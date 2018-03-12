@@ -10,10 +10,9 @@ import VueClipboard from 'vue-clipboard2';
 import Toasted from 'vue-toasted';
 import VueTheMask from 'vue-the-mask';
 import VueResource from 'vue-resource';
-import VueSocketio from "vue-socket.io";
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://50.62.23.66:4000';
+Vue.prototype.$host = 'http://54.205.245.204:3001';
 
 const NotifOptions = {
     position: 'bottom-center',
@@ -32,7 +31,6 @@ Vue.use(VModal);
 Vue.use(Toasted, NotifOptions);
 Vue.use(VueTheMask);
 Vue.use(VueResource);
-Vue.use(VueSocketio, 'http://50.62.23.66:4000');
 
 import messages from './i18n.js';
 
