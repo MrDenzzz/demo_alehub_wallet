@@ -1,0 +1,446 @@
+.list-panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 16px 0 16px;
+
+  & h3 {
+    font-family: MuseoSansCyrl700;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.29;
+    letter-spacing: 0.5px;
+    color: #0d1717;
+    opacity: 0.5;
+
+    &:not(:first-child) {
+      margin-left: 16px;
+    }
+
+    &.active {
+      color: #34343e;
+      border-bottom: 1px solid #000;
+      opacity: 1;
+    }
+  }
+
+  & .flexleft {
+    justify-content: flex-start;
+
+    & h3:hover {
+      cursor: pointer;
+      border-bottom: 1px solid #000;
+      color: #34343e;
+      opacity: 1;
+    }
+  }
+}
+
+.offer-page {
+  padding: 16px;
+  height: auto;
+  background: #ececec;
+  font-family: MuseoSansCyrl300;
+
+  & h3 {
+    font-family: MuseoSansCyrl700;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.22;
+    color: #34343e;
+  }
+
+  & h4 {
+    font-family: MuseoSansCyrl700;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.13;
+    color: #34343e;
+    margin-bottom: 0;
+  }
+
+  & .heading {
+    display: flex;
+    justify-content: space-between;
+
+    & .count {
+      margin: 0;
+      font-family: MuseoSansCyrl700;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.33;
+      color: #34343e;
+      text-decoration: none;
+    }
+
+    & .title {
+      font-family: MuseoSansCyrl700;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 1.25;
+      color: #34343e;
+      margin: 0;
+    }
+  }
+
+  & .subtitle {
+    opacity: 0.8;
+    font-family: MuseoSansCyrl500;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+    color: #34343e;
+    margin-top: 6px;
+    display: flex;
+
+    & .badge {
+      border-radius: 2px;
+      background-color: #ffd24f;
+      font-family: MuseoSansCyrl900;
+      font-size: 11px;
+      font-weight: bold;
+      line-height: 1.09;
+      color: #0d1717;
+      padding: 3px 5px 2px 5px;
+      text-align: center;
+      margin-left: 10px;
+      display: inline-table;
+      opacity: 1;
+    }
+  }
+
+  & .description {
+    font-family: MuseoSansCyrl300;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.13;
+    text-align: left;
+    color: #34343e;
+  }
+
+  & ul {
+    margin: 0;
+    list-style-type: none;
+    padding-left: 20px;
+    font-family: MuseoSansCyrl300;
+  }
+
+  & li:before {
+    content: "–  ";
+  }
+
+  & .requirement {
+    margin-right: 5px;
+    padding: 4px 8px;
+    background-color: #dedfdf;
+    border-radius: 2px;
+    font-family: MuseoSansCyrl500;
+    line-height: 1.13;
+    color: #34343e;
+    opacity: 1;
+  }
+  
+  & .muted {
+    opacity: 0.6;
+  }
+}
+
+.offer-list {
+  height: auto;
+  background: #ececec;
+  margin-bottom: 24px;
+  padding: 16px;
+
+  & h3 {
+    font-family: MuseoSansCyrl700;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.22;
+    color: #34343e;
+  }
+
+  & .heading {
+    display: flex;
+    justify-content: space-between;
+
+    & .title, & .count {
+      margin: 0;
+      font-family: MuseoSansCyrl700;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.33;
+      color: #34343e;
+      text-decoration: none;
+    }
+
+    & .title:hover {
+      text-decoration: underline;
+    }
+
+    & .large {
+      font-size: 24px;
+    }
+  }
+
+  & .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & .timeout {
+      opacity: 0.6;
+      font-family: MuseoSansCyrl300;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.13;
+      color: #34343e;
+
+      & .bold {
+        font-family: MuseoSansCyrl500;
+      }
+    }
+  }
+
+  & .subtitle {
+    opacity: 0.8;
+    font-family: MuseoSansCyrl500;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+    color: #34343e;
+    margin-top: 6px;
+    display: flex;
+
+    & .badge {
+      border-radius: 2px;
+      background-color: #ffd24f;
+      font-family: MuseoSansCyrl900;
+      font-size: 11px;
+      font-weight: bold;
+      line-height: 1.09;
+      color: #0d1717;
+      padding: 3px 5px 2px 5px;
+      text-align: center;
+      margin-left: 5px;
+      display: inline-table;
+      opacity: 1;
+    }
+  }
+
+  & .description {
+    opacity: 0.7;
+    font-family: MuseoSansCyrl300;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.13;
+    color: #34343e;
+  }
+}
+
+.tags-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 6px;
+
+  & p {
+    opacity: 0.8;
+    font-family: MuseoSansCyrl500;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+    color: #34343e;
+    margin: 0;
+    margin-right: 10px;
+  }
+
+  & .tag {
+    border-radius: 2px;
+    background-color: #dedfdf;
+    padding: 2px 6px 4px 6px;
+
+    & span {
+      opacity: 0.8;
+      font-family: MuseoSansCyrl500;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.17;
+      text-align: left;
+      color: #0d1717;
+    }
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+.filter-panel {
+  padding: 16px;
+  height: auto;
+  background: #ececec;
+
+  & .two-input {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 18px 0;
+
+    & input {
+      color: #979797;
+      font-family: MuseoSansCyrl700;
+      font-size: 12px;
+      line-height: 1.17;
+      margin-top: 0;
+      z-index: inherit;
+      position: initial;
+      &::-webkit-input-placeholder {
+        color: rgba(52, 52, 62, 0.8);
+        opacity: 0.5;
+      }
+    }
+
+    & .input-from {
+      padding-left: 39px;
+    }
+
+    & .label-from {
+      line-height: 2.1;
+      margin: 0;
+      margin-right: -36px;
+      margin-left: 7px;
+      position: inherit;
+    }
+
+    & .input-to {
+      padding-left: 23px;
+    }
+
+    & .label-to {
+      line-height: 2.1;
+      margin: 0;
+      margin-right: -20px;
+      margin-left: 21px;
+      position: inherit;
+    }
+  }
+}
+
+.control-group {
+  margin: 10px 0 18px 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  &:last-child {
+    margin-bottom: -8px;
+  }
+}
+
+.control {
+  display: block;
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: MuseoSansCyrl500;
+  line-height: 1.7;
+
+  & input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    display: none;
+  }
+
+  & .bold {
+    font-family: MuseoSansCyrl700;
+    font-size: 13px;
+  }
+}
+
+.control-indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background: #f7f7f7;
+  border: solid 0.5px #979797;
+  border-radius: 2px;
+}
+
+.control:hover input ~ .control-indicator,
+.control input:focus ~ .control-indicator {
+  background: #f7f7f7;
+}
+
+.control input:checked ~ .control-indicator {
+  background: #ffd24f;
+  border: solid 0.5px #34343e;
+}
+
+.control:hover input:not([disabled]):checked ~ .control-indicator,
+.control input:checked:focus ~ .control-indicator {
+  background: #fccd46;
+}
+
+.control input:disabled ~ .control-indicator {
+  background: #f7f7f7;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.control-indicator:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.control input:checked ~ .control-indicator:after {
+  display: block;
+}
+
+.control-checkbox {
+  width: calc(50% - 22px);
+
+  & .control-indicator:after {
+    left: 30%;
+    top: 1px;
+    width: 3px;
+    height: 7px;
+    border: solid #34343e;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  & input:disabled ~ .control-indicator:after {
+    border-color: #7b7b7b;
+  }
+}
+
+.one-col {
+  & .control {
+    width: 100%;
+  }
+}
+
+.control-radio {
+  & .control-indicator {
+    border-radius: 50%;
+  }
+
+  & .control-indicator:after {
+    left: 3px;
+    top: 3px;
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background: #34343e;
+  }
+
+  & input:disabled ~ .control-indicator:after {
+    background: #7b7b7b;
+  }
+}

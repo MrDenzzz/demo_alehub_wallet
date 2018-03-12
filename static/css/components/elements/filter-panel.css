@@ -1,0 +1,140 @@
+@charset "UTF-8";
+.filter-panel {
+  padding: 16px;
+  height: auto;
+  background: #ececec; }
+
+.offer-page {
+  padding: 16px;
+  height: auto;
+  background: #ececec;
+  font-family: MuseoSansCyrl300; }
+  .offer-page h3 {
+    font-family: MuseoSansCyrl700;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.22;
+    color: #34343e; }
+  .offer-page h4 {
+    font-family: MuseoSansCyrl700;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.13;
+    color: #34343e;
+    margin-bottom: 0; }
+  .offer-page .heading {
+    display: flex;
+    justify-content: space-between; }
+    .offer-page .heading .count {
+      margin: 0;
+      font-family: MuseoSansCyrl700;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.33;
+      color: #34343e;
+      text-decoration: none; }
+    .offer-page .heading .title {
+      font-family: MuseoSansCyrl700;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 1.25;
+      color: #34343e;
+      margin: 0; }
+    .offer-page .heading .save {
+      display: flex;
+      align-items: center; }
+      .offer-page .heading .save:hover {
+        cursor: pointer; }
+        .offer-page .heading .save:hover .icon {
+          background-image: url(../img/star-on.svg); }
+      .offer-page .heading .save span {
+        font-family: MuseoSansCyrl500;
+        font-size: 16px;
+        line-height: 1.12;
+        color: #34343e;
+        opacity: 0.5;
+        margin-right: 5px; }
+      .offer-page .heading .save .icon {
+        background-image: url(../img/star-off.svg);
+        width: 16px;
+        height: 16px;
+        background-size: contain;
+        display: block; }
+  .offer-page .subtitle {
+    opacity: 0.8;
+    font-family: MuseoSansCyrl500;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+    color: #34343e;
+    margin-top: 6px;
+    display: flex; }
+    .offer-page .subtitle .badge {
+      border-radius: 2px;
+      background-color: #ffd24f;
+      font-family: MuseoSansCyrl900;
+      font-size: 11px;
+      font-weight: bold;
+      line-height: 1.09;
+      color: #0d1717;
+      padding: 3px 5px 2px 5px;
+      text-align: center;
+      margin-left: 10px;
+      display: inline-table;
+      opacity: 1; }
+  .offer-page .description {
+    font-family: MuseoSansCyrl300;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.13;
+    text-align: left;
+    color: #34343e; }
+  .offer-page ul {
+    margin: 0;
+    list-style-type: none;
+    padding-left: 20px;
+    font-family: MuseoSansCyrl300; }
+  .offer-page li:before {
+    content: "–  "; }
+  .offer-page .requirement {
+    margin-right: 5px;
+    padding: 4px 8px;
+    background-color: #dedfdf;
+    border-radius: 2px;
+    font-family: MuseoSansCyrl500;
+    line-height: 1.13;
+    color: #34343e;
+    opacity: 1; }
+  .offer-page .muted {
+    opacity: 0.6; }
+
+.apply-panel {
+  padding: 16px;
+  height: auto;
+  background: #ececec; }
+  .apply-panel h1 {
+    font-family: MuseoSansCyrl700;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.25;
+    color: #34343e;
+    margin: 0; }
+  .apply-panel .text {
+    font-family: MuseoSansCyrl700;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.17;
+    color: #34343e;
+    margin-bottom: 16px; }
+  .apply-panel .muted {
+    opacity: 0.7; }
+  .apply-panel .link {
+    opacity: 0.5;
+    font-family: MuseoSansCyrl700;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.08;
+    color: #34343e;
+    text-decoration: none; }
+    .apply-panel .link:hover {
+      text-decoration: underline; }

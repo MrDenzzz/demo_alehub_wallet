@@ -1,0 +1,142 @@
+.form {
+  padding: 16px;
+  height: auto;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+  flex-direction: column;
+
+  & .deletelink {
+    margin: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-family: MuseoSansCyrl500;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-align: center;
+    color: #b10101;
+    margin-top: 8px;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  & .control {
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 18px;
+    padding-left: 0;
+
+    &.isCheckbox {
+      padding-bottom: 0;
+    }
+
+    & .wrap-input {
+      padding-left: 22px;
+
+      & .wrap-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & .text {
+          margin-right: 50px;
+          font-size: 14px;
+          font-family: MuseoSansCyrl500;
+          opacity: 0.5;
+          margin-bottom: 0;
+          line-height: 1.29;
+          color: #34343e;
+        }
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+
+      &:first-child {
+        margin-top: 22px;
+      }
+
+      & label {
+        text-transform: uppercase;
+        margin: 0;
+        white-space: pre;
+        margin-right: 12px;
+        font-size: 14px;
+        font-family: MuseoSansCyrl500;
+      }
+
+      & .textbox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+
+        & .text {
+          margin: 0;
+          margin-right: 18px;
+        }
+
+        & .arrow_down_icon {
+          width: 11.5px;
+          height: 7px;
+          background-image: url('../img/arrow_down.svg');
+          margin-right: 18px;
+          background-size: cover;
+        }
+      }
+
+      & .text {
+        margin-right: 12px;
+        font-size: 14px;
+        font-family: MuseoSansCyrl500;
+        opacity: 0.5;
+        margin-bottom: 0;
+        line-height: 1.29;
+        color: #34343e;
+      }
+
+      & .text-link {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      & input {
+        font-family: MuseoSansCyrl500;
+        width: 100%;
+        background: inherit;
+        border: none;
+        outline: none;
+        margin-top: 18px;
+        opacity: 0.5;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.29;
+        text-align: left;
+        color: #34343e;
+        position: relative;
+        z-index: 1;
+        display: block;
+      }
+
+      &.noline {
+        border-bottom: none;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.notifPanel {
+    & div {
+        font-family: MuseoSansCyrl500;
+        height: 54px !important;
+        justify-content: center !important;
+        border-radius: 0 !important;
+        font-size: 14px !important;
+        color: #f7f7f7 !important;
+    }
+    & .error {
+        background: rgba(217, 63, 31, 0.8) !important;
+    }
+    & .success {
+        background: rgba(10, 169, 74, 0.8) !important;
+    }
+}

@@ -1,0 +1,59 @@
+import Vue from 'vue';
+import App from './App';
+import router from './router';
+import {store} from './store'
+import VueI18n from 'vue-i18n';
+import VModal from 'vue-js-modal';
+import VueNumeric from 'vue-numeric';
+import VueQriously from 'vue-qriously';
+import VueClipboard from 'vue-clipboard2';
+import Toasted from 'vue-toasted';
+import VueTheMask from 'vue-the-mask';
+import VueResource from 'vue-resource';
+import VueSocketio from "vue-socket.io";
+
+Vue.config.productionTip = false;
+Vue.prototype.$host = 'http://50.62.23.66:4000';
+
+const NotifOptions = {
+    position: 'bottom-center',
+    fullWidth: true,
+    singleton: true,
+    containerClass: 'notifPanel',
+    fitToScreen: true,
+    closeOnSwipe: false
+};
+
+Vue.use(VueI18n);
+Vue.use(VueNumeric);
+Vue.use(VueQriously);
+Vue.use(VueClipboard);
+Vue.use(VModal);
+Vue.use(Toasted, NotifOptions);
+Vue.use(VueTheMask);
+Vue.use(VueResource);
+Vue.use(VueSocketio, 'http://50.62.23.66:4000');
+
+import messages from './i18n.js';
+
+let systemLang = '';
+if (localStorage.getItem('systemLang') === null) {
+    localStorage.setItem('systemLang', 'eng')
+    systemLang = 'eng';
+} else {
+    systemLang = localStorage.getItem('systemLang');
+}
+
+const i18n = new VueI18n({
+    locale: systemLang,
+    messages
+});
+
+new Vue({
+    el: '#app',
+    router,
+    store,
+    i18n,
+    components: {App},
+    template: '<App/>'
+});

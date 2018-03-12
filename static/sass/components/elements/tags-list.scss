@@ -1,0 +1,37 @@
+.tags-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 6px;
+
+  & p {
+    opacity: 0.8;
+    font-family: MuseoSansCyrl700;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+    color: #34343e;
+    margin: 0;
+    margin-right: 10px;
+  }
+
+  & .tag {
+    border-radius: 2px;
+    background-color: #dedfdf;
+    padding: 2px 6px 4px 6px;
+
+    & span {
+      opacity: 0.8;
+      font-family: MuseoSansCyrl700;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.17;
+      text-align: left;
+      color: #0d1717;
+    }
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}

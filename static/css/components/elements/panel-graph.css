@@ -1,0 +1,48 @@
+.panel-graphs {
+  margin: 24px 24px; }
+  .panel-graphs .data {
+    display: flex;
+    justify-content: space-between; }
+    .panel-graphs .data .prices p {
+      font-family: MuseoSansCyrl700;
+      font-size: 12px;
+      margin-bottom: 36px;
+      white-space: nowrap;
+      margin-right: 12px;
+      color: #34343e; }
+      .panel-graphs .data .prices p:first-child {
+        margin-top: 0; }
+      .panel-graphs .data .prices p:last-child {
+        margin-bottom: 0; }
+    .panel-graphs .data .graphs {
+      width: 100%; }
+      .panel-graphs .data .graphs .charts {
+        width: 100%;
+        height: 164px;
+        background: red; }
+      .panel-graphs .data .graphs .months {
+        display: flex;
+        justify-content: space-around; }
+        .panel-graphs .data .graphs .months p {
+          font-family: MuseoSansCyrl700;
+          font-size: 12px;
+          font-weight: 500;
+          color: #34343e; }
+  .panel-graphs .period {
+    padding-bottom: 16px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center; }
+    .panel-graphs .period a {
+      color: #34343e;
+      opacity: 0.5;
+      font-family: MuseoSansCyrl700;
+      text-decoration: none; }
+      .panel-graphs .period a:not(:last-child) {
+        margin-right: 24px; }
+      .panel-graphs .period a:hover {
+        opacity: 1;
+        border-bottom: 2px solid #34343e; }
+    .panel-graphs .period .active {
+      opacity: 1;
+      border-bottom: 2px solid #34343e; }

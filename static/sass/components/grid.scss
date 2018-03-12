@@ -1,0 +1,152 @@
+.container {
+  margin: 24px 24px;
+}
+
+%clearfix:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+
+//----- Grid System
+$grid-spacing: 1%;
+
+.row {
+  @extend %clearfix;
+
+  & + & {
+    margin-top: $grid-spacing;
+  }
+}
+
+[class^="col-"] {
+  float: left;
+  margin-right: $grid-spacing;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  &:last-child {
+    margin-right: 0%;
+  }
+}
+
+@function calc-grid($i, $j) {
+  @return (100% / $i) - ($grid-spacing * $j / 12);
+}
+
+.col-1 {
+  width: calc-grid(12, 11);
+}
+
+.col-2 {
+  width: calc-grid(6, 10);
+}
+
+.col-3 {
+  width: calc-grid(4, 9);
+
+  @media screen and (max-width: 1000px) {
+    width: calc-grid(3, 8);
+  }
+}
+
+.col-4 {
+  width: calc-grid(3, 8);
+}
+
+.col-5 {
+  width: calc-grid(2.4, 7);
+}
+
+.col-6 {
+  width: calc-grid(2, 6);
+}
+
+.col-7 {
+  width: calc-grid(1.714285714285714, 5);
+}
+
+.col-8 {
+  width: calc-grid(1.5, 4);
+}
+
+.col-9 {
+  width: calc-grid(1.333333333333333, 3);
+
+  @media screen and (max-width: 1000px) {
+    width: calc-grid(1.5, 4);
+  }
+}
+
+.col-10 {
+  width: calc-grid(1.2, 2);
+}
+
+.col-11 {
+  width: calc-grid(1.090909090909091, 1);
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.offset-1 {
+  margin-left: calc-grid(12, 11);
+}
+
+.offset-2 {
+  margin-left: calc-grid(6, 10);
+}
+
+.offset-3 {
+  margin-left: calc-grid(4, 9);
+}
+
+.offset-4 {
+  margin-left: calc-grid(3, 8);
+}
+
+.offset-5 {
+  margin-left: calc-grid(2.4, 7);
+}
+
+.offset-6 {
+  margin-left: calc-grid(2, 6);
+}
+
+.offset-7 {
+  margin-left: calc-grid(1.714285714285714, 5);
+}
+
+.offset-8 {
+  margin-left: calc-grid(1.5, 4);
+}
+
+.offset-9 {
+  margin-left: calc-grid(1.333333333333333, 3);
+}
+
+.offset-10 {
+  margin-left: calc-grid(1.2, 2);
+}
+
+.offset-11 {
+  margin-left: calc-grid(1.090909090909091, 1);
+}
+
+.offset-12 {
+  margin-left: 100%;
+}
+
+.row-flex {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  align-items: center;
+
+  & .col {
+    display: flex;
+    justify-content: center;
+  }
+}

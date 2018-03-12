@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box; }
+
+.select {
+  position: relative;
+  outline: none;
+  margin-top: 16px;
+  margin-right: 18px; }
+  .select .value {
+    display: block;
+    position: relative;
+    font-family: MuseoSansCyrl500;
+    font-size: 14px;
+    color: #1f202a;
+    cursor: pointer;
+    overflow-x: hidden;
+    white-space: nowrap; }
+    .select .value::before {
+      content: "";
+      position: absolute;
+      background: url("../img/arrow_down.svg");
+      background-size: cover;
+      width: 11.5px;
+      height: 7px;
+      top: 8px;
+      right: 0px;
+      z-index: 1;
+      color: #bbbbbb;
+      line-height: 40px;
+      font-size: 14px; }
+  .select .list {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 0;
+    background: #fff;
+    opacity: 0;
+    outline: none;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+    z-index: 9999; }
+    .select .list.open {
+      height: auto;
+      opacity: 1.0; }
+    .select .list .filter {
+      display: none;
+      padding: 9px 18px; }
+      .select .list .filter input {
+        width: 100%;
+        font-family: MuseoSansCyrl500;
+        font-size: 14px;
+        color: #1f202a;
+        border: none;
+        border-bottom: 1px solid #eaeaea;
+        outline: none;
+        margin: 0;
+        padding: 0 0 5px; }
+    .select .list ul {
+      display: block;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7; }
+      .select .list ul li {
+        display: block;
+        list-style: none;
+        font-family: MuseoSansCyrl500;
+        font-size: 14px;
+        color: #1f202a;
+        padding: 9px 18px;
+        cursor: pointer;
+        position: relative; }
+        .select .list ul li:hover, .select .list ul li.hovered {
+          background: #f0f0f0; }
+      .select .list ul .selected::before {
+        content: "";
+        position: absolute;
+        background: url("../img/selected-ic.svg");
+        background-size: cover;
+        width: 11.5px;
+        height: 7px;
+        top: 17px;
+        right: 18px;
+        z-index: 1;
+        color: #000;
+        line-height: 40px;
+        font-size: 14px; }
+  .select.large .filter {
+    display: block; }
+  .select.large .list ul {
+    max-height: 200px;
+    overflow-y: scroll; }

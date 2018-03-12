@@ -1,0 +1,41 @@
+.checkbox:not(checked) {
+  position: absolute;
+  opacity: 0 !important;
+  width: auto !important;
+  margin: 0 !important;
+  display: inline-block;
+}
+
+.checkbox:not(checked) + label:before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  right: 18px;
+  width: 34px;
+  height: 18px;
+  background: #34343e;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.checkbox:not(checked) + label:after {
+  content: '';
+  position: absolute;
+  top: 58px;
+  right: 20px;
+  width: 14px;
+  height: 14px;
+  border-radius: 1px;
+  background: #fff;
+  transition: all .2s;
+  cursor: pointer;
+}
+
+.checkbox:checked + label:after {
+  right: 36px;
+}
+
+:active, :hover, :focus {
+  outline: 0;
+  outline-offset: 0;
+}

@@ -1,0 +1,139 @@
+.navbar {
+  width: 100%;
+  height: 64px;
+  background: #0d1717;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 100; }
+  .navbar .textList .item span {
+    text-align: left;
+    margin-left: 24px; }
+  .navbar .navbar-nav {
+    width: 360px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; }
+    .navbar .navbar-nav a {
+      text-decoration: none; }
+    .navbar .navbar-nav .back-icon {
+      padding: 20px 32px;
+      margin-right: -32px; }
+      .navbar .navbar-nav .back-icon:hover {
+        cursor: pointer;
+        opacity: 0.7; }
+    .navbar .navbar-nav .logo {
+      font-size: 32px;
+      margin-left: 32px;
+      color: #fcfcfc;
+      font-family: Fairview; }
+    .navbar .navbar-nav .actions {
+      width: auto;
+      height: 100%;
+      display: flex;
+      margin-left: 32px; }
+      .navbar .navbar-nav .actions .item {
+        width: 64px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .navbar .navbar-nav .actions .item:not(.active):hover {
+          cursor: pointer;
+          background-color: rgba(247, 247, 247, 0.15); }
+        .navbar .navbar-nav .actions .item .badge {
+          width: 6px;
+          height: 6px;
+          border-radius: 12.5px;
+          background-color: #ffd24f;
+          position: absolute;
+          top: 16px;
+          margin-left: 12px; }
+        .navbar .navbar-nav .actions .item:hover {
+          cursor: pointer;
+          background-color: #474b4b; }
+      .navbar .navbar-nav .actions .active {
+        background-color: #474b4b; }
+  .navbar .title {
+    color: #fff;
+    font-size: 32px;
+    font-family: Fairview;
+    color: #fcfcfc;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); }
+    @media screen and (max-width: 1000px) {
+      .navbar .title {
+        left: 60%; } }
+  .navbar .balance {
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; }
+    .navbar .balance .count {
+      font-family: Fairview;
+      color: #fcfcfc;
+      font-size: 32px;
+      margin-right: 16px; }
+    .navbar .balance .options {
+      width: 64px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      .navbar .balance .options:hover {
+        background: #474b4b;
+        cursor: pointer; }
+      .navbar .balance .options:hover .dropdown-options {
+        display: block; }
+      .navbar .balance .options .dropdown-options {
+        display: none;
+        position: absolute;
+        background-color: #474b4b;
+        width: 194px;
+        right: 0;
+        color: #fff;
+        height: auto;
+        top: 64px;
+        z-index: 3; }
+        .navbar .balance .options .dropdown-options .item {
+          height: 64px;
+          line-height: 64px;
+          font-family: MuseoSansCyrl500;
+          text-align: center;
+          height: auto; }
+          .navbar .balance .options .dropdown-options .item a, .navbar .balance .options .dropdown-options .item span {
+            color: #fff;
+            text-decoration: none; }
+            .navbar .balance .options .dropdown-options .item a:hover, .navbar .balance .options .dropdown-options .item span:hover {
+              color: #34343e; }
+          .navbar .balance .options .dropdown-options .item:hover {
+            background: #ffdd78; }
+          .navbar .balance .options .dropdown-options .item span {
+            display: block; }
+      .navbar .balance .options .horizontal-dropdown-options {
+        width: 256px; }
+        .navbar .balance .options .horizontal-dropdown-options .item {
+          height: 64px;
+          width: 64px;
+          line-height: 64px;
+          font-family: MuseoSansCyrl500;
+          text-align: center;
+          display: inline-block; }
+          .navbar .balance .options .horizontal-dropdown-options .item a, .navbar .balance .options .horizontal-dropdown-options .item span {
+            color: #fff;
+            text-decoration: none; }
+            .navbar .balance .options .horizontal-dropdown-options .item a:hover, .navbar .balance .options .horizontal-dropdown-options .item span:hover {
+              color: #34343e; }
+          .navbar .balance .options .horizontal-dropdown-options .item:hover {
+            background: #ffd24f; }
+          .navbar .balance .options .horizontal-dropdown-options .item span {
+            display: block; }
+  .navbar .gridBalance .count {
+    margin-right: 32px; }
+
+.nav-center {
+  justify-content: center; }

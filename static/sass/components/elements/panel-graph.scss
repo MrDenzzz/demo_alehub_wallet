@@ -1,0 +1,77 @@
+.panel-graphs {
+  margin: 24px 24px;
+
+  & .data {
+    display: flex;
+    justify-content: space-between;
+
+    & .prices {
+      & p {
+        font-family: MuseoSansCyrl700;
+        font-size: 12px;
+        margin-bottom: 36px;
+        white-space: nowrap;
+        margin-right: 12px;
+        color: #34343e;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    & .graphs {
+      width: 100%;
+
+      & .charts {
+        width: 100%;
+        height: 164px;
+        background: red;
+      }
+
+      & .months {
+        display: flex;
+        justify-content: space-around;
+
+        & p {
+          font-family: MuseoSansCyrl700;
+          font-size: 12px;
+          font-weight: 500;
+          color: #34343e;
+        }
+      }
+    }
+  }
+
+  & .period {
+    padding-bottom: 16px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+
+    & a {
+      color: #34343e;
+      opacity: 0.5;
+      font-family: MuseoSansCyrl700;
+      text-decoration: none;
+
+      &:not(:last-child) {
+        margin-right: 24px;
+      }
+
+      &:hover {
+        opacity: 1;
+        border-bottom: 2px solid #34343e;
+      }
+    }
+
+    & .active {
+      opacity: 1;
+      border-bottom: 2px solid #34343e;
+    }
+  }
+}

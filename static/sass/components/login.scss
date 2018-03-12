@@ -1,0 +1,88 @@
+.login-form {
+  padding: 16px;
+  height: auto;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+  flex-direction: column;
+  width: 426px;
+  margin: 0 auto;
+
+  & .control {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 18px;
+    padding-left: 0;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+
+    &:first-child {
+      margin-top: 22px;
+    }
+
+    & label {
+      text-transform: uppercase;
+      margin: 0;
+      white-space: pre;
+      margin-left: 16px;
+      margin-right: 12px;
+    }
+
+    & input {
+      width: 100%;
+      font-size: 14px;
+      background: inherit;
+      border: none;
+      text-align: right;
+      outline: none;
+      margin-right: 16px;
+      position: relative;
+      z-index: 1;
+      opacity: 1;
+    }
+
+    &.noline {
+      border-bottom: none;
+    }
+  }
+
+  & .btn-control {
+    display: flex;
+    justify-content: space-between;
+
+    & button {
+      width: 50%;
+
+      &:first-child {
+        margin-right: 8px;
+      }
+
+      &:last-child {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  & .text {
+    font-family: MuseoSansCyrl700;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.29;
+    text-align: center;
+    margin: 18px 0 0 0;
+
+    & a {
+      font-weight: bold;
+      color: #0d1717;
+      border-bottom: 1px solid #000;
+      text-decoration: none;
+      padding-bottom: 1px;
+    }
+  }
+}
