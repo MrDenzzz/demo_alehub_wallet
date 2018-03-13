@@ -9,6 +9,7 @@ import SettingsModule from './modules/Settings';
 import TransactionsModule from './modules/Transactions';
 import UsersModule from './modules/Users';
 import WalletsModule from './modules/Wallets';
+import OffersModule from './modules/Offers';
 
 
 
@@ -19,7 +20,8 @@ export const store = new Vuex.Store({
         Settings: SettingsModule,
         Transactions: TransactionsModule,
         Users: UsersModule,
-        Wallets: WalletsModule
+        Wallets: WalletsModule,
+        Offers: OffersModule
     },
     strict: false
 });
