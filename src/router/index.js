@@ -7,6 +7,7 @@ import Notifications from '@/components/Notifications';
 import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
 import NotFound from '@/components/NotFound';
+import Offers from '@/components/Offers';
 
 Vue.use(Router);
 
@@ -32,6 +33,10 @@ const router = new Router({
             path: '/notifications',
             name: 'Notifications',
             component: Notifications
+        }, {
+            path: '/offers',
+            name: 'Offers',
+            component: Offers
         }, {
             path: '*',
             name: 'NotFound',
