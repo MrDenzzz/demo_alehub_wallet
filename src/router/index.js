@@ -17,22 +17,27 @@ const router = new Router({
             path: '/',
             name: 'Wallet',
             component: Wallet
-        }, {
+        },
+        {
             path: '/wallet',
             redirect: '/',
-        }, {
+        },
+        {
             path: '/wallet/settings',
             name: 'WalletSettings',
             component: WalletSettings
-        }, {
+        },
+        {
             path: '/settings',
             name: 'Settings',
             component: Settings
-        }, {
+        },
+        {
             path: '/notifications',
             name: 'Notifications',
             component: Notifications
-        }, {
+        },
+        {
             path: '*',
             name: 'NotFound',
             component: NotFound
