@@ -1,15 +1,15 @@
 <template>
     <div class="wallet">
         <Navbar
-            :title="$t('pages.summary.navbarTitle')"
-            :isNavigate="true"
-            :isBalance="true"
-            :rightMenu="rightMenu"
+                :title="$t('pages.summary.navbarTitle')"
+                :isNavigate="true"
+                :isBalance="true"
+                :rightMenu="rightMenu"
         />
         <section class="main" style="height: 100%;">
 
             <Wallets-list
-                :new-wallets="walletList"
+                    :new-wallets="walletList"
             />
             <div class="content">
                 <div class="container">
@@ -35,24 +35,24 @@
                         <div class="col-12" style="margin-top: 20px;">
                             <Spinner v-if="isLoader"/>  <!-- переписать спиннер -->
                             <Search-panel
-                                v-if="false && getActivity.length !== 0 && !transactionsLoader"
-                                :filters="filters"
-                                :active-filter="activeFilter"
-                                :check-activities="getActivity.length"
-                                :date-from-wallet="dateFrom"
-                                :date-to-wallet="dateTo"
-                                :current-transactions="currentTmpTransactions"
-                                :total-transactions=" totalTransactions"
-                                :starting-transactions="startingTransactions"
+                                    v-if="false && getActivity.length !== 0 && !transactionsLoader"
+                                    :filters="filters"
+                                    :active-filter="activeFilter"
+                                    :check-activities="getActivity.length"
+                                    :date-from-wallet="dateFrom"
+                                    :date-to-wallet="dateTo"
+                                    :current-transactions="currentTmpTransactions"
+                                    :total-transactions=" totalTransactions"
+                                    :starting-transactions="startingTransactions"
                             />
 
                             <Activity-list
-                                v-if="getActivity.length !== 0 || transactionsLoader"
-                                :activities="getActivity"
-                                :is-show-date="true"
-                                :change-wallet-result="changeWalletResult"
-                                :new-transaction="newTransaction"
-                                :loader="transactionsLoader"
+                                    v-if="getActivity.length !== 0 || transactionsLoader"
+                                    :activities="getActivity"
+                                    :is-show-date="true"
+                                    :change-wallet-result="changeWalletResult"
+                                    :new-transaction="newTransaction"
+                                    :loader="transactionsLoader"
                             />
                         </div>
                     </div>
@@ -142,7 +142,7 @@
             ...mapGetters([
                 'transactionsFilter'
             ]),
-            transactionsLoader () {
+            transactionsLoader() {
                 return this.$store.state.Transactions.transactionsLoader;
             },
             walletList: function () {
@@ -221,7 +221,7 @@
                 if (this.searchText) {
                     return this.getFilteredActivity.filter(item => {
                         return this.currentWallet.address === item.walletAddress ? item.walletDestination.toLowerCase().includes(this.searchText.toLowerCase()) :
-                                item.walletAddress.toLowerCase().includes(this.searchText.toLowerCase())
+                            item.walletAddress.toLowerCase().includes(this.searchText.toLowerCase())
                     })
                 }
                 return this.getFilteredActivity;
@@ -281,7 +281,7 @@
                 //     this.isLoader = false;
                 // }, 750);
             },
-            changeSelectedWallet (address) {
+            changeSelectedWallet(address) {
                 this.changeTransactionLoaderState(true);
                 this.$http.get(`${this.$host}/transactions/${address}`, {
                     headers: {
@@ -309,7 +309,7 @@
             this.$on('changeStartingTransactions', val => {
                 this.startingTransactions = val;
             });
-            
+
 
             // this.isLoader = true;
             //
@@ -368,7 +368,7 @@
                     this.changeWalletResult = true;
                 }
                 this.changeSelectedWallet(address);
-            })
+            });
 
             this.$on('resetWalletResult', val => {
                 if (!val) {

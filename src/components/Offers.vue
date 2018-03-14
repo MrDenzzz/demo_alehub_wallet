@@ -3,7 +3,7 @@
         <Navbar
                 :title="$t('pages.jobOffers.navbarTitle')"
                 :isNavigate="true"
-                :isBalance="false"
+                :isBalance="true"
                 :rightMenu="rightMenu"
         />
 

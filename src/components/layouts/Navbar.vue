@@ -10,7 +10,6 @@
                     <div class="logo">ALE</div>
                 </router-link>
 
-
                 <div class="actions">
                     <router-link
                         class="item"

@@ -10,6 +10,11 @@ const state = {
         iconWidth: '24.5',
         iconHeight: '22.5'
     }, {
+        path: '/resume',
+        iconName: 'wallet',
+        iconWidth: '23',
+        iconHeight: '20.5'
+    }, {
         path: '/notifications',
         iconName: 'notifications-ic',
         iconWidth: '20',

@@ -91,10 +91,10 @@
             }
         },
         computed: {
-            walletList() {
+            walletList: function () {
                 return this.$store.state.Wallets.wallets;
             },
-            currentWallet() {
+            currentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
             }
         },
@@ -105,29 +105,33 @@
                 deleteWallet: 'DELETE_WALLET',
 
             }),
-            changeWalname(e) {
+            changeWalname: function (e) {
                 e.target.blur();
                 this.updateWalletName(this.newWalletName)
             },
-            deleteWallet() {
+            deleteWallet: function () {
                 this.$modal.show('deletewallet');
             },
-            changeWalletName(e) {
+            changeWalletName: function (e) {
                 this.newWalletName = e.target.value;
             },
-            changeChecker(id, value) {
+            changeChecker: function (id, value) {
                 if (id === 'spendingPassword') {
                     this.spendingPassword = value
                 }
             },
-            initComponent() {
+            initComponent: function () {
                 this.newWalletName = this.currentWallet.name;
             },
-            newSelect(value, id) {
+            newSelect: function (value, id) {
                 if (id === "security")
                     this.selectedSecurityLevel = value;
             },
 
+        },
+        created() {
+            console.log(this.currentWallet);
+            this.initComponent();
         },
         mounted() {
             // this.$on('selectWallet', function (index) {
@@ -140,9 +144,6 @@
             //     console.log(1231233);
             //     this.changeNewWallet(walletId);
             // });
-        },
-        created() {
-            this.initComponent();
         }
     }
 </script>

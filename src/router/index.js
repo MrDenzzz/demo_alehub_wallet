@@ -8,6 +8,7 @@ import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
 import NotFound from '@/components/NotFound';
 import Offers from '@/components/Offers';
+import Resume from '@/components/Resume';
 
 Vue.use(Router);
 
@@ -42,7 +43,13 @@ const router = new Router({
             path: '/offers',
             name: 'Offers',
             component: Offers
-        }, {
+        },
+        {
+            path: '/resume',
+            name: 'Resume',
+            component: Resume
+        },
+        {
             path: '*',
             name: 'NotFound',
             component: NotFound

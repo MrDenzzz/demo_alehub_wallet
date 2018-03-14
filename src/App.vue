@@ -24,6 +24,15 @@
                 isOpenModal: false
             }
         },
+        computed: {
+            currentWallet: function () {
+                return this.$store.state.Wallets.currentWallet;
+            },
+            systemLanguage: function () {
+                if (this.language === null) return 'eng';
+                else return this.language;
+            }
+        },
         methods: {
             ...mapMutations ({
                 setCurrentWallet: 'CHANGE_NEW_WALLET',
@@ -52,7 +61,7 @@
                     console.log('error', response);
                 });
             },
-            getWalletsInfo () {
+            getWalletsInfo: function () {
                 this.$http.post(`${this.$host}/wallet/addressInfo`, {
                     addresses: JSON.parse(localStorage.getItem('wallets')),
                 }, {
@@ -94,22 +103,13 @@
                 });
             }
         },
-        computed: {
-            currentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
-            },
-            systemLanguage: function () {
-                if (this.language === null) return 'eng';
-                else return this.language;
-            }
-        },
         created() {
             let _this = this;
             this.isOpenModal = false;
             if (localStorage.getItem('wallets') === null) {
                 return false;
             }
-            this.getWalletsInfo()
+            this.getWalletsInfo();
             setInterval(_this.getIntervalWalletsInfo, 15000);
 
         },
