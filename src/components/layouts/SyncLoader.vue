@@ -1,7 +1,7 @@
 <template>
     <div class="connect-page" v-if="load">
         <div class="connect-header">
-            <h1 class="title">Ale</h1>
+            <h1 class="title">ALE</h1>
         </div>
         <div class="connect-body">
             <img src="../../assets/img/spinner-sync.svg" alt="">
@@ -10,28 +10,6 @@
             <span class="message">Connecting network…</span>
         </div>
     </div>
-    <!--<div v-else-if="isSync">-->
-        <!--<div class="sync-page">-->
-            <!--<div class="sync-header">-->
-                <!--<h1 class="title">Ale</h1>-->
-            <!--</div>-->
-            <!--<div class="sync-body">-->
-                <!--<img src="../../assets/img/spinner-sync-black.svg" alt="">-->
-            <!--</div>-->
-            <!--<div class="sync-footer">-->
-                <!--<div class="progress-bar">-->
-                    <!--<div class="static">-->
-                        <!--<span>{{ syncCount }}%</span>-->
-                        <!--<span>{{ 100-syncCount }}%</span>-->
-                    <!--</div>-->
-                    <!--<div class="line">-->
-                        <!--<div class="done" :style="{ width: syncCount + '%' }"></div>-->
-                        <!--<div class="progress" :style="{ width: parseProgressLine + '%' }"></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 </template>
 <script>
     export default {

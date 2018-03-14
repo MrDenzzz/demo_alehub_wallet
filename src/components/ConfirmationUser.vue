@@ -1,5 +1,5 @@
 <template>
-    <div class="twoAuth">
+    <div class="confirmation-user">
         <Navbar
                 :title="'ALE'"
                 :isNavigate="false"
@@ -12,32 +12,33 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="login-form">
+
                                 <div class="control noline" @click="focusInput()">
-                                    <label for="pin">2fa pin code</label>
+                                    <label for="confirmUserInput">2fa pin code</label>
                                     <the-mask
                                             mask="######"
+                                            class="d-block"
                                             placeholder="code"
                                             type="text"
-                                            id="pin"
+                                            id="confirmUserInput"
                                             :class="{error:isErrorCode}"
-                                            @keyup.enter.native="checkTwoAuth"
-                                            @input.native="resetError"
-                                            v-model="twoauth"
+                                            @input.native="resetError()"
+                                            v-model="confirmUser"
                                     />
+                                    <!--@keyup.enter.native="checkConfirmationUser()"-->
                                 </div>
 
                                 <div class="btn-control">
                                     <router-link
                                             :to="{ path: '/main' }"
-                                            tag="button"
-                                            class="buttons btn-default"
-                                    >
+                                            tag="button" class="buttons btn-default">
                                         Back
                                     </router-link>
-                                    <button class="buttons btn-black" @click="checkTwoAuth">
+                                    <button class="buttons btn-black" @click="checkConfirmationUser()">
                                         Confirm
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -51,46 +52,51 @@
     import Navbar from './layouts/Navbar';
 
     export default {
-        name: 'twoAuth',
+        name: 'confirmation-email',
         components: {
             Navbar
         },
         data() {
             return {
                 isErrorCode: false,
-                twoauth: ''
+                confirmUser: ''
             }
         },
         methods: {
-            checkTwoAuth() {
-                if (this.twoauth.length !== 6) {
-                    this.$toasted.show("The two-factor code should consist of 6 symbols", {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    this.isErrorCode = true;
-                    document.getElementById('pin').focus()
-                } else {
-                    localStorage.setItem('token', 'ih34hr512rnu32gugn548hgn49hn');
-                    this.$router.push('/wallet');
-                }
+            checkConfirmationUser: function () {
+                // if (this.twoauth.length !== 6) {
+                //     this.$toasted.show("The verification code must contain 30 characters", {
+                //         duration: 10000,
+                //         type: 'error',
+                //     });
+                //     this.isErrorCode = true;
+                //     document.getElementById('pin').focus();
+                // } else {
+                // localStorage.setItem('token', 'ih34hr512rnu32gugn548hgn49hn');
+
+
+
+
+
+                // this.$router.push('/wallet');
+
+                // }
             },
-            focusInput() {
-                document.getElementById('pin').focus()
+            focusInput: function () {
+                document.getElementById('confirmUserInput').focus();
             },
-            resetError() {
-                this.isErrorCode = false
+            resetError: function () {
+                this.isErrorCode = false;
             },
         },
         mounted() {
-            this.focusInput()
+            this.focusInput();
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    .error {
-        text-decoration: underline;
-        text-decoration-color: #d93f1f;
-    }
+<style lang="stylus" scoped>
+    .d-block
+        display block
+
 </style>

@@ -38,17 +38,17 @@
                                     >
                                 </div>
 
-                                <div class="control" @click="focusInput('phone')">
-                                    <label for="phone">phone number</label>
-                                    <input
-                                            type="text"
-                                            id="phone"
-                                            class="d-block"
-                                            placeholder="phone number"
-                                            @keyup.enter="register"
-                                            v-model="phoneNumber"
-                                    >
-                                </div>
+                                <!--<div class="control" @click="focusInput('phone')">-->
+                                    <!--<label for="phone">phone number</label>-->
+                                    <!--<input-->
+                                            <!--type="text"-->
+                                            <!--id="phone"-->
+                                            <!--class="d-block"-->
+                                            <!--placeholder="phone number"-->
+                                            <!--@keyup.enter="register"-->
+                                            <!--v-model="phoneNumber"-->
+                                    <!--&gt;-->
+                                <!--</div>-->
 
                                 <div class="control" @click="focusInput('password')">
                                     <label for="password">password</label>
@@ -74,7 +74,12 @@
                                     >
                                 </div>
 
-                                <button class="btn btn-yellow btn-block nomargin" @click="registerUser()">Create</button>
+                                <button
+                                        class="btn btn-yellow btn-block nomargin"
+                                        @click="registerUser()"
+                                >
+                                    Create
+                                </button>
 
                                 <p class="text">Already have an account?
                                     <router-link :to="{ path: '/' }">
@@ -83,7 +88,6 @@
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -105,7 +109,7 @@
                 isErrorPassword: false,
                 fullName: '',
                 email: '',
-                phoneNumber: '',
+                // phoneNumber: '',
                 password: '',
                 passwordConfirm: '',
             }
@@ -133,14 +137,6 @@
                     if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show('Enter your email', {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
-                    if (!this.phoneNumber) {
-                        this.focusInput('phone');
-                        this.$toasted.show('Enter your phone number', {
                             duration: 10000,
                             type: 'error',
                         });
@@ -191,9 +187,29 @@
                     return false;
                 }
 
+                // /users/new POST
+                //
+                // name: 'Вася пупкин',
+                // email: 'huy@kek.lol',
+                //
+                // пароль password
 
+                this.$http.post(`${this.$host}/users/new`, {
+                    name: this.fullName,
+                    email: this.email,
+                    password: this.password
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    console.log(response);
+                }, response => {
+                    console.log('error', response);
+                });
 
-                return this.$router.push('/twoauth');
+                return this.$router.push('/');
             },
             focusInput: function (id) {
                 document.getElementById(id).focus()
