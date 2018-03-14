@@ -14,23 +14,36 @@
                             <div class="login-form">
 
                                 <div class="control noline" @click="focusInput()">
-                                    <label for="confirmUserInput">2fa pin code</label>
-                                    <the-mask
-                                            mask="######"
-                                            class="d-block"
-                                            placeholder="code"
-                                            type="text"
-                                            id="confirmUserInput"
-                                            :class="{error:isErrorCode}"
-                                            @input.native="resetError()"
-                                            v-model="confirmUser"
+                                    <label for="confirmUserInput">Confirmation user code</label>
+                                    <!--<textarea-->
+                                            <!--name=""-->
+                                            <!--id="confirmUserInput"-->
+                                            <!--rows="10"-->
+                                            <!--v-model="confirmUser"-->
+                                    <!--&gt;-->
+                                    <!--</textarea>-->
+
+                                    <TextareaControl
+                                            textarea-id="confirmUserInput"
+                                            placeholder="Enter code from your email"
                                     />
+                                    <!--:input-value="confirmUser"-->
+                                    <!--<the-mask-->
+                                            <!--mask="######"-->
+                                            <!--class="d-block"-->
+                                            <!--placeholder="code"-->
+                                            <!--type="text"-->
+                                            <!--id="confirmUserInput"-->
+                                            <!--:class="{error:isErrorCode}"-->
+                                            <!--@input.native="resetError()"-->
+                                            <!--v-model="confirmUser"-->
+                                    <!--/>-->
                                     <!--@keyup.enter.native="checkConfirmationUser()"-->
                                 </div>
 
                                 <div class="btn-control">
                                     <router-link
-                                            :to="{ path: '/main' }"
+                                            :to="{ path: '/login' }"
                                             tag="button" class="buttons btn-default">
                                         Back
                                     </router-link>
@@ -50,16 +63,18 @@
 
 <script>
     import Navbar from './layouts/Navbar';
+    import TextareaControl from './layouts/forms/TextareaControl';
 
     export default {
         name: 'confirmation-email',
         components: {
-            Navbar
+            Navbar,
+            TextareaControl
         },
         data() {
             return {
                 isErrorCode: false,
-                confirmUser: ''
+                confirmUserCode: ''
             }
         },
         methods: {
@@ -76,7 +91,24 @@
 
 
 
+                // /users/confirm-reg
+                // body => confirmLink
 
+                console.log(this.confirmUserCode, 'this.confirmUserCode');
+
+                this.$http.post(`${this.$host}/users/confirm-reg`, {
+                    confirmLink: this.confirmUserCode,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    console.log(response);
+                    // return this.$router.push('/registration/confirmationuser');
+                }, response => {
+                    console.log('error', response);
+                });
 
                 // this.$router.push('/wallet');
 
@@ -91,6 +123,10 @@
         },
         mounted() {
             this.focusInput();
+
+            this.$on('getConfirmationUserCode', function (code) {
+                this.confirmUserCode = code;
+            });
         }
     }
 </script>

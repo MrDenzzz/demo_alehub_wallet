@@ -11,7 +11,17 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="login-form">
+                            <Spinner
+                                    v-if="processingSendRequest"
+                            />
+                            <div v-if="!processingSendRequest && successSendRequest" style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
+                                <p>Для заверешния регистрации пройдите по ссылке на вашей почте
+                                    <span style="font-family: MuseoSansCyrl700;">
+                                        {{email}}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="login-form" v-if="!processingSendRequest && !successSendRequest">
                                 <div class="control" @click="focusInput('fullname')">
                                     <label for="fullname">full name</label>
                                     <input
@@ -37,18 +47,6 @@
                                             v-model="email"
                                     >
                                 </div>
-
-                                <!--<div class="control" @click="focusInput('phone')">-->
-                                    <!--<label for="phone">phone number</label>-->
-                                    <!--<input-->
-                                            <!--type="text"-->
-                                            <!--id="phone"-->
-                                            <!--class="d-block"-->
-                                            <!--placeholder="phone number"-->
-                                            <!--@keyup.enter="register"-->
-                                            <!--v-model="phoneNumber"-->
-                                    <!--&gt;-->
-                                <!--</div>-->
 
                                 <div class="control" @click="focusInput('password')">
                                     <label for="password">password</label>
@@ -97,11 +95,13 @@
 
 <script>
     import Navbar from './layouts/Navbar';
+    import Spinner from './layouts/Spinner';
 
     export default {
         name: 'register',
         components: {
-            Navbar
+            Navbar,
+            Spinner
         },
         data() {
             return {
@@ -109,9 +109,10 @@
                 isErrorPassword: false,
                 fullName: '',
                 email: '',
-                // phoneNumber: '',
                 password: '',
                 passwordConfirm: '',
+                successSendRequest: false,
+                processingSendRequest: false
             }
         },
         methods: {
@@ -187,12 +188,7 @@
                     return false;
                 }
 
-                // /users/new POST
-                //
-                // name: 'Вася пупкин',
-                // email: 'huy@kek.lol',
-                //
-                // пароль password
+                this.processingSendRequest = true;
 
                 this.$http.post(`${this.$host}/users/new`, {
                     name: this.fullName,
@@ -204,12 +200,14 @@
                         'Accept': 'application/json'
                     }
                 }).then(response => {
+                    this.successSendRequest = true;
+                    this.processingSendRequest = true;
                     console.log(response);
+                    this.processingSendRequest = false;
+                    // return this.$router.push('/registration/confirmationuser');
                 }, response => {
                     console.log('error', response);
                 });
-
-                return this.$router.push('/');
             },
             focusInput: function (id) {
                 document.getElementById(id).focus()

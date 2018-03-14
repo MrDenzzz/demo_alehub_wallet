@@ -30,6 +30,11 @@ const router = new Router({
             component: Registration
         },
         {
+            path: '/registration/confirmationuser:token',
+            name: 'ConfirmationUser',
+            component: ConfirmationUser
+        },
+        {
             path: '/registration/confirmationuser',
             name: 'ConfirmationUser',
             component: ConfirmationUser

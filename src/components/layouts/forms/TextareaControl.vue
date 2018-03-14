@@ -5,9 +5,9 @@
             <textarea
                     :id="textareaId"
                     :placeholder="placeholder"
-                    @input="autosize"
-                    @blur="endOfInput"
-                    @focus="removePlaceholder"
+                    @input="autosize()"
+                    @blur="endOfInput()"
+                    @focus="removePlaceholder()"
                     class="textarea"
                     ref="textarea"
                     v-model="value"
@@ -48,6 +48,8 @@
                     this.addPlaceholder();
                 }
                 document.getElementById(this.textareaId).blur();
+
+                //добавить $emit сюда?
             },
             autosize: function () {
                 let el = this.$refs.textarea;
@@ -58,6 +60,8 @@
                 }, 40);
 
                 this.$parent.$emit('receiveDescriptionOffer', this.value);
+
+                this.$parent.$emit('getConfirmationUserCode', this.value);
             }
         }
     }
