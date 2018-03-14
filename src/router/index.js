@@ -3,6 +3,9 @@ import Router from 'vue-router';
 import {store} from '../store';
 
 import Summary from '@/components/Summary';
+import Login from '@/components/Login';
+import Registration from '@/components/Registration';
+import TwoAuth from '@/components/TwoAuth';
 import Notifications from '@/components/Notifications';
 import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
@@ -19,6 +22,21 @@ const router = new Router({
             path: '/',
             name: 'Summary',
             component: Summary
+        },
+        {
+            path: '/registration',
+            name: 'Registration',
+            component: Registration
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/twoauth',
+            name: 'TwoAuth',
+            component: TwoAuth
         },
         {
             path: '/wallet/settings',
