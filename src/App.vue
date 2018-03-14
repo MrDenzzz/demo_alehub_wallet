@@ -69,11 +69,6 @@
                         }
 
                         this.setCurrentWallet(response.body.foundedAddresses[0].address);
-
-                        // console.log(this.currentWallet, 'this.currentWallet in response');
-
-                        console.log('first');
-
                         this.getTransactions(response.body.foundedAddresses[0].address);
                         this.isLoader = false;
                     }
@@ -127,10 +122,6 @@
             }
 
             this.initiateWallets();
-
-            // console.log(this.currentWallet, 'this.currentWallet in created');
-            // console.log(this.currentWallet, 'this.currentWallet');
-            // console.log(this.currentWallet.name, 'this.currentWallet.name');
 
             setInterval(_this.getIntervalWalletsInfo, 15000);
 
