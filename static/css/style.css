@@ -4,6 +4,73 @@ body {
   margin: 0;
   background: #f7f7f7; }
 
+.dark {
+  background: #4a4e65 !important; }
+  .dark .menu {
+    background-color: #404455 !important; }
+    .dark .menu .wallet-list.active {
+      margin: 5px 35px;
+      width: calc(100% - 70px);
+      border: solid 2px #a29ffc;
+      border-radius: 6px;
+      background: #555a62;
+      box-shadow: 0 0 10px 3px #404455; }
+      .dark .menu .wallet-list.active .wrap-in-wallet {
+        margin-left: 15px; }
+      .dark .menu .wallet-list.active p {
+        color: #a29ffc; }
+      .dark .menu .wallet-list.active .wallet {
+        color: #f4f3fc;
+        font-family: MuseoSansCyrl700; }
+    .dark .menu .wallet-list:hover:not(:first-of-type) {
+      background: #555a62; }
+      .dark .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet p {
+        color: #a29ffc; }
+      .dark .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet .wallet {
+        color: #f4f3fc;
+        font-family: MuseoSansCyrl700; }
+    .dark .menu .wallet-list .wrap-in-wallet {
+      margin-left: 50px; }
+  .dark .absence-transactions {
+    color: #f4f3fc !important; }
+  .dark .btn-yellow {
+    background: #5031d5;
+    color: #f4f3fc; }
+    .dark .btn-yellow:hover {
+      background: #4a2dcf; }
+  .dark .btn-default {
+    background: #7c7b82;
+    color: #f4f3fc; }
+    .dark .btn-default:hover {
+      background: #98979e; }
+  .dark .list-panel-heading h3 {
+    color: #a09fa2;
+    opacity: 1; }
+  .dark .activityList {
+    padding: 15px 0 20px 15px;
+    background: #27272f;
+    border-radius: 8px; }
+    .dark .activityList .activityListBlock .activity-list {
+      background: transparent !important; }
+      .dark .activityList .activityListBlock .activity-list .sent {
+        background-color: transparent !important; }
+      .dark .activityList .activityListBlock .activity-list .status span {
+        color: #f4f3fc; }
+      .dark .activityList .activityListBlock .activity-list .details .info p {
+        color: #f4f3fc; }
+      .dark .activityList .activityListBlock .activity-list .details .purpose {
+        color: #f4f3fc; }
+      .dark .activityList .activityListBlock .activity-list .details .count span {
+        color: #5467d5 !important; }
+    .dark .activityList .activityListBlock .result-day .result-day-col {
+      color: #f4f3fc; }
+      .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line {
+        color: #f4f3fc; }
+        .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line .sent {
+          color: #5467d5; }
+  .dark .wallet .main .content .container .row .col-12 {
+    margin-top: 0px !important; }
+
 .container {
   margin: 24px 24px; }
 
@@ -32,7 +99,7 @@ body {
 
 .col-3 {
   width: 24.25%; }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     .col-3 {
       width: 32.66667%; } }
 
@@ -53,7 +120,7 @@ body {
 
 .col-9 {
   width: 74.75%; }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     .col-9 {
       width: 66.33333%; } }
 
@@ -177,7 +244,7 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%); }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1024px) {
       .navbar .title {
         left: 60%; } }
   .navbar .balance {
@@ -257,7 +324,7 @@ body {
   height: auto;
   min-height: calc(100vh - 64px);
   position: fixed; }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     .menu {
       width: 260px; } }
   .menu .wallet-list {
@@ -341,7 +408,7 @@ body {
     width: 100%;
     /*height: 100vh;*/
     padding-left: 360px; }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1024px) {
       .main .content {
         padding-left: 260px; } }
   .main .nomenu {
