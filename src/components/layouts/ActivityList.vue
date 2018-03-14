@@ -315,7 +315,7 @@
                 background-color: transparent;
                 display: flex;
                 justify-content: flex-end;
-                min-width: 170px;
+                min-width: 100px;
 
                 & .count-received, .count-total {
                     color: #0d1717 !important;
@@ -338,6 +338,7 @@
 
             & .info {
                 min-width: 400px;
+                word-break: break-all;
             }
 
             & .purpose {
@@ -444,6 +445,62 @@
         &:nth-child(1) {
             & .activity-list {
                 background: #f0f0f0;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1130px) {
+        .activity-list {
+            & .details {
+                & .info {
+                    word-break: break-all;
+                    min-width: 200px;
+                    padding-right: 30px;
+                }
+                & .purpose {
+                    max-width: 90px;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 600px) {
+        .activityListBlock {
+            & .result-day {
+                margin-right: 0;
+            }
+            & .activity-list {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        .activity-list {
+            & .status {
+                width: 100%;
+                height: 40px;
+            }
+            & .details {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                & .count {
+                    align-self: flex-end;
+                    position: absolute;
+                    bottom: 0;
+                    & span {
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
+                & .info {
+                    align-self: flex-start;
+                    min-width: 200px;
+                    & p {
+                        margin-bottom: 10px;
+                    }
+                }
+                & .purpose {
+                    display: none;
+                }
             }
         }
     }
