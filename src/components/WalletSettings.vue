@@ -55,7 +55,7 @@
     import SelectControl from './layouts/forms/Select';
     import SwitchControl from './layouts/forms/SwitchControl';
     import ModalDeleteWallet from './modals/DeleteWallet';
-    import ModalSend from "./modals/Send";
+    import ModalSend from './modals/Send';
     import NewWallet from './modals/NewWallet';
 
     import {mapMutations} from 'vuex';
@@ -120,7 +120,7 @@
                     this.spendingPassword = value
                 }
             },
-            initComponent: function () {
+            initWalletName: function () {
                 this.newWalletName = this.currentWallet.name;
             },
             newSelect: function (value, id) {
@@ -130,20 +130,27 @@
 
         },
         created() {
-            console.log(this.currentWallet);
-            this.initComponent();
+            // console.log(this.currentWallet);
         },
         mounted() {
-            // this.$on('selectWallet', function (index) {
-            //     this.changeWallet(index);
-            // });
+            this.initWalletName();
+
+            // console.log(this.currentWallet.name, 'wallet name');
+
+
+            //разобраться со вьюксом что происходит
+            this.$on('selectWallet', function (index) {
+                console.log(345345);
+                this.changeWallet(index);
+            });
             this.$on('changeChecker', function (id, value) {
+                console.log(90900);
                 this.changeChecker(id, value);
             });
-            // this.$on('selectNewWallet', function (walletId) {
-            //     console.log(1231233);
-            //     this.changeNewWallet(walletId);
-            // });
+            this.$on('selectNewWallet', function (walletId) {
+                console.log(1231233);
+                this.changeNewWallet(walletId);
+            });
         }
     }
 </script>

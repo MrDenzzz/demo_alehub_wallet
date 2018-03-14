@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import {store} from '../store';
 
-import Wallet from '@/components/Wallet';
+import Summary from '@/components/Summary';
 import Notifications from '@/components/Notifications';
 import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
@@ -13,22 +13,22 @@ import Resume from '@/components/Resume';
 Vue.use(Router);
 
 const router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
             path: '/',
-            name: 'Wallet',
-            component: Wallet
-        },
-        {
-            path: '/wallet',
-            redirect: '/',
+            name: 'Summary',
+            component: Summary
         },
         {
             path: '/wallet/settings',
             name: 'WalletSettings',
             component: WalletSettings
         },
+        // {
+        //     path: '/wallet',
+        //     redirect: '/',
+        // },
         {
             path: '/settings',
             name: 'Settings',
@@ -58,7 +58,7 @@ const router = new Router({
 });
 
 
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
 
     // let findUserWallet = store.state.Wallets.wallets.filter(item => {
     //     return parseInt(item.ownerId) === parseInt(localStorage.getItem('id'))
@@ -72,8 +72,8 @@ router.beforeEach((to, from, next) => {
     //     }
     // }
 
-    next();
-
-});
+//     next();
+//
+// });
 
 export default router;

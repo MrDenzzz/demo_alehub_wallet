@@ -12,7 +12,8 @@ import VueTheMask from 'vue-the-mask';
 import VueResource from 'vue-resource';
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://54.205.245.204:3001';
+// Vue.prototype.$host = 'http://192.168.1.37:4000';
+Vue.prototype.$host = 'http://192.168.1.37:4000';
 
 const NotifOptions = {
     position: 'bottom-center',

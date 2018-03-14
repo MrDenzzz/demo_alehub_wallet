@@ -1,6 +1,6 @@
 <template>
     <div class="activityList">
-        <loader v-if="loader" />
+        <!--<loader v-if="loader" />-->
         <div v-if="!loader" v-for="(activity, activityIndex) in activities" :key="activityIndex" class="activityListBlock">
             <Panel-heading :title="showDate(activity.timestamp)" v-if="checkShow(activityIndex) && isShowDate"/>
             <div class="activity-list">

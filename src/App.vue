@@ -1,27 +1,39 @@
 <template>
     <div id="app" :class="systemLanguage">
-        <router-view/>
-        <Connection-modal/>
-        <New-wallet v-if="isOpenModal" />
+
+        <div v-if="isLoader">
+            <sync-loader :load="isLoader" />
+        </div>
+
+        <div v-else>
+            <router-view />
+            <Connection-modal />
+            <New-wallet />
+        </div>
     </div>
 </template>
 
 <script>
     import ConnectionModal from './components/modals/ConnectionModal';
     import NewWallet from './components/modals/NewWallet';
+    import Spinner from './components/layouts/Spinner';
+    import SyncLoader from './components/layouts/SyncLoader';
 
-    import {mapMutations} from "vuex";
+    import {mapMutations} from 'vuex';
 
     export default {
         name: 'alehub',
         components: {
             ConnectionModal,
-            NewWallet
+            NewWallet,
+            Spinner,
+            SyncLoader
         },
         data() {
             return {
                 language: localStorage.getItem('systemLang'),
-                isOpenModal: false
+                isOpenModal: false,
+                isLoader: true
             }
         },
         computed: {
@@ -41,9 +53,36 @@
                 setNewBalance: 'SET_NEW_BALANCE',
                 changeTransactionLoaderState: 'CHANGE_TRANSACTION_LOADER_STATE'
             }),
+            initiateWallets: function () {
+                this.$http.post(`${this.$host}/wallet/addressInfo`, {
+                    addresses: JSON.parse(localStorage.getItem('wallets')),
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    console.log(response);
+                    if (response.body.foundedAddresses.length !== 0) {
+                        for (let i = 0; i < response.body.foundedAddresses.length; i++) {
+                            this.createNewWallet(response.body.foundedAddresses[i]);
+                        }
+
+                        this.setCurrentWallet(response.body.foundedAddresses[0].address);
+
+                        // console.log(this.currentWallet, 'this.currentWallet in response');
+
+                        console.log('first');
+
+                        this.getTransactions(response.body.foundedAddresses[0].address);
+                        this.isLoader = false;
+                    }
+                }, response => {
+                    console.log('error', response);
+                });
+            },
             updateOnlineStatus: function (e) {
                 if (!navigator.onLine) {
-                    console.log('offline again');
                     return this.$modal.show('connectionmodal');
                 }
             },
@@ -57,29 +96,6 @@
                 }).then(response => {
                     this.addNewTransactions(response.body);
                     this.changeTransactionLoaderState(false);
-                }, response => {
-                    console.log('error', response);
-                });
-            },
-            getWalletsInfo: function () {
-                this.$http.post(`${this.$host}/wallet/addressInfo`, {
-                    addresses: JSON.parse(localStorage.getItem('wallets')),
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-
-                    if (response.body.foundedAddresses.length !== 0) {
-                        for (let i = 0; i < response.body.foundedAddresses.length; i++) {
-                            this.createNewWallet(response.body.foundedAddresses[i]);
-                        }
-                        this.setCurrentWallet(response.body.foundedAddresses[0].address);
-
-                        this.getTransactions(response.body.foundedAddresses[0].address);
-                    }
-
                 }, response => {
                     console.log('error', response);
                 });
@@ -109,12 +125,21 @@
             if (localStorage.getItem('wallets') === null) {
                 return false;
             }
-            this.getWalletsInfo();
+
+            this.initiateWallets();
+
+            // console.log(this.currentWallet, 'this.currentWallet in created');
+            // console.log(this.currentWallet, 'this.currentWallet');
+            // console.log(this.currentWallet.name, 'this.currentWallet.name');
+
             setInterval(_this.getIntervalWalletsInfo, 15000);
 
         },
         mounted() {
-            if (!navigator.onLine) return this.$modal.show('connectionmodal');
+            if (!navigator.onLine) {
+                this.isLoader = false;
+                return this.$modal.show('connectionmodal');
+            }
             this.$on('changeSystemLanguage', function () {
                 this.language = localStorage.getItem('systemLang');
             });
