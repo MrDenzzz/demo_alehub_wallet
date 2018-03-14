@@ -19,7 +19,8 @@
                                     <label for="email">e-mail</label>
                                     <input
                                             v-validate="'required|email'"
-                                            :class="{error:isErrorEmail}"
+                                            class="d-block"
+                                            :class="{error: isErrorEmail}"
                                             @keyup.enter="checkLogin"
                                             @input="resetError('login')"
                                             type="text"
@@ -33,6 +34,7 @@
                                 <div class="control" @click="focusInput('password')">
                                     <label for="password">password</label>
                                     <input
+                                            class="d-block"
                                             :class="{error:isErrorPassword}"
                                             @keyup.enter="checkLogin"
                                             @input="resetError('password')"
@@ -47,7 +49,7 @@
                                 </button>
 
                                 <p class="text">Don’t have an account?
-                                    <router-link :to="{ path: '/register' }">
+                                    <router-link :to="{ path: '/registration' }">
                                         Create one.
                                     </router-link>
                                 </p>
@@ -57,10 +59,8 @@
 
                     </div>
                 </div>
-
             </div>
         </section>
-
     </div>
 </template>
 
@@ -88,8 +88,8 @@
             }
         },
         methods: {
-            ...mapMutations({}),
-            checkLogin() {
+            // ...mapMutations({}),
+            checkLogin: function () {
 
                 let e = this.errors.items;
 
@@ -149,10 +149,10 @@
                     return this.$router.push('/twoauth')
                 }
             },
-            focusInput(id) {
+            focusInput: function (id) {
                 document.getElementById(id).focus()
             },
-            resetError(type) {
+            resetError: function (type) {
                 if (type === 'login') this.isErrorEmail = false;
                 if (type === 'password') this.isErrorPassword = false;
             }
@@ -161,13 +161,16 @@
 </script>
 
 <style lang="stylus" scoped>
+    .d-block
+        display block
+
     .error
         text-decoration underline
         text-decoration-color #d93f1f
 
     .login-form
         .text
-            font-family: MuseoSansCyrl300
+            font-family MuseoSansCyrl300
 
             a
                 font-family MuseoSansCyrl700

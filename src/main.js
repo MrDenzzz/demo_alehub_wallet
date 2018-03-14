@@ -4,6 +4,7 @@ import router from './router';
 import {store} from './store'
 import VueI18n from 'vue-i18n';
 import VModal from 'vue-js-modal';
+import VeeValidate from 'vee-validate';
 import VueNumeric from 'vue-numeric';
 import VueQriously from 'vue-qriously';
 import VueClipboard from 'vue-clipboard2';
@@ -26,6 +27,7 @@ const NotifOptions = {
 
 Vue.use(VueI18n);
 Vue.use(VueNumeric);
+Vue.use(VeeValidate);
 Vue.use(VueQriously);
 Vue.use(VueClipboard);
 Vue.use(VModal);
@@ -37,7 +39,7 @@ import messages from './i18n.js';
 
 let systemLang = '';
 if (localStorage.getItem('systemLang') === null) {
-    localStorage.setItem('systemLang', 'eng')
+    localStorage.setItem('systemLang', 'eng');
     systemLang = 'eng';
 } else {
     systemLang = localStorage.getItem('systemLang');
