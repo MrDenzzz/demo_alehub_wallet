@@ -70,6 +70,7 @@
             font-weight: 500;
             line-height: 1.29;
             color: #34343e;
+            word-break: break-all;
         }
     }
     .qr-code {

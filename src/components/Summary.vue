@@ -442,4 +442,13 @@
 
     .m-t-center
         margin-top 30vh
+
+    @media (max-width: 600px)
+        .stats-col
+            margin 0 auto
+    @media (max-width: 375px)
+        .stats-col
+            width 100%
+        .buttons
+            width 100%
 </style>

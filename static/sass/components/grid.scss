@@ -46,7 +46,7 @@ $grid-spacing: 1%;
 .col-3 {
   width: calc-grid(4, 9);
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     width: calc-grid(3, 8);
   }
 }
@@ -74,7 +74,7 @@ $grid-spacing: 1%;
 .col-9 {
   width: calc-grid(1.333333333333333, 3);
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     width: calc-grid(1.5, 4);
   }
 }

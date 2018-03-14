@@ -3,3 +3,127 @@ body {
   margin: 0;
   background: #f7f7f7;
 }
+
+.dark {
+  background: #4a4e65 !important;
+  .menu {
+    background-color: #404455 !important;
+    .wallet-list {
+      &.active {
+        margin: 5px 35px;
+        width: calc(100% - 70px);
+        border: solid 2px #a29ffc;
+        border-radius: 6px;
+        background: #555a62;
+        box-shadow: 0 0 10px 3px #404455;
+        .wrap-in-wallet {
+          margin-left: 15px;
+        }
+        p {
+          color: #a29ffc;
+        }
+        .wallet {
+          color: #f4f3fc;
+          font-family: MuseoSansCyrl700;
+        }
+      }
+      &:hover {
+        &:not(:first-of-type) {
+          background: #555a62;
+          .wrap-in-wallet {
+            p {
+              color: #a29ffc;
+            }
+            .wallet {
+              color: #f4f3fc;
+              font-family: MuseoSansCyrl700;
+            }
+          }
+        }
+      }
+      .wrap-in-wallet {
+        margin-left: 50px;
+      }
+    }
+  }
+  .absence-transactions {
+    color: #f4f3fc !important;
+  }
+  .btn-yellow {
+    background: #5031d5;
+    color: #f4f3fc;
+    &:hover {
+      background: #4a2dcf;
+    }
+  }
+  .btn-default {
+    background: #7c7b82;
+    color: #f4f3fc;
+    &:hover {
+      background: #98979e;
+    }
+  }
+  .list-panel-heading {
+    h3 {
+      color: #a09fa2;
+      opacity: 1;
+    }
+  }
+  .activityList {
+    padding: 15px 0 20px 15px;
+    background: #27272f;
+    border-radius: 8px;
+    .activityListBlock {
+      .activity-list {
+        background: transparent !important;
+        .sent {
+          background-color: transparent !important;
+        }
+        .status {
+          span {
+            color: #f4f3fc;
+          }
+        }
+        .details {
+          .info {
+            p {
+              color: #f4f3fc;
+            }
+          }
+          .purpose {
+            color: #f4f3fc;
+          }
+          .count {
+            span {
+              color: #5467d5 !important;
+            }
+          }
+        }
+      }
+      .result-day {
+        .result-day-col {
+          color: #f4f3fc;
+          .result-day-line {
+            color: #f4f3fc;
+            .sent {
+              color: #5467d5;
+            }
+          }
+        }
+      }
+    }
+  }
+  .wallet {
+    .main {
+      .content {
+        .container {
+          .row {
+            .col-12 {
+              margin-top: 0px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,6 @@
       left: 0 !important;
       margin: 0 auto;
       margin-top: 5%;
-      border-radius: 10px !important;
       background-color: #fafafa;
       box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
       
@@ -504,5 +503,25 @@
   &::-webkit-input-placeholder {
     font-size: 20px;
     opacity: 0.5;
+  }
+}
+@media screen and (max-width: 768px) {
+  .v--modal-overlay {
+    & .v--modal-box {
+      border-radius: 0;
+      margin: 0;
+      height: 100%;
+      & .heading {
+        display: flex;
+        flex-direction: column;
+        & .close {
+          width: 20px;
+          height: 20px;
+        }
+        & .title {
+          height: 30px;
+        }
+      }
+    }
   }
 }

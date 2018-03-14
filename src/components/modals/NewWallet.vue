@@ -840,6 +840,17 @@
         background-color: #fafafa;
         box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
     }
+    @media screen and (max-width: 1024px){
+        .v--modal {
+            max-width:  80% !important;
+        }
+    }
+    @media screen and (max-width: 768px){
+        .v--modal {
+            max-width:  100% !important;
+            border-radius: 0;
+        }
+    }
 
     /*@import './modals.scss'*/
 </style>
