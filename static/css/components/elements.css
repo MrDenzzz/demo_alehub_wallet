@@ -650,22 +650,6 @@
   justify-content: center;
   border-radius: 4px;
   flex-direction: column; }
-  .form .deletelink {
-    margin: 0;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    font-family: MuseoSansCyrl500;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.25;
-    text-align: center;
-    color: #b10101;
-    margin-top: 8px;
-    text-decoration: none; }
-    .form .deletelink:hover {
-      text-decoration: underline; }
   .form .control {
     width: 100%;
     align-items: center;
@@ -745,6 +729,19 @@
         border-bottom: none; }
       .form .control .wrap-input:last-child {
         border-bottom: none; }
+
+.logout-link {
+  margin: 8px 0 0 0;
+  padding: 12px 32px;
+  font-family: MuseoSansCyrl500;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  color: #b10101;
+  text-decoration: none; }
+  .logout-link:hover {
+    text-decoration: underline; }
 
 .activity-list {
   width: 100%;
@@ -1139,7 +1136,7 @@ td, th {
   width: 34px;
   height: 18px; }
   .switch-control input {
-    display: none; }
+    display: none !important; }
     .switch-control input:checked + .slider {
       background-color: #34343e; }
     .switch-control input:focus + .slider {
@@ -1151,10 +1148,10 @@ td, th {
   .switch-control .slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
+    top: -5px;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 5px;
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;

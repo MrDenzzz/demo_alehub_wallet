@@ -40,14 +40,13 @@
         },
         created() {
             this.$http.post(`${this.$host}/users/confirm-reg`, {
-                token: this.$route.params.token,
+                token: this.$route.params.token
             }, {
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json'
                 }
             }).then(response => {
-                console.log(response);
                 localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
                 localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
                 this.loading = false;
@@ -62,5 +61,4 @@
 <style lang="stylus" scoped>
     .d-block
         display block
-
 </style>

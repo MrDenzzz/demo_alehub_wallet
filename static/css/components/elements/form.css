@@ -6,22 +6,6 @@
   justify-content: center;
   border-radius: 4px;
   flex-direction: column; }
-  .form .deletelink {
-    margin: 0;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    font-family: MuseoSansCyrl500;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.25;
-    text-align: center;
-    color: #b10101;
-    margin-top: 8px;
-    text-decoration: none; }
-    .form .deletelink:hover {
-      text-decoration: underline; }
   .form .control {
     width: 100%;
     align-items: center;
@@ -101,3 +85,16 @@
         border-bottom: none; }
       .form .control .wrap-input:last-child {
         border-bottom: none; }
+
+.logout-link {
+  margin: 8px 0 0 0;
+  padding: 12px 32px;
+  font-family: MuseoSansCyrl500;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  color: #b10101;
+  text-decoration: none; }
+  .logout-link:hover {
+    text-decoration: underline; }

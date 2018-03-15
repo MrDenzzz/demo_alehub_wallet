@@ -6,7 +6,7 @@
   width: 34px;
   height: 18px; }
   .switch-control input {
-    display: none; }
+    display: none !important; }
     .switch-control input:checked + .slider {
       background-color: #34343e; }
     .switch-control input:focus + .slider {
@@ -18,10 +18,10 @@
   .switch-control .slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
+    top: -5px;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 5px;
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
