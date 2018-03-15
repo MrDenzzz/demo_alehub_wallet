@@ -19,11 +19,11 @@
                                 <div class="stats-col">
                                     <div>
                                         <button class="buttons btn-yellow" @click="openModal('send')">
-                                            <img src="../assets/img/send.svg" width="18" height="15" class="icon">
+                                            <img :src="getIcon('send')" width="18" height="15" class="icon">
                                             {{ $t('pages.summary.buttons.send') }}
                                         </button>
                                         <button class="buttons btn-default" @click="openModal('request')">
-                                            <img src="../assets/img/receive.svg" width="18" height="15" class="icon">
+                                            <img :src="getIcon('receive')" width="18" height="15" class="icon">
                                             {{ $t('pages.summary.buttons.request') }}
                                         </button>
                                     </div>
@@ -142,6 +142,9 @@
             ...mapGetters([
                 'transactionsFilter'
             ]),
+            selectedTheme () {
+                return this.$store.state.Themes.theme;
+            },
             transactionsLoader() {
                 return this.$store.state.Transactions.transactionsLoader;
             },
@@ -250,6 +253,12 @@
 
             openModal: function (name) {
                 this.$modal.show(name);
+            },
+
+            getIcon(name) {
+                if (this.selectedTheme === 'dark') return require(`../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === 'white') return require(`../assets/img/${name}_dark.svg`);
+                else return require(`../assets/img/${name}.svg`);
             },
 
             initiateDate: function () {
