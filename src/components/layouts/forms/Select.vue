@@ -240,4 +240,10 @@
             }
         }
     }
+    @media (max-width: 375px) {
+        $l-r-padding: 9px;
+        .select-offer {
+            padding: 9px $l-r-padding;
+        }
+    }
 </style>

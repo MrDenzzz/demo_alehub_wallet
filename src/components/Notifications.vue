@@ -125,4 +125,9 @@
         font-family: MuseoSansCyrl500;
         line-height: calc(100vh - 250px);
     }
+    .main {
+        .content {
+            padding-left: 0;
+        }
+    }
 </style>
