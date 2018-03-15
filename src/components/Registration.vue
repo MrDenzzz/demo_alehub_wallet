@@ -11,7 +11,17 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="login-form">
+                            <Spinner
+                                    v-if="processingSendRequest"
+                            />
+                            <div v-if="!processingSendRequest && successSendRequest" style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
+                                <p>Для заверешния регистрации пройдите по ссылке на вашей почте
+                                    <span style="font-family: MuseoSansCyrl700;">
+                                        {{email}}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="login-form" v-if="!processingSendRequest && !successSendRequest">
                                 <div class="control" @click="focusInput('fullname')">
                                     <label for="fullname">full name</label>
                                     <input
@@ -35,18 +45,6 @@
                                             v-validate="'email'"
                                             @keyup.enter="register"
                                             v-model="email"
-                                    >
-                                </div>
-
-                                <div class="control" @click="focusInput('phone')">
-                                    <label for="phone">phone number</label>
-                                    <input
-                                            type="text"
-                                            id="phone"
-                                            class="d-block"
-                                            placeholder="phone number"
-                                            @keyup.enter="register"
-                                            v-model="phoneNumber"
                                     >
                                 </div>
 
@@ -74,7 +72,12 @@
                                     >
                                 </div>
 
-                                <button class="btn btn-yellow btn-block nomargin" @click="registerUser()">Create</button>
+                                <button
+                                        class="btn btn-yellow btn-block nomargin"
+                                        @click="registerUser()"
+                                >
+                                    Create
+                                </button>
 
                                 <p class="text">Already have an account?
                                     <router-link :to="{ path: '/' }">
@@ -83,7 +86,6 @@
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -93,11 +95,13 @@
 
 <script>
     import Navbar from './layouts/Navbar';
+    import Spinner from './layouts/Spinner';
 
     export default {
         name: 'register',
         components: {
-            Navbar
+            Navbar,
+            Spinner
         },
         data() {
             return {
@@ -105,9 +109,10 @@
                 isErrorPassword: false,
                 fullName: '',
                 email: '',
-                phoneNumber: '',
                 password: '',
                 passwordConfirm: '',
+                successSendRequest: false,
+                processingSendRequest: false
             }
         },
         methods: {
@@ -133,14 +138,6 @@
                     if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show('Enter your email', {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
-                    if (!this.phoneNumber) {
-                        this.focusInput('phone');
-                        this.$toasted.show('Enter your phone number', {
                             duration: 10000,
                             type: 'error',
                         });
@@ -191,9 +188,26 @@
                     return false;
                 }
 
+                this.processingSendRequest = true;
 
-
-                return this.$router.push('/twoauth');
+                this.$http.post(`${this.$host}/users/new`, {
+                    name: this.fullName,
+                    email: this.email,
+                    password: this.password
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    this.successSendRequest = true;
+                    this.processingSendRequest = true;
+                    console.log(response);
+                    this.processingSendRequest = false;
+                    // return this.$router.push('/registration/confirmationuser');
+                }, response => {
+                    console.log('error', response);
+                });
             },
             focusInput: function (id) {
                 document.getElementById(id).focus()

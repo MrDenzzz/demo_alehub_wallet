@@ -7,9 +7,6 @@
     /*height: 100vh;*/
     padding-left: 360px;
 
-    @media screen and (max-width: 1024px) {
-      padding-left: 260px;
-    }
   }
 
   & .nomenu {
@@ -21,3 +18,18 @@
 .marginTop {
   margin-top: 16px;
 }
+@media screen and (max-width: 1024px) {
+  .main {
+    & .content {
+      padding-left: 260px;
+    }
+  }
+}
+@media screen and (max-width: 860px) {
+  .main {
+    & .content {
+      padding-left: 0;
+    }
+  }
+}
+

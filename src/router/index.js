@@ -6,6 +6,7 @@ import Summary from '@/components/Summary';
 import Login from '@/components/Login';
 import Registration from '@/components/Registration';
 import TwoAuth from '@/components/TwoAuth';
+import ConfirmationUser from '@/components/ConfirmationUser';
 import Notifications from '@/components/Notifications';
 import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
@@ -29,12 +30,22 @@ const router = new Router({
             component: Registration
         },
         {
+            path: '/registration/confirmationuser/:token',
+            name: 'ConfirmationUser',
+            component: ConfirmationUser
+        },
+        // {
+        //     path: '/registration/confirmationuser',
+        //     name: 'ConfirmationUser',
+        //     component: ConfirmationUser
+        // },
+        {
             path: '/login',
             name: 'Login',
             component: Login
         },
         {
-            path: '/twoauth',
+            path: '/login/twoauth',
             name: 'TwoAuth',
             component: TwoAuth
         },

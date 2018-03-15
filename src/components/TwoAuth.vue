@@ -8,14 +8,11 @@
 
         <section class="main">
             <div class="content nomenu">
-
                 <div class="container">
                     <div class="row">
-
                         <div class="col-12">
                             <div class="login-form">
-
-                                <div class="control noline" @click="focusInput">
+                                <div class="control noline" @click="focusInput()">
                                     <label for="pin">2fa pin code</label>
                                     <the-mask
                                             mask="######"
@@ -30,22 +27,23 @@
                                 </div>
 
                                 <div class="btn-control">
-                                    <router-link :to="{ path: '/main' }" tag="button" class="buttons btn-default">Back
+                                    <router-link
+                                            :to="{ path: '/main' }"
+                                            tag="button"
+                                            class="buttons btn-default"
+                                    >
+                                        Back
                                     </router-link>
                                     <button class="buttons btn-black" @click="checkTwoAuth">
                                         Confirm
                                     </button>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </section>
-
     </div>
 </template>
 
@@ -65,7 +63,7 @@
         },
         methods: {
             checkTwoAuth() {
-                if (this.twoauth.length != 6) {
+                if (this.twoauth.length !== 6) {
                     this.$toasted.show("The two-factor code should consist of 6 symbols", {
                         duration: 10000,
                         type: 'error',

@@ -26,7 +26,7 @@
                                             type="text"
                                             placeholder="e-mail"
                                             id="email"
-                                            v-model="login"
+                                            v-model="email"
                                             autofocus
                                     >
                                 </div>
@@ -76,7 +76,7 @@
         },
         data() {
             return {
-                login: null,
+                email: null,
                 password: null,
                 isErrorEmail: false,
                 isErrorPassword: false,
@@ -93,23 +93,23 @@
 
                 let e = this.errors.items;
 
-                if (!this.login && !this.password) {
+                if (!this.email && !this.password) {
                     this.focusInput('email');
                     this.$toasted.show('Enter your email and password', {
                         duration: 10000,
                         type: 'error',
                     });
-                    return false
+                    return false;
                 }
 
-                if (!this.login || !this.password) {
-                    if (!this.login) {
+                if (!this.email || !this.password) {
+                    if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show('Enter your email', {
                             duration: 10000,
                             type: 'error',
                         });
-                        return false
+                        return false;
                     }
                     if (!this.password) {
                         this.focusInput('password');
@@ -117,7 +117,7 @@
                             duration: 10000,
                             type: 'error',
                         });
-                        return false
+                        return false;
                     }
                 }
 
@@ -129,25 +129,47 @@
                             duration: 10000,
                             type: 'error',
                         });
-                        return false
+                        return false;
                     }
                 }
 
-                let account = this.getTestAccounts.filter(item => {
-                    return item.email === this.login && item.password === this.password;
-                });
+                // let account = this.getTestAccounts.filter(item => {
+                //     return item.email === this.login && item.password === this.password;
+                // });
 
-                if (account.length === 0) {
-                    this.focusInput('email');
-                    this.$toasted.show('Account not found', {
-                        duration: 10000,
-                        type: 'error',
+                // if (account.length === 0) {
+                //     this.focusInput('email');
+                //     this.$toasted.show('Account not found', {
+                //         duration: 10000,
+                //         type: 'error',
+                //     });
+                //     return false
+                // } else {
+                    // /users/login POST
+                    //
+                    // BODY: email, password
+
+                    this.$http.post(`${this.$host}/users/login`, {
+                        email: this.fullName,
+                        password: this.password
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json; charset=UTF-8',
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        console.log(response);
+                    }, response => {
+                        console.log('error', response);
                     });
-                    return false
-                } else {
-                    localStorage.setItem('id', account[0].id);
-                    return this.$router.push('/twoauth')
-                }
+
+
+                    // localStorage.setItem('id', account[0].id);
+
+                    // return this.$router.push('/');
+
+                    // return this.$router.push('/twoauth');
+                // }
             },
             focusInput: function (id) {
                 document.getElementById(id).focus()
