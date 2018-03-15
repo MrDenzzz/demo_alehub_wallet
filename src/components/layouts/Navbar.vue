@@ -20,7 +20,7 @@
                         exact
                     >
                         <img
-                            :src="getNavbarIcon(link.iconName)"
+                            :src="getIcon(link.iconName)"
                             :width="link.iconWidth"
                             :height="link.iconHeight"
                         >
@@ -33,6 +33,32 @@
 
             </div>
             <span class="title">{{ title }}</span>
+            <div class="themes">
+                <label for="main">Main</label>
+                <input
+                        type="radio" id="main"
+                        class="duration_arr"
+                        value="Main" name="theme"
+                        :checked="selectedTheme === 'main'"
+                        @click="selectTheme('main')"
+                >
+                <label for="dark">Dark</label>
+                <input
+                        type="radio" id="dark"
+                        class="duration_arr"
+                        value="Dark" name="theme"
+                        :checked="selectedTheme === 'dark'"
+                        @click="selectTheme('dark')"
+                >
+                <label for="white">White</label>
+                <input
+                        type="radio" id="white"
+                        class="duration_arr"
+                        value="White" name="theme"
+                        :checked="selectedTheme === 'white'"
+                        @click="selectTheme('white')"
+                >
+            </div>
             <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu">
                 <span class="count" v-if="isBalance">
                     <vue-numeric
@@ -51,7 +77,7 @@
                 </div>
 
                 <div class="options" v-if="rightMenu">
-                    <img src="../../assets/img/options.svg" alt="" width="3" height="16">
+                    <img :src="getIcon('options')" alt="" width="3" height="16">
 
                     <div class="dropdown-options"
                          :class="{'horizontal-dropdown-options': rightMenu.horizontal, 'textList': !rightMenu.horizontal }">
@@ -76,6 +102,8 @@
 </template>
 
 <script>
+    import {mapMutations} from "vuex";
+
     export default {
         name: 'Navbar',
         component: {
@@ -97,6 +125,9 @@
             }
         },
         computed: {
+            selectedTheme () {
+                return this.$store.state.Themes.theme;
+            },
             navbarLinks() {
                 return this.$store.state.Navbar.links;
             },
@@ -130,9 +161,15 @@
                     return this.getCurrentWalletBalance.toString().split('.')[1].toString().length;
                 else
                     return 0;
+            },
+            selectedTheme: function () {
+                return this.$store.state.Themes.theme;
             }
         },
         methods: {
+            ...mapMutations({
+                setTheme: "SET_THEME"
+            }),
             getNavbarIcon: function (name) {
                 return require('../../assets/img/' + name + '.svg');
             },
@@ -155,7 +192,32 @@
                 if (id === 'sortby') {
                     this.selectedSortBy = value;
                 }
+            },
+            selectTheme (name) {
+                let body = document.getElementsByTagName('body')[0];
+                this.setTheme(name);
+                switch (name) {
+                    case 'main':
+                        body.classList.remove("dark", "white");
+                        break;
+                    case 'dark':
+                        body.classList.remove("white");
+                        body.classList.add("dark");
+                        break;
+                    case 'white':
+                        body.classList.remove("dark");
+                        body.classList.add("white");
+                        break;
+                }
+            },
+            getIcon(name) {
+                if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}.svg`);
+                else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_white.svg`);
+                else return require(`../../assets/img/${name}.svg`);
             }
+        },
+        created () {
+            this.selectTheme(this.selectedTheme);
         }
     }
 </script>

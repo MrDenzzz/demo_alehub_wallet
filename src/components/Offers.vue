@@ -69,7 +69,7 @@
                                                     class="control-arrow"
                                                     @click="doIncreasePriority"
                                             >
-                                                <img class="arrow down" src="../assets/img/change-arrow-ic.svg" alt=""/>
+                                                <img class="arrow down" :src="getIcon('change-arrow-ic')" alt=""/>
                                             </a>
                                             <a
                                                     v-if="getSortPriority === 'increase'"
@@ -77,7 +77,7 @@
                                                     class="control-arrow"
                                                     @click="doDecreasePriority"
                                             >
-                                                <img class="arrow up" src="../assets/img/change-arrow-ic.svg" alt="">
+                                                <img class="arrow up" :src="getIcon('change-arrow-ic')" alt="">
                                             </a>
                                         </div>
                                     </div>
@@ -202,6 +202,9 @@
             offersList: function () {
                 return this.$store.state.Offers.offersList;
             },
+            selectedTheme () {
+                return this.$store.state.Themes.theme;
+            },
             countOfferPerPage: function () {
                 return this.$store.state.Offers.countOfferPerPage;
             },
@@ -303,6 +306,11 @@
                 // }, response => {
                 //     console.log('E', response);
                 // })
+            },
+            getIcon(name) {
+                if (this.selectedTheme === 'dark') return require(`../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === 'white') return require(`../assets/img/${name}.svg`);
+                else return require(`../assets/img/${name}.svg`);
             }
         },
         mounted() {

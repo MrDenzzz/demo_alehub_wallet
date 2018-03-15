@@ -1,6 +1,6 @@
 <template>
     <div>
-        <modal name="send" height="auto" class="modal-md" @opened="resetState">
+        <modal name="send" height="auto" class="modal-md" @opened="resetState" :adaptive="true">
             <div @click="hideDesc">
                 <div class="heading">
                     <i v-if="parseInt(step) === 2" class="back" @click="step = 1"></i>

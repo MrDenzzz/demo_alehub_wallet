@@ -2,7 +2,7 @@
     <div class="menu">
         <div class="wallet-list wallet-search" v-if="newWallets.length">
             <div class="wrap-in-wallet">
-                <img src="../../assets/img/loupe.svg" width="18" height="15" class="icon" id="loupe">
+                <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
                 <input
                     type="text"
                     :placeholder="$t('pages.walletsList.search')"
@@ -85,6 +85,9 @@
                     });
                 }
             },
+            selectedTheme () {
+                return this.$store.state.Themes.theme;
+            },
             getCurrentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
             },
@@ -138,6 +141,11 @@
                 }, response => {
                     console.log('error', response);
                 });
+            },
+            getIcon(name) {
+                if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}.svg`);
+                else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_white.svg`);
+                else return require(`../../assets/img/${name}.svg`);
             }
         },
         created () {

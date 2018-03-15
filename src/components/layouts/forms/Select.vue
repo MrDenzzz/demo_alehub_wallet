@@ -187,7 +187,7 @@
                     padding: $t-b-padding $l-r-padding;
                 }
                 & .selected-offer {
-                    background-color: #f0f0f0 !important;
+                    background-color: #f0f0f0;
                     &::before {
                         content: none !important;
                     }

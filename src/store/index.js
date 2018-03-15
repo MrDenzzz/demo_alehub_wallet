@@ -10,6 +10,7 @@ import TransactionsModule from './modules/Transactions';
 import UsersModule from './modules/Users';
 import WalletsModule from './modules/Wallets';
 import OffersModule from './modules/Offers';
+import ThemesModule from './modules/Themes';
 
 
 
@@ -21,7 +22,8 @@ export const store = new Vuex.Store({
         Transactions: TransactionsModule,
         Users: UsersModule,
         Wallets: WalletsModule,
-        Offers: OffersModule
+        Offers: OffersModule,
+        Themes: ThemesModule
     },
     strict: false
 });
