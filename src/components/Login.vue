@@ -58,7 +58,6 @@
 
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -70,7 +69,8 @@
     import Navbar from './layouts/Navbar';
     import sha256 from 'sha256';
 
-    import {mapMutations} from "vuex";
+    import {mapMutations} from 'vuex';
+    import {mapActions} from 'vuex';
 
     export default {
         name: 'login',
@@ -92,6 +92,9 @@
         },
         methods: {
             // ...mapMutations({}),
+            ...mapActions([
+                'AUTH_REQUEST'
+            ]),
             login: function () {
 
                 let e = this.errors.items;
@@ -136,37 +139,33 @@
                     }
                 }
 
-                // /users/login POST
+                // this.$http.post(`${this.$host}/users/login`, {
+                //     email: this.email,
+                //     password: this.password
+                // }, {
+                //     headers: {
+                //         'Content-Type': 'application/json; charset=UTF-8',
+                //         'Accept': 'application/json'
+                //     }
+                // }).then(response => {
+                //     console.log(response);
                 //
-                // BODY: email, password
+                //     const { username, password } = this;
 
-                console.log(sha256('2o_H-Zu7nNDcmSaZX'));
-                // console.log(this.password);
+                const {email, password} = this;
 
-                this.$http.post(`${this.$host}/users/login`, {
-                    email: this.email,
-                    password: this.password
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-                    console.log(response);
-                    localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
-                    localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
-                    this.$router.push('/');
-                }, response => {
-                    console.log('error', response);
+                // console.log(this.authRequest);
+
+                this.$store.dispatch('authRequest', {email, password}).then(() => {
+                    this.$router.push('/')
                 });
 
-
-                // localStorage.setItem('id', account[0].id);
-
-                // return this.$router.push('/');
-
-                // return this.$router.push('/twoauth');
-                // }
+                // localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
+                // localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
+                // this.$router.push('/');
+                // }, response => {
+                //     console.log('error', response);
+                // });
             },
             focusInput: function (id) {
                 document.getElementById(id).focus()
@@ -178,7 +177,7 @@
         },
         mounted() {
             // console.log(sha256('2o_H-Zu7nNDcmSaZX'));
-            // console.log(sha256('TdlMDdlYzViMmQ5OCI'));
+            console.log(sha256('TdlMDdlYzViMmQ5OCI'));
         }
     }
 </script>

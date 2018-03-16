@@ -131,13 +131,16 @@
                 this.isLoader = true;
                 return this.$modal.show('connectionmodal');
             }
+
             this.$on('changeSystemLanguage', function () {
                 this.language = localStorage.getItem('systemLang');
             });
-            if (localStorage.getItem('wallets') === null) {
-                this.isOpenModal = true;
-                return this.$modal.show("newwallet");
-            }
+
+            // if (localStorage.getItem('wallets') === null) {
+            //     this.isOpenModal = true;
+            //     return this.$modal.show("newwallet");
+            // }
+
             this.isLoader = false;
         }
     }

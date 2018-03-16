@@ -8,6 +8,7 @@ import NotificationsModule from './modules/Notifications';
 import SettingsModule from './modules/Settings';
 import TransactionsModule from './modules/Transactions';
 import UsersModule from './modules/Users';
+import UserModule from './modules/User';
 import WalletsModule from './modules/Wallets';
 import OffersModule from './modules/Offers';
 import ThemesModule from './modules/Themes';
@@ -21,6 +22,7 @@ export const store = new Vuex.Store({
         Settings: SettingsModule,
         Transactions: TransactionsModule,
         Users: UsersModule,
+        User: UserModule,
         Wallets: WalletsModule,
         Offers: OffersModule,
         Themes: ThemesModule

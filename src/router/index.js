@@ -18,7 +18,7 @@ import Resume from '@/components/Resume';
 Vue.use(Router);
 
 const ifNotAuthenticated = (to, from, next) => {
-    if (localStorage.getItem(sha256('2o_H-Zu7nNDcmSaZX')) === null) {
+    if (localStorage.getItem(sha256('user-token')) === null) {
         next();
         return
     }
@@ -26,7 +26,7 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
-    if (localStorage.getItem(sha256('2o_H-Zu7nNDcmSaZX')) !== null) {
+    if (localStorage.getItem(sha256('user-token')) !== null) {
         next();
         return
     }
