@@ -90,6 +90,8 @@
     import Spinner from './layouts/Spinner';
     import Moment from 'moment';
 
+    import sha256 from 'sha256';
+
 
     import {mapMutations} from "vuex";
     import {mapGetters} from "vuex";
@@ -398,6 +400,8 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
+
+
 
         }
     }

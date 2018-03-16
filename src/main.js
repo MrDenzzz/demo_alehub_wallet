@@ -14,7 +14,8 @@ import VueResource from 'vue-resource';
 
 Vue.config.productionTip = false;
 // Vue.prototype.$host = 'http://192.168.1.37:4000';
-Vue.prototype.$host = 'http://192.168.1.37:4000';
+// Vue.prototype.$host = 'http://192.168.1.37:4000';
+Vue.prototype.$host = 'localhost:4000';
 
 const NotifOptions = {
     position: 'bottom-center',

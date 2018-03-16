@@ -14,39 +14,41 @@
 
                         <div class="col-12">
                             <div class="login-form">
+                                <form @submit.prevent="login">
+                                    <div class="control" @click="focusInput('email')">
+                                        <label for="email">e-mail</label>
+                                        <input
+                                                v-validate="'required|email'"
+                                                class="d-block"
+                                                :class="{error: isErrorEmail}"
+                                                @keyup.enter="checkLogin"
+                                                @input="resetError('login')"
+                                                type="text"
+                                                placeholder="e-mail"
+                                                id="email"
+                                                v-model="email"
+                                                autofocus
+                                        >
+                                    </div>
 
-                                <div class="control" @click="focusInput('email')">
-                                    <label for="email">e-mail</label>
-                                    <input
-                                            v-validate="'required|email'"
-                                            class="d-block"
-                                            :class="{error: isErrorEmail}"
-                                            @keyup.enter="checkLogin"
-                                            @input="resetError('login')"
-                                            type="text"
-                                            placeholder="e-mail"
-                                            id="email"
-                                            v-model="email"
-                                            autofocus
-                                    >
-                                </div>
+                                    <div class="control" @click="focusInput('password')">
+                                        <label for="password">password</label>
+                                        <input
+                                                class="d-block"
+                                                :class="{error:isErrorPassword}"
+                                                @keyup.enter="checkLogin"
+                                                @input="resetError('password')"
+                                                type="password"
+                                                placeholder="password"
+                                                id="password"
+                                                v-model="password">
+                                    </div>
 
-                                <div class="control" @click="focusInput('password')">
-                                    <label for="password">password</label>
-                                    <input
-                                            class="d-block"
-                                            :class="{error:isErrorPassword}"
-                                            @keyup.enter="checkLogin"
-                                            @input="resetError('password')"
-                                            type="password"
-                                            placeholder="password"
-                                            id="password"
-                                            v-model="password">
-                                </div>
-
-                                <button class="btn btn-black btn-block nomargin" @click="checkLogin">
-                                    Login
-                                </button>
+                                    <button type="submit"
+                                            class="btn btn-black btn-block nomargin">
+                                        Login
+                                    </button>
+                                </form>
 
                                 <p class="text">Don’t have an account?
                                     <router-link :to="{ path: '/registration' }">
@@ -66,6 +68,7 @@
 
 <script>
     import Navbar from './layouts/Navbar';
+    import sha256 from 'sha256';
 
     import {mapMutations} from "vuex";
 
@@ -89,7 +92,7 @@
         },
         methods: {
             // ...mapMutations({}),
-            checkLogin: function () {
+            login: function () {
 
                 let e = this.errors.items;
 
@@ -133,42 +136,36 @@
                     }
                 }
 
-                // let account = this.getTestAccounts.filter(item => {
-                //     return item.email === this.login && item.password === this.password;
-                // });
+                // /users/login POST
+                //
+                // BODY: email, password
 
-                // if (account.length === 0) {
-                //     this.focusInput('email');
-                //     this.$toasted.show('Account not found', {
-                //         duration: 10000,
-                //         type: 'error',
-                //     });
-                //     return false
-                // } else {
-                    // /users/login POST
-                    //
-                    // BODY: email, password
+                console.log(sha256('2o_H-Zu7nNDcmSaZX'));
+                // console.log(this.password);
 
-                    this.$http.post(`${this.$host}/users/login`, {
-                        email: this.fullName,
-                        password: this.password
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json; charset=UTF-8',
-                            'Accept': 'application/json'
-                        }
-                    }).then(response => {
-                        console.log(response);
-                    }, response => {
-                        console.log('error', response);
-                    });
+                this.$http.post(`${this.$host}/users/login`, {
+                    email: this.email,
+                    password: this.password
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    console.log(response);
+                    localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
+                    localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
+                    this.$router.push('/');
+                }, response => {
+                    console.log('error', response);
+                });
 
 
-                    // localStorage.setItem('id', account[0].id);
+                // localStorage.setItem('id', account[0].id);
 
-                    // return this.$router.push('/');
+                // return this.$router.push('/');
 
-                    // return this.$router.push('/twoauth');
+                // return this.$router.push('/twoauth');
                 // }
             },
             focusInput: function (id) {
@@ -178,6 +175,10 @@
                 if (type === 'login') this.isErrorEmail = false;
                 if (type === 'password') this.isErrorPassword = false;
             }
+        },
+        mounted() {
+            // console.log(sha256('2o_H-Zu7nNDcmSaZX'));
+            // console.log(sha256('TdlMDdlYzViMmQ5OCI'));
         }
     }
 </script>

@@ -118,7 +118,8 @@
         methods: {
             registerUser: function () {
                 var e = this.errors.items;
-                if (!this.fullName && !this.email && !this.phoneNumber && !this.password && !this.passwordConfirm) {
+                if (!this.fullName && !this.email && !this.phoneNumber
+                    && !this.password && !this.passwordConfirm) {
                     this.focusInput('fullname');
                     this.$toasted.show('Fill in all the fields', {
                         duration: 10000,
@@ -126,7 +127,8 @@
                     });
                     return false;
                 }
-                if (!this.fullName || !this.email || !this.phoneNumber || !this.password || !this.passwordConfirm) {
+                if (!this.fullName || !this.email || !this.phoneNumber
+                    || !this.password || !this.passwordConfirm) {
                     if (!this.fullName) {
                         this.focusInput('fullname');
                         this.$toasted.show('Enter your full name', {
