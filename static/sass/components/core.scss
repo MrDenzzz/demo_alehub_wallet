@@ -12,16 +12,23 @@ body {
       &:not(:first-child) {
         margin: 5px 35px;
         width: calc(100% - 70px);
-        border-radius: 6px;
+        border-radius: 4px;
         .wrap-in-wallet {
           margin-left: 15px;
+        }
+      }
+      &:not(.active) {
+        &:not(.wallet-search) {
+          &:hover {
+            background-color: #494d64 !important;
+          }
         }
       }
       &.active {
         margin: 5px 35px;
         width: calc(100% - 70px);
         border: solid 2px #3e4ea7;
-        border-radius: 6px;
+        border-radius: 4px;
         background: #272730;
         &:after {
           content: "";
@@ -74,10 +81,10 @@ body {
     color: #f4f3fc !important;
   }
   .btn-yellow {
-    background: #3e4ea7;
+    background: #28388e;
     color: #f4f3fc !important;
     &:hover {
-      background: #28388e;
+      background: #3e4ea7;
     }
     &:focus,
     &:active {
@@ -98,7 +105,7 @@ body {
     }
     &:focus,
     &:active {
-      background: #5b5a63;
+      background: #000;
     }
     &:disabled {
       background-color: #7c7b82;
@@ -116,15 +123,17 @@ body {
   .activityList {
     padding: 15px 30px 20px 30px;
     background: #27272f;
-    border-radius: 8px;
+    border-radius: 4px;
     .activityListBlock {
       .list-panel-heading {
         margin-left: 15px;
       }
       .activity-list {
+        margin: 3px 0;
+        border-top: 2px solid rgba(40, 56, 142, .5);
         background: transparent !important;
         .sent {
-          background-color: rgba(0, 0, 0, 0.4) !important;
+          background-color: transparent !important;
         }
         .status {
           justify-content: left;
@@ -161,7 +170,7 @@ body {
           }
         }
         .received {
-          background-color: #3e4ea7 !important;
+          background-color: transparent !important;
         }
       }
       .result-day {
@@ -445,7 +454,10 @@ body {
       }
     }
     .deletelink {
-      color: #9e0e0e;
+      color: #b53939;
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
   label {
@@ -459,7 +471,13 @@ body {
       background: #eee;
       max-width: 300px;
       margin: auto;
+      @media screen and (max-width: 350px) {
+        max-width: 240px;
+      }
     }
+  }
+  .no-found {
+    color: #dedfdf !important;
   }
 }
 
@@ -483,7 +501,7 @@ body {
       &:not(:first-child) {
         margin: 5px 35px;
         width: calc(100% - 70px);
-        border-radius: 6px;
+        border-radius: 4px;
         .wrap-in-wallet {
           margin-left: 15px;
         }
@@ -492,7 +510,7 @@ body {
         margin: 5px 35px;
         width: calc(100% - 70px);
         border: none;
-        border-radius: 6px;
+        border-radius: 4px;
         background: #eff0f3;
         &:after {
           content: "";
@@ -536,16 +554,16 @@ body {
           width: auto;
           color: #fff;
           &::-webkit-input-placeholder {
-            color: rgb(252, 252, 252);
+            color: #dedfdf;
           }
           &::-moz-placeholder {
-            color: rgb(252, 252, 252);
+            color: #dedfdf;
           }
           &:-ms-input-placeholder {
-            color: rgb(252, 252, 252);
+            color: #dedfdf;
           }
           &:-moz-placeholder {
-            color: rgb(252, 252, 252);
+            color: #dedfdf;
           }
         }
         .wallet {
@@ -595,7 +613,7 @@ body {
   .activityList {
     padding: 15px 30px 20px 30px;
     background: #eff0f3;
-    border-radius: 8px;
+    border-radius: 4px;
     .activityListBlock {
       .activity-list {
         background: transparent !important;
@@ -765,12 +783,54 @@ body {
 }
 
 .themes {
+  margin-top: 11px;
   position: relative;
   left: 15%;
+  display: flex;
   label {
     color: #f4f3fc;
+    margin-bottom: 0;
+    margin-right: 5px;
     &:not(:first-child) {
       margin-left: 10px;
+    }
+  }
+  input[type="radio"] {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .dark, .white {
+    .menu {
+      .wallet-list {
+        .wrap-in-wallet {
+          margin-left: 25px;
+          input {
+            width: calc(100% - 40px);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .request {
+    .title {
+      max-width: 200px;
+      margin: 1px auto 0;
+    }
+    .close {
+      right: 30px;
+      top: 24px;
+    }
+    .modal-control {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .qr-code {
+      margin-top: 12px;
     }
   }
 }

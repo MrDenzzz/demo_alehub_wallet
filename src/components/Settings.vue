@@ -30,6 +30,23 @@
 
                                 <!--<router-link  :to="{ path: '/sync' }">12323</router-link>-->
 
+                            </div><br>
+
+                            <Panel-heading :title="'Select theme'" :isTop="false"/>
+
+                            <div class="form">
+
+                                <div class="control" @click.stop="changeLanguage">
+                                    <div class="wrap-input">
+                                        <label>{{ $t('pages.settings.language') }}</label>
+                                        <select-control
+                                            :current="selectedLang"
+                                            :allOptions="['English', 'Русский']"
+                                            :id="'language'"
+                                        />
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>

@@ -1,5 +1,5 @@
 <template>
-    <modal name="request" height="auto" class="modal-md" @opened='focusButton()'>
+    <modal name="request" height="auto" class="modal-md request" @opened='focusButton()'>
         <div class="heading">
             <p class="title">{{ $t('modals.request.title') }}</p>
             <i class="close" @click="closeModal"></i>
@@ -13,7 +13,7 @@
             </div>
 
             <div class="qr-code">
-                <qriously :value="getCurrentWalletAddress" :size="300"/>
+                <qriously :value="getCurrentWalletAddress" :size="widthCanvas"/>
                 <span class="muted upperCase">{{ $t('modals.request.qrShare') }}</span>
             </div>
 
@@ -38,6 +38,10 @@
                 if (this.getCurrentWallet !== null)
                     return this.getCurrentWallet.address;
                 return 0;
+            },
+            widthCanvas () {
+                if (window.screen.width <= 350) return 240
+                else return 300
             }
         },
         methods: {

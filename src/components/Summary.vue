@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12" style="margin-top: 20px;">
+                        <div class="col-12">
                             <!--<Spinner v-if="isLoader"/>  &lt;!&ndash; переписать спиннер &ndash;&gt;-->
                             <Search-panel
                                     v-if="false && getActivity.length !== 0 && !transactionsLoader"
