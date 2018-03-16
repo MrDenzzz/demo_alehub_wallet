@@ -23,7 +23,7 @@ const state = {
         iconWidth: '20',
         iconHeight: '22',
         isBadge: true,
-        name: 'Notification'
+        name: 'Notifications'
     }, {
         path: '/settings',
         iconName: 'settings',
