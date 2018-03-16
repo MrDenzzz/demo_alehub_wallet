@@ -15,7 +15,7 @@
             {{ item.wallet }}
             <!--<span class="badge">{{ item.rating }}</span>-->
         </p>
-        <p class="description">{{ item.desc }}</p>
+        <p class="description">{{ item.desc | truncate(stop) }}</p>
         <div class="footer">
             <div class="tags-list">
                 <p>{{ $t('pages.singleOffer.requirements') }}:</p>
@@ -39,6 +39,11 @@
         name: "singleOffer",
         props: {
             item: [Object, Array]
+        },
+        data () {
+            return {
+                stop: null
+            }
         },
         computed: {
             formattedDate: function () {
@@ -67,10 +72,24 @@
             }
         },
         methods: {
-
+            changeTruncateStop: function (desktop, mobile) {
+                let clientWidth = document.documentElement.clientWidth;
+                clientWidth <= 425 ? this.stop = desktop : this.stop = mobile;
+            }
+        },
+        filters: {
+            truncate: function (text, stop) {
+                return text.slice(0, stop).trim() + (stop < text.length ? '...' : '');
+            }
         },
         created() {
             console.log(this.correctValuePrecision);
+        },
+        mounted() {
+            window.addEventListener('resize', this.changeTruncateStop(100, 1000) );
+        },
+        destroy() {
+            window.removeEventListener('resize', this.changeTruncateStop(100, 1000));
         }
     }
 </script>

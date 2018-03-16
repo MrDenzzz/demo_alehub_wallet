@@ -67,6 +67,11 @@
   .offer-list .subtitle {
     word-break: break-all; } }
 
-@media (max-width: 375px) {
-  .offer-list .heading .count {
-    white-space: nowrap; } }
+@media (max-width: 425px) {
+  .offer-list .heading {
+    flex-direction: column;
+    margin-bottom: 15px; }
+    .offer-list .heading .count {
+      padding-top: 5px;
+      white-space: nowrap;
+      align-self: flex-end; } }

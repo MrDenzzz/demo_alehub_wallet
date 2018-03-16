@@ -240,10 +240,27 @@
             }
         }
     }
-    @media (max-width: 375px) {
-        $l-r-padding: 9px;
+    @media (max-width: 768px) {
         .select-offer {
-            padding: 9px $l-r-padding;
+            padding: 9px 18px;
+        }
+    }
+    @media (max-width: 425px) {
+        .list-offer-sort {
+            width: 170px !important;
+        }
+        .select-offer {
+            width: 100%;
+            text-align: center;
+            padding: 9px 9px;
+            & .list-offer {
+                top: 0;
+                & ul {
+                    & li {
+                        padding: 9px 9px;
+                    }
+                }
+            }
         }
     }
 </style>

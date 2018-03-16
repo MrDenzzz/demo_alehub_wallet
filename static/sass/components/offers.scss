@@ -445,12 +445,25 @@
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 768px) {
+  .footer {
+    & .timeout {
+      white-space: nowrap;
+    }
+  }
+  .tags-list {
+    flex-wrap: wrap;
+    margin-right: 20px;
+    & .tag {
+      white-space: nowrap;
+    }
+  }
+}
+@media (max-width: 425px) {
   .list-panel-heading {
     margin: 0;
   }
   .tags-list {
-    flex-wrap: wrap;
     & p {
       display: none;
     }

@@ -53,3 +53,9 @@
 
 #reciveusd {
   text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .control-arrow-container {
+    width: 16px; }
+  .control-arrow {
+    height: 16px; } }

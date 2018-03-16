@@ -129,4 +129,11 @@
         margin-top: -8px;
         padding-top: 0px;
     }
+    @media screen and (max-width: 1024px) {
+        .main {
+             & .content {
+                padding-left: 0;
+            }
+        }
+    }
 </style>
