@@ -86,3 +86,19 @@
     color: #34343e;
   }
 }
+@media (max-width: 768px) {
+  .offer-list {
+    & .subtitle {
+      word-break: break-all;
+    }
+  }
+}
+@media (max-width: 375px) {
+  .offer-list {
+    & .heading {
+      & .count {
+        white-space: nowrap;
+      }
+    }
+  }
+}

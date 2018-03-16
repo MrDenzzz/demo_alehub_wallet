@@ -67,3 +67,15 @@
     margin: 0;
   }
 }
+
+@media (max-width: 375px) {
+  .list-panel-heading {
+    & p {
+      display: none;
+    }
+    & h3 {
+      white-space: nowrap;
+      width: 80px;
+    }
+  }
+}

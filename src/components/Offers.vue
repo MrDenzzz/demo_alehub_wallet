@@ -121,11 +121,11 @@
                             />
                             <!-- filters убрать в компонент фильтра -->
 
-                            <!--<div class="list-panel-heading mr-t0">-->
-                                <!--<h3>{{ $t('pages.jobOffers.filtersBlock.title') }}</h3>-->
-                            <!--</div>-->
+                            <div class="list-panel-heading mr-t0">
+                                <h3>{{ $t('pages.jobOffers.filtersBlock.title') }}</h3>
+                            </div>
 
-                            <!--<Filters />-->
+                            <Filters />
                         </div>
                     </div>
                 </div>
@@ -135,282 +135,301 @@
 </template>
 
 <script>
-    import Navbar from './layouts/Navbar'
-    import OffersList from './layouts/OffersList'
-    import Filters from './layouts/Filters'
-    import Select from './layouts/forms/Select'
-    import Pagination from './layouts/Pagination'
-    import ActionPanel from './layouts/ActionPanel'
-    import Spinner from './layouts/Spinner'
+import Navbar from "./layouts/Navbar";
+import OffersList from "./layouts/OffersList";
+import Filters from "./layouts/Filters";
+import Select from "./layouts/forms/Select";
+import Pagination from "./layouts/Pagination";
+import ActionPanel from "./layouts/ActionPanel";
+import Spinner from "./layouts/Spinner";
 
-    import {mapMutations} from 'vuex';
-    import {mapGetters} from 'vuex';
+import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
-    export default {
-        name: 'offers',
-        components: {
-            Navbar,
-            OffersList,
-            Filters,
-            Select,
-            Pagination,
-            ActionPanel,
-            Spinner
-        },
-        data() {
-            return {
-                isLoader: false,
-                notFoundOffers: false,
-                notFoundOffersByFilter: false,
-                //вынести во vuex?
-                optionsOffersOnPage: [10, 20, 50],
-                optionsSortBy: ["CONTRACTOR RATING", "PRICE", "END DATE"],
-                numOffers: 0,
-                rightMenu: {
-                    horizontal: false,
-                    list: [
-                        {
-                            type: 'link',
-                            name: this.$t('pages.jobOffers.rightMenu.savedOffers'),
-                            link: '/offers/saved'
-                        },
-                        {
-                            type: 'link',
-                            name: this.$t('pages.jobOffers.rightMenu.createOffer'),
-                            link: '/offers/new'
-                        }
-                    ]
-                },
-                selectedOffersOnPage: 10,
-                selectedSortBy: 'CONTRACTOR RATING',
-                offersListOpen: []
-            }
-        },
-        computed: {
-            ...mapGetters([
-                'doSortByRatingIncrease',
-                'doSortByRatingDecrease',
-                'doSortByPriceIncrease',
-                'doSortByPriceDecrease',
-                'doSortByEndDateIncrease',
-                'doSortByEndDateDecrease',
+export default {
+  name: "offers",
+  components: {
+    Navbar,
+    OffersList,
+    Filters,
+    Select,
+    Pagination,
+    ActionPanel,
+    Spinner
+  },
+  data() {
+    return {
+      isLoader: false,
+      notFoundOffers: false,
+      notFoundOffersByFilter: false,
+      //вынести во vuex?
+      optionsOffersOnPage: [10, 20, 50],
+      optionsSortBy: ["CONTRACTOR RATING", "PRICE", "END DATE"],
+      numOffers: 0,
+      rightMenu: {
+        horizontal: false,
+        list: [
+          {
+            type: "link",
+            name: this.$t("pages.jobOffers.rightMenu.savedOffers"),
+            link: "/offers/saved"
+          },
+          {
+            type: "link",
+            name: this.$t("pages.jobOffers.rightMenu.createOffer"),
+            link: "/offers/new"
+          }
+        ]
+      },
+      selectedOffersOnPage: 10,
+      selectedSortBy: "CONTRACTOR RATING",
+      offersListOpen: []
+    };
+  },
+  computed: {
+    ...mapGetters([
+      "doSortByRatingIncrease",
+      "doSortByRatingDecrease",
+      "doSortByPriceIncrease",
+      "doSortByPriceDecrease",
+      "doSortByEndDateIncrease",
+      "doSortByEndDateDecrease",
 
-                'getComputedOfferList',
+      "getComputedOfferList",
 
-                'getPartOffersList'
-            ]),
-            offersList: function () {
-                return this.$store.state.Offers.offersList;
-            },
-            selectedTheme () {
-                return this.$store.state.Themes.theme;
-            },
-            countOfferPerPage: function () {
-                return this.$store.state.Offers.countOfferPerPage;
-            },
-            currentNumOffers: function () {
-                return this.getComputedOfferList.length;
-            },
-            currentSortBy: function () {
-                return this.$store.state.Offers.currentSortBy;
-            },
-            //передавать данные из офферса в офферслист ибо проблемы с отсутствующими-присутствующими офферами
-            getOffersList: function () {
-                return this.$store.state.Offers.offersList;
-            },
-            getSortPriority: function () {
-                return this.$store.state.Offers.sortPriority;
-            },
-            getCountOfferPerPage: function () {
-                return this.$store.state.Offers.countOfferPerPage;
-            }
-            // currentOfferList: function () {
-            //     if (!this.isSaved) {
-            //         // this.$parent.$emit('numOffers', this.getOffersResultList.length);
-            //         return this.getPartOffersList;
-            //     }
-            //     else {
-            //         // this.$parent.$emit('numOffers', this.getOfferSavedList.length);
-            //         console.log(this.currentListOffers);
-            //         return this.getPartOfferSavedList;
-            //     }
-            // }
-        },
-        methods: {
-            ...mapMutations({
-                setNewSelect: 'SET_NEW_SELECT',
-                setCurrentPage: 'SET_CURRENT_PAGE',
-                setCurrentPriority: 'SET_CURRENT_PRIORITY',
-                setSortPriority: 'SET_SORT_PRIORITY',
-                setCountOffersPerPage: 'SET_COUNT_OFFERS_PER_PAGE'
-            }),
-
-            doIncreasePriority: function () {
-                this.setSortPriority('increase');
-
-                if (this.currentSortBy === 'CONTRACTOR RATING')
-                    return this.doSortByRatingIncrease;
-
-                if (this.currentSortBy === 'PRICE') {
-                    return this.doSortByPriceIncrease;
-                }
-
-                if (this.currentSortBy === 'END DATE')
-                    return this.doSortByEndDateIncrease;
-            },
-            doDecreasePriority: function () {
-                this.setSortPriority('decrease');
-
-                if (this.currentSortBy === 'CONTRACTOR RATING')
-                    return this.doSortByRatingDecrease;
-
-                if (this.currentSortBy === 'PRICE') {
-                    return this.doSortByPriceDecrease;
-                }
-
-                if (this.currentSortBy === 'END DATE')
-                    return this.doSortByEndDateDecrease;
-            },
-            newSelect(value, id) {
-                if (id === 'offersonpage') {
-                    this.selectedOffersOnPage = value;
-                }
-                if (id === 'sortby') {
-                    this.selectedSortBy = value;
-                }
-            },
-            imitationLoadPage() {
-                this.isLoader = true;
-                setTimeout(() => {
-                    this.isLoader = false;
-                }, 750);
-            },
-            initiateStateOffers: function () {
-                this.doSortByRatingDecrease;
-                this.setCountOffersPerPage(10);
-                this.setCurrentPage(1);
-
-                if (this.offersList.length === 0) {
-                    this.notFoundOffers = true;
-                }
-            },
-            getOpenOffers () {
-                // this.$http.get(`http://localhost:8080/http://127.0.0.1:12348/node/state/offers/list/open`, {
-                //     headers : {
-                //         'Content-Type' : 'application/json; charset=UTF-8',
-                //         'Accept' : 'application/json'
-                //     }
-                // }).then(response => {
-                //     this.offersListOpen = response.body;
-                //     console.log('S', response);
-                // }, response => {
-                //     console.log('E', response);
-                // })
-            },
-            getIcon(name) {
-                if (this.selectedTheme === 'dark') return require(`../assets/img/${name}_dark.svg`);
-                else if (this.selectedTheme === 'white') return require(`../assets/img/${name}.svg`);
-                else return require(`../assets/img/${name}.svg`);
-            }
-        },
-        mounted() {
-            let currentPage = this.$router;
-            window.addEventListener('scroll', function (e) {
-                if(currentPage.currentRoute.name !== 'Offers') return false;
-                let filters = document.getElementById('filters_block');
-                if (window.scrollY >= 40) { // пофиксить
-                    filters.classList.add('fixed-filters');
-                } else {
-                    filters.classList.remove('fixed-filters');
-                }
-            });
-
-            this.imitationLoadPage();
-
-            this.$on('onselect', function (item, id) {
-                this.setNewSelect(item);
-
-                if (this.currentSortBy === 'CONTRACTOR RATING') {
-                    if (this.getSortPriority === 'increase')
-                        return this.doSortByRatingIncrease;
-                    else
-                        return this.doSortByRatingDecrease;
-                }
-
-                if (this.currentSortBy === 'PRICE') {
-                    if (this.getSortPriority === 'increase')
-                        return this.doSortByPriceIncrease;
-                    else
-                        return this.doSortByPriceDecrease;
-                }
-
-                if (this.currentSortBy === 'END DATE') {
-                    if (this.getSortPriority === 'increase')
-                        return this.doSortByEndDateIncrease;
-                    else
-                        return this.doSortByEndDateDecrease;
-                }
-
-                if (id === 'offersonpage')
-                    this.setCurrentPage(1);
-            });
-
-            this.$on("changeCurrentPage", function (item) {
-                this.setCurrentPage(item);
-            });
-
-            this.$on('notFoundOffersByFilter', function (result) {
-                this.notFoundOffersByFilter = result;
-            });
-
-            this.initiateStateOffers();
-        },
-        created () {
-            this.getOpenOffers();
-        }
+      "getPartOffersList"
+    ]),
+    offersList: function() {
+      return this.$store.state.Offers.offersList;
+    },
+    selectedTheme() {
+      return this.$store.state.Themes.theme;
+    },
+    countOfferPerPage: function() {
+      return this.$store.state.Offers.countOfferPerPage;
+    },
+    currentNumOffers: function() {
+      return this.getComputedOfferList.length;
+    },
+    currentSortBy: function() {
+      return this.$store.state.Offers.currentSortBy;
+    },
+    //передавать данные из офферса в офферслист ибо проблемы с отсутствующими-присутствующими офферами
+    getOffersList: function() {
+      return this.$store.state.Offers.offersList;
+    },
+    getSortPriority: function() {
+      return this.$store.state.Offers.sortPriority;
+    },
+    getCountOfferPerPage: function() {
+      return this.$store.state.Offers.countOfferPerPage;
     }
+    // currentOfferList: function () {
+    //     if (!this.isSaved) {
+    //         // this.$parent.$emit('numOffers', this.getOffersResultList.length);
+    //         return this.getPartOffersList;
+    //     }
+    //     else {
+    //         // this.$parent.$emit('numOffers', this.getOfferSavedList.length);
+    //         console.log(this.currentListOffers);
+    //         return this.getPartOfferSavedList;
+    //     }
+    // }
+  },
+  methods: {
+    ...mapMutations({
+      setNewSelect: "SET_NEW_SELECT",
+      setCurrentPage: "SET_CURRENT_PAGE",
+      setCurrentPriority: "SET_CURRENT_PRIORITY",
+      setSortPriority: "SET_SORT_PRIORITY",
+      setCountOffersPerPage: "SET_COUNT_OFFERS_PER_PAGE"
+    }),
+
+    doIncreasePriority: function() {
+      this.setSortPriority("increase");
+
+      if (this.currentSortBy === "CONTRACTOR RATING")
+        return this.doSortByRatingIncrease;
+
+      if (this.currentSortBy === "PRICE") {
+        return this.doSortByPriceIncrease;
+      }
+
+      if (this.currentSortBy === "END DATE")
+        return this.doSortByEndDateIncrease;
+    },
+    doDecreasePriority: function() {
+      this.setSortPriority("decrease");
+
+      if (this.currentSortBy === "CONTRACTOR RATING")
+        return this.doSortByRatingDecrease;
+
+      if (this.currentSortBy === "PRICE") {
+        return this.doSortByPriceDecrease;
+      }
+
+      if (this.currentSortBy === "END DATE")
+        return this.doSortByEndDateDecrease;
+    },
+    newSelect(value, id) {
+      if (id === "offersonpage") {
+        this.selectedOffersOnPage = value;
+      }
+      if (id === "sortby") {
+        this.selectedSortBy = value;
+      }
+    },
+    imitationLoadPage() {
+      this.isLoader = true;
+      setTimeout(() => {
+        this.isLoader = false;
+      }, 750);
+    },
+    initiateStateOffers: function() {
+      this.doSortByRatingDecrease;
+      this.setCountOffersPerPage(10);
+      this.setCurrentPage(1);
+
+      if (this.offersList.length === 0) {
+        this.notFoundOffers = true;
+      }
+    },
+    getOpenOffers() {
+      // this.$http.get(`http://localhost:8080/http://127.0.0.1:12348/node/state/offers/list/open`, {
+      //     headers : {
+      //         'Content-Type' : 'application/json; charset=UTF-8',
+      //         'Accept' : 'application/json'
+      //     }
+      // }).then(response => {
+      //     this.offersListOpen = response.body;
+      //     console.log('S', response);
+      // }, response => {
+      //     console.log('E', response);
+      // })
+    },
+    getIcon(name) {
+      if (this.selectedTheme === "dark")
+        return require(`../assets/img/${name}_dark.svg`);
+      else if (this.selectedTheme === "white")
+        return require(`../assets/img/${name}.svg`);
+      else return require(`../assets/img/${name}.svg`);
+    }
+  },
+  mounted() {
+    let currentPage = this.$router;
+    window.addEventListener("scroll", function(e) {
+      if (currentPage.currentRoute.name !== "Offers") return false;
+      let filters = document.getElementById("filters_block");
+      if (window.scrollY >= 40) {
+        // пофиксить
+        filters.classList.add("fixed-filters");
+      } else {
+        filters.classList.remove("fixed-filters");
+      }
+    });
+
+    this.imitationLoadPage();
+
+    this.$on("onselect", function(item, id) {
+      this.setNewSelect(item);
+
+      if (this.currentSortBy === "CONTRACTOR RATING") {
+        if (this.getSortPriority === "increase")
+          return this.doSortByRatingIncrease;
+        else return this.doSortByRatingDecrease;
+      }
+
+      if (this.currentSortBy === "PRICE") {
+        if (this.getSortPriority === "increase")
+          return this.doSortByPriceIncrease;
+        else return this.doSortByPriceDecrease;
+      }
+
+      if (this.currentSortBy === "END DATE") {
+        if (this.getSortPriority === "increase")
+          return this.doSortByEndDateIncrease;
+        else return this.doSortByEndDateDecrease;
+      }
+
+      if (id === "offersonpage") this.setCurrentPage(1);
+    });
+
+    this.$on("changeCurrentPage", function(item) {
+      this.setCurrentPage(item);
+    });
+
+    this.$on("notFoundOffersByFilter", function(result) {
+      this.notFoundOffersByFilter = result;
+    });
+
+    this.initiateStateOffers();
+  },
+  created() {
+    this.getOpenOffers();
+  }
+};
 </script>
 
 <style lang="stylus" scoped>
+.list-panel-count-offers, .list-panel-sort {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 
-    .list-panel-count-offers,
-    .list-panel-sort
-        margin-top 0
-        margin-bottom 0
+.list-panel-offers {
+    margin: 0;
+}
 
-    .list-panel-offers
-        margin 0
+.list-panel-sort {
+    margin-left: 0;
+}
 
-    .list-panel-sort
-        margin-left 0
+.fixed-filters {
+    position: fixed;
+    right: 12px;
+    padding-right: 12px;
+    top: 50px;
+}
 
-    .fixed-filters
-        position fixed
-        right 12px
-        padding-right 12px
-        top 50px
+.no-found-offers {
+    font-family: MuseoSansCyrl500;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-align: center;
+    color: #34343e;
+}
 
-    .no-found-offers
-        font-family MuseoSansCyrl500
-        font-size 16px
-        font-weight 500
-        line-height 1.25
-        text-align center
-        color #34343e
+.flex-row {
+    display: flex;
+}
 
-    .flex-row
-        display flex
+.flex-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .flex-col
-        display flex
-        align-items center
-        justify-content center
+.wrap-not-found-offers-by-filter {
+    display: flex;
+    height: 85vh;
+    align-items: center;
+    justify-content: center;
+}
 
-    .wrap-not-found-offers-by-filter
-        display flex
-        height 85vh
-        align-items center
-        justify-content center
+@media (max-width: 1024px)
+    .main 
+        & .content 
+            padding-left 0
 
-
+@media (max-width: 375px) and (min-width: 320px)
+    .col-3
+        display none
+    .col-9
+        width 100%
+    .list-panel-count-offers
+        background-color #dedfdf
+        margin-right 0
+    .row-flex
+        justify-content flex-start
 </style>

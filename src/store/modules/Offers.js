@@ -75,7 +75,7 @@ const state = {
             type: [
                 "all",
                 "patch",
-                "full project",
+                "full proje0ct",
                 "script"
             ],
             professionalArea: [
@@ -5264,7 +5264,740 @@ const state = {
             submited: false,
             completed: false
         },
+        {
+            id: 101,
+            ownerId: 1,
+            contractorId: 0,
+            walletId: 1,
+            title: "Make pretty not-scum cryptocurrency",
+            wallet: 'L56Srfpxha42C2f4LzqeQUubh3bQwEfDTMSwidGPEViZBU',
+            rating: 1.5,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 235500,
+            reqs: [
+                "Gamedev",
+                "Unity",
+                "C++",
+                "Algo cert"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Machine learning and Big data"
+            ],
+            date: 1521493200000,
+            projectDuration: 4,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: false,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 102,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Developing web-server",
+            wallet: '324lklksdmfdslk44fs098sdfsdfffdsxcvfmkl444',
+            rating: 6.0,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 31905,
+            reqs: [
+                "Shell",
+                "Linux"
+            ],
+            type: [
+                "all",
+                "full project"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Medicine research"
+            ],
+            date: 1517173200000,
+            projectDuration: 301,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 103,
+            ownerId: 1,
+            contractorId: 2,
+            walletId: 1,
+            title: "Haskell telegram bot",
+            wallet: '0x4ce9d78cf86b6ec1280d3da512c09807e6a51a4b',
+            rating: 1.5, //установить от рейтинга юзера
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 105500,
+            // file: '',
+            reqs: [
+                "Haskell",
+                "Algo cert",
+                "0.6 c/dt"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education"
+            ],
+            date: 1518724800000,
+            projectDuration: 12,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: true,
+            apply: true,
+            submited: true,
+            completed: true
+        },
+        {
+            id: 104,
+            ownerId: 1,
+            contractorId: 0,
+            walletId: 1,
+            title: "Java server",
+            wallet: '0x4ce9d78cf86b6ec1280d3da512c09807e6a51a4b',
+            rating: 6.5,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 76700,
+            reqs: [
+                "Java",
+                "Database"
+            ],
+            type: [
+                "all",
+                "patch",
+                "full project",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education"
+            ],
+            date: 1518976800000,
+            projectDuration: 5,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: 'C:/program files/specification_file.docx',
+            saved: false,
+            apply: false,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 105,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "React frontend",
+            wallet: '324lklksdmfdslk44fs098sdfsdfffdsxcvfmkl444',
+            rating: 4.7,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 10350.45401,
+            reqs: [
+                "React",
+                "Algo cert"
+            ],
+            type: [
+                "all",
+                "full project",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education"
+            ],
+            date: 1518422400000,
+            projectDuration: 22,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: true,
+            completed: false
+        },
+        {
+            id: 106,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "C++/Qt gui",
+            wallet: '324lklksdmfdslk44fs098sdfsdfffdsxcvfmkl444',
+            rating: 6.4,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 8100,
+            reqs: [
+                "C++",
+                "QT",
+                "0.8 c/dt"
+            ],
+            type: [
+                "all",
+                "patch",
+                "full project",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education"
+            ],
+            date: 1521549000000,
+            projectDuration: 32,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 107,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Markup Jade",
+            wallet: '324lklksdmfdslk44fs098sdfsdfffdsxcvfmkl444',
+            rating: 3.2,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 4900,
+            reqs: [
+                "HTML",
+                "CSS",
+                "Jade"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Media processing"
+            ],
+            date: 1519401600000,
+            projectDuration: 32,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 108,
+            ownerId: 1,
+            contractorId: 2,
+            walletId: 1,
+            title: "VK bot",
+            wallet: 'L56Srfpxha42C2f4LzqeQUubh3bQwEfDTMSwidGPEViZBU',
+            rating: 7.2,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 14600,
+            reqs: [
+                "Python",
+                "Algo cert",
+                "0.3 c/dt"
+            ],
+            type: [
+                "all",
+                "patch"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Medicine research"
+            ],
+            date: 1522530000000,
+            projectDuration: 25,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: true,
+            apply: true,
+            submited: true,
+            completed: false
+        },
+        {
+            id: 109,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Mobile Android App",
+            wallet: 'xcvsdf494fij4f984jfi4ojf4980fjlijf490fj4f9j4f',
+            rating: 6.1,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 44000,
+            reqs: [
+                "Java",
+                "Kotlin",
+                "Android"
+            ],
+            type: [
+                "all",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education"
+            ],
+            date: 1520542800000,
+            projectDuration: 38,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: true,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 110,
+            ownerId: 1,
+            contractorId: 0,
+            walletId: 1,
+            title: "Mobile IOS App",
+            wallet: 'wef980ewjhf890wejfwoejf09ewujf0wejfkejwfwe9f032df3f',
+            rating: 5.1,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 21300,
+            reqs: [
+                "Swift",
+                "IOS"
+            ],
+            type: [
+                "all",
+                "full project"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Chemystry and Biology",
+                "Machine learning and Big data",
+                "Medicine research"
+            ],
+            date: 1520096400000,
+            projectDuration: 1,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: true,
+            completed: false
+        },
+        {
+            id: 111,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "UX",
+            wallet: 'wef980ewjhf890wejfwoejf09ewujf0wejfkejwfwe9f032df3f',
+            rating: 8.1,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 43100,
+            reqs: [
+                "UX",
+                "Design"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet"
+            ],
+            date: 1519678800000,
+            projectDuration: 16,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 112,
+            ownerId: 1,
+            contractorId: 2,
+            walletId: 1,
+            title: "Compress algorithm",
+            wallet: 'L56Srfpxha42C2f4LzqeQUubh3bQwEfDTMSwidGPEViZBU',
+            rating: 1.5,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 62150,
+            reqs: [
+                "C/C++",
+                "Algo cert",
+                "1.1 c/dt"
+            ],
+            type: [
+                "all",
+                "patch"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Chemystry and Biology"
+            ],
+            date: 1526072400000,
+            projectDuration: 70,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: true,
+            completed: false
+        },
+        {
+            id: 113,
+            ownerId: 1,
+            contractorId: 0,
+            walletId: 1,
+            title: "Online game",
+            wallet: 'L56Srfpxha42C2f4LzqeQUubh3bQwEfDTMSwidGPEViZBU',
+            rating: 1.5,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 235500,
+            reqs: [
+                "Gamedev",
+                "Unity",
+                "C++",
+                "Algo cert"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Machine learning and Big data"
+            ],
+            date: 1521493200000,
+            projectDuration: 4,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: false,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 114,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Developing web-server",
+            wallet: 'wef980ewjhf890wejfwoejf09ewujf0wejfkejwfwe9f032df3f',
+            rating: 6.0,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 31905,
+            reqs: [
+                "Shell",
+                "Linux"
+            ],
+            type: [
+                "all",
+                "full project"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Medicine research"
+            ],
+            date: 1519373200000,
+            projectDuration: 301,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 116,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Make social network",
+            wallet: 'wef980ewjhf890wejfwoejf09ewujf0wejfkejwfwe9f032df3f',
+            rating: 5.1,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 21300,
+            reqs: [
+                "Swift",
+                "IOS"
+            ],
+            type: [
+                "all",
+                "full project"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Chemystry and Biology",
+                "Machine learning and Big data",
+                "Medicine research"
+            ],
+            date: 1520096400000,
+            projectDuration: 1,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 117,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Create innovative compress algorithm",
+            wallet: 'xcvsdf494fij4f984jfi4ojf4980fjlijf490fj4f9j4f',
+            rating: 8.1,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 143100,
+            reqs: [
+                "UX",
+                "Design"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet"
+            ],
+            date: 1519678800000,
+            projectDuration: 16,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: false,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 118,
+            ownerId: 1,
+            contractorId: 2,
+            walletId: 1,
+            title: "Create cool website",
+            wallet: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
+            rating: 1.5,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 62150,
+            reqs: [
+                "Java Script",
+                "HTML/CSS",
+                "Algo cert",
+                "1.1 c/dt"
+            ],
+            type: [
+                "all",
+                "patch"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Chemystry and Biology"
+            ],
+            date: 1526072400000,
+            projectDuration: 70,
+            premium: [
+                "all",
+                "premium"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: true,
+            completed: false
+        },
+        {
+            id: 119,
+            ownerId: 1,
+            contractorId: 0,
+            walletId: 1,
+            title: "Make pretty not-scum cryptocurrency",
+            wallet: 'L56Srfpxha42C2f4LzqeQUubh3bQwEfDTMSwidGPEViZBU',
+            rating: 1.5,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 235500,
+            reqs: [
+                "Gamedev",
+                "Unity",
+                "C++",
+                "Algo cert"
+            ],
+            type: [
+                "all",
+                "patch",
+                "script"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Science and Education",
+                "Machine learning and Big data"
+            ],
+            date: 1521493200000,
+            projectDuration: 4,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: false,
+            submited: false,
+            completed: false
+        },
+        {
+            id: 120,
+            ownerId: 1,
+            contractorId: 1,
+            walletId: 1,
+            title: "Developing web-server",
+            wallet: '0x4ce9d78cf86b6ec1280d3da512c09807e6a51a4b',
+            rating: 6.0,
+            desc: "We are looking for a talented developer to write functional and working bot for Telegram messenger. " +
+                "Bot should do few things: track amount of something, send push notifications to admins telling about " +
+                "errors, notify user about…",
+            price: 31905,
+            reqs: [
+                "Shell",
+                "Linux"
+            ],
+            type: [
+                "all",
+                "full project"
+            ],
+            professionalArea: [
+                "all",
+                "Information technology, System integration, Internet",
+                "Medicine research"
+            ],
+            date: 1517173200000,
+            projectDuration: 301,
+            premium: [
+                "all"
+            ],
+            fileSolution: '',
+            saved: false,
+            apply: true,
+            submited: false,
+            completed: false
+        }
     ],
+    
     offersSavedList: []
 };
 
