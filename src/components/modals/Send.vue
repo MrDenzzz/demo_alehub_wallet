@@ -326,11 +326,6 @@
     .clicked
         cursor pointer
 
-    .modal-input
-        & input
-            width 350px !important
-
-
     .no-spinners
         -moz-appearance textfield
 
