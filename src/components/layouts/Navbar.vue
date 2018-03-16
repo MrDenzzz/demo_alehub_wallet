@@ -6,8 +6,10 @@
                     <img src="../../assets/img/back-ic.svg" width="24.5" height="17">
                 </div>
 
-                <router-link :to="{ path: '/wallet' }" v-else>
-                    <div class="logo">ALE</div>
+                <router-link :to="{ path: '/' }" v-else>
+                    <div class="logo">
+                        <img :src="getLogo()" alt="">
+                    </div>
                 </router-link>
 
                 <div class="actions">
@@ -60,7 +62,7 @@
                 >
             </div>
             <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu || isMobile">
-                <span class="count" v-if="isBalance && !isMobile">
+                <span class="count" v-if="isBalance && (!isMobile || isTablet)">
                     <vue-numeric
                             :value="getCurrentWalletBalance"
                             :separator="correctLangSep"
@@ -70,13 +72,13 @@
                     />
                 </span>
                 <div
-                        v-if="isBalance && !isMobile"
+                        v-if="isBalance && (!isMobile || isTablet)"
                         class="count"
                 >
                     {{ 'ALE' }}
                 </div>
 
-                <div class="options" v-if="rightMenu && !isMobile">
+                <div class="options" v-if="rightMenu && (!isMobile || isTablet)">
                     <img :src="getIcon('options')" alt="" width="3" height="16">
 
                     <div class="dropdown-options"
@@ -166,7 +168,11 @@
         },
         computed: {
             isMobile () {
-                if (window.screen.width <= 425) return true
+                if (window.screen.width <= 768) return true
+                else return false
+            },
+            isTablet () {
+                if (window.screen.width <= 1024 && window.screen.width > 768) return true
                 else return false
             },
             selectedTheme () {
@@ -214,8 +220,44 @@
             ...mapMutations({
                 setTheme: "SET_THEME"
             }),
+            getLogo () {
+                switch (this.selectedTheme) {
+                    case 'main':
+                        return require('../../../static/img/logo_main.svg');
+                        break;
+                    case 'dark':
+                        return require('../../../static/img/logo_dark.svg');
+                        break;
+                    case 'white':
+                        return require('../../../static/img/logo_white.svg');
+                        break;
+                
+                    default:
+                        return require('../../../static/img/logo_main.svg');
+                        break;
+                }
+            },
             toggleMenu () {
-                this.collapsed = !this.collapsed;
+                let nav = document.querySelector(".mobile-menu"),
+                    navToggle = document.querySelector("#hamburger");
+                if (!nav.classList.contains('is-collapsed')) {
+                    this.collapsed = true;
+                    nav.classList.add("is-collapsed");
+                    navToggle.classList.add('is-active');
+                    document.addEventListener('click', closeMenu, true)
+                }
+                else {
+                    this.collapsed = false;
+                    nav.classList.remove("is-collapsed");
+                    navToggle.classList.remove('is-active');
+                    document.removeEventListener('click', closeMenu, true)
+                }
+                function closeMenu () {
+                    if (!event.target.classList.contains('hamburger') && !event.target.classList.contains('line') && nav.classList.contains('mobile-menu')) {
+                        nav.classList.remove("is-collapsed");
+                        navToggle.classList.remove('is-active');
+                    }
+                }
             },
             getNavbarIcon: function (name) {
                 return require('../../assets/img/' + name + '.svg');
