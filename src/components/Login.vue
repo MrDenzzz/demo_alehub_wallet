@@ -93,7 +93,7 @@
         methods: {
             // ...mapMutations({}),
             ...mapActions([
-                'AUTH_REQUEST'
+                'authRequest'
             ]),
             login: function () {
 
@@ -153,8 +153,6 @@
                 //     const { username, password } = this;
 
                 const {email, password} = this;
-
-                // console.log(this.authRequest);
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
                     this.$router.push('/')

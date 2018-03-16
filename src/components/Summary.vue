@@ -401,7 +401,8 @@
                 this.dateTo = to;
             });
 
-
+            console.log(this.currentToken, 'this.currentToken');
+            console.log(this.currentStatus, 'this.currentStatus');
 
         }
     }

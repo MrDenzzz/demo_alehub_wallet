@@ -106,6 +106,8 @@
     import PanelHeading from './layouts/PanelHeading';
     import sha256 from 'sha256';
 
+    import {mapActions} from 'vuex';
+
     export default {
         name: 'settings',
         data() {
@@ -136,9 +138,14 @@
             }
         },
         methods: {
+            ...mapActions([
+                'authLogout'
+            ]),
             logout: function () {
-                localStorage.removeItem(sha256('2o_H-Zu7nNDcmSaZX'));
-                localStorage.removeItem(sha256('TdlMDdlYzViMmQ5OCI'));
+                this.$store.dispatch('authLogout').then(() => {
+                    this.$router.push('/login')
+                });
+
                 this.$router.push('/login');
             },
             newSelect: function (value, id) {

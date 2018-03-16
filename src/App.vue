@@ -37,6 +37,12 @@
             }
         },
         computed: {
+            // currentToken: function () {
+            //     return this.$store.state.User.token;
+            // },
+            // currentStatus: function () {
+            //     return this.$store.state.User.status;
+            // },
             currentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
             },

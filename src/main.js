@@ -11,8 +11,8 @@ import VueClipboard from 'vue-clipboard2';
 import Toasted from 'vue-toasted';
 import VueTheMask from 'vue-the-mask';
 import VueResource from 'vue-resource';
-// import axios from 'axios';
 
+import axios from 'axios';
 import sha256 from 'sha256';
 
 Vue.config.productionTip = false;
@@ -37,7 +37,6 @@ Vue.use(VModal);
 Vue.use(Toasted, NotifOptions);
 Vue.use(VueTheMask);
 Vue.use(VueResource);
-// Vue.use(axios);
 
 import messages from './i18n.js';
 
@@ -54,25 +53,9 @@ const i18n = new VueI18n({
     messages
 });
 
-const token = localStorage.getItem(sha256('2o_H-Zu7nNDcmSaZX'));
+const token = localStorage.getItem(sha256('user-token'));
 if (token) {
-
-    this.$http.post(`${this.$host}/users/check-login`, {
-        token: token,
-    }, {
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        console.log(response);
-        localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_token);
-        // this.$router.push('/');
-    }, response => {
-        console.log('error', response);
-    });
-
-    // axios.defaults.headers.common['Authorization'] = token;
+    axios.defaults.headers.common['Login'] = token
 }
 
 new Vue({
