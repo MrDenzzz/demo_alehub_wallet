@@ -299,6 +299,12 @@
 #reciveusd {
   text-decoration: underline; }
 
+@media (max-width: 768px) {
+  .control-arrow-container {
+    width: 16px; }
+  .control-arrow {
+    height: 16px; } }
+
 .tags-list {
   display: flex;
   justify-content: flex-start;
@@ -855,8 +861,7 @@
   .list-panel-heading p {
     display: none; }
   .list-panel-heading h3 {
-    white-space: nowrap;
-    width: 80px; } }
+    white-space: nowrap; } }
 
 .offer-list {
   height: auto;
@@ -927,9 +932,14 @@
   .offer-list .subtitle {
     word-break: break-all; } }
 
-@media (max-width: 375px) {
-  .offer-list .heading .count {
-    white-space: nowrap; } }
+@media (max-width: 425px) {
+  .offer-list .heading {
+    flex-direction: column;
+    margin-bottom: 15px; }
+    .offer-list .heading .count {
+      padding-top: 5px;
+      white-space: nowrap;
+      align-self: flex-end; } }
 
 table {
   background-color: transparent;

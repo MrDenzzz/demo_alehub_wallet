@@ -317,16 +317,16 @@ export default {
   },
   mounted() {
     let currentPage = this.$router;
-    window.addEventListener("scroll", function(e) {
-      if (currentPage.currentRoute.name !== "Offers") return false;
-      let filters = document.getElementById("filters_block");
-      if (window.scrollY >= 40) {
-        // пофиксить
-        filters.classList.add("fixed-filters");
-      } else {
-        filters.classList.remove("fixed-filters");
-      }
-    });
+    // window.addEventListener("scroll", function(e) {
+    //   if (currentPage.currentRoute.name !== "Offers") return false;
+    //   let filters = document.getElementById("filters_block");
+    //   if (window.scrollY >= 40) {
+    //     // пофиксить
+    //     filters.classList.add("fixed-filters");
+    //   } else {
+    //     filters.classList.remove("fixed-filters");
+    //   }
+    // });
 
     this.imitationLoadPage();
 
@@ -422,14 +422,57 @@ export default {
         & .content 
             padding-left 0
 
-@media (max-width: 375px) and (min-width: 320px)
+@media (max-width: 768px) and (min-width: 426px)
+    .list-panel-offers
+        background-color #dedfdf
+        & p
+          display none
+    .list-panel-count-offers
+        background-color #dedfdf
+        & p
+          display none
+    .list-panel-sort
+        margin-left 16px
+
+@media (max-width: 425px) and (min-width: 321px)
     .col-3
         display none
     .col-9
         width 100%
+    .list-panel-offers
+        background-color #dedfdf
+        margin-right 5px
+        width 170px
+        & p
+          display none
     .list-panel-count-offers
         background-color #dedfdf
-        margin-right 0
+        margin-right 5px
+        margin-left 5px
+        & p
+          display none
+    .list-panel-sort
+        padding 9px
+        width 32px
     .row-flex
         justify-content flex-start
+@media (max-width: 320px)
+    .row-flex
+        flex-wrap wrap
+    .col
+        margin-bottom 5px
+    .col-3
+        display none
+    .col-9
+        width 100%
+    .list-panel-offers
+        background-color #dedfdf
+        margin-right 5px
+        width 170px
+    .list-panel-count-offers
+        background-color #dedfdf
+        margin-right 5px
+    .list-panel-sort
+        padding 9px
+        width 32px
 </style>

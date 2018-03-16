@@ -33,7 +33,7 @@
             return {
                 language: localStorage.getItem('systemLang'),
                 isOpenModal: false,
-                isLoader: true
+                isLoader: false
             }
         },
         computed: {

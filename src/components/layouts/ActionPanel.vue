@@ -152,4 +152,7 @@
         .link
             margin-top 16px
 
+    @media (max-width: 768px)
+        .offers-apply-panel
+            margin-top 50px
 </style>
