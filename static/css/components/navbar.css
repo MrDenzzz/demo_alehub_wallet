@@ -75,8 +75,6 @@
       color: #fcfcfc;
       font-size: 32px;
       margin-right: 16px; }
-      .navbar .balance .count:nth-child(2) {
-        margin-right: 0; }
     .navbar .balance .options {
       width: 64px;
       height: 100%;
@@ -141,7 +139,7 @@
   display: none;
   cursor: pointer;
   padding: 1em 0em; }
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 768px) {
     .hamburger {
       display: block;
       padding-right: 32px;
@@ -170,9 +168,13 @@
         -o-transform: translateY(-7px) rotate(-45deg);
         transform: translateY(-7px) rotate(-45deg); } }
 
+@media screen and (max-width: 768px) {
+  .white .hamburger .line {
+    background-color: #43414a; } }
+
 .mobile-menu {
-  position: absolute;
-  height: 100vh;
+  position: fixed;
+  height: 100%;
   background: #0d1717;
   width: 100%;
   max-width: 360px;
@@ -181,17 +183,24 @@
   transition: .3s;
   display: none;
   padding: 15px;
-  padding-top: 75px;
+  padding-top: calc(64px + 15px);
   z-index: 5; }
   .mobile-menu.is-collapsed {
     overflow-y: scroll;
     bottom: 0; }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
   .themes, .actions, .options {
+    display: none !important; } }
+
+@media screen and (max-width: 1024px) {
+  .themes {
     display: none !important; }
   .navbar .navbar-nav {
     width: auto; }
+  .navbar .title {
+    position: initial;
+    transform: unset; }
   .mobile-menu {
     display: block; }
     .mobile-menu a {

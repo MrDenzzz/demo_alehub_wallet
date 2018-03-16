@@ -6,6 +6,9 @@ body {
 
 .dark {
   background: #4a4e65 !important;
+  .drag {
+    background-color: #404455;
+  }
   .menu {
     background-color: #404455 !important;
     .wallet-list {
@@ -54,7 +57,7 @@ body {
       }
       &:hover {
         &:not(:first-of-type) {
-          background: #17171d;
+          background: #272730;
           .wrap-in-wallet {
             p {
               color: #fcfcfc;
@@ -224,16 +227,24 @@ body {
     }
     .navbar-nav {
       .actions {
-        .active {
-          background-color: #404455;
-        }
         .item {
+          &.active {
+            background-color: #4a4e65;
+          }
           &:hover {
-            background-color: #404455;
+            background-color: #4a4e65;
           }
           &:not(.active) {
             &:hover {
               background-color: rgba(64, 68, 85, 0.75);
+            }
+          }
+          &:first-child {
+            &.active {
+              background-color: #404455;
+            }
+            &:hover {
+              background-color: #404455;
             }
           }
         }
@@ -265,6 +276,12 @@ body {
       background-color: #27272f;
       .body {
         .modal-control {
+          .badge-control {
+            .badge {
+              background-color: rgba(13, 23, 23, 0.7) !important;
+              color: #dedfdf !important;
+            }
+          }
           .address {
             color: #dedfdf;
           }
@@ -331,6 +348,9 @@ body {
         }
         .close {
           background-image: url('/static/img/close-cross_dark.svg');
+        }
+        .back {
+          background-image: url('/static/img/back-arrow-small_dark.svg');
         }
       }
     }
@@ -470,19 +490,72 @@ body {
     > div {
       background: #eee;
       max-width: 300px;
+      max-height: 300px;
       margin: auto;
       @media screen and (max-width: 350px) {
         max-width: 240px;
+        max-height: 240px;
       }
     }
   }
   .no-found {
     color: #dedfdf !important;
   }
+  .modal-warning {
+    .agreed {
+      color: #dedfdf !important;
+    }
+    &.agreed-border {
+      .agreed {
+        border-bottom: 1px solid #565656 !important;
+      }
+    }
+  }
+  .control-checkbox {
+    color: rgba(222, 223, 223, 0.7) !important;
+    .control-indicator {
+      &:after {
+        border: solid #dedfdf;
+        left: 6px !important;
+      }
+    }
+  }
+  .control-indicator {
+    background: #3c3e4b;
+    border: solid 0.5px #484848;
+  }
+  .control:hover input ~ .control-indicator, 
+  .control input:focus ~ .control-indicator {
+    background: #29388e;
+  }
+  .control input:checked ~ .control-indicator {
+    background: #3e4ea7;
+    border: solid 0.5px #080880;
+  }
+  .control:hover input:not([disabled]):checked ~ .control-indicator, 
+  .control input:checked:focus ~ .control-indicator {
+    background: #29388e;
+  }
+  .phrase {
+    background-color: rgba(13, 23, 23, 0.25) !important;
+    span {
+      color: #dedfdf !important;
+    }
+  }
 }
 
 .white {
   background: #fff !important;
+  .drag {
+    background-color: #aaaec1;
+    &:after {
+      content: " ";
+      background: url("./../../../static/img/wallet_white.svg");
+      background-size: cover;
+      width: 23px;
+      height: 20.5px;
+    }
+  }
   .menu {
     background-color: #aaaec1 !important;
     .wallet-list {
@@ -577,31 +650,31 @@ body {
     color: #282c41 !important;
   }
   .btn-yellow {
-    background: #3c4af0;
-    color: #f4f3fc;
+    background: #3c4af0 !important;
+    color: #f4f3fc !important;
     &:hover {
-      background: #2f3dd4;
+      background: #2f3dd4 !important;
     }
     &:focus,
     &:active {
-      background: #303cc4;
+      background: #303cc4 !important;
     }
     &:disabled {
-      background-color: #3c4af0;
+      background-color: #3c4af0 !important;
     }
   }
   .btn-default {
-    background: #adb1c3;
-    color: #fff;
+    background: #adb1c3 !important;
+    color: #fff !important;
     &:hover {
-      background: #8f95b1;
+      background: #8f95b1 !important;
     }
     &:focus,
     &:active {
-      background: #7a7f97;
+      background: #7a7f97 !important;
     }
     &:disabled {
-      background-color: #adb1c3;
+      background-color: #adb1c3 !important;
     }
   }
   .list-panel-heading {
@@ -780,6 +853,30 @@ body {
       color: #ececec;
     }
   }
+  .mobile-menu {
+    background: #eff0f3;
+    a {
+      span {
+        color: #43414a;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid #d7d8da;
+      }
+    }
+    hr {
+      color: #d7d8da;
+      background-color: #d7d8da;
+    }
+  }
+  .scMobileMenu {
+    .item {
+      &:not(:last-child) {
+        a {
+          border-bottom: 1px solid #d7d8da;
+        }
+      }
+    }
+  }
 }
 
 .themes {
@@ -797,6 +894,50 @@ body {
   }
   input[type="radio"] {
     margin: 0;
+  }
+}
+
+.dragParent {
+  min-height: calc(100vh - 64px);
+  width: 720px;
+  position: absolute;
+  left: -360px;
+}
+
+.drag {
+  width: 60px;
+  height: 60px;
+  background-color: #474b4b;
+  position: absolute;
+  left: calc(100% - 20px);
+  top: calc(50% - 60px);
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  &:after {
+    content: " ";
+    font-size: 24pt;
+    text-align: center;
+    line-height: 42px;
+    color: #fff;
+    float: left;
+    position: relative;
+    left: 26px;
+    top: 20px;
+    background: url("./../../../static/img/wallet.svg");
+    background-size: cover;
+    width: 23px;
+    height: 20.5px;
+  }
+}
+
+.navbar {
+  .navbar-nav {
+    .logo {
+      display: flex;
+      img {
+        height: 36px;
+      }
+    }
   }
 }
 
@@ -831,6 +972,14 @@ body {
     }
     .qr-code {
       margin-top: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .navbar {
+    .title {
+      display: none !important;
     }
   }
 }
