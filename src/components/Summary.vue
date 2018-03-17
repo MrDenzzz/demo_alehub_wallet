@@ -144,6 +144,19 @@
             ...mapGetters([
                 'transactionsFilter'
             ]),
+            // currentToken: function () {
+            //     return this.$store.state.User.token;
+            // },
+            // currentStatus: function () {
+            //     return this.$store.state.User.status;
+            // },
+
+            // currentUserEmail: function () {
+            //     return this.$store.state.User.email;
+            // },
+            // currentUserName: function () {
+            //     return this.$store.state.User.name;
+            // },
             selectedTheme () {
                 return this.$store.state.Themes.theme;
             },
@@ -257,7 +270,7 @@
                 this.$modal.show(name);
             },
 
-            getIcon(name) {
+            getIcon: function (name) {
                 if (this.selectedTheme === 'dark') return require(`../assets/img/${name}_dark.svg`);
                 else if (this.selectedTheme === 'white') return require(`../assets/img/${name}_dark.svg`);
                 else return require(`../assets/img/${name}.svg`);
@@ -321,7 +334,8 @@
                 this.startingTransactions = val;
             });
 
-
+            console.log(this.currentUserEmail, 'this.currentUserEmail');
+            console.log(this.currentUserName, 'this.currentUserName');
             // this.isLoader = true;
             //
             // document.addEventListener('DOMContentLoaded', function () {
@@ -401,8 +415,10 @@
                 this.dateTo = to;
             });
 
-            console.log(this.currentToken, 'this.currentToken');
-            console.log(this.currentStatus, 'this.currentStatus');
+            // console.log(this.currentToken, 'this.currentToken');
+            // console.log(this.currentStatus, 'this.currentStatus');
+
+
 
         }
     }

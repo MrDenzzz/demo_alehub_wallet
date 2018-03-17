@@ -13,7 +13,7 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="login-form">
+                            <div class="login-form" v-if="authStatus !== 'success'">
                                 <form @submit.prevent="login">
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
@@ -21,7 +21,8 @@
                                                 v-validate="'required|email'"
                                                 class="d-block"
                                                 :class="{error: isErrorEmail}"
-                                                @keyup.enter="checkLogin"
+                                                @keyup.enter="checkLogin()"
+                                                @blur="checkLogin()"
                                                 @input="resetError('login')"
                                                 type="text"
                                                 placeholder="e-mail"
@@ -35,8 +36,9 @@
                                         <label for="password">password</label>
                                         <input
                                                 class="d-block"
-                                                :class="{error:isErrorPassword}"
-                                                @keyup.enter="checkLogin"
+                                                :class="{error: isErrorPassword}"
+                                                @keyup.enter="checkPassword()"
+                                                @blur="checkPassword()"
                                                 @input="resetError('password')"
                                                 type="password"
                                                 placeholder="password"
@@ -57,6 +59,26 @@
                                 </p>
 
                             </div>
+
+                            <div class="2fa-form" v-else>
+                                <form @submit.prevent="login">
+                                    <qriously :value="'123'" :size="300"/>
+
+                                    <div class="control" @click="focusInput('password')">
+                                        <label for="password">password</label>
+                                        <input
+                                                type="text"
+                                                id="2fakey"
+                                                class="d-block"
+                                                placeholder="Enter your 2fakey"
+                                                :class="{error: isError2fa}"
+                                                @keyup.enter="check2fa()"
+                                                @blur="check2fa()"
+                                                @input="resetError('password')"
+                                                v-model="twoFa">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,7 +91,7 @@
     import Navbar from './layouts/Navbar';
     import sha256 from 'sha256';
 
-    import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
 
     export default {
@@ -81,17 +103,21 @@
             return {
                 email: null,
                 password: null,
+                twoFa: null,
                 isErrorEmail: false,
                 isErrorPassword: false,
+                isError2fa: false
             }
         },
         computed: {
+            ...mapGetters([
+                'authStatus'
+            ]),
             getTestAccounts: function () {
                 return this.$store.state.Users.testAccounts;
             }
         },
         methods: {
-            // ...mapMutations({}),
             ...mapActions([
                 'authRequest'
             ]),
@@ -164,6 +190,15 @@
                 // }, response => {
                 //     console.log('error', response);
                 // });
+            },
+            checkLogin: function () {
+
+            },
+            checkPassword: function () {
+
+            },
+            check2fa: function () {
+
             },
             focusInput: function (id) {
                 document.getElementById(id).focus()

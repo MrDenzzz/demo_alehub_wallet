@@ -9,22 +9,24 @@
             <div class="modal-control">
                 <div class="modal-input">
                     <label class="title">Old password</label>
-                    <input type="text" class="input" placeholder="password" :value="data.old" @input="setOldPassword">
+                    <!--<input type="text" class="input" placeholder="password" :value="data.old" @input="setOldPassword">-->
+                    <input type="text" class="input" placeholder="password">
                 </div>
             </div>
 
             <div class="modal-control">
                 <div class="modal-input">
                     <label class="title">New password</label>
-                    <input type="text" class="input" placeholder="password" :value="data.new" @input="setNewPassword">
+                    <!--<input type="text" class="input" placeholder="password" :value="data.new" @input="setNewPassword">-->
+                    <input type="text" class="input" placeholder="password">
                 </div>
             </div>
 
             <div class="modal-control no-bottom">
                 <div class="modal-input">
                     <label class="title">Repeat password</label>
-                    <input type="text" class="input" placeholder="password" :value="data.repeat"
-                           @input="setRepeatPassword">
+                    <!--<input type="text" class="input" placeholder="password" :value="data.repeat" @input="setRepeatPassword">-->
+                    <input type="text" class="input" placeholder="password">
                 </div>
             </div>
 
@@ -51,23 +53,23 @@
         },
         computed: {
             data() {
-                return this.$store.state.Settings.changePassword
+                // return this.$store.state.Settings.changePassword
             }
         },
         methods: {
             ...mapMutations({
-                setOldPass: 'SET_OLD_PASSWORD',
-                setNewPass: 'SET_NEW_PASSWORD',
-                setRepeatPass: 'SET_REPEAT_PASSWORD'
+                // setOldPass: 'SET_OLD_PASSWORD',
+                // setNewPass: 'SET_NEW_PASSWORD',
+                // setRepeatPass: 'SET_REPEAT_PASSWORD'
             }),
             setOldPassword(e) {
-                this.setOldPass(e.target.value);
+                // this.setOldPass(e.target.value);
             },
             setNewPassword(e) {
-                this.setNewPass(e.target.value);
+                // this.setNewPass(e.target.value);
             },
             setRepeatPassword(e) {
-                this.setRepeatPass(e.target.value);
+                // this.setRepeatPass(e.target.value);
             },
             closeModal() {
                 this.$modal.hide('changepassword');

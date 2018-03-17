@@ -9,28 +9,46 @@
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
-                    <div class="row">
+                    <Spinner v-if="authStatus !== 'success'" />
+                    <div class="row" v-else>
                         <div class="col-12">
                             <panel-heading :title="'General'" :isTop="true"/>
                             <div class="form">
                                 <input-control
                                         :label-value="'Full name'"
                                         :input-id="'fullname'"
-                                        :input-value="'Prof. PVA'"
+                                        :input-value="userName"
                                         :input-type="'text'"
                                 />
-                                <input-control
-                                        :label-value="'E-mail'"
-                                        :input-id="'email'"
-                                        :input-value="'i***@pva.com'"
-                                        :input-type="'text'"
-                                />
+                                <!--<input-control-->
+                                        <!--:label-value="'E-mail'"-->
+                                        <!--:input-id="'email'"-->
+                                        <!--:input-value="userEmail"-->
+                                        <!--:input-type="'text'"-->
+                                <!--/>-->
+
+                                <div class="control">
+                                    <div class="wrap-input">
+                                        <label>E-mail</label>
+                                        <div class="textbox">
+                                            <p
+                                                    class="text full-line"
+                                                    @click="openModal('changeemail')"
+                                            >
+                                                <!--@click="showCPModal"-->
+                                                {{userEmail}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="control">
                                     <div class="wrap-input">
                                         <label>Password</label>
                                         <div class="textbox">
                                             <p
                                                     class="text full-line"
+                                                    @click="openModal('changepassword')"
                                             >
                                                 <!--@click="showCPModal"-->
                                                 Last updated 15 days ago
@@ -84,7 +102,8 @@
             </div>
         </section>
 
-        <!--<change-password-modal />-->
+        <change-password-modal />
+        <change-email-modal />
 
         <!-- изменить на тостер -->
 
@@ -104,12 +123,26 @@
     import InputControl from './layouts/forms/InputControl';
     import SwitchControl from './layouts/forms/SwitchControl';
     import PanelHeading from './layouts/PanelHeading';
+    import ChangePasswordModal from './modals/ChangePassword';
+    import ChangeEmailModal from './modals/ChangeEmailModal';
+    import Spinner from './layouts/Spinner';
     import sha256 from 'sha256';
 
     import {mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'settings',
+        components: {
+            Navbar,
+            SelectControl,
+            SwitchControl,
+            InputControl,
+            PanelHeading,
+            ChangePasswordModal,
+            ChangeEmailModal,
+            Spinner
+        },
         data() {
             return {
                 isShow: false,
@@ -118,14 +151,12 @@
                 selectedLanguage: 'English'
             }
         },
-        components: {
-            Navbar,
-            SelectControl,
-            SwitchControl,
-            InputControl,
-            PanelHeading
-        },
         computed: {
+            ...mapGetters([
+                'authStatus',
+                'userName',
+                'userEmail'
+            ]),
             selectedLang: function () {
                 switch (localStorage.getItem('systemLang')) {
                     case 'eng':
@@ -165,9 +196,15 @@
                 if (e.target.className === 'value')
                     return false;
                 document.getElementsByClassName('value')[0].click();
+            },
+            openModal: function (name) {
+                this.$modal.show(name);
             }
         },
         mounted() {
+
+            console.log(this.userName, 'this.userName');
+
             this.$on('onselect', function (id, value) {
                 this.newSelect(id, value)
             });
@@ -178,6 +215,9 @@
                     this.notifText = 'Password is not';
                 } else
                     this.closeModal('changepassword');
+            });
+            this.$on('receiveTitleOffer', function (value) {
+                console.log(value, 'zxczxc');
             });
         }
     }
