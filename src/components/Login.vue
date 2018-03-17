@@ -75,7 +75,7 @@
                                                 @keyup.enter="check2fa()"
                                                 @blur="check2fa()"
                                                 @input="resetError('password')"
-                                                v-model="twoFa">
+                                                v-model="twoauth">
                                     </div>
                                 </form>
                             </div>
@@ -103,7 +103,7 @@
             return {
                 email: null,
                 password: null,
-                twoFa: null,
+                twoauth: null,
                 isErrorEmail: false,
                 isErrorPassword: false,
                 isError2fa: false
@@ -165,31 +165,11 @@
                     }
                 }
 
-                // this.$http.post(`${this.$host}/users/login`, {
-                //     email: this.email,
-                //     password: this.password
-                // }, {
-                //     headers: {
-                //         'Content-Type': 'application/json; charset=UTF-8',
-                //         'Accept': 'application/json'
-                //     }
-                // }).then(response => {
-                //     console.log(response);
-                //
-                //     const { username, password } = this;
-
                 const {email, password} = this;
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
                     this.$router.push('/')
                 });
-
-                // localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
-                // localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
-                // this.$router.push('/');
-                // }, response => {
-                //     console.log('error', response);
-                // });
             },
             checkLogin: function () {
 

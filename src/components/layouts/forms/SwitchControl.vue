@@ -20,7 +20,7 @@
         methods: {
             changeChecker: function () {
                 this.value = !this.value;
-                this.$parent.$emit('changeChecker', this.id, this.value);
+                this.$parent.$emit('changeChecker', this.value);
             }
         }
     }

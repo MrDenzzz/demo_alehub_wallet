@@ -20,12 +20,6 @@
                                         :input-value="userName"
                                         :input-type="'text'"
                                 />
-                                <!--<input-control-->
-                                        <!--:label-value="'E-mail'"-->
-                                        <!--:input-id="'email'"-->
-                                        <!--:input-value="userEmail"-->
-                                        <!--:input-type="'text'"-->
-                                <!--/>-->
 
                                 <div class="control">
                                     <div class="wrap-input">
@@ -35,7 +29,6 @@
                                                     class="text full-line"
                                                     @click="openModal('changeemail')"
                                             >
-                                                <!--@click="showCPModal"-->
                                                 {{userEmail}}
                                             </p>
                                         </div>
@@ -50,7 +43,6 @@
                                                     class="text full-line"
                                                     @click="openModal('changepassword')"
                                             >
-                                                <!--@click="showCPModal"-->
                                                 Last updated 15 days ago
                                             </p>
                                         </div>
@@ -81,8 +73,8 @@
                                                 to your phone or using third-party authentification app.
                                             </p>
                                             <switch-control
-                                                    :checked="tfa"
-                                                    :id="'tfa'"
+                                                    :checked="twoauth"
+                                                    :id="'twoauth'"
                                             />
                                         </div>
                                     </div>
@@ -147,7 +139,7 @@
             return {
                 isShow: false,
                 notifText: '',
-                tfa: false,
+                twoauth: this.userTwoAuth,
                 selectedLanguage: 'English'
             }
         },
@@ -155,7 +147,8 @@
             ...mapGetters([
                 'authStatus',
                 'userName',
-                'userEmail'
+                'userEmail',
+                'userTwoAuth'
             ]),
             selectedLang: function () {
                 switch (localStorage.getItem('systemLang')) {
@@ -203,7 +196,7 @@
         },
         mounted() {
 
-            console.log(this.userName, 'this.userName');
+            // console.log(this.userName, 'this.userName');
 
             this.$on('onselect', function (id, value) {
                 this.newSelect(id, value)
@@ -218,6 +211,18 @@
             });
             this.$on('receiveTitleOffer', function (value) {
                 console.log(value, 'zxczxc');
+            });
+            this.$on('changeChecker', function (value) {
+                // this.twoauth = value;
+
+                this.openModal();
+
+                // this.$store.dispatch('twoauthRequest').then(() => {
+                    // this.$router.push('/')
+
+                // });
+
+
             });
         }
     }

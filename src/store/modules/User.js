@@ -5,9 +5,12 @@ import sha256 from 'sha256';
 const state = {
     name: '',
     email: '',
+    twoauth: '',
     userStatus: '',
     token: localStorage.getItem(sha256('2o_H-Zu7nNDcmSaZX')) || '',
-    status: ''
+    status: '',
+    twoauthGeneratedCode: '',
+    twoauthStatus: ''
 };
 
 const actions = {
@@ -74,6 +77,30 @@ const actions = {
                     reject(err);
                 });
         });
+    },
+    twoauthRequest: ({commit, dispatch}) => {
+        return new Promise((resolve, reject) => {
+            commit('TWOAUTH_REQUEST');
+            let host = 'http://192.168.1.37:4000/users/generate-qr';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            })
+                .then(resp => {
+                    console.log(resp);
+                    // commit('TWOAUTH_SUCCESS', resp);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('TWOAUTH_ERROR', err);
+                    reject(err);
+                });
+        });
     }
 };
 
@@ -96,20 +123,32 @@ const mutations = {
         state.userStatus = 'loading';
     },
     USER_SUCCESS: (state, user) => {
+        state.userStatus = 'success';
         state.name = user.name;
         state.email = user.email;
-        state.userStatus = 'success';
+        state.twoauth = user.twoauth;
     },
     USER_ERROR: (state) => {
         state.userStatus = 'error';
     },
+    TWOAUTH_REQUEST: (state) => {
+        state.twoauthStatus = 'loading';
+    },
+    TWOAUTH_SUCCESS: (state, twoauthCode) => {
+        state.twoauthStatus = 'success';
+        state.twoauthGeneratedCode = twoauthCode;
+    },
+    TWOAUTH_ERROR: (state) => {
+        state.twoauthStatus = 'error';
+    }
 };
 
 const getters = {
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status,
     userName: state => state.name,
-    userEmail: state => state.email
+    userEmail: state => state.email,
+    userTwoAuth: state => state.twoauth
 };
 
 export default {
