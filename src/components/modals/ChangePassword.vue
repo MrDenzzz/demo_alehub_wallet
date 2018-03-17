@@ -1,5 +1,5 @@
 <template>
-    <modal name="changepassword" height="auto" class="modal-xs">
+    <modal name="change-password" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">Change password</p>
             <i class="close" @click="closeModal"></i>
@@ -44,7 +44,7 @@
     import {mapMutations} from 'vuex';
 
     export default {
-        name: 'newWallet',
+        name: 'change-password-modal',
         data() {
             return {
                 isDropDown: false,
@@ -72,7 +72,7 @@
                 // this.setRepeatPass(e.target.value);
             },
             closeModal() {
-                this.$modal.hide('changepassword');
+                this.$modal.hide('change-password');
             }
         }
     }

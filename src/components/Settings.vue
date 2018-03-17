@@ -96,6 +96,7 @@
 
         <change-password-modal />
         <change-email-modal />
+        <change-two-auth-modal :twoauth-status="changeableValue" />
 
         <!-- изменить на тостер -->
 
@@ -116,7 +117,8 @@
     import SwitchControl from './layouts/forms/SwitchControl';
     import PanelHeading from './layouts/PanelHeading';
     import ChangePasswordModal from './modals/ChangePassword';
-    import ChangeEmailModal from './modals/ChangeEmailModal';
+    import ChangeEmailModal from './modals/ChangeEmail';
+    import ChangeTwoAuthModal from './modals/ChangeTwoAuth';
     import Spinner from './layouts/Spinner';
     import sha256 from 'sha256';
 
@@ -133,6 +135,7 @@
             PanelHeading,
             ChangePasswordModal,
             ChangeEmailModal,
+            ChangeTwoAuthModal,
             Spinner
         },
         data() {
@@ -140,6 +143,7 @@
                 isShow: false,
                 notifText: '',
                 twoauth: this.userTwoAuth,
+                changeableValue: false,
                 selectedLanguage: 'English'
             }
         },
@@ -148,7 +152,8 @@
                 'authStatus',
                 'userName',
                 'userEmail',
-                'userTwoAuth'
+                'userTwoAuth',
+                'userStatus'
             ]),
             selectedLang: function () {
                 switch (localStorage.getItem('systemLang')) {
@@ -195,9 +200,6 @@
             }
         },
         mounted() {
-
-            // console.log(this.userName, 'this.userName');
-
             this.$on('onselect', function (id, value) {
                 this.newSelect(id, value)
             });
@@ -207,22 +209,14 @@
                     this.isSuccessNotif = false;
                     this.notifText = 'Password is not';
                 } else
-                    this.closeModal('changepassword');
+                    this.closeModal('change-password');
             });
             this.$on('receiveTitleOffer', function (value) {
                 console.log(value, 'zxczxc');
             });
             this.$on('changeChecker', function (value) {
-                // this.twoauth = value;
-
-                this.openModal();
-
-                // this.$store.dispatch('twoauthRequest').then(() => {
-                    // this.$router.push('/')
-
-                // });
-
-
+                this.changeableValue = value;
+                this.openModal('change-two-auth');
             });
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <modal name="changeemail" height="auto" class="modal-xs">
+    <modal name="change-email" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">Change email</p>
             <i class="close" @click="closeModal"></i>
@@ -52,7 +52,7 @@
         },
         methods: {
             closeModal: function () {
-                this.$modal.hide('changeemail');
+                this.$modal.hide('change-email');
             }
         },
         create() {

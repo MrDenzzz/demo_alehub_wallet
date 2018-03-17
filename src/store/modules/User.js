@@ -10,6 +10,7 @@ const state = {
     token: localStorage.getItem(sha256('2o_H-Zu7nNDcmSaZX')) || '',
     status: '',
     twoauthGeneratedCode: '',
+    twoauthSecret: '',
     twoauthStatus: ''
 };
 
@@ -86,14 +87,17 @@ const actions = {
                 url: host,
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json',
-                    'Authorization': axios.defaults.headers.common['Authorization']
+                    'Accept': 'application/json'
                 },
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp);
-                    // commit('TWOAUTH_SUCCESS', resp);
+                    let twoauth = {
+                        qrPath: resp.data.qr_path,
+                        secret: resp.data.secret
+                    };
+                    // console.log(twoauth, 'twoauth');
+                    commit('TWOAUTH_SUCCESS', twoauth);
                     resolve(resp);
                 })
                 .catch(err => {
@@ -134,9 +138,10 @@ const mutations = {
     TWOAUTH_REQUEST: (state) => {
         state.twoauthStatus = 'loading';
     },
-    TWOAUTH_SUCCESS: (state, twoauthCode) => {
+    TWOAUTH_SUCCESS: (state, twoauth) => {
         state.twoauthStatus = 'success';
-        state.twoauthGeneratedCode = twoauthCode;
+        state.twoauthGeneratedCode = twoauth.qrPath;
+        state.twoauthSecret = twoauth.secret;
     },
     TWOAUTH_ERROR: (state) => {
         state.twoauthStatus = 'error';
@@ -148,7 +153,11 @@ const getters = {
     authStatus: state => state.status,
     userName: state => state.name,
     userEmail: state => state.email,
-    userTwoAuth: state => state.twoauth
+    userStatus: state => state.userStatus,
+    userTwoAuth: state => state.twoauth,
+    twoAuthStatus: state => state.twoauthStatus,
+    twoAuthGeneratedCode: state => state.twoauthGeneratedCode,
+    twoAuthSecret: state => state.twoauthSecret
 };
 
 export default {
