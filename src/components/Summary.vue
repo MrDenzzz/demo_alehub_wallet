@@ -305,7 +305,7 @@
                 //     this.isLoader = false;
                 // }, 750);
             },
-            changeSelectedWallet(address) {
+            changeSelectedWallet: function (address) {
                 this.changeTransactionLoaderState(true);
                 this.$http.get(`${this.$host}/transactions/${address}`, {
                     headers: {
@@ -334,8 +334,6 @@
                 this.startingTransactions = val;
             });
 
-            console.log(this.currentUserEmail, 'this.currentUserEmail');
-            console.log(this.currentUserName, 'this.currentUserName');
             // this.isLoader = true;
             //
             // document.addEventListener('DOMContentLoaded', function () {

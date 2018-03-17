@@ -54,9 +54,8 @@ const i18n = new VueI18n({
 });
 
 const token = localStorage.getItem(sha256('user-token'));
-if (token) {
+if (token !== 'undefined' && token) {
     axios.defaults.headers.common['Authorization'] = token;
-
     store.dispatch('userRequest').then(() => {
         console.log('successfully reload');
     });

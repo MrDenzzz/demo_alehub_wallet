@@ -13,7 +13,7 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="login-form" v-if="authStatus !== 'success'">
+                            <div class="login-form" v-if="this.authStep !== 1">
                                 <form @submit.prevent="login">
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
@@ -28,6 +28,7 @@
                                                 placeholder="e-mail"
                                                 id="email"
                                                 v-model="email"
+                                                required
                                                 autofocus
                                         >
                                     </div>
@@ -43,6 +44,7 @@
                                                 type="password"
                                                 placeholder="password"
                                                 id="password"
+                                                required
                                                 v-model="password">
                                     </div>
 
@@ -60,23 +62,29 @@
 
                             </div>
 
-                            <div class="2fa-form" v-else>
-                                <form @submit.prevent="login">
-                                    <qriously :value="'123'" :size="300"/>
-
-                                    <div class="control" @click="focusInput('password')">
-                                        <label for="password">password</label>
+                            <div class="login-form" v-else>
+                                <form @submit.prevent="loginWithTwoAuth">
+                                    <div class="control" @click="focusInput('twoAuthKey')">
+                                        <label for="twoAuthKey">2fa code</label>
                                         <input
                                                 type="text"
-                                                id="2fakey"
+                                                id="twoAuthKey"
                                                 class="d-block"
-                                                placeholder="Enter your 2fakey"
+                                                placeholder="Enter your key"
                                                 :class="{error: isError2fa}"
                                                 @keyup.enter="check2fa()"
                                                 @blur="check2fa()"
-                                                @input="resetError('password')"
-                                                v-model="twoauth">
+                                                @input="resetError('token')"
+                                                v-model="token"
+                                                autofocus
+                                                required>
                                     </div>
+
+                                    <button
+                                            type="submit"
+                                            class="btn btn-black btn-block nomargin">
+                                        Enter code
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -90,20 +98,21 @@
 <script>
     import Navbar from './layouts/Navbar';
     import sha256 from 'sha256';
+    import Spinner from './layouts/Spinner';
 
     import {mapGetters} from 'vuex';
-    import {mapActions} from 'vuex';
 
     export default {
         name: 'login',
         components: {
-            Navbar
+            Navbar,
+            Spinner
         },
         data() {
             return {
                 email: null,
                 password: null,
-                twoauth: null,
+                token: null,
                 isErrorEmail: false,
                 isErrorPassword: false,
                 isError2fa: false
@@ -111,16 +120,12 @@
         },
         computed: {
             ...mapGetters([
-                'authStatus'
+                'authStep',
+                'authStatus',
+                'userTwoAuth'
             ]),
-            getTestAccounts: function () {
-                return this.$store.state.Users.testAccounts;
-            }
         },
         methods: {
-            ...mapActions([
-                'authRequest'
-            ]),
             login: function () {
 
                 let e = this.errors.items;
@@ -168,11 +173,23 @@
                 const {email, password} = this;
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
-                    this.$router.push('/')
+                    if (this.authStep === 0) {
+                        this.$store.dispatch('userRequest').then(() => {
+                            this.$router.push('/');
+                        });
+                    }
                 });
             },
-            checkLogin: function () {
 
+            loginWithTwoAuth: function () {
+                const {email, password, token} = this;
+                this.$store.dispatch('authTwoFaRequest', {email, password, token}).then(() => {
+                    this.$router.push('/');
+                });
+            },
+
+            checkLogin: function () {
+                //тосты для вывода ошибок
             },
             checkPassword: function () {
 
@@ -181,11 +198,14 @@
 
             },
             focusInput: function (id) {
-                document.getElementById(id).focus()
+                document.getElementById(id).focus();
             },
             resetError: function (type) {
-                if (type === 'login') this.isErrorEmail = false;
-                if (type === 'password') this.isErrorPassword = false;
+                if (type === 'login')
+                    this.isErrorEmail = false;
+
+                if (type === 'password')
+                    this.isErrorPassword = false;
             }
         },
         mounted() {
@@ -196,6 +216,37 @@
 </script>
 
 <style lang="stylus" scoped>
+    /*.two-auth-form*/
+        /*.control*/
+            /*label*/
+                /*text-transform uppercase*/
+                /*margin 0*/
+                /*white-space pre*/
+                /*margin-left 16px*/
+                /*margin-right 12px*/
+            /*input*/
+                /*width 100%*/
+                /*font-size 14px*/
+                /*background inherit*/
+                /*border none*/
+                /*text-align right*/
+                /*outline none*/
+                /*margin-right 16px*/
+                /*position relative*/
+                /*z-index 1*/
+                /*opacity 1*/
+
+    /*.two-auth-form*/
+        /*width 426px*/
+        /*padding 16px*/
+        /*height auto*/
+        /*background #f0f0f0*/
+        /*display flex*/
+        /*justify-content center*/
+        /*border-radius 4px*/
+        /*flex-direction column*/
+        /*margin 0 auto*/
+
     .d-block
         display block
 
