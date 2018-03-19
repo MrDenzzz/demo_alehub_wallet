@@ -14,9 +14,9 @@ const state = {
     twoAuthSecret: '',
     twoAuthStatus: '',
     disableTwoAuthStatus: '',
-
-    changeUserNameStatus: ''
-
+    changeUserNameStatus: '',
+    isLoader: false,
+    isErrorLogin: false
 };
 
 const actions = {
@@ -227,16 +227,24 @@ const actions = {
 
 const mutations = {
     AUTH_CHANGE_STEP: (state) => {
+        state.isErrorLogin = false;
+        state.isLoader = false;
         state.authStep = 1;
     },
     AUTH_REQUEST: (state) => {
+        state.isErrorLogin = false;
+        state.isLoader = true;
         state.status = 'loading';
     },
     AUTH_SUCCESS: (state, token) => {
+        state.isErrorLogin = false;
+        state.isLoader = false;
         state.status = 'success';
         state.token = token;
     },
     AUTH_ERROR: (state) => {
+        state.isErrorLogin = true;
+        state.isLoader = false;
         state.status = 'error';
     },
     AUTH_LOGOUT: (state) => {
@@ -306,8 +314,9 @@ const getters = {
     twoAuthStatus: state => state.twoAuthStatus,
     twoAuthGeneratedCode: state => state.twoAuthGeneratedCode,
     twoAuthSecret: state => state.twoAuthSecret,
-
-    changeUserNameStatus: state => state.changeUserNameStatus
+    changeUserNameStatus: state => state.changeUserNameStatus,
+    isLoaderUserAuth: state => state.isLoader,
+    isErrorLogin: state => state.isErrorLogin
 };
 
 export default {
