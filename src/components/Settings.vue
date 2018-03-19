@@ -35,34 +35,50 @@
                                     </div>
                                 </div>
 
-                                <div class="control">
-                                    <div class="wrap-input">
-                                        <label>Password</label>
-                                        <div class="textbox">
-                                            <p
-                                                    class="text full-line"
-                                                    @click="openModal('changepassword')"
-                                            >
-                                                Last updated 15 days ago
-                                            </p>
-                                        </div>
-                                    </div>
+                                <!--<router-link  :to="{ path: '/sync' }">12323</router-link>-->
+
+                            </div><br>
+
+                            <Panel-heading :title="'Select theme'" :isTop="false"/>
+
+                            <div class="group-settings">
+                                <div class="form select-main" @click="selectTheme('main')">
+                                    <img src="../../static/img/logo_main.svg" alt="">
                                 </div>
-                                <div class="control border-none" @click.stop="changeLanguage">
-                                    <div class="wrap-input">
-                                        <label>{{ $t('pages.settings.language') }}</label>
-                                        <select-control
-                                                :current="selectedLang"
-                                                :all-options="['English', 'Русский']"
-                                                :id="'language'"
-                                        />
-                                    </div>
+                                <div class="form select-dark" @click="selectTheme('dark')">
+                                    <img src="../../static/img/logo_dark.svg" alt="">
+                                </div>
+                                <div class="form select-white" @click="selectTheme('white')">
+                                    <img src="../../static/img/logo_white.svg" alt="">
                                 </div>
                             </div>
 
                             <panel-heading
                                     :title="'Security'"
                             />
+                            <div class="control">
+                                <div class="wrap-input">
+                                    <label>Password</label>
+                                    <div class="textbox">
+                                        <p
+                                                class="text full-line"
+                                                @click="openModal('changepassword')"
+                                        >
+                                            Last updated 15 days ago
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control border-none" @click.stop="changeLanguage">
+                                <div class="wrap-input">
+                                    <label>{{ $t('pages.settings.language') }}</label>
+                                    <select-control
+                                            :current="selectedLang"
+                                            :all-options="['English', 'Русский']"
+                                            :id="'language'"
+                                    />
+                                </div>
+                            </div>
                             <div class="form">
                                 <div class="control">
                                     <div class="wrap-input">
@@ -127,6 +143,7 @@
 
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
+    import {mapMutations} from 'vuex';
 
     export default {
         name: 'settings',
@@ -185,6 +202,9 @@
             }
         },
         methods: {
+            ...mapMutations({
+                setTheme: "SET_THEME"
+            }),
             ...mapActions([
                 'authLogout'
             ]),
@@ -217,6 +237,23 @@
                 if (e.target.className === 'value')
                     return false;
                 document.getElementsByClassName('value')[0].click();
+            },
+            selectTheme (name) {
+                let body = document.getElementsByTagName('body')[0];
+                this.setTheme(name);
+                switch (name) {
+                    case 'main':
+                        body.classList.remove("dark", "white");
+                        break;
+                    case 'dark':
+                        body.classList.remove("white");
+                        body.classList.add("dark");
+                        break;
+                    case 'white':
+                        body.classList.remove("dark");
+                        body.classList.add("white");
+                        break;
+                }
             },
             openModal: function (name) {
                 this.$modal.show(name);

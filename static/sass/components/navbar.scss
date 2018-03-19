@@ -269,7 +269,7 @@
   width: 100%;
   max-width: 360px;
   right: 0;
-  bottom: 100vh;
+  bottom: 100%;
   transition: .3s;
   display: none;
   padding: 15px;
@@ -349,10 +349,18 @@
   }
   .navbar {
     .title {
-      position: inherit;
+      position: relative;
       left: auto;
       transform: none;
       padding-left: 32px;
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .navbar {
+    .title {
+      display: none;
     }
   }
 }

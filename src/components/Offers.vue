@@ -21,11 +21,11 @@
                     <div class="row" v-if="notFoundOffers">
                         <div class="col-12">
                             <action-panel
-                                          :btn-router-text="$t('pages.jobOffers.newOfferBlock.subTitle')"
-                                          :action-router-text="$t('pages.jobOffers.newOfferBlock.title')"
-                                          to="/offers/new"
-                                          is-top-offers-action="true"
-                                          top-offers-apply-panel="true"
+                                :btn-router-text="$t('pages.jobOffers.newOfferBlock.subTitle')"
+                                :action-router-text="$t('pages.jobOffers.newOfferBlock.title')"
+                                to="/offers/new"
+                                is-top-offers-action="true"
+                                top-offers-apply-panel="true"
                             />
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                     <div class="list-panel-heading list-panel-count-offers">
                                         <p>{{ $t('pages.jobOffers.filters.onPage') }}: </p>
                                         <Select
-                                                current="10"
+                                                :current="10"
                                                 :all-options="optionsOffersOnPage"
                                                 type-select="offer"
                                                 count-offers="true"
@@ -455,7 +455,7 @@ export default {
         padding 9px
         width 32px
     .row-flex
-        justify-content flex-start
+        justify-content space-between;
 @media (max-width: 320px)
     .row-flex
         flex-wrap wrap

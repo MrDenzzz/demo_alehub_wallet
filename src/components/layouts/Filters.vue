@@ -1,32 +1,36 @@
 <template>
     <div class="filter-panel">
 
-        <label>Price, ALC</label>
+        <label>{{ $t('pages.jobOffers.filtersBlock.price.title') }}, ALC</label>
         <div class="two-input">
-            <label for="price_from" class="label-from">from</label>
-            <input
-                    id="price_from"
-                    type="number"
-                    class="input input-from"
-                    :placeholder="getMinPriceOffers"
-                    @blur="filterPriceFrom"
-                    @keydown.enter="filterPriceFrom"
-            >
-            <label for="price_to" class="label-to">to</label>
-            <!-- забирать эти значения не из геттера, а из стейта -->
-            <input
-                    id="price_to"
-                    type="number"
-                    class="input input-to"
-                    :placeholder="getMaxPriceOffers"
-                    @blur="filterPriceTo"
-                    @keydown.enter="filterPriceTo"
-            >
+            <div>
+                <label for="price_from" class="label-from">{{ $t('pages.jobOffers.filtersBlock.price.from') }}</label>
+                <input
+                        id="price_from"
+                        type="number"
+                        class="input input-from"
+                        :placeholder="getMinPriceOffers"
+                        @blur="filterPriceFrom"
+                        @keydown.enter="filterPriceFrom"
+                >
+            </div>
+            <div>
+                <label for="price_to" class="label-to">{{ $t('pages.jobOffers.filtersBlock.price.to') }}</label>
+                <!-- забирать эти значения не из геттера, а из стейта -->
+                <input
+                        id="price_to"
+                        type="number"
+                        class="input input-to"
+                        :placeholder="getMaxPriceOffers"
+                        @blur="filterPriceTo"
+                        @keydown.enter="filterPriceTo"
+                >
+            </div>
         </div>
 
         <label>Type</label>
 
-        <div class="control-group">
+        <div class="control-group group-double">
             <label class="control control-checkbox" v-for="item in typeOffer">
                 {{ item.title }}
                 <input
@@ -43,24 +47,28 @@
         <label>Contractor rating</label>
 
         <div class="two-input">
-            <label for="rating_from" class="label-from">from</label>
-            <input
-                    id="rating_from"
-                    type="number"
-                    class="input input-from"
-                    :placeholder="getMinRatingOffers"
-                    @blur="filterRatingFrom"
-                    @keydown.enter="filterRatingFrom"
-            >
-            <label for="rating_to" class="label-to">to</label>
-            <input
-                    id="rating_to"
-                    type="number"
-                    class="input input-to"
-                    :placeholder="getMaxRatingOffers"
-                    @blur="filterRatingTo"
-                    @keydown.enter="filterRatingTo"
-            >
+            <div>
+                <label for="rating_from" class="label-from">from</label>
+                <input
+                        id="rating_from"
+                        type="number"
+                        class="input input-from"
+                        :placeholder="getMinRatingOffers"
+                        @blur="filterRatingFrom"
+                        @keydown.enter="filterRatingFrom"
+                >
+            </div>
+            <div>
+                <label for="rating_to" class="label-to">to</label>
+                <input
+                        id="rating_to"
+                        type="number"
+                        class="input input-to"
+                        :placeholder="getMaxRatingOffers"
+                        @blur="filterRatingTo"
+                        @keydown.enter="filterRatingTo"
+                >
+            </div>
         </div>
 
         <label>Professional area</label>

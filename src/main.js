@@ -47,6 +47,7 @@ if (localStorage.getItem('systemLang') === null) {
 } else {
     systemLang = localStorage.getItem('systemLang');
 }
+if (systemLang !== ('rus' || 'eng')) systemLang = 'eng'
 
 const i18n = new VueI18n({
     locale: systemLang,
