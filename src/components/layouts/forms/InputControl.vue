@@ -62,6 +62,8 @@
             },
             sendData: function () {
                 this.$parent.$emit('receiveTitleOffer', this.value);
+
+                this.$parent.$emit('receiveFullName', this.value);
             }
         },
         mounted() {

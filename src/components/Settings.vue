@@ -9,7 +9,7 @@
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
-                    <Spinner v-if="authStatus !== 'success' && userStatus !== 'success'" />
+                    <Spinner v-if="authStatus !== 'success' && userStatus !== 'success'"/>
                     <div class="row" v-else>
                         <div class="col-12">
                             <panel-heading :title="'General'" :isTop="true"/>
@@ -74,7 +74,7 @@
                                             </p>
                                             <switch-control
                                                     v-if="userStatus === 'success'"
-                                                    :checked="switchValueAuth"
+                                                    :checked="updatableTwoAuth"
                                                     :id="'twoauth'"
                                             />
                                         </div>
@@ -95,9 +95,9 @@
             </div>
         </section>
 
-        <change-password-modal />
-        <change-email-modal />
-        <change-two-auth-modal />
+        <change-password-modal/>
+        <change-email-modal/>
+        <change-two-auth-modal/>
 
         <!-- изменить на тостер -->
 
@@ -144,15 +144,14 @@
                 isShow: false,
                 notifText: '',
 
-                switchValueAuth: '',
+                // switchValueAuth: this.userTwoAuth,
+                switchValueAuth: true,
 
                 // changeableValue: false,
                 selectedLanguage: 'English'
             }
         },
-        watch: {
-
-        },
+        watch: {},
         computed: {
             ...mapGetters([
                 'authStatus',
@@ -162,6 +161,9 @@
                 'userTwoAuth',
                 'twoAuthStatus'
             ]),
+            updatableTwoAuth: function () {
+                return this.userTwoAuth;
+            },
             selectedLang: function () {
                 switch (localStorage.getItem('systemLang')) {
                     case 'eng':
@@ -177,9 +179,6 @@
             ...mapActions([
                 'authLogout'
             ]),
-            // changeSwitchValue: function (val) {
-            //
-            // },
             logout: function () {
                 this.$store.dispatch('authLogout').then(() => {
                     this.$router.push('/login')
@@ -187,6 +186,11 @@
 
                 this.$router.push('/login');
             },
+            // changeFullName: function () {
+            //     if () {
+            //
+            //     }
+            // },
             newSelect: function (value, id) {
                 if (id === "language") {
                     if (value === 'English')
@@ -209,9 +213,10 @@
                 this.$modal.show(name);
             }
         },
-        mounted() {
+        created() {
 
-            console.log(this.userTwoAuth, 'this.userTwoAuth');
+        },
+        mounted() {
 
             this.$on('onselect', function (id, value) {
                 this.newSelect(id, value)
@@ -224,8 +229,10 @@
                 } else
                     this.closeModal('change-password');
             });
-            this.$on('receiveTitleOffer', function (value) {
-                console.log(value, 'zxczxc');
+            this.$on('receiveFullName', function (value) {
+                if (value !== this.userName) {
+
+                }
             });
             this.$on('changeChecker', function (value) {
                 // this.changeableValue = value;
