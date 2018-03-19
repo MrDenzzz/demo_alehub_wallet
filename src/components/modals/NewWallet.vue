@@ -34,10 +34,10 @@
 
                 <div class="modal-btn text-center">
                     <button
-                        class="btn btn-yellow btn-large"
-                        @click="changeStepCreate('next')"
-                        :disabled="checkNewWalletFields"
-                        :class="{ 'disabled': checkNewWalletFields }"
+                            class="btn btn-yellow btn-large"
+                            @click="changeStepCreate('next')"
+                            :disabled="checkNewWalletFields"
+                            :class="{ 'disabled': checkNewWalletFields }"
                     >
                         {{ $t('modals.newWallet.new.button') }}
                     </button>
@@ -50,11 +50,11 @@
                     <div class="modal-input">
                         <label class="title">{{ $t('modals.newWallet.import.fields.title.label') }}</label>
                         <input
-                            type="text"
-                            id="redemptionWalletName"
-                            class="input"
-                            :placeholder="$t('modals.newWallet.import.fields.title.placeholder')"
-                            v-model="walletName1"
+                                type="text"
+                                id="redemptionWalletName"
+                                class="input"
+                                :placeholder="$t('modals.newWallet.import.fields.title.placeholder')"
+                                v-model="walletName1"
                         />
                     </div>
                 </div>
@@ -66,26 +66,26 @@
                             <span class="badge" v-for="mnemonic in mnemonicsRecovery">{{ mnemonic }}</span>
                         </div>
                         <input
-                            type="text"
-                            class="input"
-                            id="redemptionKey"
-                            placeholder="Mnemonic phrase"
-                            v-on:keyup.188="addMnemonic"
-                            v-model="mnemonicFieldRecovery"
-                            @keyup.enter="addMnemonicRecovery"
-                            @keyup.delete="removeMnemonicRecovery"
-                            @keyup.space="addMnemonicRecovery"
-                            @blur="onBlurNewWallet"
+                                type="text"
+                                class="input"
+                                id="redemptionKey"
+                                placeholder="Mnemonic phrase"
+                                v-on:keyup.188="addMnemonic"
+                                v-model="mnemonicFieldRecovery"
+                                @keyup.enter="addMnemonicRecovery"
+                                @keyup.delete="removeMnemonicRecovery"
+                                @keyup.space="addMnemonicRecovery"
+                                @blur="onBlurNewWallet"
                         />
                     </div>
                 </div>
 
                 <div class="modal-btn text-center">
                     <button
-                        class="btn btn-yellow btn-large"
-                        @click="importWallet()"
-                        :disabled="isImport"
-                        :class="{ 'disabled': isImport }"
+                            class="btn btn-yellow btn-large"
+                            @click="importWallet()"
+                            :disabled="isImport"
+                            :class="{ 'disabled': isImport }"
                     >
                         {{ $t('modals.newWallet.import.button') }}
                     </button>
@@ -108,12 +108,12 @@
 
             <div class="modal-btn text-center">
                 <button
-                    class="btn btn-yellow btn-large btn-bottom btn-timer"
-                    :disabled="countTimer || !isAgreedRecovery"
-                    :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery }"
-                    @click="getRandomSeed()">
+                        class="btn btn-yellow btn-large btn-bottom btn-timer"
+                        :disabled="countTimer || !isAgreedRecovery"
+                        :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery }"
+                        @click="getRandomSeed()">
                     {{ $t('modals.newWallet.recovery.phrase.btn') }} <span
-                    v-if="countTimer !== 0">({{ countTimer }})</span>
+                        v-if="countTimer !== 0">({{ countTimer }})</span>
                 </button>
             </div>
         </div>
@@ -152,15 +152,15 @@
                         <span class="badge" v-for="mnemonic in mnemonicsRecovery">{{ mnemonic }}</span>
                     </div>
                     <input
-                        type="text"
-                        class="input"
-                        :placeholder="$t('modals.newWallet.recovery.finish.fields.phrase.placeholder')"
-                        v-on:keyup.188="addMnemonicRecovery"
-                        v-model="mnemonicFieldRecovery"
-                        @keyup.enter="addMnemonicRecovery"
-                        @keyup.delete="removeMnemonicRecovery"
-                        @keyup.space="addMnemonicRecovery"
-                        @blur="recoveryBlur"
+                            type="text"
+                            class="input"
+                            :placeholder="$t('modals.newWallet.recovery.finish.fields.phrase.placeholder')"
+                            v-on:keyup.188="addMnemonicRecovery"
+                            v-model="mnemonicFieldRecovery"
+                            @keyup.enter="addMnemonicRecovery"
+                            @keyup.delete="removeMnemonicRecovery"
+                            @keyup.space="addMnemonicRecovery"
+                            @blur="recoveryBlur"
                     />
                 </div>
             </div>
@@ -183,18 +183,18 @@
 
             <div class="modal-btn text-center">
                 <button
-                    class="btn btn-default btn-large"
-                    :class="{ 'disabled': mnemonicsRecovery.length === 0 }"
-                    @click="clearRecoveryPhrase"
-                    :disabled="mnemonicsRecovery.length === 0"
+                        class="btn btn-default btn-large"
+                        :class="{ 'disabled': mnemonicsRecovery.length === 0 }"
+                        @click="clearRecoveryPhrase"
+                        :disabled="mnemonicsRecovery.length === 0"
                 >
                     {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
                 </button>
                 <button
-                    class="btn btn-yellow btn-large"
-                    :class="{ 'disabled': isConfirmRecovery }"
-                    :disabled="isConfirmRecovery"
-                    @click="newCreateWallet"
+                        class="btn btn-yellow btn-large"
+                        :class="{ 'disabled': isConfirmRecovery }"
+                        :disabled="isConfirmRecovery"
+                        @click="newCreateWallet"
                 >
                     {{ $t('modals.newWallet.recovery.finish.btn.confirm') }}
                 </button>
@@ -430,67 +430,23 @@
                 item.push(JSON.parse('"' + data + '"'));
                 localStorage.setItem('wallets', JSON.stringify(item));
             },
+
             newCreateWallet: function () {
-                if (!this.walletName1) {
-                    switch (this.walletType) {
-                        case 'new':
-                            this.focusInput('newWalletName');
-                            return false;
-                        case 'redemption':
-                            this.focusInput('redemptionWalletName');
-                            return false;
-                        case 'preico':
-                            this.focusInput('preicoWalletName');
-                            return false;
+
+                this.$store.dispatch('newWallet', {
+                        name: this.walletName1,
+                        seed: this.mnemonicsRecovery
                     }
-                }
-                if (this.walletType === 'redemption' || this.walletType === 'preico') {
-                    if (!this.redemtionKey) {
-                        switch (this.walletType) {
-                            case 'redemption':
-                                this.focusInput('redemptionKey');
-                                return false;
-                            case 'redemption':
-                                this.focusInput('redemptionPreico');
-                                return false;
-                        }
-                    }
-                }
+                ).then(() => {
 
-                if (this.getUserWallets.length === 1) {
-                    this.$store.state.Wallets.currentWallet = this.getUserWallets[0];
-                    localStorage.setItem('walletId', this.$store.state.Wallets.currentWallet.id);
-                }
-
-                this.$http.post(`${this.$host}/wallet/new`, {
-                    name: this.walletName1, //rename
-                    seed: this.mnemonicsRecovery
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json',
-                        'Authorization': localStorage.getItem(sha256('user-token'))
-                    }
-                }).then(response => {
-
-                    this.createNewNewWallet(response.body.walletModel);
-
-                    if (localStorage.getItem('wallets')) {
-                        this.saveDataToFieldLocalStorage(response.body.walletModel.address);
-                    } else {
-                        this.saveDataToEmptyLocalStorage(response.body.walletModel.address);
-                    }
-
-                }, response => {
-                    this.$toasted.show('Wallet not found', {
-                        duration: 10000,
-                        type: 'error',
-                    });
                 });
+
 
                 this.closeModal();
             },
-            importWallet () {
+
+
+            importWallet() {
                 if (!this.walletName1) {
                     this.focusInput('redemptionWalletName');
                     return false;
@@ -845,14 +801,16 @@
         background-color: #fafafa;
         box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
     }
-    @media screen and (max-width: 1024px){
+
+    @media screen and (max-width: 1024px) {
         .v--modal {
-            max-width:  80% !important;
+            max-width: 80% !important;
         }
     }
-    @media screen and (max-width: 768px){
+
+    @media screen and (max-width: 768px) {
         .v--modal {
-            max-width:  100% !important;
+            max-width: 100% !important;
             border-radius: 0;
         }
     }

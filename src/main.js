@@ -47,7 +47,7 @@ if (localStorage.getItem('systemLang') === null) {
 } else {
     systemLang = localStorage.getItem('systemLang');
 }
-if (systemLang !== ('rus' || 'eng')) systemLang = 'eng'
+if (systemLang !== ('rus' || 'eng')) systemLang = 'eng';
 
 const i18n = new VueI18n({
     locale: systemLang,
@@ -60,6 +60,35 @@ if (token !== 'undefined' && token) {
     store.dispatch('userRequest').then(() => {
         console.log('successfully reload');
     });
+
+    store.dispatch('walletsRequest').then(() => {
+        console.log('successfully reload wallets');
+    });
+
+
+    // let host = 'http://192.168.1.37:4000/users/user-wallets';
+    //
+    // axios({
+    //     url: host,
+    //     headers: {
+    //         'Content-Type': 'application/json; charset=UTF-8',
+    //         'Accept': 'application/json',
+    //         'Authorization': axios.defaults.headers.common['Authorization']
+    //     },
+    //     method: 'GET'
+    // })
+    //     .then(resp => {
+    //
+    //         console.log(resp);
+    //
+    //         resolve(resp);
+    //     })
+    //     .catch(err => {
+    //
+    //         reject(err);
+    //     });
+
+
 }
 
 new Vue({
