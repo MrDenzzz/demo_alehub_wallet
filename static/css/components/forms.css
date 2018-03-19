@@ -6,22 +6,18 @@ label {
   color: #34343e;
   margin-bottom: 16px; }
 
-.two-input {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0 18px 0; }
-  .two-input .input {
-    width: 100%;
-    border-radius: 2px;
-    background-color: #f7f7f7;
-    border: solid 1px #979797;
-    padding: 6px 8px;
-    font-family: MuseoSansCyrl700;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.17;
-    color: #34343e; }
-    .two-input .input:first-child {
-      margin-right: 0px; }
-    .two-input .input:last-child {
-      margin-left: 0px; }
+.two-input .input {
+  width: 100%;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+  border: solid 1px #979797;
+  padding: 6px 8px;
+  font-family: MuseoSansCyrl700;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.17;
+  color: #34343e; }
+  .two-input .input:first-child {
+    margin-right: 0px; }
+  .two-input .input:last-child {
+    margin-left: 0px; }
