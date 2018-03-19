@@ -43,6 +43,9 @@
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
                 else return this.language;
+            },
+            selectedTheme () {
+                return this.$store.state.Themes.theme;
             }
         },
         methods: {
@@ -115,6 +118,20 @@
             }
         },
         created() {
+            let body = document.querySelector('body');
+            switch (this.selectedTheme) {
+                case 'main':
+                    body.classList.remove("dark", "white");
+                    break;
+                case 'dark':
+                    body.classList.remove("white");
+                    body.classList.add("dark");
+                    break;
+                case 'white':
+                    body.classList.remove("dark");
+                    body.classList.add("white");
+                    break;
+            }
             let _this = this;
             this.isOpenModal = false;
             if (localStorage.getItem('wallets') === null) {
@@ -124,6 +141,7 @@
             this.initiateWallets();
 
             setInterval(_this.getIntervalWalletsInfo, 15000);
+            
 
         },
         mounted() {
