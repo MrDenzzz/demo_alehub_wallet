@@ -72,6 +72,14 @@
                                     >
                                 </div>
 
+                                <div class="is-center" v-if="isLoader">
+                                    <Spinner  />
+                                </div>
+
+                                <div class="error-block" v-if="isExistUser">
+                                    <p>Error login</p>
+                                </div>
+
                                 <button
                                         class="btn btn-yellow btn-block nomargin"
                                         @click="registerUser()"
@@ -112,11 +120,14 @@
                 password: '',
                 passwordConfirm: '',
                 successSendRequest: false,
-                processingSendRequest: false
+                processingSendRequest: false,
+                isLoader: false,
+                isExistUser: false
             }
         },
         methods: {
             registerUser: function () {
+                this.isExistUser = false;
                 var e = this.errors.items;
                 if (!this.fullName && !this.email && !this.phoneNumber
                     && !this.password && !this.passwordConfirm) {
@@ -190,7 +201,8 @@
                     return false;
                 }
 
-                this.processingSendRequest = true;
+                
+                this.isLoader = true;
 
                 this.$http.post(`${this.$host}/users/new`, {
                     name: this.fullName,
@@ -202,6 +214,10 @@
                         'Accept': 'application/json'
                     }
                 }).then(response => {
+                    if(response.body.message === 'User already exist!') {
+                        this.isLoader = false;
+                        return this.isExistUser = true;
+                    }
                     this.successSendRequest = true;
                     this.processingSendRequest = true;
                     console.log(response);
@@ -222,7 +238,28 @@
     }
 </script>
 
+<style>
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #f0f0f0 inset !important;
+    }
+</style>
+
 <style lang="stylus" scoped>
+    .is-center
+        display flex
+        justify-content center
+        margin-top -10px
+        margin-bottom 25px
+
+    .error-block
+        color red
+        font-family MuseoSansCyrl300
+        text-align center
+        margin-top -20px
+
     .d-block
         display block
 
