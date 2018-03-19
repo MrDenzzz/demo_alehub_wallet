@@ -280,9 +280,12 @@
                         }
                     }).then(response => {
                         this.addNewNotificaiton(response.body.model);
-                        this.$socket.emit('get transactions', {sender: this.currentWallet.address, receiver: this.address});
-                        let adresses = JSON.parse(localStorage.getItem('wallets'));
-                        this.$socket.emit('get balance', adresses);
+
+                        console.log(response, 'send response');
+
+                        // this.$socket.emit('get transactions', {sender: this.currentWallet.address, receiver: this.address});
+                        // let adresses = JSON.parse(localStorage.getItem('wallets'));
+                        // this.$socket.emit('get balance', adresses);
                     }, response => {
                         console.log('error', response);
                     });
