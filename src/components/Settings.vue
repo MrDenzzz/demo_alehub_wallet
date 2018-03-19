@@ -9,7 +9,7 @@
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
-                    <Spinner v-if="authStatus !== 'success' && userStatus !== 'success'"/>
+                    <Spinner v-if="false"/>
                     <div class="row" v-else>
                         <div class="col-12">
                             <panel-heading :title="'General'" :isTop="true"/>
@@ -35,9 +35,30 @@
                                     </div>
                                 </div>
 
-                                <!--<router-link  :to="{ path: '/sync' }">12323</router-link>-->
-
-                            </div><br>
+                                <div class="control">
+                                    <div class="wrap-input">
+                                        <label>Password</label>
+                                        <div class="textbox">
+                                            <p
+                                                    class="text full-line"
+                                                    @click="openModal('changepassword')"
+                                            >
+                                                Last updated 15 days ago
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control border-none" @click.stop="changeLanguage">
+                                    <div class="wrap-input">
+                                        <label>{{ $t('pages.settings.language') }}</label>
+                                        <select-control
+                                                :current="selectedLang"
+                                                :all-options="['English', 'Русский']"
+                                                :id="'language'"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
                             <Panel-heading :title="'Select theme'" :isTop="false"/>
 
@@ -56,29 +77,6 @@
                             <panel-heading
                                     :title="'Security'"
                             />
-                            <div class="control">
-                                <div class="wrap-input">
-                                    <label>Password</label>
-                                    <div class="textbox">
-                                        <p
-                                                class="text full-line"
-                                                @click="openModal('changepassword')"
-                                        >
-                                            Last updated 15 days ago
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="control border-none" @click.stop="changeLanguage">
-                                <div class="wrap-input">
-                                    <label>{{ $t('pages.settings.language') }}</label>
-                                    <select-control
-                                            :current="selectedLang"
-                                            :all-options="['English', 'Русский']"
-                                            :id="'language'"
-                                    />
-                                </div>
-                            </div>
                             <div class="form">
                                 <div class="control">
                                     <div class="wrap-input">
@@ -140,11 +138,9 @@
     import ChangeTwoAuthModal from './modals/ChangeTwoAuth';
     import Spinner from './layouts/Spinner';
     import sha256 from 'sha256';
-
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
     import {mapMutations} from 'vuex';
-
     export default {
         name: 'settings',
         components: {
@@ -162,10 +158,8 @@
             return {
                 isShow: false,
                 notifText: '',
-
                 // switchValueAuth: this.userTwoAuth,
                 switchValueAuth: true,
-
                 // changeableValue: false,
                 selectedLanguage: 'English',
 
@@ -184,11 +178,9 @@
                 'userTwoAuth',
                 'twoAuthStatus'
             ]),
-
             changeFlag: function () {
                 return this.flag;
             },
-
             updatableTwoAuth: function () {
                 return this.userTwoAuth;
             },
@@ -214,7 +206,6 @@
                 this.$store.dispatch('authLogout').then(() => {
                     this.$router.push('/login')
                 });
-
                 this.$router.push('/login');
             },
             // changeFullName: function () {
@@ -240,6 +231,9 @@
                     return false;
                 document.getElementsByClassName('value')[0].click();
             },
+            openModal: function (name) {
+                this.$modal.show(name);
+            },
             selectTheme (name) {
                 let body = document.getElementsByTagName('body')[0];
                 this.setTheme(name);
@@ -256,13 +250,9 @@
                         body.classList.add("white");
                         break;
                 }
-            },
-            openModal: function (name) {
-                this.$modal.show(name);
             }
         },
         created() {
-
         },
         mounted() {
             this.$on('onselect', function (id, value) {
@@ -312,19 +302,15 @@
             .wrap-input
                 .full-line
                     width 100%
-
     .form .deletelink
         margin-top -8px
         padding-top 0
-
     .border-none
         border none
-
     .form .deletelink {
         margin-top: -8px;
         padding-top: 0px;
     }
-
     @media screen and (max-width: 1024px) {
         .main {
             & .content {
