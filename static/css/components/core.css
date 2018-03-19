@@ -5,6 +5,20 @@ body {
 
 .dark {
   background: #4a4e65 !important; }
+  .dark .filter-panel {
+    background: #27272f; }
+    .dark .filter-panel .two-input input {
+      background-color: #3c3e4a;
+      border: solid 0.5px #484848;
+      color: #dedfdf; }
+      .dark .filter-panel .two-input input::-webkit-input-placeholder {
+        color: #dedfdf; }
+      .dark .filter-panel .two-input input::-moz-placeholder {
+        color: #dedfdf; }
+      .dark .filter-panel .two-input input:-ms-input-placeholder {
+        color: #dedfdf; }
+      .dark .filter-panel .two-input input:-moz-placeholder {
+        color: #dedfdf; }
   .dark .drag {
     background-color: #404455; }
   .dark .menu {
@@ -98,6 +112,8 @@ body {
         .dark .activityList .activityListBlock .activity-list .status span {
           padding-top: 2px;
           color: #f4f3fc; }
+        .dark .activityList .activityListBlock .activity-list .status.sent span {
+          color: #5e7cd3 !important; }
       .dark .activityList .activityListBlock .activity-list .details {
         padding-right: 15px; }
         .dark .activityList .activityListBlock .activity-list .details .info p {
@@ -108,12 +124,17 @@ body {
         .dark .activityList .activityListBlock .activity-list .details .count {
           min-width: 70px; }
           .dark .activityList .activityListBlock .activity-list .details .count span {
-            color: #455bd6 !important;
             padding-right: 0;
             margin-right: 0;
             padding-bottom: 3px; }
           .dark .activityList .activityListBlock .activity-list .details .count.active span {
             color: #f4f3fc !important; }
+        .dark .activityList .activityListBlock .activity-list .details.sent .count span {
+          color: #5e7cd3 !important; }
+        .dark .activityList .activityListBlock .activity-list .details.sent .purpose {
+          color: #5e7cd3 !important; }
+        .dark .activityList .activityListBlock .activity-list .details.sent .info p {
+          color: #5e7cd3 !important; }
       .dark .activityList .activityListBlock .activity-list .received {
         background-color: transparent !important; }
     .dark .activityList .activityListBlock .result-day {
@@ -294,8 +315,9 @@ body {
   .dark .control-checkbox {
     color: rgba(222, 223, 223, 0.7) !important; }
     .dark .control-checkbox .control-indicator:after {
+      left: 34%;
       border: solid #dedfdf;
-      left: 6px !important; }
+      border-width: 0 2px 2px 0; }
   .dark .control-indicator {
     background: #3c3e4b;
     border: solid 0.5px #484848; }
@@ -315,6 +337,8 @@ body {
 
 .white {
   background: #fff !important; }
+  .white .select-white {
+    background: #f0f0f0; }
   .white .drag {
     background-color: #aaaec1; }
     .white .drag:after {
@@ -550,6 +574,67 @@ body {
   display: flex; }
   .navbar .navbar-nav .logo img {
     height: 36px; }
+
+.group-settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; }
+  .group-settings .form {
+    min-height: 150px;
+    width: 32.5%;
+    min-width: 300px;
+    background: transparent;
+    cursor: pointer; }
+    .group-settings .form.select-main {
+      background-color: #474b4b; }
+    .group-settings .form.select-dark {
+      background-color: #27272f; }
+    .group-settings .form.select-white {
+      background-color: #aaaec1; }
+
+@media screen and (max-width: 980px) {
+  .group-settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap; }
+    .group-settings .form {
+      min-height: 150px;
+      width: 32.5%;
+      min-width: 312px; }
+      .group-settings .form:last-child {
+        margin-top: 20px; } }
+
+@media screen and (max-width: 720px) {
+  .group-settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap; }
+    .group-settings .form {
+      min-height: 150px;
+      width: 32.5%;
+      min-width: 340px; }
+      .group-settings .form:last-child {
+        margin-top: 20px; }
+      .group-settings .form:nth-child(2) {
+        margin-top: 20px; } }
+
+@media screen and (max-width: 390px) {
+  .group-settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap; }
+    .group-settings .form {
+      min-height: 150px;
+      width: 100%;
+      min-width: 100px; }
+      .group-settings .form:last-child {
+        margin-top: 20px; }
+      .group-settings .form:nth-child(2) {
+        margin-top: 20px; } }
 
 @media screen and (max-width: 1024px) {
   .dark .menu .wallet-list .wrap-in-wallet, .white .menu .wallet-list .wrap-in-wallet {
