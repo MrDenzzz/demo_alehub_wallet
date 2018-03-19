@@ -1,16 +1,17 @@
 <template>
     <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen">
         <div class="heading" v-if="newWalletStep === 1">
-            <p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>
+            <p class="title">{{ dropDownOption[0].title }}</p>
+            <!--<p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>-->
             <i class="close" @click="closeModal" v-if="isCloseModal"></i>
-            <div class="dropdown-list list-select" v-show="isOpenOptions">
-                <ul>
-                    <li v-for="(option, optionIndex) in dropDownOption" :class="{ 'selected': option.isSelected }"
-                        @click="changeType(optionIndex)">
-                        {{ option.title }}
-                    </li>
-                </ul>
-            </div>
+            <!--<div class="dropdown-list list-select" v-show="isOpenOptions">-->
+                <!--<ul>-->
+                    <!--<li v-for="(option, optionIndex) in dropDownOption" :class="{ 'selected': option.isSelected }"-->
+                        <!--@click="changeType(optionIndex)">-->
+                        <!--{{ option.title }}-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </div>
 
         <div class="heading" v-if="newWalletStep !== 1">
@@ -220,7 +221,7 @@
                 walletName1: '',
                 dropDownOption: [
                     {title: this.$t('modals.newWallet.new.label'), isSelected: true, value: 'new'},
-                    {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
+                    // {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
                 ],
                 redemtionKey: '',
                 newWalletStep: 1,

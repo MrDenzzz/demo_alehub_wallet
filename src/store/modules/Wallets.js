@@ -4,6 +4,7 @@ import axios from "axios/index";
 import sha256 from "sha256";
 
 const state = {
+    wallets_status: '',
     currentWallet: null,
     selectedWallet: '',
     wallets: [
@@ -293,7 +294,7 @@ const state = {
 const actions = {
     walletsRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
-            commit('AUTH_REQUEST');
+            commit('WALLETS_REQUEST');
             let host = 'http://192.168.1.37:4000/users/user-wallets';
             axios({
                 url: host,
@@ -310,6 +311,7 @@ const actions = {
                     resolve(resp);
                 })
                 .catch(err => {
+                    commit('WALLETS_ERROR', err);
                     // commit('AUTH_ERROR', err);
 
                     // localStorage.removeItem(sha256('user-token'));
@@ -348,17 +350,24 @@ const actions = {
 };
 
 const mutations = {
+    WALLETS_REQUEST(state) {
+        state.wallets_status = 'loading';
+    },
     SET_WALLETS(state, wallets) {
         if (wallets.length !== 0) {
             state.wallets = wallets;
             state.currentWallet = state.wallets[0];
         }
+        state.wallets_status = 'success';
+        console.log(state.wallets_status, 'state.wallets_status');
     },
     ADD_WALLET(state, wallet) {
         state.wallets.push(wallet);
         state.currentWallet = state.wallets[state.wallets.length - 1];
     },
-
+    WALLETS_ERROR(state) {
+        state.wallets_status = 'error';
+    },
 
 
     AGREED_DELETE(state) {
@@ -460,7 +469,8 @@ const mutations = {
 };
 
 const getters = {
-    lengthWalletList: state => state.wallets.length
+    lengthWalletList: state => state.wallets.length,
+    walletStatus: state => state.wallets_status
 };
 
 export default {

@@ -143,7 +143,8 @@
         computed: {
             ...mapGetters([
                 'transactionsFilter',
-                'lengthWalletList'
+                'lengthWalletList',
+                'walletStatus'
             ]),
             // currentToken: function () {
             //     return this.$store.state.User.token;
@@ -346,8 +347,9 @@
 
         },
         mounted() {
-
-            if (this.lengthWalletList === 0) {
+            // console.log(this.lengthWalletList, 'this.lengthWalletList');
+            // console.log(this.walletStatus, 'this.walletStatus');
+            if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
                 this.openModal('newwallet');
             }
 
