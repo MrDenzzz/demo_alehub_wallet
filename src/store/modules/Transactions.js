@@ -1,3 +1,5 @@
+import axios from "axios/index";
+
 const state = {
     transactions: [
         // {
@@ -167,10 +169,58 @@ const state = {
     activeFilter: 0,
     searchText: '',
     hideFilter: false,
-    transactionsLoader: true
+    transactionStatus: '',
+    transactionsLoader: false
+};
+
+const actions = {
+    transactionsRequest: ({commit, dispatch}, address) => {
+
+        // this.addNewTransactions(response.body);
+        // this.changeTransactionLoaderState(false);
+
+        return new Promise((resolve, reject) => {
+            commit('TRANSACTIONS_REQUEST');
+            let host = `http://192.168.1.37:4000/transactions/${address}`;
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            })
+                .then(resp => {
+                    console.log(resp.data, 'transactions');
+                    commit('SET_TRANSACTIONS', resp.data);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('TRANSACTIONS_ERROR', err);
+                    // commit('AUTH_ERROR', err);
+
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    },
 };
 
 const mutations = {
+    TRANSACTIONS_REQUEST(state) {
+        state.transactionStatus = 'loading';
+    },
+    SET_TRANSACTIONS(state, transactions) {
+        state.transactionStatus = 'success';
+        state.transactions = transactions;
+    },
+    TRANSACTIONS_ERROR(state, err) {
+        state.transactionStatus = 'error';
+    },
+
+
     CHANGE_ACTIVE_FILTER(state, index) {
         state.activeFilter = index;
     },
@@ -228,11 +278,15 @@ const getters = {
         if (state.activeFilter === 2) return state.transactions.filter(item => {
             return item.type == 'sold' || item.type == 'sent'
         });
-    }
+    },
+
+
+    transactionsStatus: state => state.transactionStatus,
 };
 
 export default {
     state,
+    actions,
     mutations,
     getters
 }

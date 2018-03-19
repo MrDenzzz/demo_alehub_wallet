@@ -91,6 +91,7 @@
     import SelectControl from "../layouts/forms/Select";
     import numeral from 'numeral';
     import {mapMutations} from "vuex";
+    import sha256 from 'sha256';
 
     export default {
         name: "send",
@@ -274,10 +275,11 @@
                     }, {
                         headers: {
                             'Content-Type': 'application/json; charset=UTF-8',
-                            'Accept': 'application/json'
+                            'Accept': 'application/json',
+                            'Authorization': localStorage.getItem(sha256('user-token'))
                         }
                     }).then(response => {
-                        this.addNewNotificaiton(response.body.model)
+                        this.addNewNotificaiton(response.body.model);
                         this.$socket.emit('get transactions', {sender: this.currentWallet.address, receiver: this.address});
                         let adresses = JSON.parse(localStorage.getItem('wallets'));
                         this.$socket.emit('get balance', adresses);

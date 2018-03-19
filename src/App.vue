@@ -41,6 +41,7 @@
                 'authStatus',
                 'userStatus',
                 'walletStatus',
+                'transactionsStatus',
                 'lengthWalletList'
             ]),
             // currentToken: function () {
@@ -60,7 +61,7 @@
                 return this.$store.state.Themes.theme;
             },
             isLoading: function () {
-                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success') {
+                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionsStatus === 'success') {
                     // if (this.lengthWalletList === 0) {
                     //     this.$modal.show('newwallet');
                     // }

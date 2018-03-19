@@ -50,6 +50,7 @@
     import numeral from 'numeral';
     import SelectControl from '../layouts/forms/Select';
     import NewWallet from '../modals/NewWallet';
+    import sha256 from 'sha256';
 
     import {mapMutations} from 'vuex';
 
@@ -118,7 +119,7 @@
             selectNewWallet: function (address) {
                 clearInterval(this.setIntervalId);
                 this.changeNewWallet(address);
-                this.$parent.$emit('changeWallet', true, address)
+                this.$parent.$emit('changeWallet', true, address);
                 this.setIntervalId = setInterval(this.getTransactions, 15000);
             },
             parseBalance: function (balance) {
@@ -134,9 +135,11 @@
                 this.$http.get(`${this.$host}/transactions/${this.getCurrentWallet.address}`, {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Authorization': localStorage.getItem(sha256('user-token'))
                     }
                 }).then(response => {
+                    console.log(response);
                     this.addNewTransactions(response.body);
                 }, response => {
                     console.log('error', response);

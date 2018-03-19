@@ -59,10 +59,14 @@ if (token !== 'undefined' && token) {
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch('userRequest').then(() => {
         console.log('successfully reload');
-    });
 
-    store.dispatch('walletsRequest').then(() => {
-        console.log('successfully reload wallets');
+        store.dispatch('walletsRequest').then(() => {
+            console.log('successfully reload wallets');
+
+            store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
+                console.log('successfully reload transactions');
+            });
+        });
     });
 
 }
