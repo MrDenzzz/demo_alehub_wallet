@@ -45,7 +45,12 @@ const messages = {
                     }
                 },
                 filtersBlock: {
-                    title: 'Filters'
+                    title: 'Filters',
+                    price: {
+                        title: 'Price',
+                        from: 'from',
+                        to: 'to'
+                    }
                 },
                 newOfferBlock: {
                     title: 'You are an employer? ',
@@ -294,11 +299,16 @@ const messages = {
                     }
                 },
                 filtersBlock: {
-                    title: 'Фильтры'
+                    title: 'Фильтры',
+                    price: {
+                        title: 'Цена',
+                        from: 'от',
+                        to: 'до'
+                    }
                 },
                 newOfferBlock: {
                     title: 'Вы работодатель?',
-                    subTitle: 'Создайте собственную задачу'
+                    subTitle: 'Создайте задачу'
                 },
                 rightMenu: {
                     savedOffers: 'Сохраненное',
