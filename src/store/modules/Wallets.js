@@ -305,7 +305,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    // console.log(resp.data);
+                    console.log(resp.data, 'resp.data');
                     commit('SET_WALLETS', resp.data);
                     resolve(resp);
                 })
@@ -349,8 +349,10 @@ const actions = {
 
 const mutations = {
     SET_WALLETS(state, wallets) {
-        state.wallets = wallets;
-        state.currentWallet = state.wallets[0];
+        if (wallets.length !== 0) {
+            state.wallets = wallets;
+            state.currentWallet = state.wallets[0];
+        }
     },
     ADD_WALLET(state, wallet) {
         state.wallets.push(wallet);
