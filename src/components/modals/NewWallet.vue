@@ -550,10 +550,11 @@
 
 <style lang="scss" scoped>
 
-    .input-phrase {
-        display: flex !important;
-        align-items: flex-start !important;
-    }
+    // .input-phrase {
+    //     display: flex !important;
+    //     align-items: center !important;
+    //     justify-content: flex-start !important;
+    // }
 
     .control-checkbox {
         font-size: 14px;
@@ -834,6 +835,24 @@
                     }
                 }
             }
+        }
+    }
+    .v--modal-overlay {
+        & .v--modal-box {
+            & .body {
+                & .modal-control {
+                    & .modal-input {
+                        & .title {
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media(max-width: 425px) {
+        .phrase {
+            padding: 12px;
         }
     }
 </style>
