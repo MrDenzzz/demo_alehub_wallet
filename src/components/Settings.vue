@@ -34,19 +34,16 @@
 
                             <Panel-heading :title="'Select theme'" :isTop="false"/>
 
-                            <div class="form">
-
-                                <div class="control" @click.stop="changeLanguage">
-                                    <div class="wrap-input">
-                                        <label>{{ $t('pages.settings.language') }}</label>
-                                        <select-control
-                                            :current="selectedLang"
-                                            :allOptions="['English', 'Русский']"
-                                            :id="'language'"
-                                        />
-                                    </div>
+                            <div class="group-settings">
+                                <div class="form select-main" @click="selectTheme('main')">
+                                    <img src="../../static/img/logo_main.svg" alt="">
                                 </div>
-
+                                <div class="form select-dark" @click="selectTheme('dark')">
+                                    <img src="../../static/img/logo_dark.svg" alt="">
+                                </div>
+                                <div class="form select-white" @click="selectTheme('white')">
+                                    <img src="../../static/img/logo_white.svg" alt="">
+                                </div>
                             </div>
 
                         </div>
@@ -90,6 +87,9 @@
             }
         },
         methods: {
+            ...mapMutations({
+                setTheme: "SET_THEME"
+            }),
             newSelect(value, id) {
                 if (id === "language") {
                     if (value === 'English')
@@ -105,6 +105,23 @@
                 if (e.target.localName === 'li') return false;
                 if (e.target.className === 'value') return false;
                 document.getElementsByClassName('value')[0].click();
+            },
+            selectTheme (name) {
+                let body = document.getElementsByTagName('body')[0];
+                this.setTheme(name);
+                switch (name) {
+                    case 'main':
+                        body.classList.remove("dark", "white");
+                        break;
+                    case 'dark':
+                        body.classList.remove("white");
+                        body.classList.add("dark");
+                        break;
+                    case 'white':
+                        body.classList.remove("dark");
+                        body.classList.add("white");
+                        break;
+                }
             }
         },
         mounted() {
