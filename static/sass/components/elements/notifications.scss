@@ -15,12 +15,14 @@
 
     & .datetime {
       margin: 0;
+      margin-left: 10px;
       opacity: 0.6;
       font-family: MuseoSansCyrl300;
       font-size: 16px;
       font-weight: 300;
       line-height: 1.12;
       color: #34343e;
+      white-space: nowrap;
 
       & .bold {
         font-weight: bold;
@@ -49,6 +51,7 @@
       & strong {
         font-weight: bold;
         font-family: MuseoSansCyrl700;
+        word-break: break-all;
       }
     }
 
@@ -126,6 +129,17 @@
           padding: 0 5px;
           font-style: normal;
         }
+      }
+    }
+  }
+}
+@media (max-width: 425px) {
+  .notif-panel {
+    & .panel-heading {
+      flex-direction: column;
+      & .datetime {
+        align-self: flex-end;
+        margin-top: 10px;
       }
     }
   }

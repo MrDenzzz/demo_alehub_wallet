@@ -62,3 +62,16 @@
     font-weight: 300;
     line-height: 1.13;
     color: #34343e; }
+
+@media (max-width: 768px) {
+  .offer-list .subtitle {
+    word-break: break-all; } }
+
+@media (max-width: 425px) {
+  .offer-list .heading {
+    flex-direction: column;
+    margin-bottom: 15px; }
+    .offer-list .heading .count {
+      padding-top: 5px;
+      white-space: nowrap;
+      align-self: flex-end; } }

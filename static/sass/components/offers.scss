@@ -444,3 +444,31 @@
     background: #7b7b7b;
   }
 }
+
+@media (max-width: 768px) {
+  .footer {
+    & .timeout {
+      white-space: nowrap;
+    }
+  }
+  .tags-list {
+    flex-wrap: wrap;
+    margin-right: 20px;
+    & .tag {
+      white-space: nowrap;
+    }
+  }
+}
+@media (max-width: 425px) {
+  .list-panel-heading {
+    margin: 0;
+  }
+  .tags-list {
+    & p {
+      display: none;
+    }
+    & .tag {
+      margin-bottom: 8px;
+    }
+  }
+}

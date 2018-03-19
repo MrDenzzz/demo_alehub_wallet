@@ -6,8 +6,10 @@
                     <img src="../../assets/img/back-ic.svg" width="24.5" height="17">
                 </div>
 
-                <router-link :to="{ path: '/wallet' }" v-else>
-                    <div class="logo">ALE</div>
+                <router-link :to="{ path: '/' }" v-else>
+                    <div class="logo">
+                        <img :src="getLogo()" alt="">
+                    </div>
                 </router-link>
 
                 <div class="actions">
@@ -33,7 +35,7 @@
 
             </div>
             <span class="title">{{ title }}</span>
-            <div class="themes">
+            <div class="themes" v-if="true">
                 <label for="main">Main</label>
                 <input
                         type="radio" id="main"
@@ -59,8 +61,8 @@
                         @click="selectTheme('white')"
                 >
             </div>
-            <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu">
-                <span class="count" v-if="isBalance">
+            <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu || isMobile">
+                <span class="count" v-if="isBalance && (!isMobile || isTablet)">
                     <vue-numeric
                             :value="getCurrentWalletBalance"
                             :separator="correctLangSep"
@@ -70,13 +72,13 @@
                     />
                 </span>
                 <div
-                        v-if="isBalance"
+                        v-if="isBalance && (!isMobile || isTablet)"
                         class="count"
                 >
                     {{ 'ALE' }}
                 </div>
 
-                <div class="options" v-if="rightMenu">
+                <div class="options" v-if="rightMenu && (!isMobile || isTablet)">
                     <img :src="getIcon('options')" alt="" width="3" height="16">
 
                     <div class="dropdown-options"
@@ -94,10 +96,49 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="hamburger" :class="{'is-active': collapsed}" id="hamburger" @click="toggleMenu()">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
             </div>
             <div v-else></div>
+            
         </header>
-
+        <div class="mobile-menu" :class="{ 'is-collapsed': collapsed }">
+            <div class="menus">
+                <router-link
+                    class="item"
+                    active-class="active"
+                    v-for="(link, indexLink) in navbarLinks"
+                    :key="indexLink"
+                    :to="{ path: link.path }"
+                    exact
+                >
+                    <img
+                        :src="getIcon(link.iconName)"
+                        :width="link.iconWidth"
+                        :height="link.iconHeight"
+                    >
+                    <span class="linkName">{{link.name}}</span>
+                </router-link>
+            </div>
+            <hr v-if="rightMenu">
+            <div class="scMobileMenu" v-if="rightMenu">
+                <div class="item" v-for="(item, index) in rightMenu.list" :key="index">
+                    <router-link v-if="item.type === 'link' && !item.isHide && !item.mail"
+                                    :to="{ path: item.link }"
+                                    active-class="active">
+                        <span>{{ item.name }}</span>
+                    </router-link>
+                    <a v-if="item.mail" :href="'mailto:'+item.mail"><span>{{ item.name }}</span></a>
+                    <a v-if="item.type === 'event'"
+                        @click="startEvent(item.function)"><span>{{ item.name }}</span></a>
+                    <span v-if="item.type === 'modal' && !item.isHide" @click="openModal(item.target)">{{ item.name }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -122,9 +163,18 @@
         data() {
             return {
                 isFullScreen: false,
+                collapsed: false
             }
         },
         computed: {
+            isMobile () {
+                if (window.screen.width <= 768) return true
+                else return false
+            },
+            isTablet () {
+                if (window.screen.width <= 1024 && window.screen.width > 768) return true
+                else return false
+            },
             selectedTheme () {
                 return this.$store.state.Themes.theme;
             },
@@ -170,6 +220,45 @@
             ...mapMutations({
                 setTheme: "SET_THEME"
             }),
+            getLogo () {
+                switch (this.selectedTheme) {
+                    case 'main':
+                        return require('../../../static/img/logo_main.svg');
+                        break;
+                    case 'dark':
+                        return require('../../../static/img/logo_dark.svg');
+                        break;
+                    case 'white':
+                        return require('../../../static/img/logo_white.svg');
+                        break;
+                
+                    default:
+                        return require('../../../static/img/logo_main.svg');
+                        break;
+                }
+            },
+            toggleMenu () {
+                let nav = document.querySelector(".mobile-menu"),
+                    navToggle = document.querySelector("#hamburger");
+                if (!nav.classList.contains('is-collapsed')) {
+                    this.collapsed = true;
+                    nav.classList.add("is-collapsed");
+                    navToggle.classList.add('is-active');
+                    document.addEventListener('click', closeMenu, true)
+                }
+                else {
+                    this.collapsed = false;
+                    nav.classList.remove("is-collapsed");
+                    navToggle.classList.remove('is-active');
+                    document.removeEventListener('click', closeMenu, true)
+                }
+                function closeMenu () {
+                    if (!event.target.classList.contains('hamburger') && !event.target.classList.contains('line') && nav.classList.contains('mobile-menu')) {
+                        nav.classList.remove("is-collapsed");
+                        navToggle.classList.remove('is-active');
+                    }
+                }
+            },
             getNavbarIcon: function (name) {
                 return require('../../assets/img/' + name + '.svg');
             },

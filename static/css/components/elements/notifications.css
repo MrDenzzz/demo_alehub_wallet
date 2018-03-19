@@ -13,12 +13,14 @@
     justify-content: space-between; }
     .notif-panel .panel-heading .datetime {
       margin: 0;
+      margin-left: 10px;
       opacity: 0.6;
       font-family: MuseoSansCyrl300;
       font-size: 16px;
       font-weight: 300;
       line-height: 1.12;
-      color: #34343e; }
+      color: #34343e;
+      white-space: nowrap; }
       .notif-panel .panel-heading .datetime .bold {
         font-weight: bold;
         font-family: MuseoSansCyrl500; }
@@ -38,7 +40,8 @@
       margin: 0; }
       .notif-panel .title p strong {
         font-weight: bold;
-        font-family: MuseoSansCyrl700; }
+        font-family: MuseoSansCyrl700;
+        word-break: break-all; }
     .notif-panel .title .accepted {
       font-weight: bold;
       font-family: MuseoSansCyrl700;
@@ -91,3 +94,10 @@
           background: #ffd24f;
           padding: 0 5px;
           font-style: normal; }
+
+@media (max-width: 425px) {
+  .notif-panel .panel-heading {
+    flex-direction: column; }
+    .notif-panel .panel-heading .datetime {
+      align-self: flex-end;
+      margin-top: 10px; } }

@@ -335,3 +335,20 @@
 
 .control-radio input:disabled ~ .control-indicator:after {
   background: #7b7b7b; }
+
+@media (max-width: 768px) {
+  .footer .timeout {
+    white-space: nowrap; }
+  .tags-list {
+    flex-wrap: wrap;
+    margin-right: 20px; }
+    .tags-list .tag {
+      white-space: nowrap; } }
+
+@media (max-width: 425px) {
+  .list-panel-heading {
+    margin: 0; }
+  .tags-list p {
+    display: none; }
+  .tags-list .tag {
+    margin-bottom: 8px; } }

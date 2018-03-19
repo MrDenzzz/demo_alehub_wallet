@@ -59,6 +59,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <panel-heading
                                     :title="'Security'"
                             />
@@ -261,4 +262,17 @@
 
     .border-none
         border none
+
+    .form .deletelink {
+        margin-top: -8px;
+        padding-top: 0px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .main {
+            & .content {
+                padding-left: 0;
+            }
+        }
+    }
 </style>

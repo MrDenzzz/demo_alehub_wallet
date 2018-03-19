@@ -1,6 +1,6 @@
 <template>
     <label class="switch-control">
-        {{ checked }}
+        <!--{{ checked }}-->
         <input
                 type="checkbox"
                 @click="changeChecker()"

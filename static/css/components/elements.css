@@ -299,6 +299,12 @@
 #reciveusd {
   text-decoration: underline; }
 
+@media (max-width: 768px) {
+  .control-arrow-container {
+    width: 16px; }
+  .control-arrow {
+    height: 16px; } }
+
 .tags-list {
   display: flex;
   justify-content: flex-start;
@@ -848,6 +854,12 @@
 .list-panel-heading-offers h3 {
   margin: 0; }
 
+@media (max-width: 375px) {
+  .list-panel-heading p {
+    display: none; }
+  .list-panel-heading h3 {
+    white-space: nowrap; } }
+
 .offer-list {
   height: auto;
   background: #ececec;
@@ -912,6 +924,19 @@
     font-weight: 300;
     line-height: 1.13;
     color: #34343e; }
+
+@media (max-width: 768px) {
+  .offer-list .subtitle {
+    word-break: break-all; } }
+
+@media (max-width: 425px) {
+  .offer-list .heading {
+    flex-direction: column;
+    margin-bottom: 15px; }
+    .offer-list .heading .count {
+      padding-top: 5px;
+      white-space: nowrap;
+      align-self: flex-end; } }
 
 table {
   background-color: transparent;
@@ -1049,12 +1074,14 @@ td, th {
     justify-content: space-between; }
     .notif-panel .panel-heading .datetime {
       margin: 0;
+      margin-left: 10px;
       opacity: 0.6;
       font-family: MuseoSansCyrl300;
       font-size: 16px;
       font-weight: 300;
       line-height: 1.12;
-      color: #34343e; }
+      color: #34343e;
+      white-space: nowrap; }
       .notif-panel .panel-heading .datetime .bold {
         font-weight: bold;
         font-family: MuseoSansCyrl500; }
@@ -1074,7 +1101,8 @@ td, th {
       margin: 0; }
       .notif-panel .title p strong {
         font-weight: bold;
-        font-family: MuseoSansCyrl700; }
+        font-family: MuseoSansCyrl700;
+        word-break: break-all; }
     .notif-panel .title .accepted {
       font-weight: bold;
       font-family: MuseoSansCyrl700;
@@ -1127,6 +1155,13 @@ td, th {
           background: #ffd24f;
           padding: 0 5px;
           font-style: normal; }
+
+@media (max-width: 425px) {
+  .notif-panel .panel-heading {
+    flex-direction: column; }
+    .notif-panel .panel-heading .datetime {
+      align-self: flex-end;
+      margin-top: 10px; } }
 
 .switch-control {
   position: absolute;
