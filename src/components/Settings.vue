@@ -76,6 +76,7 @@
                                             <switch-control
                                                     v-if="userStatus === 'success'"
                                                     :checked="updatableTwoAuth"
+                                                    :flag="changeFlag"
                                                     :id="'twoauth'"
                                             />
                                         </div>
@@ -149,7 +150,9 @@
                 switchValueAuth: true,
 
                 // changeableValue: false,
-                selectedLanguage: 'English'
+                selectedLanguage: 'English',
+
+                flag: null
             }
         },
         watch: {},
@@ -162,6 +165,11 @@
                 'userTwoAuth',
                 'twoAuthStatus'
             ]),
+
+            changeFlag: function () {
+                return this.flag;
+            },
+
             updatableTwoAuth: function () {
                 return this.userTwoAuth;
             },
@@ -237,6 +245,8 @@
             });
             this.$on('changeChecker', function (value) {
                 // this.changeableValue = value;
+                this.flag = value;
+                // console.log(this.flag, '111');
                 this.openModal('change-two-auth');
             });
             this.$on('cancelSwitchControl', function (value) {

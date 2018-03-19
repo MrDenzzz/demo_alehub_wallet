@@ -118,6 +118,7 @@
                 this.$modal.hide('change-two-auth');
                 const {token, secret} = this;
                 this.$store.dispatch('enableTwoAuth', {token, secret}).then(() => {
+                    this.token = '';
                     this.secret = '';
                     this.qrPath = '';
                 });

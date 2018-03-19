@@ -1,6 +1,6 @@
 <template>
     <label class="switch-control">
-        <!--{{ checked }}-->
+        {{ flag }}
         <input
                 type="checkbox"
                 @click="changeChecker()"
@@ -18,13 +18,16 @@
             checked: {
                 type: Boolean
             },
+            flag: {
+                type: [Boolean, String]
+            },
             id: {
                 type: String
             }
         },
         watch: {
             value: function (val) {
-                this.receiveCaret();
+                // this.receiveCaret();
             }
         },
         data() {
