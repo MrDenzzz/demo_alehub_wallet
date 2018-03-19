@@ -15,6 +15,8 @@ const state = {
     twoAuthStatus: '',
     disableTwoAuthStatus: '',
 
+    changeUserNameStatus: ''
+
 };
 
 const actions = {
@@ -49,7 +51,7 @@ const actions = {
     authTwoFaRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('AUTH_REQUEST');
-            let host = 'http://192.168.1.37:4000/login/2fa';
+            let host = 'http://192.168.1.37:4000/users/login/2fa';
             axios({
                 url: host,
                 data: user,
@@ -57,10 +59,10 @@ const actions = {
             })
                 .then(resp => {
                     console.log(resp);
-                    // const token = resp.data.user_token;
-                    // localStorage.setItem(sha256('user-token'), token);
-                    // axios.defaults.headers.common['Authorization'] = token;
-                    // commit('AUTH_SUCCESS');
+                    const token = resp.data.user_token;
+                    localStorage.setItem(sha256('user-token'), token);
+                    axios.defaults.headers.common['Authorization'] = token;
+                    commit('AUTH_SUCCESS');
                     resolve(resp);
                 })
                 .catch(err => {
@@ -183,15 +185,44 @@ const actions = {
                 method: 'POST'
             })
                 .then(resp => {
+                    console.log(resp);
                     commit('DISABLE_TWOAUTH_SUCCESS');
                     resolve(resp);
                 })
                 .catch(err => {
+                    console.log(err);
                     commit('DISABLE_TWOAUTH_ERROR', err);
                     reject(err);
                 });
         });
-    }
+    },
+    changeUserName: ({commit, dispatch}, name) => {
+        return new Promise((resolve, reject) => {
+            // commit('DISABLE_TWOAUTH_REQUEST');
+            let host = 'http://192.168.1.37:4000/users/change-name';
+            axios({
+                url: host,
+                data: name,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            })
+                .then(resp => {
+                    console.log(resp);
+                    let name = resp;
+                    commit('CHANGE_USERNAME_SUCCESS', name);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    console.log(err);
+                    commit('CHANGE_USERNAME_ERROR', err);
+                    reject(err);
+                });
+        });
+    },
 };
 
 const mutations = {
@@ -240,7 +271,7 @@ const mutations = {
     },
     ENABLE_TWOAUTH_SUCCESS: (state) => {
         state.enableTwoAuthStatus = 'success';
-        // state.twoAuth = user.twoauth;
+        state.twoAuth = true;
     },
     ENABLE_TWOAUTH_ERROR: (state) => {
         state.enableTwoAuthStatus = 'error'
@@ -250,10 +281,17 @@ const mutations = {
     },
     DISABLE_TWOAUTH_SUCCESS: (state) => {
         state.disableTwoAuthStatus = 'success';
-        // state.twoAuth = user.twoauth;
+        state.twoAuth = false;
     },
     DISABLE_TWOAUTH_ERROR: (state) => {
         state.disableTwoAuthStatus = 'error';
+    },
+    CHANGE_USERNAME_SUCCESS: (state, name) => {
+        state.name = name;
+        state.changeUserNameStatus = 'success';
+    },
+    CHANGE_USERNAME_ERROR: (state, err) => {
+        state.changeUserNameStatus = 'error';
     }
 };
 
@@ -267,7 +305,9 @@ const getters = {
     userTwoAuth: state => state.twoAuth,
     twoAuthStatus: state => state.twoAuthStatus,
     twoAuthGeneratedCode: state => state.twoAuthGeneratedCode,
-    twoAuthSecret: state => state.twoAuthSecret
+    twoAuthSecret: state => state.twoAuthSecret,
+
+    changeUserNameStatus: state => state.changeUserNameStatus
 };
 
 export default {

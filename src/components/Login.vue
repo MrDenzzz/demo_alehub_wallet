@@ -83,7 +83,7 @@
                                     <button
                                             type="submit"
                                             class="btn btn-black btn-block nomargin">
-                                        Enter code
+                                        Submit code
                                     </button>
                                 </form>
                             </div>

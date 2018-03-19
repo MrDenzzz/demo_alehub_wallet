@@ -1,5 +1,7 @@
 import router from '../../router/index';
 import moment from 'moment';
+import axios from "axios/index";
+import sha256 from "sha256";
 
 const state = {
     currentWallet: null,
@@ -288,7 +290,75 @@ const state = {
     }
 };
 
+const actions = {
+    walletsRequest: ({commit, dispatch}) => {
+        return new Promise((resolve, reject) => {
+            commit('AUTH_REQUEST');
+            let host = 'http://192.168.1.37:4000/users/user-wallets';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            })
+                .then(resp => {
+                    // console.log(resp.data);
+                    commit('SET_WALLETS', resp.data);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    // commit('AUTH_ERROR', err);
+
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    },
+    newWallet: ({commit, dispatch}, wallet) => {
+        return new Promise((resolve, reject) => {
+            // commit('AUTH_REQUEST');
+            let host = 'http://192.168.1.37:4000/wallet/new';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: wallet,
+                method: 'POST'
+            })
+                .then(resp => {
+                    // console.log(resp, 'resprespresp');
+                    commit('ADD_WALLET', resp.data.walletModel);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('AUTH_ERROR', err);
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    }
+};
+
 const mutations = {
+    SET_WALLETS(state, wallets) {
+        state.wallets = wallets;
+        state.currentWallet = state.wallets[0];
+    },
+    ADD_WALLET(state, wallet) {
+        state.wallets.push(wallet);
+        state.currentWallet = state.wallets[state.wallets.length - 1];
+    },
+
+
+
     AGREED_DELETE(state) {
         state.delWalletProperty.isAgreed = !state.delWalletProperty.isAgreed;
         state.delWalletProperty.mnemonic = '';
@@ -387,10 +457,13 @@ const mutations = {
     }
 };
 
-const getters = {};
+const getters = {
+
+};
 
 export default {
     state,
+    actions,
     getters,
     mutations
 };

@@ -109,15 +109,19 @@
                 }
             },
             makeDisableTwoAuth: function () {
+                this.$modal.hide('change-two-auth');
                 const {token, secret} = this;
                 this.$store.dispatch('disableTwoAuth', {token, secret}).then(() => {
                     console.log('disable two auth done');
+                    this.token = '';
+                    this.secret = '';
                 });
             },
             makeEnableTwoAuth: function () {
                 this.$modal.hide('change-two-auth');
                 const {token, secret} = this;
                 this.$store.dispatch('enableTwoAuth', {token, secret}).then(() => {
+                    this.token = '';
                     this.secret = '';
                     this.qrPath = '';
                 });

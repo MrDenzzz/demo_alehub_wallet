@@ -1,6 +1,6 @@
 <template>
     <label class="switch-control">
-        <!--{{ checked }}-->
+        <!--{{ flag }}-->
         <input
                 type="checkbox"
                 @click="changeChecker()"
@@ -18,12 +18,15 @@
             checked: {
                 type: Boolean
             },
+            flag: {
+                type: [Boolean, String]
+            },
             id: {
                 type: String
             }
         },
         watch: {
-            value: function (val) {
+            'flag': function (val) {
                 this.receiveCaret();
             }
         },
@@ -40,15 +43,13 @@
         methods: {
             changeChecker: function () {
                 this.value = !this.value;
-                console.log(1);
                 this.$parent.$emit('changeChecker', this.value);
             },
+            //shitcode. rewrite.
             receiveCaret: function () {
-                console.log(2);
                 if (this.userTwoAuth !== this.value) {
-                    console.log(3);
                     this.value = !this.value;
-                    this.$parent.$emit('changeChecker', this.value);
+                    // this.$parent.$emit('changeChecker', this.value);
                 }
             }
             // checkUserAuth: function () {
