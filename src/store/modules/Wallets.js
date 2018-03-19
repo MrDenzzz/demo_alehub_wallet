@@ -458,7 +458,7 @@ const mutations = {
 };
 
 const getters = {
-
+    lengthWalletList: state => state.wallets.length
 };
 
 export default {

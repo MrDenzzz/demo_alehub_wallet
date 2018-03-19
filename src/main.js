@@ -65,36 +65,12 @@ if (token !== 'undefined' && token) {
         console.log('successfully reload wallets');
     });
 
-
-    // let host = 'http://192.168.1.37:4000/users/user-wallets';
-    //
-    // axios({
-    //     url: host,
-    //     headers: {
-    //         'Content-Type': 'application/json; charset=UTF-8',
-    //         'Accept': 'application/json',
-    //         'Authorization': axios.defaults.headers.common['Authorization']
-    //     },
-    //     method: 'GET'
-    // })
-    //     .then(resp => {
-    //
-    //         console.log(resp);
-    //
-    //         resolve(resp);
-    //     })
-    //     .catch(err => {
-    //
-    //         reject(err);
-    //     });
-
-
 }
 
 new Vue({
     el: '#app',
-    router,
     store,
+    router,
     i18n,
     components: {App},
     template: '<App/>'

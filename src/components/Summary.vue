@@ -142,7 +142,8 @@
         watch: {},
         computed: {
             ...mapGetters([
-                'transactionsFilter'
+                'transactionsFilter',
+                'lengthWalletList'
             ]),
             // currentToken: function () {
             //     return this.$store.state.User.token;
@@ -345,6 +346,11 @@
 
         },
         mounted() {
+
+            if (this.lengthWalletList === 0) {
+                this.openModal('newwallet');
+            }
+
             //переписать название функции sendMoney на что нибудь более подходящее; переписать названия мутаций тоже
             this.$on('sendMoney', function (data) {
 
