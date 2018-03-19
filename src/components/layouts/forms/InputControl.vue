@@ -8,7 +8,7 @@
                     :type="inputType"
                     :id="inputId"
                     :placeholder="placeholder"
-                    @keydown.enter="endOfInput"
+                    @keyup.enter="endOfInput"
                     @blur="addPlaceholder"
                     @focus="removePlaceholder"
                     @input="sendData"
@@ -53,12 +53,17 @@
             },
             addPlaceholder: function () {
                 document.getElementById(this.inputId).placeholder = this.placeholder;
+
+                //rewrite shitcode.
+                this.$parent.$emit('changeFullName', this.value);
             },
             endOfInput: function () {
                 if (this.value.length === 0) {
                     this.addPlaceholder();
                 }
                 document.getElementById(this.inputId).blur();
+
+                this.$parent.$emit('changeFullName', this.value);
             },
             sendData: function () {
                 this.$parent.$emit('receiveTitleOffer', this.value);
@@ -68,6 +73,8 @@
         },
         mounted() {
             this.$parent.$emit('receiveTitleOffer1', this.value);
+
+            this.$parent.$emit('receiveFullName', this.value);
         }
     }
 </script>

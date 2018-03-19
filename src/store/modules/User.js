@@ -15,6 +15,8 @@ const state = {
     twoAuthStatus: '',
     disableTwoAuthStatus: '',
 
+    changeUserNameStatus: ''
+
 };
 
 const actions = {
@@ -193,7 +195,34 @@ const actions = {
                     reject(err);
                 });
         });
-    }
+    },
+    changeUserName: ({commit, dispatch}, name) => {
+        return new Promise((resolve, reject) => {
+            // commit('DISABLE_TWOAUTH_REQUEST');
+            let host = 'http://192.168.1.37:4000/users/change-name';
+            axios({
+                url: host,
+                data: name,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            })
+                .then(resp => {
+                    console.log(resp);
+                    let name = resp;
+                    commit('CHANGE_USERNAME_SUCCESS', name);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    console.log(err);
+                    commit('CHANGE_USERNAME_ERROR', err);
+                    reject(err);
+                });
+        });
+    },
 };
 
 const mutations = {
@@ -256,6 +285,13 @@ const mutations = {
     },
     DISABLE_TWOAUTH_ERROR: (state) => {
         state.disableTwoAuthStatus = 'error';
+    },
+    CHANGE_USERNAME_SUCCESS: (state, name) => {
+        state.name = name;
+        state.changeUserNameStatus = 'success';
+    },
+    CHANGE_USERNAME_ERROR: (state, err) => {
+        state.changeUserNameStatus = 'error';
     }
 };
 
@@ -269,7 +305,9 @@ const getters = {
     userTwoAuth: state => state.twoAuth,
     twoAuthStatus: state => state.twoAuthStatus,
     twoAuthGeneratedCode: state => state.twoAuthGeneratedCode,
-    twoAuthSecret: state => state.twoAuthSecret
+    twoAuthSecret: state => state.twoAuthSecret,
+
+    changeUserNameStatus: state => state.changeUserNameStatus
 };
 
 export default {
