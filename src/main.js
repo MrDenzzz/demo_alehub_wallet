@@ -12,9 +12,12 @@ import Toasted from 'vue-toasted';
 import VueTheMask from 'vue-the-mask';
 import VueResource from 'vue-resource';
 
+import axios from 'axios';
+import sha256 from 'sha256';
+
 Vue.config.productionTip = false;
-// Vue.prototype.$host = 'http://192.168.1.37:4000';
 Vue.prototype.$host = 'http://192.168.1.37:4000';
+// Vue.prototype.$host = 'localhost:4000';
 
 const NotifOptions = {
     position: 'bottom-center',
@@ -50,6 +53,14 @@ const i18n = new VueI18n({
     locale: systemLang,
     messages
 });
+
+const token = localStorage.getItem(sha256('user-token'));
+if (token !== 'undefined' && token) {
+    axios.defaults.headers.common['Authorization'] = token;
+    store.dispatch('userRequest').then(() => {
+        console.log('successfully reload');
+    });
+}
 
 new Vue({
     el: '#app',

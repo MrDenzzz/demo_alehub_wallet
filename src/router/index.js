@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import {store} from '../store';
+import sha256 from 'sha256';
 
 import Summary from '@/components/Summary';
 import Login from '@/components/Login';
@@ -16,23 +17,46 @@ import Resume from '@/components/Resume';
 
 Vue.use(Router);
 
+const ifNotAuthenticated = (to, from, next) => {
+    let token = localStorage.getItem(sha256('user-token'));
+    if (token === null || token === 'undefined' || token === undefined) {
+        localStorage.clear();
+        next();
+        return;
+    }
+    next('/');
+};
+
+const ifAuthenticated = (to, from, next) => {
+    let token = localStorage.getItem(sha256('user-token'));
+    if (token !== null && token !== 'undefined' && token !== undefined) {
+        next();
+        return;
+    }
+    localStorage.clear();
+    next('/login');
+};
+
 const router = new Router({
     // mode: 'history',
     routes: [
         {
             path: '/',
             name: 'Summary',
-            component: Summary
+            component: Summary,
+            beforeEnter: ifAuthenticated
         },
         {
             path: '/registration',
             name: 'Registration',
-            component: Registration
+            component: Registration,
+            beforeEnter: ifNotAuthenticated
         },
         {
             path: '/registration/confirmationuser/:token',
             name: 'ConfirmationUser',
-            component: ConfirmationUser
+            component: ConfirmationUser,
+            beforeEnter: ifNotAuthenticated
         },
         // {
         //     path: '/registration/confirmationuser',
@@ -42,17 +66,20 @@ const router = new Router({
         {
             path: '/login',
             name: 'Login',
-            component: Login
+            component: Login,
+            beforeEnter: ifNotAuthenticated
         },
         {
             path: '/login/twoauth',
             name: 'TwoAuth',
-            component: TwoAuth
+            component: TwoAuth,
+            beforeEnter: ifNotAuthenticated
         },
         {
             path: '/wallet/settings',
             name: 'WalletSettings',
-            component: WalletSettings
+            component: WalletSettings,
+            beforeEnter: ifAuthenticated
         },
         // {
         //     path: '/wallet',
@@ -61,22 +88,26 @@ const router = new Router({
         {
             path: '/settings',
             name: 'Settings',
-            component: Settings
+            component: Settings,
+            beforeEnter: ifAuthenticated
         },
         {
             path: '/notifications',
             name: 'Notifications',
-            component: Notifications
+            component: Notifications,
+            beforeEnter: ifAuthenticated
         },
         {
             path: '/offers',
             name: 'Offers',
-            component: Offers
+            component: Offers,
+            beforeEnter: ifAuthenticated
         },
         {
             path: '/resume',
             name: 'Resume',
-            component: Resume
+            component: Resume,
+            beforeEnter: ifAuthenticated
         },
         {
             path: '*',
@@ -87,22 +118,9 @@ const router = new Router({
 });
 
 
-// router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
 
-    // let findUserWallet = store.state.Wallets.wallets.filter(item => {
-    //     return parseInt(item.ownerId) === parseInt(localStorage.getItem('id'))
-    // });
-    //
-    // if (!localStorage.getItem('walletId')) {
-    //
-    // } else {
-    //     if (store.state.Wallets.currentWallet === undefined) {
-    //         this.setCurrentWallet(localStorage.getItem('walletId'));
-    //     }
-    // }
-
-//     next();
-//
-// });
+    next();
+});
 
 export default router;

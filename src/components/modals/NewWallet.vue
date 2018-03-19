@@ -1,6 +1,6 @@
 <template>
     <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen">
-        <div class="heading" v-if="newWalletStep == 1">
+        <div class="heading" v-if="newWalletStep === 1">
             <p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>
             <i class="close" @click="closeModal" v-if="isCloseModal"></i>
             <div class="dropdown-list list-select" v-show="isOpenOptions">
@@ -13,15 +13,15 @@
             </div>
         </div>
 
-        <div class="heading" v-if="newWalletStep != 1">
+        <div class="heading" v-if="newWalletStep !== 1">
             <i class="back" @click="changeRecoveryStep"></i>
             <p class="title">{{ $t('modals.newWallet.recovery.phrase.title') }}</p>
             <i class="close" @click="closeModal" v-if="isCloseModal"></i>
         </div>
 
-        <div v-if="newWalletStep == 1">
+        <div v-if="newWalletStep === 1">
 
-            <div class="body" v-if="walletType == 'new'">
+            <div class="body" v-if="walletType === 'new'">
                 <!--<div class="modal-control" @click="focusInput('newWalletName')">-->
                 <div class="modal-control">
                     <div class="modal-input">
@@ -36,7 +36,6 @@
                     <button
                         class="btn btn-yellow btn-large"
                         @click="changeStepCreate('next')"
-                        @keypress.enter="changeStepCreate('next')"
                         :disabled="checkNewWalletFields"
                         :class="{ 'disabled': checkNewWalletFields }"
                     >
@@ -45,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="body" v-if="walletType == 'import'">
+            <div class="body" v-if="walletType === 'import'">
 
                 <div class="modal-control" @click="focusInput('redemptionWalletName')">
                     <div class="modal-input">
@@ -95,7 +94,7 @@
 
         </div>
 
-        <div v-if="newWalletStep == 2 && recoveryStep == 1">
+        <div v-if="newWalletStep === 2 && recoveryStep === 1">
             <div class="modal-warning">
                 <p class="agreed">{{ $t('modals.newWallet.recovery.phrase.text') }}</p>
 
@@ -119,7 +118,7 @@
             </div>
         </div>
 
-        <div v-if="newWalletStep == 2 && recoveryStep == 2">
+        <div v-if="newWalletStep === 2 && recoveryStep === 2">
             <div class="modal-warning">
                 <p class="agreed">{{ $t('modals.newWallet.recovery.mnemonic.text') }}</p>
             </div>
@@ -136,15 +135,19 @@
 
         </div>
 
-        <div v-if="newWalletStep == 2 && recoveryStep == 3" class="body">
+        <div v-if="newWalletStep === 2 && recoveryStep === 3" class="body">
 
             <div class="modal-warning agreed-border">
-                <p class="agreed">{{ $t('modals.newWallet.recovery.finish.each') }}</p>
+                <p class="agreed">
+                    {{ $t('modals.newWallet.recovery.finish.each') }}
+                </p>
             </div>
 
             <div class="modal-control modal-control-noMargin" style="margin-left: 42px;margin-right: 42px;">
                 <div class="modal-input input-phrase">
-                    <label class="title">{{ $t('modals.newWallet.recovery.finish.fields.phrase.title') }}</label>
+                    <label class="title">
+                        {{ $t('modals.newWallet.recovery.finish.fields.phrase.title') }}
+                    </label>
                     <div class="badge-control" v-if="mnemonicsRecovery.length !== 0">
                         <span class="badge" v-for="mnemonic in mnemonicsRecovery">{{ mnemonic }}</span>
                     </div>
@@ -206,6 +209,7 @@
     import {mapMutations} from "vuex";
     import {mapGetters} from 'vuex';
     import mnGen from 'mngen';
+    import sha256 from 'sha256';
 
     export default {
         name: 'newWallet',
@@ -312,7 +316,7 @@
                 if (step === 'next') {
                     return this.recoveryStep = this.recoveryStep + 1;
                 }
-                if (this.recoveryStep == 1 && step !== 'next') {
+                if (this.recoveryStep === 1 && step !== 'next') {
                     this.newWalletStep = 1;
                 }
                 else this.recoveryStep = this.recoveryStep - 1;
@@ -342,7 +346,7 @@
                 this.mnemonicFieldRecovery = '';
             },
             countDown() {
-                if (this.countTimer != 0) {
+                if (this.countTimer !== 0) {
                     setTimeout(() => {
                         this.countTimer--;
                         this.countDown();
@@ -464,7 +468,8 @@
                 }, {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Authorization': localStorage.getItem(sha256('user-token'))
                     }
                 }).then(response => {
 
