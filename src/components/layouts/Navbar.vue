@@ -35,32 +35,6 @@
 
             </div>
             <span class="title">{{ title }}</span>
-            <div class="themes" v-if="true">
-                <label for="main">Main</label>
-                <input
-                        type="radio" id="main"
-                        class="duration_arr"
-                        value="Main" name="theme"
-                        :checked="selectedTheme === 'main'"
-                        @click="selectTheme('main')"
-                >
-                <label for="dark">Dark</label>
-                <input
-                        type="radio" id="dark"
-                        class="duration_arr"
-                        value="Dark" name="theme"
-                        :checked="selectedTheme === 'dark'"
-                        @click="selectTheme('dark')"
-                >
-                <label for="white">White</label>
-                <input
-                        type="radio" id="white"
-                        class="duration_arr"
-                        value="White" name="theme"
-                        :checked="selectedTheme === 'white'"
-                        @click="selectTheme('white')"
-                >
-            </div>
             <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu || isMobile">
                 <span class="count" v-if="isBalance && (!isMobile || isTablet)">
                     <vue-numeric
@@ -211,15 +185,9 @@
                     return this.getCurrentWalletBalance.toString().split('.')[1].toString().length;
                 else
                     return 0;
-            },
-            selectedTheme: function () {
-                return this.$store.state.Themes.theme;
             }
         },
         methods: {
-            ...mapMutations({
-                setTheme: "SET_THEME"
-            }),
             getLogo () {
                 switch (this.selectedTheme) {
                     case 'main':
@@ -231,7 +199,6 @@
                     case 'white':
                         return require('../../../static/img/logo_white.svg');
                         break;
-                
                     default:
                         return require('../../../static/img/logo_main.svg');
                         break;
@@ -282,31 +249,11 @@
                     this.selectedSortBy = value;
                 }
             },
-            selectTheme (name) {
-                let body = document.getElementsByTagName('body')[0];
-                this.setTheme(name);
-                switch (name) {
-                    case 'main':
-                        body.classList.remove("dark", "white");
-                        break;
-                    case 'dark':
-                        body.classList.remove("white");
-                        body.classList.add("dark");
-                        break;
-                    case 'white':
-                        body.classList.remove("dark");
-                        body.classList.add("white");
-                        break;
-                }
-            },
             getIcon(name) {
                 if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}.svg`);
                 else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_white.svg`);
                 else return require(`../../assets/img/${name}.svg`);
             }
-        },
-        created () {
-            this.selectTheme(this.selectedTheme);
         }
     }
 </script>
