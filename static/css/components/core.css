@@ -5,6 +5,18 @@ body {
 
 .dark {
   background: #4a4e65 !important; }
+  .dark .logout-link {
+    color: #b53939;
+    background-color: #282730;
+    border-radius: 4px; }
+    .dark .logout-link:hover {
+      text-decoration: none; }
+  .dark .switch-control .slider {
+    background-color: #aaaec1; }
+    .dark .switch-control .slider:before {
+      background-color: #282730; }
+  .dark .switch-control input:checked .slider {
+    background-color: #494d64; }
   .dark .filter-panel {
     background: #27272f; }
     .dark .filter-panel .two-input input {
@@ -225,7 +237,8 @@ body {
       .dark .v--modal-overlay .v--modal-box .heading .back {
         background-image: url("/static/img/back-arrow-small_dark.svg"); }
   .dark .select .value {
-    color: #dedfdf !important; }
+    color: #aaa !important;
+    opacity: 1 !important; }
   .dark .select .list ul {
     background: #0d1717 !important; }
     .dark .select .list ul li {
@@ -289,8 +302,15 @@ body {
           color: #dedfdf; }
         .dark .form .control .wrap-input input:-moz-placeholder {
           color: #dedfdf; }
+      .dark .form .control .wrap-input .text {
+        color: #aaa;
+        opacity: 1; }
+      .dark .form .control .wrap-input .wrap-container .text {
+        color: #aaa;
+        opacity: 1; }
     .dark .form .deletelink {
-      color: #b53939; }
+      color: #b53939;
+      font-family: MuseoSansCyrl500; }
       .dark .form .deletelink:hover {
         text-decoration: none; }
   .dark label {
