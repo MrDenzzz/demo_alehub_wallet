@@ -1,14 +1,15 @@
 <template>
     <div id="app" :class="systemLanguage">
-
-        <div v-if="isLoading">
-            <sync-loader :load="isLoading"/>
-        </div>
-        <div v-else>
-            <!--<New-wallet/>-->
-            <router-view/>
-            <Connection-modal/>
-        </div>
+        <transition name="fade" mode="out-in">
+            <div v-if="isLoading" key="save">
+                <sync-loader :load="isLoading"/>
+            </div>
+            <div v-else key="edit">
+                <!--<New-wallet/>-->
+                <router-view/>
+                <Connection-modal/>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -210,5 +211,12 @@
         .navbar
             .title
                 font-family PingFangSCBold
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .3s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+        opacity: 0.5;
+    }
 
 </style>
