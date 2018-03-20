@@ -35,7 +35,7 @@
                                 mask="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                                 type="text"
                                 :masked="false"
-                                placeholder="Enter the address of the cryptographic wallet"
+                                :placeholder="placeholderText"
                                 class="input"
                                 :class="{error:errorAddress}"
                                 @keyup.enter.native="nextCheck"
@@ -100,6 +100,7 @@
         },
         data() {
             return {
+                placeholderText: '',
                 amountAle: '',
                 amountUsd: 161,
                 step: 1,
@@ -311,7 +312,17 @@
             useMax: function () {
                 this.amountAle = this.currentWallet.balance;
                 this.focusInput('address');
+            },
+            changePlaceholderText: function () {
+                let clientWidth = document.documentElement.clientWidth;
+                clientWidth <= 425 ? this.placeholderText = "the cryptographic wallet's name" : this.placeholderText = 'Enter the name of the cryptographic wallet';
             }
+        },
+        created() {
+            window.addEventListener('resize', this.changePlaceholderText());
+        },
+        destroy() {
+            window.removeEventListener('resize', this.changePlaceholderText());
         }
     };
 </script>

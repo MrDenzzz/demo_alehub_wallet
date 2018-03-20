@@ -64,11 +64,14 @@ if (token !== 'undefined' && token) {
         store.dispatch('walletsRequest').then(() => {
             console.log('successfully reload wallets');
 
-            if (store.state.Wallets.currentWallet !== null) {
-                store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
-                    console.log('successfully reload transactions');
-                });
-            }
+            // if (store.state.Wallets.currentWallet !== null) {
+            //     store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
+            //         console.log('successfully reload transactions');
+            //     });
+            // }
+            store.dispatch('transactionsRequest', store.state.Wallets.currentWallet ? store.state.Wallets.currentWallet.address : '').then(() => {
+                console.log('successfully reload transactions');
+            });
         });
     });
 

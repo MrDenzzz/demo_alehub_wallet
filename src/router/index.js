@@ -16,6 +16,7 @@ import WalletSettings from '@/components/WalletSettings';
 import NotFound from '@/components/NotFound';
 import Offers from '@/components/Offers';
 import Resume from '@/components/Resume';
+import NewOffer from '@/components/NewOffer'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -108,6 +109,12 @@ const router = new Router({
             path: '/offers',
             name: 'Offers',
             component: Offers,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/offers/new',
+            name: 'NewOffer',
+            component: NewOffer,
             beforeEnter: ifAuthenticated
         },
         {

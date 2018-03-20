@@ -22,6 +22,7 @@
 
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
+    import sha256 from 'sha256';
 
     export default {
         name: 'alehub',
@@ -36,6 +37,7 @@
                 language: localStorage.getItem('systemLang'),
                 isOpenModal: false,
                 isLoader: false,
+                token: localStorage.getItem(sha256('user-token'))
             }
         },
         computed: {
@@ -72,8 +74,14 @@
                     // if (this.lengthWalletList === 0) {
                     //     this.$modal.show('newwallet');
                     // }
+
                     return false;
                 }
+
+                // else if (this.token === null) {
+                //     this.$router.push('/login');
+                //     return false
+                // }
 
                 return true;
             }

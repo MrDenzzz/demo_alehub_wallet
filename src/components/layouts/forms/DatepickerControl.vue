@@ -76,13 +76,13 @@
         },
         mounted() {
             let imgNext = document.createElement('img');
-            imgNext.src = path.join(__dirname, '../../../assets/img/arrow-right.svg');
+            imgNext.src = path.join(__dirname, '../../../static/img/arrow-right.svg');
             imgNext.classList.add('arrow');
             document.getElementsByClassName('next')[0].innerHTML = '';
             document.getElementsByClassName('next')[0].appendChild(imgNext);
 
             let imgPrev = document.createElement('img');
-            imgPrev.src = path.join(__dirname, '../../../assets/img/arrow-left.svg');
+            imgPrev.src = path.join(__dirname, '../../../static/img/arrow-left.svg');
             imgPrev.classList.add('arrow');
             document.getElementsByClassName('prev')[0].innerHTML = '';
             document.getElementsByClassName('prev')[0].appendChild(imgPrev);

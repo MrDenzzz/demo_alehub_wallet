@@ -24,7 +24,7 @@
         name: "Select",
         props: {
             current: {
-                type: String,
+                type: [String, Number],
                 required: true
             },
             allOptions: {

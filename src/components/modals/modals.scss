@@ -526,3 +526,28 @@
     }
   }
 }
+@media (max-width: 425px) {
+  .v--modal-overlay {
+    & .v--modal-box {
+      & .heading {
+        & .close {
+          top: 15px;
+          right: 15px;
+        }
+      }
+      & .body {
+        & .modal-control {
+          margin-left: 10px;
+          margin-right: 10px;
+          & .modal-input {
+            margin-left: 5px;
+            margin-right: 5px;
+            & .title {
+              padding-right: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

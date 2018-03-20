@@ -22,7 +22,7 @@
 
                                 <input-control
                                         :label-value="$t('pages.newOffer.fields.name.label')"
-                                        :input-id="'offername'"
+                                        :input-id="'title'"
                                         :input-type="'text'"
                                         :placeholder="$t('pages.newOffer.fields.name.placeholder')"
                                 />
@@ -175,34 +175,12 @@
                 date: null,
                 tmpFileSolution: '',
                 offer: {
-                    id: null,
-                    ownerId: null,
-                    contractorId: 0,
                     title: '',
-                    wallet: '',
-                    rating: '',
-                    desc: '',
+                    description: '',
                     price: '',
-                    reqs: '',
-                    type: [
-                        "all",
-                        "full project"
-                    ],
-                    professionalArea: [
-                        "all",
-                        "Information technology, System integration, Internet",
-                        "Medicine research"
-                    ],
-                    date: '',
-                    projectDuration: 301,
-                    premium: [
-                        "all"
-                    ],
-                    fileSolution: '',
-                    saved: false,
-                    apply: false,
-                    submited: false,
-                    completed: false
+                    requirements: '',
+                    deadline: '',
+                    tests: ['poka pusto', 'hz che tut budet'] // file solution?
                 }
             }
         },
@@ -266,7 +244,7 @@
                 return true;
             },
             checkFillDescField: function () {
-                if (this.offer.desc.length === 0) {
+                if (this.offer.description.length === 0) {
                     this.$toasted.show("Fill out the DESCRIPTION field", {
                         duration: 10000,
                         type: 'error',
@@ -276,7 +254,7 @@
                 return true;
             },
             checkFillReqsField: function () {
-                if (this.offer.reqs.length === 0) {
+                if (this.offer.requirements.length === 0) {
                     this.$toasted.show("Fill out the REQUIREMENTS field", {
                         duration: 10000,
                         type: 'error',
@@ -286,7 +264,7 @@
                 return true;
             },
             checkFillDateField: function () {
-                if (this.offer.date.length === 0) {
+                if (this.offer.deadline.length === 0) {
                     this.$toasted.show("Fill out the DEADLINE field", {
                         duration: 10000,
                         type: 'error',
@@ -302,7 +280,7 @@
                         type: 'error',
                     });
                     return false;
-                } else if (this.offer.fileSolution === '' && this.tmpFileSolution !== '') {
+                } else if (this.offer.tests === '' && this.tmpFileSolution !== '') {
                     this.$toasted.show("You should click the UPLOAD file buttone", {
                         duration: 10000,
                         type: 'error',
@@ -313,39 +291,24 @@
             },
             uploadFile: function () {
                 if (this.tmpFileSolution !== '') {
-                    this.offer.fileSolution = this.tmpFileSolution;
+                    this.offer.tests = this.tmpFileSolution;
                     this.$toasted.show("Selected file was successfully uploaded", {
                         duration: 5000,
                         type: 'success',
                     });
                 }
             },
-            setOfferId: function () {
-                this.offer.id = this.$store.state.Offers.offersList[this.$store.state.Offers.offersList.length - 1].id + 1;
-            },
-            setOfferOwnerId: function () {
-                this.offer.ownerId = parseInt(this.getUserId);
-            },
-            setOfferTitle: function (value) {
-                this.offer.title = value;
-            },
-            setOfferWallerAddress: function (walletAddress) {
-                this.offer.wallet = walletAddress;
-            },
-            setOfferRating: function () {
-                this.offer.rating = this.getUserRating;
-            },
             setOfferDesc: function (value) {
-                this.offer.desc = value;
+                this.offer.description = value;
             },
             setOfferPrice: function (value) {
                 this.offer.price = value;
             },
             setOfferReqs: function (value) {
-                this.offer.reqs = value;
+                this.offer.requirements = value;
             },
             setOfferDate: function (value) {
-                this.offer.date = value;
+                this.offer.deadline = value;
             },
             fileUploader: function () {
                 document.getElementById("customButton").addEventListener("click", function () {
@@ -366,47 +329,21 @@
                 if (this.checkFillTitleField() && this.checkFillPriceField() && this.checkFillDescField() &&
                     this.checkFillReqsField() && this.checkFillDateField() && this.checkFillFileSolution()) {
                     return this.newOfferCreate();
-                    this.addNewOffer(this.offer);
-                    this.addWalletOffer({id: this.offer.id});
                     this.$router.push('/offers/' + this.offer.id);
-                    console.log(this.$store.state.Wallets.currentWallet);
                 }
             },
             newOfferCreate () {
-                this.$http.post(`http://localhost:8080/http://localhost:12348/wallets/0eCtiP9kDKWaVOBwpJD8Oo1suoVC6JOU4DYg%2fSa6ZXA=/offers/publish`, {
-                        "descr": "aGVsbG93b3JsZAo=",
-                        "deadline": "2016-07-22T00:00:00Z",
-                        "price": Number(this.offer.price),
-                        "reqs": { 'RConst': { 'RBool': false } }
-                    }, {
-                    headers : {
-                        'Content-Type' : 'application/json; charset=UTF-8',
-                        'Accept' : 'application/json'
-                    }
-                }).then(response => {
-                    //Уведомить юзера, что все ок и это в нотификашки закинуть.
-                    this.$router.push('/offers/');
-                    //this.offersListOpen = response.body;
-                    console.log('S', response);
-                }, response => {
-                    console.log('E', response);
+                this.$store.dispatch('createOffer', this.offer).then(() => {
+                    
                 });
             }
         },
         mounted() {
             this.fileUploader();
 
-            this.setOfferId();
-
-            this.setOfferOwnerId();
-
-            this.$on('receiveTitleOffer', function (title) {
-                this.setOfferTitle(title);
-            });
-
-            this.setOfferRating();
-
-            this.setOfferWallerAddress(this.getCurrentWalletAddress);
+            this.$on('imitVModel', function (value, id) {
+                this.offer[id] = value;
+            })
 
             this.$on('receiveDescriptionOffer', function (desc) {
                 this.setOfferDesc(desc);

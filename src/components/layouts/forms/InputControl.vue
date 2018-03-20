@@ -69,6 +69,10 @@
                 this.$parent.$emit('receiveTitleOffer', this.value);
 
                 this.$parent.$emit('receiveFullName', this.value);
+
+                // это не так должо работать, б***ь
+
+                this.$parent.$emit('imitVModel', this.value, this.inputId)
             }
         },
         mounted() {

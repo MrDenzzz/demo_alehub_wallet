@@ -320,6 +320,33 @@ const actions = {
                 });
         })
     },
+    walletsRequestLazy: ({commit, dispatch}) => {
+        return new Promise((resolve, reject) => {
+            let host = 'http://192.168.1.37:4000/users/user-wallets';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            })
+                .then(resp => {
+                    console.log(resp.data, 'resp.data');
+                    commit('SET_WALLETS', resp.data);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('WALLETS_ERROR', err);
+                    // commit('AUTH_ERROR', err);
+
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    },
     newWallet: ({commit, dispatch}, wallet) => {
         return new Promise((resolve, reject) => {
             // commit('AUTH_REQUEST');
