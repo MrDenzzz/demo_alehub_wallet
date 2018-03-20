@@ -5,285 +5,11 @@ import sha256 from "sha256";
 
 const state = {
     wallets_status: '',
+
+    lazyWalletStatus: '',
+
     currentWallet: null,
-    selectedWallet: '',
-    wallets: [
-        // {
-        //     address
-        //         :
-        //         "0x977XDRx4ZoyaJiAxNUsN4Y3mLyYBBFGkOScIas2ruuhxq"
-        //     balance
-        //         :
-        //         100
-        //     name
-        //         :
-        //         "123123"
-        // },
-        // {
-        //     id: 1,
-        //     ownerId: 1,
-        //     name: 'wallet 1',
-        //     balance: 2500,
-        //     securityLevel: 'normal',
-        //     address: '0x4ce9d78cf86b6ec1280d3da512c09807e6a51a4b',
-        //     password: '12345678',
-        //     transactions: [
-        //         {
-        //             id: 1
-        //         },
-        //         {
-        //             id: 7
-        //         },
-        //         {
-        //             id: 8
-        //         },
-        //         {
-        //             id: 9
-        //         },
-        //         {
-        //             id: 10
-        //         },
-        //         {
-        //             id: 11
-        //         },
-        //         {
-        //             id: 12
-        //         },
-        //         {
-        //             id: 13
-        //         }
-        //     ],
-        //     activitySummary: [{
-        //         type: 'sent',
-        //         to: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
-        //         date: 1518734800000,  //set milliseconds
-        //         total: '-2583',
-        //         isActive: false
-        //     }],
-        //     activityPortfolio: [{
-        //         type: 'apply',
-        //         to: '@user123',
-        //         date: 1518724800000,
-        //         price: '120000',
-        //         isActive: false
-        //     }],
-        //     offers: [
-        //         {
-        //             id: 1
-        //         }, {
-        //             id: 2
-        //         }, {
-        //             id: 15
-        //         }
-        //     ],
-        //     portfolio: [
-        //         {
-        //             id: 3
-        //         }, {
-        //             id: 4
-        //         }
-        //     ],
-        //     //подумать куда вынести, дабы отделить данные от интерфейса
-        //     hideCompletePortfolio: false,
-        //     hideCompleteOffers: false,
-        // },
-        // {
-        //     id: 2,
-        //     ownerId: 1,
-        //     name: 'wallet 2',
-        //     balance: 48000,
-        //     securityLevel: 'normal',
-        //     address: 'L56Srfpxha42C2f4LzqeQUubh3bQwEfDTMSwidGPEViZBU',
-        //     password: '12345678',
-        //     transactions: [
-        //         {
-        //             id: 2
-        //         }
-        //     ],
-        //     activitySummary: [{
-        //         type: 'sent',
-        //         to: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
-        //         date: 1518724800000,
-        //         total: '-2583',
-        //         isActive: false
-        //     }],
-        //     activityPortfolio: [{
-        //         type: 'apply',
-        //         to: '@user123',
-        //         date: 1518724800000,
-        //         price: '120000',
-        //         isActive: false
-        //     }],
-        //     offers: [
-        //         {
-        //             id: 6
-        //         }, {
-        //             id: 10
-        //         }, {
-        //             id: 11
-        //         }, {
-        //             id: 16
-        //         }
-        //     ],
-        //     portfolio: [],
-        //     hideCompletePortfolio: false,
-        //     hideCompleteOffers: false,
-        // },
-        // {
-        //     id: 3,
-        //     ownerId: 1,
-        //     name: 'wallet 3',
-        //     balance: 1000,
-        //     securityLevel: 'normal',
-        //     address: '2asdlkasdWlkdsls34kldsfsdlfsdasdc554',
-        //     password: '12345678',
-        //     transactions: [
-        //         {
-        //             id: 3
-        //         }
-        //     ],
-        //     activitySummary: [{
-        //         type: 'sent',
-        //         to: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
-        //         date: 1518734800000,
-        //         total: '-2583',
-        //         isActive: false
-        //     }],
-        //     activityPortfolio: [{
-        //         type: 'apply',
-        //         to: '@user123',
-        //         date: 1518724800000,
-        //         price: '120000',
-        //         isActive: false
-        //     }],
-        //     offers: [],
-        //     portfolio: [],
-        //     hideCompletePortfolio: false,
-        //     hideCompleteOffers: false,
-        // },
-        // {
-        //     id: 4,
-        //     ownerId: 2,
-        //     name: 'wallet 4',
-        //     balance: 5000,
-        //     securityLevel: 'normal',
-        //     address: '324lklksdmfdslk44fs098sdfsdfffdsxcvfmkl444',
-        //     password: '',
-        //     transactions: [
-        //         {
-        //             id: 4
-        //         }
-        //     ],
-        //     activitySummary: [{
-        //         type: 'sent',
-        //         to: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
-        //         date: 1518724800000,  //set milliseconds
-        //         total: '-2583',
-        //         isActive: false
-        //     }],
-        //     activityPortfolio: [{
-        //         type: 'apply',
-        //         to: '@user123',
-        //         date: 1518744800000,  //set milliseconds
-        //         price: '120000',
-        //         isActive: false
-        //     }],
-        //     offers: [
-        //         {
-        //             id: 3
-        //         }, {
-        //             id: 4
-        //         }, {
-        //             id: 5
-        //         }, {
-        //             id: 17
-        //         }
-        //     ],
-        //     portfolio: [],
-        //     hideCompletePortfolio: false,
-        //     hideCompleteOffers: false,
-        // },
-        // {
-        //     id: 5,
-        //     ownerId: 2,
-        //     name: 'wallet 5',
-        //     balance: 1400,
-        //     securityLevel: 'normal',
-        //     address: 'xcvsdf494fij4f984jfi4ojf4980fjlijf490fj4f9j4f',
-        //     password: '',
-        //     transactions: [
-        //         {
-        //             id: 5
-        //         }
-        //     ],
-        //     activitySummary: [{
-        //         type: 'sent',
-        //         to: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
-        //         date: 1518754800000,
-        //         total: '-2583',
-        //         isActive: false
-        //     }],
-        //     activityPortfolio: [{
-        //         type: 'apply',
-        //         to: '@user123',
-        //         date: 1518724800000,
-        //         price: '120000',
-        //         isActive: false
-        //     }],
-        //     offers: [
-        //         {
-        //             id: 7
-        //         }, {
-        //             id: 14
-        //         }
-        //     ],
-        //     portfolio: [],
-        //     hideCompletePortfolio: false,
-        //     hideCompleteOffers: false,
-        // },
-        // {
-        //     id: 6,
-        //     ownerId: 2,
-        //     name: 'wallet 6',
-        //     balance: 3000,
-        //     securityLevel: 'normal',
-        //     address: 'wef980ewjhf890wejfwoejf09ewujf0wejfkejwfwe9f032df3f',
-        //     password: '',
-        //     transactions: [
-        //         {
-        //             id: 6
-        //         }
-        //     ],
-        //     activitySummary: [{
-        //         type: 'sent',
-        //         to: '1JmqBkdgYB1p1jJnjqX3wy7NdpsLZbmvEX',
-        //         date: 1518824800000,
-        //         total: '-2583',
-        //         isActive: false
-        //     }],
-        //     activityPortfolio: [{
-        //         type: 'apply',
-        //         to: '@user123',
-        //         date: 1518794800000,
-        //         price: '120000',
-        //         isActive: false
-        //     }],
-        //     offers: [
-        //         {
-        //             id: 8
-        //         }, {
-        //             id: 9
-        //         }, {
-        //             id: 12
-        //         }, {
-        //             id: 13
-        //         }
-        //     ],
-        //     portfolio: [],
-        //     hideCompletePortfolio: false,
-        //     hideCompleteOffers: false,
-        // },
-    ],
+    wallets: [],
 
     delWalletProperty: {
         mnemonic: '',
@@ -322,7 +48,8 @@ const actions = {
     },
     walletsRequestLazy: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
-            let host = 'http://192.168.1.37:4000/users/user-wallets';
+            commit('REQUEST_LAZY_WALLETS');
+            let host = 'http://54.144.234.226:8181/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -333,16 +60,13 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp.data, 'resp.data');
-                    commit('SET_WALLETS', resp.data);
+                    console.log(resp.data, 'wallets request lazy');
+                    commit('SET_LAZY_WALLETS', resp.data);
                     resolve(resp);
                 })
                 .catch(err => {
-                    commit('WALLETS_ERROR', err);
-                    // commit('AUTH_ERROR', err);
-
-                    // localStorage.removeItem(sha256('user-token'));
-                    // delete axios.defaults.headers.common['Login'];
+                    console.log(err, 'error wallets lazy request');
+                    commit('ERROR_LAZY_WALLETS', err);
                     reject(err)
                 });
         })
@@ -368,8 +92,6 @@ const actions = {
                 })
                 .catch(err => {
                     commit('AUTH_ERROR', err);
-                    // localStorage.removeItem(sha256('user-token'));
-                    // delete axios.defaults.headers.common['Login'];
                     reject(err)
                 });
         })
@@ -394,6 +116,21 @@ const mutations = {
     },
     WALLETS_ERROR(state) {
         state.wallets_status = 'error';
+    },
+
+
+    REQUEST_LAZY_WALLETS(state) {
+        state.lazyWalletStatus = 'loading';
+    },
+    SET_LAZY_WALLETS(state, wallets) {
+        if (wallets.length !== 0) {
+            state.wallets = wallets;
+            state.currentWallet = state.wallets[0];
+        }
+        state.lazyWalletStatus = 'success';
+    },
+    ERROR_LAZY_WALLETS(state, err) {
+        state.lazyWalletStatus = 'error';
     },
 
 
@@ -496,8 +233,10 @@ const mutations = {
 };
 
 const getters = {
+    wallets: state => state.wallets,
     lengthWalletList: state => state.wallets.length,
-    walletStatus: state => state.wallets_status
+    walletStatus: state => state.wallets_status,
+    currentWallet: state => state.currentWallet
 };
 
 export default {
