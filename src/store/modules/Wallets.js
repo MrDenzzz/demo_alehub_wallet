@@ -1,7 +1,10 @@
 import router from '../../router/index';
 import moment from 'moment';
+import axios from "axios/index";
+import sha256 from "sha256";
 
 const state = {
+    wallets_status: '',
     currentWallet: null,
     selectedWallet: '',
     wallets: [
@@ -288,7 +291,85 @@ const state = {
     }
 };
 
+const actions = {
+    walletsRequest: ({commit, dispatch}) => {
+        return new Promise((resolve, reject) => {
+            commit('WALLETS_REQUEST');
+            let host = 'http://192.168.1.37:4000/users/user-wallets';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            })
+                .then(resp => {
+                    console.log(resp.data, 'resp.data');
+                    commit('SET_WALLETS', resp.data);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('WALLETS_ERROR', err);
+                    // commit('AUTH_ERROR', err);
+
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    },
+    newWallet: ({commit, dispatch}, wallet) => {
+        return new Promise((resolve, reject) => {
+            // commit('AUTH_REQUEST');
+            let host = 'http://192.168.1.37:4000/wallet/new';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: wallet,
+                method: 'POST'
+            })
+                .then(resp => {
+                    // console.log(resp, 'resprespresp');
+                    commit('ADD_WALLET', resp.data.walletModel);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('AUTH_ERROR', err);
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    }
+};
+
 const mutations = {
+    WALLETS_REQUEST(state) {
+        state.wallets_status = 'loading';
+    },
+    SET_WALLETS(state, wallets) {
+        if (wallets.length !== 0) {
+            state.wallets = wallets;
+            state.currentWallet = state.wallets[0];
+        }
+        state.wallets_status = 'success';
+        console.log(state.wallets_status, 'state.wallets_status');
+    },
+    ADD_WALLET(state, wallet) {
+        state.wallets.push(wallet);
+        state.currentWallet = state.wallets[state.wallets.length - 1];
+    },
+    WALLETS_ERROR(state) {
+        state.wallets_status = 'error';
+    },
+
+
     AGREED_DELETE(state) {
         state.delWalletProperty.isAgreed = !state.delWalletProperty.isAgreed;
         state.delWalletProperty.mnemonic = '';
@@ -387,10 +468,14 @@ const mutations = {
     }
 };
 
-const getters = {};
+const getters = {
+    lengthWalletList: state => state.wallets.length,
+    walletStatus: state => state.wallets_status
+};
 
 export default {
     state,
+    actions,
     getters,
     mutations
 };

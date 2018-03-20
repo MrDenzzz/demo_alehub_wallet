@@ -162,7 +162,10 @@
                 switchValueAuth: true,
                 // changeableValue: false,
                 selectedLanguage: 'English',
-                flag: null
+
+                flag: null,
+
+                newName: ''
             }
         },
         watch: {},
@@ -264,8 +267,8 @@
                     this.closeModal('change-password');
             });
             this.$on('receiveFullName', function (value) {
-                if (value !== this.userName) {
-                }
+                //this func is not need
+                // this.newName = value;
             });
             this.$on('changeChecker', function (value) {
                 // this.changeableValue = value;
@@ -275,6 +278,16 @@
             });
             this.$on('cancelSwitchControl', function (value) {
                 this.switchValueAuth = value;
+            });
+
+
+            this.$on('changeFullName', function (value) {
+                if (this.userName !== value) {
+                    this.$store.dispatch('changeUserName', {newName: value}).then(() => {
+                        // this.$router.push('/login')
+                        console.log('change user name');
+                    });
+                }
             });
         }
     }

@@ -52,6 +52,12 @@
                                             class="btn btn-black btn-block nomargin">
                                         Login
                                     </button>
+                                    <div class="error-block" v-if="isErrorLogin">
+                                        <p>Login or password is incorrect</p>
+                                    </div>
+                                    <div class="is-center" v-if="isLoaderUserAuth">
+                                        <Spinner  />
+                                    </div>
                                 </form>
 
                                 <p class="text">Don’t have an account?
@@ -78,6 +84,12 @@
                                                 v-model="token"
                                                 autofocus
                                                 required>
+                                    </div>
+                                    <div class="error-block" v-if="isErrorLogin">
+                                        <p>Incorrect two-factor code</p>
+                                    </div>
+                                    <div class="is-center is-2fa-loader" v-if="isLoaderUserAuth">
+                                        <Spinner  />
                                     </div>
 
                                     <button
@@ -122,7 +134,9 @@
             ...mapGetters([
                 'authStep',
                 'authStatus',
-                'userTwoAuth'
+                'userTwoAuth',
+                'isLoaderUserAuth',
+                'isErrorLogin'
             ]),
         },
         methods: {
@@ -215,6 +229,15 @@
     }
 </script>
 
+<style>
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #f0f0f0 inset !important;
+    }
+</style>
+
 <style lang="stylus" scoped>
     /*.two-auth-form*/
         /*.control*/
@@ -250,9 +273,21 @@
     .d-block
         display block
 
+    .is-center
+        display flex
+        justify-content center
+
+    .is-2fa-loader
+        margin-top -20px
+        margin-bottom 20px
+
     .error
         text-decoration underline
         text-decoration-color #d93f1f
+    .error-block
+        color red
+        font-family MuseoSansCyrl300
+        text-align center
 
     .login-form
         .text

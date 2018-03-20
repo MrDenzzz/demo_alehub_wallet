@@ -1,5 +1,5 @@
 <template>
-    <div class="notifications-panel">
+    <div class="notifications-panel" style="width: 100%;">
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
             <Panel-heading :title="parseDate(notification.date)" :isTop="true" v-if="check(notificationIndex)"/>
 

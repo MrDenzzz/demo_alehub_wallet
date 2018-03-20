@@ -1,7 +1,5 @@
 <template>
-    <div class="text-center">
-        <img src="../../assets/img/spinner.svg" width="44" height="44" class="spinner">
-    </div>
+    <img src="../../assets/img/spinner.svg" width="44" height="44" class="spinner">
 </template>
 
 <script>

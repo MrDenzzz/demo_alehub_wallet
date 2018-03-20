@@ -165,6 +165,7 @@
 
             getCurrentWalletBalance: function () {
                 if (this.getCurrentWallet !== null){
+                    // console.log(this.getCurrentWallet.balance, 'this.getCurrentWallet.balance');
                     return this.getCurrentWallet.balance;
                 }
                 return 0;

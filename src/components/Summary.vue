@@ -34,6 +34,11 @@
                     <div class="row">
                         <div class="col-12">
                             <!--<Spinner v-if="isLoader"/>  &lt;!&ndash; переписать спиннер &ndash;&gt;-->
+
+
+                            <!--{{ this.$store.state.Transactions.transactions }}-->
+
+
                             <Search-panel
                                     v-if="false && getActivity.length !== 0 && !transactionsLoader"
                                     :filters="filters"
@@ -142,7 +147,9 @@
         watch: {},
         computed: {
             ...mapGetters([
-                'transactionsFilter'
+                'transactionsFilter',
+                'lengthWalletList',
+                'walletStatus'
             ]),
             // currentToken: function () {
             //     return this.$store.state.User.token;
@@ -217,6 +224,8 @@
             },
 
             getFilteredActivity: function () {
+
+                console.log(this.getTransactions, 'this.getTransactions');
 
                 let list = this.getTransactions.slice().sort((a, b) => {
                     return a.transactions - b.transactions;
@@ -310,7 +319,8 @@
                 this.$http.get(`${this.$host}/transactions/${address}`, {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Authorization': localStorage.getItem(sha256('user-token'))
                     }
                 }).then(response => {
                     this.addNewTransactions(response.body);
@@ -345,6 +355,12 @@
 
         },
         mounted() {
+            // console.log(this.lengthWalletList, 'this.lengthWalletList');
+            // console.log(this.walletStatus, 'this.walletStatus');
+            if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
+                this.openModal('newwallet');
+            }
+
             //переписать название функции sendMoney на что нибудь более подходящее; переписать названия мутаций тоже
             this.$on('sendMoney', function (data) {
 

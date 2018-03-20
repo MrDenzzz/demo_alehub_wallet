@@ -35,7 +35,7 @@
                                 mask="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                                 type="text"
                                 :masked="false"
-                                placeholder="Enter the address of the cryptographic wallet"
+                                :placeholder="placeholderText"
                                 class="input"
                                 :class="{error:errorAddress}"
                                 @keyup.enter.native="nextCheck"
@@ -91,6 +91,7 @@
     import SelectControl from "../layouts/forms/Select";
     import numeral from 'numeral';
     import {mapMutations} from "vuex";
+    import sha256 from 'sha256';
 
     export default {
         name: "send",
@@ -99,6 +100,7 @@
         },
         data() {
             return {
+                placeholderText: '',
                 amountAle: '',
                 amountUsd: 161,
                 step: 1,
@@ -274,13 +276,17 @@
                     }, {
                         headers: {
                             'Content-Type': 'application/json; charset=UTF-8',
-                            'Accept': 'application/json'
+                            'Accept': 'application/json',
+                            'Authorization': localStorage.getItem(sha256('user-token'))
                         }
                     }).then(response => {
-                        this.addNewNotificaiton(response.body.model)
-                        this.$socket.emit('get transactions', {sender: this.currentWallet.address, receiver: this.address});
-                        let adresses = JSON.parse(localStorage.getItem('wallets'));
-                        this.$socket.emit('get balance', adresses);
+                        this.addNewNotificaiton(response.body.model);
+
+                        console.log(response, 'send response');
+
+                        // this.$socket.emit('get transactions', {sender: this.currentWallet.address, receiver: this.address});
+                        // let adresses = JSON.parse(localStorage.getItem('wallets'));
+                        // this.$socket.emit('get balance', adresses);
                     }, response => {
                         console.log('error', response);
                     });
@@ -306,7 +312,17 @@
             useMax: function () {
                 this.amountAle = this.currentWallet.balance;
                 this.focusInput('address');
+            },
+            changePlaceholderText: function () {
+                let clientWidth = document.documentElement.clientWidth;
+                clientWidth <= 425 ? this.placeholderText = "the cryptographic wallet's name" : this.placeholderText = 'Enter the name of the cryptographic wallet';
             }
+        },
+        created() {
+            window.addEventListener('resize', this.changePlaceholderText());
+        },
+        destroy() {
+            window.removeEventListener('resize', this.changePlaceholderText());
         }
     };
 </script>

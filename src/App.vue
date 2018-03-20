@@ -1,14 +1,13 @@
 <template>
     <div id="app" :class="systemLanguage">
 
-        <div v-if="isLoader">
-            <sync-loader :load="isLoader" />
+        <div v-if="isLoading">
+            <sync-loader :load="isLoading"/>
         </div>
-
         <div v-else>
-            <router-view />
-            <Connection-modal />
-            <New-wallet />
+            <!--<New-wallet/>-->
+            <router-view/>
+            <Connection-modal/>
         </div>
     </div>
 </template>
@@ -20,6 +19,7 @@
     import SyncLoader from './components/layouts/SyncLoader';
 
     import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'alehub',
@@ -33,10 +33,17 @@
             return {
                 language: localStorage.getItem('systemLang'),
                 isOpenModal: false,
-                isLoader: false
+                isLoader: false,
             }
         },
         computed: {
+            ...mapGetters([
+                'authStatus',
+                'userStatus',
+                'walletStatus',
+                'transactionsStatus',
+                'lengthWalletList'
+            ]),
             // currentToken: function () {
             //     return this.$store.state.User.token;
             // },
@@ -50,12 +57,21 @@
                 if (this.language === null) return 'eng';
                 else return this.language;
             },
-            selectedTheme () {
+            selectedTheme() {
                 return this.$store.state.Themes.theme;
+            },
+            isLoading: function () {
+                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionsStatus === 'success') {
+                    // if (this.lengthWalletList === 0) {
+                    //     this.$modal.show('newwallet');
+                    // }
+                    return false;
+                }
+                return true;
             }
         },
         methods: {
-            ...mapMutations ({
+            ...mapMutations({
                 setCurrentWallet: 'CHANGE_NEW_WALLET',
                 createNewWallet: 'CREATE_NEW_WALLET',
                 addNewTransactions: 'ADD_NEW_TRANSACTION',
