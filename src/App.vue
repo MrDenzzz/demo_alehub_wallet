@@ -45,7 +45,7 @@
                 'authStatus',
                 'userStatus',
                 'walletStatus',
-                'transactionsStatus',
+                'transactionStatus',
                 'lengthWalletList'
             ]),
             // currentToken: function () {
@@ -69,8 +69,18 @@
                     return false;
                 }
 
-                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' &&
-                    this.transactionsStatus === 'success') {
+                console.log(this.authStatus, 'this.authStatus');
+                console.log(this.userStatus, 'this.userStatus');
+                console.log(this.walletStatus, 'this.walletStatus');
+                console.log(this.transactionStatus, 'this.transactionStatus');
+
+
+                if ((this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'not found') ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionStatus === 'not found') ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionStatus === 'success')) {
+                    // this.transactionsStatus === 'success') {
+
+
                     // if (this.lengthWalletList === 0) {
                     //     this.$modal.show('newwallet');
                     // }

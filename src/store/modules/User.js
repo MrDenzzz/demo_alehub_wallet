@@ -8,7 +8,7 @@ const state = {
     email: '',
     twoAuth: '',
     userStatus: '',
-    token: localStorage.getItem(sha256('2o_H-Zu7nNDcmSaZX')) || '',
+    token: localStorage.getItem(sha256('user-token')) || '',
     status: '',
     twoAuthGeneratedCode: '',
     twoAuthSecret: '',

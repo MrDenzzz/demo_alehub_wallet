@@ -684,9 +684,7 @@ body {
     top: 24px; }
   .request .modal-control {
     padding-top: 0 !important;
-    padding-bottom: 0 !important; }
-  .request .qr-code {
-    margin-top: 12px; } }
+    padding-bottom: 0 !important; } }
 
 @media screen and (max-width: 375px) {
   .navbar .title {
@@ -2874,7 +2872,11 @@ td, th {
   overflow-x: hidden;
   overflow-y: auto; }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  .qr-code {
+    margin-top: 64px; } }
+
+@media (max-width: 425px) {
   .qr-code {
     margin-top: 24px; } }
 

@@ -144,7 +144,7 @@
                 </p>
             </div>
 
-            <div class="modal-control modal-control-noMargin" style="margin-left: 42px;margin-right: 42px;">
+            <div class="modal-control modal-control-noMargin">
                 <div class="modal-input input-phrase">
                     <label class="title">
                         {{ $t('modals.newWallet.recovery.finish.fields.phrase.title') }}
@@ -508,9 +508,9 @@
 <style lang="scss" scoped>
 
     // .input-phrase {
-    //     display: flex !important;
-    //     align-items: center !important;
-    //     justify-content: flex-start !important;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: flex-start;
     // }
 
     .control-checkbox {
@@ -794,44 +794,86 @@
             }
         }
     }
-    .v--modal-overlay {
-        & .v--modal-box {
-            & .body {
-                & .modal-control {
-                    & .modal-input {
-                        & .title {
-                            white-space: nowrap;
+
+    @media(max-width: 425px) {
+        .phrase {
+            padding: 12px;
+        }
+        .modal-btn {
+            margin: 0 42px;
+            & .btn-large {
+                padding: 10px 10px;
+                width: 100%;
+            }
+        }
+        .v--modal-overlay {
+            & .v--modal-box {
+                & .body {
+                    & .modal-control {
+                        margin: 0 42px;
+                        & .modal-input {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
                         }
                     }
                 }
             }
         }
     }
-    @media(max-width: 425px) {
-        .phrase {
-            padding: 12px;
+    @media(max-width: 320px) {
+        .control-checkbox {
+            font-size: 10px;
+        }
+        .v--modal-overlay {
+            & .v--modal-box {
+                & .heading {
+                    margin-bottom: 0;
+                    & .title {
+                        height: 15px;
+                        padding-bottom: 0;
+                    }
+                }
+                & .body {
+                    & .modal-btn {
+                        margin-bottom: 15px;
+                        margin-top: 20px;
+                        & .btn-large {
+                            padding: 5px 10px;
+                            font-size: 12px;
+                        }
+                    }
+                    & .modal-control {
+                        margin: 0 20px;
+                    }
+                    & .modal-warning {
+                        margin: 0 20px;
+                        & .agreed {
+                            margin-top: 10px;
+                        }
+                        &.agreed-border {
+                            & .agreed {
+                                padding-bottom: 10px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 </style>
 
 <style lang="scss">
     .v--modal {
-        width: 776px !important;
+        min-width: 610px;
         border-radius: 10px;
         background-color: #fafafa;
         box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
     }
 
-    @media screen and (max-width: 1024px) {
+    @media (max-width: 1024px) {
         .v--modal {
-            max-width: 80% !important;
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        .v--modal {
-            max-width: 100% !important;
-            border-radius: 0;
+            min-width: 100%;
         }
     }
 

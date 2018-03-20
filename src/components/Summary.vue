@@ -9,7 +9,7 @@
         <section class="main" style="height: 100%;">
 
             <Wallets-list
-                    :new-wallets="walletList"
+                    :new-wallets="wallets"
             />
             <div class="content">
                 <div class="container">
@@ -39,17 +39,15 @@
                             <!--{{ this.$store.state.Transactions.transactions }}-->
 
 
-                            <Search-panel
-                                    v-if="false && getActivity.length !== 0 && !transactionsLoader"
-                                    :filters="filters"
-                                    :active-filter="activeFilter"
-                                    :check-activities="getActivity.length"
-                                    :date-from-wallet="dateFrom"
-                                    :date-to-wallet="dateTo"
-                                    :current-transactions="currentTmpTransactions"
-                                    :total-transactions=" totalTransactions"
-                                    :starting-transactions="startingTransactions"
-                            />
+                            <!--<Search-panel-->
+                                    <!--v-if="false && getActivity.length !== 0 && !transactionsLoader"-->
+                                    <!--:check-activities="getActivity.length"-->
+                                    <!--:date-from-wallet="dateFrom"-->
+                                    <!--:date-to-wallet="dateTo"-->
+                                    <!--:current-transactions="currentTmpTransactions"-->
+                                    <!--:total-transactions=" totalTransactions"-->
+                                    <!--:starting-transactions="startingTransactions"-->
+                            <!--/>-->
 
                             <Activity-list
                                     v-if="getActivity.length !== 0 || transactionsLoader"
@@ -147,10 +145,27 @@
         watch: {},
         computed: {
             ...mapGetters([
+                'wallets',
+                'transactions',
                 'transactionsFilter',
                 'lengthWalletList',
-                'walletStatus'
+                'walletStatus',
+                'currentWallet'
             ]),
+
+            getTransactions: function () {
+                console.log(this.currentWallet, 'this.currentWallet');
+                if (this.currentWallet !== null) {
+                    this.$store.dispatch('walletsRequestLazy').then(() => {
+                        console.log('successfully interval get wallet info');
+
+                        this.$store.dispatch('transactionsRequestLazy', this.currentWallet !== null ? this.currentWallet.address : '').then(() => {
+                            console.log('successfully interval get transactions info');
+                        });
+                    });
+                }
+            },
+
             // currentToken: function () {
             //     return this.$store.state.User.token;
             // },
@@ -164,70 +179,46 @@
             // currentUserName: function () {
             //     return this.$store.state.User.name;
             // },
-            selectedTheme () {
+
+
+            selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
-            transactionsLoader() {
+
+            transactionsLoader: function () {
                 return this.$store.state.Transactions.transactionsLoader;
             },
-            walletList: function () {
-                //передавать только воллеты текущего пользователя
-                return this.$store.state.Wallets.wallets;
-            },
-            walletFromLS: function () {
-                return localStorage.getItem('walletId');
-            },
-            currentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
-            },
+
+
             currentBalance: function () {
                 return this.$store.state.Wallets.currentWallet.balance;
             },
-            // getUserWallets: function () {
-            //     return this.walletList.filter(item => {
-            //         return parseInt(item.ownerId) === parseInt(this.getUserId);
-            //     });
-            // },
-            getUserId: function () {
-                return localStorage.getItem('id');
-            },
-            getFirstWallet: function () {
-                if (this.walletList.length !== 0)
-                //воллеты текущего пользователя
-                    return this.walletList[0].id;
-                return false;
-            },
-            filters: function () {
-                return this.$store.state.Transactions.filters;
-            },
-            activeFilter: function () {
-                return this.$store.state.Transactions.activeFilter
-            },
-            getTransactions: function () {
-                return this.$store.state.Transactions.transactions;
-            },
+
+
+
             currentTransactions: function () {
-                return this.getTransactions.filter(item => {
+                return this.transactions.filter(item => {
                     return item._id === this.currentWallet._id;
                 });
             },
+
             currentTmpTransactions: function () {
                 if (this.dateFrom && this.dateTo) {
                     let dateFrom = this.dateFrom.getTime(),
                         dateTo = this.dateTo.getTime();
 
-                    return this.getTransactions.filter(item => {
+                    return this.transactions.filter(item => {
                         return item.date >= dateFrom && item.date <= dateTo;
                     });
                 }
                 return [];
             },
 
+
+
             getFilteredActivity: function () {
 
-                console.log(this.getTransactions, 'this.getTransactions');
-
-                let list = this.getTransactions.slice().sort((a, b) => {
+                let list = this.transactions.slice().sort((a, b) => {
                     return a.transactions - b.transactions;
                 }).reverse();
 
@@ -253,9 +244,6 @@
                 }
                 return this.getFilteredActivity;
             },
-            getSelectedWallet: function () {
-                return this.$store.state.Wallets.selectedWallet;
-            }
         },
         methods: {
             ...mapMutations({
@@ -305,15 +293,6 @@
                 this.dateTo.setMilliseconds(999);
             },
 
-            imitationLoadPage: function () {
-                // this.isLoader = true;
-                // window.onload = function () {
-                //     this.isLoader = false;
-                // };
-                // setTimeout(() => {
-                //     this.isLoader = false;
-                // }, 750);
-            },
             changeSelectedWallet: function (address) {
                 this.changeTransactionLoaderState(true);
                 this.$http.get(`${this.$host}/transactions/${address}`, {
@@ -328,9 +307,13 @@
                 }, response => {
                     console.log('error', response);
                 });
-            }
+            },
         },
         created() {
+
+            // let _this = this;
+            // this.setIntervalId = setInterval(this.getTransactions, 15000);
+
 
             if (this.currentTransactions.length !== 0) {
                 this.initiateDate();
@@ -344,19 +327,12 @@
                 this.startingTransactions = val;
             });
 
-            // this.isLoader = true;
-            //
-            // document.addEventListener('DOMContentLoaded', function () {
-            //     this.isLoader = false;
-            // });
-            //
-            // // this.imitationLoadPage();
-            // console.log(this.isLoader);
-
         },
         mounted() {
-            // console.log(this.lengthWalletList, 'this.lengthWalletList');
-            // console.log(this.walletStatus, 'this.walletStatus');
+
+            this.setIntervalId = setInterval(this.getTransactions, 15000);
+
+
             if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
                 this.openModal('newwallet');
             }
@@ -371,7 +347,7 @@
 
                 this.sendMoneyToAdress(data);
                 this.setNotificationForSend(data);
-                this.setNotificationForSendToProfile(this.getTransactions[this.getTransactions.length - 1]);
+                this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
                 this.newTransaction = true;
 
                 if (checkFirstTransaction) {
@@ -428,12 +404,6 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
-
-            // console.log(this.currentToken, 'this.currentToken');
-            // console.log(this.currentStatus, 'this.currentStatus');
-
-
-
         }
     }
 </script>
@@ -490,9 +460,11 @@
     @media (max-width: 600px)
         .stats-col
             margin 0 auto
+
     @media (max-width: 375px)
         .stats-col
             width 100%
+
         .buttons
             width 100%
 </style>

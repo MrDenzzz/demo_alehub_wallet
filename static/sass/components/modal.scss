@@ -339,7 +339,12 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  .qr-code {
+    margin-top: 64px;
+  }
+}
+@media (max-width: 425px) {
   .qr-code {
     margin-top: 24px;
   }
