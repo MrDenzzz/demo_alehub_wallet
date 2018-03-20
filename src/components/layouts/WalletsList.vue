@@ -152,7 +152,7 @@
             }
         },
         created () {
-            let _this = this;
+            // let _this = this;
             // this.setIntervalId = setInterval(_this.getTransactions, 15000);
         }
     }

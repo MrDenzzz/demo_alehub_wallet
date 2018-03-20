@@ -6,7 +6,6 @@ const state = {
     chunkTransactions: [],
     dateFrom: 0,
     dateTo: 0,
-    filters: ['All'],
     activeFilter: 0,
     searchText: '',
     hideFilter: false,
@@ -15,7 +14,7 @@ const state = {
 
 
 
-    transactionStatus: 'success',
+    transactionStatus: 'not found',
 
 
     lazyTransactionsStatus: '',
@@ -167,7 +166,7 @@ const getters = {
     },
 
 
-    transactionsStatus: state => state.transactionStatus,
+    transactionStatus: state => state.transactionStatus,
 };
 
 export default {

@@ -41,8 +41,6 @@
 
                             <!--<Search-panel-->
                                     <!--v-if="false && getActivity.length !== 0 && !transactionsLoader"-->
-                                    <!--:filters="filters"-->
-                                    <!--:active-filter="activeFilter"-->
                                     <!--:check-activities="getActivity.length"-->
                                     <!--:date-from-wallet="dateFrom"-->
                                     <!--:date-to-wallet="dateTo"-->
@@ -156,6 +154,7 @@
             ]),
 
             getTransactions: function () {
+                console.log(this.currentWallet, 'this.currentWallet');
                 if (this.currentWallet !== null) {
                     this.$store.dispatch('walletsRequestLazy').then(() => {
                         console.log('successfully interval get wallet info');
@@ -180,10 +179,13 @@
             // currentUserName: function () {
             //     return this.$store.state.User.name;
             // },
+
+
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
-            transactionsLoader() {
+
+            transactionsLoader: function () {
                 return this.$store.state.Transactions.transactionsLoader;
             },
 
@@ -192,13 +194,7 @@
                 return this.$store.state.Wallets.currentWallet.balance;
             },
 
-            filters: function () { //снести
-                return this.$store.state.Transactions.filters;
-            },
 
-            activeFilter: function () { //снести
-                return this.$store.state.Transactions.activeFilter
-            },
 
             currentTransactions: function () {
                 return this.transactions.filter(item => {
@@ -218,9 +214,9 @@
                 return [];
             },
 
-            getFilteredActivity: function () {
 
-                console.log(this.transactions, 'this.getTransactions');
+
+            getFilteredActivity: function () {
 
                 let list = this.transactions.slice().sort((a, b) => {
                     return a.transactions - b.transactions;
@@ -315,8 +311,8 @@
         },
         created() {
 
-            let _this = this;
-            this.setIntervalId = setInterval(_this.getTransactions, 15000);
+            // let _this = this;
+            // this.setIntervalId = setInterval(this.getTransactions, 15000);
 
 
             if (this.currentTransactions.length !== 0) {
@@ -333,6 +329,9 @@
 
         },
         mounted() {
+
+            this.setIntervalId = setInterval(this.getTransactions, 15000);
+
 
             if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
                 this.openModal('newwallet');

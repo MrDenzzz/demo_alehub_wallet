@@ -6,17 +6,17 @@
                 <input type="text" id="search-transactions" placeholder="Search Transactions" @input="searchTransaction"
                        v-model="searchText">
             </div>
-            <div class="filters">
-                <span
-                        @click="switchFilter()"
-                        class="cursor-p"
-                        :class="{ 'active': !hideFilter}"
-                >
-                    Date range
-                </span>
-            </div>
+            <!--<div class="filters">-->
+                <!--<span-->
+                        <!--@click="switchFilter()"-->
+                        <!--class="cursor-p"-->
+                        <!--:class="{ 'active': !hideFilter}"-->
+                <!--&gt;-->
+                    <!--Date range-->
+                <!--</span>-->
+            <!--</div>-->
         </div>
-        <div class="bottom" v-if="!hideFilter">
+        <div class="bottom">
             <div class="date">
                 <h3 class="date-title">
                     Select a date range
@@ -125,8 +125,6 @@
             ShareTransactions
         },
         props: {
-            filters: [Object, Array],
-            activeFilter: [String, Number],
             dateFromWallet: Date,
             dateToWallet: Date,
             totalTransactions: [String, Number],

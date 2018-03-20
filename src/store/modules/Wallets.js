@@ -4,7 +4,7 @@ import axios from "axios/index";
 import sha256 from "sha256";
 
 const state = {
-    wallets_status: '',
+    walletStatus: 'not found',
 
     lazyWalletStatus: '',
 
@@ -100,22 +100,21 @@ const actions = {
 
 const mutations = {
     WALLETS_REQUEST(state) {
-        state.wallets_status = 'loading';
+        state.walletStatus = 'loading';
     },
     SET_WALLETS(state, wallets) {
         if (wallets.length !== 0) {
             state.wallets = wallets;
             state.currentWallet = state.wallets[0];
         }
-        state.wallets_status = 'success';
-        console.log(state.wallets_status, 'state.wallets_status');
+        state.walletStatus = 'success';
     },
     ADD_WALLET(state, wallet) {
         state.wallets.push(wallet);
         state.currentWallet = state.wallets[state.wallets.length - 1];
     },
     WALLETS_ERROR(state) {
-        state.wallets_status = 'error';
+        state.walletStatus = 'error';
     },
 
 
@@ -235,7 +234,7 @@ const mutations = {
 const getters = {
     wallets: state => state.wallets,
     lengthWalletList: state => state.wallets.length,
-    walletStatus: state => state.wallets_status,
+    walletStatus: state => state.walletStatus,
     currentWallet: state => state.currentWallet
 };
 
