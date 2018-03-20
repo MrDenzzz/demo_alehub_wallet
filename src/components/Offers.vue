@@ -9,7 +9,7 @@
 
         <section class="main">
             <div class="content nomenu">
-                <div class="container" v-if="isLoader">
+                <div class="container" v-if="offersStatus !== 'success'">
                     <div class="row">
                         <div class="col-12">
                             <Spinner/>
@@ -121,11 +121,11 @@
                             />
                             <!-- filters убрать в компонент фильтра -->
 
-                            <div class="list-panel-heading mr-t0">
+                            <div v-if="offersList.length > 0" class="list-panel-heading mr-t0">
                                 <h3>{{ $t('pages.jobOffers.filtersBlock.title') }}</h3>
                             </div>
 
-                            <Filters />
+                            <Filters v-if="offersList.length > 0" />
                         </div>
                     </div>
                 </div>
@@ -188,16 +188,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "doSortByRatingIncrease",
-      "doSortByRatingDecrease",
-      "doSortByPriceIncrease",
-      "doSortByPriceDecrease",
-      "doSortByEndDateIncrease",
-      "doSortByEndDateDecrease",
+        "doSortByRatingIncrease",
+        "doSortByRatingDecrease",
+        "doSortByPriceIncrease",
+        "doSortByPriceDecrease",
+        "doSortByEndDateIncrease",
+        "doSortByEndDateDecrease",
 
-      "getComputedOfferList",
-
-      "getPartOffersList"
+        "getComputedOfferList",
+        "offersStatus",
+        "getPartOffersList"
     ]),
     offersList: function() {
       return this.$store.state.Offers.offersList;
@@ -365,6 +365,7 @@ export default {
     this.initiateStateOffers();
   },
   created() {
+    this.$store.dispatch('getOffers').then(() => {  });
     this.getOpenOffers();
   }
 };
