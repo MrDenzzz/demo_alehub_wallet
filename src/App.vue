@@ -18,6 +18,8 @@
     import Spinner from './components/layouts/Spinner';
     import SyncLoader from './components/layouts/SyncLoader';
 
+    import sha256 from 'sha256';
+
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
 
@@ -61,12 +63,18 @@
                 return this.$store.state.Themes.theme;
             },
             isLoading: function () {
-                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionsStatus === 'success') {
+                if (localStorage.getItem(sha256('user-token')) === null) {
+                    return false;
+                }
+
+                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' &&
+                    this.transactionsStatus === 'success') {
                     // if (this.lengthWalletList === 0) {
                     //     this.$modal.show('newwallet');
                     // }
                     return false;
                 }
+
                 return true;
             }
         },

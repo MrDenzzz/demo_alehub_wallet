@@ -169,7 +169,7 @@ const state = {
     activeFilter: 0,
     searchText: '',
     hideFilter: false,
-    transactionStatus: '',
+    transactionStatus: 'success',
     transactionsLoader: false
 };
 
@@ -181,7 +181,7 @@ const actions = {
 
         return new Promise((resolve, reject) => {
             commit('TRANSACTIONS_REQUEST');
-            let host = `http://192.168.1.37:4000/transactions/${address}`;
+            let host = `http://54.144.234.226:8181/transactions/${address}`;
             axios({
                 url: host,
                 headers: {

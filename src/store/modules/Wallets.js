@@ -295,7 +295,7 @@ const actions = {
     walletsRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('WALLETS_REQUEST');
-            let host = 'http://192.168.1.37:4000/users/user-wallets';
+            let host = 'http://54.144.234.226:8181/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -323,7 +323,7 @@ const actions = {
     newWallet: ({commit, dispatch}, wallet) => {
         return new Promise((resolve, reject) => {
             // commit('AUTH_REQUEST');
-            let host = 'http://192.168.1.37:4000/wallet/new';
+            let host = 'http://54.144.234.226:8181/wallet/new';
             axios({
                 url: host,
                 headers: {
