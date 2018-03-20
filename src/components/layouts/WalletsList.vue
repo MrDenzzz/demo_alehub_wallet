@@ -131,18 +131,12 @@
                 return 0;
             },
             getTransactions () {
-                if (!this.getCurrentWallet) return false;
-                this.$http.get(`${this.$host}/transactions/${this.getCurrentWallet.address}`, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json',
-                        'Authorization': localStorage.getItem(sha256('user-token'))
-                    }
-                }).then(response => {
-                    console.log(response);
-                    this.addNewTransactions(response.body);
-                }, response => {
-                    console.log('error', response);
+                this.$store.dispatch('walletsRequestLazy').then(() => {
+                    console.log('successfully reload wallets');
+
+                    this.$store.dispatch('transactionsRequestLazy', this.$store.state.Wallets.currentWallet ? this.$store.state.Wallets.currentWallet.address : '').then(() => {
+                        console.log('successfully reload transactions');
+                    });
                 });
             },
             getIcon(name) {

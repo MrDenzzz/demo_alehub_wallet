@@ -207,6 +207,38 @@ const actions = {
                 });
         })
     },
+    transactionsRequestLazy: ({commit, dispatch}, address) => {
+
+        // this.addNewTransactions(response.body);
+        // this.changeTransactionLoaderState(false);
+
+        return new Promise((resolve, reject) => {
+            if (address === '') return false;
+            let host = `http://192.168.1.37:4000/transactions/${address}`;
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            })
+                .then(resp => {
+                    console.log(resp.data, 'transactions');
+                    commit('SET_TRANSACTIONS', resp.data);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('TRANSACTIONS_ERROR', err);
+                    // commit('AUTH_ERROR', err);
+
+                    // localStorage.removeItem(sha256('user-token'));
+                    // delete axios.defaults.headers.common['Login'];
+                    reject(err)
+                });
+        })
+    },
 };
 
 const mutations = {
