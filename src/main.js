@@ -63,7 +63,7 @@ if (token !== 'undefined' && token) {
         store.dispatch('walletsRequest').then(() => {
             console.log('successfully reload wallets');
 
-            store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
+            store.dispatch('transactionsRequest', store.state.Wallets.currentWallet ? store.state.Wallets.currentWallet.address : '').then(() => {
                 console.log('successfully reload transactions');
             });
         });

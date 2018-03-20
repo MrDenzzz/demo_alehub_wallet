@@ -180,6 +180,7 @@ const actions = {
         // this.changeTransactionLoaderState(false);
 
         return new Promise((resolve, reject) => {
+            if (address === '') return false;
             commit('TRANSACTIONS_REQUEST');
             let host = `http://192.168.1.37:4000/transactions/${address}`;
             axios({
