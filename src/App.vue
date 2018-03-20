@@ -22,7 +22,6 @@
 
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
-    import sha256 from 'sha256';
 
     export default {
         name: 'alehub',
