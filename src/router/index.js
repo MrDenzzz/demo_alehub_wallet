@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import VModal from 'vue-js-modal';
 import {store} from '../store';
+
 import sha256 from 'sha256';
 
 import Summary from '@/components/Summary';
@@ -16,6 +18,7 @@ import Offers from '@/components/Offers';
 import Resume from '@/components/Resume';
 
 Vue.use(Router);
+Vue.use(VModal);
 
 const ifNotAuthenticated = (to, from, next) => {
     let token = localStorage.getItem(sha256('user-token'));
@@ -28,6 +31,10 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
+    if (store.state.Wallets.wallets.length === 0 && to.name !== 'Summary') {
+        next('/');
+        return;
+    }
     let token = localStorage.getItem(sha256('user-token'));
     if (token !== null && token !== 'undefined' && token !== undefined) {
         next();
@@ -119,7 +126,6 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-
     next();
 });
 

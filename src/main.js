@@ -59,42 +59,22 @@ if (token !== 'undefined' && token) {
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch('userRequest').then(() => {
         console.log('successfully reload');
+
+        store.dispatch('walletsRequest').then(() => {
+            console.log('successfully reload wallets');
+
+            store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
+                console.log('successfully reload transactions');
+            });
+        });
     });
-
-    store.dispatch('walletsRequest').then(() => {
-        console.log('successfully reload wallets');
-    });
-
-
-    // let host = 'http://192.168.1.37:4000/users/user-wallets';
-    //
-    // axios({
-    //     url: host,
-    //     headers: {
-    //         'Content-Type': 'application/json; charset=UTF-8',
-    //         'Accept': 'application/json',
-    //         'Authorization': axios.defaults.headers.common['Authorization']
-    //     },
-    //     method: 'GET'
-    // })
-    //     .then(resp => {
-    //
-    //         console.log(resp);
-    //
-    //         resolve(resp);
-    //     })
-    //     .catch(err => {
-    //
-    //         reject(err);
-    //     });
-
 
 }
 
 new Vue({
     el: '#app',
-    router,
     store,
+    router,
     i18n,
     components: {App},
     template: '<App/>'
