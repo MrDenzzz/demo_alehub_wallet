@@ -618,6 +618,11 @@ body {
     .group-settings .form:last-child {
       margin-right: 0; }
 
+.login .navbar, .register .navbar {
+  justify-content: center; }
+  .login .navbar .title, .register .navbar .title {
+    display: flex; }
+
 @media screen and (max-width: 980px) {
   .group-settings {
     display: flex;

@@ -1051,6 +1051,15 @@ body {
   }
 }
 
+.login, .register {
+  .navbar {
+    justify-content: center;
+    .title {
+      display: flex;
+    }
+  }
+}
+
 @media screen and (max-width: 980px) {
   .group-settings {
     display: flex;
