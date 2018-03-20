@@ -16,7 +16,8 @@ import axios from 'axios';
 import sha256 from 'sha256';
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://192.168.1.37:4000';
+Vue.prototype.$host = 'http://54.144.234.226:8181';
+// Vue.prototype.$host = 'http://54.144.234.226:8181';
 // Vue.prototype.$host = 'localhost:4000';
 
 const NotifOptions = {
@@ -63,9 +64,14 @@ if (token !== 'undefined' && token) {
         store.dispatch('walletsRequest').then(() => {
             console.log('successfully reload wallets');
 
-            store.dispatch('transactionsRequest', store.state.Wallets.currentWallet ? store.state.Wallets.currentWallet.address : '').then(() => {
-                console.log('successfully reload transactions');
-            });
+            if (store.state.Wallets.currentWallet !== null) {
+                store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
+                    console.log('successfully reload transactions');
+                });
+            }
+            // store.dispatch('transactionsRequest', store.state.Wallets.currentWallet ? store.state.Wallets.currentWallet.address : '').then(() => {
+            //     console.log('successfully reload transactions');
+            // });
         });
     });
 

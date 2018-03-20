@@ -18,9 +18,10 @@
     import Spinner from './components/layouts/Spinner';
     import SyncLoader from './components/layouts/SyncLoader';
 
+    import sha256 from 'sha256';
+
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
-    import sha256 from 'sha256';
 
     export default {
         name: 'alehub',
@@ -43,7 +44,7 @@
                 'authStatus',
                 'userStatus',
                 'walletStatus',
-                'transactionsStatus',
+                'transactionStatus',
                 'lengthWalletList'
             ]),
             // currentToken: function () {
@@ -63,17 +64,34 @@
                 return this.$store.state.Themes.theme;
             },
             isLoading: function () {
-                if (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionsStatus === 'success') {
+                if (localStorage.getItem(sha256('user-token')) === null) {
+                    return false;
+                }
+
+                console.log(this.authStatus, 'this.authStatus');
+                console.log(this.userStatus, 'this.userStatus');
+                console.log(this.walletStatus, 'this.walletStatus');
+                console.log(this.transactionStatus, 'this.transactionStatus');
+
+
+                if ((this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'not found') ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionStatus === 'not found') ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionStatus === 'success')) {
+                    // this.transactionsStatus === 'success') {
+
+
                     // if (this.lengthWalletList === 0) {
                     //     this.$modal.show('newwallet');
                     // }
 
                     return false;
                 }
-                else if (this.token === null) {
-                    this.$router.push('/login')
-                    return false
-                }
+
+                // else if (this.token === null) {
+                //     this.$router.push('/login');
+                //     return false
+                // }
+
                 return true;
             }
         },
