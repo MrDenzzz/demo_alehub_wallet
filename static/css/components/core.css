@@ -560,35 +560,42 @@ body {
   .themes input[type="radio"] {
     margin: 0; }
 
-.dragParent {
-  min-height: calc(100vh - 64px);
-  width: 720px;
-  position: absolute;
-  left: -360px; }
+@media screen and (max-width: 860px) {
+  .dragParent {
+    min-height: calc(100vh - 64px);
+    width: 720px;
+    position: absolute;
+    left: -360px; } }
 
-.drag {
-  width: 60px;
-  height: 60px;
-  background-color: #474b4b;
-  position: absolute;
-  left: calc(100% - 20px);
-  top: calc(50% - 60px);
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%; }
-  .drag:after {
-    content: " ";
-    font-size: 24pt;
-    text-align: center;
-    line-height: 42px;
-    color: #fff;
-    float: left;
-    position: relative;
-    left: 26px;
-    top: 20px;
-    background: url("./../../../static/img/wallet.svg");
-    background-size: cover;
-    width: 23px;
-    height: 20.5px; }
+@media screen and (max-width: 860px) {
+  .drag {
+    width: 60px;
+    height: 60px;
+    background-color: #474b4b;
+    position: absolute;
+    left: calc(100% - 20px);
+    top: calc(50% - 60px);
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%; }
+    .drag:after {
+      content: " ";
+      font-size: 24pt;
+      text-align: center;
+      line-height: 42px;
+      color: #fff;
+      float: left;
+      position: relative;
+      left: 26px;
+      top: 20px;
+      background: url("./../../../static/img/wallet.svg");
+      background-size: cover;
+      width: 23px;
+      height: 20.5px; } }
+
+.menu.is-opened {
+  left: 0; }
+  .menu.is-opened .drag {
+    display: none; }
 
 .navbar .navbar-nav .logo {
   display: flex; }

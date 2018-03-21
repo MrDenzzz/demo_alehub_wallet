@@ -1,48 +1,52 @@
 <template>
-    <div class="menu">
-        <div class="wallet-list wallet-search" v-if="newWallets.length">
-            <div class="wrap-in-wallet">
-                <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
-                <input
-                    type="text"
-                    :placeholder="$t('pages.walletsList.search')"
-                    v-model="searchField"
-                >
-            </div>
-        </div>
-
-        <div
-            class="wallet-list wallet-element"
-            v-for="wallet in newWalletsList"
-            :key="wallet.address"
-            :id="wallet.address"
-            :class="{ active: checkActive(wallet.address) }"
-            @click="selectNewWallet(wallet.address)"
-        >
-            <div class="wrap-in-wallet">
-                <p>{{ wallet.name }}</p>
-                <div class="separator"></div>
-                <p class="wallet">
-                    <vue-numeric
-                        :separator='correctLangSep'
-                        :decimal-separator='correctLangDecSep'
-                        :value="wallet.balance"
-                        :precision="correctValuePrecision(wallet.balance)"
-                        :read-only="true">
-                    </vue-numeric>
-                    {{ ' ' + 'ALC'}}
-                </p>
+    <div class="dragParent">
+        <div class="menu" :class="{'is-opened': isToggle}" @click="closeMenu">
+            <div class="wallet-list wallet-search" v-if="newWallets.length">
+                <div class="wrap-in-wallet">
+                    <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
+                    <input
+                        type="text"
+                        :placeholder="$t('pages.walletsList.search')"
+                        v-model="searchField"
+                    >
+                </div>
             </div>
 
-        </div>
+            <div
+                class="wallet-list wallet-element"
+                v-for="wallet in newWalletsList"
+                :key="wallet.address"
+                :id="wallet.address"
+                :class="{ active: checkActive(wallet.address) }"
+                @click="selectNewWallet(wallet.address)"
+            >
+                <div class="wrap-in-wallet">
+                    <p>{{ wallet.name }}</p>
+                    <div class="separator"></div>
+                    <p class="wallet">
+                        <vue-numeric
+                            :separator='correctLangSep'
+                            :decimal-separator='correctLangDecSep'
+                            :value="wallet.balance"
+                            :precision="correctValuePrecision(wallet.balance)"
+                            :read-only="true">
+                        </vue-numeric>
+                        {{ ' ' + 'ALC'}}
+                    </p>
+                </div>
 
-        <div class="wallet-list wrap-between cursor-p" @click="addNewWalletModal">
-            <div class="wrap-in-wallet">
-                <p class="new-wallet">{{ $t('pages.walletsList.addNew') }}</p>
             </div>
-            <img src="../../assets/img/add-ic.svg" width="18" height="18"/>
-        </div>
 
+            <div class="wallet-list wrap-between cursor-p" @click="addNewWalletModal">
+                <div class="wrap-in-wallet">
+                    <p class="new-wallet">{{ $t('pages.walletsList.addNew') }}</p>
+                </div>
+                <img src="../../assets/img/add-ic.svg" width="18" height="18"/>
+            </div>
+
+            <div class="drag"></div>
+
+        </div>
     </div>
 </template>
 
@@ -51,6 +55,7 @@
     import SelectControl from '../layouts/forms/Select';
     import NewWallet from '../modals/NewWallet';
     import sha256 from 'sha256';
+    import {Draggable} from '@shopify/draggable';
 
     import {mapMutations} from 'vuex';
 
@@ -69,7 +74,8 @@
         data() {
             return {
                 searchField: '',
-                setIntervalId: 0
+                setIntervalId: 0,
+                isToggle: false
             }
         },
         watch: {
@@ -149,11 +155,38 @@
                 if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}.svg`);
                 else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_white.svg`);
                 else return require(`../../assets/img/${name}.svg`);
+            },
+            initDrag () {
+                const draggable = new Draggable(document.querySelectorAll('.dragParent'), {
+                    draggable: '.menu',
+                    delay: 0,
+                    handle: '.drag',
+                    mirror: {
+                        constrainDimensions: true,
+                        yAxis: false
+                    }
+                });
+
+                draggable.on('drag:move', (event) => {
+                    if (event.mirror.getBoundingClientRect().x * -0.66 <= 90) {
+                        this.isToggle = true
+                        document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
+                    }
+                    if (event.mirror.getBoundingClientRect().x >= 0) event.cancel();
+                });
+            },
+            closeMenu (event) {
+                if (event.target.localName !== 'input') {
+                    this.isToggle = false;
+                }
             }
         },
         created () {
             // let _this = this;
             // this.setIntervalId = setInterval(_this.getTransactions, 15000);
+        },
+        mounted () {
+            this.initDrag();
         }
     }
 </script>
