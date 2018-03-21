@@ -1,6 +1,6 @@
 <template>
     <div class="dragParent">
-        <div class="menu" :class="{'is-opened': isToggle}" @click="closeMenu">
+        <div class="menu" :class="{'is-opened': isToggle}">
             <div class="wallet-list wallet-search" v-if="newWallets.length">
                 <div class="wrap-in-wallet">
                     <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
@@ -86,11 +86,12 @@
         },
         computed: {
             newWalletsList: function () {
-                if (this.searchField === '') {
+                if (this.searchField !== '') {
                     return this.newWallets.filter(item => {
                         return item.name.toLowerCase().includes(this.searchField.toLowerCase());
                     });
                 }
+                return this.newWallets
             },
             selectedTheme () {
                 return this.$store.state.Themes.theme;
@@ -168,11 +169,14 @@
                 });
 
                 draggable.on('drag:move', (event) => {
-                    if (event.mirror.getBoundingClientRect().x * -0.66 <= 90) {
+                    if (event.mirror.getBoundingClientRect().x * -0.66 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
                         this.isToggle = true
                         document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
+                    } else if (event.mirror.getBoundingClientRect().x >= 0) {
+                        event.cancel();
+                        document.querySelector('.draggable-mirror').style.transform = 'translate3d(0px, 64px, 0)'
+                        document.querySelector('.draggable-mirror').style.left = 0
                     }
-                    if (event.mirror.getBoundingClientRect().x >= 0) event.cancel();
                 });
             },
             closeMenu (event) {
@@ -182,6 +186,7 @@
             }
         },
         created () {
+            document.addEventListener('click', this.closeMenu)
             // let _this = this;
             // this.setIntervalId = setInterval(_this.getTransactions, 15000);
         },
@@ -193,7 +198,7 @@
 
 <style lang="stylus" scoped>
     .menu
-        z-index 100
+        z-index 4
         .wallet-list
             &:not(.active)
                 &:not(.wallet-search)
@@ -216,7 +221,7 @@
 
 <style lang="stylus">
     .menu
-        z-index 100
+        z-index 4
         .type-list
             opacity 1
 
