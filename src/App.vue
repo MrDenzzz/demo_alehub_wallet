@@ -44,6 +44,8 @@
                 'authStatus',
                 'userStatus',
                 'walletStatus',
+                'userHaveWallets',
+                'userHaveTransactions',
                 'transactionStatus',
                 'lengthWalletList'
             ]),
@@ -68,29 +70,16 @@
                     return false;
                 }
 
-                console.log(this.authStatus, 'this.authStatus');
                 console.log(this.userStatus, 'this.userStatus');
-                console.log(this.walletStatus, 'this.walletStatus');
-                console.log(this.transactionStatus, 'this.transactionStatus');
 
+                if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
 
-                if ((this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'not found') ||
-                    (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionStatus === 'not found') ||
-                    (this.authStatus === 'success' && this.userStatus === 'success' && this.walletStatus === 'success' && this.transactionStatus === 'success')) {
-                    // this.transactionsStatus === 'success') {
-
-
-                    // if (this.lengthWalletList === 0) {
-                    //     this.$modal.show('newwallet');
-                    // }
+                    console.log('load check');
 
                     return false;
                 }
-
-                // else if (this.token === null) {
-                //     this.$router.push('/login');
-                //     return false
-                // }
 
                 return true;
             }
@@ -103,66 +92,12 @@
                 setNewBalance: 'SET_NEW_BALANCE',
                 changeTransactionLoaderState: 'CHANGE_TRANSACTION_LOADER_STATE'
             }),
-            // initiateWallets: function () {
-            //     this.$http.post(`${this.$host}/wallet/addressInfo`, {
-            //         addresses: JSON.parse(localStorage.getItem('wallets')),
-            //     }, {
-            //         headers: {
-            //             'Content-Type': 'application/json; charset=UTF-8',
-            //             'Accept': 'application/json'
-            //         }
-            //     }).then(response => {
-            //         console.log(response);
-            //         if (response.body.foundedAddresses.length !== 0) {
-            //             for (let i = 0; i < response.body.foundedAddresses.length; i++) {
-            //                 this.createNewWallet(response.body.foundedAddresses[i]);
-            //             }
-            //
-            //             this.setCurrentWallet(response.body.foundedAddresses[0].address);
-            //             this.getTransactions(response.body.foundedAddresses[0].address);
-            //             this.isLoader = false;
-            //         }
-            //     }, response => {
-            //         console.log('error', response);
-            //     });
-            // },
+
             updateOnlineStatus: function (e) {
                 if (!navigator.onLine) {
                     return this.$modal.show('connectionmodal');
                 }
             },
-            // getTransactions: function (address) {
-            //     this.changeTransactionLoaderState(true);
-            //     this.$http.get(`${this.$host}/transactions/${address}`, {
-            //         headers: {
-            //             'Content-Type': 'application/json; charset=UTF-8',
-            //             'Accept': 'application/json'
-            //         }
-            //     }).then(response => {
-            //         this.addNewTransactions(response.body);
-            //         this.changeTransactionLoaderState(false);
-            //     }, response => {
-            //         console.log('error', response);
-            //     });
-            // },
-            // getIntervalWalletsInfo () {
-            //     this.$http.post(`${this.$host}/wallet/addressInfo`, {
-            //         addresses: JSON.parse(localStorage.getItem('wallets')),
-            //     }, {
-            //         headers: {
-            //             'Content-Type': 'application/json; charset=UTF-8',
-            //             'Accept': 'application/json'
-            //         }
-            //     }).then(response => {
-            //
-            //         if (response.body.foundedAddresses.length !== 0) {
-            //             this.setNewBalance(response.body.foundedAddresses);
-            //         }
-            //
-            //     }, response => {
-            //         console.log('error', response);
-            //     });
-            // }
         },
         created() {
             let body = document.querySelector('body');
@@ -179,16 +114,12 @@
                     body.classList.add("white");
                     break;
             }
-            let _this = this;
+
+
             this.isOpenModal = false;
             if (localStorage.getItem('wallets') === null) {
                 return false;
             }
-
-            // this.initiateWallets();
-
-            // setInterval(_this.getIntervalWalletsInfo, 15000);
-
         },
         mounted() {
             if (!navigator.onLine) {
@@ -199,11 +130,6 @@
             this.$on('changeSystemLanguage', function () {
                 this.language = localStorage.getItem('systemLang');
             });
-
-            // if (localStorage.getItem('wallets') === null) {
-            //     this.isOpenModal = true;
-            //     return this.$modal.show("newwallet");
-            // }
 
             this.isLoader = false;
         }
