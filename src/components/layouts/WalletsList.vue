@@ -168,11 +168,14 @@
                 });
 
                 draggable.on('drag:move', (event) => {
-                    if (event.mirror.getBoundingClientRect().x * -0.66 <= 90) {
+                    if (event.mirror.getBoundingClientRect().x * -0.66 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
                         this.isToggle = true
                         document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
+                    } else if (event.mirror.getBoundingClientRect().x >= 0) {
+                        event.cancel();
+                        document.querySelector('.draggable-mirror').style.transform = 'translate3d(0px, 64px, 0)'
+                        document.querySelector('.draggable-mirror').style.left = 0
                     }
-                    if (event.mirror.getBoundingClientRect().x >= 0) event.cancel();
                 });
             },
             closeMenu (event) {
