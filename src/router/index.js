@@ -16,7 +16,9 @@ import WalletSettings from '@/components/WalletSettings';
 import NotFound from '@/components/NotFound';
 import Offers from '@/components/Offers';
 import Resume from '@/components/Resume';
-import NewOffer from '@/components/NewOffer'
+import NewOffer from '@/components/NewOffer';
+import Recover from '@/components/Recover';
+import RecoverConfirm from '@/components/RecoverConfirm';
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -81,6 +83,18 @@ const router = new Router({
             path: '/login/twoauth',
             name: 'TwoAuth',
             component: TwoAuth,
+            beforeEnter: ifNotAuthenticated
+        },
+        {
+            path: '/recover-confirm/:token',
+            name: 'RecoverConfirm',
+            component: RecoverConfirm,
+            beforeEnter: ifNotAuthenticated
+        },
+        {
+            path: '/recover',
+            name: 'Recover',
+            component: Recover,
             beforeEnter: ifNotAuthenticated
         },
         {

@@ -39,18 +39,18 @@
                             <!--{{ this.$store.state.Transactions.transactions }}-->
 
 
-                            <!--<Search-panel-->
-                                    <!--v-if="false && getActivity.length !== 0 && !transactionsLoader"-->
-                                    <!--:check-activities="getActivity.length"-->
-                                    <!--:date-from-wallet="dateFrom"-->
-                                    <!--:date-to-wallet="dateTo"-->
-                                    <!--:current-transactions="currentTmpTransactions"-->
-                                    <!--:total-transactions=" totalTransactions"-->
-                                    <!--:starting-transactions="startingTransactions"-->
-                            <!--/>-->
+                            <Search-panel
+                                    v-if="getActivity.length !== 0"
+                                    :check-activities="getActivity.length"
+                                    :date-from-wallet="dateFrom"
+                                    :date-to-wallet="dateTo"
+                                    :current-transactions="currentTmpTransactions"
+                                    :total-transactions="totalTransactions"
+                                    :starting-transactions="startingTransactions"
+                            />
 
                             <Activity-list
-                                    v-if="getActivity.length !== 0 || transactionsLoader"
+                                    v-if="getActivity.length !== 0"
                                     :activities="getActivity"
                                     :is-show-date="true"
                                     :change-wallet-result="changeWalletResult"
@@ -147,6 +147,7 @@
             ...mapGetters([
                 'wallets',
                 'transactions',
+                'walletTransactions',
                 'transactionsFilter',
                 'lengthWalletList',
                 'walletStatus',
@@ -157,10 +158,10 @@
                 console.log(this.currentWallet, 'this.currentWallet');
                 if (this.currentWallet !== null) {
                     this.$store.dispatch('walletsRequestLazy').then(() => {
-                        console.log('successfully interval get wallet info');
+                        // console.log('successfully interval get wallet info');
 
                         this.$store.dispatch('transactionsRequestLazy', this.currentWallet !== null ? this.currentWallet.address : '').then(() => {
-                            console.log('successfully interval get transactions info');
+                            // console.log('successfully interval get transactions info');
                         });
                     });
                 }
@@ -187,11 +188,6 @@
 
             transactionsLoader: function () {
                 return this.$store.state.Transactions.transactionsLoader;
-            },
-
-
-            currentBalance: function () {
-                return this.$store.state.Wallets.currentWallet.balance;
             },
 
 
@@ -263,6 +259,13 @@
                 changeTransactionLoaderState: 'CHANGE_TRANSACTION_LOADER_STATE'
             }),
 
+
+            currentTransactions1: function () {
+                this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
+
+                });
+            },
+
             openModal: function (name) {
                 this.$modal.show(name);
             },
@@ -315,6 +318,8 @@
             // this.setIntervalId = setInterval(this.getTransactions, 15000);
 
 
+            console.log(this.currentTransactions, 'currentTransactions');
+
             if (this.currentTransactions.length !== 0) {
                 this.initiateDate();
             }
@@ -332,8 +337,12 @@
 
             this.setIntervalId = setInterval(this.getTransactions, 15000);
 
+            console.log(this.lengthWalletList, 'this.lengthWalletList');
+            console.log(this.walletStatus, 'this.walletStatus');
 
-            if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
+
+            // if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
+            if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
             }
 
@@ -404,6 +413,11 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
+
+
+            this.currentTransactions1();
+
+            console.log(this.walletTransactions, 'this.walletTransactions');
         }
     }
 </script>
