@@ -352,6 +352,11 @@
       transform: none;
       padding-left: 32px;
     }
+    .balance {
+      .count {
+        display: none;
+      }
+    }
   }
 }
 

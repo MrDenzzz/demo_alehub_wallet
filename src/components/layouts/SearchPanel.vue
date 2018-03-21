@@ -297,6 +297,9 @@
 
                 &:focus {
                     width: 100% !important;
+                    @media screen and (max-width: 768px) {
+                        width: auto !important;
+                    }
                 }
             }
         }

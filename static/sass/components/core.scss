@@ -14,6 +14,87 @@ body {
       text-decoration: none;
     }
   }
+  .searchPanel {
+    .top {
+      border-bottom: 1px solid #676767 !important;
+      .searchControl {
+        input {
+          color: #dedfdf;
+          border-bottom: 1px solid rgba(222, 223, 223, .5);
+          opacity: 1;
+          &::-webkit-input-placeholder {
+            color: #dedfdf;
+          }
+          &::-moz-placeholder {
+            color: #dedfdf;
+          }
+          &:-ms-input-placeholder {
+            color: #dedfdf;
+          }
+          &:-moz-placeholder {
+            color: #dedfdf;
+          }
+        }
+      }
+    }
+    .bottom {
+      background-color: rgba(40, 39, 48, 0.5);
+      .date {
+        .date-title {
+          color: #dedfdf;
+        }
+        input {
+          background-color: #3c3e4a;
+          border: solid 0.5px #484848;
+          border-bottom: 1px solid rgba(222, 223, 223, .4) !important;
+          color: rgba(222, 223, 223, .8) !important;
+          &::-webkit-input-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+          &::-moz-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+          &:-ms-input-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+          &:-moz-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+        }
+      }
+    }
+  }
+  .vdp-datepicker__calendar {
+    background-color: #282730;
+    header {
+      .prev {
+        &:after {
+          border-right: 10px solid #dedfdf;
+        }
+      }
+      .next {
+        &:after {
+          border-left: 10px solid #dedfdf;
+        }
+      }
+      .up {
+        color: #dedfdf;
+      }
+    }
+  }
+  .day-header {
+    color: #aaaec1 !important;
+  }
+  .cell.day {
+    color: #dedfdf;
+  }
+  .title-opt-span, 
+  .result-opt-span {
+    color: #f4f3fc !important;
+    &.sent {
+      color: #455bd6 !important;
+    }
+  }
   .switch-control {
     .slider {
       background-color: #aaaec1;
@@ -360,6 +441,9 @@ body {
             }
           }
           .modal-input {
+            .small {
+              color: #dedfdf;
+            }
             .input {
               color: #fff;
               &::-webkit-input-placeholder {
@@ -982,12 +1066,6 @@ body {
     width: 720px;
     position: absolute;
     left: -360px;
-  }
-}
-
-.settings {
-  .list-panel-heading {
-    margin: 0 16px 0 16px;
   }
 }
 

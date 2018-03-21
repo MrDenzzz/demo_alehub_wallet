@@ -35,7 +35,7 @@
 
             </div>
             <span class="title">{{ title }}</span>
-            <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu">
+            <div class="balance" :class="{ 'gridBalance': !rightMenu }">
                 <span class="count" v-if="isBalance">
                     <vue-numeric
                             :value="getCurrentWalletBalance"
@@ -77,7 +77,6 @@
                     <span class="line"></span>
                 </div>
             </div>
-            <div v-else></div>
             
         </header>
         <div class="mobile-menu" :class="{ 'is-collapsed': collapsed }">

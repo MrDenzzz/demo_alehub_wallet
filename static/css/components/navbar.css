@@ -233,7 +233,9 @@
     position: relative;
     left: auto;
     transform: none;
-    padding-left: 32px; } }
+    padding-left: 32px; }
+  .navbar .balance .count {
+    display: none; } }
 
 @media screen and (max-width: 720px) {
   .navbar .title {
