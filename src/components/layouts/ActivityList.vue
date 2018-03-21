@@ -26,9 +26,9 @@
                     </div>
                 </div>
             </div>
-            <div class="result-day" v-if="checkShowResultActivityPanel(activityIndex)">
+        <div class="result-day" v-if="checkShowResultActivityPanel(activityIndex)">
 
-                <div class="result-day-col">
+            <div class="result-day-col">
                     <div class="result-day-status">
                         <span class="result-day-field">
                             Recieved
@@ -455,6 +455,7 @@
                 & .info {
                     word-break: break-all;
                     min-width: 200px;
+                    max-width: 300px;
                     padding-right: 30px;
                 }
                 & .purpose {
