@@ -144,7 +144,7 @@
 
     .modal-md {
         & .v--modal {
-            width: 776px !important;
+            width: 776px;
         }
     }
 
@@ -227,5 +227,14 @@
 
     #wallet-name-label, #modal-wallet-name {
         cursor: pointer;
+    }
+    @media (max-width: 425px) {
+        .modal-warning {
+            & .checkbox-contol {
+                & input {
+                    min-width: 18px;
+                }
+            }
+        }
     }
 </style>
