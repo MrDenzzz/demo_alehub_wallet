@@ -361,6 +361,11 @@
 
         .selected
             background-color #f0f0f0 !important
+
+        @media (max-width: 425px)
+            input#datepickerFrom, input#datepickerTo
+                margin-right 0
+                
 </style>
 
 <style lang="stylus" scoped>
@@ -427,5 +432,44 @@
             padding 5px
             margin 0 10px 0 10px
 
+    @media (max-width: 425px)
+        input#datepickerFrom, input#datepickerTo
+            margin-right 0
+
+        .searchPanel
+            margin-top 24px
+
+        .bottom
+            flex-direction column
+
+            & .info
+                width 100%
+                justify-content space-between
+
+            & .date 
+                width 100%
+                padding 0
+                align-items center
+                margin-bottom 20px
+
+                & .datepicker-wrap
+                    width 100%
+                    justify-content space-around
+
+            & .docs
+                width 100%
+                margin-bottom 20px
+                align-items center
+        
+        .title-opt-span
+            padding 5px 0
+
+            & .title
+                padding 5px 0
+                margin 0
+
+        .result-opt-span
+            padding 5px 0
+            margin 0
 
 </style>

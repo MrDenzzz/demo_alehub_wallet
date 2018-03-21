@@ -60,6 +60,12 @@
                                     </div>
                                 </form>
 
+                                <p class="text">Forgot your username or password?
+                                    <router-link :to="{ path: '/recover' }">
+                                        Recover account.
+                                    </router-link>
+                                </p>
+
                                 <p class="text">Don’t have an account?
                                     <router-link :to="{ path: '/registration' }">
                                         Create one.
