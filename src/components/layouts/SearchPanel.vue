@@ -212,29 +212,36 @@
                     return item.balanceInfo.after - item.balanceInfo.before < 0;
                 });
 
+                console.log(sentTransactions, 'sentTransactions again');
+
                 if (sentTransactions.length > 1) {
-                    return sentTransactions.reduce(
-                        (sum, current) => {
-                            return {total: parseInt(sum.count) + parseInt(current.count)};
-                        }
-                    ).total;
+                    let sum = 0;
+                    for (let i = 0; i < sentTransactions.length; i++)
+                        sum += sentTransactions[i].count;
+                    return sum;
+                    // return sentTransactions.reduce(
+                    //     (sum, current) => {
+                    //         return {total: parseInt(sum.count) + parseInt(current.count)};
+                    //     }
+                    // ).total;
                 } else if (sentTransactions.length === 1) {
                     return sentTransactions[0].count;
                 }
                 return 0;
             },
             currentReceiveBalance: function () {
-                let receiveBalance = this.currentTransactions.filter(item => {
-                    return item.type === 'received';
+                let receiveTransactions = this.transactions.filter(item => {
+                    return item.balanceInfo.after - item.balanceInfo.before > 0;
                 });
-                if (receiveBalance.length > 1) {
-                    return receiveBalance.reduce(
+
+                if (receiveTransactions.length > 1) {
+                    return receiveTransactions.reduce(
                         (sum, current) => {
-                            return {total: parseInt(sum.total) + parseInt(current.total)};
+                            return {total: parseInt(sum.count) + parseInt(current.count)};
                         }
                     ).total;
-                } else if (receiveBalance.length === 1) {
-                    return receiveBalance[0].total;
+                } else if (receiveTransactions.length === 1) {
+                    return receiveTransactions[0].total;
                 }
                 return 0;
             },

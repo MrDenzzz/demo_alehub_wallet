@@ -362,7 +362,6 @@
 
             this.$on('changeWallet', function (val, address) {
                 if (val && this.transactions.length !== 0) {
-                    this.initiateDate();
                     this.changeWalletResult = true;
                 }
                 this.changeSelectedWallet(address);
