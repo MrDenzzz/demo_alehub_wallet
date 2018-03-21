@@ -167,20 +167,6 @@
                 }
             },
 
-            // currentToken: function () {
-            //     return this.$store.state.User.token;
-            // },
-            // currentStatus: function () {
-            //     return this.$store.state.User.status;
-            // },
-
-            // currentUserEmail: function () {
-            //     return this.$store.state.User.email;
-            // },
-            // currentUserName: function () {
-            //     return this.$store.state.User.name;
-            // },
-
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
@@ -261,7 +247,7 @@
 
 
             currentTransactions1: function () {
-                this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
+                this.$store.dispatch('walletTransactions', this.currentWallet._id).then(() => {
 
                 });
             },
@@ -277,9 +263,11 @@
             },
 
             initiateDate: function () {
-                this.dateFrom = new Date(this.currentTransactions.reduce(
+
+
+                this.dateFrom = new Date(this.walletTransactions.reduce(
                     (acc, loc) =>
-                        acc.date < loc.date
+                        acc.timestamp < loc.timestamp
                             ? acc
                             : loc
                 ).date);
@@ -317,10 +305,13 @@
             // let _this = this;
             // this.setIntervalId = setInterval(this.getTransactions, 15000);
 
+            //переписать каррент трансекшинс в
+            this.currentTransactions1();
 
-            console.log(this.currentTransactions, 'currentTransactions');
 
-            if (this.currentTransactions.length !== 0) {
+            console.log(this.walletTransactions, 'this.walletTransactions');
+
+            if (this.walletTransactions.length !== 0) {
                 this.initiateDate();
             }
 

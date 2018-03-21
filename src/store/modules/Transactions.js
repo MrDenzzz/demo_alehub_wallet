@@ -38,7 +38,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    // console.log(resp.data, 'transactions');
+                    console.log(resp.data, 'transactions');
                     commit('SET_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })
@@ -114,7 +114,15 @@ const mutations = {
 
     },
     SET_WALLET_TRANSACTIONS(state, address) {
+
+        console.log(address, 'wallet id');
+
+        console.log(state.transactions, 'state.transactions');
+
+        //дождаться от саши связь воллета с транзакциями
+
         state.walletTransactions = state.transactions.filter(item => {
+            console.log(item._id);
             return item._id === address;
         });
     },
