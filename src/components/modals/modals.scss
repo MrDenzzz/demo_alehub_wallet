@@ -150,7 +150,7 @@
           & .title {
             text-transform: uppercase;
             margin-bottom: 0;
-            white-space: pre;
+            white-space: nowrap;
             padding-right: 15px;
           }
 
@@ -508,14 +508,20 @@
 @media screen and (max-width: 768px) {
   .v--modal-overlay {
     & .v--modal-box {
-      overflow: unset;
       border-radius: 0;
       margin: 0;
+      width: 100% !important;
       height: 100% !important;
       & .heading {
         display: flex;
         flex-direction: column;
         & .close {
+          top: 20px;
+          right: 20px;
+          width: 20px;
+          height: 20px;
+        }
+        & .back {
           width: 20px;
           height: 20px;
         }
@@ -530,20 +536,36 @@
   .v--modal-overlay {
     & .v--modal-box {
       & .heading {
+        margin-bottom: 10px;
         & .close {
           top: 15px;
           right: 15px;
         }
+        & .back {
+          top: 15px;
+          left: 15px;
+        }
       }
       & .body {
+        & .modal-btn {
+          & .btn-large {
+            padding: 10px 10px;
+          }
+        }
         & .modal-control {
-          margin-left: 10px;
-          margin-right: 10px;
+          & .badge-control {
+            padding-bottom: 10px;
+            width: 100%;
+          }
           & .modal-input {
             margin-left: 5px;
             margin-right: 5px;
+            & .input {
+              text-align: left;
+            }
             & .title {
-              padding-right: 5px;
+              padding-right: 10px;
+              padding-bottom: 15px;
             }
           }
         }

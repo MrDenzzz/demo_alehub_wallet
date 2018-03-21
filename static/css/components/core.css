@@ -618,6 +618,11 @@ body {
     .group-settings .form:last-child {
       margin-right: 0; }
 
+.login .navbar, .register .navbar {
+  justify-content: center; }
+  .login .navbar .title, .register .navbar .title {
+    display: flex; }
+
 @media screen and (max-width: 980px) {
   .group-settings {
     display: flex;
@@ -678,9 +683,7 @@ body {
     top: 24px; }
   .request .modal-control {
     padding-top: 0 !important;
-    padding-bottom: 0 !important; }
-  .request .qr-code {
-    margin-top: 12px; } }
+    padding-bottom: 0 !important; } }
 
 @media screen and (max-width: 375px) {
   .navbar .title {

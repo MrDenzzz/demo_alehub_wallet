@@ -22,6 +22,9 @@
   .main {
     & .content {
       padding-left: 260px;
+      &.nomenu {
+        padding-left: 0;
+      }
     }
   }
 }

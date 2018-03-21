@@ -90,7 +90,7 @@
 
     .modal-btn {
         & .btn-large {
-            padding: 11px 70px 11px 70px !important;
+            padding: 11px 70px 11px 70px;
         }
     }
 </style>
