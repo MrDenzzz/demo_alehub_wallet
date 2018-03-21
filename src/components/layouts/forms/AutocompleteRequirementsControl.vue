@@ -356,5 +356,9 @@
         li:hover
             background-color #f0f0f0
 
-
+    @media (max-width: 425px)
+        .form
+            & .control
+                & .wrap-input
+                    padding-left 0
 </style>

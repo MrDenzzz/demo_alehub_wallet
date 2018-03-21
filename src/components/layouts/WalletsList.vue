@@ -169,7 +169,7 @@
                 });
 
                 draggable.on('drag:move', (event) => {
-                    if (event.mirror.getBoundingClientRect().x * -0.66 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
+                    if (event.mirror.getBoundingClientRect().x * -0.4 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
                         this.isToggle = true
                         document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
                     } else if (event.mirror.getBoundingClientRect().x >= 0) {

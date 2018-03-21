@@ -12,7 +12,9 @@
                 <div class="container" v-if="offersStatus !== 'success'">
                     <div class="row">
                         <div class="col-12">
-                            <Spinner/>
+                            <div class="spinner">
+                                <Spinner/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -416,6 +418,11 @@ export default {
     height: 85vh;
     align-items: center;
     justify-content: center;
+}
+.spinner {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
 
 @media (max-width: 1024px)

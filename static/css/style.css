@@ -12,6 +12,55 @@ body {
     border-radius: 4px; }
     .dark .logout-link:hover {
       text-decoration: none; }
+  .dark .searchPanel .top {
+    border-bottom: 1px solid #676767 !important; }
+    .dark .searchPanel .top .searchControl input {
+      color: #dedfdf;
+      border-bottom: 1px solid rgba(222, 223, 223, 0.5);
+      opacity: 1; }
+      .dark .searchPanel .top .searchControl input::-webkit-input-placeholder {
+        color: #dedfdf; }
+      .dark .searchPanel .top .searchControl input::-moz-placeholder {
+        color: #dedfdf; }
+      .dark .searchPanel .top .searchControl input:-ms-input-placeholder {
+        color: #dedfdf; }
+      .dark .searchPanel .top .searchControl input:-moz-placeholder {
+        color: #dedfdf; }
+  .dark .searchPanel .bottom {
+    background-color: rgba(40, 39, 48, 0.5); }
+    .dark .searchPanel .bottom .date .date-title {
+      color: #dedfdf; }
+    .dark .searchPanel .bottom .date input {
+      background-color: #3c3e4a;
+      border: solid 0.5px #484848;
+      border-bottom: 1px solid rgba(222, 223, 223, 0.4) !important;
+      color: rgba(222, 223, 223, 0.8) !important; }
+      .dark .searchPanel .bottom .date input::-webkit-input-placeholder {
+        color: rgba(222, 223, 223, 0.8) !important; }
+      .dark .searchPanel .bottom .date input::-moz-placeholder {
+        color: rgba(222, 223, 223, 0.8) !important; }
+      .dark .searchPanel .bottom .date input:-ms-input-placeholder {
+        color: rgba(222, 223, 223, 0.8) !important; }
+      .dark .searchPanel .bottom .date input:-moz-placeholder {
+        color: rgba(222, 223, 223, 0.8) !important; }
+  .dark .vdp-datepicker__calendar {
+    background-color: #282730; }
+    .dark .vdp-datepicker__calendar header .prev:after {
+      border-right: 10px solid #dedfdf; }
+    .dark .vdp-datepicker__calendar header .next:after {
+      border-left: 10px solid #dedfdf; }
+    .dark .vdp-datepicker__calendar header .up {
+      color: #dedfdf; }
+  .dark .day-header {
+    color: #aaaec1 !important; }
+  .dark .cell.day {
+    color: #dedfdf; }
+  .dark .title-opt-span,
+  .dark .result-opt-span {
+    color: #f4f3fc !important; }
+    .dark .title-opt-span.sent,
+    .dark .result-opt-span.sent {
+      color: #455bd6 !important; }
   .dark .switch-control .slider {
     background-color: #aaaec1; }
     .dark .switch-control .slider:before {
@@ -200,6 +249,8 @@ body {
         color: #dedfdf; }
       .dark .v--modal-overlay .v--modal-box .body .modal-control.double:nth-child(2n) .modal-input .title {
         opacity: 0.6; }
+      .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .small {
+        color: #dedfdf; }
       .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input {
         color: #fff; }
         .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input::-webkit-input-placeholder {
@@ -563,7 +614,6 @@ body {
 
 @media screen and (max-width: 860px) {
   .dragParent {
-    min-height: calc(100vh - 64px);
     width: 720px;
     position: absolute;
     left: -360px; } }
@@ -641,9 +691,7 @@ body {
       max-height: 120px;
       width: 32.5%;
       max-width: 200px;
-      margin: 0 0; }
-      .group-settings .form:last-child {
-        margin-top: 20px; } }
+      margin: 0 0; } }
 
 @media screen and (max-width: 720px) {
   .group-settings {
@@ -655,11 +703,7 @@ body {
       max-height: 120px;
       width: 32.5%;
       max-width: 200px;
-      margin: 0 0; }
-      .group-settings .form:last-child {
-        margin-top: 20px; }
-      .group-settings .form:nth-child(2) {
-        margin-top: 20px; } }
+      margin: 0 0; } }
 
 @media screen and (max-width: 390px) {
   .group-settings {
@@ -670,11 +714,7 @@ body {
     .group-settings .form {
       min-height: 150px;
       width: 100%;
-      min-width: 100px; }
-      .group-settings .form:last-child {
-        margin-top: 20px; }
-      .group-settings .form:nth-child(2) {
-        margin-top: 20px; } }
+      min-width: 100px; } }
 
 @media screen and (max-width: 1024px) {
   .dark .menu .wallet-list .wrap-in-wallet, .white .menu .wallet-list .wrap-in-wallet {
@@ -695,7 +735,7 @@ body {
 
 @media screen and (max-width: 375px) {
   .navbar .title {
-    display: none !important; } }
+    display: none; } }
 
 .container {
   margin: 24px 24px; }
@@ -1039,7 +1079,9 @@ body {
     position: relative;
     left: auto;
     transform: none;
-    padding-left: 32px; } }
+    padding-left: 32px; }
+  .navbar .balance .count {
+    display: none; } }
 
 @media screen and (max-width: 720px) {
   .navbar .title {
@@ -1048,9 +1090,18 @@ body {
 .menu {
   width: 360px;
   background-color: #474b4b;
-  height: 100%;
-  min-height: calc(100vh - 64px);
-  position: fixed; }
+  position: fixed;
+  top: 64px;
+  bottom: 0px;
+  overflow-y: scroll; }
+  @media (max-width: 860px) {
+    .menu {
+      overflow-y: unset; } }
+  .menu.is-opened {
+    overflow-y: scroll; }
+    @media (max-width: 425px) {
+      .menu.is-opened .wallet-search {
+        width: 100vh !important; } }
   .menu .wallet-list {
     width: 100%;
     height: 64px;
@@ -1060,6 +1111,22 @@ body {
       cursor: pointer; }
       .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet p {
         color: #34343e; }
+    .menu .wallet-list.wallet-search {
+      position: fixed;
+      width: 360px;
+      background-color: #474b4b;
+      z-index: 2; }
+      @media (max-width: 1024px) {
+        .menu .wallet-list.wallet-search {
+          width: 260px; } }
+      @media (max-width: 860px) {
+        .menu .wallet-list.wallet-search {
+          width: 360px; } }
+      @media (max-width: 425px) {
+        .menu .wallet-list.wallet-search {
+          width: calc(100% - 100vh); } }
+    .menu .wallet-list.wallet-element:nth-child(2) {
+      margin-top: 69px !important; }
     .menu .wallet-list .wrap-in-wallet {
       align-self: center;
       display: flex;
@@ -3002,6 +3069,13 @@ label {
       border-bottom: 1px solid #000;
       text-decoration: none;
       padding-bottom: 1px; }
+
+@media (max-width: 490px) {
+  .login .container, .register .container {
+    margin: 0; }
+    .login .container .login-form, .register .container .login-form {
+      margin: 10px 5px;
+      width: calc(100% - 10px); } }
 
 .list-panel-heading {
   display: flex;

@@ -95,4 +95,9 @@
                 opacity 1
                 line-height 1.29
                 font-size 14px
+
+         @media (max-width: 425px)
+            & .wrap-input
+                & textarea
+                    height 60px
 </style>

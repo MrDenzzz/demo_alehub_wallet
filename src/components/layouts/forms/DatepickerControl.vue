@@ -171,5 +171,9 @@
 
         .selected
             background-color #f0f0f0 !important
-
+    @media (max-width: 425px)
+        .form
+            & .control
+                & .wrap-input
+                    padding-left 0
 </style>

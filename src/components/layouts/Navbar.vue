@@ -35,8 +35,8 @@
 
             </div>
             <span class="title">{{ title }}</span>
-            <div class="balance" :class="{ 'gridBalance': !rightMenu }" v-if="isBalance || rightMenu || isMobile">
-                <span class="count" v-if="isBalance && (!isMobile || isTablet)">
+            <div class="balance" :class="{ 'gridBalance': !rightMenu }">
+                <span class="count" v-if="isBalance">
                     <vue-numeric
                             :value="getCurrentWalletBalance"
                             :separator="correctLangSep"
@@ -46,13 +46,13 @@
                     />
                 </span>
                 <div
-                        v-if="isBalance && (!isMobile || isTablet)"
+                        v-if="isBalance"
                         class="count"
                 >
                     {{ 'ALE' }}
                 </div>
 
-                <div class="options" v-if="rightMenu && (!isMobile || isTablet)">
+                <div class="options" v-if="rightMenu">
                     <img :src="getIcon('options')" alt="" width="3" height="16">
 
                     <div class="dropdown-options"
@@ -77,7 +77,6 @@
                     <span class="line"></span>
                 </div>
             </div>
-            <div v-else></div>
             
         </header>
         <div class="mobile-menu" :class="{ 'is-collapsed': collapsed }">
@@ -141,14 +140,6 @@
             }
         },
         computed: {
-            isMobile () {
-                if (window.screen.width <= 768) return true
-                else return false
-            },
-            isTablet () {
-                if (window.screen.width <= 1024 && window.screen.width > 768) return true
-                else return false
-            },
             selectedTheme () {
                 return this.$store.state.Themes.theme;
             },

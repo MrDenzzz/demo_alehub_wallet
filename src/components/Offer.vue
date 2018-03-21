@@ -681,5 +681,4 @@
             b
                 font-family MuseoSansCyrl700
                 margin-right 4px
-
 </style>

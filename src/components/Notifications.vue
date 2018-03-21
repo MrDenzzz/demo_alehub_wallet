@@ -12,7 +12,7 @@
             <div class="content nomenu">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-12">
                             <Spinner v-if="isLoader"/>
                             <Notif-panel :notifications="notifications"
                                          v-else-if="!isLoader && notifications.length !== 0"/>
@@ -129,5 +129,10 @@
         .content {
             padding-left: 0;
         }
+    }
+    .col-12 {
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
     }
 </style>

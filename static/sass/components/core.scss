@@ -14,6 +14,87 @@ body {
       text-decoration: none;
     }
   }
+  .searchPanel {
+    .top {
+      border-bottom: 1px solid #676767 !important;
+      .searchControl {
+        input {
+          color: #dedfdf;
+          border-bottom: 1px solid rgba(222, 223, 223, .5);
+          opacity: 1;
+          &::-webkit-input-placeholder {
+            color: #dedfdf;
+          }
+          &::-moz-placeholder {
+            color: #dedfdf;
+          }
+          &:-ms-input-placeholder {
+            color: #dedfdf;
+          }
+          &:-moz-placeholder {
+            color: #dedfdf;
+          }
+        }
+      }
+    }
+    .bottom {
+      background-color: rgba(40, 39, 48, 0.5);
+      .date {
+        .date-title {
+          color: #dedfdf;
+        }
+        input {
+          background-color: #3c3e4a;
+          border: solid 0.5px #484848;
+          border-bottom: 1px solid rgba(222, 223, 223, .4) !important;
+          color: rgba(222, 223, 223, .8) !important;
+          &::-webkit-input-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+          &::-moz-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+          &:-ms-input-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+          &:-moz-placeholder {
+            color: rgba(222, 223, 223, .8) !important;
+          }
+        }
+      }
+    }
+  }
+  .vdp-datepicker__calendar {
+    background-color: #282730;
+    header {
+      .prev {
+        &:after {
+          border-right: 10px solid #dedfdf;
+        }
+      }
+      .next {
+        &:after {
+          border-left: 10px solid #dedfdf;
+        }
+      }
+      .up {
+        color: #dedfdf;
+      }
+    }
+  }
+  .day-header {
+    color: #aaaec1 !important;
+  }
+  .cell.day {
+    color: #dedfdf;
+  }
+  .title-opt-span, 
+  .result-opt-span {
+    color: #f4f3fc !important;
+    &.sent {
+      color: #455bd6 !important;
+    }
+  }
   .switch-control {
     .slider {
       background-color: #aaaec1;
@@ -360,6 +441,9 @@ body {
             }
           }
           .modal-input {
+            .small {
+              color: #dedfdf;
+            }
             .input {
               color: #fff;
               &::-webkit-input-placeholder {
@@ -979,7 +1063,6 @@ body {
 
 .dragParent {
   @media screen and (max-width: 860px) {
-    min-height: calc(100vh - 64px);
     width: 720px;
     position: absolute;
     left: -360px;
@@ -1084,9 +1167,6 @@ body {
       width: 32.5%;
       max-width: 200px;
       margin: 0 0;
-      &:last-child {
-        margin-top: 20px;
-      }
     }
   }
 }
@@ -1102,12 +1182,6 @@ body {
       width: 32.5%;
       max-width: 200px;
       margin: 0 0;
-      &:last-child {
-        margin-top: 20px;
-      }
-      &:nth-child(2) {
-        margin-top: 20px;
-      }
     }
   }
 }
@@ -1122,12 +1196,6 @@ body {
       min-height: 150px;
       width: 100%;
       min-width: 100px;
-      &:last-child {
-        margin-top: 20px;
-      }
-      &:nth-child(2) {
-        margin-top: 20px;
-      }
     }
   }
 }
@@ -1167,7 +1235,7 @@ body {
 @media screen and (max-width: 375px) {
   .navbar {
     .title {
-      display: none !important;
+      display: none;
     }
   }
 }

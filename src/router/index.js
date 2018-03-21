@@ -19,6 +19,7 @@ import Resume from '@/components/Resume';
 import NewOffer from '@/components/NewOffer';
 import Recover from '@/components/Recover';
 import RecoverConfirm from '@/components/RecoverConfirm';
+import Recover2fa from '@/components/Recover2fa';
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -95,6 +96,12 @@ const router = new Router({
             path: '/recover',
             name: 'Recover',
             component: Recover,
+            beforeEnter: ifNotAuthenticated
+        },
+        {
+            path: '/recover-twofactor',
+            name: 'Recover2fa',
+            component: Recover2fa,
             beforeEnter: ifNotAuthenticated
         },
         {
