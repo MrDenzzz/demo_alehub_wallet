@@ -56,7 +56,7 @@
                                         <p>Login or password is incorrect</p>
                                     </div>
                                     <div class="is-center" v-if="isLoaderUserAuth">
-                                        <Spinner  />
+                                        <Spinner/>
                                     </div>
                                 </form>
 
@@ -95,7 +95,7 @@
                                         <p>Incorrect two-factor code</p>
                                     </div>
                                     <div class="is-center is-2fa-loader" v-if="isLoaderUserAuth">
-                                        <Spinner  />
+                                        <Spinner/>
                                     </div>
 
                                     <button
@@ -204,7 +204,10 @@
             loginWithTwoAuth: function () {
                 const {email, password, token} = this;
                 this.$store.dispatch('authTwoFaRequest', {email, password, token}).then(() => {
-                    this.$router.push('/');
+                    // console.log(this.$store.state.User.userStatus, 'this.$store.state.User.userStatus');
+                    this.$store.dispatch('userRequest').then(() => {
+                        this.$router.push('/');
+                    });
                 });
             },
 
@@ -240,41 +243,41 @@
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0px 1000px #f0f0f0 inset !important;
+        -webkit-box-shadow: 0 0 0 1000px #f0f0f0 inset !important;
     }
 </style>
 
 <style lang="stylus" scoped>
     /*.two-auth-form*/
-        /*.control*/
-            /*label*/
-                /*text-transform uppercase*/
-                /*margin 0*/
-                /*white-space pre*/
-                /*margin-left 16px*/
-                /*margin-right 12px*/
-            /*input*/
-                /*width 100%*/
-                /*font-size 14px*/
-                /*background inherit*/
-                /*border none*/
-                /*text-align right*/
-                /*outline none*/
-                /*margin-right 16px*/
-                /*position relative*/
-                /*z-index 1*/
-                /*opacity 1*/
+    /*.control*/
+    /*label*/
+    /*text-transform uppercase*/
+    /*margin 0*/
+    /*white-space pre*/
+    /*margin-left 16px*/
+    /*margin-right 12px*/
+    /*input*/
+    /*width 100%*/
+    /*font-size 14px*/
+    /*background inherit*/
+    /*border none*/
+    /*text-align right*/
+    /*outline none*/
+    /*margin-right 16px*/
+    /*position relative*/
+    /*z-index 1*/
+    /*opacity 1*/
 
     /*.two-auth-form*/
-        /*width 426px*/
-        /*padding 16px*/
-        /*height auto*/
-        /*background #f0f0f0*/
-        /*display flex*/
-        /*justify-content center*/
-        /*border-radius 4px*/
-        /*flex-direction column*/
-        /*margin 0 auto*/
+    /*width 426px*/
+    /*padding 16px*/
+    /*height auto*/
+    /*background #f0f0f0*/
+    /*display flex*/
+    /*justify-content center*/
+    /*border-radius 4px*/
+    /*flex-direction column*/
+    /*margin 0 auto*/
 
     .d-block
         display block
@@ -290,6 +293,7 @@
     .error
         text-decoration underline
         text-decoration-color #d93f1f
+
     .error-block
         color red
         font-family MuseoSansCyrl300

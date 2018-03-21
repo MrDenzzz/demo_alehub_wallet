@@ -7,6 +7,8 @@ const state = {
     name: '',
     email: '',
     twoAuth: '',
+    haveTransactions: null,
+    haveWallets: null,
     userStatus: '',
     token: localStorage.getItem(sha256('user-token')) || '',
     status: '',
@@ -23,7 +25,7 @@ const actions = {
     authRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('AUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/login';
+            let host = 'http://192.168.1.37:4000/users/login';
             axios({
                 url: host,
                 data: user,
@@ -51,7 +53,7 @@ const actions = {
     authTwoFaRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('AUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/login/2fa';
+            let host = 'http://192.168.1.37:4000/users/login/2fa';
             axios({
                 url: host,
                 data: user,
@@ -84,7 +86,7 @@ const actions = {
     userRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('USER_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/get-user-data';
+            let host = 'http://192.168.1.37:4000/users/get-user-data';
             axios({
                 url: host,
                 headers: {
@@ -95,15 +97,10 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    let user = {
-                        name: resp.data.name,
-                        email: resp.data.email,
-                        twoauth: resp.data.isTwoAuth
-                    };
 
                     console.log(resp);
 
-                    commit('USER_SUCCESS', user);
+                    commit('USER_SUCCESS', resp.data);
                     commit('AUTH_SUCCESS');
                     resolve(resp);
                 })
@@ -117,7 +114,7 @@ const actions = {
     twoAuthRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('TWOAUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/generate-qr';
+            let host = 'http://192.168.1.37:4000/users/generate-qr';
             axios({
                 url: host,
                 headers: {
@@ -149,7 +146,7 @@ const actions = {
     enableTwoAuth: ({commit, dispatch}, authData) => {
         return new Promise((resolve, reject) => {
             commit('ENABLE_TWOAUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/enable-two-auth';
+            let host = 'http://192.168.1.37:4000/users/enable-two-auth';
             axios({
                 url: host,
                 data: authData,
@@ -173,7 +170,7 @@ const actions = {
     disableTwoAuth: ({commit, dispatch}, confirmDisableData) => {
         return new Promise((resolve, reject) => {
             commit('DISABLE_TWOAUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/disable-two-auth';
+            let host = 'http://192.168.1.37:4000/users/disable-two-auth';
             axios({
                 url: host,
                 data: confirmDisableData,
@@ -199,7 +196,7 @@ const actions = {
     changeUserName: ({commit, dispatch}, name) => {
         return new Promise((resolve, reject) => {
             // commit('DISABLE_TWOAUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/change-name';
+            let host = 'http://192.168.1.37:4000/users/change-name';
             axios({
                 url: host,
                 data: name,
@@ -257,7 +254,9 @@ const mutations = {
     USER_SUCCESS: (state, user) => {
         state.name = user.name;
         state.email = user.email;
-        state.twoAuth = user.twoauth;
+        state.twoAuth = user.isTwoAuth;
+        state.haveTransactions = user.haveTransactions;
+        user.walletsList.length === 0 ? state.haveWallets = false : state.haveWallets = true;
         state.userStatus = 'success';
     },
     USER_ERROR: (state) => {
@@ -311,6 +310,8 @@ const getters = {
     userEmail: state => state.email,
     userStatus: state => state.userStatus,
     userTwoAuth: state => state.twoAuth,
+    userHaveWallets: state => state.haveWallets,
+    userHaveTransactions: state => state.haveTransactions,
     twoAuthStatus: state => state.twoAuthStatus,
     twoAuthGeneratedCode: state => state.twoAuthGeneratedCode,
     twoAuthSecret: state => state.twoAuthSecret,

@@ -125,8 +125,8 @@
             ShareTransactions
         },
         props: {
-            dateFromWallet: Date,
-            dateToWallet: Date,
+            dateFromWallet: Date, //получать отсюда
+            dateToWallet: Date, //получать отсюда
             totalTransactions: [String, Number],
             startingTransactions: [String, Number],
             checkActivities: [Number, String],
@@ -183,6 +183,8 @@
             },
 
             initiateDatepickers: function () {
+                console.log(this.dateFromWallet, 'this.dateFromWallet');
+                console.log(this.dateToWallet, 'this.dateToWallet');
                 this.dateFrom = this.dateFromWallet;
                 this.dateTo = this.dateToWallet;
             },
@@ -231,35 +233,9 @@
         },
         created() {
             this.initiateDatepickers();
-
         },
         mounted() {
-            // let imgNext1 = document.createElement('img');
-            // imgNext1.setAttribute('src', '../../assets/img/send.svg');
-            // console.log(imgNext1);
-            // document.getElementsByTagName('body')[0].appendChild(imgNext1);
 
-            // let nextArrows = document.getElementsByClassName('next');
-            // for (let i = 0; i < nextArrows.length; i++) {
-            //     let imgNext = document.createElement('img');
-            //     imgNext.src = path.join(__dirname, '../../assets/img/send.svg');
-            //     console.log(imgNext.src);
-            //     imgNext.classList.add('arrow');
-            //     nextArrows[i].innerHTML = '';
-            //     nextArrows[i].appendChild(imgNext);
-            // }
-            //
-            //
-            // let prevArrows = document.getElementsByClassName('prev');
-            // for (let i = 0; i < prevArrows.length; i++) {
-            //     let imgPrev = document.createElement('img');
-            //     imgPrev.src = path.join(__dirname, '../../assets/img/arrow-left.svg');
-            //     imgPrev.classList.add('arrow');
-            //     prevArrows[i].innerHTML = '';
-            //     prevArrows[i].appendChild(imgPrev);
-            // }
-
-            // this.currentTransactions;
         }
     }
 </script>

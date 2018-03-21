@@ -2,6 +2,9 @@ import axios from "axios/index";
 
 const state = {
     transactions: [],
+
+    walletTransactions: [],
+
     tmpTransactions: [],
     chunkTransactions: [],
     dateFrom: 0,
@@ -9,9 +12,6 @@ const state = {
     activeFilter: 0,
     searchText: '',
     hideFilter: false,
-
-
-
 
 
     transactionStatus: 'not found',
@@ -27,7 +27,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             // if (address === '') return false;
             commit('TRANSACTIONS_REQUEST');
-            let host = `http://54.144.234.226:8181/transactions/${address}`;
+            let host = `http://192.168.1.37:4000/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -38,7 +38,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp.data, 'transactions');
+                    // console.log(resp.data, 'transactions');
                     commit('SET_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })
@@ -55,7 +55,7 @@ const actions = {
 
             commit('REQUEST_LAZY_TRANSACTIONS');
 
-            let host = `http://54.144.234.226:8181/transactions/${address}`;
+            let host = `http://192.168.1.37:4000/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -66,7 +66,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp.data, 'transactions');
+                    // console.log(resp.data, 'transactions');
                     commit('SET_LAZY_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })
@@ -75,6 +75,14 @@ const actions = {
                     reject(err)
                 });
         })
+    },
+    walletTransactions: ({commit, dispatch}, address) => {
+
+        commit('REQUEST_WALLET_TRANSACTIONS');
+
+        commit('SET_WALLET_TRANSACTIONS', address);
+
+        // commit('ERR_WALLET_TRANSACTIONS');
     },
 };
 
@@ -101,6 +109,16 @@ const mutations = {
     ERROR_LAZY_TRANSACTIONS(state, err) {
         state.lazyTransactionsStatus = 'error';
     },
+
+    REQUEST_WALLET_TRANSACTIONS(state) {
+
+    },
+    SET_WALLET_TRANSACTIONS(state, address) {
+        state.walletTransactions = state.transactions.filter(item => {
+            return item._id === address;
+        });
+    },
+
 
 
     CHANGE_ACTIVE_FILTER(state, index) {
@@ -152,6 +170,8 @@ const mutations = {
 const getters = {
 
     transactions: state => state.transactions,
+
+    walletTransactions: state => state.walletTransactions,
 
     transactionsFilter: state => {
         if (state.activeFilter === 0) {

@@ -21,7 +21,7 @@ const actions = {
     walletsRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('WALLETS_REQUEST');
-            let host = 'http://54.144.234.226:8181/users/user-wallets';
+            let host = 'http://192.168.1.37:4000/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -32,7 +32,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp.data, 'resp.data');
+                    // console.log(resp.data, 'resp.data');
                     commit('SET_WALLETS', resp.data);
                     resolve(resp);
                 })
@@ -49,7 +49,7 @@ const actions = {
     walletsRequestLazy: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LAZY_WALLETS');
-            let host = 'http://54.144.234.226:8181/users/user-wallets';
+            let host = 'http://192.168.1.37:4000/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -60,7 +60,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp.data, 'wallets request lazy');
+                    // console.log(resp.data, 'wallets request lazy');
                     commit('SET_LAZY_WALLETS', resp.data);
                     resolve(resp);
                 })
@@ -74,7 +74,7 @@ const actions = {
     newWallet: ({commit, dispatch}, wallet) => {
         return new Promise((resolve, reject) => {
             // commit('AUTH_REQUEST');
-            let host = 'http://54.144.234.226:8181/wallet/new';
+            let host = 'http://192.168.1.37:4000/wallet/new';
             axios({
                 url: host,
                 headers: {
