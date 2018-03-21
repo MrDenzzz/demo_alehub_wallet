@@ -13,7 +13,7 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="login-form" v-if="this.authStep !== 1">
+                            <div class="login-form" v-if="authStep !== 0">
                                 <form @submit.prevent="login">
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
@@ -73,8 +73,7 @@
                                 </p>
 
                             </div>
-
-                            <div class="login-form" v-else>
+                        <div class="login-form" v-else>
                                 <form @submit.prevent="loginWithTwoAuth">
                                     <div class="control" @click="focusInput('twoAuthKey')">
                                         <label for="twoAuthKey">2fa code</label>
@@ -98,11 +97,16 @@
                                         <Spinner/>
                                     </div>
 
-                                    <button
-                                            type="submit"
-                                            class="btn btn-black btn-block nomargin">
+                                    <button type="submit" class="btn btn-black btn-block nomargin">
                                         Submit code
                                     </button>
+
+                                    <p class="text">
+                                        <router-link :to="{ path: '/recover-twofactor' }">
+                                            Recover two-factor code
+                                        </router-link>
+                                    </p>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -158,8 +162,7 @@
                     });
                     return false;
                 }
-
-                if (!this.email || !this.password) {
+            if (!this.email || !this.password) {
                     if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show('Enter your email', {
@@ -298,7 +301,6 @@
         color red
         font-family MuseoSansCyrl300
         text-align center
-
     .login-form
         .text
             font-family MuseoSansCyrl300
