@@ -12,7 +12,7 @@
                     <Spinner v-if="false"/>
                     <div class="row" v-else>
                         <div class="col-12">
-                            <panel-heading :title="'General'" :isTop="true"/>
+                            <panel-heading :title="'General'" :isTop="false"/>
                             <div class="form">
                                 <input-control
                                         :label-value="'Full name'"

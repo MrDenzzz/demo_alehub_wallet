@@ -563,10 +563,12 @@ body {
 
 @media screen and (max-width: 860px) {
   .dragParent {
-    min-height: calc(100vh - 64px);
     width: 720px;
     position: absolute;
     left: -360px; } }
+
+.settings .list-panel-heading {
+  margin: 0 16px 0 16px; }
 
 @media screen and (max-width: 860px) {
   .drag {
@@ -641,9 +643,7 @@ body {
       max-height: 120px;
       width: 32.5%;
       max-width: 200px;
-      margin: 0 0; }
-      .group-settings .form:last-child {
-        margin-top: 20px; } }
+      margin: 0 0; } }
 
 @media screen and (max-width: 720px) {
   .group-settings {
@@ -655,11 +655,7 @@ body {
       max-height: 120px;
       width: 32.5%;
       max-width: 200px;
-      margin: 0 0; }
-      .group-settings .form:last-child {
-        margin-top: 20px; }
-      .group-settings .form:nth-child(2) {
-        margin-top: 20px; } }
+      margin: 0 0; } }
 
 @media screen and (max-width: 390px) {
   .group-settings {
@@ -670,11 +666,7 @@ body {
     .group-settings .form {
       min-height: 150px;
       width: 100%;
-      min-width: 100px; }
-      .group-settings .form:last-child {
-        margin-top: 20px; }
-      .group-settings .form:nth-child(2) {
-        margin-top: 20px; } }
+      min-width: 100px; } }
 
 @media screen and (max-width: 1024px) {
   .dark .menu .wallet-list .wrap-in-wallet, .white .menu .wallet-list .wrap-in-wallet {
@@ -695,7 +687,7 @@ body {
 
 @media screen and (max-width: 375px) {
   .navbar .title {
-    display: none !important; } }
+    display: none; } }
 
 .container {
   margin: 24px 24px; }
@@ -3002,6 +2994,13 @@ label {
       border-bottom: 1px solid #000;
       text-decoration: none;
       padding-bottom: 1px; }
+
+@media (max-width: 490px) {
+  .container {
+    margin: 0; }
+    .container .login-form {
+      margin: 10px 5px;
+      width: calc(100% - 10px); } }
 
 .list-panel-heading {
   display: flex;
