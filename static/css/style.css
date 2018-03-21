@@ -2996,9 +2996,9 @@ label {
       padding-bottom: 1px; }
 
 @media (max-width: 490px) {
-  .container {
+  .login .container, .register .container {
     margin: 0; }
-    .container .login-form {
+    .login .container .login-form, .register .container .login-form {
       margin: 10px 5px;
       width: calc(100% - 10px); } }
 

@@ -88,11 +88,13 @@
 }
 
 @media (max-width: 490px) {
-  .container {
-    margin: 0;
-    .login-form {
-      margin: 10px 5px;
-      width: calc(100% - 10px);
+  .login, .register {
+    .container {
+      margin: 0;
+      .login-form {
+        margin: 10px 5px;
+        width: calc(100% - 10px);
+      }
     }
   }
 }
