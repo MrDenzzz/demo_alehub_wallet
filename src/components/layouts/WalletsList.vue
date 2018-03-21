@@ -1,6 +1,6 @@
 <template>
     <div class="dragParent">
-        <div class="menu" :class="{'is-opened': isToggle}" @click="closeMenu">
+        <div class="menu" :class="{'is-opened': isToggle}">
             <div class="wallet-list wallet-search" v-if="newWallets.length">
                 <div class="wrap-in-wallet">
                     <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
@@ -186,6 +186,7 @@
             }
         },
         created () {
+            document.addEventListener('click', this.closeMenu)
             // let _this = this;
             // this.setIntervalId = setInterval(_this.getTransactions, 15000);
         },
@@ -197,7 +198,7 @@
 
 <style lang="stylus" scoped>
     .menu
-        z-index 100
+        z-index 4
         .wallet-list
             &:not(.active)
                 &:not(.wallet-search)
@@ -220,7 +221,7 @@
 
 <style lang="stylus">
     .menu
-        z-index 100
+        z-index 4
         .type-list
             opacity 1
 
