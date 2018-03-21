@@ -71,13 +71,11 @@
                     return false;
                 }
 
-                console.log(this.userStatus, 'this.userStatus');
-
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
 
-                    console.log('load check');
+                    console.log('IM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEAR');
 
                     return false;
                 }
@@ -148,11 +146,10 @@
             .title
                 font-family PingFangSCBold
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .3s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-        opacity: 0.5;
-    }
+    .fade-enter-active, .fade-leave-active
+        transition opacity .3s
+
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
+        opacity 0.5
 
 </style>

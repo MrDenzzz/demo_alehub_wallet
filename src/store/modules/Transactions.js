@@ -1,9 +1,10 @@
 import axios from "axios/index";
 
 const state = {
-    transactions: [],
 
-    walletTransactions: [],
+    //мб подгружать сразу все транзакции или только для текущего воллета, а потом по требованию, но не сохранять, а дозаписывать?
+
+    transactions: [],
 
     tmpTransactions: [],
     chunkTransactions: [],
@@ -13,9 +14,7 @@ const state = {
     searchText: '',
     hideFilter: false,
 
-
     transactionStatus: 'not found',
-
 
     lazyTransactionsStatus: '',
 
@@ -39,6 +38,7 @@ const actions = {
             })
                 .then(resp => {
                     console.log(resp.data, 'transactions');
+                    // console.log(address, 'current wallet address');
                     commit('SET_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })
@@ -115,16 +115,9 @@ const mutations = {
     },
     SET_WALLET_TRANSACTIONS(state, address) {
 
-        console.log(address, 'wallet id');
+        console.log(address, 'wallet address');
 
         console.log(state.transactions, 'state.transactions');
-
-        //дождаться от саши связь воллета с транзакциями
-
-        state.walletTransactions = state.transactions.filter(item => {
-            console.log(item._id);
-            return item._id === address;
-        });
     },
 
 

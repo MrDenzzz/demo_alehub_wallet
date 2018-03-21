@@ -26,14 +26,14 @@
                             id="datepickerFrom"
                             v-model="dateFrom"
                             language="en"
-                            :placeholder="placeholderDateFrom"
+                            :placeholder="'Date from'"
                     />
 
                     <datepicker
                             id="datepickerTo"
                             v-model="dateTo"
                             language="en"
-                            :placeholder="placeholderDateTo"
+                            :placeholder="'Date to'"
                     />
                 </div>
             </div>
@@ -116,6 +116,7 @@
     import ShareTransactions from '../modals/ShareTransactions';
 
     import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'searchPanel',
@@ -125,8 +126,6 @@
             ShareTransactions
         },
         props: {
-            dateFromWallet: Date, //получать отсюда
-            dateToWallet: Date, //получать отсюда
             totalTransactions: [String, Number],
             startingTransactions: [String, Number],
             checkActivities: [Number, String],
@@ -136,8 +135,6 @@
             return {
                 dateFrom: null,
                 dateTo: null,
-                placeholderDateFrom: 'Date from',
-                placeholderDateTo: 'Date to',
                 searchText: ''
             }
         },
@@ -147,13 +144,12 @@
             },
             dateTo: function (val) {
                 this.$parent.$emit('changeDateTo', val);
-            },
-            currentWallet: function () {
-                this.dateFrom = this.dateFromWallet;
-                this.dateTo = this.dateToWallet;
             }
         },
         computed: {
+            ...mapGetters([
+                'transactions'
+            ]),
             currentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
             },
@@ -182,11 +178,23 @@
                 (this.hideFilter) ? this.setHideFilter(false) : this.setHideFilter(true);
             },
 
-            initiateDatepickers: function () {
-                console.log(this.dateFromWallet, 'this.dateFromWallet');
-                console.log(this.dateToWallet, 'this.dateToWallet');
-                this.dateFrom = this.dateFromWallet;
-                this.dateTo = this.dateToWallet;
+            initiateDate: function () {
+                this.dateFrom = new Date(this.transactions.reduce(
+                    (acc, loc) =>
+                        acc.timestamp < loc.timestamp
+                            ? acc
+                            : loc
+                ).timestamp);
+                this.dateFrom.setHours(0);
+                this.dateFrom.setMinutes(0);
+                this.dateFrom.setSeconds(0);
+                this.dateFrom.setMilliseconds(0);
+
+                this.dateTo = new Date();
+                this.dateTo.setHours(23);
+                this.dateTo.setMinutes(59);
+                this.dateTo.setSeconds(59);
+                this.dateTo.setMilliseconds(999);
             },
 
             currentBalanceBeginPeriod: function () {
@@ -200,18 +208,18 @@
                 return 0;
             },
             currentSentBalance: function () {
-                let sentBalance = this.currentTransactions.filter(item => {
-                    return item.type === 'sent';
+                let sentTransactions = this.transactions.filter(item => {
+                    return item.balanceInfo.after - item.balanceInfo.before < 0;
                 });
 
-                if (sentBalance.length > 1) {
-                    return sentBalance.reduce(
+                if (sentTransactions.length > 1) {
+                    return sentTransactions.reduce(
                         (sum, current) => {
-                            return {total: parseInt(sum.total) + parseInt(current.total)};
+                            return {total: parseInt(sum.count) + parseInt(current.count)};
                         }
                     ).total;
-                } else if (sentBalance.length === 1) {
-                    return sentBalance[0].total;
+                } else if (sentTransactions.length === 1) {
+                    return sentTransactions[0].count;
                 }
                 return 0;
             },
@@ -232,7 +240,9 @@
             },
         },
         created() {
-            this.initiateDatepickers();
+            if (this.transactions.length !== 0) {
+                this.initiateDate();
+            }
         },
         mounted() {
 

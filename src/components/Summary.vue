@@ -42,8 +42,6 @@
                             <Search-panel
                                     v-if="getActivity.length !== 0"
                                     :check-activities="getActivity.length"
-                                    :date-from-wallet="dateFrom"
-                                    :date-to-wallet="dateTo"
                                     :current-transactions="currentTmpTransactions"
                                     :total-transactions="totalTransactions"
                                     :starting-transactions="startingTransactions"
@@ -62,7 +60,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="flex-block-transaction"
-                                 :class="{'m-t-center': currentTransactions.length === 0}"
+                                 :class="{'m-t-center': transactions.length === 0}"
                                  v-if="getActivity.length === 0 && !transactionsLoader">
                                 <p class="absence-transactions">No transactions found</p>
                             </div>
@@ -100,7 +98,7 @@
     import {mapGetters} from "vuex";
 
     export default {
-        name: "wallet",
+        name: 'wallet',
         components: {
             Navbar,
             WalletsList,
@@ -155,13 +153,9 @@
             ]),
 
             getTransactions: function () {
-                console.log(this.currentWallet, 'this.currentWallet');
                 if (this.currentWallet !== null) {
                     this.$store.dispatch('walletsRequestLazy').then(() => {
-                        // console.log('successfully interval get wallet info');
-
                         this.$store.dispatch('transactionsRequestLazy', this.currentWallet !== null ? this.currentWallet.address : '').then(() => {
-                            // console.log('successfully interval get transactions info');
                         });
                     });
                 }
@@ -177,12 +171,10 @@
             },
 
 
-
-            currentTransactions: function () {
-                return this.transactions.filter(item => {
-                    return item._id === this.currentWallet._id;
-                });
-            },
+            //
+            // currentTransactions: function () {
+            //     return this.transactions;
+            // },
 
             currentTmpTransactions: function () {
                 if (this.dateFrom && this.dateTo) {
@@ -247,7 +239,7 @@
 
 
             currentTransactions1: function () {
-                this.$store.dispatch('walletTransactions', this.currentWallet._id).then(() => {
+                this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
 
                 });
             },
@@ -262,27 +254,25 @@
                 else return require(`../assets/img/${name}.svg`);
             },
 
-            initiateDate: function () {
-
-
-                this.dateFrom = new Date(this.walletTransactions.reduce(
-                    (acc, loc) =>
-                        acc.timestamp < loc.timestamp
-                            ? acc
-                            : loc
-                ).date);
-                this.dateTo = new Date();
-
-                this.dateFrom.setHours(0);
-                this.dateFrom.setMinutes(0);
-                this.dateFrom.setSeconds(0);
-                this.dateFrom.setMilliseconds(0);
-
-                this.dateTo.setHours(23);
-                this.dateTo.setMinutes(59);
-                this.dateTo.setSeconds(59);
-                this.dateTo.setMilliseconds(999);
-            },
+            // initiateDate: function () {
+            //
+            //     this.dateFrom = new Date(this.transactions.reduce(
+            //         (acc, loc) =>
+            //             acc.timestamp < loc.timestamp
+            //                 ? acc
+            //                 : loc
+            //     ).timestamp);
+            //     this.dateFrom.setHours(0);
+            //     this.dateFrom.setMinutes(0);
+            //     this.dateFrom.setSeconds(0);
+            //     this.dateFrom.setMilliseconds(0);
+            //
+            //     this.dateTo = new Date();
+            //     this.dateTo.setHours(23);
+            //     this.dateTo.setMinutes(59);
+            //     this.dateTo.setSeconds(59);
+            //     this.dateTo.setMilliseconds(999);
+            // },
 
             changeSelectedWallet: function (address) {
                 this.changeTransactionLoaderState(true);
@@ -308,12 +298,9 @@
             //переписать каррент трансекшинс в
             this.currentTransactions1();
 
-
-            console.log(this.walletTransactions, 'this.walletTransactions');
-
-            if (this.walletTransactions.length !== 0) {
-                this.initiateDate();
-            }
+            // if (this.transactions.length !== 0) {
+            //     this.initiateDate();
+            // }
 
             this.$on('changeTotalTransactions', val => {
                 this.totalTransactions = val;
@@ -328,10 +315,6 @@
 
             this.setIntervalId = setInterval(this.getTransactions, 15000);
 
-            console.log(this.lengthWalletList, 'this.lengthWalletList');
-            console.log(this.walletStatus, 'this.walletStatus');
-
-
             // if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
@@ -341,7 +324,7 @@
             this.$on('sendMoney', function (data) {
 
                 let checkFirstTransaction = false;
-                if (this.currentTransactions.length === 0) {
+                if (this.transactions.length === 0) {
                     checkFirstTransaction = true;
                 }
 
@@ -378,7 +361,7 @@
             });
 
             this.$on('changeWallet', function (val, address) {
-                if (val && this.currentTransactions.length !== 0) {
+                if (val && this.transactions.length !== 0) {
                     this.initiateDate();
                     this.changeWalletResult = true;
                 }
