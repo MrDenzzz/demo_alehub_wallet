@@ -86,11 +86,12 @@
         },
         computed: {
             newWalletsList: function () {
-                if (this.searchField === '') {
+                if (this.searchField !== '') {
                     return this.newWallets.filter(item => {
                         return item.name.toLowerCase().includes(this.searchField.toLowerCase());
                     });
                 }
+                return this.newWallets
             },
             selectedTheme () {
                 return this.$store.state.Themes.theme;
