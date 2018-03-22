@@ -132,6 +132,12 @@ body {
       }
     }
   }
+  .warning-title {
+    color: #dedfdf;
+  }
+  .two-auth-secret {
+    color: #dedfdf;
+  }
   .drag {
     background-color: #404455;
   }
@@ -518,6 +524,13 @@ body {
           color: #dedfdf !important;
           &:hover {
             background: #404455;
+          }
+          &.selected {
+            background-color: #404455 !important;
+            &:before {
+              background: url('../img/selected-ic_dark.svg');
+              background-size: cover;
+            }
           }
         }
       }

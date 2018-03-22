@@ -80,6 +80,10 @@ body {
         color: #dedfdf; }
       .dark .filter-panel .two-input input:-moz-placeholder {
         color: #dedfdf; }
+  .dark .warning-title {
+    color: #dedfdf; }
+  .dark .two-auth-secret {
+    color: #dedfdf; }
   .dark .drag {
     background-color: #404455; }
   .dark .menu {
@@ -298,6 +302,11 @@ body {
       color: #dedfdf !important; }
       .dark .select .list ul li:hover {
         background: #404455; }
+      .dark .select .list ul li.selected {
+        background-color: #404455 !important; }
+        .dark .select .list ul li.selected:before {
+          background: url("../img/selected-ic_dark.svg");
+          background-size: cover; }
   .dark .select-offer .list-offer ul .selected-offer {
     background-color: #404455 !important; }
   .dark .apply-panel {
