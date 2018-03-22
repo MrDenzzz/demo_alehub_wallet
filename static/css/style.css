@@ -81,10 +81,16 @@ body {
         color: #dedfdf; }
       .dark .filter-panel .two-input input:-moz-placeholder {
         color: #dedfdf; }
+  .dark .warning-title {
+    color: #dedfdf; }
+  .dark .two-auth-secret {
+    color: #dedfdf; }
   .dark .drag {
     background-color: #404455; }
   .dark .menu {
     background-color: #404455 !important; }
+    .dark .menu .wallet-list.wallet-search {
+      background-color: #404455; }
     .dark .menu .wallet-list:not(:first-child) {
       margin: 5px 35px;
       width: calc(100% - 70px);
@@ -297,6 +303,11 @@ body {
       color: #dedfdf !important; }
       .dark .select .list ul li:hover {
         background: #404455; }
+      .dark .select .list ul li.selected {
+        background-color: #404455 !important; }
+        .dark .select .list ul li.selected:before {
+          background: url("../img/selected-ic_dark.svg");
+          background-size: cover; }
   .dark .select-offer .list-offer ul .selected-offer {
     background-color: #404455 !important; }
   .dark .apply-panel {
@@ -421,6 +432,8 @@ body {
       height: 20.5px; }
   .white .menu {
     background-color: #aaaec1 !important; }
+    .white .menu .wallet-list.wallet-search {
+      background-color: #aaaec1 !important; }
     .white .menu .wallet-list:not(.active):not(.wallet-search):hover {
       background-color: rgba(247, 247, 247, 0.25); }
       .white .menu .wallet-list:not(.active):not(.wallet-search):hover .wrap-in-wallet p {
@@ -1093,12 +1106,12 @@ body {
   position: fixed;
   top: 64px;
   bottom: 0px;
-  overflow-y: scroll; }
+  overflow-y: auto; }
   @media (max-width: 860px) {
     .menu {
       overflow-y: unset; } }
   .menu.is-opened {
-    overflow-y: scroll; }
+    overflow-y: auto; }
     @media (max-width: 425px) {
       .menu.is-opened .wallet-search {
         width: 100vh !important; } }
@@ -2946,6 +2959,9 @@ td, th {
 
 .modal-open {
   overflow: hidden; }
+
+.settings .qr-code {
+  margin-top: 10px; }
 
 .modal-open .modal {
   overflow-x: hidden;

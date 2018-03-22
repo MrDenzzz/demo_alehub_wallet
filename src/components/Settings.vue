@@ -319,17 +319,22 @@
     .form .deletelink
         margin-top -8px
         padding-top 0
+
     .border-none
         border none
-    .form .deletelink {
-        margin-top: -8px;
-        padding-top: 0px;
-    }
-    @media screen and (max-width: 1024px) {
-        .main {
-            & .content {
-                padding-left: 0;
-            }
-        }
-    }
+
+    .form .deletelink 
+        margin-top -8px
+        padding-top 0px
+    
+    @media (max-width: 1024px)
+        .main
+            .content 
+                padding-left 0
+        
+    @media (max-width: 425px)
+        .form
+            .control
+                .wrap-input
+                    padding-left 0
 </style>
