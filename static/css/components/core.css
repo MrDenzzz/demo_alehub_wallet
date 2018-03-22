@@ -84,6 +84,8 @@ body {
     background-color: #404455; }
   .dark .menu {
     background-color: #404455 !important; }
+    .dark .menu .wallet-list.wallet-search {
+      background-color: #404455; }
     .dark .menu .wallet-list:not(:first-child) {
       margin: 5px 35px;
       width: calc(100% - 70px);
@@ -420,6 +422,8 @@ body {
       height: 20.5px; }
   .white .menu {
     background-color: #aaaec1 !important; }
+    .white .menu .wallet-list.wallet-search {
+      background-color: #aaaec1 !important; }
     .white .menu .wallet-list:not(.active):not(.wallet-search):hover {
       background-color: rgba(247, 247, 247, 0.25); }
       .white .menu .wallet-list:not(.active):not(.wallet-search):hover .wrap-in-wallet p {

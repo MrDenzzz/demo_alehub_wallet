@@ -138,6 +138,9 @@ body {
   .menu {
     background-color: #404455 !important;
     .wallet-list {
+      &.wallet-search {
+        background-color: #404455;
+      }
       &:not(:first-child) {
         margin: 5px 35px;
         width: calc(100% - 70px);
@@ -723,6 +726,9 @@ body {
   .menu {
     background-color: #aaaec1 !important;
     .wallet-list {
+      &.wallet-search {
+        background-color: #aaaec1 !important;
+      }
       &:not(.active) {
         &:not(.wallet-search) {
           &:hover {
