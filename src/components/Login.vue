@@ -9,6 +9,11 @@
         <section class="main">
             <div class="content nomenu">
 
+
+                <!--37 <label for="password">{{ $t('pages.login.password') }}</label>-->
+                <!--45 :placeholder="$t('pages.login.password')"-->
+                <!--53 {{ $t('pages.login.login') }}-->
+
                 <div class="container">
                     <div class="row">
 
@@ -32,7 +37,7 @@
                                     </div>
 
                                     <div class="control" @click="focusInput('password')">
-                                        <label for="password">password</label>
+                                        <label for="password">{{ $t('pages.login.password') }}</label>
                                         <input
                                                 class="d-block"
                                                 :class="{error: isErrorPassword}"
@@ -44,9 +49,8 @@
                                                 required>
                                     </div>
 
-                                    <button type="submit"
-                                            class="btn btn-black btn-block nomargin">
-                                        Login
+                                    <button type="submit" class="btn btn-black btn-block nomargin">
+                                        {{ $t('pages.login.login') }}
                                     </button>
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Login or password is incorrect</p>
@@ -56,15 +60,15 @@
                                     </div>
                                 </form>
 
-                                <p class="text">Forgot your username or password?
+                                <p class="text">{{ $t('pages.login.textForgotPassword') }}
                                     <router-link :to="{ path: '/recover' }">
-                                        Recover account.
+                                        {{ $t('pages.login.recoverAccount') }}
                                     </router-link>
                                 </p>
 
-                                <p class="text">Don’t have an account?
+                                <p class="text">{{ $t('pages.login.textHaveAccount') }}
                                     <router-link :to="{ path: '/registration' }">
-                                        Create one.
+                                        {{ $t('pages.login.createAccount') }}
                                     </router-link>
                                 </p>
 

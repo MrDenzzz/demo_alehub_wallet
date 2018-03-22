@@ -3,7 +3,11 @@ const messages = {
         pages: {
             login: {
                 password: 'password',
-                login: 'Login'
+                login: 'Login',
+                textForgotPassword: 'Forgot your email or password?',
+                recoverAccount: 'Recover account.',
+                textHaveAccount: 'Don’t have an account?',
+                createAccount: 'Create one.'
             },
             notifications: {
                 navbarTitle: 'Notifications feed',
@@ -267,7 +271,11 @@ const messages = {
         pages: {
             login: {
                 password: 'пароль',
-                login: 'Войти'
+                login: 'Войти',
+                textForgotPassword: 'Забыли свой email или пароль?',
+                recoverAccount: 'Восстановите аккаунт',
+                textHaveAccount: 'У Вас ещё нет аккаунта?',
+                createAccount: 'Создайте аккаунт.'
             },
             notifications: {
                 navbarTitle: 'Уведомления',
