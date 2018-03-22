@@ -129,9 +129,18 @@
             </div>
 
             <div class="modal-btn text-center">
+                <button
+                        id="copy-mnemonic"
+                        type="button"
+                        class="buttons btn-default"
+                        v-clipboard:copy="copyMnemonic()">
+                    <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
+                    Copy mnemonic
+                </button>
                 <button class="btn btn-yellow btn-large btn-bottom" @click="changeRecoveryStep('next')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
                 </button>
+
             </div>
 
         </div>
@@ -483,6 +492,9 @@
 
                     this.closeModal();
                 });
+            },
+            copyMnemonic() {
+                return this.recoveryMnemonicPhrase.join(' ');
             }
         },
         created() {
@@ -536,10 +548,15 @@
         }
     }
 
+    .icon-copy {
+        height: 19px;
+        margin-right: 5px;
+    }
+
     .phrase {
         background-color: rgba(13, 23, 23, 0.04);
         border-radius: 2px;
-        padding: 12px 0;
+        padding: 12px 12px;
         text-align: center;
         margin: 24px 42px 42px;
 
@@ -550,6 +567,10 @@
             color: #34343e;
             user-select: text;
         }
+    }
+    
+    .buttons {
+        width: 200px;
     }
 
     .modal-warning {
@@ -651,7 +672,7 @@
         }
 
         & .btn-large {
-            padding: 10px 70px 10px 70px;
+            padding: 10px 40px 10px 40px;
             font-size: 16px;
             font-family: MuseoSansCyrl500;
         }
