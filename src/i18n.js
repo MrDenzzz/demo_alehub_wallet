@@ -1,6 +1,10 @@
 const messages = {
     eng: {
         pages: {
+            login: {
+                password: 'password',
+                login: 'Login'
+            },
             notifications: {
                 navbarTitle: 'Notifications feed',
                 notFound: 'No notifications found',
@@ -11,8 +15,14 @@ const messages = {
             settings: {
                 navbarTitle: 'Settings',
                 panelHeadingGeneral: 'General',
+                fullName: 'Full name',
+                password: 'Password',
                 language: 'Language',
-                logout: 'Log out'
+                logout: 'Log out',
+                security: 'Security',
+                theme: 'Select theme',
+                _2fa: 'Two-factor authentification',
+                _2faText: 'You can add a second layer of protection with 2-Step Verification, switch requires a single-use code sent to your phone or using third-party authentification app.'
             },
             summary: {
                 navbarTitle: 'Summary',
@@ -255,6 +265,10 @@ const messages = {
     },
     rus: {
         pages: {
+            login: {
+                password: 'пароль',
+                login: 'Войти'
+            },
             notifications: {
                 navbarTitle: 'Уведомления',
                 notFound: 'Уведомления не найдены',
@@ -265,8 +279,14 @@ const messages = {
             settings: {
                 navbarTitle: 'Настройки',
                 panelHeadingGeneral: 'Общие',
+                fullName: 'Полное имя',
+                password: 'Пароль',
                 language: 'Язык',
-                logout: 'Выход'
+                logout: 'Выход',
+                security: 'Безопасность',
+                theme: 'Выберите тему',
+                _2fa: 'Двухфакторная аутентификация',
+                _2faText: 'Вы можете добавить второй уровень защиты с помощью двухэтапной аутентификации. Для переключения потребуется одноразовый код, отправленный на ваш телефон, или стороннее приложение для аутентификации.'
             },
             summary: {
                 navbarTitle: 'Обзор',
