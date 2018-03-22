@@ -237,7 +237,9 @@ const messages = {
                     },
                     mnemonic: {
                         text: 'Please, make sure you have carefully writen down your recovery phrase somewhere safe. You will need this phrase later for next use and recover. Phrase is case sensitive.',
-                        btn: 'Yes, I’ve written it down'
+                        btnCopy: 'Copy mnemonic',
+                        btn: 'Yes, I’ve written it down',
+                        toastedSuccessMnemonic: 'The mnemonic phrase was copied successfully'
                     },
                     finish: {
                         each: 'Type each word in the correct order to verify your recovery phrase',
@@ -523,7 +525,9 @@ const messages = {
                     },
                     mnemonic: {
                         text: 'Пожалуйста, убедитесь, что вы тщательно записали фразу восстановления в безопасном месте. Вам понадобится эта фраза позже для последующего использования и восстановления. Фраза чувствительна к регистру.',
-                        btn: 'Да, я записал его'
+                        btnCopy: 'Скопировать фразу',
+                        btn: 'Да, я записал его',
+                        toastedSuccessMnemonic: 'Мнемоническая фраза успешно скопирована'
                     },
                     finish: {
                         each: 'Введите каждое слово в правильном порядке, чтобы подтвердить свою фразу восстановления',
