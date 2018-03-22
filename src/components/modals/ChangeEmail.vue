@@ -8,39 +8,38 @@
             <div v-if="dataProcessing" class="wrap-spinner">
                 <Spinner v-if="dataProcessing"/>
             </div>
-            <div v-else>
-                <form @submit.prevent="changeEmail()">
-                    <div class="modal-control">
-                        <div class="modal-input">
-                            <label class="title">2fa key</label>
-                            <input
-                                    type="number"
-                                    class="input"
-                                    placeholder="Enter 2fa code"
-                                    v-model="token"
-                                    required>
-                        </div>
-                    </div>
 
-                    <div class="modal-control">
-                        <div class="modal-input">
-                            <label class="title">Email</label>
-                            <input
-                                    type="email"
-                                    class="input"
-                                    placeholder="Enter new email"
-                                    v-model="email"
-                                    required>
-                        </div>
+            <form v-else @submit.prevent="changeEmail()">
+                <div class="modal-control">
+                    <div class="modal-input">
+                        <label class="title">2fa key</label>
+                        <input
+                                type="number"
+                                class="input"
+                                placeholder="Enter 2fa code"
+                                v-model="token"
+                                required>
                     </div>
+                </div>
 
-                    <div class="modal-btn text-center">
-                        <button type="submit" class="btn btn-yellow btn-large">
-                            Change
-                        </button>
+                <div class="modal-control">
+                    <div class="modal-input">
+                        <label class="title">Email</label>
+                        <input
+                                type="email"
+                                class="input"
+                                placeholder="Enter new email"
+                                v-model="email"
+                                required>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="modal-btn text-center">
+                    <button type="submit" class="btn btn-yellow btn-large">
+                        Change
+                    </button>
+                </div>
+            </form>
         </div>
     </modal>
 </template>
@@ -71,10 +70,10 @@
                     const {email, token} = this;
                     this.$store.dispatch('changeEmail', {email, token}).then(() => {
                         this.dataProcessing = false;
-                        this.closeModal('changeemail');
+                        this.closeModal();
                         this.$parent.$emit('changeEmail', email);
                     }).catch(() => {
-
+                        console.log('You are sent to me wrong email data');
                     });
                 } else {
                     this.$toasted.show(`The 2fa code length must be 6 digits`, {

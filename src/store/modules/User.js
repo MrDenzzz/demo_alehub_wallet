@@ -18,7 +18,10 @@ const state = {
     disableTwoAuthStatus: '',
     changeUserNameStatus: '',
     isLoader: false,
-    isErrorLogin: false
+    isErrorLogin: false,
+
+    changeEmailStatus: '',
+    changePasswordStatus: ''
 };
 
 const actions = {
@@ -236,12 +239,38 @@ const actions = {
             })
                 .then(resp => {
                     console.log(resp, 'change email success');
-                    // commit('SUCCESS_CHANGE_EMAIL', name);
+                    commit('SUCCESS_CHANGE_EMAIL', emailData.email);
                     resolve(resp);
                 })
                 .catch(err => {
                     console.log(err);
                     commit('ERROR_CHANGE_EMAIL', err);
+                    reject(err);
+                });
+        });
+    },
+    changePassword: ({commit, dispatch}, passData) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_CHANGE_PASSWORD');
+            let host = 'http://192.168.1.37:4000/users/changePassword';
+            axios({
+                url: host,
+                data: passData,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            })
+                .then(resp => {
+                    console.log(resp, 'change password');
+                    commit('SUCCESS_CHANGE_PASSWORD');
+                    resolve(resp);
+                })
+                .catch(err => {
+                    console.log(err);
+                    commit('ERROR_CHANGE_PASSWORD', err);
                     reject(err);
                 });
         });
@@ -336,7 +365,17 @@ const mutations = {
     },
     ERROR_CHANGE_EMAIL: (state) => {
         state.changeEmailStatus = 'error';
-    }
+    },
+
+    REQUEST_CHANGE_PASSWORD: (state) => {
+        state.changePasswordStatus = 'loading';
+    },
+    SUCCESS_CHANGE_PASSWORD: (state) => {
+        state.changePasswordStatus = 'success';
+    },
+    ERROR_CHANGE_PASSWORD: (state) => {
+        state.changePasswordStatus = 'error';
+    },
 };
 
 const getters = {

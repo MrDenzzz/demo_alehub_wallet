@@ -21,13 +21,12 @@
                                         :input-type="'text'"
                                 />
 
-                                <div class="control">
+                                <div class="control" @click="openModal('changeemail')">
                                     <div class="wrap-input">
                                         <label>E-mail</label>
                                         <div class="textbox">
                                             <p
                                                     class="text full-line"
-                                                    @click="openModal('changeemail')"
                                             >
                                                 {{userEmail}}
                                             </p>
@@ -35,13 +34,12 @@
                                     </div>
                                 </div>
 
-                                <div class="control">
+                                <div class="control" @click="openModal('changepassword')">
                                     <div class="wrap-input">
                                         <label>Password</label>
                                         <div class="textbox">
                                             <p
                                                     class="text full-line"
-                                                    @click="openModal('changepassword')"
                                             >
                                                 Last updated 15 days ago
                                             </p>
@@ -297,6 +295,13 @@
                         type: 'success',
                     });
                 }
+            });
+
+            this.$on('changePassword', function () {
+                this.$toasted.show(`Password changed`, {
+                    duration: 5000,
+                    type: 'success',
+                });
             });
         }
     }
