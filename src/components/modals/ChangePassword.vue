@@ -12,6 +12,17 @@
             <form v-else @submit.prevent="changePassword()">
                 <div class="modal-control">
                     <div class="modal-input">
+                        <label class="title">2fa key</label>
+                        <input
+                                type="number"
+                                class="input"
+                                placeholder="Enter 2fa code"
+                                v-model="token"
+                                required>
+                    </div>
+                </div>
+                <div class="modal-control">
+                    <div class="modal-input">
                         <label class="title">Old password</label>
                         <input
                                 type="password"
@@ -66,6 +77,7 @@
         },
         data() {
             return {
+                token: '',
                 oldPass: '',
                 newPass: '',
                 confirmPass: '',
@@ -82,7 +94,11 @@
                 if (this.oldPass.length >= 8 || this.newPass.length >= 8 || this.confirmPass.length >= 8) {
                     if (this.newPass.length === this.confirmPass.length) {
                         this.dataProcessing = true;
-                        this.$store.dispatch('changePassword', {old: this.oldPass, new: this.newPass}).then(() => {
+                        this.$store.dispatch('changePassword', {
+                            token: this.token,
+                            old: this.oldPass,
+                            new: this.newPass
+                        }).then(() => {
                             this.dataProcessing = false;
                             this.closeModal();
                             this.$parent.$emit('changePassword');

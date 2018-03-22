@@ -257,12 +257,12 @@
                 this.newSelect(id, value)
             });
             this.$on('changePassword', function (password) {
-                if (data.new === '') {
-                    this.isShow = true;
-                    this.isSuccessNotif = false;
-                    this.notifText = 'Password is not';
-                } else
-                    this.closeModal('change-password');
+                // if (data.new === '') {
+                //     this.isShow = true;
+                //     this.isSuccessNotif = false;
+                //     this.notifText = 'Password is not';
+                // } else
+                //     this.closeModal('change-password');
             });
             this.$on('receiveFullName', function (value) {
                 //this func is not need
