@@ -39,6 +39,7 @@ const actions = {
                 .then(resp => {
                     console.log(resp.data, 'transactions');
                     // console.log(address, 'current wallet address');
+                    console.log(axios.defaults.headers.common['Authorization']);
                     commit('SET_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })

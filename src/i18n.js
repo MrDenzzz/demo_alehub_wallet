@@ -2,12 +2,30 @@ const messages = {
     eng: {
         pages: {
             login: {
-                password: 'password',
+                password: 'Password',
                 login: 'Login',
                 textForgotPassword: 'Forgot your email or password?',
                 recoverAccount: 'Recover account.',
                 textHaveAccount: 'Don’t have an account?',
                 createAccount: 'Create one.'
+            },
+            registration: {
+                fullName: 'Full name',
+                email: 'E-mail',
+                password: 'Password',
+                repeatPassword: 'Repeat Password',
+                create: 'Create',
+                haveAccount: 'Already have an account?',
+                login: 'Log in.',
+                completionRegistration: 'To complete the registration, please follow the link on your mail',
+                fillAllFields: 'Fill in all the fields',
+                enterFullName: 'Enter your full name',
+                enterEmail: 'Enter your email',
+                enterPassword: 'Enter your password',
+                enterRepeatPassword: 'Repeat password',
+                enterValidEmail: 'Enter your valid email',
+                enterCorrectLengthPassword: 'Password must be at least 8 characters long',
+                enterMatchPassword: 'Passwords do not match'
             },
             notifications: {
                 navbarTitle: 'Notifications feed',
@@ -276,6 +294,24 @@ const messages = {
                 recoverAccount: 'Восстановите аккаунт',
                 textHaveAccount: 'У Вас ещё нет аккаунта?',
                 createAccount: 'Создайте аккаунт.'
+            },
+            registration: {
+                fullName: 'Имя',
+                email: 'E-mail',
+                password: 'Пароль',
+                repeatPassword: 'Повторите пароль',
+                create: 'Создать',
+                haveAccount: 'У Вас уже есть аккаунт?',
+                login: 'Войти.',
+                completionRegistration: 'Для завершения регистрации пройдите по ссылке на вашей почте',
+                fillAllFields: 'Заполните все поля',
+                enterFullName: 'Введите Ваше имя',
+                enterEmail: 'Введите email',
+                enterPassword: 'Введите Ваш пароль',
+                enterRepeatPassword: 'Повторите пароль',
+                enterValidEmail: 'Введите корректный пароль',
+                enterCorrectLengthPassword: 'Пароль должен быть длиной минимум 8 символовPassword must be at least 8 characters long',
+                enterMatchPassword: 'Пароли не совпадают'
             },
             notifications: {
                 navbarTitle: 'Уведомления',
