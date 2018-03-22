@@ -10,7 +10,7 @@
                 <div class="body" v-if="parseInt(step) === 1">
                     <div class="modal-control double" @click="focusInput('amount')">
                         <div class="modal-input">
-                            <label class="title">AMOUNT</label>
+                            <label class="title">{{ $t('modals.send.amount') }}</label>
                             <p class="count">
                                 <input
                                     type="text"
@@ -25,17 +25,17 @@
                     </div>
                     <div class="modal-control double">
                         <div class="modal-input">
-                            <label class="title clicked" @click="useMax">use max</label>
+                            <label class="title clicked" @click="useMax">{{ $t('modals.send.max') }}</label>
                         </div>
                     </div>
                     <div class="modal-control" @click="focusInput('address')">
-                        <div class="modal-input">
-                            <label class="title">ADDRESS</label>
+                        <div class="modal-input address">
+                            <label class="title">{{ $t('modals.send.address')}}</label>
                             <the-mask
                                 mask="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                                 type="text"
                                 :masked="false"
-                                :placeholder="placeholderText"
+                                :placeholder="$t('modals.send.addressPlaceholder')"
                                 class="input"
                                 :class="{error:errorAddress}"
                                 @keyup.enter.native="nextCheck"
@@ -48,7 +48,7 @@
                     </div>
                     <div class="modal-control last">
                         <div class="modal-input">
-                            <label class="title">TOTAL</label>
+                            <label class="title">{{ $t('modals.send.total') }}</label>
                             <p class="total">
                                 <vue-numeric :separator='correctLangSep' :decimal-separator='correctLangDecSep'
                                              :value="amountAle" :precision="correctValuePrecision"
@@ -60,7 +60,7 @@
                     <div class="modal-footer">
                         <button class="buttons btn-yellow openModal" @click="nextCheck"
                                 :disabled="!amountAle || !address">
-                            Next
+                            {{ $t('modals.send.buttons.next') }}
                         </button>
                     </div>
                 </div>
@@ -68,17 +68,17 @@
                     <div class="modal-control">
                         <div class="modal-input">
                             <p class="small">
-                                You are sending
+                                {{ $t('modals.send.sendText') }}
                                 <vue-numeric separator="," v-model="amountAle" :precision="2"
                                              :read-only="true"></vue-numeric>
-                                <span>ALC</span> <!-- (with <span>{{fees}}</span> ALC of fees) --> to
+                                <span>ALC</span> <!-- (with <span>{{fees}}</span> ALC of fees) --> {{ $t('modals.send.to') }}
                                 <span>{{address}}</span>. <!-- Type your spending password to confirm transaction. -->
                             </p>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="buttons btn-yellow openModal" @click="send">
-                            Send
+                            {{ $t('modals.send.buttons.send') }}
                         </button>
                     </div>
                 </div>
@@ -100,7 +100,6 @@
         },
         data() {
             return {
-                placeholderText: 'Enter the name of the cryptographic wallet',
                 amountAle: '',
                 amountUsd: 161,
                 step: 1,
@@ -339,4 +338,5 @@
     .no-spinners::-webkit-inner-spin-button
         -webkit-appearance none
         margin 0
+
 </style>

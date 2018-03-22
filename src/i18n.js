@@ -235,7 +235,18 @@ const messages = {
                 }
             },
             send: {
-                title: 'Send'
+                title: 'Send',
+                amount: 'Amount',
+                max: 'use max',
+                address: 'Address',
+                addressPlaceholder: 'Enter the name of the cryptographic wallet',
+                total: 'Total',
+                sendText: 'You are sending',
+                to: 'to',
+                buttons: {
+                    next: 'Next',
+                    send: 'Send'
+                }
             },
             request: {
                 title: 'request',
@@ -499,7 +510,18 @@ const messages = {
                 }
             },
             send: {
-                title: 'Отправить'
+                title: 'Отправить',
+                amount: 'Количество',
+                max: 'максимальная сумма',
+                address: 'Aдрес',
+                addressPlaceholder: 'Введите адрес криптокошелька',
+                total: 'Всего',
+                sendText: 'Вы отправляете',
+                to: 'в',
+                buttons: {
+                    next: 'Далее',
+                    send: 'Отправить'
+                }
             },
             request: {
                 title: 'Получить',
