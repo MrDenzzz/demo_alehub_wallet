@@ -234,14 +234,22 @@
                     return item.balanceInfo.after - item.balanceInfo.before > 0;
                 });
 
+
+                console.log(receiveTransactions, 'receiveTransactions');
+
+
                 if (receiveTransactions.length > 1) {
-                    return receiveTransactions.reduce(
-                        (sum, current) => {
-                            return {total: parseInt(sum.count) + parseInt(current.count)};
-                        }
-                    ).total;
+                    let sum = 0;
+                    for (let i = 0; i < receiveTransactions.length; i++)
+                        sum += receiveTransactions[i].count;
+                    return sum;
+                    // return receiveTransactions.reduce(
+                    //     (sum, current) => {
+                    //         return {total: parseInt(sum.count) + parseInt(current.count)};
+                    //     }
+                    // ).total;
                 } else if (receiveTransactions.length === 1) {
-                    return receiveTransactions[0].total;
+                    return receiveTransactions[0].count;
                 }
                 return 0;
             },
