@@ -241,6 +241,8 @@
             currentTransactions1: function () {
                 this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
 
+                }).catch(() => {
+
                 });
             },
 
@@ -296,7 +298,9 @@
             // this.setIntervalId = setInterval(this.getTransactions, 15000);
 
             //переписать каррент трансекшинс в
-            this.currentTransactions1();
+            if (this.currentWallet) {
+                this.currentTransactions1();
+            }
 
             // if (this.transactions.length !== 0) {
             //     this.initiateDate();
@@ -316,6 +320,10 @@
             this.setIntervalId = setInterval(this.getTransactions, 15000);
 
             // if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
+
+            console.log(this.wallets, 'this.wallets');
+            console.log(this.lengthWalletList, 'this.lengthWalletList');
+
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
             }
@@ -387,9 +395,6 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
-
-
-            this.currentTransactions1();
 
             console.log(this.walletTransactions, 'this.walletTransactions');
         }

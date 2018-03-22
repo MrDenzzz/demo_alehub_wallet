@@ -9,6 +9,11 @@
         <section class="main">
             <div class="content nomenu">
 
+
+                <!--37 <label for="password">{{ $t('pages.login.password') }}</label>-->
+                <!--45 :placeholder="$t('pages.login.password')"-->
+                <!--53 {{ $t('pages.login.login') }}-->
+
                 <div class="container">
                     <div class="row">
 
@@ -21,8 +26,6 @@
                                                 v-validate="'required|email'"
                                                 class="d-block"
                                                 :class="{error: isErrorEmail}"
-                                                @keyup.enter="checkLogin()"
-                                                @blur="checkLogin()"
                                                 @input="resetError('login')"
                                                 type="text"
                                                 placeholder="e-mail"
@@ -34,23 +37,20 @@
                                     </div>
 
                                     <div class="control" @click="focusInput('password')">
-                                        <label for="password">password</label>
+                                        <label for="password">{{ $t('pages.login.password') }}</label>
                                         <input
                                                 class="d-block"
                                                 :class="{error: isErrorPassword}"
-                                                @keyup.enter="checkPassword()"
-                                                @blur="checkPassword()"
                                                 @input="resetError('password')"
                                                 type="password"
                                                 placeholder="password"
                                                 id="password"
-                                                required
-                                                v-model="password">
+                                                v-model="password"
+                                                required>
                                     </div>
 
-                                    <button type="submit"
-                                            class="btn btn-black btn-block nomargin">
-                                        Login
+                                    <button type="submit" class="btn btn-black btn-block nomargin">
+                                        {{ $t('pages.login.login') }}
                                     </button>
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Login or password is incorrect</p>
@@ -60,20 +60,20 @@
                                     </div>
                                 </form>
 
-                                <p class="text">Forgot your username or password?
+                                <p class="text">{{ $t('pages.login.textForgotPassword') }}
                                     <router-link :to="{ path: '/recover' }">
-                                        Recover account.
+                                        {{ $t('pages.login.recoverAccount') }}
                                     </router-link>
                                 </p>
 
-                                <p class="text">Don’t have an account?
+                                <p class="text">{{ $t('pages.login.textHaveAccount') }}
                                     <router-link :to="{ path: '/registration' }">
-                                        Create one.
+                                        {{ $t('pages.login.createAccount') }}
                                     </router-link>
                                 </p>
 
                             </div>
-                        <div class="login-form" v-else>
+                            <div class="login-form" v-else>
                                 <form @submit.prevent="loginWithTwoAuth">
                                     <div class="control" @click="focusInput('twoAuthKey')">
                                         <label for="twoAuthKey">2fa code</label>
@@ -83,8 +83,6 @@
                                                 class="d-block"
                                                 placeholder="Enter your key"
                                                 :class="{error: isError2fa}"
-                                                @keyup.enter="check2fa()"
-                                                @blur="check2fa()"
                                                 @input="resetError('token')"
                                                 v-model="token"
                                                 autofocus
@@ -106,7 +104,7 @@
                                             Recover two-factor code
                                         </router-link>
                                     </p>
-                                    
+
                                 </form>
                             </div>
                         </div>
@@ -146,7 +144,9 @@
                 'authStatus',
                 'userTwoAuth',
                 'isLoaderUserAuth',
-                'isErrorLogin'
+                'isErrorLogin',
+                'currentWallet',
+                
             ]),
         },
         methods: {
@@ -162,7 +162,7 @@
                     });
                     return false;
                 }
-            if (!this.email || !this.password) {
+                if (!this.email || !this.password) {
                     if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show('Enter your email', {
@@ -193,36 +193,48 @@
                     }
                 }
 
+                if (this.password.length < 8) {
+                    this.focusInput('password');
+                    this.$toasted.show('The password must be at least 8 characters in length', {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+
+
                 const {email, password} = this;
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
                     if (this.authStep === 0) {
-                        this.$store.dispatch('userRequest').then(() => {
-                            this.$router.push('/');
+                        this.$store.dispatch('userRequest').then(() => { //запрашивать воллеты и транзакции
+                            this.$store.dispatch('walletsRequest').then(() => {
+                                this.$store.dispatch('transactionsRequest', this.currentWallet.address).then(() => {
+                                    this.$router.push('/');
+                                }).catch(() => {
+
+                                });
+                            }).catch(() => {
+
+                            });
+                        }).catch(() => {
+
                         });
                     }
+                }).catch(() => {
+
                 });
             },
 
             loginWithTwoAuth: function () {
                 const {email, password, token} = this;
                 this.$store.dispatch('authTwoFaRequest', {email, password, token}).then(() => {
-                    // console.log(this.$store.state.User.userStatus, 'this.$store.state.User.userStatus');
                     this.$store.dispatch('userRequest').then(() => {
                         this.$router.push('/');
                     });
                 });
             },
 
-            checkLogin: function () {
-                //тосты для вывода ошибок
-            },
-            checkPassword: function () {
-
-            },
-            check2fa: function () {
-
-            },
             focusInput: function (id) {
                 document.getElementById(id).focus();
             },
@@ -301,6 +313,7 @@
         color red
         font-family MuseoSansCyrl300
         text-align center
+
     .login-form
         .text
             font-family MuseoSansCyrl300

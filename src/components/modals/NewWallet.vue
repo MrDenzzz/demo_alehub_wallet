@@ -244,40 +244,37 @@
             ...mapGetters([
                 'checkNewWalletMatchPassword'
             ]),
-            isImport() {
-                if (this.mnemonicsRecovery.length === 0 || this.walletName1 === '') return true;
+            isImport: function () {
+                if (this.mnemonicsRecovery.length === 0 || this.walletName1 === '')
+                    return true;
                 return false;
             },
-            isConfirmRecovery() {
-                if (this.restorationAgreements.deviceOnly === false || this.restorationAgreements.phraseSecure === false || JSON.stringify(this.mnemonicsRecovery) !== JSON.stringify(this.recoveryMnemonicPhrase)) return true;
+            isConfirmRecovery: function () {
+
+                if (this.restorationAgreements.deviceOnly === false || this.restorationAgreements.phraseSecure === false
+                    || JSON.stringify(this.mnemonicsRecovery) !== JSON.stringify(this.recoveryMnemonicPhrase))
+                    return true;
                 return false;
             },
-            newWallets() {
+            newWallets: function () {
                 return this.$store.state.Wallets.newWallet
             },
-            modalTitle() {
+            modalTitle: function () {
                 let type = this.dropDownOption.filter(item => {
                     return item.isSelected
                 });
                 return type[0].title;
             },
-            checkNewWalletFields() {
+            checkNewWalletFields: function () {
                 if (this.walletName1.length === 0) {
                     return true;
                 }
                 return false;
             },
-            isCloseModal() {
-                if (this.$store.state.Wallets.currentWallet == null) return false;
+            isCloseModal: function () {
+                if (this.$store.state.Wallets.currentWallet == null)
+                    return false;
                 return true;
-            },
-            getUserId() {
-                return localStorage.getItem('id');
-            },
-            getUserWallets() {
-                return this.$store.state.Wallets.wallets.filter(item => {
-                    return parseInt(item.ownerId) === parseInt(this.getUserId);
-                });
             },
             getCurrentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;

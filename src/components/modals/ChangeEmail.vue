@@ -69,6 +69,8 @@
                     this.dataProcessing = true;
                     const {email, token} = this;
                     this.$store.dispatch('changeEmail', {email, token}).then(() => {
+                        this.email = '';
+                        this.token = '';
                         this.dataProcessing = false;
                         this.closeModal();
                         this.$parent.$emit('changeEmail', email);
@@ -76,6 +78,8 @@
                         console.log('You are sent to me wrong email data');
                     });
                 } else {
+                    this.email = '';
+                    this.token = '';
                     this.$toasted.show(`The 2fa code length must be 6 digits`, {
                         duration: 10000,
                         type: 'error',
@@ -93,6 +97,11 @@
 </script>
 
 <style lang="stylus" scoped>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button
+        -webkit-appearance none
+        margin 0
+
     .wrap-spinner
         display flex
         justify-content center

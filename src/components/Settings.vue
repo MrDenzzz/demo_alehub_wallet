@@ -12,10 +12,10 @@
                     <Spinner v-if="false"/>
                     <div class="row" v-else>
                         <div class="col-12">
-                            <panel-heading :title="'General'" :isTop="true"/>
+                            <panel-heading :title="$t('pages.settings.panelHeadingGeneral')" :isTop="true"/>
                             <div class="form">
                                 <input-control
-                                        :label-value="'Full name'"
+                                        :label-value="$t('pages.settings.fullName')"
                                         :input-id="'fullname'"
                                         :input-value="userName"
                                         :input-type="'text'"
@@ -36,7 +36,7 @@
 
                                 <div class="control" @click="openModal('changepassword')">
                                     <div class="wrap-input">
-                                        <label>Password</label>
+                                        <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
                                             <p
                                                     class="text full-line"
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
 
-                            <Panel-heading :title="'Select theme'" :isTop="false"/>
+                            <Panel-heading :title="$t('pages.settings.theme')" :isTop="false"/>
 
                             <div class="group-settings">
                                 <div class="form select-main" @click="selectTheme('main')">
@@ -73,17 +73,15 @@
                             </div>
 
                             <panel-heading
-                                    :title="'Security'"
+                                    :title="$t('pages.settings.security')"
                             />
                             <div class="form">
                                 <div class="control">
                                     <div class="wrap-input">
-                                        <label>Two-factor authentification</label>
+                                        <label>{{ $t('pages.settings._2fa') }}</label>
                                         <div class="wrap-container">
                                             <p class="text">
-                                                You can add a second layer of protection with 2-Step
-                                                Verification, switch requires a single-use code sent
-                                                to your phone or using third-party authentification app.
+                                                {{ $t('pages.settings._2faText') }}
                                             </p>
                                             <switch-control
                                                     v-if="userStatus === 'success'"
@@ -100,7 +98,7 @@
                                         href="#"
                                         class="logout-link"
                                         @click="logout">
-                                    Logout
+                                        {{ $t('pages.settings.logout')}}
                                 </a>
                             </div>
                         </div>
@@ -257,12 +255,12 @@
                 this.newSelect(id, value)
             });
             this.$on('changePassword', function (password) {
-                if (data.new === '') {
-                    this.isShow = true;
-                    this.isSuccessNotif = false;
-                    this.notifText = 'Password is not';
-                } else
-                    this.closeModal('change-password');
+                // if (data.new === '') {
+                //     this.isShow = true;
+                //     this.isSuccessNotif = false;
+                //     this.notifText = 'Password is not';
+                // } else
+                //     this.closeModal('change-password');
             });
             this.$on('receiveFullName', function (value) {
                 //this func is not need
