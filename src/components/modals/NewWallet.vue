@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
     <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen">
         <div class="heading" v-if="newWalletStep === 1">
             <p class="title">{{ dropDownOption[0].title }}</p>
@@ -565,7 +565,10 @@
             font-size: 14px;
             font-weight: bold;
             color: #34343e;
-            user-select: text;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
     }
     
