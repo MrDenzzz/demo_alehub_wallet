@@ -21,8 +21,6 @@
                                                 v-validate="'required|email'"
                                                 class="d-block"
                                                 :class="{error: isErrorEmail}"
-                                                @keyup.enter="checkLogin()"
-                                                @blur="checkLogin()"
                                                 @input="resetError('login')"
                                                 type="text"
                                                 placeholder="e-mail"
@@ -38,14 +36,12 @@
                                         <input
                                                 class="d-block"
                                                 :class="{error: isErrorPassword}"
-                                                @keyup.enter="checkPassword()"
-                                                @blur="checkPassword()"
                                                 @input="resetError('password')"
                                                 type="password"
                                                 placeholder="password"
                                                 id="password"
-                                                required
-                                                v-model="password">
+                                                v-model="password"
+                                                required>
                                     </div>
 
                                     <button type="submit"
@@ -73,7 +69,7 @@
                                 </p>
 
                             </div>
-                        <div class="login-form" v-else>
+                            <div class="login-form" v-else>
                                 <form @submit.prevent="loginWithTwoAuth">
                                     <div class="control" @click="focusInput('twoAuthKey')">
                                         <label for="twoAuthKey">2fa code</label>
@@ -83,8 +79,6 @@
                                                 class="d-block"
                                                 placeholder="Enter your key"
                                                 :class="{error: isError2fa}"
-                                                @keyup.enter="check2fa()"
-                                                @blur="check2fa()"
                                                 @input="resetError('token')"
                                                 v-model="token"
                                                 autofocus
@@ -106,7 +100,7 @@
                                             Recover two-factor code
                                         </router-link>
                                     </p>
-                                    
+
                                 </form>
                             </div>
                         </div>
@@ -162,7 +156,7 @@
                     });
                     return false;
                 }
-            if (!this.email || !this.password) {
+                if (!this.email || !this.password) {
                     if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show('Enter your email', {
@@ -193,6 +187,16 @@
                     }
                 }
 
+                if (this.password.length < 8) {
+                    this.focusInput('password');
+                    this.$toasted.show('The password must be at least 8 characters in length', {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+
+
                 const {email, password} = this;
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
@@ -207,22 +211,12 @@
             loginWithTwoAuth: function () {
                 const {email, password, token} = this;
                 this.$store.dispatch('authTwoFaRequest', {email, password, token}).then(() => {
-                    // console.log(this.$store.state.User.userStatus, 'this.$store.state.User.userStatus');
                     this.$store.dispatch('userRequest').then(() => {
                         this.$router.push('/');
                     });
                 });
             },
 
-            checkLogin: function () {
-                //тосты для вывода ошибок
-            },
-            checkPassword: function () {
-
-            },
-            check2fa: function () {
-
-            },
             focusInput: function (id) {
                 document.getElementById(id).focus();
             },
@@ -301,6 +295,7 @@
         color red
         font-family MuseoSansCyrl300
         text-align center
+
     .login-form
         .text
             font-family MuseoSansCyrl300
