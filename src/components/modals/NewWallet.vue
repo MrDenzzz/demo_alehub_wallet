@@ -126,6 +126,7 @@
 
             <div class="phrase">
                 <span v-for="mnemonic in recoveryMnemonicPhrase">{{ mnemonic }} </span>
+                <div class="btn-copy"></div>
             </div>
 
             <div class="modal-btn text-center">
@@ -542,9 +543,10 @@
     .phrase {
         background-color: rgba(13, 23, 23, 0.04);
         border-radius: 2px;
-        padding: 12px 0;
+        padding: 12px 50px 12px 10px;
         text-align: center;
         margin: 24px 42px 42px;
+        position: relative;
 
         & span {
             font-family: MuseoSansCyrl700;
@@ -552,6 +554,17 @@
             font-weight: bold;
             color: #34343e;
             user-select: text;
+        }
+
+        .btn-copy {
+            position: absolute;
+            height: 100%;
+            width: 40px;
+            right: 0;
+            background-image: url('../../assets/img/tmp_copy_icon.png');
+            background-size: cover;
+            top: 0;
+            padding: 5px;
         }
     }
 
