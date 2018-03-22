@@ -126,13 +126,21 @@
 
             <div class="phrase">
                 <span v-for="mnemonic in recoveryMnemonicPhrase">{{ mnemonic }} </span>
-                <div class="btn-copy"></div>
             </div>
 
             <div class="modal-btn text-center">
+                <button
+                        id="copy-mnemonic"
+                        type="button"
+                        class="buttons btn-default"
+                        v-clipboard:copy="copyMnemonic()">
+                    <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
+                    Copy mnemonic
+                </button>
                 <button class="btn btn-yellow btn-large btn-bottom" @click="changeRecoveryStep('next')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
                 </button>
+
             </div>
 
         </div>
@@ -484,6 +492,9 @@
 
                     this.closeModal();
                 });
+            },
+            copyMnemonic() {
+                return this.recoveryMnemonicPhrase.join(' ');
             }
         },
         created() {
@@ -537,13 +548,17 @@
         }
     }
 
+    .icon-copy {
+        height: 19px;
+        margin-right: 5px;
+    }
+
     .phrase {
         background-color: rgba(13, 23, 23, 0.04);
         border-radius: 2px;
-        padding: 12px 50px 12px 10px;
+        padding: 12px 12px;
         text-align: center;
         margin: 24px 42px 42px;
-        position: relative;
 
         & span {
             font-family: MuseoSansCyrl700;
@@ -552,17 +567,10 @@
             color: #34343e;
             user-select: text;
         }
-
-        .btn-copy {
-            position: absolute;
-            height: 100%;
-            width: 40px;
-            right: 0;
-            background-image: url('../../assets/img/tmp_copy_icon.png');
-            background-size: cover;
-            top: 0;
-            padding: 5px;
-        }
+    }
+    
+    .buttons {
+        width: 200px;
     }
 
     .modal-warning {
@@ -664,7 +672,7 @@
         }
 
         & .btn-large {
-            padding: 10px 70px 10px 70px;
+            padding: 10px 40px 10px 40px;
             font-size: 16px;
             font-family: MuseoSansCyrl500;
         }
