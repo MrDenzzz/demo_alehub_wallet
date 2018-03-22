@@ -289,6 +289,15 @@
                     });
                 }
             });
+
+            this.$on('changeEmail', function (email) {
+                if (email) {
+                    this.$toasted.show(`A confirmation email has been sent to ${email}`, {
+                        duration: 5000,
+                        type: 'success',
+                    });
+                }
+            });
         }
     }
 </script>

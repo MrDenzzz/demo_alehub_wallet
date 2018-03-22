@@ -1,58 +1,87 @@
 <template>
-    <modal name="change-email" height="auto" class="modal-xs">
+    <modal name="changeemail" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">Change email</p>
-            <i class="close" @click="closeModal"></i>
+            <i class="close" v-if="dataProcessing" @click="closeModal"></i>
         </div>
         <div class="body">
-
-            <div class="qr-code">
-                <qriously :value="'123'" :size="300"/>
-                <span class="muted upperCase">{{ $t('modals.request.qrShare') }}</span>
+            <div v-if="dataProcessing" class="wrap-spinner">
+                <Spinner v-if="dataProcessing"/>
             </div>
+            <div v-else>
+                <form @submit.prevent="changeEmail()">
+                    <div class="modal-control">
+                        <div class="modal-input">
+                            <label class="title">2fa key</label>
+                            <input
+                                    type="number"
+                                    class="input"
+                                    placeholder="Enter 2fa code"
+                                    v-model="token"
+                                    required>
+                        </div>
+                    </div>
 
-            <div class="modal-control">
-                <div class="modal-input">
-                    <label class="title">2fa key</label>
-                    <input type="text" class="input" placeholder="enter secret key">
-                </div>
+                    <div class="modal-control">
+                        <div class="modal-input">
+                            <label class="title">Email</label>
+                            <input
+                                    type="email"
+                                    class="input"
+                                    placeholder="Enter new email"
+                                    v-model="email"
+                                    required>
+                        </div>
+                    </div>
+
+                    <div class="modal-btn text-center">
+                        <button type="submit" class="btn btn-yellow btn-large">
+                            Change
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <div class="modal-control">
-                <div class="modal-input">
-                    <label class="title">Email</label>
-                    <input type="email" class="input" placeholder="email">
-                </div>
-            </div>
-
-            <div class="modal-btn text-center">
-                <button class="btn btn-yellow btn-large">
-                    Change
-                </button>
-            </div>
-
         </div>
     </modal>
 </template>
 
 <script>
+    import Spinner from '../layouts/Spinner';
 
     export default {
         name: "change-email-modal",
         components: {
-
+            Spinner
         },
         data() {
             return {
-
+                email: '',
+                token: '',
+                dataProcessing: false
             }
         },
-        computed: {
-
-        },
+        computed: {},
         methods: {
             closeModal: function () {
-                this.$modal.hide('change-email');
+                this.$modal.hide('changeemail');
+            },
+            changeEmail: function () {
+                if (this.token.length === 6) {
+                    this.dataProcessing = true;
+                    const {email, token} = this;
+                    this.$store.dispatch('changeEmail', {email, token}).then(() => {
+                        this.dataProcessing = false;
+                        this.closeModal('changeemail');
+                        this.$parent.$emit('changeEmail', email);
+                    }).catch(() => {
+
+                    });
+                } else {
+                    this.$toasted.show(`The 2fa code length must be 6 digits`, {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                }
             }
         },
         create() {
@@ -65,5 +94,8 @@
 </script>
 
 <style lang="stylus" scoped>
-
+    .wrap-spinner
+        display flex
+        justify-content center
+        padding 0 0 2em 0
 </style>

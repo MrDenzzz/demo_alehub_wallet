@@ -208,7 +208,7 @@ const actions = {
                 method: 'POST'
             })
                 .then(resp => {
-                    console.log(resp);
+                    // console.log(resp);
                     let name = resp;
                     commit('CHANGE_USERNAME_SUCCESS', name);
                     resolve(resp);
@@ -216,6 +216,32 @@ const actions = {
                 .catch(err => {
                     console.log(err);
                     commit('CHANGE_USERNAME_ERROR', err);
+                    reject(err);
+                });
+        });
+    },
+    changeEmail: ({commit, dispatch}, emailData) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_CHANGE_EMAIL');
+            let host = 'http://192.168.1.37:4000/users/changeEmail';
+            axios({
+                url: host,
+                data: emailData,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            })
+                .then(resp => {
+                    console.log(resp, 'change email success');
+                    // commit('SUCCESS_CHANGE_EMAIL', name);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    console.log(err);
+                    commit('ERROR_CHANGE_EMAIL', err);
                     reject(err);
                 });
         });
@@ -299,6 +325,17 @@ const mutations = {
     },
     CHANGE_USERNAME_ERROR: (state, err) => {
         state.changeUserNameStatus = 'error';
+    },
+
+    REQUEST_CHANGE_EMAIL: (state) => {
+        state.changeEmailStatus = 'loading';
+    },
+    SUCCESS_CHANGE_EMAIL: (state, email) => {
+        state.email = email;
+        state.changeEmailStatus = 'success';
+    },
+    ERROR_CHANGE_EMAIL: (state) => {
+        state.changeEmailStatus = 'error';
     }
 };
 

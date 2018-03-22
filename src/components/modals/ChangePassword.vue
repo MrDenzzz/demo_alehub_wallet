@@ -1,5 +1,5 @@
 <template>
-    <modal name="change-password" height="auto" class="modal-xs">
+    <modal name="changepassword" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">Change password</p>
             <i class="close" @click="closeModal"></i>
@@ -10,7 +10,7 @@
                 <div class="modal-input">
                     <label class="title">Old password</label>
                     <!--<input type="text" class="input" placeholder="password" :value="data.old" @input="setOldPassword">-->
-                    <input type="text" class="input" placeholder="password">
+                    <input type="text" class="input" placeholder="Old password" v-model="oldPass">
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
                 <div class="modal-input">
                     <label class="title">New password</label>
                     <!--<input type="text" class="input" placeholder="password" :value="data.new" @input="setNewPassword">-->
-                    <input type="text" class="input" placeholder="password">
+                    <input type="text" class="input" placeholder="password" v-model="newPass">
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
                 <div class="modal-input">
                     <label class="title">Repeat password</label>
                     <!--<input type="text" class="input" placeholder="password" :value="data.repeat" @input="setRepeatPassword">-->
-                    <input type="text" class="input" placeholder="password">
+                    <input type="text" class="input" placeholder="password" v-model="confirmPass">
                 </div>
             </div>
 
@@ -41,20 +41,21 @@
 </template>
 
 <script>
-    import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'change-password-modal',
         data() {
             return {
-                isDropDown: false,
-                isActivate: false
+                oldPass: '',
+                newPass: '',
+                confirmPass: ''
             }
         },
         computed: {
-            data() {
-                // return this.$store.state.Settings.changePassword
-            }
+            ...mapGetters([
+                ''
+            ]),
         },
         methods: {
             ...mapMutations({
