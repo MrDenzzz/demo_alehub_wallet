@@ -144,7 +144,9 @@
                 'authStatus',
                 'userTwoAuth',
                 'isLoaderUserAuth',
-                'isErrorLogin'
+                'isErrorLogin',
+                'currentWallet',
+                
             ]),
         },
         methods: {
@@ -205,10 +207,22 @@
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
                     if (this.authStep === 0) {
-                        this.$store.dispatch('userRequest').then(() => {
-                            this.$router.push('/');
+                        this.$store.dispatch('userRequest').then(() => { //запрашивать воллеты и транзакции
+                            this.$store.dispatch('walletsRequest').then(() => {
+                                this.$store.dispatch('transactionsRequest', this.currentWallet.address).then(() => {
+                                    this.$router.push('/');
+                                }).catch(() => {
+
+                                });
+                            }).catch(() => {
+
+                            });
+                        }).catch(() => {
+
                         });
                     }
+                }).catch(() => {
+
                 });
             },
 
