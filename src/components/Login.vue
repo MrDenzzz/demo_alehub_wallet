@@ -13,7 +13,7 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="login-form" v-if="authStep !== 0">
+                            <div class="login-form" v-if="authStep !== 1">
                                 <form @submit.prevent="login">
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
