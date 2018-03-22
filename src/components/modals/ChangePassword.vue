@@ -122,7 +122,7 @@
 
     .modal-xs
         .v--modal-box
-            width 426px !important
+            width 426px 
 
     .modal-btn
         .btn-yellow
@@ -133,4 +133,34 @@
 
                 &:hover
                     cursor default
+
+    @media(max-width: 425px)
+        .v--modal-overlay
+            .v--modal-box
+                .body
+                    .modal-control
+                        .modal-input
+                            .title
+                                padding-right 0
+                                padding-bottom 0
+
+                            .input
+                                text-align right
+                                 
+    @media(max-width: 320px)
+        .v--modal-overlay
+            .v--modal-box
+                .body
+                    .modal-control
+                        .modal-input
+                            display flex 
+                            flex-direction column
+                            align-items flex-start
+
+                            .title
+                                padding-right 0
+                                padding-bottom 10px
+
+                            .input
+                                text-align left 
 </style>
