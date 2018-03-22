@@ -32,12 +32,13 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    // console.log(resp.data, 'resp.data');
+                    console.log(resp, 'resp from wallets request');
                     commit('SET_WALLETS', resp.data);
                     resolve(resp);
                 })
                 .catch(err => {
                     commit('WALLETS_ERROR', err);
+                    console.log(err, 'err from wallets request');
                     // commit('AUTH_ERROR', err);
 
                     // localStorage.removeItem(sha256('user-token'));

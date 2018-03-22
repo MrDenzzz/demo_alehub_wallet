@@ -145,8 +145,9 @@
                 'userTwoAuth',
                 'isLoaderUserAuth',
                 'isErrorLogin',
+                'wallets',
                 'currentWallet',
-                
+
             ]),
         },
         methods: {
@@ -207,15 +208,18 @@
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
                     if (this.authStep === 0) {
-                        this.$store.dispatch('userRequest').then(() => { //запрашивать воллеты и транзакции
+                        this.$store.dispatch('userRequest').then(() => {
                             this.$store.dispatch('walletsRequest').then(() => {
-                                this.$store.dispatch('transactionsRequest', this.currentWallet.address).then(() => {
+                                this.$store.dispatch('transactionsRequest', this.currentWallet.address || '').then(() => {
                                     this.$router.push('/');
                                 }).catch(() => {
-
+                                    //это не срабатывает???
+                                    console.log('You do not have transactions');
+                                    this.$router.push('/');
                                 });
                             }).catch(() => {
-
+                                console.log('You do not have wallets');
+                                this.$router.push('/');
                             });
                         }).catch(() => {
 
