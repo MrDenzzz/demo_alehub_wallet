@@ -30,6 +30,7 @@
     import Navbar from "./layouts/Navbar";
     import NotifPanel from "./layouts/NotifPanel";
     import Spinner from './layouts/Spinner';
+    import sha256 from 'sha256';
 
     import {mapMutations} from "vuex";
 
@@ -54,54 +55,30 @@
             },
             transactions () {
                 return this.$store.state.Transactions.transactions
-            },
-            language () {
-                return localStorage.getItem('systemLang')
-            }
-        },
-        watch: {
-            transactions () {
-                this.initNotification()
             }
         },
         methods: {
             ...mapMutations({
                 changeWallet: "CHANGE_SELECTED_WALLET",
                 toggleNotifBadge: "TOGGLE_NOTIF_BADGE",
-                addNewNotification: "ADD_NEW_NOTIFICATION",
-                resetNotification: "RESET_NOTIFICATION"
+                addNotifications: 'ADD_NOTIFICATIONS'
             }),
-            imitationLoadPage() {
+            getTransactions () {
                 this.isLoader = true;
-                setTimeout(() => {
+                this.$http.get(`http://localhost:4000/notifications`, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json',
+                        'Authorization': localStorage.getItem(sha256('user-token'))
+                    }
+                }).then(response => {
                     this.isLoader = false;
-                }, 750);
-            },
-            initNotification () {
-                this.resetNotification();
-                for (let i = 0; i < this.transactions.length; i++) {
-                    this.addNewNotification({
-                        status: 'new',
-                        isDeleted: false,
-                        isSubtitle: false,
-                        date: this.transactions[i].timestamp,
-                        title: this.language === 'rus' ? this.checkType(this.transactions[i].walletAddress) ? `Вы **отправили** <span class="deleted">-${this.transactions[i].count}</span> ALC на адрес **${this.transactions[i].walletDestination}**` : 
-                                `Вы **получили** <span class="accepted">+${this.transactions[i].count}</span> ALC с адреса **${this.transactions[i].walletAddress}**` : 
-                                this.checkType(this.transactions[i].walletAddress) ? `You **sent** <span class="deleted">-${this.transactions[i].count}</span> ALC to **${this.transactions[i].walletDestination}** address` : 
-                                `You **received** <span class="accepted">+${this.transactions[i].count}</span> ALC from **${this.transactions[i].walletAddress}** address`,
-                        // subTitle: 'Balance',
-                        // changes: [{
-                        //     status: 'old',
-                        //     text: `_${this.checkType(this.transactions[i].walletAddress) ? this.transactions[i].balanceInfo.before : this.transactions[i].balanceInfo.after}_ ALC`
-                        // }, {
-                        //     status: 'updated',
-                        //     text: `_${this.checkType(this.transactions[i].walletAddress) ? this.transactions[i].balanceInfo.after : this.transactions[i].balanceInfo.before}_ ALC`
-                        // }]
-                    })
-                }
-            },
-            checkType(address) {
-                return this.currentWallet.address === address ? true : false
+                    if(response.body.length > 0) {
+                        this.addNotifications(response.body);
+                    }
+                }, response => {
+                    this.isLoader = false;
+                });
             }
         },
         mounted() {
@@ -111,8 +88,7 @@
         },
         created() {
             this.toggleNotifBadge(false);
-            this.imitationLoadPage();
-            this.initNotification();
+            this.getTransactions();
         }
     };
 </script>
