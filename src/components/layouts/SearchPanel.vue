@@ -3,7 +3,7 @@
         <div class="top" style="display: flex; justify-content: space-between; align-items: center;">
             <div class="searchControl" @click="makeFocusSearch" style="display: flex; justify-content: flex-start;">
                 <img src="../../assets/img/search-ic.svg" width="16" height="16">
-                <input type="text" id="search-transactions" placeholder="Search Transactions" @input="searchTransaction"
+                <input type="text" id="search-transactions" :placeholder="$t('pages.summary.searchPanel.search')" @input="searchTransaction"
                        v-model="searchText">
             </div>
             <!--<div class="filters">-->
@@ -19,7 +19,7 @@
         <div class="bottom">
             <div class="date">
                 <h3 class="date-title">
-                    Select a date range
+                    {{ $t('pages.summary.searchPanel.dateRange') }}
                 </h3>
                 <div class="datepicker-wrap">
                     <datepicker
@@ -39,32 +39,32 @@
             </div>
             <div class="docs">
                 <button class="buttons btn-default">
-                    Download PDF
+                    {{ $t('pages.summary.searchPanel.buttons.download') }}
                 </button>
                 <button class="buttons btn-default" @click="openModal('shareTransactions')">
-                    Share
+                    {{ $t('pages.summary.searchPanel.buttons.share') }}
                 </button>
             </div>
             <div class="info" style="display: flex;">
                 <div class="stats-col" style="display: flex; flex-direction: column;">
                     <div class="title-opt-span">
                         <span class="title">
-                            Received
+                            {{ $t('pages.summary.searchPanel.info.received') }}
                         </span>
                     </div>
                     <div class="title-opt-span sent">
                         <span class="title">
-                            Sent
+                            {{ $t('pages.summary.searchPanel.info.sent') }}
                         </span>
                     </div>
                     <div class="title-opt-span">
                         <span class="title">
-                            Starting
+                            {{ $t('pages.summary.searchPanel.info.starting') }}
                         </span>
                     </div>
                     <div class="title-opt-span">
                         <span class="title">
-                            Total
+                            {{ $t('pages.summary.searchPanel.info.total') }}
                         </span>
                     </div>
                 </div>

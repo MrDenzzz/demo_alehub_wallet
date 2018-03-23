@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <label>Type</label>
+        <label>{{ $t('pages.jobOffers.filtersBlock.type.title') }}</label>
 
         <div class="control-group group-double">
             <label class="control control-checkbox" v-for="item in typeOffer">
@@ -44,11 +44,11 @@
             </label>
         </div>
 
-        <label>Contractor rating</label>
+        <label>{{ $t('pages.jobOffers.filtersBlock.contractor.title') }}</label>
 
         <div class="two-input">
             <div>
-                <label for="rating_from" class="label-from">from</label>
+                <label for="rating_from" class="label-from">{{ $t('pages.jobOffers.filtersBlock.contractor.from') }}</label>
                 <input
                         id="rating_from"
                         type="number"
@@ -59,7 +59,7 @@
                 >
             </div>
             <div>
-                <label for="rating_to" class="label-to">to</label>
+                <label for="rating_to" class="label-to">{{ $t('pages.jobOffers.filtersBlock.contractor.to') }}</label>
                 <input
                         id="rating_to"
                         type="number"
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <label>Professional area</label>
+        <label>{{ $t('pages.jobOffers.filtersBlock.profArea.title') }}</label>
 
         <div class="control-group one-col">
             <label class="control control-checkbox" v-for="item in professionalArea">
@@ -86,7 +86,7 @@
             </label>
         </div>
 
-        <label>Project duration</label>
+        <label>{{ $t('pages.jobOffers.filtersBlock.duration.title') }}</label>
 
         <div class="control-group one-col">
             <div class="project-duration" v-for="item in projectDuration">

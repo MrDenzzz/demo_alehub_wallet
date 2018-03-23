@@ -100,7 +100,7 @@
                                             v-if="notFoundOffersByFilter"
                                             class="no-found-offers"
                                     >
-                                        No offers match your filters
+                                        {{ $t('pages.jobOffers.notFoundOffersByFilter') }}
                                     </h3>
                                     <action-panel
                                             v-if="!notFoundOffers && getCountOfferPerPage === 50 || notFoundOffersByFilter"

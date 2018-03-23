@@ -61,6 +61,27 @@ const messages = {
                     send: 'Send',
                     transactions: 'Transactions',
                     walletSettings: 'Wallet settings'
+                },
+                searchPanel: {
+                    search: 'Search Transactions...',
+                    dateRange: 'Select a date range',
+                    buttons: {
+                        download: 'Download PDF',
+                        share: 'Share'
+                    },
+                    info: {
+                        received: 'Received',
+                        sent: 'Sent',
+                        starting: 'Starting',
+                        total: 'Total'
+                    }
+                },
+                activityList: {
+                    resultDay: {
+                        received: 'Received',
+                        sent: 'Sent',
+                        total: 'Total'
+                    }
                 }
             },
             walletsList: {
@@ -70,6 +91,7 @@ const messages = {
             jobOffers: {
                 navbarTitle: 'Job Offers',
                 amountOffers: 'offers',
+                notFoundOffersByFilter: 'No offers match your filters',
                 filters: {
                     onPage: 'offers on page',
                     sortBy: {
@@ -82,6 +104,20 @@ const messages = {
                         title: 'Price',
                         from: 'from',
                         to: 'to'
+                    },
+                    type: {
+                        title: 'Type'
+                    },
+                    contractor: {
+                        title: 'Contractor rating',
+                        from: 'from',
+                        to: 'to'
+                    },
+                    profArea: {
+                        title: 'Professional area',
+                    },
+                    duration: {
+                        title: 'Project duration'
                     }
                 },
                 newOfferBlock: {
@@ -382,6 +418,27 @@ const messages = {
                     send: 'Отправить',
                     transactions: 'Транзакции',
                     walletSettings: 'Настройки'
+                },
+                searchPanel: {
+                    search: 'Поиск транзакций...',
+                    dateRange: 'Выберите диапазон дат',
+                    buttons: {
+                        download: 'Загрузить PDF',
+                        share: 'Поделиться'
+                    },
+                    info: {
+                        received: 'Получено',
+                        sent: 'Отправлено',
+                        starting: 'Начальное значение',
+                        total: 'Всего'
+                    }
+                },
+                activitiList: {
+                    resultDay: {
+                        received: 'Получено',
+                        sent: 'Отправлено',
+                        total: 'Всего' 
+                    }
                 }
             },
             walletsList: {
@@ -391,6 +448,7 @@ const messages = {
             jobOffers: {
                 navbarTitle: 'Предложения о работе',
                 amountOffers: 'предложений',
+                notFoundOffersByFilter: 'Нет предложений, соответствующих фильтрам',
                 filters: {
                     onPage: 'предложений на странице',
                     sortBy: {
@@ -403,6 +461,20 @@ const messages = {
                         title: 'Цена',
                         from: 'от',
                         to: 'до'
+                    },
+                    type: {
+                        title: 'Тип'
+                    },
+                    contractor: {
+                        title: 'Рейтинг работодателя',
+                        from: 'от',
+                        to: 'до'
+                    },
+                    profArea: {
+                        title: 'Профессиональная область',
+                    },
+                    duration: {
+                        title: 'Продолжительность проекта'
                     }
                 },
                 newOfferBlock: {
