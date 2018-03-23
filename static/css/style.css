@@ -89,6 +89,9 @@ body {
     background-color: #404455; }
   .dark .menu {
     background-color: #404455 !important; }
+    .dark .menu.scrollable .wrap-between {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important; }
     .dark .menu .wallet-list.wallet-search {
       background-color: #404455; }
     .dark .menu .wallet-list:not(:first-child) {
@@ -99,6 +102,19 @@ body {
         margin-left: 15px; }
     .dark .menu .wallet-list:not(.active):not(.wallet-search):hover {
       background-color: #494d64 !important; }
+    .dark .menu .wallet-list.wrap-between {
+      margin: 0 35px;
+      background-color: #404455 !important;
+      width: calc(360px - 70px) !important; }
+      @media (max-width: 1024px) {
+        .dark .menu .wallet-list.wrap-between {
+          width: calc(260px - 70px) !important; } }
+      @media (max-width: 860px) {
+        .dark .menu .wallet-list.wrap-between {
+          width: calc(360px - 70px) !important; } }
+      @media (max-width: 425px) {
+        .dark .menu .wallet-list.wrap-between {
+          width: calc(100% - 100vh) !important; } }
     .dark .menu .wallet-list.active {
       margin: 5px 35px;
       width: calc(100% - 70px);
@@ -432,6 +448,9 @@ body {
       height: 20.5px; }
   .white .menu {
     background-color: #aaaec1 !important; }
+    .white .menu.scrollable .wrap-between {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important; }
     .white .menu .wallet-list.wallet-search {
       background-color: #aaaec1 !important; }
     .white .menu .wallet-list:not(.active):not(.wallet-search):hover {
@@ -444,12 +463,24 @@ body {
       border-radius: 4px; }
       .white .menu .wallet-list:not(:first-child) .wrap-in-wallet {
         margin-left: 15px; }
+    .white .menu .wallet-list.wrap-between {
+      margin: 0 35px;
+      background-color: #aaaec1 !important;
+      width: calc(360px - 70px) !important; }
+      @media (max-width: 1024px) {
+        .white .menu .wallet-list.wrap-between {
+          width: calc(260px - 70px) !important; } }
+      @media (max-width: 860px) {
+        .white .menu .wallet-list.wrap-between {
+          width: calc(360px - 70px) !important; } }
+      @media (max-width: 425px) {
+        .white .menu .wallet-list.wrap-between {
+          width: calc(100% - 100vh) !important; } }
     .white .menu .wallet-list.active {
       margin: 5px 35px;
       width: calc(100% - 70px);
       border: none;
-      border-radius: 4px;
-      background: #eff0f3; }
+      border-radius: 4px; }
       .white .menu .wallet-list.active:after {
         content: "";
         position: relative;
@@ -467,13 +498,15 @@ body {
       .white .menu .wallet-list.active .wallet {
         color: #282c41 !important;
         font-family: MuseoSansCyrl700; }
-    .white .menu .wallet-list:hover:not(:first-of-type) {
-      background: #eff0f3; }
-      .white .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet p {
+    .white .menu .wallet-list:hover:not(:first-of-type):not(.active) {
+      background: #b6b9c9 !important; }
+      .white .menu .wallet-list:hover:not(:first-of-type):not(.active) .wrap-in-wallet p {
         color: #34343e; }
-      .white .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet .wallet {
+      .white .menu .wallet-list:hover:not(:first-of-type):not(.active) .wrap-in-wallet .wallet {
         color: #282c41;
         font-family: MuseoSansCyrl500; }
+    .white .menu .wallet-list.active {
+      background: #eff0f3 !important; }
     .white .menu .wallet-list .wrap-in-wallet {
       margin-left: 55px; }
       .white .menu .wallet-list .wrap-in-wallet input {
@@ -753,6 +786,34 @@ body {
   .navbar .title {
     display: none; } }
 
+::-webkit-scrollbar {
+  width: 9px;
+  height: 5px; }
+
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+  border-radius: 3px; }
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 9px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  background-color: #8f9292;
+  border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:vertical:active {
+    height: 5px;
+    background-color: #8f9292;
+    border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:vertical:window-inactive {
+    height: 5px;
+    background-color: #8f9292;
+    border-radius: 3px; }
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 5px;
+  background-color: #e1e1e1;
+  border-radius: 3px; }
+
 .container {
   margin: 24px 24px; }
 
@@ -861,7 +922,7 @@ body {
     justify-content: center; }
 
 .navbar {
-  width: 100%;
+  width: 100vw;
   height: 64px;
   background: #0d1717;
   display: flex;

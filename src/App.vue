@@ -149,6 +149,8 @@
                     transform translateX(-20%)
                 @media (max-width: 1050px)
                     transform translateX(-10%)
+                @media (max-width: 1024px)
+                    transform translateX(-50%)
 
     .china
         .navbar

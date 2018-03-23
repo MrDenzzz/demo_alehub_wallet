@@ -1,6 +1,6 @@
 <template>
     <div class="dragParent">
-        <div class="menu" :class="{'is-opened': isToggle}">
+        <div class="menu" :class="{'is-opened': isToggle, 'scrollable': scrollable}">
             <div class="wallet-list wallet-search" v-if="newWallets.length">
                 <div class="wrap-in-wallet">
                     <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
@@ -44,7 +44,7 @@
                 <img src="../../assets/img/add-ic.svg" width="18" height="18"/>
             </div>
 
-            <div class="drag"></div>
+            <div class="drag" @click="checkScroll()"></div>
 
         </div>
     </div>
@@ -75,13 +75,15 @@
             return {
                 searchField: '',
                 setIntervalId: 0,
-                isToggle: false
+                isToggle: false,
+                scrollable: false
             }
         },
         watch: {
-            newWallets() {
-                clearInterval(this.setIntervalId);
-                this.setIntervalId = setInterval(this.getTransactions, 15000);
+            newWalletsList() {
+                // clearInterval(this.setIntervalId);
+                // this.setIntervalId = setInterval(this.getTransactions, 15000);
+                this.checkScroll();
             }
         },
         computed: {
@@ -183,12 +185,21 @@
                 if (event.target.localName !== 'input') {
                     this.isToggle = false;
                 }
+            },
+            checkScroll () {
+                let scrollableEl = document.querySelector('.menu');
+                if (scrollableEl.scrollHeight > scrollableEl.clientHeight) {
+                    this.scrollable = true;
+                } else {
+                    this.scrollable = false;
+                }
             }
         },
         created () {
-            document.addEventListener('click', this.closeMenu)
+            document.addEventListener('click', this.closeMenu);
             // let _this = this;
             // this.setIntervalId = setInterval(_this.getTransactions, 15000);
+            window.addEventListener('resize', this.checkScroll);
         },
         mounted () {
             this.initDrag();
@@ -203,7 +214,7 @@
             &:not(.active)
                 &:not(.wallet-search)
                     &:hover
-                        background-color rgba(247, 247, 247, 0.15)
+                        background-color #616565
 
                         & .wrap-in-wallet
                             & p
@@ -217,6 +228,22 @@
                 .separator
                     content ''
                     width 100%
+
+        &.scrollable
+            .wallet-list
+                &:nth-last-child(3)
+                    margin-bottom 64px
+            .wrap-between
+                position fixed
+                bottom 0
+                width 360px
+                background-color #474b4b
+                @media (max-width: 1024px)
+                    width 260px
+                @media (max-width: 860px)
+                    width 360px
+                @media (max-width: 425px)
+                    width calc(100% - 100vh)
 </style>
 
 <style lang="stylus">
