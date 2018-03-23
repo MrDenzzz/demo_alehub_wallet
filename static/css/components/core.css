@@ -693,6 +693,9 @@ body {
   .login .navbar .title, .register .navbar .title {
     display: flex; }
 
+.login .hamburger, .register .hamburger {
+  display: none !important; }
+
 @media screen and (max-width: 980px) {
   .group-settings {
     display: flex;

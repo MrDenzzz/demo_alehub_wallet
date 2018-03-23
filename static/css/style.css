@@ -694,6 +694,9 @@ body {
   .login .navbar .title, .register .navbar .title {
     display: flex; }
 
+.login .hamburger, .register .hamburger {
+  display: none !important; }
+
 @media screen and (max-width: 980px) {
   .group-settings {
     display: flex;
@@ -920,7 +923,9 @@ body {
     font-size: 32px;
     font-family: Fairview;
     color: #fcfcfc;
-    position: unset; }
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); }
   .navbar .balance {
     width: auto;
     height: 100%;
@@ -996,7 +1001,7 @@ body {
   display: none;
   cursor: pointer;
   padding: 1em 0em; }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     .hamburger {
       display: block;
       padding-right: 32px;
@@ -1046,7 +1051,7 @@ body {
     overflow-y: scroll;
     bottom: 0; }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .themes, .actions, .options {
     display: none !important; } }
 
