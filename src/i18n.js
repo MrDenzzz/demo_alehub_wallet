@@ -433,7 +433,7 @@ const messages = {
                         total: 'Всего'
                     }
                 },
-                activitiList: {
+                activityList: {
                     resultDay: {
                         received: 'Получено',
                         sent: 'Отправлено',

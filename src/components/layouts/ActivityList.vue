@@ -31,17 +31,17 @@
             <div class="result-day-col">
                     <div class="result-day-status">
                         <span class="result-day-field">
-                            {{ $t('pages.summary.activitiList.resultDay.received') }}
+                            {{ $t('pages.summary.activityList.resultDay.received') }}
                         </span>
                     </div>
                     <div class="result-day-status">
                         <span class="result-day-field">
-                            {{ $t('pages.summary.activitiList.resultDay.sent') }}
+                            {{ $t('pages.summary.activityList.resultDay.sent') }}
                         </span>
                     </div>
                     <div class="result-day-status">
                         <span class="result-day-field">
-                            {{ $t('pages.summary.activitiList.resultDay.total') }}
+                            {{ $t('pages.summary.activityList.resultDay.total') }}
                         </span>
                     </div>
                 </div>
