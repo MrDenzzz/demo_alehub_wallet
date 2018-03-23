@@ -27,7 +27,7 @@ Vue.use(VModal);
 const ifNotAuthenticated = (to, from, next) => {
     let token = localStorage.getItem(sha256('user-token'));
     if (token === null || token === 'undefined' || token === undefined) {
-        localStorage.clear();
+        localStorage.removeItem(sha256('user-token'));
         next();
         return;
     }
@@ -44,7 +44,7 @@ const ifAuthenticated = (to, from, next) => {
         next();
         return;
     }
-    localStorage.clear();
+    localStorage.removeItem(sha256('user-token'));
     next('/login');
 };
 

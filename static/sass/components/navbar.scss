@@ -92,7 +92,9 @@
     font-size: 32px;
     font-family: Fairview;
     color: #fcfcfc;
-    position: unset;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   & .balance {
@@ -211,7 +213,7 @@
   display: none;
   cursor: pointer;
   padding: 1em 0em;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     display: block;
     padding-right: 32px;
     padding-left: 32px;
@@ -279,7 +281,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .themes, .actions, .options {
     display: none !important;
   }

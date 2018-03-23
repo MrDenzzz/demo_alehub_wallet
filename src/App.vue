@@ -140,6 +140,15 @@
         .navbar
             .title
                 font-family DINProCondensedBold
+                font-size 26px
+                @media (max-width: 1200px)
+                    transform translateX(-40%)
+                @media (max-width: 1150px)
+                    transform translateX(-30%)
+                @media (max-width: 1100px)
+                    transform translateX(-20%)
+                @media (max-width: 1050px)
+                    transform translateX(-10%)
 
     .china
         .navbar
