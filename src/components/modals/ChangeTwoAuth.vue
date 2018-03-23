@@ -1,8 +1,8 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
     <modal name="change-two-auth" height="auto" class="modal-xs" @opened="getQr()">
         <div class="heading">
-            <p class="title" v-if="!userTwoAuth">Enable TWO AUTH</p>
-            <p class="title" v-else>Disable TWO AUTH</p>
+            <p class="title" v-if="!userTwoAuth">{{ $t('modals.changeTwoAuth.title.enable') }}</p>
+            <p class="title" v-else>{{ $t('modals.changeTwoAuth.title.disable') }}</p>
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
@@ -13,7 +13,7 @@
                         v-else
                         :value="qrPath"
                         :size="300"/>
-                <span class="warning-title">Save this secret code to safe place</span>
+                <span class="warning-title">{{ $t('modals.changeTwoAuth.warning') }}</span>
                 <span
                         v-if="secret"
                         id="secret-key"
@@ -24,15 +24,15 @@
 
             <div class="modal-control" v-if="userTwoAuth">
                 <div class="modal-input">
-                    <label class="title">Secret key</label>
-                    <input type="text" class="input" placeholder="Enter your secret key" v-model="secret">
+                    <label class="title">{{ $t('modals.changeTwoAuth.fields.secret.label') }}</label>
+                    <input type="text" class="input" :placeholder="$t('modals.changeTwoAuth.fields.secret.placeholder')" v-model="secret">
                 </div>
             </div>
 
             <div class="modal-control">
                 <div class="modal-input">
-                    <label class="title">2fa key</label>
-                    <input type="text" class="input" placeholder="Enter your 2fa key" v-model="token">
+                    <label class="title">{{ $t('modals.changeTwoAuth.fields._2fa.label') }}</label>
+                    <input type="text" class="input" :placeholder="$t('modals.changeTwoAuth.fields._2fa.placeholder')" v-model="token">
                 </div>
             </div>
 
@@ -44,21 +44,21 @@
                         class="buttons btn-default"
                         v-clipboard:copy="copySecret()">
                     <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
-                    Copy secret key
+                    {{ $t('modals.changeTwoAuth.buttons.copy') }}
                 </button>
                 <button
                         v-if="!userTwoAuth"
                         type="button"
                         class="buttons btn-yellow"
                         @click="makeEnableTwoAuth()">
-                    Enable
+                    {{ $t('modals.changeTwoAuth.buttons.enable') }}
                 </button>
                 <button
                         v-if="userTwoAuth"
                         type="button"
                         class="buttons btn-default"
                         @click="makeDisableTwoAuth()">
-                    Disable
+                    {{ $t('modals.changeTwoAuth.buttons.disable') }}
                 </button>
             </div>
         </div>

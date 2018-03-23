@@ -295,6 +295,28 @@ const messages = {
                     cancel: 'Cancel',
                     delete: 'Delete'
                 }
+            },
+            changeTwoAuth: {
+                title: {
+                    enable: 'Enable TWO AUTH',
+                    disable: 'Disable TWO AUTH'
+                },
+                warning: 'Save this secret code to safe place',
+                buttons: {
+                    enable: 'Enable',
+                    disable: 'Disable',
+                    copy: 'Copy secret key'
+                },
+                fields: {
+                    secret: {
+                        label: 'Secret key',
+                        placeholder: 'Enter your secret key'
+                    },
+                    _2fa: {
+                        label: '2fa key',
+                        placeholder: 'Enter your 2fa key'
+                    }
+                }
             }
         }
     },
@@ -323,7 +345,7 @@ const messages = {
                 enterPassword: 'Введите Ваш пароль',
                 enterRepeatPassword: 'Повторите пароль',
                 enterValidEmail: 'Введите корректный пароль',
-                enterCorrectLengthPassword: 'Пароль должен быть длиной минимум 8 символовPassword must be at least 8 characters long',
+                enterCorrectLengthPassword: 'Пароль должен быть длиной минимум 8 символов',
                 enterMatchPassword: 'Пароли не совпадают'
             },
             notifications: {
@@ -537,7 +559,7 @@ const messages = {
                     mnemonic: {
                         text: 'Пожалуйста, убедитесь, что вы тщательно записали фразу восстановления в безопасном месте. Вам понадобится эта фраза позже для последующего использования и восстановления. Фраза чувствительна к регистру.',
                         btnCopy: 'Скопировать фразу',
-                        btn: 'Да, я записал его',
+                        btn: 'Да, я записал еe',
                         toastedSuccessMnemonic: 'Мнемоническая фраза успешно скопирована'
                     },
                     finish: {
@@ -545,7 +567,7 @@ const messages = {
                         fields: {
                             phrase: {
                                 title: 'Фраза восстановления',
-                                placeholder: 'введите здесь фразу восстановления'
+                                placeholder: 'введите фразу восстановления'
                             },
                             deviceOnly: 'Я понимаю, что мои деньги хранятся только на этом устройстве, а не на серверах компании',
                             secure: 'Я понимаю, что если это приложение перенесено на другое устройство или удалено, мои деньги могут быть восстановлены только с резервной фразой, записанной в безопасном месте'
@@ -593,6 +615,28 @@ const messages = {
                 buttons: {
                     cancel: 'Отмена',
                     delete: 'Удалить'
+                }
+            },
+            changeTwoAuth: {
+                title: {
+                    enable: 'Включить двухфакторную аутентификацию',
+                    disable: 'Выключить двухфакторную аутентификацию'
+                },
+                warning: 'Сохраните этот секретный код в безопасном месте',
+                buttons: {
+                    enable: 'Включить',
+                    disable: 'Выключить',
+                    copy: 'Скопировать секретный ключ'
+                },
+                fields: {
+                    secret: {
+                        label: 'Секретный ключ',
+                        placeholder: 'Введите секретный ключ'
+                    },
+                    _2fa: {
+                        label: '2fa ключ',
+                        placeholder: 'Введите 2fa ключ'
+                    }
                 }
             }
         }
