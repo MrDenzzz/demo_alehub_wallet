@@ -24,7 +24,6 @@ const state = {
 const actions = {
     transactionsRequest: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
-            // if (address === '') return false;
             commit('TRANSACTIONS_REQUEST');
             let host = `http://192.168.1.37:4000/transactions/${address}`;
             axios({
@@ -37,13 +36,13 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    console.log(resp.data, 'transactions');
+                    console.log(resp.data, 'resp.data transactions when new wallet create');
                     // console.log(address, 'current wallet address');
-                    console.log(axios.defaults.headers.common['Authorization']);
                     commit('SET_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })
                 .catch(err => {
+                    console.log(err, 'error transactions wallet address');
                     commit('TRANSACTIONS_ERROR', err);
                     reject(err)
                 });

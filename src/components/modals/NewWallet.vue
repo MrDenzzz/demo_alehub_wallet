@@ -448,9 +448,20 @@
                         seed: this.mnemonicsRecovery
                     }
                 ).then((resp) => {
-                    this.$toasted.show(`Wallet "${resp.data.walletModel.name}" successful created!`, {
+                    console.log(resp, 'resp');
+                    this.$toasted.show(`Wallet '${resp.data.walletModel.name}' successful created!`, {
                         duration: 5000,
                         type: 'success',
+                    });
+
+
+                    this.$store.dispatch('transactionsRequestLazy',
+                        resp.data.walletModel.address
+                    ).then((resp) => {
+                        console.log(resp, 'transactions new wallet resp success');
+
+                    }).catch((err) => {
+                        console.log(err, 'transactions new wallet resp err');
                     });
                 }).catch(() => {
 
