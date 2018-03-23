@@ -455,10 +455,32 @@
         padding 5px
         margin 0 10px 0 10px
         align-self flex-end
+        white-space nowrap
 
         .count
             padding 5px
             margin 0 10px 0 10px
+
+    @media (max-width: 1100px)
+        .bottom
+            .docs
+                .buttons
+                    width 130px
+
+    @media (max-width: 1024px)
+        .bottom
+            .date
+                width 190px
+                padding-left 0
+
+                .buttons
+                    width 130px
+                
+                .datepicker-wrap
+                    width 190px
+
+                input#datepickerFrom, input#datepickerTo
+                    margin-right 15px
 
     @media (max-width: 425px)
         input#datepickerFrom, input#datepickerTo

@@ -429,7 +429,7 @@ const messages = {
                     info: {
                         received: 'Получено',
                         sent: 'Отправлено',
-                        starting: 'Начальное значение',
+                        starting: 'На начало',
                         total: 'Всего'
                     }
                 },
