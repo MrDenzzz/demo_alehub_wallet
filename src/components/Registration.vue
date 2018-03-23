@@ -11,9 +11,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <Spinner
-                                    v-if="processingSendRequest"
-                            />
+                            <div class="is-center" v-if="processingSendRequest">
+                                <Spinner/>
+                            </div>
 
                             <div v-if="!processingSendRequest && successSendRequest" style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
                                 <p>{{ $t('pages.registration.completionRegistration') }}
