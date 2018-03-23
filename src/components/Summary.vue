@@ -348,10 +348,6 @@
 
             this.$on('successCopyAddress', function (wallet) {
                 this.$modal.hide('request');
-                this.$toasted.show(`Address ${wallet} was copied to the clipboard`, {
-                    duration: 5000,
-                    type: 'success',
-                });
             });
 
             this.$on('setPeriod', function (period) {

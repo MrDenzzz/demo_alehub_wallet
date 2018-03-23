@@ -134,7 +134,8 @@
                         id="copy-mnemonic"
                         type="button"
                         class="buttons btn-default"
-                        v-clipboard:copy="copyMnemonic()">
+                        v-clipboard:copy="copyMnemonic()"
+                        @click="successCopyMnemonic">
                     <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
                     {{ $t('modals.newWallet.recovery.mnemonic.btnCopy') }}
                 </button>
@@ -512,12 +513,13 @@
                 });
             },
             copyMnemonic: function () {
+                return this.recoveryMnemonicPhrase.join(' ');
+            },
+            successCopyMnemonic: function () {
                 this.$toasted.show(this.$t('modals.newWallet.recovery.mnemonic.toastedSuccessMnemonic'), {
                     duration: 5000,
                     type: 'success',
                 });
-
-                return this.recoveryMnemonicPhrase.join(' ');
             }
         },
         created() {
@@ -622,6 +624,8 @@
 
     .buttons {
         width: 200px;
+        display: flex;
+        justify-content: center;
     }
 
     .modal-warning {
@@ -941,7 +945,7 @@
         box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 768px) {
         .v--modal {
             min-width: 100%;
         }
