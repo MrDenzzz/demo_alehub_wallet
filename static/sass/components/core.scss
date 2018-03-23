@@ -1173,6 +1173,9 @@ body {
       display: flex;
     }
   }
+  .hamburger {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 980px) {
