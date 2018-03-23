@@ -14,8 +14,9 @@
                             <Spinner
                                     v-if="processingSendRequest"
                             />
+
                             <div v-if="!processingSendRequest && successSendRequest" style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
-                                <p>Для заверешния регистрации пройдите по ссылке на вашей почте
+                                <p>{{ $t('pages.registration.completionRegistration') }}
                                     <span style="font-family: MuseoSansCyrl700;">
                                         {{email}}
                                     </span>
@@ -23,7 +24,7 @@
                             </div>
                             <div class="login-form" v-if="!processingSendRequest && !successSendRequest">
                                 <div class="control" @click="focusInput('fullname')">
-                                    <label for="fullname">full name</label>
+                                    <label for="fullname">{{ $t('pages.registration.fullName') }}</label>
                                     <input
                                             type="text"
                                             id="fullname"
@@ -36,7 +37,7 @@
                                 </div>
 
                                 <div class="control" @click="focusInput('email')">
-                                    <label for="email">e-mail</label>
+                                    <label for="email">{{ $t('pages.registration.email') }}</label>
                                     <input
                                             type="text"
                                             id="email"
@@ -49,7 +50,7 @@
                                 </div>
 
                                 <div class="control" @click="focusInput('password')">
-                                    <label for="password">password</label>
+                                    <label for="password">{{ $t('pages.registration.password') }}</label>
                                     <input
                                             type="password"
                                             id="password"
@@ -61,7 +62,7 @@
                                 </div>
 
                                 <div class="control" @click="focusInput('repeatpass')">
-                                    <label for="repeatpass">Repeat Password</label>
+                                    <label for="repeatpass">{{ $t('pages.registration.repeatPassword') }}</label>
                                     <input
                                             type="password"
                                             id="repeatpass"
@@ -84,12 +85,12 @@
                                         class="btn btn-yellow btn-block nomargin"
                                         @click="registerUser()"
                                 >
-                                    Create
+                                    {{ $t('pages.registration.create') }}
                                 </button>
 
-                                <p class="text">Already have an account?
+                                <p class="text">{{ $t('pages.registration.haveAccount') }}
                                     <router-link :to="{ path: '/' }">
-                                        Log in.
+                                        {{ $t('pages.registration.login') }}
                                     </router-link>
                                 </p>
                             </div>
@@ -132,7 +133,7 @@
                 if (!this.fullName && !this.email && !this.phoneNumber
                     && !this.password && !this.passwordConfirm) {
                     this.focusInput('fullname');
-                    this.$toasted.show('Fill in all the fields', {
+                    this.$toasted.show(this.$t('pages.registration.fillAllFields'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -142,7 +143,7 @@
                     || !this.password || !this.passwordConfirm) {
                     if (!this.fullName) {
                         this.focusInput('fullname');
-                        this.$toasted.show('Enter your full name', {
+                        this.$toasted.show(this.$t('pages.registration.enterFullName'), {
                             duration: 10000,
                             type: 'error',
                         });
@@ -150,7 +151,7 @@
                     }
                     if (!this.email) {
                         this.focusInput('email');
-                        this.$toasted.show('Enter your email', {
+                        this.$toasted.show(this.$t('pages.registration.enterEmail'), {
                             duration: 10000,
                             type: 'error',
                         });
@@ -158,7 +159,7 @@
                     }
                     if (!this.password) {
                         this.focusInput('password');
-                        this.$toasted.show('Enter your password', {
+                        this.$toasted.show(this.$t('pages.registration.enterPassword'), {
                             duration: 10000,
                             type: 'error',
                         });
@@ -166,7 +167,7 @@
                     }
                     if (!this.passwordConfirm) {
                         this.focusInput('repeatpass');
-                        this.$toasted.show('Repeat password', {
+                        this.$toasted.show(this.$t('pages.registration.enterRepeatPassword'), {
                             duration: 10000,
                             type: 'error',
                         });
@@ -177,7 +178,7 @@
                     this.isErrorEmail = true;
                     this.focusInput('email');
                     if (e[0].rule === 'email') {
-                        this.$toasted.show('Enter your valid email', {
+                        this.$toasted.show(this.$t('pages.registration.enterValidEmail'), {
                             duration: 10000,
                             type: 'error',
                         });
@@ -186,14 +187,14 @@
                 }
                 if (this.password.length < 8) {
                     this.focusInput('password');
-                    this.$toasted.show('Password must be at least 8 characters long', {
+                    this.$toasted.show(this.$t('pages.registration.enterCorrectLengthPassword'), {
                         duration: 10000,
                         type: 'error',
                     });
                     return false
                 }
                 if (this.password !== this.passwordConfirm) {
-                    this.$toasted.show('Passwords do not match', {
+                    this.$toasted.show(this.$t('pages.registration.enterMatchPassword'), {
                         duration: 10000,
                         type: 'error',
                     });

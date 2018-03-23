@@ -1,16 +1,16 @@
-<template>
+<template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
     <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen">
         <div class="heading" v-if="newWalletStep === 1">
             <p class="title">{{ dropDownOption[0].title }}</p>
             <!--<p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>-->
             <i class="close" @click="closeModal" v-if="isCloseModal"></i>
             <!--<div class="dropdown-list list-select" v-show="isOpenOptions">-->
-                <!--<ul>-->
-                    <!--<li v-for="(option, optionIndex) in dropDownOption" :class="{ 'selected': option.isSelected }"-->
-                        <!--@click="changeType(optionIndex)">-->
-                        <!--{{ option.title }}-->
-                    <!--</li>-->
-                <!--</ul>-->
+            <!--<ul>-->
+            <!--<li v-for="(option, optionIndex) in dropDownOption" :class="{ 'selected': option.isSelected }"-->
+            <!--@click="changeType(optionIndex)">-->
+            <!--{{ option.title }}-->
+            <!--</li>-->
+            <!--</ul>-->
             <!--</div>-->
         </div>
 
@@ -109,12 +109,13 @@
 
             <div class="modal-btn text-center">
                 <button
+                        id="continue-to-recovery"
                         class="btn btn-yellow btn-large btn-bottom btn-timer"
                         :disabled="countTimer || !isAgreedRecovery"
                         :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery }"
                         @click="getRandomSeed()">
-                    {{ $t('modals.newWallet.recovery.phrase.btn') }} <span
-                        v-if="countTimer !== 0">({{ countTimer }})</span>
+                    {{ $t('modals.newWallet.recovery.phrase.btn') }}
+                    <span v-if="countTimer !== 0">({{ countTimer }})</span>
                 </button>
             </div>
         </div>
@@ -125,13 +126,22 @@
             </div>
 
             <div class="phrase">
-                <span v-for="mnemonic in recoveryMnemonicPhrase">{{ mnemonic }} </span>
+                <span class="mnemonic-phrase" v-for="mnemonic in recoveryMnemonicPhrase">{{ mnemonic }} </span>
             </div>
 
             <div class="modal-btn text-center">
+                <button
+                        id="copy-mnemonic"
+                        type="button"
+                        class="buttons btn-default"
+                        v-clipboard:copy="copyMnemonic()">
+                    <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
+                    {{ $t('modals.newWallet.recovery.mnemonic.btnCopy') }}
+                </button>
                 <button class="btn btn-yellow btn-large btn-bottom" @click="changeRecoveryStep('next')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
                 </button>
+
             </div>
 
         </div>
@@ -161,7 +171,7 @@
                             @keyup.enter="addMnemonicRecovery"
                             @keyup.delete="removeMnemonicRecovery"
                             @keyup.space="addMnemonicRecovery"
-                            @blur="recoveryBlur"
+                            @blur="addMnemonicRecovery"
                     />
                 </div>
             </div>
@@ -192,6 +202,7 @@
                     {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
                 </button>
                 <button
+                        id="create-new-wallet"
                         class="btn btn-yellow btn-large"
                         :class="{ 'disabled': isConfirmRecovery }"
                         :disabled="isConfirmRecovery"
@@ -289,6 +300,7 @@
                 createNewNewWallet: "CREATE_NEW_NEW_WALLET"
             }),
             getRandomSeed: function () {
+                console.log('getRandomSeed');
                 this.$http.get(`${this.$host}/wallet/seed`, {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
@@ -301,9 +313,9 @@
                     console.log('error', response);
                 });
             },
-            recoveryBlur() {
-                this.mnemonicFieldRecovery = '';
-            },
+            // recoveryBlur() {
+            //     this.mnemonicFieldRecovery = '';
+            // },
             onBlurNewWallet() {
                 this.mnemonicField = '';
             },
@@ -435,16 +447,31 @@
                         name: this.walletName1,
                         seed: this.mnemonicsRecovery
                     }
-                ).then(() => {
+                ).then((resp) => {
+                    console.log(resp, 'resp');
+                    this.$toasted.show(`Wallet '${resp.data.walletModel.name}' successful created!`, {
+                        duration: 5000,
+                        type: 'success',
+                    });
+
+
+                    this.$store.dispatch('transactionsRequestLazy',
+                        resp.data.walletModel.address
+                    ).then((resp) => {
+                        console.log(resp, 'transactions new wallet resp success');
+
+                    }).catch((err) => {
+                        console.log(err, 'transactions new wallet resp err');
+                    });
+                }).catch(() => {
 
                 });
-
 
                 this.closeModal();
             },
 
 
-            importWallet() {
+            importWallet: function () {
                 if (!this.walletName1) {
                     this.focusInput('redemptionWalletName');
                     return false;
@@ -483,6 +510,14 @@
 
                     this.closeModal();
                 });
+            },
+            copyMnemonic: function () {
+                this.$toasted.show(this.$t('modals.newWallet.recovery.mnemonic.toastedSuccessMnemonic'), {
+                    duration: 5000,
+                    type: 'success',
+                });
+
+                return this.recoveryMnemonicPhrase.join(' ');
             }
         },
         created() {
@@ -498,6 +533,31 @@
                     }
                 }
             }, 5);
+
+
+            document.addEventListener('keyup', (event) => {
+                if (this.newWalletStep === 2 && this.recoveryStep === 1) {
+                    if (event.keyCode === 32) {
+                        this.isAgreedRecovery = !this.isAgreedRecovery;
+                    }
+
+                    setTimeout(() => {
+                        if (event.keyCode === 13 && !document.getElementById('continue-to-recovery').disabled) {
+                            document.getElementById('continue-to-recovery').click();
+                        }
+                    }, 40);
+                }
+                if (this.newWalletStep === 2 && this.recoveryStep === 3) {
+                    setTimeout(() => {
+                        if (event.keyCode === 13 && !document.getElementById('create-new-wallet').disabled) {
+                            document.getElementById('create-new-wallet').click();
+                        }
+                    }, 40);
+                }
+            })
+        },
+        mounted() {
+            this.mountClipboard = true;
         }
     }
 </script>
@@ -536,10 +596,15 @@
         }
     }
 
+    .icon-copy {
+        height: 19px;
+        margin-right: 5px;
+    }
+
     .phrase {
         background-color: rgba(13, 23, 23, 0.04);
         border-radius: 2px;
-        padding: 12px 0;
+        padding: 12px 12px;
         text-align: center;
         margin: 24px 42px 42px;
 
@@ -548,8 +613,15 @@
             font-size: 14px;
             font-weight: bold;
             color: #34343e;
-            user-select: text;
+            /*-webkit-user-select: none;*/
+            /*-moz-user-select: none;*/
+            /*-ms-user-select: none;*/
+            /*user-select: none;*/
         }
+    }
+
+    .buttons {
+        width: 200px;
     }
 
     .modal-warning {
@@ -651,7 +723,7 @@
         }
 
         & .btn-large {
-            padding: 10px 70px 10px 70px;
+            padding: 10px 40px 10px 40px;
             font-size: 16px;
             font-family: MuseoSansCyrl500;
         }
@@ -818,6 +890,7 @@
             }
         }
     }
+
     @media(max-width: 320px) {
         .control-checkbox {
             font-size: 10px;

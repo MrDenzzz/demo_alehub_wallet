@@ -320,6 +320,10 @@
             this.setIntervalId = setInterval(this.getTransactions, 15000);
 
             // if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
+
+            console.log(this.wallets, 'this.wallets');
+            console.log(this.lengthWalletList, 'this.lengthWalletList');
+
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
             }

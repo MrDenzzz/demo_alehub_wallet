@@ -5,11 +5,8 @@
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
-            <div v-if="dataProcessing" class="wrap-spinner">
-                <Spinner v-if="dataProcessing"/>
-            </div>
 
-            <form v-else @submit.prevent="changePassword()">
+            <form @submit.prevent="changePassword()">
                 <div class="modal-control">
                     <div class="modal-input">
                         <label class="title">2fa key</label>
@@ -57,6 +54,10 @@
                     </div>
                 </div>
 
+                <div v-if="dataProcessing" class="wrap-spinner">
+                    <Spinner v-if="dataProcessing" />
+                </div>
+
                 <div class="modal-btn text-center">
                     <button class="btn btn-yellow btn-large" type="submit">
                         Change
@@ -99,11 +100,27 @@
                             old: this.oldPass,
                             new: this.newPass
                         }).then(() => {
+                            this.token = '';
+                            this.oldPass = '';
+                            this.newPass = '';
+                            this.confirmPass = '';
                             this.dataProcessing = false;
+                            this.$toasted.show(`You have successfully changed your password`, {
+                                duration: 5000,
+                                type: 'success',
+                            });
                             this.closeModal();
                             this.$parent.$emit('changePassword');
                         }).catch(() => {
-                            console.log('You are sent wrong password data');
+                            this.token = '';
+                            this.oldPass = '';
+                            this.newPass = '';
+                            this.confirmPass = '';
+                            this.dataProcessing = false;
+                            this.$toasted.show(`You are submitting incorrect project data`, {
+                                duration: 5000,
+                                type: 'error',
+                            });
                         });
                     } else {
                         this.$toasted.show(`New password and confirmed password do not match`, {
@@ -131,7 +148,7 @@
     .wrap-spinner
         display flex
         justify-content center
-        padding 0 0 2em 0
+        padding 1em 0
 </style>
 
 <style lang="stylus">

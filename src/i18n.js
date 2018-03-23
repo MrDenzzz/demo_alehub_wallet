@@ -2,8 +2,30 @@ const messages = {
     eng: {
         pages: {
             login: {
-                password: 'password',
-                login: 'Login'
+                password: 'Password',
+                login: 'Login',
+                textForgotPassword: 'Forgot your email or password?',
+                recoverAccount: 'Recover account.',
+                textHaveAccount: 'Don’t have an account?',
+                createAccount: 'Create one.'
+            },
+            registration: {
+                fullName: 'Full name',
+                email: 'E-mail',
+                password: 'Password',
+                repeatPassword: 'Repeat Password',
+                create: 'Create',
+                haveAccount: 'Already have an account?',
+                login: 'Log in.',
+                completionRegistration: 'To complete the registration, please follow the link on your mail',
+                fillAllFields: 'Fill in all the fields',
+                enterFullName: 'Enter your full name',
+                enterEmail: 'Enter your email',
+                enterPassword: 'Enter your password',
+                enterRepeatPassword: 'Repeat password',
+                enterValidEmail: 'Enter your valid email',
+                enterCorrectLengthPassword: 'Password must be at least 8 characters long',
+                enterMatchPassword: 'Passwords do not match'
             },
             notifications: {
                 navbarTitle: 'Notifications feed',
@@ -215,7 +237,9 @@ const messages = {
                     },
                     mnemonic: {
                         text: 'Please, make sure you have carefully writen down your recovery phrase somewhere safe. You will need this phrase later for next use and recover. Phrase is case sensitive.',
-                        btn: 'Yes, I’ve written it down'
+                        btnCopy: 'Copy mnemonic',
+                        btn: 'Yes, I’ve written it down',
+                        toastedSuccessMnemonic: 'The mnemonic phrase was copied successfully'
                     },
                     finish: {
                         each: 'Type each word in the correct order to verify your recovery phrase',
@@ -278,7 +302,29 @@ const messages = {
         pages: {
             login: {
                 password: 'пароль',
-                login: 'Войти'
+                login: 'Войти',
+                textForgotPassword: 'Забыли свой email или пароль?',
+                recoverAccount: 'Восстановите аккаунт',
+                textHaveAccount: 'У Вас ещё нет аккаунта?',
+                createAccount: 'Создайте аккаунт.'
+            },
+            registration: {
+                fullName: 'Имя',
+                email: 'E-mail',
+                password: 'Пароль',
+                repeatPassword: 'Повторите пароль',
+                create: 'Создать',
+                haveAccount: 'У Вас уже есть аккаунт?',
+                login: 'Войти.',
+                completionRegistration: 'Для завершения регистрации пройдите по ссылке на вашей почте',
+                fillAllFields: 'Заполните все поля',
+                enterFullName: 'Введите Ваше имя',
+                enterEmail: 'Введите email',
+                enterPassword: 'Введите Ваш пароль',
+                enterRepeatPassword: 'Повторите пароль',
+                enterValidEmail: 'Введите корректный пароль',
+                enterCorrectLengthPassword: 'Пароль должен быть длиной минимум 8 символовPassword must be at least 8 characters long',
+                enterMatchPassword: 'Пароли не совпадают'
             },
             notifications: {
                 navbarTitle: 'Уведомления',
@@ -490,7 +536,9 @@ const messages = {
                     },
                     mnemonic: {
                         text: 'Пожалуйста, убедитесь, что вы тщательно записали фразу восстановления в безопасном месте. Вам понадобится эта фраза позже для последующего использования и восстановления. Фраза чувствительна к регистру.',
-                        btn: 'Да, я записал его'
+                        btnCopy: 'Скопировать фразу',
+                        btn: 'Да, я записал его',
+                        toastedSuccessMnemonic: 'Мнемоническая фраза успешно скопирована'
                     },
                     finish: {
                         each: 'Введите каждое слово в правильном порядке, чтобы подтвердить свою фразу восстановления',
