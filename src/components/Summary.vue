@@ -18,14 +18,14 @@
                             <div class="stats-balance">
                                 <div class="stats-col">
                                     <div>
-                                        <button class="buttons btn-yellow" @click="openModal('send')">
-                                            <img :src="getIcon('send')" width="18" height="15" class="icon">
-                                            {{ $t('pages.summary.buttons.send') }}
-                                        </button>
-                                        <button class="buttons btn-default" @click="openModal('request')">
-                                            <img :src="getIcon('receive')" width="18" height="15" class="icon">
-                                            {{ $t('pages.summary.buttons.request') }}
-                                        </button>
+                                        <!--<button class="buttons btn-yellow" @click="openModal('send')">-->
+                                            <!--<img :src="getIcon('send')" width="18" height="15" class="icon">-->
+                                            <!--{{ $t('pages.summary.buttons.send') }}-->
+                                        <!--</button>-->
+                                        <!--<button class="buttons btn-default" @click="openModal('request')">-->
+                                            <!--<img :src="getIcon('receive')" width="18" height="15" class="icon">-->
+                                            <!--{{ $t('pages.summary.buttons.request') }}-->
+                                        <!--</button>-->
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                             <!--{{ this.$store.state.Transactions.transactions }}-->
 
 
-                            <Search-panel
+                            <transactions-tool-panel
                                     v-if="getActivity.length !== 0"
                                     :check-activities="getActivity.length"
                                     :current-transactions="currentTmpTransactions"
@@ -70,8 +70,8 @@
             </div>
         </section>
 
-        <Modal-send/>
-        <Modal-request/>
+        <!--<Modal-send/>-->
+        <!--<Modal-request/>-->
         <New-wallet/>
     </div>
 </template>
@@ -84,9 +84,8 @@
     import ModalRequest from "./modals/Request";
     import PanelHeading from "./layouts/PanelHeading";
     import NewWallet from './modals/NewWallet';
-    import SearchPanel from './layouts/SearchPanel';
+    import TransactionsToolPanel from './layouts/TransactionsToolPanel';
     import Datepicker from 'vuejs-datepicker';
-    import TransactionsFilter from './layouts/TransactionsFilter';
     import FormattingPrice from './layouts/FormattingPrice';
     import Spinner from './layouts/Spinner';
     import Moment from 'moment';
@@ -107,9 +106,8 @@
             ModalRequest,
             PanelHeading,
             NewWallet,
-            SearchPanel,
+            TransactionsToolPanel,
             Datepicker,
-            TransactionsFilter,
             FormattingPrice,
             Spinner
         },
@@ -329,26 +327,26 @@
             }
 
             //переписать название функции sendMoney на что нибудь более подходящее; переписать названия мутаций тоже
-            this.$on('sendMoney', function (data) {
+            // this.$on('sendMoney', function (data) {
+            //
+            //     let checkFirstTransaction = false;
+            //     if (this.transactions.length === 0) {
+            //         checkFirstTransaction = true;
+            //     }
+            //
+            //     this.sendMoneyToAdress(data);
+            //     this.setNotificationForSend(data);
+            //     this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
+            //     this.newTransaction = true;
+            //
+            //     if (checkFirstTransaction) {
+            //         this.initiateDate();
+            //     }
+            // });
 
-                let checkFirstTransaction = false;
-                if (this.transactions.length === 0) {
-                    checkFirstTransaction = true;
-                }
-
-                this.sendMoneyToAdress(data);
-                this.setNotificationForSend(data);
-                this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
-                this.newTransaction = true;
-
-                if (checkFirstTransaction) {
-                    this.initiateDate();
-                }
-            });
-
-            this.$on('successCopyAddress', function (wallet) {
-                this.$modal.hide('request');
-            });
+            // this.$on('successCopyAddress', function (wallet) {
+            //     this.$modal.hide('request');
+            // });
 
             this.$on('setPeriod', function (period) {
                 this.setActivePeriod(period);

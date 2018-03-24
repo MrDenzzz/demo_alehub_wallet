@@ -1,21 +1,23 @@
 <template>
     <div class="searchPanel">
-        <div class="top" style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="searchControl" @click="makeFocusSearch" style="display: flex; justify-content: flex-start;">
-                <img src="../../assets/img/search-ic.svg" width="16" height="16">
-                <input type="text" id="search-transactions" :placeholder="$t('pages.summary.searchPanel.search')" @input="searchTransaction"
-                       v-model="searchText">
-            </div>
-            <!--<div class="filters">-->
-                <!--<span-->
-                        <!--@click="switchFilter()"-->
-                        <!--class="cursor-p"-->
-                        <!--:class="{ 'active': !hideFilter}"-->
-                <!--&gt;-->
-                    <!--Date range-->
-                <!--</span>-->
+        <transactions-tool-panel-operation/>
+        <!--<div class="top" style="display: flex; justify-content: space-between; align-items: flex-end;">-->
+            <!--<div class="searchControl" @click="makeFocusSearch" style="display: flex; justify-content: flex-start;">-->
+                <!--<img src="../../assets/img/search-ic.svg" width="16" height="16">-->
+                <!--<input type="text" id="search-transactions" :placeholder="$t('pages.summary.searchPanel.search')" @input="searchTransaction()"-->
+                       <!--v-model="searchText">-->
             <!--</div>-->
-        </div>
+            <!--<div>-->
+                <!--<button class="buttons btn-yellow" @click="openModal('send')" style="margin-bottom: 0;">-->
+                    <!--<img :src="getIcon('send')" width="18" height="15" class="icon">-->
+                    <!--{{ $t('pages.summary.buttons.send') }}-->
+                <!--</button>-->
+                <!--<button class="buttons btn-default" @click="openModal('request')" style="margin-bottom: 0;">-->
+                    <!--<img :src="getIcon('receive')" width="18" height="15" class="icon">-->
+                    <!--{{ $t('pages.summary.buttons.request') }}-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="bottom">
             <div class="date">
                 <h3 class="date-title">
@@ -105,7 +107,9 @@
             </div>
         </div>
 
-        <ShareTransactions/>
+        <modal-send/>
+        <modal-request/>
+        <modal-share-transactions/>
 
     </div>
 </template>
@@ -113,17 +117,25 @@
 <script>
     import Datepicker from 'vuejs-datepicker';
     import FormattingPrice from '../layouts/FormattingPrice';
-    import ShareTransactions from '../modals/ShareTransactions';
+    import TransactionsToolPanelFilter from '../layouts/TransactionsToolPanelFilter';
+    import TransactionsToolPanelOperation from '../layouts/TransactionsToolPanelOperation';
+    import ModalShareTransactions from '../modals/ShareTransactions';
+    import ModalSend from '../modals/Send';
+    import ModalRequest from '../modals/Request';
 
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
 
     export default {
-        name: 'searchPanel',
+        name: 'transactions-tool-panel',
         components: {
             Datepicker,
             FormattingPrice,
-            ShareTransactions
+            ModalShareTransactions,
+            TransactionsToolPanelOperation,
+            TransactionsToolPanelFilter,
+            ModalSend,
+            ModalRequest
         },
         props: {
             totalTransactions: [String, Number],
@@ -164,6 +176,12 @@
             ...mapMutations({
                 setHideFilter: 'SET_HIDE_FILTER',
             }),
+            getIcon: function (name) {
+                if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_dark.svg`);
+                else return require(`../../assets/img/${name}.svg`);
+            },
+
             openModal: function (name) {
                 this.$modal.show(name);
             },
@@ -171,6 +189,7 @@
                 this.$parent.$emit('searchTransaction', this.searchText)
             },
             makeFocusSearch: function () {
+                //rewrite. bad method
                 document.getElementById('search-transactions').focus();
             },
 
@@ -260,7 +279,26 @@
             }
         },
         mounted() {
+            this.$on('sendMoney', function (data) {
 
+                let checkFirstTransaction = false;
+                if (this.transactions.length === 0) {
+                    checkFirstTransaction = true;
+                }
+
+                this.sendMoneyToAdress(data);
+                this.setNotificationForSend(data);
+                this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
+                this.newTransaction = true;
+
+                if (checkFirstTransaction) {
+                    this.initiateDate();
+                }
+            });
+
+            this.$on('successCopyAddress', function (wallet) {
+                this.$modal.hide('request');
+            });
         }
     }
 </script>
