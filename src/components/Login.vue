@@ -49,13 +49,13 @@
                                                 required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-black btn-block nomargin">
+                                    <button type="submit" class="btn btn-black btn-block nomargin" @click="isLoadingCheck">
                                         {{ $t('pages.login.login') }}
                                     </button>
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Login or password is incorrect</p>
                                     </div>
-                                    <div class="is-center" v-if="isLoaderUserAuth">
+                                    <div class="is-center" v-if="isLoading">
                                         <Spinner/>
                                     </div>
                                 </form>
@@ -91,7 +91,8 @@
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Incorrect two-factor code</p>
                                     </div>
-                                    <div class="is-center is-2fa-loader" v-if="isLoaderUserAuth">
+
+                                    <div class="is-center is-2fa-loader" v-if="isLoading">
                                         <Spinner/>
                                     </div>
 
@@ -135,7 +136,9 @@
                 token: null,
                 isErrorEmail: false,
                 isErrorPassword: false,
-                isError2fa: false
+                isError2fa: false,
+                isLoading: false,
+                initialLoading: true
             }
         },
         computed: {
@@ -143,11 +146,15 @@
                 'authStep',
                 'authStatus',
                 'userTwoAuth',
+                'userStatus',
+                'userHaveWallets',
+                'userHaveTransactions',
                 'isLoaderUserAuth',
                 'isErrorLogin',
                 'wallets',
+                'walletStatus',
                 'currentWallet',
-
+                'transactionStatus'
             ]),
         },
         methods: {
@@ -238,6 +245,23 @@
                         this.$router.push('/');
                     });
                 });
+            },
+
+            isLoadingCheck: function () {
+                if ((this.authStatus !== 'success' && this.userStatus !== 'success') || (this.authStatus === 'success' && this.userStatus !== 'success'))
+                    this.isLoading = false;
+                else
+                    this.isLoading = true;
+
+                if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
+
+                    console.log('IM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEAR');
+
+                    this.isLoading = false;
+                } else
+                    this.isLoading = true;
             },
 
             focusInput: function (id) {

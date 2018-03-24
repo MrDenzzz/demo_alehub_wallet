@@ -301,7 +301,8 @@ const mutations = {
         state.status = 'error';
     },
     AUTH_LOGOUT: (state) => {
-        state.status = 'not authorized';
+        state.status = '';
+        state.userStatus = '';
         state.token = '';
     },
     USER_REQUEST: (state) => {

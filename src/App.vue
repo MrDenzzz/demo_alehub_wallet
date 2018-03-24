@@ -61,7 +61,7 @@
                 if (this.language === null) return 'eng';
                 else return this.language;
             },
-            selectedTheme() {
+            selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
             isLoading: function () {
@@ -69,6 +69,7 @@
                     return false;
                 }
 
+                //if (computed)
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
