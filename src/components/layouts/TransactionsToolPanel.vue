@@ -2,99 +2,9 @@
     <div class="searchPanel">
         <transactions-tool-panel-operation/>
 
-        <div class="bottom">
-            <div class="date">
-                <h3 class="date-title">
-                    {{ $t('pages.summary.searchPanel.dateRange') }}
-                </h3>
-                <div class="datepicker-wrap">
-                    <datepicker
-                            id="datepickerFrom"
-                            v-model="dateFrom"
-                            language="en"
-                            :placeholder="'Date from'"
-                    />
+        <transactions-tool-panel-filter/>
 
-                    <datepicker
-                            id="datepickerTo"
-                            v-model="dateTo"
-                            language="en"
-                            :placeholder="'Date to'"
-                    />
-                </div>
-            </div>
-            <div class="docs">
-                <button class="buttons btn-default">
-                    {{ $t('pages.summary.searchPanel.buttons.download') }}
-                </button>
-                <button class="buttons btn-default" @click="openModal('shareTransactions')">
-                    {{ $t('pages.summary.searchPanel.buttons.share') }}
-                </button>
-            </div>
-            <div class="info" style="display: flex;">
-                <div class="stats-col" style="display: flex; flex-direction: column;">
-                    <div class="title-opt-span">
-                        <span class="title">
-                            {{ $t('pages.summary.searchPanel.info.received') }}
-                        </span>
-                    </div>
-                    <div class="title-opt-span sent">
-                        <span class="title">
-                            {{ $t('pages.summary.searchPanel.info.sent') }}
-                        </span>
-                    </div>
-                    <div class="title-opt-span">
-                        <span class="title">
-                            {{ $t('pages.summary.searchPanel.info.starting') }}
-                        </span>
-                    </div>
-                    <div class="title-opt-span">
-                        <span class="title">
-                            {{ $t('pages.summary.searchPanel.info.total') }}
-                        </span>
-                    </div>
-                </div>
-                <div class="stats-col" style="display: flex; flex-direction: column;">
-                    <div class="result-opt-span">
-                        <span class="count">
-                            <FormattingPrice
-                                    :value="currentReceiveBalance()"
-                            />
-                        </span>
-                        ALC
-                    </div>
-                    <div class="result-opt-span sent">
-                        <span class="count">
-                            <FormattingPrice
-                                    :value="currentSentBalance()"
-                            />
-                        </span>
-                        ALC
-                    </div>
-                    <div class="result-opt-span">
-                        <span class="count">
-                            <FormattingPrice
-                                    :value="currentBalanceBeginPeriod()"
-                            />
-                        </span>
-                        ALC
-                    </div>
-                    <div class="result-opt-span">
-                        <span class="count">
-                            <FormattingPrice
-                                    :value="currentBalanceEndPeriod()"
-                            />
-                        </span>
-                        ALC
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--<modal-send/>-->
-        <!--<modal-request/>-->
         <modal-share-transactions/>
-
     </div>
 </template>
 
@@ -104,10 +14,7 @@
     import TransactionsToolPanelFilter from '../layouts/TransactionsToolPanelFilter';
     import TransactionsToolPanelOperation from '../layouts/TransactionsToolPanelOperation';
     import ModalShareTransactions from '../modals/ShareTransactions';
-    // import ModalSend from '../modals/Send';
-    // import ModalRequest from '../modals/Request';
 
-    import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
 
     export default {
@@ -157,110 +64,10 @@
             },
         },
         methods: {
-            ...mapMutations({
-                setHideFilter: 'SET_HIDE_FILTER',
-            }),
-            getIcon: function (name) {
-                if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}_dark.svg`);
-                else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_dark.svg`);
-                else return require(`../../assets/img/${name}.svg`);
-            },
 
-            openModal: function (name) {
-                this.$modal.show(name);
-            },
-            searchTransaction: function () {
-                this.$parent.$emit('searchTransaction', this.searchText)
-            },
-            makeFocusSearch: function () {
-                //rewrite. bad method
-                document.getElementById('search-transactions').focus();
-            },
-
-            switchFilter: function () {
-                (this.hideFilter) ? this.setHideFilter(false) : this.setHideFilter(true);
-            },
-
-            initiateDate: function () {
-                this.dateFrom = new Date(this.transactions.reduce(
-                    (acc, loc) =>
-                        acc.timestamp < loc.timestamp
-                            ? acc
-                            : loc
-                ).timestamp);
-                this.dateFrom.setHours(0);
-                this.dateFrom.setMinutes(0);
-                this.dateFrom.setSeconds(0);
-                this.dateFrom.setMilliseconds(0);
-
-                this.dateTo = new Date();
-                this.dateTo.setHours(23);
-                this.dateTo.setMinutes(59);
-                this.dateTo.setSeconds(59);
-                this.dateTo.setMilliseconds(999);
-            },
-
-            currentBalanceBeginPeriod: function () {
-                if (this.checkActivities)
-                    return this.startingTransactions;
-                return 0;
-            },
-            currentBalanceEndPeriod: function () {
-                if (this.checkActivities)
-                    return this.totalTransactions;
-                return 0;
-            },
-            currentSentBalance: function () {
-                let sentTransactions = this.transactions.filter(item => {
-                    return item.balanceInfo.after - item.balanceInfo.before < 0;
-                });
-
-                console.log(sentTransactions, 'sentTransactions again');
-
-                if (sentTransactions.length > 1) {
-                    let sum = 0;
-                    for (let i = 0; i < sentTransactions.length; i++)
-                        sum += sentTransactions[i].count;
-                    return sum;
-                    // return sentTransactions.reduce(
-                    //     (sum, current) => {
-                    //         return {total: parseInt(sum.count) + parseInt(current.count)};
-                    //     }
-                    // ).total;
-                } else if (sentTransactions.length === 1) {
-                    return sentTransactions[0].count;
-                }
-                return 0;
-            },
-            currentReceiveBalance: function () {
-                let receiveTransactions = this.transactions.filter(item => {
-                    return item.balanceInfo.after - item.balanceInfo.before > 0;
-                });
-
-
-                console.log(receiveTransactions, 'receiveTransactions');
-
-
-                if (receiveTransactions.length > 1) {
-                    let sum = 0;
-                    for (let i = 0; i < receiveTransactions.length; i++)
-                        sum += receiveTransactions[i].count;
-                    return sum;
-                    // return receiveTransactions.reduce(
-                    //     (sum, current) => {
-                    //         return {total: parseInt(sum.count) + parseInt(current.count)};
-                    //     }
-                    // ).total;
-                } else if (receiveTransactions.length === 1) {
-                    return receiveTransactions[0].count;
-                }
-                return 0;
-            },
         },
         created() {
-            if (this.transactions.length !== 0) {
-                this.initiateDate();
-            }
+
         },
         mounted() {
             // this.$on('sendMoney', function (data) {
@@ -279,49 +86,14 @@
             //         this.initiateDate();
             //     }
             // });
-
-            // this.$on('successCopyAddress', function (wallet) {
-            //     this.$modal.hide('request');
-            // });
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    .searchPanel {
-        width: 100%;
-        margin-bottom: 24px;
-        /*display: flex;*/
-        /*justify-content: space-between;*/
-        /*align-items: center;*/
-
-        & .filters {
-            span {
-                opacity: 0.5;
-                font-family: MuseoSansCyrl300;
-                font-size: 14px;
-                line-height: 1.29;
-                text-align: right;
-                color: #34343e;
-                min-width: 20px;
-
-                &:not(:last-child) {
-                    margin-right: 18px;
-                }
-
-                &.active {
-                    opacity: 1;
-                }
-
-                &:hover {
-                    &:not(.active) {
-                        cursor: pointer;
-                        opacity: 1;
-                    }
-                }
-            }
-        }
-    }
+<style lang="stylus" scoped>
+    .searchPanel
+        width 100%
+        margin-bottom 24px
 </style>
 
 <style lang="stylus">

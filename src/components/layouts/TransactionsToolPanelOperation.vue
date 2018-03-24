@@ -40,7 +40,8 @@
                 searchText: ''
             }
         },
-        computed: {},
+        computed: {
+        },
         methods: {
             openModal: function (name) {
                 this.$modal.show(name);
