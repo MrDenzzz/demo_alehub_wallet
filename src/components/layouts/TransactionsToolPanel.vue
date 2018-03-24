@@ -1,23 +1,7 @@
 <template>
     <div class="searchPanel">
         <transactions-tool-panel-operation/>
-        <!--<div class="top" style="display: flex; justify-content: space-between; align-items: flex-end;">-->
-            <!--<div class="searchControl" @click="makeFocusSearch" style="display: flex; justify-content: flex-start;">-->
-                <!--<img src="../../assets/img/search-ic.svg" width="16" height="16">-->
-                <!--<input type="text" id="search-transactions" :placeholder="$t('pages.summary.searchPanel.search')" @input="searchTransaction()"-->
-                       <!--v-model="searchText">-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<button class="buttons btn-yellow" @click="openModal('send')" style="margin-bottom: 0;">-->
-                    <!--<img :src="getIcon('send')" width="18" height="15" class="icon">-->
-                    <!--{{ $t('pages.summary.buttons.send') }}-->
-                <!--</button>-->
-                <!--<button class="buttons btn-default" @click="openModal('request')" style="margin-bottom: 0;">-->
-                    <!--<img :src="getIcon('receive')" width="18" height="15" class="icon">-->
-                    <!--{{ $t('pages.summary.buttons.request') }}-->
-                <!--</button>-->
-            <!--</div>-->
-        <!--</div>-->
+
         <div class="bottom">
             <div class="date">
                 <h3 class="date-title">
@@ -279,22 +263,22 @@
             }
         },
         mounted() {
-            this.$on('sendMoney', function (data) {
-
-                let checkFirstTransaction = false;
-                if (this.transactions.length === 0) {
-                    checkFirstTransaction = true;
-                }
-
-                this.sendMoneyToAdress(data);
-                this.setNotificationForSend(data);
-                this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
-                this.newTransaction = true;
-
-                if (checkFirstTransaction) {
-                    this.initiateDate();
-                }
-            });
+            // this.$on('sendMoney', function (data) {
+            //
+            //     let checkFirstTransaction = false;
+            //     if (this.transactions.length === 0) {
+            //         checkFirstTransaction = true;
+            //     }
+            //
+            //     this.sendMoneyToAdress(data);
+            //     this.setNotificationForSend(data);
+            //     this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
+            //     this.newTransaction = true;
+            //
+            //     if (checkFirstTransaction) {
+            //         this.initiateDate();
+            //     }
+            // });
 
             // this.$on('successCopyAddress', function (wallet) {
             //     this.$modal.hide('request');
@@ -337,41 +321,10 @@
                 }
             }
         }
-
-        & .searchControl {
-            /*display: flex;*/
-            /*align-items: center;*/
-            width: calc(100% - 350px); // переписать динамически
-            cursor: pointer;
-
-            & input {
-                background: none;
-                outline: none;
-                border: none;
-                border-bottom: 1px solid #ccc;
-                opacity: 0.5;
-                font-family: MuseoSansCyrl300;
-                font-size: 14px;
-                line-height: 1.29;
-                color: #34343e;
-                margin-left: 18px;
-                padding: 0;
-                margin-top: 0;
-
-                &:focus {
-                    width: 100% !important;
-                    @media screen and (max-width: 768px) {
-                        width: auto !important;
-                    }
-                }
-            }
-        }
     }
 </style>
 
 <style lang="stylus">
-    #search-transactions
-        width auto
     input#datepickerFrom, input#datepickerTo
         font-family MuseoSansCyrl500
         background inherit
@@ -438,10 +391,6 @@
     .cursor-p
         cursor pointer
 
-    .top
-        padding-bottom 18px
-        border-bottom 1px solid #d1d1d1
-        margin-bottom 24px
 
     .bottom
         background-color #f0f0f0

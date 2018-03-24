@@ -18,7 +18,9 @@ const state = {
 
     lazyTransactionsStatus: '',
 
-    transactionsLoader: false
+    transactionsLoader: false,
+
+    transactionSendStatus: ''
 };
 
 const actions = {
@@ -51,7 +53,6 @@ const actions = {
     transactionsRequestLazy: ({commit, dispatch}, address) => {
 
         return new Promise((resolve, reject) => {
-            // if (address === '') return false;
 
             commit('REQUEST_LAZY_TRANSACTIONS');
 
@@ -75,6 +76,35 @@ const actions = {
                     reject(err)
                 });
         })
+    },
+    sendCoins: ({commit, dispatch}, walletDetails) => {
+        return new Promise((resolve, reject) => {
+
+            commit('REQUEST_SEND_COINS');
+
+            let host = `http://192.168.1.37:4000/transactions/send`;
+            axios({
+                url: host,
+                data: walletDetails,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            })
+                .then(resp => {
+                    console.log(resp, 'send response');
+                    // this.addNewNotificaiton(response.body.model);
+                    commit('SUCCESS_SEND_COINS');
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('ERROR_SEND_COINS', err);
+                    reject(err)
+                });
+        })
+
     },
     walletTransactions: ({commit, dispatch}, address) => {
 
@@ -165,6 +195,16 @@ const mutations = {
     },
     CHANGE_TRANSACTION_LOADER_STATE(state, loaderState) {
         state.transactionsLoader = loaderState;
+    },
+
+    REQUEST_SEND_COINS(state) {
+        state.transactionSendStatus = 'loading';
+    },
+    SUCCESS_SEND_COINS(state) {
+        state.transactionSendStatus = 'success';
+    },
+    ERROR_SEND_COINS(state) {
+        state.transactionSendStatus = 'error';
     }
 };
 

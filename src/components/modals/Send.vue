@@ -262,32 +262,22 @@
                 this.step = 2;
             },
             send: function () {
-                this.$toasted.show('Sending success', {
-                    duration: 5000,
-                    type: 'success',
-                });
                 if (this.nextCheck) {
 
-                    this.$http.post(`${this.$host}/transactions/send`, {
+                    this.$store.dispatch('sendCoins', {
                         walletAddress: this.currentWallet.address,
                         walletDestination: this.address,
                         count: parseInt(this.amountAle),
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json; charset=UTF-8',
-                            'Accept': 'application/json',
-                            'Authorization': localStorage.getItem(sha256('user-token'))
-                        }
-                    }).then(response => {
-                        this.addNewNotificaiton(response.body.model);
-
-                        console.log(response, 'send response');
-
-                        // this.$socket.emit('get transactions', {sender: this.currentWallet.address, receiver: this.address});
-                        // let adresses = JSON.parse(localStorage.getItem('wallets'));
-                        // this.$socket.emit('get balance', adresses);
-                    }, response => {
-                        console.log('error', response);
+                    }).then(() => {
+                        this.$toasted.show('Sending was successful', {
+                            duration: 5000,
+                            type: 'success',
+                        });
+                    }).catch(() => {
+                        this.$toasted.show('Sending failed', {
+                            duration: 10000,
+                            type: 'success',
+                        });
                     });
 
                     this.addNewNotificaiton(`**${numeral(this.amountAle).format('0,0')}** ALE <span class="accepted">success send</span> to **${this.address}**`);
