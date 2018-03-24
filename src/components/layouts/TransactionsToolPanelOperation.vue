@@ -9,31 +9,18 @@
                     :placeholder="$t('pages.summary.searchPanel.search')"
                     v-model="searchText">
         </div>
-        <div>
-            <button class="buttons btn-yellow" @click="openModal('send')">
-                <img :src="getIcon('send')" width="18" height="15" class="icon">
-                {{ $t('pages.summary.buttons.send') }}
-            </button>
-            <button class="buttons btn-default" @click="openModal('request')">
-                <img :src="getIcon('receive')" width="18" height="15" class="icon">
-                {{ $t('pages.summary.buttons.request') }}
-            </button>
-        </div>
 
-        <modal-send/>
-        <modal-request/>
+        <send-request/>
     </div>
 </template>
 
 <script>
-    import ModalSend from '../modals/Send';
-    import ModalRequest from '../modals/Request';
+    import SendRequest from './SendRequest';
 
     export default {
         name: 'transactions-operation-tool-panel',
         components: {
-            ModalSend,
-            ModalRequest
+            SendRequest
         },
         data() {
             return {
@@ -41,19 +28,9 @@
             }
         },
         computed: {
+
         },
         methods: {
-            openModal: function (name) {
-                this.$modal.show(name);
-            },
-            getIcon: function (name) {
-                if (this.selectedTheme === 'dark')
-                    return require(`../../assets/img/${name}_dark.svg`);
-                else if (this.selectedTheme === 'white')
-                    return require(`../../assets/img/${name}_dark.svg`);
-
-                return require(`../../assets/img/${name}.svg`);
-            },
             makeFocusSearch: function () {
                 //rewrite. bad method
                 document.getElementById('search-transactions').focus();
@@ -66,14 +43,7 @@
 
         },
         mounted() {
-            this.$on('successCopyAddress', function () {
-                this.$modal.hide('request');
 
-                this.$toasted.show('You have successfully copied the address of the wallet', {
-                    duration: 5000,
-                    type: 'success',
-                });
-            });
         }
     }
 </script>
@@ -116,7 +86,4 @@
 
         #search-transactions
             width auto
-
-        .buttons
-            margin-bottom 0
 </style>

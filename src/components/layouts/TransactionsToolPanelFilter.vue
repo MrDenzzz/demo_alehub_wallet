@@ -28,8 +28,8 @@
                 {{ $t('pages.summary.searchPanel.buttons.share') }}
             </button>
         </div>
-        <div class="info" style="display: flex;">
-            <div class="stats-col" style="">
+        <div class="info">
+            <div class="stats-col">
                 <div class="title-opt-span">
                         <span class="title">
                             {{ $t('pages.summary.searchPanel.info.received') }}
@@ -51,10 +51,10 @@
                         </span>
                 </div>
             </div>
-            <div class="stats-col" style="display: flex; flex-direction: column;">
+            <div class="stats-col">
                 <div class="result-opt-span">
                         <span class="count">
-                            <FormattingPrice
+                            <formatting-price
                                     :value="currentReceiveBalance()"
                             />
                         </span>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="result-opt-span sent">
                         <span class="count">
-                            <FormattingPrice
+                            <formatting-price
                                     :value="currentSentBalance()"
                             />
                         </span>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="result-opt-span">
                         <span class="count">
-                            <FormattingPrice
+                            <formatting-price
                                     :value="currentBalanceBeginPeriod()"
                             />
                         </span>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="result-opt-span">
                         <span class="count">
-                            <FormattingPrice
+                            <formatting-price
                                     :value="currentBalanceEndPeriod()"
                             />
                         </span>
@@ -86,12 +86,16 @@
                 </div>
             </div>
         </div>
+
+        <modal-share-transactions/>
+
     </div>
 </template>
 
 <script>
     import Datepicker from 'vuejs-datepicker';
     import FormattingPrice from '../layouts/FormattingPrice';
+    import ModalShareTransactions from '../modals/ShareTransactions';
 
     import {mapGetters} from 'vuex';
 
@@ -99,7 +103,8 @@
         name: 'transactions-tool-panel-filter',
         components: {
             Datepicker,
-            FormattingPrice
+            FormattingPrice,
+            ModalShareTransactions
         },
         data() {
             return {

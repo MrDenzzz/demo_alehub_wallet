@@ -6,7 +6,7 @@
                 :isBalance="true"
                 :rightMenu="rightMenu"
         />
-        <section class="main" style="height: 100%;">
+        <section class="main">
 
             <Wallets-list
                     :new-wallets="wallets"
@@ -17,16 +17,7 @@
                         <div class="col-12">
                             <div class="stats-balance">
                                 <div class="stats-col">
-                                    <div>
-                                        <!--<button class="buttons btn-yellow" @click="openModal('send')">-->
-                                            <!--<img :src="getIcon('send')" width="18" height="15" class="icon">-->
-                                            <!--{{ $t('pages.summary.buttons.send') }}-->
-                                        <!--</button>-->
-                                        <!--<button class="buttons btn-default" @click="openModal('request')">-->
-                                            <!--<img :src="getIcon('receive')" width="18" height="15" class="icon">-->
-                                            <!--{{ $t('pages.summary.buttons.request') }}-->
-                                        <!--</button>-->
-                                    </div>
+                                    <send-request v-if="getActivity.length === 0 && !transactionsLoader"/>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +38,7 @@
                                     :starting-transactions="startingTransactions"
                             />
 
-                            <Activity-list
+                            <activity-list
                                     v-if="getActivity.length !== 0"
                                     :activities="getActivity"
                                     :is-show-date="true"
@@ -70,22 +61,18 @@
             </div>
         </section>
 
-        <!--<Modal-send/>-->
-        <!--<Modal-request/>-->
         <New-wallet/>
     </div>
 </template>
 
 <script>
-    import Navbar from "./layouts/Navbar";
-    import WalletsList from "./layouts/WalletsList";
-    import ActivityList from "./layouts/ActivityList";
-    import ModalSend from "./modals/Send";
-    import ModalRequest from "./modals/Request";
-    import PanelHeading from "./layouts/PanelHeading";
+    import Navbar from './layouts/Navbar';
+    import WalletsList from './layouts/WalletsList';
+    import ActivityList from './layouts/ActivityList';
+    import PanelHeading from './layouts/PanelHeading';
     import NewWallet from './modals/NewWallet';
+    import SendRequest from './layouts/SendRequest';
     import TransactionsToolPanel from './layouts/TransactionsToolPanel';
-    import Datepicker from 'vuejs-datepicker';
     import FormattingPrice from './layouts/FormattingPrice';
     import Spinner from './layouts/Spinner';
     import Moment from 'moment';
@@ -102,12 +89,10 @@
             Navbar,
             WalletsList,
             ActivityList,
-            ModalSend,
-            ModalRequest,
             PanelHeading,
             NewWallet,
+            SendRequest,
             TransactionsToolPanel,
-            Datepicker,
             FormattingPrice,
             Spinner
         },
@@ -152,9 +137,18 @@
 
             getTransactions: function () {
                 if (this.currentWallet !== null) {
-                    this.$store.dispatch('walletsRequestLazy').then(() => {
-                        this.$store.dispatch('transactionsRequestLazy', this.currentWallet !== null ? this.currentWallet.address : '').then(() => {
+                    this.$store.dispatch(
+                        'walletsRequestLazy'
+                    ).then(() => {
+                        this.$store.dispatch('transactionsRequestLazy',
+                            this.currentWallet !== null ? this.currentWallet.address : ''
+                        ).then(() => {
+
+                        }).catch(() => {
+
                         });
+                    }).catch(() => {
+
                     });
                 }
             },
@@ -396,6 +390,9 @@
 </script>
 
 <style lang="stylus" scoped>
+    .main
+        height 100%
+
     .result-opt-span.sent
         color #b10303
 
