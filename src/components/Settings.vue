@@ -111,14 +111,6 @@
         <change-email-modal/>
         <change-two-auth-modal/>
 
-        <!-- изменить на тостер -->
-
-        <!--<notif-line-->
-        <!--:isShow="isShow"-->
-        <!--:text="notifText"-->
-        <!--:isSuccess="isSuccessNotif"-->
-        <!--/>-->
-
     </div>
 </template>
 
@@ -193,24 +185,23 @@
         },
         methods: {
             ...mapMutations({
-                setTheme: "SET_THEME"
+                setTheme: 'SET_THEME'
             }),
             ...mapActions([
                 'authLogout'
             ]),
             logout: function () {
-                this.$store.dispatch('authLogout').then(() => {
+                this.$store.dispatch('authLogout'
+                ).then(() => {
+
                     this.$router.push('/login')
+                }).catch(() => {
+
                 });
                 this.$router.push('/login');
             },
-            // changeFullName: function () {
-            //     if () {
-            //
-            //     }
-            // },
             newSelect: function (value, id) {
-                if (id === "language") {
+                if (id === 'language') {
                     if (value === 'English')
                         localStorage.setItem('systemLang', 'eng');
                     if (value === 'Русский')

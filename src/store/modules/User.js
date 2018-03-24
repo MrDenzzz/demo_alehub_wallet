@@ -82,6 +82,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('AUTH_LOGOUT');
             localStorage.removeItem(sha256('user-token'));
+            localStorage.removeItem(sha256('current-wallet'));
             delete axios.defaults.headers.common['Authorization'];
             resolve();
         })

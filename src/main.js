@@ -77,18 +77,18 @@ if (token !== 'undefined' && token) {
                         store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
                             console.log('successfully reload transactions');
                         }).catch(() => {
-
+                            console.log('Error requesting transactions');
                         });
                     }).catch(() => {
-
+                        console.log('Error change current wallet');
                     });
                 }
             }).catch(() => {
-
+                console.log('Error requesting wallets');
             });
         }
     }).catch(() => {
-
+        console.log('Error requesting user');
     });
 
 }

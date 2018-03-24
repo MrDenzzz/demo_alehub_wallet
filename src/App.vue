@@ -1,15 +1,13 @@
 <template>
     <div id="app" :class="systemLanguage">
-        <transition name="fade" mode="out-in">
-            <div v-if="isLoading" key="save">
-                <sync-loader :load="isLoading"/>
-            </div>
-            <div v-else key="edit">
-                <!--<New-wallet/>-->
-                <router-view/>
-                <Connection-modal/>
-            </div>
-        </transition>
+        <div v-if="isLoading" key="save">
+            <sync-loader :load="isLoading"/>
+        </div>
+        <div v-else key="edit">
+            <!--<New-wallet/>-->
+            <router-view/>
+            <Connection-modal/>
+        </div>
     </div>
 </template>
 
