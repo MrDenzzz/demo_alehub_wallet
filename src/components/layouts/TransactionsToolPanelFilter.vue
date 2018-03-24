@@ -109,14 +109,13 @@
         data() {
             return {
                 dateFrom: null,
-                dateTo: null,
-
+                dateTo: null
             }
         },
         computed: {
             ...mapGetters([
                 'transactions',
-                'currentWallet'
+                'currentWallet',
             ]),
             currentBalance: function () {
                 return this.$store.state.Wallets.currentWallet.balance;
@@ -145,14 +144,11 @@
                 this.dateTo.setMilliseconds(999);
             },
             currentBalanceBeginPeriod: function () {
-                if (this.checkActivities)
-                    return this.startingTransactions;
-                return 0;
+                console.log(this.transactions);
+                return this.transactions[0].balanceInfo.before;
             },
             currentBalanceEndPeriod: function () {
-                if (this.checkActivities)
-                    return this.totalTransactions;
-                return 0;
+                return this.transactions[this.transactions.length - 1].balanceInfo.after;
             },
             currentSentBalance: function () {
                 let sentTransactions = this.transactions.filter(item => {

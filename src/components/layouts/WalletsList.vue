@@ -5,31 +5,31 @@
                 <div class="wrap-in-wallet">
                     <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
                     <input
-                        type="text"
-                        :placeholder="$t('pages.walletsList.search')"
-                        v-model="searchField"
+                            type="text"
+                            :placeholder="$t('pages.walletsList.search')"
+                            v-model="searchField"
                     >
                 </div>
             </div>
 
             <div
-                class="wallet-list wallet-element"
-                v-for="wallet in newWalletsList"
-                :key="wallet.address"
-                :id="wallet.address"
-                :class="{ active: checkActive(wallet.address) }"
-                @click="selectNewWallet(wallet.address)"
+                    class="wallet-list wallet-element"
+                    v-for="wallet in newWalletsList"
+                    :key="wallet.address"
+                    :id="wallet.address"
+                    :class="{ active: checkActive(wallet.address) }"
+                    @click="selectNewWallet(wallet.address)"
             >
                 <div class="wrap-in-wallet">
                     <p>{{ wallet.name }}</p>
                     <div class="separator"></div>
                     <p class="wallet">
                         <vue-numeric
-                            :separator='correctLangSep'
-                            :decimal-separator='correctLangDecSep'
-                            :value="wallet.balance"
-                            :precision="correctValuePrecision(wallet.balance)"
-                            :read-only="true">
+                                :separator='correctLangSep'
+                                :decimal-separator='correctLangDecSep'
+                                :value="wallet.balance"
+                                :precision="correctValuePrecision(wallet.balance)"
+                                :read-only="true">
                         </vue-numeric>
                         {{ ' ' + 'ALC'}}
                     </p>
@@ -58,6 +58,7 @@
     import {Draggable} from '@shopify/draggable';
 
     import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'walletsList',
@@ -87,6 +88,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'currentWallet'
+            ]),
             newWalletsList: function () {
                 if (this.searchField !== '') {
                     return this.newWallets.filter(item => {
@@ -95,7 +99,7 @@
                 }
                 return this.newWallets
             },
-            selectedTheme () {
+            selectedTheme() {
                 return this.$store.state.Themes.theme;
             },
             getCurrentWallet: function () {
@@ -126,10 +130,16 @@
                 this.$modal.show('newwallet');
             },
             selectNewWallet: function (address) {
-                clearInterval(this.setIntervalId);
-                this.changeNewWallet(address);
-                this.$parent.$emit('changeWallet', true, address);
-                this.setIntervalId = setInterval(this.getTransactions, 15000);
+                // clearInterval(this.setIntervalId);
+
+                this.$store.dispatch('changeCurrentWallet',
+                    address
+                ).then(() => {
+                    this.$parent.$emit('changeCurrentWalletEmit', address);
+                }).catch((err) => {
+                    console.log('Сan not change the current wallet');
+                });
+                // this.setIntervalId = setInterval(this.getTransactions, 15000);
             },
             parseBalance: function (balance) {
                 return numeral(balance).format('0,0');
@@ -139,7 +149,7 @@
                     return balance.toString().split('.')[1].toString().length;
                 return 0;
             },
-            getTransactions () {
+            getTransactions: function () {
                 // if (!this.getCurrentWallet) return false;
                 // this.$http.get(`${this.$host}/transactions/${this.getCurrentWallet.address}`, {
                 //     headers: {
@@ -154,12 +164,15 @@
                 //     console.log('error', response);
                 // });
             },
-            getIcon(name) {
-                if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}.svg`);
-                else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_white.svg`);
-                else return require(`../../assets/img/${name}.svg`);
+            getIcon: function (name) {
+                if (this.selectedTheme === 'dark')
+                    return require(`../../assets/img/${name}.svg`);
+                else if (this.selectedTheme === 'white')
+                    return require(`../../assets/img/${name}_white.svg`);
+
+                return require(`../../assets/img/${name}.svg`);
             },
-            initDrag () {
+            initDrag: function () {
                 const draggable = new Draggable(document.querySelectorAll('.dragParent'), {
                     draggable: '.menu',
                     delay: 0,
@@ -181,12 +194,12 @@
                     }
                 });
             },
-            closeMenu (event) {
+            closeMenu: function (event) {
                 if (event.target.localName !== 'input') {
                     this.isToggle = false;
                 }
             },
-            checkScroll () {
+            checkScroll: function () {
                 let scrollableEl = document.querySelector('.menu');
                 if (scrollableEl.scrollHeight > scrollableEl.clientHeight) {
                     this.scrollable = true;
@@ -195,13 +208,13 @@
                 }
             }
         },
-        created () {
+        created() {
             document.addEventListener('click', this.closeMenu);
             // let _this = this;
             // this.setIntervalId = setInterval(_this.getTransactions, 15000);
             window.addEventListener('resize', this.checkScroll);
         },
-        mounted () {
+        mounted() {
             this.initDrag();
         }
     }
@@ -276,7 +289,6 @@
 
                     &::before
                         background none
-
 
     .wrap-between
         display flex

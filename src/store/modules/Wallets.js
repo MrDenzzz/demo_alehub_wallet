@@ -96,7 +96,10 @@ const actions = {
                     reject(err)
                 });
         })
-    }
+    },
+    changeCurrentWallet: ({commit}, address) => {
+        commit('CHANGE_CURRENT_WALLET', address);
+    },
 };
 
 const mutations = {
@@ -131,6 +134,13 @@ const mutations = {
     },
     ERROR_LAZY_WALLETS(state, err) {
         state.lazyWalletStatus = 'error';
+    },
+
+
+    CHANGE_CURRENT_WALLET(state, address) {
+        state.currentWallet = state.wallets.find(item => {
+            return item.address === address;
+        });
     },
 
 

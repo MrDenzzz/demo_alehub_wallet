@@ -16,7 +16,7 @@ const state = {
 
     transactionStatus: 'not found',
 
-    lazyTransactionsStatus: '',
+    transactionsLazyStatus: '',
 
     transactionsLoader: false,
 
@@ -67,8 +67,7 @@ const actions = {
                 method: 'GET'
             })
                 .then(resp => {
-                    // console.log(resp.data, 'transactions');
-                    commit('SET_LAZY_TRANSACTIONS', resp.data);
+                    commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
                     resolve(resp);
                 })
                 .catch(err => {
@@ -119,25 +118,28 @@ const actions = {
 const mutations = {
     TRANSACTIONS_REQUEST(state) {
         state.transactionStatus = 'loading';
+        state.transactionsLazyStatus = 'loading';
     },
     SET_TRANSACTIONS(state, transactions) {
         state.transactionStatus = 'success';
+        state.transactionsLazyStatus = 'success';
         state.transactions = transactions;
     },
     TRANSACTIONS_ERROR(state, err) {
         state.transactionStatus = 'error';
+        state.transactionsLazyStatus = 'error';
     },
 
 
     REQUEST_LAZY_TRANSACTIONS(state) {
-        state.lazyTransactionsStatus = 'loading';
+        state.transactionsLazyStatus = 'loading';
     },
-    SET_LAZY_TRANSACTIONS(state, transactions) {
-        state.lazyTransactionsStatus = 'success';
+    SUCCESS_LAZY_TRANSACTIONS(state, transactions) {
         state.transactions = transactions;
+        state.transactionsLazyStatus = 'success';
     },
     ERROR_LAZY_TRANSACTIONS(state, err) {
-        state.lazyTransactionsStatus = 'error';
+        state.transactionsLazyStatus = 'error';
     },
 
     REQUEST_WALLET_TRANSACTIONS(state) {
@@ -212,22 +214,20 @@ const getters = {
 
     transactions: state => state.transactions,
 
-    walletTransactions: state => state.walletTransactions,
-
     transactionsFilter: state => {
         if (state.activeFilter === 0) {
             return state.transactions;
         }
         if (state.activeFilter === 1) return state.transactions.filter(item => {
-            return item.type == 'received' || item.type == 'bought'
+            return item.type === 'received' || item.type == 'bought'
         });
         if (state.activeFilter === 2) return state.transactions.filter(item => {
-            return item.type == 'sold' || item.type == 'sent'
+            return item.type === 'sold' || item.type == 'sent'
         });
     },
 
-
     transactionStatus: state => state.transactionStatus,
+    transactionsLazyStatus: state => state.transactionsLazyStatus,
 };
 
 export default {

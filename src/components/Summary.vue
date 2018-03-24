@@ -17,21 +17,19 @@
                         <div class="col-12">
                             <div class="stats-balance">
                                 <div class="stats-col">
-                                    <send-request v-if="getActivity.length === 0 && !transactionsLoader"/>
+                                    <send-request v-if="getActivity.length === 0 && transactionsLazyStatus === 'success'"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <!--<Spinner v-if="isLoader"/>  &lt;!&ndash; переписать спиннер &ndash;&gt;-->
-
-
-                            <!--{{ this.$store.state.Transactions.transactions }}-->
-
+                            <div v-if="transactionsLazyStatus !== 'success'" class="wrap-spinner">
+                                <Spinner v-if="transactionsLazyStatus !== 'success'"/>
+                            </div>
 
                             <transactions-tool-panel
-                                    v-if="getActivity.length !== 0"
+                                    v-if="getActivity.length !== 0 && transactionsLazyStatus === 'success'"
                                     :check-activities="getActivity.length"
                                     :current-transactions="currentTmpTransactions"
                                     :total-transactions="totalTransactions"
@@ -39,12 +37,11 @@
                             />
 
                             <activity-list
-                                    v-if="getActivity.length !== 0"
+                                    v-if="getActivity.length !== 0 && transactionsLazyStatus === 'success'"
                                     :activities="getActivity"
                                     :is-show-date="true"
                                     :change-wallet-result="changeWalletResult"
                                     :new-transaction="newTransaction"
-                                    :loader="transactionsLoader"
                             />
                         </div>
                     </div>
@@ -52,7 +49,8 @@
                         <div class="col-12">
                             <div class="flex-block-transaction"
                                  :class="{'m-t-center': transactions.length === 0}"
-                                 v-if="getActivity.length === 0 && !transactionsLoader">
+                                 v-if="getActivity.length === 0 && transactionsLazyStatus === 'success'">
+
                                 <p class="absence-transactions">No transactions found</p>
                             </div>
                         </div>
@@ -128,44 +126,38 @@
             ...mapGetters([
                 'wallets',
                 'transactions',
-                'walletTransactions',
                 'transactionsFilter',
                 'lengthWalletList',
                 'walletStatus',
-                'currentWallet'
+                'currentWallet',
+                'transactionsLazyStatus'
             ]),
 
-            getTransactions: function () {
-                if (this.currentWallet !== null) {
-                    this.$store.dispatch(
-                        'walletsRequestLazy'
-                    ).then(() => {
-                        this.$store.dispatch('transactionsRequestLazy',
-                            this.currentWallet !== null ? this.currentWallet.address : ''
-                        ).then(() => {
-
-                        }).catch(() => {
-
-                        });
-                    }).catch(() => {
-
-                    });
-                }
-            },
+            // getTransactions: function () {
+            //     if (this.currentWallet !== null) {
+            //         this.$store.dispatch(
+            //             'walletsRequestLazy'
+            //         ).then(() => {
+            //             this.$store.dispatch('transactionsRequestLazy',
+            //                 this.currentWallet !== null ? this.currentWallet.address : ''
+            //             ).then(() => {
+            //
+            //             }).catch(() => {
+            //
+            //             });
+            //         }).catch(() => {
+            //
+            //         });
+            //     }
+            // },
 
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
 
-            transactionsLoader: function () {
-                return this.$store.state.Transactions.transactionsLoader;
-            },
-
-
-            //
-            // currentTransactions: function () {
-            //     return this.transactions;
+            // transactionsLoader: function () {
+            //     return this.$store.state.Transactions.transactionsLoader;
             // },
 
             currentTmpTransactions: function () {
@@ -179,7 +171,6 @@
                 }
                 return [];
             },
-
 
 
             getFilteredActivity: function () {
@@ -230,58 +221,16 @@
             }),
 
 
-            currentTransactions1: function () {
-                this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
-
-                }).catch(() => {
-
-                });
-            },
+            // currentTransactions1: function () {
+            //     this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
+            //
+            //     }).catch(() => {
+            //
+            //     });
+            // },
 
             openModal: function (name) {
                 this.$modal.show(name);
-            },
-
-            getIcon: function (name) {
-                if (this.selectedTheme === 'dark') return require(`../assets/img/${name}_dark.svg`);
-                else if (this.selectedTheme === 'white') return require(`../assets/img/${name}_dark.svg`);
-                else return require(`../assets/img/${name}.svg`);
-            },
-
-            // initiateDate: function () {
-            //
-            //     this.dateFrom = new Date(this.transactions.reduce(
-            //         (acc, loc) =>
-            //             acc.timestamp < loc.timestamp
-            //                 ? acc
-            //                 : loc
-            //     ).timestamp);
-            //     this.dateFrom.setHours(0);
-            //     this.dateFrom.setMinutes(0);
-            //     this.dateFrom.setSeconds(0);
-            //     this.dateFrom.setMilliseconds(0);
-            //
-            //     this.dateTo = new Date();
-            //     this.dateTo.setHours(23);
-            //     this.dateTo.setMinutes(59);
-            //     this.dateTo.setSeconds(59);
-            //     this.dateTo.setMilliseconds(999);
-            // },
-
-            changeSelectedWallet: function (address) {
-                this.changeTransactionLoaderState(true);
-                this.$http.get(`${this.$host}/transactions/${address}`, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json',
-                        'Authorization': localStorage.getItem(sha256('user-token'))
-                    }
-                }).then(response => {
-                    this.addNewTransactions(response.body);
-                    this.changeTransactionLoaderState(false);
-                }, response => {
-                    console.log('error', response);
-                });
             },
         },
         created() {
@@ -290,12 +239,8 @@
             // this.setIntervalId = setInterval(this.getTransactions, 15000);
 
             //переписать каррент трансекшинс в
-            if (this.currentWallet) {
-                this.currentTransactions1();
-            }
-
-            // if (this.transactions.length !== 0) {
-            //     this.initiateDate();
+            // if (this.currentWallet) {
+            //     this.currentTransactions1();
             // }
 
             this.$on('changeTotalTransactions', val => {
@@ -338,10 +283,6 @@
             //     }
             // });
 
-            // this.$on('successCopyAddress', function (wallet) {
-            //     this.$modal.hide('request');
-            // });
-
             this.$on('setPeriod', function (period) {
                 this.setActivePeriod(period);
                 if (period !== "alltime") this.setDefaultChart(period);
@@ -356,12 +297,19 @@
                 this.searchText = searchText;
             });
 
-            this.$on('changeWallet', function (val, address) {
-                if (val && this.transactions.length !== 0) {
-                    // this.initiateDate();
-                    this.changeWalletResult = true;
-                }
-                this.changeSelectedWallet(address);
+            this.$on('changeCurrentWalletEmit', function (address) {
+
+
+                console.log('check emit count');
+
+                this.$store.dispatch('transactionsRequestLazy',
+                    address
+                ).then(() => {
+                    console.log('Transactions for the current wallet were successfully received');
+                }).catch(() => {
+                    console.log(err, 'Get transactions for current wallet impossible');
+                });
+
             });
 
             this.$on('resetWalletResult', val => {
@@ -383,13 +331,21 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
-
-            console.log(this.walletTransactions, 'this.walletTransactions');
         }
     }
 </script>
 
 <style lang="stylus" scoped>
+    .wrap-spinner
+        display flex
+        justify-content center
+        align-items center
+        padding 1em 0
+        margin-top 30vh
+
+        img
+            margin-top 0
+
     .main
         height 100%
 
