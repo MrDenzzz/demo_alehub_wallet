@@ -54,6 +54,7 @@
     import numeral from 'numeral';
     import SelectControl from '../layouts/forms/Select';
     import NewWallet from '../modals/NewWallet';
+
     import sha256 from 'sha256';
     import {Draggable} from '@shopify/draggable';
 

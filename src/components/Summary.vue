@@ -299,8 +299,7 @@
 
             this.$on('changeCurrentWalletEmit', function (address) {
 
-
-                console.log('check emit count');
+                localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
                 this.$store.dispatch('transactionsRequestLazy',
                     address
@@ -341,7 +340,7 @@
         justify-content center
         align-items center
         padding 1em 0
-        margin-top 30vh
+        margin-top 33vh
 
         img
             margin-top 0

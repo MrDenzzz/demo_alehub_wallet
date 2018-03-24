@@ -63,7 +63,6 @@ if (token !== 'undefined' && token) {
 
         console.log('successfully reload');
 
-
         if (store.state.User.haveWallets) {
 
             store.dispatch('walletsRequest').then(() => {
@@ -72,13 +71,24 @@ if (token !== 'undefined' && token) {
 
                 if (store.state.Wallets.currentWallet !== null && store.state.User.haveTransactions) {
 
-                    store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
-                        console.log('successfully reload transactions');
-                    });
+                    store.dispatch('changeCurrentWallet',
+                        localStorage.getItem(sha256('current-wallet'))
+                    ).then(() => {
+                        store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
+                            console.log('successfully reload transactions');
+                        }).catch(() => {
 
+                        });
+                    }).catch(() => {
+
+                    });
                 }
+            }).catch(() => {
+
             });
         }
+    }).catch(() => {
+
     });
 
 }

@@ -104,7 +104,6 @@
                                             Recover two-factor code
                                         </router-link>
                                     </p>
-
                                 </form>
                             </div>
                         </div>
@@ -117,8 +116,9 @@
 
 <script>
     import Navbar from './layouts/Navbar';
-    import sha256 from 'sha256';
     import Spinner from './layouts/Spinner';
+
+    import sha256 from 'sha256';
 
     import {mapGetters} from 'vuex';
 
@@ -210,6 +210,7 @@
                     if (this.authStep === 0) {
                         this.$store.dispatch('userRequest').then(() => {
                             this.$store.dispatch('walletsRequest').then(() => {
+                                localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
                                 this.$store.dispatch('transactionsRequest', this.currentWallet.address || '').then(() => {
                                     this.$router.push('/');
                                 }).catch(() => {
@@ -222,11 +223,11 @@
                                 this.$router.push('/');
                             });
                         }).catch(() => {
-
+                            console.log('Wrong user');
                         });
                     }
                 }).catch(() => {
-
+                    console.log('Wrong auth');
                 });
             },
 
