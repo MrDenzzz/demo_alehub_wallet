@@ -107,8 +107,8 @@
             </div>
         </div>
 
-        <modal-send/>
-        <modal-request/>
+        <!--<modal-send/>-->
+        <!--<modal-request/>-->
         <modal-share-transactions/>
 
     </div>
@@ -120,8 +120,8 @@
     import TransactionsToolPanelFilter from '../layouts/TransactionsToolPanelFilter';
     import TransactionsToolPanelOperation from '../layouts/TransactionsToolPanelOperation';
     import ModalShareTransactions from '../modals/ShareTransactions';
-    import ModalSend from '../modals/Send';
-    import ModalRequest from '../modals/Request';
+    // import ModalSend from '../modals/Send';
+    // import ModalRequest from '../modals/Request';
 
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
@@ -134,8 +134,8 @@
             ModalShareTransactions,
             TransactionsToolPanelOperation,
             TransactionsToolPanelFilter,
-            ModalSend,
-            ModalRequest
+            // ModalSend,
+            // ModalRequest
         },
         props: {
             totalTransactions: [String, Number],
@@ -296,9 +296,9 @@
                 }
             });
 
-            this.$on('successCopyAddress', function (wallet) {
-                this.$modal.hide('request');
-            });
+            // this.$on('successCopyAddress', function (wallet) {
+            //     this.$modal.hide('request');
+            // });
         }
     }
 </script>

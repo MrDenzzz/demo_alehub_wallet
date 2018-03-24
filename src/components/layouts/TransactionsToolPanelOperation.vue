@@ -42,6 +42,9 @@
         },
         computed: {},
         methods: {
+            openModal: function (name) {
+                this.$modal.show(name);
+            },
             getIcon: function (name) {
                 if (this.selectedTheme === 'dark')
                     return require(`../../assets/img/${name}_dark.svg`);
@@ -49,9 +52,6 @@
                     return require(`../../assets/img/${name}_dark.svg`);
 
                 return require(`../../assets/img/${name}.svg`);
-            },
-            openModal: function (name) {
-                this.$modal.show(name);
             },
             makeFocusSearch: function () {
                 //rewrite. bad method
@@ -65,7 +65,14 @@
 
         },
         mounted() {
+            this.$on('successCopyAddress', function () {
+                this.$modal.hide('request');
 
+                this.$toasted.show('You have successfully copied the address of the wallet', {
+                    duration: 5000,
+                    type: 'success',
+                });
+            });
         }
     }
 </script>
@@ -108,7 +115,6 @@
 
         #search-transactions
             width auto
-
 
         .buttons
             margin-bottom 0
