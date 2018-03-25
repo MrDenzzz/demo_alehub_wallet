@@ -257,7 +257,7 @@
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
 
-                    console.log('IM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEAR');
+                    console.log('Success loading');
 
                     this.isLoading = false;
                 } else
