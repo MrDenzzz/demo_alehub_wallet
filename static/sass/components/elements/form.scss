@@ -7,6 +7,14 @@
   border-radius: 4px;
   flex-direction: column;
 
+  & .deletelink {
+    color: #b53939;
+    font-family: MuseoSansCyrl500;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   & .control {
     width: 100%;
     align-items: center;

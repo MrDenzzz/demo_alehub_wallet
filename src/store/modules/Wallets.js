@@ -7,6 +7,7 @@ const state = {
     walletStatus: 'not found',
 
     lazyWalletStatus: '',
+    changeWalletStatus: '',
 
     currentWallet: null,
     wallets: [],
@@ -87,7 +88,6 @@ const actions = {
                 method: 'POST'
             })
                 .then(resp => {
-                    // console.log(resp, 'resprespresp');
                     commit('ADD_WALLET', resp.data.walletModel);
                     resolve(resp);
                 })
@@ -101,6 +101,31 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('CHANGE_CURRENT_WALLET', address);
             resolve();
+        });
+    },
+    changeCurrentWalletName: ({commit}, dataToChangeWalletName) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_CHANGE_WALLET_NAME');
+
+            let host = 'http://192.168.1.37:4000/wallet/rename';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: dataToChangeWalletName,
+                method: 'POST'
+            })
+                .then(resp => {
+                    commit('SUCCESS_CHANGE_WALLET_NAME', dataToChangeWalletName.newWalletName);
+                    resolve(resp);
+                })
+                .catch(err => {
+                    commit('ERROR_CHANGE_WALLET_NAME', err);
+                    reject(err)
+                });
         });
     },
 };
@@ -144,6 +169,20 @@ const mutations = {
         state.currentWallet = state.wallets.find(item => {
             return item.address === address;
         });
+    },
+
+    REQUEST_CHANGE_WALLET_NAME(state) {
+        state.changeWalletStatus = 'loading';
+    },
+    SUCCESS_CHANGE_WALLET_NAME(state, newWalletName) {
+        state.currentWallet.name = newWalletName;
+        state.wallets.find(item => {
+            return item.address === state.currentWallet.address;
+        }).name = newWalletName;
+        state.changeWalletStatus = 'loading';
+    },
+    ERROR_CHANGE_WALLET_NAME(state) {
+        state.changeWalletStatus = 'error';
     },
 
 

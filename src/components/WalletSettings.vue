@@ -26,8 +26,8 @@
                                             id="walletname"
                                             :value="currentWallet.name"
                                             @input="changeWalletName"
-                                            v-on:blur="changeWalname"
-                                            @keyup.enter="changeWalname">
+                                            v-on:blur="reqChangeWalletName"
+                                            @keyup.enter="reqChangeWalletName">
                                     </div>
                                 </div>
 
@@ -59,6 +59,7 @@
     import NewWallet from './modals/NewWallet';
 
     import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'walletSettings',
@@ -91,6 +92,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'currentWallet'
+            ]),
             walletList: function () {
                 return this.$store.state.Wallets.wallets;
             },
@@ -105,8 +109,24 @@
                 deleteWallet: 'DELETE_WALLET',
 
             }),
-            changeWalname: function (e) {
+            reqChangeWalletName: function (e) {
                 e.target.blur();
+
+                this.$store.dispatch('changeCurrentWalletName', {
+                    walletAddress: this.currentWallet.address,
+                    newWalletName: this.newWalletName
+                }).then(() => {
+                    this.$toasted.show('The name of the wallet was successfully changed', {
+                        duration: 5000,
+                        type: 'success',
+                    });
+                }).catch(() => {
+                    this.$toasted.show('There was an error changing your wallet name', {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                });
+
                 this.updateWalletName(this.newWalletName)
             },
             deleteWallet: function () {

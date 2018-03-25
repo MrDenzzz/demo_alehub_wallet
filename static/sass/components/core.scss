@@ -88,7 +88,7 @@ body {
   .cell.day {
     color: #dedfdf;
   }
-  .title-opt-span, 
+  .title-opt-span,
   .result-opt-span {
     color: #f4f3fc !important;
     &.sent {
@@ -721,7 +721,7 @@ body {
     background: #3c3e4b;
     border: solid 0.5px #484848;
   }
-  .control:hover input ~ .control-indicator, 
+  .control:hover input ~ .control-indicator,
   .control input:focus ~ .control-indicator {
     background: #29388e;
   }
@@ -729,7 +729,7 @@ body {
     background: #3e4ea7;
     border: solid 0.5px #080880;
   }
-  .control:hover input:not([disabled]):checked ~ .control-indicator, 
+  .control:hover input:not([disabled]):checked ~ .control-indicator,
   .control input:checked:focus ~ .control-indicator {
     background: #29388e;
   }
@@ -771,7 +771,7 @@ body {
       &:not(.active) {
         &:not(.wallet-search) {
           &:hover {
-            background-color: rgba(247,247,247,0.25);
+            background-color: rgba(247, 247, 247, 0.25);
             .wrap-in-wallet {
               p {
                 opacity: 1 !important;
@@ -1131,7 +1131,7 @@ body {
 }
 
 .drag {
-  @media screen and (max-width: 860px){
+  @media screen and (max-width: 860px) {
     width: 60px;
     height: 60px;
     background-color: #474b4b;
@@ -1303,7 +1303,6 @@ body {
     }
   }
 }
-
 
 // scrollbar
 

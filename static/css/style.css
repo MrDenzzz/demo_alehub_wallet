@@ -1993,6 +1993,11 @@ body {
   justify-content: center;
   border-radius: 4px;
   flex-direction: column; }
+  .form .deletelink {
+    color: #b53939;
+    font-family: MuseoSansCyrl500; }
+    .form .deletelink:hover {
+      text-decoration: none; }
   .form .control {
     width: 100%;
     align-items: center;
