@@ -14,8 +14,9 @@
                     <div class="row">
                         <div class="col-12">
                             <Spinner v-if="isLoader"/>
-                            <Notif-panel :notifications="notifications"
-                                         v-else-if="!isLoader && notifications.length !== 0"/>
+                            <Notif-panel
+                                    v-else-if="!isLoader && notifications.length !== 0"
+                                    :notifications="notifications"/>
 
                             <p v-else class="no-found">{{ $t('pages.notifications.notFound') }}</p>
                         </div>
@@ -30,9 +31,11 @@
     import Navbar from "./layouts/Navbar";
     import NotifPanel from "./layouts/NotifPanel";
     import Spinner from './layouts/Spinner';
+
     import sha256 from 'sha256';
 
     import {mapMutations} from "vuex";
+    import {mapGetters} from "vuex";
 
     export default {
         name: "Notifications",
@@ -47,44 +50,28 @@
             }
         },
         computed: {
-            notifications () {
-                return this.$store.state.Notifications.notifications;
-            },
-            currentWallet: function() {
-                return this.$store.state.Wallets.currentWallet;
-            },
-            transactions () {
-                return this.$store.state.Transactions.transactions
-            }
+            ...mapGetters([
+                'notifications'
+            ]),
         },
         methods: {
             ...mapMutations({
-                changeWallet: "CHANGE_SELECTED_WALLET",
-                toggleNotifBadge: "TOGGLE_NOTIF_BADGE",
-                addNotifications: 'ADD_NOTIFICATIONS'
+                toggleNotifBadge: "TOGGLE_NOTIF_BADGE"
             }),
-            getTransactions () {
+            getTransactions: function () {
                 this.isLoader = true;
-                this.$http.get(`http://localhost:4000/notifications`, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json',
-                        'Authorization': localStorage.getItem(sha256('user-token'))
-                    }
-                }).then(response => {
+
+                this.$store.dispatch('getNotifications'
+                ).then(() => {
                     this.isLoader = false;
-                    if(response.body.length > 0) {
-                        this.addNotifications(response.body);
-                    }
-                }, response => {
-                    this.isLoader = false;
+                    console.log('Success getting notifications');
+                }).catch(() => {
+                    console.log('Error getting notifications');
                 });
             }
         },
         mounted() {
-            this.$on("selectWallet", function (index) {
-                this.changeWallet(index);
-            })
+
         },
         created() {
             this.toggleNotifBadge(false);
@@ -93,22 +80,21 @@
     };
 </script>
 
-<style scoped lang="scss">
-    .no-found {
-        text-align: center;
-        color: #34343e;
-        font-size: 14px;
-        font-family: MuseoSansCyrl500;
-        line-height: calc(100vh - 250px);
-    }
-    .main {
-        .content {
-            padding-left: 0;
-        }
-    }
-    .col-12 {
-        display: flex; 
-        justify-content: center; 
-        align-items: center;
-    }
+<style lang="stylus" scoped>
+    .no-found
+        text-align center
+        color #34343e
+        font-size 14px
+        font-family MuseoSansCyrl500
+        line-height calc(100vh - 250px)
+
+    .main
+        .content
+            padding-left 0
+
+    .col-12
+        display flex
+        justify-content center
+        align-items center
+
 </style>

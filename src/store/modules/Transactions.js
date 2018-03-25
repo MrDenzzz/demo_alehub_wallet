@@ -65,15 +65,13 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-                    commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('ERROR_LAZY_TRANSACTIONS', err);
-                    reject(err)
-                });
+            }).then(resp => {
+                commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_LAZY_TRANSACTIONS', err);
+                reject(err)
+            });
         })
     },
     sendCoins: ({commit, dispatch}, walletDetails) => {
@@ -151,7 +149,6 @@ const mutations = {
 
         console.log(state.transactions, 'state.transactions');
     },
-
 
 
     CHANGE_ACTIVE_FILTER(state, index) {

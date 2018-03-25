@@ -1,18 +1,18 @@
 import axios from "axios/index";
 
 const state = {
+    getNotificationsStatus: '',
     isNewNotification: false,
     notifications: []
 };
 
 const actions = {
-    transactionsRequestLazy: ({commit, dispatch}, address) => {
-
+    getNotifications: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
 
-            commit('REQUEST_LAZY_TRANSACTIONS');
+            commit('REQUEST_GET_NOTIFICATIONS');
 
-            let host = `http://192.168.1.37:4000/transactions/${address}`;
+            let host = `http://192.168.1.37:4000/notifications`;
             axios({
                 url: host,
                 headers: {
@@ -21,27 +21,40 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-                    commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('ERROR_LAZY_TRANSACTIONS', err);
-                    reject(err)
-                });
+            }).then(resp => {
+
+                console.log(resp, 'respNotifications sssssssssssssssss');
+
+                // if (resp.body.length > 0) {
+                commit('SUCCESS_GET_NOTIFICATIONS', resp.data);
+                // }
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_GET_NOTIFICATIONS', err);
+                reject(err)
+            });
         })
     },
 };
 
-
 const mutations = {
+    REQUEST_GET_NOTIFICATIONS(state) {
+        state.getNotificationsStatus = 'loading';
+    },
+    SUCCESS_GET_NOTIFICATIONS(state, notifications) {
+        state.notifications = notifications;
+        state.getNotificationsStatus = 'success';
+    },
+    ERROR_GET_NOTIFICATIONS(state) {
+        state.getNotificationsStatus = 'error';
+    },
     TOGGLE_NOTIF_BADGE(state, value) {
         state.isNewNotification = value;
-    },
-    ADD_NOTIFICATIONS(state, data) {
-        state.notifications = data;
     }
+};
+
+const getters = {
+    notifications: state => state.notifications
 };
 
 export default {

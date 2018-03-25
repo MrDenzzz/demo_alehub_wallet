@@ -90,7 +90,7 @@
 <script>
     import SelectControl from "../layouts/forms/Select";
     import numeral from 'numeral';
-    import {mapMutations} from "vuex";
+
     import sha256 from 'sha256';
 
     export default {
@@ -147,10 +147,6 @@
             }
         },
         methods: {
-            ...mapMutations({
-                addNewNotificaiton: "ADD_NEW_NOTIFICATION",
-                toggleNotifBadge: "TOGGLE_NOTIF_BADGE"
-            }),
             checkTypingChar: function (e) {
                 let event = e || window.event;
                 let key = event.keyCode || event.which;
@@ -269,6 +265,14 @@
                         walletDestination: this.address,
                         count: parseInt(this.amountAle),
                     }).then(() => {
+
+                        this.$store.dispatch('getNotifications'
+                        ).then(() => {
+                            console.log('Success getting notifications');
+                        }).catch(() => {
+                            console.log('Error getting notifications');
+                        });
+
                         this.$toasted.show('Sending was successful', {
                             duration: 5000,
                             type: 'success',
@@ -280,8 +284,6 @@
                         });
                     });
 
-                    this.addNewNotificaiton(`**${numeral(this.amountAle).format('0,0')}** ALE <span class="accepted">success send</span> to **${this.address}**`);
-                    this.toggleNotifBadge(true);
                     this.closeModal();
                 }
             },

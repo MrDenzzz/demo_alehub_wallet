@@ -117,15 +117,13 @@ const actions = {
                 },
                 data: dataToChangeWalletName,
                 method: 'POST'
-            })
-                .then(resp => {
-                    commit('SUCCESS_CHANGE_WALLET_NAME', dataToChangeWalletName.newWalletName);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('ERROR_CHANGE_WALLET_NAME', err);
-                    reject(err)
-                });
+            }).then(resp => {
+                commit('SUCCESS_CHANGE_WALLET_NAME', dataToChangeWalletName.newWalletName);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_CHANGE_WALLET_NAME', err);
+                reject(err)
+            });
         });
     },
 };
