@@ -356,6 +356,13 @@ const messages = {
                     }
                 }
             }
+        },
+        navbar: {
+            wallet: 'Wallet',
+            offers: 'Offers',
+            resume: 'Resumes',
+            notifications: 'Notifications',
+            settings: 'Settings'
         }
     },
     rus: {
@@ -419,7 +426,7 @@ const messages = {
                     walletOffers: 'Предложения',
                     send: 'Отправить',
                     transactions: 'Транзакции',
-                    walletSettings: 'Настройки'
+                    walletSettings: 'Настройки кошелька'
                 },
                 searchPanel: {
                     search: 'Поиск транзакций...',
@@ -715,6 +722,13 @@ const messages = {
                     }
                 }
             }
+        },
+        navbar: {
+            wallet: 'Кошелек',
+            offers: 'Предложения о работе',
+            resume: 'Резюме',
+            notifications: 'Оповещения',
+            settings: 'Настройки'
         }
     }
 };
