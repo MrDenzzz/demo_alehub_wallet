@@ -202,6 +202,7 @@
             },
             checkScroll: function () {
                 let scrollableEl = document.querySelector('.menu');
+                if (!scrollableEl) return false
                 if (scrollableEl.scrollHeight > scrollableEl.clientHeight) {
                     this.scrollable = true;
                 } else {

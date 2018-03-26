@@ -12,7 +12,7 @@
                 <qriously
                         v-else
                         :value="qrPath"
-                        :size="300"/>
+                        :size="qrcodeWidth"/>
                 <span class="warning-title">{{ $t('modals.changeTwoAuth.warning') }}</span>
                 <span
                         v-if="secret"
@@ -79,7 +79,8 @@
             return {
                 token: '',
                 qrPath: '',
-                secret: ''
+                secret: '',
+                windowWidth: ''
             }
         },
         computed: {
@@ -88,7 +89,11 @@
                 'twoAuthGeneratedCode',
                 'twoAuthSecret',
                 'userTwoAuth'
-            ])
+            ]),
+            qrcodeWidth () {
+                if (this.windowWidth <= 425) return 220
+                return 300
+            }
         },
         methods: {
             closeModal: function () {
@@ -128,7 +133,13 @@
             }
         },
         created() {
-
+            let _this = this
+            _this.windowWidth = window.outerWidth;
+            window.addEventListener('resize', function(e) {
+                if (!_this.windowWidth) return false
+                _this.windowWidth = e.target.outerWidth;
+                console.log(_this.windowWidth)
+            })
         },
         mounted() {
             // this.$store.dispatch('twoauthRequest').then(() => {
