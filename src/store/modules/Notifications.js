@@ -7,7 +7,7 @@ const state = {
 };
 
 const actions = {
-    getNotifications: ({commit, dispatch}) => {
+    getNotifications: ({commit}) => {
         return new Promise((resolve, reject) => {
 
             commit('REQUEST_GET_NOTIFICATIONS');
@@ -22,18 +22,19 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-
-                console.log(resp, 'respNotifications sssssssssssssssss');
-
-                // if (resp.body.length > 0) {
                 commit('SUCCESS_GET_NOTIFICATIONS', resp.data);
-                // }
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_GET_NOTIFICATIONS', err);
                 reject(err)
             });
         })
+    },
+    toggleNotificationBadge: ({commit}, value) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_TOGGLE_NOTIFICATION', value);
+            resolve(value);
+        });
     },
 };
 
@@ -48,7 +49,7 @@ const mutations = {
     ERROR_GET_NOTIFICATIONS(state) {
         state.getNotificationsStatus = 'error';
     },
-    TOGGLE_NOTIF_BADGE(state, value) {
+    SUCCESS_TOGGLE_NOTIFICATION(state, value) {
         state.isNewNotification = value;
     }
 };

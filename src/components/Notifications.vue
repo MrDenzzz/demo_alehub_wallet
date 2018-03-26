@@ -32,9 +32,6 @@
     import NotifPanel from "./layouts/NotifPanel";
     import Spinner from './layouts/Spinner';
 
-    import sha256 from 'sha256';
-
-    import {mapMutations} from "vuex";
     import {mapGetters} from "vuex";
 
     export default {
@@ -55,10 +52,7 @@
             ]),
         },
         methods: {
-            ...mapMutations({
-                toggleNotifBadge: "TOGGLE_NOTIF_BADGE"
-            }),
-            getTransactions: function () {
+            getCurrentNotifications: function () {
                 this.isLoader = true;
 
                 this.$store.dispatch('getNotifications'
@@ -68,14 +62,23 @@
                 }).catch(() => {
                     console.log('Error getting notifications');
                 });
+            },
+            changeToggleNotificationBadge: function (val) {
+                this.$store.dispatch('toggleNotificationBadge',
+                    val
+                ).then(() => {
+                    console.log('Success toggle notifications badge');
+                }).catch(() => {
+                    console.log('Error toggle notifications badge');
+                });
             }
+        },
+        created() {
+            this.changeToggleNotificationBadge(false);
+            this.getCurrentNotifications();
         },
         mounted() {
 
-        },
-        created() {
-            this.toggleNotifBadge(false);
-            this.getTransactions();
         }
     };
 </script>

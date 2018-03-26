@@ -273,6 +273,8 @@
                             console.log('Error getting notifications');
                         });
 
+                        this.changeToggleNotificationBadge(true);
+
                         this.$toasted.show('Sending was successful', {
                             duration: 5000,
                             type: 'success',
@@ -286,6 +288,15 @@
 
                     this.closeModal();
                 }
+            },
+            changeToggleNotificationBadge: function (val) {
+                this.$store.dispatch('toggleNotificationBadge',
+                    val
+                ).then(() => {
+                    console.log('Success toggle notifications badge');
+                }).catch(() => {
+                    console.log('Error toggle notifications badge');
+                });
             },
             resetError: function (type) {
                 switch (type) {
