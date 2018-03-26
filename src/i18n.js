@@ -77,6 +77,8 @@ const messages = {
                     }
                 },
                 activityList: {
+                    from: 'From:',
+                    to: 'To:',
                     resultDay: {
                         received: 'Received',
                         sent: 'Sent',
@@ -434,6 +436,8 @@ const messages = {
                     }
                 },
                 activityList: {
+                    from: 'От:',
+                    to: 'В:',
                     resultDay: {
                         received: 'Получено',
                         sent: 'Отправлено',

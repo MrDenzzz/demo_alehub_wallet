@@ -60,6 +60,9 @@
         margin-right: 12px;
         font-size: 14px;
         font-family: MuseoSansCyrl500;
+        @media(max-width: 320px) {
+          white-space: normal;
+        }
       }
 
       & .textbox {
