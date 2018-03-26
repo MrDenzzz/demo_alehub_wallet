@@ -191,4 +191,14 @@
             .modal-btn
                 .btn-large
                     padding 11px
+    
+    @media(max-width: 425px)
+        .two-auth
+            .btn-default
+                    margin-right 0
+
+            .btn-yellow 
+                margin-left 0
+
+
 </style>
