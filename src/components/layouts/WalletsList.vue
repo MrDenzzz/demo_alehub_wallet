@@ -133,13 +133,16 @@
             selectNewWallet: function (address) {
                 // clearInterval(this.setIntervalId);
 
-                this.$store.dispatch('changeCurrentWallet',
-                    address
-                ).then(() => {
-                    this.$parent.$emit('changeCurrentWalletEmit', address);
-                }).catch((err) => {
-                    console.log('Сan not change the current wallet');
-                });
+                if (this.currentWallet.address !== address) {
+                    this.$store.dispatch('changeCurrentWallet',
+                        address
+                    ).then(() => {
+                        this.$parent.$emit('changeCurrentWalletEmit', address);
+                    }).catch((err) => {
+                        console.log('Сan not change the current wallet');
+                    });
+                }
+
                 // this.setIntervalId = setInterval(this.getTransactions, 15000);
             },
             parseBalance: function (balance) {
@@ -186,11 +189,11 @@
 
                 draggable.on('drag:move', (event) => {
                     if (event.mirror.getBoundingClientRect().x * -0.4 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
-                        this.isToggle = true
+                        this.isToggle = true;
                         document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
                     } else if (event.mirror.getBoundingClientRect().x >= 0) {
                         event.cancel();
-                        document.querySelector('.draggable-mirror').style.transform = 'translate3d(0px, 64px, 0)'
+                        document.querySelector('.draggable-mirror').style.transform = 'translate3d(0px, 64px, 0)';
                         document.querySelector('.draggable-mirror').style.left = 0
                     }
                 });
