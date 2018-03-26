@@ -66,4 +66,11 @@
     .transactions-buttons
         .buttons
             margin-bottom 0
+    
+    @media(max-width: 375px)
+        .transactions-buttons
+            width 100%
+            .buttons
+                width 100%
+                margin-bottom 10px 
 </style>

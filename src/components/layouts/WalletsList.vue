@@ -254,7 +254,7 @@
                 background-color #474b4b
                 @media (max-width: 1024px)
                     width 260px
-                @media (max-width: 860px)
+                @media (max-width: 920px)
                     width 360px
                 @media (max-width: 425px)
                     width calc(100% - 100vh)

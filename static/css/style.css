@@ -109,7 +109,7 @@ body {
       @media (max-width: 1024px) {
         .dark .menu .wallet-list.wrap-between {
           width: calc(260px - 70px) !important; } }
-      @media (max-width: 860px) {
+      @media (max-width: 920px) {
         .dark .menu .wallet-list.wrap-between {
           width: calc(360px - 70px) !important; } }
       @media (max-width: 425px) {
@@ -470,7 +470,7 @@ body {
       @media (max-width: 1024px) {
         .white .menu .wallet-list.wrap-between {
           width: calc(260px - 70px) !important; } }
-      @media (max-width: 860px) {
+      @media (max-width: 920px) {
         .white .menu .wallet-list.wrap-between {
           width: calc(360px - 70px) !important; } }
       @media (max-width: 425px) {
@@ -658,13 +658,13 @@ body {
   .themes input[type="radio"] {
     margin: 0; }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 920px) {
   .dragParent {
     width: 720px;
     position: absolute;
     left: -360px; } }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 920px) {
   .drag {
     width: 60px;
     height: 60px;
@@ -1176,7 +1176,7 @@ body {
   top: 64px;
   bottom: 0px;
   overflow-y: auto; }
-  @media (max-width: 860px) {
+  @media (max-width: 920px) {
     .menu {
       overflow-y: unset; } }
   .menu.is-opened {
@@ -1201,7 +1201,7 @@ body {
       @media (max-width: 1024px) {
         .menu .wallet-list.wallet-search {
           width: 260px; } }
-      @media (max-width: 860px) {
+      @media (max-width: 920px) {
         .menu .wallet-list.wallet-search {
           width: 360px; } }
       @media (max-width: 425px) {
@@ -1278,7 +1278,7 @@ body {
   .menu {
     width: 260px; } }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 920px) {
   .menu {
     width: 360px; } }
 
@@ -1307,7 +1307,7 @@ body {
     .main .content.nomenu {
       padding-left: 0; } }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 920px) {
   .main .content {
     padding-left: 0; } }
 
