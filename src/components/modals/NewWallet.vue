@@ -265,6 +265,8 @@
         },
         computed: {
             ...mapGetters([
+                'wallets',
+                'currentWallet',
                 'checkNewWalletMatchPassword'
             ]),
             isImport: function () {
@@ -468,6 +470,8 @@
                         type: 'success',
                     });
 
+                    localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
+
                     this.closeModal();
 
                     this.$store.dispatch('transactionsRequestLazy',
@@ -479,7 +483,7 @@
                         console.log(err, 'transactions new wallet resp err');
                     });
                 }).catch(() => {
-
+                    console.log('Error request new wallet');
                 });
             },
 
