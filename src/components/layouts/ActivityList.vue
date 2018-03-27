@@ -12,8 +12,8 @@
                 </div>
                 <div class="details" :class="{ 'sent': typeTransaction(activity.walletAddress), 'received': !typeTransaction(activity.walletAddress) }">
                     <div class="info">
-                        <p v-if="typeTransaction(activity.walletAddress)">To: {{ activity.walletDestination }}</p>
-                        <p v-else>From: {{ activity.walletAddress }}</p>
+                        <p v-if="typeTransaction(activity.walletAddress)">{{ $t('pages.summary.activityList.to') }} {{ activity.walletDestination }}</p>
+                        <p v-else>{{ $t('pages.summary.activityList.from') }} {{ activity.walletAddress }}</p>
                         <p>{{ parseDate(activity.timestamp) }} / {{ parseTime(activity.timestamp) }}</p>
                     </div>
                     <div class="purpose">

@@ -94,7 +94,7 @@
                         :width="link.iconWidth"
                         :height="link.iconHeight"
                     >
-                    <span class="linkName">{{link.name}}</span>
+                    <span class="linkName">{{$t('navbar.'+link.name)}}</span>
                 </router-link>
             </div>
             <hr v-if="rightMenu">

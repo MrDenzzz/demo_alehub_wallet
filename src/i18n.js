@@ -77,6 +77,8 @@ const messages = {
                     }
                 },
                 activityList: {
+                    from: 'From:',
+                    to: 'To:',
                     resultDay: {
                         received: 'Received',
                         sent: 'Sent',
@@ -354,6 +356,13 @@ const messages = {
                     }
                 }
             }
+        },
+        navbar: {
+            wallet: 'Wallet',
+            offers: 'Offers',
+            resume: 'Resumes',
+            notifications: 'Notifications',
+            settings: 'Settings'
         }
     },
     rus: {
@@ -417,7 +426,7 @@ const messages = {
                     walletOffers: 'Предложения',
                     send: 'Отправить',
                     transactions: 'Транзакции',
-                    walletSettings: 'Настройки'
+                    walletSettings: 'Настройки кошелька'
                 },
                 searchPanel: {
                     search: 'Поиск транзакций...',
@@ -434,6 +443,8 @@ const messages = {
                     }
                 },
                 activityList: {
+                    from: 'От:',
+                    to: 'В:',
                     resultDay: {
                         received: 'Получено',
                         sent: 'Отправлено',
@@ -711,6 +722,13 @@ const messages = {
                     }
                 }
             }
+        },
+        navbar: {
+            wallet: 'Кошелек',
+            offers: 'Предложения о работе',
+            resume: 'Резюме',
+            notifications: 'Оповещения',
+            settings: 'Настройки'
         }
     }
 };

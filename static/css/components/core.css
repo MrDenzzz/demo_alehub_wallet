@@ -108,7 +108,7 @@ body {
       @media (max-width: 1024px) {
         .dark .menu .wallet-list.wrap-between {
           width: calc(260px - 70px) !important; } }
-      @media (max-width: 860px) {
+      @media (max-width: 920px) {
         .dark .menu .wallet-list.wrap-between {
           width: calc(360px - 70px) !important; } }
       @media (max-width: 425px) {
@@ -469,7 +469,7 @@ body {
       @media (max-width: 1024px) {
         .white .menu .wallet-list.wrap-between {
           width: calc(260px - 70px) !important; } }
-      @media (max-width: 860px) {
+      @media (max-width: 920px) {
         .white .menu .wallet-list.wrap-between {
           width: calc(360px - 70px) !important; } }
       @media (max-width: 425px) {
@@ -657,13 +657,13 @@ body {
   .themes input[type="radio"] {
     margin: 0; }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 920px) {
   .dragParent {
     width: 720px;
     position: absolute;
     left: -360px; } }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 920px) {
   .drag {
     width: 60px;
     height: 60px;
@@ -812,3 +812,6 @@ body {
   width: 5px;
   background-color: #e1e1e1;
   border-radius: 3px; }
+
+.v--modal {
+  overflow-y: auto !important; }

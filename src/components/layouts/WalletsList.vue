@@ -205,6 +205,7 @@
             },
             checkScroll: function () {
                 let scrollableEl = document.querySelector('.menu');
+                if (!scrollableEl) return false
                 if (scrollableEl.scrollHeight > scrollableEl.clientHeight) {
                     this.scrollable = true;
                 } else {
@@ -257,7 +258,7 @@
                 background-color #474b4b
                 @media (max-width: 1024px)
                     width 260px
-                @media (max-width: 860px)
+                @media (max-width: 920px)
                     width 360px
                 @media (max-width: 425px)
                     width calc(100% - 100vh)

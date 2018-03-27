@@ -86,4 +86,13 @@
 
         #search-transactions
             width auto
+
+    @media(max-width: 600px) 
+        .top
+            flex-direction column
+            align-items flex-start
+
+            .searchControl
+                margin-bottom 20px
+
 </style>

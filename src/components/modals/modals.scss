@@ -526,8 +526,18 @@
           height: 20px;
         }
         & .title {
+          padding: 0 30px;
           height: 30px;
         }
+      }
+    }
+  }
+}
+@media(max-width: 580px) {
+  .two-auth {
+    & .btn-default {
+      & .icon-copy {
+        margin-top: 10px;
       }
     }
   }
@@ -548,6 +558,11 @@
       }
       & .body {
         & .modal-btn {
+          display: flex;
+          flex-direction: column;
+          & .buttons {
+            width: 100%;
+          }
           & .btn-large {
             padding: 10px 10px;
           }
@@ -576,6 +591,29 @@
             }
           }
         }
+      }
+    }
+  }
+  .two-auth {
+    & .btn-default {
+      & .icon-copy {
+        margin-top: 0;
+      }
+    }
+  }
+  .warning-title {
+    padding: 0 30px;
+  }
+  .two-auth-secret {
+    word-break: break-all;
+    padding: 0 30px;
+  }
+}
+@media(max-width: 320px) {
+  .two-auth {
+    & .btn-default {
+      & .icon-copy {
+        margin-top: 10px;
       }
     }
   }
