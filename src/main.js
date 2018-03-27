@@ -80,7 +80,7 @@ if (token !== 'undefined' && token) {
                             console.log('Error requesting transactions');
                         });
                     }).catch(() => {
-                        console.log('Error change current wallet');
+                        console.log('Error set current wallet');
                     });
                 }
             }).catch(() => {

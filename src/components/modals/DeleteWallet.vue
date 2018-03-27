@@ -45,6 +45,10 @@
                 </div>
             </div>
 
+            <div v-if="dataProcessing" class="wrap-spinner">
+                <spinner v-if="dataProcessing" />
+            </div>
+
             <div class="modal-btn text-center">
                 <button class="btn btn-default btn-large">
                     {{ $t('modals.deleteWallet.buttons.cancel') }}
@@ -65,17 +69,23 @@
 </template>
 
 <script>
+    import Spinner from '../layouts/Spinner';
+
     import sha256 from 'sha256';
 
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'deletewallet',
+        components: {
+            Spinner
+        },
         data() {
             return {
                 timer: 0,
                 consentRmWallet: false,
-                rmWalletName: ''
+                rmWalletName: '',
+                dataProcessing: false
             }
         },
         computed: {
@@ -131,6 +141,7 @@
                             duration: 5000,
                             type: 'success',
                         });
+                        this.dataProcessing = false;
                         localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
                         this.$modal.hide('deletewallet');
                     }).catch(() => {
@@ -141,6 +152,8 @@
                 });
             },
             removeCurrentWallet: function () {
+                this.dataProcessing = true;
+
                 this.$store.dispatch('removeWallet', {
                     address: this.currentWallet.address
                 }).then(() => {
@@ -157,6 +170,7 @@
                                     duration: 5000,
                                     type: 'success',
                                 });
+                                this.dataProcessing = false;
                                 localStorage.removeItem(sha256('current-wallet'));
                                 this.$router.push('/');
                                 this.$modal.hide('deletewallet');
@@ -168,6 +182,7 @@
                         // });
                     }
                 }).catch(() => {
+                    this.dataProcessing = false;
                     this.$toasted.show(`There was an error deleting the wallet '${this.currentWallet.name}'`, {
                         duration: 10000,
                         type: 'error',
@@ -183,6 +198,10 @@
 </style>
 
 <style lang="stylus">
+    .wrap-spinner
+        display flex
+        justify-content center
+        padding 1em 0
 
     .modal-input
         input

@@ -100,7 +100,7 @@ const actions = {
         })
     },
     changeCurrentWallet: ({commit}, address) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             commit('CHANGE_CURRENT_WALLET', address);
             resolve();
         });

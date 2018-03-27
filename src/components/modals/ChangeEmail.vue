@@ -33,7 +33,7 @@
                 </div>
 
                 <div v-if="dataProcessing" class="wrap-spinner">
-                    <Spinner v-if="dataProcessing" />
+                    <spinner v-if="dataProcessing" />
                 </div>
 
                 <div class="modal-btn text-center">
