@@ -126,7 +126,6 @@
             ...mapGetters([
                 'wallets',
                 'transactions',
-                'transactionsFilter',
                 'lengthWalletList',
                 'walletStatus',
                 'currentWallet',
@@ -134,32 +133,9 @@
                 'transactionsLazyStatus'
             ]),
 
-            // getTransactions: function () {
-            //     if (this.currentWallet !== null) {
-            //         this.$store.dispatch(
-            //             'walletsRequestLazy'
-            //         ).then(() => {
-            //             this.$store.dispatch('transactionsRequestLazy',
-            //                 this.currentWallet !== null ? this.currentWallet.address : ''
-            //             ).then(() => {
-            //
-            //             }).catch(() => {
-            //
-            //             });
-            //         }).catch(() => {
-            //
-            //         });
-            //     }
-            // },
-
-
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
-
-            // transactionsLoader: function () {
-            //     return this.$store.state.Transactions.transactionsLoader;
-            // },
 
             currentTmpTransactions: function () {
                 if (this.dateFrom && this.dateTo) {
@@ -172,35 +148,14 @@
                 }
                 return [];
             },
-
-
-            getFilteredActivity: function () {
-
-                let list = this.transactions.slice().sort((a, b) => {
-                    return a.transactions - b.transactions;
-                }).reverse();
-
-
-                let activity = [];
-                for (let i = 0; i < list.length; i++) {
-                    let findActivity = this.transactionsFilter.find(item => {
-                        return list[i]._id === item._id;
-                    });
-                    if (findActivity !== undefined) {
-                        activity.push(findActivity)
-                    }
-                }
-                return activity;
-            },
             getActivity: function () {
-                //return this.$store.state.Transactions.transactions;
                 if (this.searchText) {
-                    return this.getFilteredActivity.filter(item => {
+                    return this.transactions.filter(item => {
                         return this.currentWallet.address === item.walletAddress ? item.walletDestination.toLowerCase().includes(this.searchText.toLowerCase()) :
                             item.walletAddress.toLowerCase().includes(this.searchText.toLowerCase())
                     })
                 }
-                return this.getFilteredActivity;
+                return this.transactions;
             },
         },
         methods: {

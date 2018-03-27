@@ -242,19 +242,6 @@ const mutations = {
 const getters = {
 
     transactions: state => state.transactions,
-
-    transactionsFilter: state => {
-        if (state.activeFilter === 0) {
-            return state.transactions;
-        }
-        if (state.activeFilter === 1) return state.transactions.filter(item => {
-            return item.type === 'received' || item.type == 'bought'
-        });
-        if (state.activeFilter === 2) return state.transactions.filter(item => {
-            return item.type === 'sold' || item.type == 'sent'
-        });
-    },
-
     transactionStatus: state => state.transactionStatus,
     transactionsLazyStatus: state => state.transactionsLazyStatus,
 };
