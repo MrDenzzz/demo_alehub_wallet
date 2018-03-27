@@ -126,11 +126,10 @@
                 return this.$store.state.Wallets.currentWallet.balance;
             },
             currentBalanceBeginPeriod: function () {
-                console.log(this.transactions);
-                return this.transactions[0].balanceInfo.before;
+                return this.transactions[this.transactions.length - 1].balanceInfo.before;
             },
             currentBalanceEndPeriod: function () {
-                return this.transactions[this.transactions.length - 1].balanceInfo.after;
+                return this.transactions[0].balanceInfo.after;
             },
             currentSentBalance: function () {
                 let sentTransactions = this.transactions.filter(item => {
