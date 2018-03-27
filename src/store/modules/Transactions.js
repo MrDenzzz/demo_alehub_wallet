@@ -17,6 +17,7 @@ const state = {
     transactionStatus: 'not found',
 
     transactionsLazyStatus: '',
+    transactionsMomentStatus: '',
 
     transactionsLoader: false,
 
@@ -53,9 +54,7 @@ const actions = {
     transactionsRequestLazy: ({commit, dispatch}, address) => {
 
         return new Promise((resolve, reject) => {
-
             commit('REQUEST_LAZY_TRANSACTIONS');
-
             let host = `http://192.168.1.37:4000/transactions/${address}`;
             axios({
                 url: host,
@@ -70,6 +69,28 @@ const actions = {
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_LAZY_TRANSACTIONS', err);
+                reject(err)
+            });
+        })
+    },
+    transactionsRequestMoment: ({commit, dispatch}, address) => {
+
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_MOMENT_TRANSACTIONS');
+            let host = `http://192.168.1.37:4000/transactions/${address}`;
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            }).then(resp => {
+                commit('SUCCESS_MOMENT_TRANSACTIONS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_MOMENT_TRANSACTIONS', err);
                 reject(err)
             });
         })
@@ -89,17 +110,16 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'POST'
-            })
-                .then(resp => {
-                    console.log(resp, 'send response');
-                    // this.addNewNotificaiton(response.body.model);
-                    commit('SUCCESS_SEND_COINS');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('ERROR_SEND_COINS', err);
-                    reject(err)
-                });
+            }).then(resp => {
+                console.log(resp, 'send response');
+                // this.addNewNotificaiton(response.body.model);
+                commit('SUCCESS_SEND_COINS');
+
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_SEND_COINS', err);
+                reject(err)
+            });
         })
 
     },
@@ -120,12 +140,12 @@ const mutations = {
     },
     SET_TRANSACTIONS(state, transactions) {
         state.transactionStatus = 'success';
-        state.transactionsLazyStatus = 'success';
+        state.transactionsLazyStatus = 'loading';
         state.transactions = transactions;
     },
     TRANSACTIONS_ERROR(state, err) {
         state.transactionStatus = 'error';
-        state.transactionsLazyStatus = 'error';
+        state.transactionsLazyStatus = 'loading';
     },
 
 
@@ -136,9 +156,21 @@ const mutations = {
         state.transactions = transactions;
         state.transactionsLazyStatus = 'success';
     },
-    ERROR_LAZY_TRANSACTIONS(state, err) {
+    ERROR_LAZY_TRANSACTIONS(state) {
         state.transactionsLazyStatus = 'error';
     },
+
+    REQUEST_MOMENT_TRANSACTIONS(state) {
+        state.transactionsMomentStatus = 'loading';
+    },
+    SUCCESS_MOMENT_TRANSACTIONS(state, transactions) {
+        state.transactions = transactions;
+        state.transactionsMomentStatus = 'success';
+    },
+    ERROR_MOMENT_TRANSACTIONS(state) {
+        state.transactionsMomentStatus = 'error';
+    },
+
 
     REQUEST_WALLET_TRANSACTIONS(state) {
 
