@@ -1,105 +1,118 @@
 <template>
-    <modal name="deletewallet" height="auto" class="modal-md" @before-close="beforeClose" @opened="modalOpen">
+    <modal
+            name="deletewallet"
+            height="auto"
+            class="modal-md"
+            @before-close="beforeClose"
+            @opened="modalOpen">
         <div class="heading">
-            <p class="title">{{ $t('modals.deleteWallet.title') }}</p>
+            <p class="title">
+                {{ $t('modals.deleteWallet.title') }}
+            </p>
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
-
-            <div class="modal-warning" :class="{ 'bl': delWallet.isAgreed }">
-                <p class="agreed">{{ $t('modals.deleteWallet.confirm.titleStart') }} <b>{{ currentWallet.name }}</b> {{
-                    $t('modals.deleteWallet.confirm.titleEnd') }}</p>
+            <div class="modal-warning" :class="{ 'bl': consentRmWallet }">
+                <p class="agreed">
+                    {{ $t('modals.deleteWallet.confirm.titleStart') }} <b>{{ currentWallet.name }}</b>
+                    {{ $t('modals.deleteWallet.confirm.titleEnd') }}
+                </p>
                 <div class="checkbox-contol">
-                    <input id="checkbox-access" type="checkbox" :value="delWallet.isAgreed" @change="agreedDelete"/>
-                    <span id="label-checkbox" @click="makeFocusCheckbox">{{ $t('modals.deleteWallet.confirm.subtitle') }}</span>
+                    <input
+                            id="checkbox-access"
+                            type="checkbox"
+                            :value="consentRmWallet"
+                            @change="changeStatusConsentRmWallet"/>
+
+                    <span id="label-checkbox" @click="makeFocusCheckbox">
+                        {{ $t('modals.deleteWallet.confirm.subtitle') }}
+                    </span>
                 </div>
             </div>
 
-            <div class="modal-control nobl" id="modal-wallet-name" @click="makeWalletNameFocus" v-if="delWallet.isAgreed">
+            <div class="modal-control nobl" id="modal-wallet-name" @click="makeWalletNameFocus"
+                 v-if="consentRmWallet">
                 <div class="modal-input">
-                    <label id="wallet-name-label" class="title lc" >{{ $t('modals.deleteWallet.fields.walletName.label') }}</label>
-                    <input type="text" class="input" id="wallet-name-input"
-                           :placeholder="$t('modals.deleteWallet.fields.walletName.placeholder')"
-                           v-model="delWalletName"/>
+                    <label id="wallet-name-label" class="title lc">
+                        {{ $t('modals.deleteWallet.fields.walletName.label') }}
+                    </label>
+                    <input
+                            type="text"
+                            class="input"
+                            id="wallet-name-input"
+                            :placeholder="$t('modals.deleteWallet.fields.walletName.placeholder')"
+                            v-model="rmWalletName"/>
                 </div>
             </div>
 
             <div class="modal-btn text-center">
-                <button class="btn btn-default btn-large">{{ $t('modals.deleteWallet.buttons.cancel') }}</button>
+                <button class="btn btn-default btn-large">
+                    {{ $t('modals.deleteWallet.buttons.cancel') }}
+                </button>
                 <button
-                    class="btn btn-yellow btn-large"
-                    :class="{ 'disabled': checkCorrectDeleteWallet || timer != 0 }"
-                    :disabled="checkCorrectDeleteWallet || timer != 0"
-                    @click="removeCurrentWallet()">
+                        class="btn btn-yellow btn-large"
+                        :class="{ 'disabled': checkCorrectRmWallet || timer !== 0 }"
+                        :disabled="checkCorrectRmWallet || timer !== 0"
+                        @click="removeCurrentWallet()">
                     {{ $t('modals.deleteWallet.buttons.delete') }}
-                    <span v-if="timer != 0">({{ timer }})</span>
+                    <span v-if="timer !== 0">
+                        ({{ timer }})
+                    </span>
                 </button>
             </div>
-
         </div>
     </modal>
 </template>
 
 <script>
-    import {mapMutations} from "vuex";
+    import sha256 from 'sha256';
+
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'deletewallet',
         data() {
             return {
                 timer: 0,
-                delWalletName: ''
+                consentRmWallet: false,
+                rmWalletName: ''
             }
         },
         computed: {
-            newWallets() {
-                return this.$store.state.Wallets.wallets;
-            },
-            userId: function () {
-                return localStorage.getItem('id');
-            },
-            currentWallet: function() {
-                return this.$store.state.Wallets.currentWallet;
-            },
-
-            delWallet: function() {
-                return this.$store.state.Wallets.delWalletProperty;
-            },
-            checkCorrectDeleteWallet: function() {
-                if (this.currentWallet.name === this.delWalletName)
+            ...mapGetters([
+                'wallets',
+                'currentWallet',
+                'currentWalletIndex'
+            ]),
+            checkCorrectRmWallet: function () {
+                if (this.currentWallet.name === this.rmWalletName)
                     return false;
                 return true;
             }
         },
         methods: {
-            ...mapMutations({
-                deleteWallet: "DELETE_WALLET",
-                agreedDelete: "AGREED_DELETE",
-
-                removeWallet: 'REMOVE_WALLET',
-                removeOffers: 'REMOVE_OFFERS',
-                changeNewWallet: 'CHANGE_NEW_WALLET',
-                removeTransactions: 'REMOVE_TRANSACTIONS'
-            }),
-            beforeClose: function () {
-                this.agreedDelete();
-                this.delWalletName = '';
-            },
-            closeModal() {
+            closeModal: function () {
                 this.$modal.hide('deletewallet');
-                this.agreedDelete();
-                this.delWalletName = '';
             },
-            setMnemonic(e) {
-                this.setMnemonicCode(e.target.value);
+            beforeClose: function () {
+                this.timer = 1;
+                this.consentRmWallet = false;
+                this.rmWalletName = '';
             },
-            countDown() {
-                if (this.timer != 0) {
+            modalOpen: function () {
+                this.timer = 3;
+                this.countDown();
+            },
+            countDown: function () {
+                if (this.timer !== 0) {
                     setTimeout(() => {
                         this.timer--;
                         this.countDown();
                     }, 1000);
                 }
+            },
+            changeStatusConsentRmWallet: function () {
+                this.consentRmWallet = !this.consentRmWallet;
             },
             makeFocusCheckbox: function () {
                 document.getElementById('checkbox-access').click();
@@ -107,27 +120,40 @@
             makeWalletNameFocus: function () {
                 document.getElementById('wallet-name-input').focus();
             },
-            modalOpen() {
-                this.timer = 10;
-                this.countDown();
-            },
-            getFirstAnotherWallet: function (rmWalletAddress) {
-                return this.newWallets.find(item => {
-                    return item.address !== rmWalletAddress;
+            changeCurrentWalletAfterDeleting: function (newIndex, oldIndex) {
+                this.$store.dispatch('changeCurrentWallet',
+                    this.wallets[newIndex].address
+                ).then(() => {
+                    this.$store.dispatch('removeWalletFromWallets',
+                        oldIndex
+                    ).then(() => {
+                        this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
+                            duration: 5000,
+                            type: 'success',
+                        });
+                        localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
+                        this.$modal.hide('deletewallet');
+                    }).catch(() => {
+                        console.log('Error removing purse from wallets list');
+                    });
+                }).catch(() => {
+                    console.log('Error changing current wallet');
                 });
             },
             removeCurrentWallet: function () {
-                let rmWalletAddress = this.currentWallet.address;
-                this.changeNewWallet(this.getFirstAnotherWallet(rmWalletAddress).address);
-                // localStorage.setItem('walletId', this.currentWallet.id);
-                let walletsLS = JSON.parse(localStorage.getItem('wallets'));
-                let rmIndexLS = walletsLS.findIndex(item => {
-                    return item === rmWalletAddress;
+                this.$store.dispatch('removeWallet', {
+                    address: this.currentWallet.address
+                }).then(() => {
+                    if (this.wallets[this.currentWalletIndex + 1])
+                        this.changeCurrentWalletAfterDeleting(this.currentWalletIndex + 1, this.currentWalletIndex);
+                    else if (this.wallets[this.currentWalletIndex - 1])
+                        this.changeCurrentWalletAfterDeleting(this.currentWalletIndex - 1, this.currentWalletIndex);
+                }).catch(() => {
+                    this.$toasted.show(`There was an error deleting the wallet '${this.currentWallet.name}'`, {
+                        duration: 10000,
+                        type: 'error',
+                    });
                 });
-                walletsLS.splice(rmIndexLS, 1);
-                localStorage.setItem('wallets', JSON.stringify(walletsLS));
-                this.removeWallet(rmWalletAddress);
-                this.$modal.hide('deletewallet');
             }
         }
     }
@@ -135,106 +161,87 @@
 
 <style lang="scss">
     @import './modals.scss';
+</style>
 
-    .modal-input {
-        & input {
-            width: 100%;
-        }
-    }
+<style lang="stylus">
 
-    .modal-md {
-        & .v--modal {
-            width: 776px;
-        }
-    }
+    .modal-input
+        input
+            width 100%
 
-    .nobl {
-        border-bottom: none !important;
-    }
+    .modal-md
+        .v--modal
+            width 776px
 
-    .modal-btn {
-        & .btn-yellow {
-            &.disabled {
-                opacity: 0.3;
-                border-radius: 2px;
-                background-color: #ffd24f;
+    .nobl
+        border-bottom none !important
 
-                &:hover {
-                    cursor: default;
-                }
-            }
-        }
-    }
+    .modal-btn
+        .btn-yellow
+            .disabled
+                opacity 0.3
+                border-radius 2px
+                background-color #ffd24f
 
-    .lc {
-        text-transform: capitalize !important;
-    }
+                &:hover
+                    cursor default
 
-    .modal-warning {
-        margin-left: 24px;
-        margin-right: 24px;
-        margin-top: 4px;
+    .lc
+        text-transform capitalize !important
 
-        & .agreed {
-            font-family: MuseoSansCyrl300;
-            font-size: 14px;
-            line-height: 1.29;
-            color: #34343e;
+    .modal-warning
+        margin-left 24px
+        margin-right 24px
+        margin-top 4px
 
-            & b {
-                font-family: MuseoSansCyrl700;
-                font-weight: bold;
-            }
-        }
+        & .agreed
+            font-family MuseoSansCyrl300
+            font-size 14px
+            line-height 1.29
+            color #34343e
 
-        & .checkbox-contol {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            b
+                font-family MuseoSansCyrl700
+                font-weight bold
 
-            & input {
-                width: 18px;
-                height: 18px;
-                border-radius: 2px;
-                background-color: #f7f7f7;
-                border: solid 0.5px #979797;
-                margin-right: 18px;
-                cursor: pointer;
-            }
+        .checkbox-contol
+            display flex
+            justify-content space-between
+            align-items center
 
-            & span {
-                font-family: MuseoSansCyrl300;
-                font-size: 14px;
-                line-height: 1.29;
-                color: #34343e;
-                cursor: pointer;
-            }
-        }
+            input
+                width 18px
+                height 18px
+                border-radius 2px
+                background-color #f7f7f7
+                border solid 0.5px #979797
+                margin-right 18px
+                cursor pointer
 
-        &.bl {
-            border-bottom: 1px solid #d1d1d1;
-            padding-bottom: 18px;
-        }
-    }
+            span
+                font-family MuseoSansCyrl300
+                font-size 14px
+                line-height 1.29
+                color #34343e
+                cursor pointer
 
-    .no-activate {
-        border-bottom: none !important;
+        .bl
+            border-bottom 1px solid #d1d1d1
+            padding-bottom 18px
 
-        & .modal-checkbox {
-            margin-bottom: 0 !important;
-        }
-    }
+    .no-activate
+        border-bottom none !important
 
-    #wallet-name-label, #modal-wallet-name {
-        cursor: pointer;
-    }
-    @media (max-width: 425px) {
-        .modal-warning {
-            & .checkbox-contol {
-                & input {
-                    min-width: 18px;
-                }
-            }
-        }
-    }
+        .modal-checkbox
+            margin-bottom 0 !important
+
+    #wallet-name-label, #modal-wallet-name
+        cursor pointer
+
+    @media (max-width: 425px)
+        .modal-warning
+            .checkbox-contol
+                input
+                    min-width 18px
+
 </style>

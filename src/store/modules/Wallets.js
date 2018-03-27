@@ -4,13 +4,15 @@ import axios from "axios/index";
 import sha256 from "sha256";
 
 const state = {
+    wallets: [],
     walletStatus: 'not found',
 
     lazyWalletStatus: '',
     changeWalletStatus: '',
 
     currentWallet: null,
-    wallets: [],
+
+    removeWalletStatus: '',
 
     delWalletProperty: {
         mnemonic: '',
@@ -126,6 +128,36 @@ const actions = {
             });
         });
     },
+    removeWallet: ({commit}, address) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_REMOVE_WALLET');
+
+            let host = `http://192.168.1.37:4000/wallet/${address.address}`;
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'DELETE'
+            }).then(resp => {
+                console.log(resp, 'success removing wallet');
+                commit('SUCCESS_REMOVE_WALLET');
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error removing wallet');
+                commit('ERROR_REMOVE_WALLET', err);
+                reject(err)
+            });
+        });
+    },
+    removeWalletFromWallets: ({commit}, index) => {
+        return new Promise((resolve) => {
+            commit('REMOVE_WALLET_FROM_WALLETS', index);
+            resolve();
+        });
+    },
 };
 
 const mutations = {
@@ -166,7 +198,7 @@ const mutations = {
     CHANGE_CURRENT_WALLET(state, address) {
         state.currentWallet = state.wallets.find(item => {
             return item.address === address;
-        });
+        })
     },
 
     REQUEST_CHANGE_WALLET_NAME(state) {
@@ -181,6 +213,20 @@ const mutations = {
     },
     ERROR_CHANGE_WALLET_NAME(state) {
         state.changeWalletStatus = 'error';
+    },
+
+    REQUEST_REMOVE_WALLET(state) {
+        state.removeWalletStatus = 'loading';
+    },
+    SUCCESS_REMOVE_WALLET(state) {
+        state.removeWalletStatus = 'success';
+    },
+    ERROR_REMOVE_WALLET(state) {
+        state.removeWalletStatus = 'error';
+    },
+
+    REMOVE_WALLET_FROM_WALLETS(state, index) {
+        state.wallets.splice(index, 1);
     },
 
 
@@ -286,7 +332,12 @@ const getters = {
     wallets: state => state.wallets,
     lengthWalletList: state => state.wallets.length,
     walletStatus: state => state.walletStatus,
-    currentWallet: state => state.currentWallet
+    currentWallet: state => state.currentWallet,
+    currentWalletIndex: state => {
+        return state.wallets.findIndex(item => {
+            return item.address === state.currentWallet.address;
+        });
+    }
 };
 
 export default {
