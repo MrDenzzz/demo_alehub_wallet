@@ -1,3 +1,9 @@
+.v--modal {
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
 .v--modal-overlay {
   z-index: 9999;
 
@@ -11,6 +17,25 @@
       
 
       & .heading {
+        & .title-expand {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          & .arrow {
+            background-image: url('../../assets/img/expand-arrow.svg');
+            width: 11.5px;
+            height: 7px;
+            background-size: cover;
+            opacity: 0.5;
+            margin: -2px 0 0 8px;
+          }
+        }
+
         & .title {
           text-align: center;
           font-family: MuseoSansCyrl700;
@@ -84,6 +109,34 @@
         border-bottom: 1px solid #d1d1d1;
         margin-left: 24px;
         margin-right: 24px;
+
+        & .badge-control {
+          width: 70%;
+          display: flex;
+          flex-wrap: wrap;
+
+          & .badge {
+            border-radius: 2px;
+            background-color: rgba(13, 23, 23, 0.08);
+            padding: 0 6px;
+            font-family: MuseoSansCyrl500;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.29;
+            color: #34343e;
+            margin: 0 3px;
+            margin-bottom: 6px;
+          }
+        }
+
+        &.modal-control-noMargin {
+          margin-bottom: 0;
+          padding-top: 10px;
+
+          & .modal-input {
+            margin: 0 !important;
+          }
+        }
 
         & .modal-input {
           display: flex;
@@ -506,6 +559,10 @@
   }
 }
 @media screen and (max-width: 768px) {
+  .v--modal {
+    min-width: 100%;
+  }
+
   .v--modal-overlay {
     & .v--modal-box {
       border-radius: 0;
@@ -558,21 +615,34 @@
       }
       & .body {
         & .modal-btn {
+          margin-right: 42px;
+          margin-left: 42px;
           display: flex;
           flex-direction: column;
-          & .buttons {
+          & .button-copy {
             width: 100%;
           }
           & .btn-large {
+            width: 100%;
             padding: 10px 10px;
+            margin-bottom: 10px;
+          }
+          & .btn-timer {
+            width: 100;
+            margin-left: 42px;
+            margin-right: 42px;
           }
         }
         & .modal-control {
+          margin: 0 42px;
           & .badge-control {
             padding-bottom: 10px;
             width: 100%;
           }
           & .modal-input {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
             &.address {
               flex-direction: column;
               align-items: flex-start;
@@ -609,11 +679,80 @@
     padding: 0 30px;
   }
 }
+
+.modal-btn {
+  & .btn-timer {
+    margin-top: 24px;
+  }
+
+  & .btn-yellow {
+    color: #34343e;
+    &.disabled {
+      opacity: 0.5;
+      border-radius: 2px;
+      background-color: #ffd24f;
+
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    &.btn-bottom {
+      margin-bottom: 24px;
+    }
+
+
+  }
+}
+
 @media(max-width: 320px) {
   .two-auth {
     & .btn-default {
       & .icon-copy {
         margin-top: 10px;
+      }
+    }
+  }
+
+  .v--modal-overlay {
+    & .v--modal-box {
+      & .heading {
+        margin-bottom: 0;
+
+        & .title {
+          height: 15px;
+          padding-bottom: 0;
+        }
+      }
+
+      & .body {
+        & .modal-btn {
+          margin-bottom: 15px;
+          margin-top: 20px;
+
+          & .btn-large {
+            padding: 5px 10px;
+            font-size: 12px;
+          }
+        }
+
+        & .modal-control {
+          margin: 0 20px;
+        }
+
+        & .modal-warning {
+          margin: 0 20px;
+
+          & .agreed {
+            margin-top: 10px;
+          }
+
+          &.agreed-border {
+            & .agreed {
+              padding-bottom: 10px;
+            }
+          }
+        }
       }
     }
   }
