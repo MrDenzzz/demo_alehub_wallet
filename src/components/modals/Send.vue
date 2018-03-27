@@ -276,29 +276,34 @@
                         count: parseInt(this.amountAle),
                     }).then(() => {
 
-                        this.$store.dispatch('transactionsRequestMoment',
-                            this.currentWallet.address
+                        this.$store.dispatch('walletsRequestLazy'
                         ).then(() => {
-                            this.$toasted.show('Sending was successful', {
-                                duration: 5000,
-                                type: 'success',
-                            });
-
-                            console.log('Moment transactions was successful');
-
-                            this.$store.dispatch('getNotifications'
+                            this.$store.dispatch('transactionsRequestMoment',
+                                this.currentWallet.address
                             ).then(() => {
-                                this.changeToggleNotificationBadge(true);
-                                console.log('Success getting notifications');
+                                this.$toasted.show('Sending was successful', {
+                                    duration: 5000,
+                                    type: 'success',
+                                });
+
+                                console.log('Moment transactions was successful');
+
+                                this.$store.dispatch('getNotifications'
+                                ).then(() => {
+                                    this.changeToggleNotificationBadge(true);
+                                    console.log('Success getting notifications');
+                                }).catch(() => {
+                                    console.log('Error getting notifications');
+                                });
+
+                                this.dataProcessing = false;
+                                this.closeModal();
+
                             }).catch(() => {
-                                console.log('Error getting notifications');
+                                console.log('Moment transactions has an error');
                             });
-
-                            this.dataProcessing = false;
-                            this.closeModal();
-
                         }).catch(() => {
-                            console.log('Moment transactions was error');
+                            console.log('Lazy wallets has an error');
                         });
 
                     }).catch(() => {
