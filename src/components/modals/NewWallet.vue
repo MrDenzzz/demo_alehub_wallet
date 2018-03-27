@@ -27,7 +27,7 @@
                 <div class="modal-control">
                     <div class="modal-input">
                         <label class="title">{{ $t('modals.newWallet.new.fields.title.label') }}</label>
-                        <input id="newWalletName" type="text" class="input" v-model="walletName1"
+                        <input id="newWalletName" type="text" class="input" v-model="walletName"
                                :placeholder="$t('modals.newWallet.new.fields.title.placeholder')"
                                @keyup.enter="changeStepCreate('next')">
                     </div>
@@ -55,7 +55,7 @@
                                 id="redemptionWalletName"
                                 class="input"
                                 :placeholder="$t('modals.newWallet.import.fields.title.placeholder')"
-                                v-model="walletName1"
+                                v-model="walletName"
                         />
                     </div>
                 </div>
@@ -240,7 +240,7 @@
             return {
                 walletType: 'new',
                 isOpenOptions: false,
-                walletName1: '',
+                walletName: '',
                 dropDownOption: [
                     {title: this.$t('modals.newWallet.new.label'), isSelected: true, value: 'new'},
                     // {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
@@ -270,7 +270,7 @@
                 'checkNewWalletMatchPassword'
             ]),
             isImport: function () {
-                if (this.mnemonicsRecovery.length === 0 || this.walletName1 === '')
+                if (this.mnemonicsRecovery.length === 0 || this.walletName === '')
                     return true;
                 return false;
             },
@@ -291,7 +291,7 @@
                 return type[0].title;
             },
             checkNewWalletFields: function () {
-                if (this.walletName1.length === 0) {
+                if (this.walletName.length === 0) {
                     return true;
                 }
                 return false;
@@ -307,11 +307,7 @@
         },
         methods: {
             ...mapMutations({
-                walletName: "NEW_WALLET_NAME",
-                activityChecked: "CHECKED_ACTIVITY",
                 walletPassword: "NEW_WALLET_PASSWORD",
-                walletRepeatPassword: "WALLET_REPEAT_PASSWORD",
-                createNewWallet: "CREATE_NEW_WALLET",
                 createNewNewWallet: "CREATE_NEW_NEW_WALLET"
             }),
             getRandomSeed: function () {
@@ -401,7 +397,7 @@
                 }
                 this.mnemonics = [];
                 this.mnemonicField = '';
-                this.walletName1 = '';
+                this.walletName = '';
                 this.dropDownOption[index].isSelected = true;
                 this.isOpenOptions = false;
                 this.walletType = this.dropDownOption[index].value;
@@ -427,7 +423,7 @@
                     this.dropDownOption[i].isSelected = false;
                 }
                 this.dropDownOption[0].isSelected = true;
-                this.walletName1 = '';
+                this.walletName = '';
                 this.focusInput('newWalletName');
                 this.redemtionKey = '';
                 this.newWalletStep = 1;
@@ -459,7 +455,7 @@
                 this.dataProcessing = true;
 
                 this.$store.dispatch('newWallet', {
-                        name: this.walletName1,
+                        name: this.walletName,
                         seed: this.mnemonicsRecovery
                     }
                 ).then((resp) => {
@@ -489,7 +485,7 @@
 
 
             importWallet: function () {
-                if (!this.walletName1) {
+                if (!this.walletName) {
                     this.focusInput('redemptionWalletName');
                     return false;
                 }

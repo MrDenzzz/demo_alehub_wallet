@@ -64,7 +64,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="body" v-if="step == 2">
+                <div class="body" v-if="step === 2">
                     <div class="modal-control">
                         <div class="modal-input">
                             <p class="small">
@@ -76,6 +76,11 @@
                             </p>
                         </div>
                     </div>
+
+                    <div v-if="dataProcessing" class="wrap-spinner">
+                        <spinner v-if="dataProcessing"/>
+                    </div>
+
                     <div class="modal-footer">
                         <button class="buttons btn-yellow openModal" @click="send">
                             {{ $t('modals.send.buttons.send') }}
@@ -88,7 +93,9 @@
 </template>
 
 <script>
-    import SelectControl from "../layouts/forms/Select";
+    import SelectControl from '../layouts/forms/Select';
+    import Spinner from '../layouts/Spinner';
+
     import numeral from 'numeral';
 
     import sha256 from 'sha256';
@@ -96,7 +103,8 @@
     export default {
         name: "send",
         components: {
-            SelectControl
+            SelectControl,
+            Spinner
         },
         data() {
             return {
@@ -115,7 +123,9 @@
                 errorAmount: false,
                 errorPassword: false,
                 password: '',
-                maxlength: 18
+                maxlength: 18,
+
+                dataProcessing: false
             };
         },
         computed: {
@@ -259,7 +269,7 @@
             },
             send: function () {
                 if (this.nextCheck) {
-
+                    this.dataProcessing = true;
                     this.$store.dispatch('sendCoins', {
                         walletAddress: this.currentWallet.address,
                         walletDestination: this.address,
@@ -274,19 +284,21 @@
                         });
 
                         this.changeToggleNotificationBadge(true);
+                        this.dataProcessing = false;
+                        this.closeModal();
 
                         this.$toasted.show('Sending was successful', {
                             duration: 5000,
                             type: 'success',
                         });
                     }).catch(() => {
+                        this.dataProcessing = false;
+                        this.closeModal();
                         this.$toasted.show('Sending failed', {
                             duration: 10000,
                             type: 'success',
                         });
                     });
-
-                    this.closeModal();
                 }
             },
             changeToggleNotificationBadge: function (val) {
@@ -321,6 +333,11 @@
 
 <style lang="stylus">
     @import "./modals.scss"
+
+    .wrap-spinner
+        display flex
+        justify-content center
+        padding 1em 0
 
     .buttons
         &:disabled
