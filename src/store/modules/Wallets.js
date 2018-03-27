@@ -5,14 +5,13 @@ import sha256 from "sha256";
 
 const state = {
     wallets: [],
-    walletStatus: 'not found',
-
-    lazyWalletStatus: '',
-    changeWalletStatus: '',
-
     currentWallet: null,
 
+    walletStatus: 'not found',
+    lazyWalletStatus: '',
+    changeWalletStatus: '',
     removeWalletStatus: '',
+    getRandomSeedStatus: '',
 
     delWalletProperty: {
         mnemonic: '',
@@ -164,6 +163,30 @@ const actions = {
             resolve();
         });
     },
+    getRandomSeed: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_GET_RANDOM_SEED');
+
+            let host = `http://192.168.1.37:4000/wallet/seed`;
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            }).then(resp => {
+                console.log(resp, 'success get random seed');
+                commit('SUCCESS_GET_RANDOM_SEED');
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error removing wallet');
+                commit('ERROR_GET_RANDOM_SEED', err);
+                reject(err)
+            });
+        });
+    },
 };
 
 const mutations = {
@@ -237,6 +260,18 @@ const mutations = {
 
     ZEROING_OUT_CURRENT_WALLET(state) {
         state.currentWallet = null;
+    },
+
+    REQUEST_GET_RANDOM_SEED(state) {
+        state.getRandomSeedStatus = 'loading';
+    },
+
+    SUCCESS_GET_RANDOM_SEED(state) {
+        state.getRandomSeedStatus = 'success';
+    },
+
+    ERROR_GET_RANDOM_SEED(state) {
+        state.getRandomSeedStatus = 'error';
     },
 
 

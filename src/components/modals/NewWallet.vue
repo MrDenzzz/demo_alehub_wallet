@@ -104,7 +104,10 @@
                     <input type="checkbox" class="type_project_arr" v-model="isAgreedRecovery"/>
                     <div class="control-indicator"></div>
                 </label>
+            </div>
 
+            <div v-if="dataProcessing" class="wrap-spinner">
+                <spinner v-if="dataProcessing"/>
             </div>
 
             <div class="modal-btn text-center">
@@ -172,13 +175,12 @@
                             @keyup.enter="addMnemonicRecovery"
                             @keyup.delete="removeMnemonicRecovery"
                             @keyup.space="addMnemonicRecovery"
-                            @blur="addMnemonicRecovery"
+                            @blur="recoveryBlur"
                     />
                 </div>
             </div>
 
             <div class="modal-warning">
-
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.finish.fields.deviceOnly') }}</span>
                     <input type="checkbox" class="type_project_arr" v-model="restorationAgreements.deviceOnly"/>
@@ -190,7 +192,10 @@
                     <input type="checkbox" class="type_project_arr" v-model="restorationAgreements.phraseSecure"/>
                     <div class="control-indicator"></div>
                 </label>
+            </div>
 
+            <div v-if="dataProcessing" class="wrap-spinner">
+                <spinner v-if="dataProcessing"/>
             </div>
 
             <div class="modal-btn text-center">
@@ -219,6 +224,8 @@
 </template>
 
 <script>
+    import Spinner from '../layouts/Spinner';
+
     import {mapMutations} from "vuex";
     import {mapGetters} from 'vuex';
     import mnGen from 'mngen';
@@ -226,6 +233,9 @@
 
     export default {
         name: 'newWallet',
+        components: {
+            Spinner
+        },
         data() {
             return {
                 walletType: 'new',
@@ -248,7 +258,9 @@
                 restorationAgreements: {
                     deviceOnly: false,
                     phraseSecure: false
-                }
+                },
+
+                dataProcessing: false
             }
         },
         computed: {
@@ -301,22 +313,21 @@
                 createNewNewWallet: "CREATE_NEW_NEW_WALLET"
             }),
             getRandomSeed: function () {
-                console.log('getRandomSeed');
-                this.$http.get(`${this.$host}/wallet/seed`, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-                    this.recoveryMnemonicPhrase = response.body.seed;
+                this.dataProcessing = true;
+
+                this.$store.dispatch('getRandomSeed'
+                ).then(resp => {
+                    this.recoveryMnemonicPhrase = resp.data.seed;
+                    this.dataProcessing = false;
                     this.changeRecoveryStep('next');
-                }, response => {
-                    console.log('error', response);
+                }).catch(() => {
+                    this.dataProcessing = false;
+                    console.log('Error get random seed');
                 });
             },
-            // recoveryBlur() {
-            //     this.mnemonicFieldRecovery = '';
-            // },
+            recoveryBlur: function () {
+                this.mnemonicFieldRecovery = '';
+            },
             onBlurNewWallet() {
                 this.mnemonicField = '';
             },
@@ -443,18 +454,21 @@
             },
 
             newCreateWallet: function () {
+                this.dataProcessing = true;
 
                 this.$store.dispatch('newWallet', {
                         name: this.walletName1,
                         seed: this.mnemonicsRecovery
                     }
                 ).then((resp) => {
-                    console.log(resp, 'resp');
+                    this.dataProcessing = true;
+
                     this.$toasted.show(`Wallet '${resp.data.walletModel.name}' successful created!`, {
                         duration: 5000,
                         type: 'success',
                     });
 
+                    this.closeModal();
 
                     this.$store.dispatch('transactionsRequestLazy',
                         resp.data.walletModel.address
@@ -467,8 +481,6 @@
                 }).catch(() => {
 
                 });
-
-                this.closeModal();
             },
 
 
@@ -563,6 +575,13 @@
         }
     }
 </script>
+
+<style lang="stylus" scoped>
+    .wrap-spinner
+        display flex
+        justify-content center
+        padding 1em 0
+</style>
 
 <style lang="scss" scoped>
 
