@@ -158,6 +158,12 @@ const actions = {
             resolve();
         });
     },
+    zeroingOutCurrentWallet: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('ZEROING_OUT_CURRENT_WALLET');
+            resolve();
+        });
+    },
 };
 
 const mutations = {
@@ -227,6 +233,10 @@ const mutations = {
 
     REMOVE_WALLET_FROM_WALLETS(state, index) {
         state.wallets.splice(index, 1);
+    },
+
+    ZEROING_OUT_CURRENT_WALLET(state) {
+        state.currentWallet = null;
     },
 
 

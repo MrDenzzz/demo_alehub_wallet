@@ -148,6 +148,25 @@
                         this.changeCurrentWalletAfterDeleting(this.currentWalletIndex + 1, this.currentWalletIndex);
                     else if (this.wallets[this.currentWalletIndex - 1])
                         this.changeCurrentWalletAfterDeleting(this.currentWalletIndex - 1, this.currentWalletIndex);
+                    else if (this.wallets.length === 1) {
+                        // this.$store.dispatch('zeroingOutCurrentWallet').then(() => {
+                            this.$store.dispatch('removeWalletFromWallets',
+                                this.currentWalletIndex
+                            ).then(() => {
+                                this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
+                                    duration: 5000,
+                                    type: 'success',
+                                });
+                                localStorage.removeItem(sha256('current-wallet'));
+                                this.$router.push('/');
+                                this.$modal.hide('deletewallet');
+                            }).catch(() => {
+                                console.log('Error removing wallet from wallets list');
+                            });
+                        // }).catch(() => {
+                        //     console.log('Error zeroing out current wallet');
+                        // });
+                    }
                 }).catch(() => {
                     this.$toasted.show(`There was an error deleting the wallet '${this.currentWallet.name}'`, {
                         duration: 10000,

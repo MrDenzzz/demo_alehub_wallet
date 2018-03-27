@@ -1,6 +1,6 @@
 <template>
     <div class="wallet">
-        <Navbar
+        <navbar
                 :title="$t('pages.summary.navbarTitle')"
                 :isNavigate="true"
                 :isBalance="true"
@@ -8,7 +8,7 @@
         />
         <section class="main">
 
-            <Wallets-list
+            <wallets-list
                     :new-wallets="wallets"
             />
             <div class="content">
@@ -59,7 +59,7 @@
             </div>
         </section>
 
-        <New-wallet/>
+        <new-wallet/>
     </div>
 </template>
 
@@ -242,6 +242,15 @@
             // if (this.currentWallet) {
             //     this.currentTransactions1();
             // }
+
+            if (this.wallets.length === 0) {
+                this.$store.dispatch('zeroingOutCurrentWallet'
+                ).then(() => {
+                    console.log('Success zeroing out current wallet');
+                }).catch(() => {
+                    console.log('Error zeroing out current wallet');
+                });
+            };
 
             this.$on('changeTotalTransactions', val => {
                 this.totalTransactions = val;
