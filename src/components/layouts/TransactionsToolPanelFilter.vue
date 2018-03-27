@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="docs">
-                <button class="buttons btn-default">
+                <button class="buttons btn-default" @click="createPDF">
                     {{ $t('pages.summary.searchPanel.buttons.download') }}
                 </button>
                 <button class="buttons btn-default" @click="openModal('shareTransactions')">
@@ -57,7 +57,7 @@
                 <div class="result-opt-span">
                         <span class="count">
                             <formatting-price
-                                    :value="currentReceiveBalance()"
+                                    :value="currentReceivedBalance"
                             />
                         </span>
                     ALC
@@ -65,7 +65,7 @@
                 <div class="result-opt-span sent">
                         <span class="count">
                             <formatting-price
-                                    :value="currentSentBalance()"
+                                    :value="currentSentBalance"
                             />
                         </span>
                     ALC
@@ -73,7 +73,7 @@
                 <div class="result-opt-span">
                         <span class="count">
                             <formatting-price
-                                    :value="currentBalanceBeginPeriod()"
+                                    :value="currentBalanceBeginPeriod"
                             />
                         </span>
                     ALC
@@ -81,7 +81,7 @@
                 <div class="result-opt-span">
                         <span class="count">
                             <formatting-price
-                                    :value="currentBalanceEndPeriod()"
+                                    :value="currentBalanceEndPeriod"
                             />
                         </span>
                     ALC
@@ -98,6 +98,9 @@
     import Datepicker from 'vuejs-datepicker';
     import FormattingPrice from '../layouts/FormattingPrice';
     import ModalShareTransactions from '../modals/ShareTransactions';
+
+    import JsPDF from 'jspdf';
+    import Moment from 'moment';
 
     import {mapGetters} from 'vuex';
 
@@ -121,29 +124,6 @@
             ]),
             currentBalance: function () {
                 return this.$store.state.Wallets.currentWallet.balance;
-            }
-        },
-        methods: {
-            openModal: function (name) {
-                this.$modal.show(name);
-            },
-            initiateDate: function () {
-                this.dateFrom = new Date(this.transactions.reduce(
-                    (acc, loc) =>
-                        acc.timestamp < loc.timestamp
-                            ? acc
-                            : loc
-                ).timestamp);
-                this.dateFrom.setHours(0);
-                this.dateFrom.setMinutes(0);
-                this.dateFrom.setSeconds(0);
-                this.dateFrom.setMilliseconds(0);
-
-                this.dateTo = new Date();
-                this.dateTo.setHours(23);
-                this.dateTo.setMinutes(59);
-                this.dateTo.setSeconds(59);
-                this.dateTo.setMilliseconds(999);
             },
             currentBalanceBeginPeriod: function () {
                 console.log(this.transactions);
@@ -167,7 +147,7 @@
 
                 return 0;
             },
-            currentReceiveBalance: function () {
+            currentReceivedBalance: function () {
                 let receiveTransactions = this.transactions.filter(item => {
                     return item.balanceInfo.after - item.balanceInfo.before > 0;
                 });
@@ -183,11 +163,211 @@
                 return 0;
             },
         },
+        methods: {
+            openModal: function (name) {
+                this.$modal.show(name);
+            },
+            initiateDate: function () {
+                this.dateFrom = new Date(this.transactions.reduce(
+                    (acc, loc) =>
+                        acc.timestamp < loc.timestamp
+                            ? acc
+                            : loc
+                ).timestamp);
+                this.dateFrom.setHours(0);
+                this.dateFrom.setMinutes(0);
+                this.dateFrom.setSeconds(0);
+                this.dateFrom.setMilliseconds(0);
+
+                this.dateTo = new Date();
+                this.dateTo.setHours(23);
+                this.dateTo.setMinutes(59);
+                this.dateTo.setSeconds(59);
+                this.dateTo.setMilliseconds(999);
+            },
+            createPDF: function () {
+                let pdfName = 'test';
+                let doc = new JsPDF();
+
+                const height = 297,
+                    width = 210;
+
+                let countPage = 1;
+
+                console.log(this.transactions, 'this.transactions');
+                let summaryString = '',
+                    summaryBalance = '',
+                    summaryTitle = '',
+                    stringOfAle = '';
+
+                doc.setFontSize(20);
+                doc.text(this.currentWallet.name, 90, 10);
+
+                doc.setFontSize(12);
+
+                summaryTitle = 'Starting' + '\n' + 'Total';
+
+                doc.setTextColor(75, 177, 3);
+                doc.text('Received', 130, 20);
+                doc.text(this.currentReceivedBalance.toString(), 160, 20);
+                doc.text('ALE', 175, 20);
+
+                doc.setTextColor(177, 3, 3);
+                doc.text('Send', 130, 25);
+                doc.text(this.currentSentBalance.toString(), 160, 25);
+                doc.text('ALE', 175, 25);
+
+                doc.setTextColor(0, 0, 0);
+                doc.text(summaryTitle, 130, 30);
+                summaryBalance = this.currentBalanceBeginPeriod + '\n' +
+                    this.currentBalanceEndPeriod;
+
+                stringOfAle = 'ALE' + '\n' + 'ALE';
+
+                doc.text(summaryBalance, 160, 30);
+                doc.text(stringOfAle, 175, 30);
+
+                let balancer = 0;
+                let offset = 50;
+
+                let currentSent = 0;
+                let currentReceived = 0;
+                let currentTotal = 0;
+
+                for (let i = 0; i < this.transactions.length; i++) {
+
+                    let j = i - balancer;
+                    let type = '';
+
+                    if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
+                        type = 'RECEIVED';
+                    else
+                        type = 'SEND';
+
+                    let count = this.transactions[i].count;
+                    let time = Moment(this.transactions[i].timestamp).format("HH:mm:ss");
+                    let date = Moment(this.transactions[i].timestamp).format("D.M.YYYY");
+                    let walletAddress = this.transactions[i].walletAddress;
+                    let walletDestination = this.transactions[i].walletDestination;
+
+                    if (i === 0 || date !== Moment(this.transactions[i - 1].timestamp).format("D.M.YYYY")) {
+                        doc.setFontSize(16);
+
+                        if (countPage === 1) {
+                            doc.text(date, 10, 40 * (j + 1));
+                        } else {
+
+                            currentTotal = this.transactions[i - 1].balanceInfo.after;
+
+                            doc.setFontSize(12);
+
+                            let currentTransactionsSummaryTitle = 'Received' + '\n' + 'Sent' + '\n' + 'Total';
+                            doc.text(currentTransactionsSummaryTitle, 130, offset + 25 * j);
+
+                            doc.text(currentReceived.toString(), 160, offset + 25 * j);
+                            doc.setTextColor(177, 3, 3);
+                            doc.text(currentSent.toString(), 160, offset + 5 + 25 * j);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text(currentTotal.toString(), 160, offset + 10 + 25 * j);
+
+                            currentSent = 0;
+                            currentReceived = 0;
+
+                            doc.text('ALE', 175, offset + 25 * j);
+                            doc.setTextColor(177, 3, 3);
+                            doc.text('ALE', 175, offset + 5 + 25 * j);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('ALE', 175, offset + 10 + 25 * j);
+
+                            doc.setFontSize(16);
+                            doc.text(date, 10, offset + 20 + 25 * j);
+                            offset += 30;
+
+                        }
+                    }
+
+                    if (type === 'SEND') {
+                        currentSent += count;
+                        if (offset + 25 * j > height - 20) {
+                            doc.addPage();
+                            countPage++;
+                            doc.setPage(countPage);
+                            balancer = i;
+                            j = i - balancer;
+                            offset = 10;
+                        }
+
+                        doc.setFontSize(12);
+                        doc.setTextColor(177, 3, 3);
+                        doc.text(type, 10, offset + 25 * j);
+
+                        summaryString = count + ' ALE' + '\n' +
+                            date + ' - ' + time + '\n' +
+                            'wallet address: ' + walletAddress + '\n' +
+                            'wallet destination: ' + walletDestination + '\n\n';
+
+                        doc.setTextColor(0, 0, 0);
+                        doc.text(summaryString, 40, offset + 25 * j);
+
+                    } else {
+                        currentReceived += count;
+                        if (offset + 25 * j > height - 20) {
+                            doc.addPage();
+                            countPage++;
+                            doc.setPage(countPage);
+                            balancer = i;
+                            j = i - balancer;
+                            offset = 10;
+                        }
+
+                        doc.setFontSize(12);
+                        doc.setTextColor(75, 177, 3);
+                        doc.text(type, 10, offset + 25 * j);
+
+                        summaryString = count + ' ALE' + '\n' +
+                            date + ' - ' + time + '\n' +
+                            'wallet address: ' + walletAddress + '\n' +
+                            'wallet destination: ' + walletDestination + '\n\n';
+
+                        doc.setTextColor(0, 0, 0);
+                        doc.text(summaryString, 40, offset + 25 * j);
+                    }
+
+                    if (i === this.transactions.length - 1) {
+                        offset += 25;
+                        currentTotal = this.transactions[i].balanceInfo.after;
+
+                        doc.setFontSize(12);
+
+                        let currentTransactionsSummaryTitle = 'Received' + '\n' + 'Sent' + '\n' + 'Total';
+                        doc.text(currentTransactionsSummaryTitle, 130, offset + 25 * j);
+
+                        doc.text(currentReceived.toString(), 160, offset + 25 * j);
+                        doc.setTextColor(177, 3, 3);
+                        doc.text(currentSent.toString(), 160, offset + 5 + 25 * j);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text(currentTotal.toString(), 160, offset + 10 + 25 * j);
+
+                        currentSent = 0;
+                        currentReceived = 0;
+
+                        doc.text('ALE', 175, offset + 25 * j);
+                        doc.setTextColor(177, 3, 3);
+                        doc.text('ALE', 175, offset + 5 + 25 * j);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text('ALE', 175, offset + 10 + 25 * j);
+                    }
+                }
+
+                doc.save(pdfName + '.pdf');
+            }
+        },
         created() {
             if (this.transactions.length !== 0) {
                 this.initiateDate();
             }
-        },
+        }
+        ,
         mounted() {
 
         }
@@ -413,8 +593,8 @@
             padding 5px 0
             margin 0
 
-    @media(max-width: 375px)  
-        .bottom 
+    @media (max-width: 375px)
+        .bottom
             .row-tablet
                 width 100%
 

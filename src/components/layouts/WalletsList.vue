@@ -31,7 +31,7 @@
                                 :precision="correctValuePrecision(wallet.balance)"
                                 :read-only="true">
                         </vue-numeric>
-                        {{ ' ' + 'ALC'}}
+                        {{ ' ' + 'ALE'}}
                     </p>
                 </div>
 

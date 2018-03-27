@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div v-if="transactionsLazyStatus !== 'success'" class="wrap-spinner">
-                                <Spinner v-if="transactionsLazyStatus !== 'success'"/>
+                                <Spinner />
                             </div>
 
                             <transactions-tool-panel
@@ -130,6 +130,7 @@
                 'lengthWalletList',
                 'walletStatus',
                 'currentWallet',
+                'transactionStatus',
                 'transactionsLazyStatus'
             ]),
 

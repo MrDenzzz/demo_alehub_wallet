@@ -140,12 +140,12 @@ const mutations = {
     },
     SET_TRANSACTIONS(state, transactions) {
         state.transactionStatus = 'success';
-        state.transactionsLazyStatus = 'loading';
+        state.transactionsLazyStatus = 'success';
         state.transactions = transactions;
     },
     TRANSACTIONS_ERROR(state, err) {
         state.transactionStatus = 'error';
-        state.transactionsLazyStatus = 'loading';
+        state.transactionsLazyStatus = 'error';
     },
 
 

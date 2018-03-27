@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="count" :class="{ 'active': !typeTransaction(activity.walletAddress) }">
-                        <span>{{ activity.count }} ALC</span>
+                        <span>{{ activity.count }} ALE</span>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                                         :value="resultReceived(activity.timestamp)"
                                 />
                             </span>
-                            ALC
+                            ALE
                         </span>
                     </div>
                     <div class="result-day-line">
@@ -63,7 +63,7 @@
                                          :value="resultSent(activity.timestamp)"
                                  />
                             </span>
-                            ALC
+                            ALE
                         </span>
                     </div>
                     <div class="result-day-line">
@@ -73,7 +73,7 @@
                                         :value="resultTotal(activity.timestamp)"
                                 />
                             </span>
-                            ALC
+                            ALE
                         </span>
                     </div>
                 </div>

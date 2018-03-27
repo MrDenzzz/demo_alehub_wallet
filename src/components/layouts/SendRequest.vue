@@ -44,7 +44,7 @@
                     return require(`../../assets/img/${name}_dark.svg`);
 
                 return require(`../../assets/img/${name}.svg`);
-            },
+            }
         },
         created() {
 
