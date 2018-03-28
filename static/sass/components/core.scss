@@ -10,6 +10,23 @@ body {
   padding: 1em 0;
 }
 
+.m-t-center {
+  margin-top: 30vh;
+}
+
+.flex-block-transaction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & .absence-transactions {
+    font-size: 14px;
+    font-family: MuseoSansCyrl500;
+    color: #34343e;
+  }
+}
+
 .phrase {
   background-color: rgba(13, 23, 23, 0.04);
   border-radius: 2px;
@@ -23,6 +40,14 @@ body {
     font-weight: bold;
     color: #34343e;
   }
+}
+
+.stats-balance {
+  font-size: 14px;
+  font-family: MuseoSansCyrl500;
+  color: #34343e;
+  display: flex;
+  justify-content: space-between;
 }
 
 .modal-warning {

@@ -1,6 +1,7 @@
 .main {
   display: flex;
-  padding-top: 64px; }
+  padding-top: 64px;
+  height: 100%; }
   .main .content {
     width: 100%;
     /*height: 100vh;*/
