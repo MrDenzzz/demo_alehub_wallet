@@ -30,6 +30,7 @@
 
                             <transactions-tool-panel
                                     v-if="this.transactions.length !== 0 && transactionsLazyStatus === 'success'"
+                                    :current-transactions="getActivity"
                             />
 
                             <activity-list

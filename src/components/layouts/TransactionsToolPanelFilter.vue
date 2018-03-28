@@ -111,6 +111,12 @@
             FormattingPrice,
             ModalShareTransactions
         },
+        props: {
+            currentTransactions: {
+                type: Array,
+                required: true
+            }
+        },
         data() {
             return {
                 dateFromDatepicker: '',
@@ -145,13 +151,13 @@
                 'dateTo'
             ]),
             currentBalanceBeginPeriod: function () {
-                return this.transactions[this.transactions.length - 1].balanceInfo.before;
+                return (this.currentTransactions.length !== 0) ? this.currentTransactions[this.currentTransactions.length - 1].balanceInfo.before : 0;
             },
             currentBalanceEndPeriod: function () {
-                return this.transactions[0].balanceInfo.after;
+                return (this.currentTransactions.length !== 0) ? this.currentTransactions[0].balanceInfo.after : 0;
             },
             currentSentBalance: function () {
-                let sentTransactions = this.transactions.filter(item => {
+                let sentTransactions = this.currentTransactions.filter(item => {
                     return item.balanceInfo.after - item.balanceInfo.before < 0;
                 });
 
@@ -166,7 +172,7 @@
                 return 0;
             },
             currentReceivedBalance: function () {
-                let receiveTransactions = this.transactions.filter(item => {
+                let receiveTransactions = this.currentTransactions.filter(item => {
                     return item.balanceInfo.after - item.balanceInfo.before > 0;
                 });
 
@@ -183,27 +189,7 @@
         },
         methods: {
             openModal: function (name) {
-                console.log(this.dateFrom, 'this.dateTo from vuex');
-                console.log(this.dateTo, 'fake dateFrom transactions');
                 this.$modal.show(name);
-            },
-            initiateDate: function () {
-                this.dateFromDatepicker = new Date(this.transactions.reduce(
-                    (acc, loc) =>
-                        acc.timestamp < loc.timestamp
-                            ? acc
-                            : loc
-                ).timestamp);
-                this.dateFromDatepicker.setHours(0);
-                this.dateFromDatepicker.setMinutes(0);
-                this.dateFromDatepicker.setSeconds(0);
-                this.dateFromDatepicker.setMilliseconds(0);
-
-                this.dateToDatepicker = new Date();
-                this.dateToDatepicker.setHours(23);
-                this.dateToDatepicker.setMinutes(59);
-                this.dateToDatepicker.setSeconds(59);
-                this.dateToDatepicker.setMilliseconds(999);
             },
             createPDF: function () {
                 let pdfName = 'test';
@@ -383,23 +369,8 @@
             }
         },
         created() {
-
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
-
-            if (this.transactions.length !== 0) {
-                // this.initiateDate();
-            }
-        }
-        ,
-        mounted() {
-
-            // this.$store.dispatch('initiateFilterDate'
-            // ).then(() => {
-            //     console.log('Success initiate filter date');
-            // }).catch(() => {
-            //     console.log('Error initiate filter date');
-            // });
         }
     }
 </script>

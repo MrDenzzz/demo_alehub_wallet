@@ -1,7 +1,7 @@
 <template>
     <div class="searchPanel">
         <transactions-tool-panel-operation/>
-        <transactions-tool-panel-filter/>
+        <transactions-tool-panel-filter :current-transactions="currentTransactions" />
     </div>
 </template>
 
@@ -18,10 +18,10 @@
             TransactionsToolPanelFilter,
         },
         props: {
-            totalTransactions: [String, Number],
-            startingTransactions: [String, Number],
-            checkActivities: [Number, String],
-            currentTransactions: [Object, Array]
+            currentTransactions: {
+                type: Array,
+                required: true
+            }
         },
         data() {
             return {
