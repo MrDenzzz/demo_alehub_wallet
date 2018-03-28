@@ -66,7 +66,6 @@ body {
 .control {
   display: block;
   position: relative;
-  padding-left: 22px;
   margin-bottom: 8px;
   cursor: pointer;
   font-size: 12px;
@@ -921,7 +920,9 @@ body {
 
 @media (max-width: 425px) {
   .phrase {
-    padding: 12px; } }
+    padding: 12px; }
+  .control {
+    width: 100%; } }
 
 @media screen and (max-width: 390px) {
   .group-settings {
