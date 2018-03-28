@@ -8,7 +8,8 @@
 
                 <router-link :to="{ path: '/' }" v-else>
                     <div class="logo">
-                        <img :src="getLogo()" alt="">
+                        ALEHUB
+                        <!--<img :src="getLogo()" alt="">-->
                     </div>
                 </router-link>
 
