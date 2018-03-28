@@ -159,6 +159,7 @@
                 'dateTo'
             ]),
             currentBalanceBeginPeriod: function () {
+                this.watchResetStateDate();
                 return (this.currentTransactions.length !== 0) ? this.currentTransactions[this.currentTransactions.length - 1].balanceInfo.before : 0;
             },
             currentBalanceEndPeriod: function () {
@@ -198,6 +199,10 @@
         methods: {
             openModal: function (name) {
                 this.$modal.show(name);
+            },
+            watchResetStateDate: function () {
+                this.dateFromDatepicker = this.dateFrom;
+                this.dateToDatepicker = this.dateTo;
             },
             createPDF: function () {
                 let pdfName = 'test';

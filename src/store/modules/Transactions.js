@@ -130,7 +130,7 @@ const actions = {
         commit('SET_WALLET_TRANSACTIONS', address);
     },
 
-    setFilterDate:({commit}, dateFrom) => {
+    setFilterDate:({commit}) => {
         return new Promise((resolve, reject) => {
             commit('SUCCESS_INITIATE_FILTER_DATE');
             resolve();

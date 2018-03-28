@@ -1,6 +1,6 @@
 <template>
     <div class="searchPanel">
-        <transactions-tool-panel-operation/>
+        <transactions-tool-panel-operation :reset-search="resetSearch"/>
         <transactions-tool-panel-filter :current-transactions="currentTransactions" />
     </div>
 </template>
@@ -21,13 +21,14 @@
             currentTransactions: {
                 type: Array,
                 required: true
+            },
+            resetSearch: {
+                type: Boolean
             }
         },
         mounted() {
-            this.$on('searchTransaction', function (searchText) {
-
-                // this.$parent.$emit
-
+            this.$on('successResetSearchToTool', function () {
+                this.$parent.$emit('successResetSearchToTool');
             });
         }
     }

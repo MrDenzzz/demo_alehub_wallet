@@ -31,6 +31,7 @@
                             <transactions-tool-panel
                                     v-if="this.transactions.length !== 0 && transactionsLazyStatus === 'success'"
                                     :current-transactions="getActivity"
+                                    :reset-search="resetSearch"
                             />
 
                             <activity-list
@@ -49,6 +50,13 @@
                                  v-if="getActivity.length === 0 && transactionsLazyStatus === 'success'">
 
                                 <p class="absence-transactions">No transactions found</p>
+
+                                <button
+                                        v-if="transactions.length !== 0"
+                                        class="buttons btn-yellow"
+                                        @click="resetFilter()">
+                                    Reset filter
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -114,7 +122,9 @@
                 changeWalletResult: false,
                 totalTransactions: 0,
                 startingTransactions: 0,
-                isLoader: false
+                isLoader: false,
+
+                resetSearch: false
             }
         },
         watch: {},
@@ -179,6 +189,22 @@
             openModal: function (name) {
                 this.$modal.show(name);
             },
+            resetFilter: function () {
+                this.$store.dispatch('setFilterDate').then(() => {
+                    console.log('Success set filter date');
+                }).catch(() => {
+                    console.log('Error set filter date');
+                });
+
+                this.$store.dispatch('setSearchText',
+                ''
+                ).then(() => {
+                    this.resetSearch = true;
+                    console.log('Success set search text');
+                }).catch(() => {
+                    console.log('Error set search text');
+                });
+            }
         },
         created() {
 
@@ -259,6 +285,12 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
+
+
+
+            this.$on('successResetSearchToTool', function () {
+                this.resetSearch = false;
+            });
         }
     }
 </script>
@@ -320,7 +352,9 @@
 
     .flex-block-transaction
         display flex
+        flex-direction column
         justify-content center
+        align-items center
 
     .m-t-center
         margin-top 30vh

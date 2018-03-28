@@ -5,6 +5,7 @@
             <input
                     type="text"
                     id="search-transactions"
+
                     @input="searchTransaction()"
                     :placeholder="$t('pages.summary.searchPanel.search')"
                     v-model="searchCurrentText">
@@ -24,19 +25,26 @@
         components: {
             SendRequest
         },
+        props: {
+            resetSearch: {
+                type: Boolean
+            }
+        },
+        watch: {
+            'resetSearch': function (val) {
+                if (val) {
+                    this.searchCurrentText = '';
+                    this.$parent.$emit('successResetSearchToTool');
+                }
+            }
+        },
         data() {
             return {
                 searchCurrentText: ''
             }
         },
-        computed: {
-            ...mapGetters([
-                'searchText'
-            ])
-        },
         methods: {
             makeFocusSearch: function () {
-                //rewrite. bad method
                 document.getElementById('search-transactions').focus();
             },
             searchTransaction: function () {
