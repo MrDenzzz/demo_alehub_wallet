@@ -23,51 +23,6 @@
                 required: true
             }
         },
-        data() {
-            return {
-
-            }
-        },
-        watch: {
-            dateFrom: function (val) {
-                this.$parent.$emit('changeDateFrom', val);
-            },
-            dateTo: function (val) {
-                this.$parent.$emit('changeDateTo', val);
-            }
-        },
-        computed: {
-            ...mapGetters([
-                'transactions'
-            ]),
-            currentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
-            },
-        },
-        methods: {
-
-        },
-        created() {
-
-        },
-        mounted() {
-            // this.$on('sendMoney', function (data) {
-            //
-            //     let checkFirstTransaction = false;
-            //     if (this.transactions.length === 0) {
-            //         checkFirstTransaction = true;
-            //     }
-            //
-            //     this.sendMoneyToAdress(data);
-            //     this.setNotificationForSend(data);
-            //     this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
-            //     this.newTransaction = true;
-            //
-            //     if (checkFirstTransaction) {
-            //         this.initiateDate();
-            //     }
-            // });
-        }
     }
 </script>
 

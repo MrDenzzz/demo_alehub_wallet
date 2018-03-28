@@ -68,7 +68,7 @@
             NewWallet,
         },
         props: {
-            newWallets: { //переименовать
+            newWallets: { //переименовать. рефактор
                 type: Array,
                 required: true
             },
@@ -137,6 +137,14 @@
                     this.$store.dispatch('changeCurrentWallet',
                         address
                     ).then(() => {
+
+                        this.$store.dispatch('setFilterDate'
+                        ).then(() => {
+                            console.log('Success set filter date');
+                        }).catch(() => {
+                            console.log('Error set filter date');
+                        });
+
                         this.$parent.$emit('changeCurrentWalletEmit', address);
                     }).catch((err) => {
                         console.log('Сan not change the current wallet');
@@ -152,21 +160,6 @@
                 if (Number(balance) % 1 !== 0)
                     return balance.toString().split('.')[1].toString().length;
                 return 0;
-            },
-            getTransactions: function () {
-                // if (!this.getCurrentWallet) return false;
-                // this.$http.get(`${this.$host}/transactions/${this.getCurrentWallet.address}`, {
-                //     headers: {
-                //         'Content-Type': 'application/json; charset=UTF-8',
-                //         'Accept': 'application/json',
-                //         'Authorization': localStorage.getItem(sha256('user-token'))
-                //     }
-                // }).then(response => {
-                //     console.log(response);
-                //     this.addNewTransactions(response.body);
-                // }, response => {
-                //     console.log('error', response);
-                // });
             },
             getIcon: function (name) {
                 if (this.selectedTheme === 'dark')
@@ -205,7 +198,8 @@
             },
             checkScroll: function () {
                 let scrollableEl = document.querySelector('.menu');
-                if (!scrollableEl) return false
+                if (!scrollableEl)
+                    return false;
                 if (scrollableEl.scrollHeight > scrollableEl.clientHeight) {
                     this.scrollable = true;
                 } else {
