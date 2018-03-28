@@ -5,7 +5,8 @@ const state = {
     //мб подгружать сразу все транзакции или только для текущего воллета, а потом по требованию, но не сохранять, а дозаписывать?
 
     transactions: [],
-    dateTransactions: [],
+    transactionsUpdated: [],
+    // dateTransactions: [],
     chunkTransactions: [],
     activeFilter: 0,
 
@@ -13,10 +14,14 @@ const state = {
 
     transactionStatus: 'not found',
     transactionsLazyStatus: '',
+    transactionsPingStatus: '',
     transactionsMomentStatus: '',
-    transactionsLoader: false,
     transactionSendStatus: '',
     initiateFilterDateStatus: '',
+
+    transactionsLoader: false,
+
+    transactionsChanged: false,
 
     dateFrom: 0,
     dateTo: 0,
@@ -38,19 +43,17 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-                    console.log(resp.data, 'resp.data transactions when new wallet create');
-                    // console.log(address, 'current wallet address');
-                    commit('SET_TRANSACTIONS', resp.data);
-                    commit('SUCCESS_INITIATE_FILTER_DATE');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    console.log(err, 'error transactions wallet address');
-                    commit('TRANSACTIONS_ERROR', err);
-                    reject(err)
-                });
+            }).then(resp => {
+                console.log(resp.data, 'resp.data transactions when new wallet create');
+                // console.log(address, 'current wallet address');
+                commit('SET_TRANSACTIONS', resp.data);
+                commit('SUCCESS_INITIATE_FILTER_DATE');
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error transactions wallet address');
+                commit('TRANSACTIONS_ERROR', err);
+                reject(err)
+            });
         })
     },
     transactionsRequestLazy: ({commit, dispatch}, address) => {
@@ -74,6 +77,27 @@ const actions = {
             });
         })
     },
+    transactionsRequestPing: ({commit, dispatch}, address) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_PING_TRANSACTIONS');
+            let host = `http://192.168.1.37:4000/transactions/${address}`;
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            }).then(resp => {
+                commit('SUCCESS_PING_TRANSACTIONS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_PING_TRANSACTIONS', err);
+                reject(err)
+            });
+        })
+    },
     transactionsRequestMoment: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_MOMENT_TRANSACTIONS');
@@ -93,6 +117,11 @@ const actions = {
                 commit('ERROR_MOMENT_TRANSACTIONS', err);
                 reject(err)
             });
+        })
+    },
+    refreshTransaction: ({commit}) => {
+        return new Promise((resolve, reject) => {
+
         })
     },
     sendCoins: ({commit, dispatch}, walletDetails) => {
@@ -128,7 +157,7 @@ const actions = {
         commit('SET_WALLET_TRANSACTIONS', address);
     },
 
-    setFilterDate:({commit}) => {
+    setFilterDate: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('SUCCESS_INITIATE_FILTER_DATE');
             resolve();
@@ -157,48 +186,67 @@ const actions = {
 };
 
 const mutations = {
-    TRANSACTIONS_REQUEST(state) {
+    TRANSACTIONS_REQUEST: (state) => {
         state.transactionStatus = 'loading';
         state.transactionsLazyStatus = 'loading';
     },
-    SET_TRANSACTIONS(state, transactions) {
+    SET_TRANSACTIONS: (state, transactions) => {
         state.transactionStatus = 'success';
         state.transactionsLazyStatus = 'success';
         state.transactions = transactions;
     },
-    TRANSACTIONS_ERROR(state, err) {
+    TRANSACTIONS_ERROR: (state, err) => {
         state.transactionStatus = 'error';
         state.transactionsLazyStatus = 'error';
     },
 
 
-    REQUEST_LAZY_TRANSACTIONS(state) {
+    REQUEST_LAZY_TRANSACTIONS: (state) => {
         state.transactionsLazyStatus = 'loading';
     },
-    SUCCESS_LAZY_TRANSACTIONS(state, transactions) {
+    SUCCESS_LAZY_TRANSACTIONS: (state, transactions) => {
         state.transactions = transactions;
         state.transactionsLazyStatus = 'success';
     },
-    ERROR_LAZY_TRANSACTIONS(state) {
+    ERROR_LAZY_TRANSACTIONS: (state) => {
         state.transactionsLazyStatus = 'error';
     },
 
-    REQUEST_MOMENT_TRANSACTIONS(state) {
+    REQUEST_PING_TRANSACTIONS: (state) => {
+        state.transactionsPingStatus = 'loading';
+    },
+    SUCCESS_PING_TRANSACTIONS: (state, transactionsUpdated) => {
+
+        if (!state.transactions.equals(transactionsUpdated) && !state.transactionsUpdated.equals(transactionsUpdated)) {
+            state.transactionsUpdated = transactionsUpdated;
+            state.transactionsChanged = true;
+        }
+
+        // console.log(transactionsUpdated.equals(transactionsUpdated));
+        // console.log(state.transactions);
+
+        state.transactionsPingStatus = 'success';
+    },
+    ERROR_PING_TRANSACTIONS: () => {
+        state.transactionsPingStatus = 'error';
+    },
+
+    REQUEST_MOMENT_TRANSACTIONS: (state) => {
         state.transactionsMomentStatus = 'loading';
     },
-    SUCCESS_MOMENT_TRANSACTIONS(state, transactions) {
+    SUCCESS_MOMENT_TRANSACTIONS: (state, transactions) => {
         state.transactions = transactions;
         state.transactionsMomentStatus = 'success';
     },
-    ERROR_MOMENT_TRANSACTIONS(state) {
+    ERROR_MOMENT_TRANSACTIONS: (state) => {
         state.transactionsMomentStatus = 'error';
     },
 
 
-    REQUEST_WALLET_TRANSACTIONS(state) {
+    REQUEST_WALLET_TRANSACTIONS: (state) => {
 
     },
-    SET_WALLET_TRANSACTIONS(state, address) {
+    SET_WALLET_TRANSACTIONS: (state, address) => {
 
         console.log(address, 'wallet address');
 
@@ -206,7 +254,7 @@ const mutations = {
     },
 
 
-    SUCCESS_INITIATE_FILTER_DATE(state) {
+    SUCCESS_INITIATE_FILTER_DATE: (state) => {
         // state.dateFrom = new Date(state.transactions[0].timestamp);
         // for (let i = 0; i < state.transactions.length; i++) {
         //     if (this.dateFrom > state.transactions[i].timestamp)
@@ -228,15 +276,15 @@ const mutations = {
         state.initiateFilterDateStatus = 'success';
     },
 
-    SUCCESS_CHANGE_DATE_FROM(state, dateFrom) {
+    SUCCESS_CHANGE_DATE_FROM: (state, dateFrom) => {
         state.dateFrom = dateFrom;
     },
 
-    SUCCESS_CHANGE_DATE_TO(state, dateTo) {
+    SUCCESS_CHANGE_DATE_TO: (state, dateTo) => {
         state.dateTo = dateTo;
     },
 
-    SUCCESS_SET_SEARCH_TEXT(state, searchText) {
+    SUCCESS_SET_SEARCH_TEXT: (state, searchText) => {
         state.searchText = searchText;
     },
 
@@ -300,13 +348,15 @@ const mutations = {
 const getters = {
 
     transactions: state => state.transactions,
-    dateTransactions: state => state.dateTransactions,
+    // dateTransactions: state => state.dateTransactions,
     transactionStatus: state => state.transactionStatus,
     transactionsLazyStatus: state => state.transactionsLazyStatus,
     initiateFilterDateStatus: state => state.initiateFilterDateStatus,
     dateFrom: state => state.dateFrom,
     dateTo: state => state.dateTo,
-    searchText: state => state.searchText
+    searchText: state => state.searchText,
+
+    transactionsChanged: state => state.transactionsChanged
 };
 
 export default {

@@ -41,6 +41,86 @@ Vue.use(VueResource);
 
 import messages from './i18n.js';
 
+
+Object.prototype.equals = function (object2) {
+
+    for (let propName in this) {
+        if (this.hasOwnProperty(propName) != object2.hasOwnProperty(propName))
+            return false;
+
+        else if (typeof this[propName] != typeof object2[propName])
+            return false;
+    }
+
+    for (let propName in object2) {
+
+        if (this.hasOwnProperty(propName) != object2.hasOwnProperty(propName))
+            return false;
+
+        else if (typeof this[propName] != typeof object2[propName])
+            return false;
+
+
+        if (!this.hasOwnProperty(propName))
+            continue;
+
+        /**REQUIRES Array.equals**/
+
+        if (this[propName] instanceof Array && object2[propName] instanceof Array) {
+
+            if (!this[propName].equals(object2[propName]))
+                return false;
+
+        } else if (this[propName] instanceof Object && object2[propName] instanceof Object) {
+
+            if (!this[propName].equals(object2[propName]))
+                return false;
+
+        } else if (this[propName] != object2[propName]) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+Object.defineProperty(Object.prototype, 'equals', {enumerable: false});
+
+// if(Array.prototype.equals)
+//     console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+
+Array.prototype.equals = function (array) {
+
+    let self = this;
+
+    if (!array)
+        return false;
+
+    if (self.length !== array.length)
+        return false;
+
+    for (var i = 0; i < self.length; i++) {
+        if (self[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!self[i].equals(array[i]))
+                return false;
+
+            /**REQUIRES OBJECT COMPARE**/
+        } else if (self[i] instanceof Object && array[i] instanceof Object) {
+
+            if (!self[i].equals(array[i]))
+                return false;
+
+        } else if (self[i] !== array[i]) {
+            return false;
+        }
+    }
+    return true;
+};
+
+Object.defineProperty(Array.prototype, 'equals', {enumerable: false});
+
+
 let systemLang = '';
 if (localStorage.getItem('systemLang') === null) {
     localStorage.setItem('systemLang', 'eng');

@@ -7,10 +7,11 @@
             <!--<New-wallet/>-->
             <router-view/>
             <div
+                    v-if="transactionsChanged"
                     @click=""
                     style="position: fixed; bottom: 0; width: 100%; color: #ffffff; background-color: #1bac2c;
              z-index: 10000; display: flex; justify-content: center; align-items: center; justify-content: center;
-             padding-top: 1em; padding-bottom: 1em; cursor: pointer;">
+             padding-top: 1em; padding-bottom: 1em; cursor: pointer; font-family: MuseoSansCyrl500;">
                 You have received new data. Click to refresh.
             </div>
             <Connection-modal/>
@@ -63,7 +64,8 @@
                 'transactionStatus',
                 'initiateFilterDateStatus',
                 'lengthWalletList',
-                'currentWalletAddress'
+                'currentWalletAddress',
+                'transactionsChanged'
             ]),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
@@ -100,7 +102,7 @@
             pingTransactions: function () {
                 if (this.readyToPing) {
                     console.log('check');
-                    this.$store.dispatch('transactionsRequestLazy',
+                    this.$store.dispatch('transactionsRequestPing',
                         this.currentWalletAddress
                     ).then(() => {
                         console.log('Success ping transactions');
@@ -108,6 +110,9 @@
                         console.log('Error ping transactions');
                     });
                 }
+            },
+            refreshTransactionsCurrentWallet: function () {
+                this.$store.dispatch();
             }
         },
         created() {
@@ -133,7 +138,7 @@
             }
         },
         mounted() {
-            // this.setIntervalId = setInterval(this.pingTransactions, 15000);
+            // this.setIntervalId = setInterval(this.pingTransactions, 60000);
 
             if (!navigator.onLine) {
                 this.isLoader = true;
