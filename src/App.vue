@@ -26,7 +26,6 @@
 
     import sha256 from 'sha256';
 
-    import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
 
     export default {
@@ -42,8 +41,17 @@
                 language: localStorage.getItem('systemLang'),
                 isOpenModal: false,
                 isLoader: false,
-                token: localStorage.getItem(sha256('user-token'))
+                token: localStorage.getItem(sha256('user-token')),
+                readyToPing: false,
+
+                setIntervalId: 0
             }
+        },
+        watch: {
+            // readyToPing: function (val) {
+            //     clearInterval(this.setIntervalId);
+            //     this.setIntervalId = setInterval(this.pingTransactions(), 2000);
+            // }
         },
         computed: {
             ...mapGetters([
@@ -54,11 +62,9 @@
                 'userHaveTransactions',
                 'transactionStatus',
                 'initiateFilterDateStatus',
-                'lengthWalletList'
+                'lengthWalletList',
+                'currentWalletAddress'
             ]),
-            currentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
-            },
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
                 else return this.language;
@@ -75,6 +81,8 @@
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success')) {
 
+                    this.readyToPing = true;
+
                     console.log('Load app');
 
                     return false;
@@ -84,19 +92,23 @@
             }
         },
         methods: {
-            ...mapMutations({
-                setCurrentWallet: 'CHANGE_NEW_WALLET',
-                createNewWallet: 'CREATE_NEW_WALLET',
-                addNewTransactions: 'ADD_NEW_TRANSACTION',
-                setNewBalance: 'SET_NEW_BALANCE',
-                changeTransactionLoaderState: 'CHANGE_TRANSACTION_LOADER_STATE'
-            }),
-
             updateOnlineStatus: function (e) {
                 if (!navigator.onLine) {
                     return this.$modal.show('connectionmodal');
                 }
             },
+            pingTransactions: function () {
+                if (this.readyToPing) {
+                    console.log('check');
+                    this.$store.dispatch('transactionsRequestLazy',
+                        this.currentWalletAddress
+                    ).then(() => {
+                        console.log('Success ping transactions');
+                    }).catch(() => {
+                        console.log('Error ping transactions');
+                    });
+                }
+            }
         },
         created() {
             let body = document.querySelector('body');
@@ -121,6 +133,8 @@
             }
         },
         mounted() {
+            // this.setIntervalId = setInterval(this.pingTransactions, 15000);
+
             if (!navigator.onLine) {
                 this.isLoader = true;
                 return this.$modal.show('connectionmodal');

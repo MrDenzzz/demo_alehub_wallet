@@ -378,6 +378,7 @@ const getters = {
     lengthWalletList: state => state.wallets.length,
     walletStatus: state => state.walletStatus,
     currentWallet: state => state.currentWallet,
+    currentWalletAddress: state => state.currentWallet.address,
     currentWalletIndex: state => {
         return state.wallets.findIndex(item => {
             return item.address === state.currentWallet.address;

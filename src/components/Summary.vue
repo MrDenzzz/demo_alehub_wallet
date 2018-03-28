@@ -124,10 +124,22 @@
                 startingTransactions: 0,
                 isLoader: false,
 
-                resetSearch: false
+                imLoad: false,
+
+                resetSearch: false,
+
+                setIntervalId: 0,
+
+
+                flag: 0
             }
         },
-        watch: {},
+        // watch: {
+        //     flag: function (val) {
+        //         // clearInterval(this.setIntervalId);
+        //         // this.setIntervalId = setInterval(this.pingTransactions(), 2000);
+        //     }
+        // },
         computed: {
             ...mapGetters([
                 'wallets',
@@ -204,7 +216,7 @@
                 }).catch(() => {
                     console.log('Error set search text');
                 });
-            }
+            },
         },
         created() {
 
@@ -218,7 +230,7 @@
                 }).catch(() => {
                     console.log('Error zeroing out current wallet');
                 });
-            };
+            }
 
             this.$on('changeTotalTransactions', val => {
                 this.totalTransactions = val;
@@ -231,7 +243,11 @@
         },
         mounted() {
 
-            // this.setIntervalId = setInterval(this.getTransactions, 15000);
+            // this.setIntervalId = setInterval(this.pingTransactions, 2000);
+
+            this.imLoad = true;
+
+            // setInterval(this.pingTransactions(), 2000);
 
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');

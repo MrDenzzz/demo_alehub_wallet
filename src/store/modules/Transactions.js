@@ -54,7 +54,6 @@ const actions = {
         })
     },
     transactionsRequestLazy: ({commit, dispatch}, address) => {
-
         return new Promise((resolve, reject) => {
             commit('REQUEST_LAZY_TRANSACTIONS');
             let host = `http://192.168.1.37:4000/transactions/${address}`;
@@ -76,7 +75,6 @@ const actions = {
         })
     },
     transactionsRequestMoment: ({commit, dispatch}, address) => {
-
         return new Promise((resolve, reject) => {
             commit('REQUEST_MOMENT_TRANSACTIONS');
             let host = `http://192.168.1.37:4000/transactions/${address}`;
