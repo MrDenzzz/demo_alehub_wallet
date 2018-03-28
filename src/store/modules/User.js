@@ -12,6 +12,7 @@ const state = {
     userStatus: '',
     token: localStorage.getItem(sha256('user-token')) || '',
     status: '',
+    logoutStatus: '',
     twoAuthGeneratedCode: '',
     twoAuthSecret: '',
     twoAuthStatus: '',
@@ -33,24 +34,22 @@ const actions = {
                 url: host,
                 data: user,
                 method: 'POST'
-            })
-                .then(resp => {
-                    if (resp.data.statusLogin === 200) {
-                        commit('AUTH_CHANGE_STEP');
-                    } else {
-                        const token = resp.data.user_token;
-                        localStorage.setItem(sha256('user-token'), token);
-                        axios.defaults.headers.common['Authorization'] = token;
-                        commit('AUTH_SUCCESS');
-                    }
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('AUTH_ERROR', err);
-                    localStorage.removeItem(sha256('user-token'));
-                    delete axios.defaults.headers.common['Login'];
-                    reject(err)
-                });
+            }).then(resp => {
+                if (resp.data.statusLogin === 200) {
+                    commit('AUTH_CHANGE_STEP');
+                } else {
+                    const token = resp.data.user_token;
+                    localStorage.setItem(sha256('user-token'), token);
+                    axios.defaults.headers.common['Authorization'] = token;
+                    commit('AUTH_SUCCESS');
+                }
+                resolve(resp);
+            }).catch(err => {
+                commit('AUTH_ERROR', err);
+                localStorage.removeItem(sha256('user-token'));
+                delete axios.defaults.headers.common['Login'];
+                reject(err)
+            });
         })
     },
     authTwoFaRequest: ({commit, dispatch}, user) => {
@@ -61,33 +60,48 @@ const actions = {
                 url: host,
                 data: user,
                 method: 'POST'
-            })
-                .then(resp => {
-                    console.log(resp);
-                    const token = resp.data.user_token;
-                    localStorage.setItem(sha256('user-token'), token);
-                    axios.defaults.headers.common['Authorization'] = token;
-                    commit('AUTH_SUCCESS');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('AUTH_ERROR', err);
-                    localStorage.removeItem(sha256('user-token'));
-                    delete axios.defaults.headers.common['Login'];
-                    reject(err)
-                });
+            }).then(resp => {
+                console.log(resp);
+                const token = resp.data.user_token;
+                localStorage.setItem(sha256('user-token'), token);
+                axios.defaults.headers.common['Authorization'] = token;
+                commit('AUTH_SUCCESS');
+                resolve(resp);
+            }).catch(err => {
+                commit('AUTH_ERROR', err);
+                localStorage.removeItem(sha256('user-token'));
+                delete axios.defaults.headers.common['Login'];
+                reject(err)
+            });
         })
     },
-    authLogout: ({commit, dispatch}) => {
+    authLogout: ({commit}) => {
         return new Promise((resolve, reject) => {
-            commit('AUTH_LOGOUT');
-            localStorage.removeItem(sha256('user-token'));
-            localStorage.removeItem(sha256('current-wallet'));
-            delete axios.defaults.headers.common['Authorization'];
-            resolve();
+            commit('REQUEST_LOGOUT');
+            let host = 'http://192.168.1.37:4000/users/logout';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            }).then(resp => {
+                console.log(resp, 'logout');
+                commit('SUCCESS_LOGOUT');
+                localStorage.removeItem(sha256('user-token'));
+                localStorage.removeItem(sha256('current-wallet'));
+                delete axios.defaults.headers.common['Authorization'];
+                resolve(resp);
+            }).catch(err => {
+                console.log(err);
+                commit('ERROR_LOGOUT', err);
+                reject(err)
+            });
         })
     },
-    userRequest: ({commit, dispatch}) => {
+    userRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('USER_REQUEST');
             let host = 'http://192.168.1.37:4000/users/get-user-data';
@@ -99,23 +113,18 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-
-                    console.log(resp);
-
-                    commit('USER_SUCCESS', resp.data);
-                    commit('AUTH_SUCCESS');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('USER_ERROR', err);
-                    commit('AUTH_ERROR', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                commit('USER_SUCCESS', resp.data);
+                commit('AUTH_SUCCESS');
+                resolve(resp);
+            }).catch(err => {
+                commit('USER_ERROR', err);
+                commit('AUTH_ERROR', err);
+                reject(err);
+            });
         });
     },
-    twoAuthRequest: ({commit, dispatch}) => {
+    twoAuthRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('TWOAUTH_REQUEST');
             let host = 'http://192.168.1.37:4000/users/generate-qr';
@@ -126,25 +135,17 @@ const actions = {
                     'Accept': 'application/json'
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-
-                    console.log(resp);
-
-                    let twoauth = {
-                        qrPath: resp.data.qr_path,
-                        secret: resp.data.secret
-                    };
-
-                    console.log(twoauth);
-                    // console.log(twoauth, 'twoauth');
-                    commit('TWOAUTH_SUCCESS', twoauth);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('TWOAUTH_ERROR', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                let twoauth = {
+                    qrPath: resp.data.qr_path,
+                    secret: resp.data.secret
+                };
+                commit('TWOAUTH_SUCCESS', twoauth);
+                resolve(resp);
+            }).catch(err => {
+                commit('TWOAUTH_ERROR', err);
+                reject(err);
+            });
         });
     },
     enableTwoAuth: ({commit, dispatch}, authData) => {
@@ -160,15 +161,13 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'POST'
-            })
-                .then(resp => {
-                    commit('ENABLE_TWOAUTH_SUCCESS');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('ENABLE_TWOAUTH_ERROR', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                commit('ENABLE_TWOAUTH_SUCCESS');
+                resolve(resp);
+            }).catch(err => {
+                commit('ENABLE_TWOAUTH_ERROR', err);
+                reject(err);
+            });
         });
     },
     disableTwoAuth: ({commit, dispatch}, confirmDisableData) => {
@@ -184,17 +183,15 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'POST'
-            })
-                .then(resp => {
-                    console.log(resp);
-                    commit('DISABLE_TWOAUTH_SUCCESS');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    console.log(err);
-                    commit('DISABLE_TWOAUTH_ERROR', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                console.log(resp);
+                commit('DISABLE_TWOAUTH_SUCCESS');
+                resolve(resp);
+            }).catch(err => {
+                console.log(err);
+                commit('DISABLE_TWOAUTH_ERROR', err);
+                reject(err);
+            });
         });
     },
     changeUserName: ({commit, dispatch}, name) => {
@@ -210,18 +207,16 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'POST'
-            })
-                .then(resp => {
-                    // console.log(resp);
-                    let name = resp;
-                    commit('CHANGE_USERNAME_SUCCESS', name);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    console.log(err);
-                    commit('CHANGE_USERNAME_ERROR', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                // console.log(resp);
+                let name = resp;
+                commit('CHANGE_USERNAME_SUCCESS', name);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err);
+                commit('CHANGE_USERNAME_ERROR', err);
+                reject(err);
+            });
         });
     },
     changeEmail: ({commit, dispatch}, emailData) => {
@@ -237,17 +232,15 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'POST'
-            })
-                .then(resp => {
-                    console.log(resp, 'change email success');
-                    commit('SUCCESS_CHANGE_EMAIL', emailData.email);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    console.log(err);
-                    commit('ERROR_CHANGE_EMAIL', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                console.log(resp, 'change email success');
+                commit('SUCCESS_CHANGE_EMAIL', emailData.email);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err);
+                commit('ERROR_CHANGE_EMAIL', err);
+                reject(err);
+            });
         });
     },
     changePassword: ({commit, dispatch}, passData) => {
@@ -263,17 +256,15 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'POST'
-            })
-                .then(resp => {
-                    console.log(resp, 'change password');
-                    commit('SUCCESS_CHANGE_PASSWORD');
-                    resolve(resp);
-                })
-                .catch(err => {
-                    console.log(err);
-                    commit('ERROR_CHANGE_PASSWORD', err);
-                    reject(err);
-                });
+            }).then(resp => {
+                console.log(resp, 'change password');
+                commit('SUCCESS_CHANGE_PASSWORD');
+                resolve(resp);
+            }).catch(err => {
+                console.log(err);
+                commit('ERROR_CHANGE_PASSWORD', err);
+                reject(err);
+            });
         });
     },
 };
@@ -300,10 +291,17 @@ const mutations = {
         state.isLoader = false;
         state.status = 'error';
     },
-    AUTH_LOGOUT: (state) => {
+    REQUEST_LOGOUT: (state) => {
+        state.logoutStatus = 'loading';
+    },
+    SUCCESS_LOGOUT: (state) => {
         state.status = '';
         state.userStatus = '';
         state.token = '';
+        state.logoutStatus = 'success';
+    },
+    ERROR_LOGOUT: (state) => {
+        state.logoutStatus = 'error';
     },
     USER_REQUEST: (state) => {
         state.userStatus = 'loading';

@@ -193,12 +193,11 @@
             logout: function () {
                 this.$store.dispatch('authLogout'
                 ).then(() => {
-
+                    console.log('Success logout');
                     this.$router.push('/login')
                 }).catch(() => {
-
+                    console.log('Error logout');
                 });
-                this.$router.push('/login');
             },
             newSelect: function (value, id) {
                 if (id === 'language') {
