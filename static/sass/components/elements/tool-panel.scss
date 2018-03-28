@@ -1,0 +1,180 @@
+.bottom {
+    background-color: #f0f0f0;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .date {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding-left: 15px;
+        margin-right: 15px;
+
+        .date-title {
+            font-family: MuseoSansCyrl500;
+            font-size: 14px;
+            color: #34343e;
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+
+        .datepicker-wrap {
+            display: flex;
+        }
+    }
+
+    .docs {
+        display: flex;
+        flex-direction: column;
+
+        .disable-gray-button {
+            background-color: #dedede;
+            opacity: 0.4;
+        }
+
+        button:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .info {
+        display: flex;
+
+        .stats-col {
+            display: flex;
+            flex-direction: column;
+
+            .title-opt-span, .result-opt-span {
+                font-family: MuseoSansCyrl500;
+                font-size: 14px;
+                color: #34343e;
+            }
+
+            .title-opt-span {
+                padding: 5px;
+                align-self: flex-start;
+
+                .title {
+                    padding: 5px;
+                    margin: 0 10px 0 10px;
+                }
+            }
+            .result-opt-span {
+                padding: 5px;
+                margin: 0 10px 0 10px;
+                align-self: flex-end;
+                white-space: nowrap;
+            }
+
+            .sent {
+                color: #b10303;
+            }
+
+            .count {
+                padding: 5px;
+                margin: 0 10px 0 10px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    .bottom {
+        .docs {
+            .buttons {
+                width: 130px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .bottom {
+        .date {
+            width: 190px;
+            padding-left: 0;
+
+            .buttons {
+                width: 130px;
+            }
+
+            .datepicker-wrap {
+                width: 190px;
+            }
+        }
+    }
+}
+
+@media (max-width: 660px) {
+    .top {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .searchControl {
+            margin-bottom: 20px;
+        }
+    }
+
+    .bottom {
+        .date {
+            .datepicker-wrap {
+                flex-direction: column;
+                width: auto;
+
+                .vdp-datepicker {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 560px) {
+    .bottom {
+        flex-direction: column;
+
+        .date {
+            margin-right: 0;
+
+            .datepicker-wrap {
+                flex-direction: row;
+            }
+        }
+        
+        .docs {
+            flex-direction: row;
+
+            button {
+                margin-right: 15px;
+            }
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    .bottom {
+        .docs {
+            flex-direction: column;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+
+            .buttons {
+                width: 100%;
+            }
+        }
+
+        .info {
+            width: 100%;
+            justify-content: flex-end;
+
+            .stats-col {
+                .result-opt-span {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
