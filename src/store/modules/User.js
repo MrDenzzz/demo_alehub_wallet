@@ -86,7 +86,7 @@ const actions = {
                     'Accept': 'application/json',
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
-                method: 'GET'
+                method: 'DELETE'
             }).then(resp => {
                 console.log(resp, 'logout');
                 commit('SUCCESS_LOGOUT');

@@ -242,6 +242,19 @@
                 const {email, password, token} = this;
                 this.$store.dispatch('authTwoFaRequest', {email, password, token}).then(() => {
                     this.$store.dispatch('userRequest').then(() => {
+                        this.$store.dispatch('walletsRequest').then(() => {
+                            localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
+                            this.$store.dispatch('transactionsRequest', this.currentWallet.address || '').then(() => {
+                                this.$router.push('/');
+                            }).catch(() => {
+                                //это не срабатывает???
+                                console.log('You do not have transactions');
+                                this.$router.push('/');
+                            });
+                        }).catch(() => {
+                            console.log('You do not have wallets');
+                            this.$router.push('/');
+                        });
                         this.$router.push('/');
                     });
                 });

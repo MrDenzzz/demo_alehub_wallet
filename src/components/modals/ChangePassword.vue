@@ -55,7 +55,7 @@
                 </div>
 
                 <div v-if="dataProcessing" class="wrap-spinner">
-                    <Spinner v-if="dataProcessing" />
+                    <Spinner />
                 </div>
 
                 <div class="modal-btn text-center">
