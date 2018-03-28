@@ -1506,3 +1506,163 @@ td, th {
         color: #000;
         line-height: 40px;
         font-size: 14px; }
+
+.bottom {
+  background-color: #f0f0f0;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .bottom .date {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-left: 15px;
+    margin-right: 15px; }
+    .bottom .date .date-title {
+      font-family: MuseoSansCyrl500;
+      font-size: 14px;
+      color: #34343e;
+      text-transform: uppercase;
+      margin-top: 0; }
+    .bottom .date .datepicker-wrap {
+      display: flex; }
+  .bottom .docs {
+    display: flex;
+    flex-direction: column; }
+    .bottom .docs .disable-gray-button {
+      background-color: #dedede;
+      opacity: 0.4; }
+    .bottom .docs button:last-of-type {
+      margin-bottom: 0; }
+  .bottom .info {
+    display: flex; }
+    .bottom .info .stats-col {
+      display: flex;
+      flex-direction: column; }
+      .bottom .info .stats-col .title-opt-span, .bottom .info .stats-col .result-opt-span {
+        font-family: MuseoSansCyrl500;
+        font-size: 14px;
+        color: #34343e; }
+      .bottom .info .stats-col .title-opt-span {
+        padding: 5px;
+        align-self: flex-start; }
+        .bottom .info .stats-col .title-opt-span .title {
+          padding: 5px;
+          margin: 0 10px 0 10px; }
+      .bottom .info .stats-col .result-opt-span {
+        padding: 5px;
+        margin: 0 10px 0 10px;
+        align-self: flex-end;
+        white-space: nowrap; }
+      .bottom .info .stats-col .sent {
+        color: #b10303; }
+      .bottom .info .stats-col .count {
+        padding: 5px;
+        margin: 0 10px 0 10px; }
+
+@media (max-width: 1100px) {
+  .bottom .docs .buttons {
+    width: 130px; } }
+
+@media (max-width: 1024px) {
+  .bottom .date {
+    width: 190px;
+    padding-left: 0; }
+    .bottom .date .buttons {
+      width: 130px; }
+    .bottom .date .datepicker-wrap {
+      width: 190px; } }
+
+@media (max-width: 660px) {
+  .top {
+    flex-direction: column;
+    align-items: flex-start; }
+    .top .searchControl {
+      margin-bottom: 20px; }
+  .bottom .date .datepicker-wrap {
+    flex-direction: column;
+    width: auto; }
+    .bottom .date .datepicker-wrap .vdp-datepicker {
+      margin-bottom: 10px; } }
+
+@media (max-width: 560px) {
+  .bottom {
+    flex-direction: column; }
+    .bottom .date {
+      margin-right: 0; }
+      .bottom .date .datepicker-wrap {
+        flex-direction: row; }
+    .bottom .docs {
+      flex-direction: row; }
+      .bottom .docs button {
+        margin-right: 15px; } }
+
+@media (max-width: 375px) {
+  .bottom .docs {
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 100%; }
+    .bottom .docs .buttons {
+      width: 100%; }
+  .bottom .info {
+    width: 100%;
+    justify-content: flex-end; }
+    .bottom .info .stats-col .result-opt-span {
+      margin-right: 0; } }
+
+input#datepickerFrom, input#datepickerTo {
+  font-family: MuseoSansCyrl500;
+  background: inherit;
+  border: none;
+  border-bottom: 1px solid rgba(52, 52, 62, 0.2);
+  width: 80px;
+  margin-right: 30px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+  text-align: left;
+  color: #34343e;
+  position: relative;
+  z-index: 1; }
+
+#datepickerFrom, #datepickerTo {
+  cursor: pointer; }
+
+#datepickerFrom::-webkit-input-placeholder, #datepickerTo::-webkit-input-placeholder {
+  opacity: 1;
+  line-height: 1.29;
+  font-size: 14px; }
+
+.vdp-datepicker__calendar {
+  background-color: #f7f7f7;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.12);
+  border: 0 !important;
+  padding: 7px;
+  font-family: MuseoSansCyrl500 !important; }
+  .vdp-datepicker__calendar header .next, .vdp-datepicker__calendar header .prev {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px; }
+    .vdp-datepicker__calendar header .next .arrow, .vdp-datepicker__calendar header .prev .arrow {
+      width: 7.5px; }
+  .vdp-datepicker__calendar .day-header {
+    font-family: MuseoSansCyrl500 !important;
+    color: #0d1717 !important;
+    font-size: 12px !important; }
+  .vdp-datepicker__calendar .day:hover, .vdp-datepicker__calendar .month:hover, .vdp-datepicker__calendar .year:hover {
+    background-color: #f0f0f0 !important;
+    border: 1px solid #f0f0f0 !important; }
+  .vdp-datepicker__calendar .selected {
+    background-color: #f0f0f0 !important; }
+
+@media (max-width: 660px) {
+  input#datepickerFrom, input#datepickerTo {
+    margin-right: 0; } }
+
+@media (max-width: 560px) {
+  input#datepickerFrom, input#datepickerTo {
+    margin-right: 15px; } }

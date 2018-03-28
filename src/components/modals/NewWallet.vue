@@ -576,11 +576,5 @@
     }
 </script>
 
-<style lang="stylus" scoped>
-    .wrap-spinner
-        display flex
-        justify-content center
-        padding 1em 0
-</style>
 
 
