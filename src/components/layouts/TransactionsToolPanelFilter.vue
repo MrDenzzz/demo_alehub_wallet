@@ -22,10 +22,18 @@
                 </div>
             </div>
             <div class="docs">
-                <button class="buttons btn-default" @click="createPDF">
+                <button
+                        class="buttons btn-default"
+                        :class="{'disable-gray-button': currentTransactions.length === 0}"
+                        @click="createPDF"
+                        :disabled="currentTransactions.length === 0">
                     {{ $t('pages.summary.searchPanel.buttons.download') }}
                 </button>
-                <button class="buttons btn-default" @click="openModal('shareTransactions')">
+                <button
+                        class="buttons btn-default"
+                        :class="{'disable-gray-button': currentTransactions.length === 0}"
+                        @click="openModal('shareTransactions')"
+                        :disabled="currentTransactions.length === 0">
                     {{ $t('pages.summary.searchPanel.buttons.share') }}
                 </button>
             </div>
@@ -472,6 +480,10 @@
         .docs
             display flex
             flex-direction column
+
+            .disable-gray-button
+                background-color #dedede
+                opacity 0.4
 
             button:last-of-type
                 margin-bottom 0

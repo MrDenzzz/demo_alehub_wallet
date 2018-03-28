@@ -146,7 +146,7 @@
                         });
 
                         this.$parent.$emit('changeCurrentWalletEmit', address);
-                    }).catch((err) => {
+                    }).catch(() => {
                         console.log('Сan not change the current wallet');
                     });
                 }
