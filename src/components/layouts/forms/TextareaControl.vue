@@ -12,8 +12,7 @@
                     ref="textarea"
                     v-model="value"
                     name=""
-                    rows="1"
-            >
+                    rows="1">
             </textarea>
         </div>
     </div>
@@ -77,7 +76,7 @@
                 background inherit
                 border none
                 outline none
-                margin-top 18px
+                /*margin-top 18px*/
                 font-size 14px
                 font-weight 500
                 line-height 1.29
@@ -86,6 +85,8 @@
                 opacity 0.5
                 position relative
                 z-index 1
+                resize none
+                overflow hidden
 
             textarea:focus
                 color #34343e

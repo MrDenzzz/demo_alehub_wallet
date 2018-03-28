@@ -5,10 +5,11 @@
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
-            <div class="modal-control double" style="border-bottom 1px solid #d1d1d1
-        padding-bottom 18px">
-                <div class="modal-input">
-                    <label class="title">Add your comment</label>
+            <div class="modal-control double">
+                <div class="modal-input modal-input-textarea">
+                    <div class="control">
+                        <label class="title">Add your comment</label>
+                    </div>
                     <textarea-control
                         :textarea-id="'comment'"
                         :placeholder="'Write your comment here'"
@@ -82,6 +83,11 @@
 </script>
 
 <style lang="stylus" scoped>
+    .modal-input-textarea
+        align-items flex-start !important
+        border-bottom 1px solid #d1d1d1
+        padding-bottom 18px
+
     .share-area
         display flex
         flex-direction column
