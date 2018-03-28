@@ -71,14 +71,12 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="hamburger" :class="{'is-active': collapsed}" id="hamburger" @click="toggleMenu()">
                     <span class="line"></span>
                     <span class="line"></span>
                     <span class="line"></span>
                 </div>
             </div>
-            
         </header>
         <div class="mobile-menu" :class="{ 'is-collapsed': collapsed }">
             <div class="menus">

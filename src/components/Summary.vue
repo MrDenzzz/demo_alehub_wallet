@@ -112,7 +112,7 @@
                     list: [{
                         type: "link",
                         name: this.$t('pages.summary.rightMenu.summary'),
-                        link: "/wallet"
+                        link: "/"
                     }, {
                         type: "link",
                         name: this.$t('pages.summary.rightMenu.walletSettings'),

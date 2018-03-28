@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: "not-found"
+        name: 'not-found'
     }
 </script>
 
@@ -34,4 +34,10 @@
 
             .title
                 font-family MuseoSansCyrl500
+
+            a.buttons
+                display flex
+                justify-content center
+                align-items center
+                text-decoration none
 </style>
