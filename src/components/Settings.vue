@@ -9,8 +9,7 @@
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
-                    <Spinner v-if="false"/>
-                    <div class="row" v-else>
+                    <div class="row">
                         <div class="col-12">
                             <panel-heading :title="$t('pages.settings.panelHeadingGeneral')" :isTop="true"/>
                             <div class="form">
@@ -93,6 +92,11 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div v-if="dataProcessing" class="wrap-spinner">
+                                <Spinner />
+                            </div>
+
                             <div class="text-center">
                                 <a
                                         href="#"
@@ -153,7 +157,8 @@
 
                 flag: null,
 
-                newName: ''
+                newName: '',
+                dataProcessing: false
             }
         },
         watch: {},
@@ -190,13 +195,24 @@
             ...mapActions([
                 'authLogout'
             ]),
+
             logout: function () {
+                this.dataProcessing = true;
+
+                setTimeout(() => {
+                    window.scrollTo(0, document.body.scrollHeight);
+                }, 40);
+
                 this.$store.dispatch('authLogout'
                 ).then(() => {
-                    console.log('Success logout');
+                    this.dataProcessing = false;
                     this.$router.push('/login')
                 }).catch(() => {
-                    console.log('Error logout');
+                    this.dataProcessing = false;
+                    this.$toasted.show('An error occurred while logout', {
+                        duration: 10000,
+                        type: 'error',
+                    });
                 });
             },
             newSelect: function (value, id) {
