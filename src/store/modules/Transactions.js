@@ -8,8 +8,8 @@ const state = {
     dateTransactions: [],
     chunkTransactions: [],
     activeFilter: 0,
-    searchText: '',
-    hideFilter: false,
+
+    // hideFilter: false,
 
     transactionStatus: 'not found',
     transactionsLazyStatus: '',
@@ -20,7 +20,9 @@ const state = {
 
     dateFrom: 0,
     dateTo: 0,
-    // Moment().hours(23).minutes(59).seconds(59).milliseconds(999)
+
+    searchText: '',
+
 };
 
 const actions = {
@@ -147,6 +149,13 @@ const actions = {
             resolve();
         });
     },
+
+    setSearchText: ({commit}, searchText) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_SET_SEARCH_TEXT', searchText);
+            resolve();
+        });
+    },
 };
 
 const mutations = {
@@ -229,6 +238,10 @@ const mutations = {
         state.dateTo = dateTo;
     },
 
+    SUCCESS_SET_SEARCH_TEXT(state, searchText) {
+        state.searchText = searchText;
+    },
+
 
     CHANGE_ACTIVE_FILTER(state, index) {
         state.activeFilter = index;
@@ -256,9 +269,9 @@ const mutations = {
             state.transactions.splice(rmTransactionsInd, 1);
         }
     },
-    SET_HIDE_FILTER(state, prop) {
-        state.hideFilter = prop;
-    },
+    // SET_HIDE_FILTER(state, prop) {
+    //     state.hideFilter = prop;
+    // },
     SET_DATE_FROM(state, from) {
         state.dateFrom = from;
     },
@@ -294,7 +307,8 @@ const getters = {
     transactionsLazyStatus: state => state.transactionsLazyStatus,
     initiateFilterDateStatus: state => state.initiateFilterDateStatus,
     dateFrom: state => state.dateFrom,
-    dateTo: state => state.dateTo
+    dateTo: state => state.dateTo,
+    searchText: state => state.searchText
 };
 
 export default {

@@ -7,7 +7,7 @@
                     id="search-transactions"
                     @input="searchTransaction()"
                     :placeholder="$t('pages.summary.searchPanel.search')"
-                    v-model="searchText">
+                    v-model="searchCurrentText">
         </div>
 
         <send-request/>
@@ -17,6 +17,8 @@
 <script>
     import SendRequest from './SendRequest';
 
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'transactions-operation-tool-panel',
         components: {
@@ -24,11 +26,13 @@
         },
         data() {
             return {
-                searchText: ''
+                searchCurrentText: ''
             }
         },
         computed: {
-
+            ...mapGetters([
+                'searchText'
+            ])
         },
         methods: {
             makeFocusSearch: function () {
@@ -36,14 +40,16 @@
                 document.getElementById('search-transactions').focus();
             },
             searchTransaction: function () {
-                this.$parent.$emit('searchTransaction', this.searchText);
+
+                this.$store.dispatch('setSearchText',
+                    this.searchCurrentText
+                ).then(() => {
+                    // console.log('Success set search text');
+                }).catch(() => {
+                    console.log('Error set search text');
+                });
+
             },
-        },
-        created() {
-
-        },
-        mounted() {
-
         }
     }
 </script>

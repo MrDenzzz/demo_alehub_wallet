@@ -17,7 +17,7 @@
                         <div class="col-12">
                             <div class="stats-balance">
                                 <div class="stats-col">
-                                    <send-request v-if="getActivity.length === 0 && transactionsLazyStatus === 'success'"/>
+                                    <send-request v-if="this.transactions.length === 0 && transactionsLazyStatus === 'success'"/>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,6 @@
                         link: "/wallet/settings"
                     }]
                 },
-                searchText: '',
                 changeWalletResult: false,
                 totalTransactions: 0,
                 startingTransactions: 0,
@@ -130,14 +129,13 @@
                 'transactionStatus',
                 'transactionsLazyStatus',
                 'dateFrom',
-                'dateTo'
+                'dateTo',
+                'searchText'
             ]),
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
-
-            //дублировать транзакции во vuex
 
             currentDateTransactions: function () {
                 if (this.dateFrom && this.dateTo) {
@@ -178,15 +176,6 @@
                 changeTransactionLoaderState: 'CHANGE_TRANSACTION_LOADER_STATE'
             }),
 
-
-            // currentTransactions1: function () {
-            //     this.$store.dispatch('walletTransactions', this.currentWallet.address).then(() => {
-            //
-            //     }).catch(() => {
-            //
-            //     });
-            // },
-
             openModal: function (name) {
                 this.$modal.show(name);
             },
@@ -195,11 +184,6 @@
 
             // let _this = this;
             // this.setIntervalId = setInterval(this.getTransactions, 15000);
-
-            //переписать каррент трансекшинс в
-            // if (this.currentWallet) {
-            //     this.currentTransactions1();
-            // }
 
             if (this.wallets.length === 0) {
                 this.$store.dispatch('zeroingOutCurrentWallet'
@@ -223,32 +207,9 @@
 
             this.setIntervalId = setInterval(this.getTransactions, 15000);
 
-            // if (this.lengthWalletList === 0 && this.walletStatus === 'success') {
-
-            console.log(this.wallets, 'this.wallets');
-            console.log(this.lengthWalletList, 'this.lengthWalletList');
-
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
             }
-
-            //переписать название функции sendMoney на что нибудь более подходящее; переписать названия мутаций тоже
-            // this.$on('sendMoney', function (data) {
-            //
-            //     let checkFirstTransaction = false;
-            //     if (this.transactions.length === 0) {
-            //         checkFirstTransaction = true;
-            //     }
-            //
-            //     this.sendMoneyToAdress(data);
-            //     this.setNotificationForSend(data);
-            //     this.setNotificationForSendToProfile(this.transactions[this.transactions.length - 1]);
-            //     this.newTransaction = true;
-            //
-            //     if (checkFirstTransaction) {
-            //         this.initiateDate();
-            //     }
-            // });
 
             this.$on('setPeriod', function (period) {
                 this.setActivePeriod(period);
@@ -259,10 +220,11 @@
                 this.changeActiveFilter(index);
             });
 
-            this.$on('searchTransaction', function (searchText) {
-                this.searchTransaction(searchText);
-                this.searchText = searchText;
-            });
+            // this.$on('searchTransaction', function (searchText) {
+            //     console.log(searchText);
+            //     // this.searchTransaction(searchText);
+            //     // this.searchText = searchText;
+            // });
 
             this.$on('changeCurrentWalletEmit', function (address) {
 

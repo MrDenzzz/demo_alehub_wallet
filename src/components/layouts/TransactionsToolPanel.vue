@@ -23,6 +23,13 @@
                 required: true
             }
         },
+        mounted() {
+            this.$on('searchTransaction', function (searchText) {
+
+                // this.$parent.$emit
+
+            });
+        }
     }
 </script>
 

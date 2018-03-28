@@ -379,7 +379,7 @@
         created() {
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
-        }
+        },
     }
 </script>
 
