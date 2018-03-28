@@ -1,27 +1,26 @@
-import axios from "axios/index";
+import axios from 'axios/index';
 
 const state = {
 
     //мб подгружать сразу все транзакции или только для текущего воллета, а потом по требованию, но не сохранять, а дозаписывать?
 
     transactions: [],
-
-    tmpTransactions: [],
+    dateTransactions: [],
     chunkTransactions: [],
-    dateFrom: 0,
-    dateTo: 0,
     activeFilter: 0,
     searchText: '',
     hideFilter: false,
 
     transactionStatus: 'not found',
-
     transactionsLazyStatus: '',
     transactionsMomentStatus: '',
-
     transactionsLoader: false,
+    transactionSendStatus: '',
+    initiateFilterDateStatus: '',
 
-    transactionSendStatus: ''
+    dateFrom: 0,
+    dateTo: 0,
+    // Moment().hours(23).minutes(59).seconds(59).milliseconds(999)
 };
 
 const actions = {
@@ -42,6 +41,7 @@ const actions = {
                     console.log(resp.data, 'resp.data transactions when new wallet create');
                     // console.log(address, 'current wallet address');
                     commit('SET_TRANSACTIONS', resp.data);
+                    commit('SUCCESS_INITIATE_FILTER_DATE');
                     resolve(resp);
                 })
                 .catch(err => {
@@ -121,15 +121,24 @@ const actions = {
                 reject(err)
             });
         })
-
     },
+
     walletTransactions: ({commit, dispatch}, address) => {
-
         commit('REQUEST_WALLET_TRANSACTIONS');
-
         commit('SET_WALLET_TRANSACTIONS', address);
+    },
 
-        // commit('ERR_WALLET_TRANSACTIONS');
+    changeDateFrom: ({commit}, dateFrom) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_CHANGE_DATE_FROM', dateFrom);
+            resolve();
+        });
+    },
+    changeDateTo: ({commit}, dateTo) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_CHANGE_DATE_TO', dateTo);
+            resolve();
+        });
     },
 };
 
@@ -180,6 +189,37 @@ const mutations = {
         console.log(address, 'wallet address');
 
         console.log(state.transactions, 'state.transactions');
+    },
+
+
+    SUCCESS_INITIATE_FILTER_DATE(state) {
+        // state.dateFrom = new Date(state.transactions[0].timestamp);
+        // for (let i = 0; i < state.transactions.length; i++) {
+        //     if (this.dateFrom > state.transactions[i].timestamp)
+        //         this.dateFrom = state.transactions[i].timestamp;
+        // }
+
+        state.dateFrom = new Date(state.transactions[state.transactions.length - 1].timestamp);
+        state.dateFrom.setHours(0);
+        state.dateFrom.setMinutes(0);
+        state.dateFrom.setSeconds(0);
+        state.dateFrom.setMilliseconds(0);
+
+        state.dateTo = new Date();
+        state.dateTo.setHours(23);
+        state.dateTo.setMinutes(59);
+        state.dateTo.setSeconds(59);
+        state.dateTo.setMilliseconds(999);
+
+        state.initiateFilterDateStatus = 'success';
+    },
+
+    SUCCESS_CHANGE_DATE_FROM(state, dateFrom) {
+        state.dateFrom = dateFrom;
+    },
+
+    SUCCESS_CHANGE_DATE_TO(state, dateTo) {
+        state.dateTo = dateTo;
     },
 
 
@@ -242,8 +282,12 @@ const mutations = {
 const getters = {
 
     transactions: state => state.transactions,
+    dateTransactions: state => state.dateTransactions,
     transactionStatus: state => state.transactionStatus,
     transactionsLazyStatus: state => state.transactionsLazyStatus,
+    initiateFilterDateStatus: state => state.initiateFilterDateStatus,
+    dateFrom: state => state.dateFrom,
+    dateTo: state => state.dateTo
 };
 
 export default {

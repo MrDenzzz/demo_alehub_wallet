@@ -8,14 +8,14 @@
                 <div class="datepicker-wrap">
                     <datepicker
                             id="datepickerFrom"
-                            v-model="dateFrom"
+                            v-model="dateFromDatepicker"
                             language="en"
                             :placeholder="'Date from'"
                     />
 
                     <datepicker
                             id="datepickerTo"
-                            v-model="dateTo"
+                            v-model="dateToDatepicker"
                             language="en"
                             :placeholder="'Date to'"
                     />
@@ -113,18 +113,37 @@
         },
         data() {
             return {
-                dateFrom: null,
-                dateTo: null
+                dateFromDatepicker: '',
+                dateToDatepicker: ''
+            }
+        },
+        watch: {
+            dateFromDatepicker: function (val) {
+                this.$store.dispatch('changeDateFrom',
+                    val
+                ).then(() => {
+                    console.log('Success change date from');
+                }).catch(() => {
+                    console.log('Error change date from');
+                });
+            },
+            dateToDatepicker: function (val) {
+                this.$store.dispatch('changeDateTo',
+                    val
+                ).then(() => {
+                    console.log('Success change date to');
+                }).catch(() => {
+                    console.log('Error change date to');
+                });
             }
         },
         computed: {
             ...mapGetters([
                 'transactions',
                 'currentWallet',
+                'dateFrom',
+                'dateTo'
             ]),
-            currentBalance: function () {
-                return this.$store.state.Wallets.currentWallet.balance;
-            },
             currentBalanceBeginPeriod: function () {
                 return this.transactions[this.transactions.length - 1].balanceInfo.before;
             },
@@ -164,25 +183,27 @@
         },
         methods: {
             openModal: function (name) {
+                console.log(this.dateFrom, 'this.dateTo from vuex');
+                console.log(this.dateTo, 'fake dateFrom transactions');
                 this.$modal.show(name);
             },
             initiateDate: function () {
-                this.dateFrom = new Date(this.transactions.reduce(
+                this.dateFromDatepicker = new Date(this.transactions.reduce(
                     (acc, loc) =>
                         acc.timestamp < loc.timestamp
                             ? acc
                             : loc
                 ).timestamp);
-                this.dateFrom.setHours(0);
-                this.dateFrom.setMinutes(0);
-                this.dateFrom.setSeconds(0);
-                this.dateFrom.setMilliseconds(0);
+                this.dateFromDatepicker.setHours(0);
+                this.dateFromDatepicker.setMinutes(0);
+                this.dateFromDatepicker.setSeconds(0);
+                this.dateFromDatepicker.setMilliseconds(0);
 
-                this.dateTo = new Date();
-                this.dateTo.setHours(23);
-                this.dateTo.setMinutes(59);
-                this.dateTo.setSeconds(59);
-                this.dateTo.setMilliseconds(999);
+                this.dateToDatepicker = new Date();
+                this.dateToDatepicker.setHours(23);
+                this.dateToDatepicker.setMinutes(59);
+                this.dateToDatepicker.setSeconds(59);
+                this.dateToDatepicker.setMilliseconds(999);
             },
             createPDF: function () {
                 let pdfName = 'test';
@@ -362,13 +383,23 @@
             }
         },
         created() {
+
+            this.dateFromDatepicker = this.dateFrom;
+            this.dateToDatepicker = this.dateTo;
+
             if (this.transactions.length !== 0) {
-                this.initiateDate();
+                // this.initiateDate();
             }
         }
         ,
         mounted() {
 
+            // this.$store.dispatch('initiateFilterDate'
+            // ).then(() => {
+            //     console.log('Success initiate filter date');
+            // }).catch(() => {
+            //     console.log('Error initiate filter date');
+            // });
         }
     }
 </script>

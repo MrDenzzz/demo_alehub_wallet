@@ -29,11 +29,7 @@
                             </div>
 
                             <transactions-tool-panel
-                                    v-if="getActivity.length !== 0 && transactionsLazyStatus === 'success'"
-                                    :check-activities="getActivity.length"
-                                    :current-transactions="currentTmpTransactions"
-                                    :total-transactions="totalTransactions"
-                                    :starting-transactions="startingTransactions"
+                                    v-if="this.transactions.length !== 0 && transactionsLazyStatus === 'success'"
                             />
 
                             <activity-list
@@ -97,8 +93,8 @@
         data() {
             return {
                 isSuccessNotif: true,
-                dateFrom: null,
-                dateTo: null,
+                // dateFrom: null,
+                // dateTo: null,
                 placeholderDateFrom: 'Date from',
                 placeholderDateTo: 'Date to',
                 newTransaction: false,
@@ -126,36 +122,41 @@
             ...mapGetters([
                 'wallets',
                 'transactions',
+                'dateTransactions',
                 'lengthWalletList',
                 'walletStatus',
                 'currentWallet',
                 'transactionStatus',
-                'transactionsLazyStatus'
+                'transactionsLazyStatus',
+                'dateFrom',
+                'dateTo'
             ]),
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
 
-            currentTmpTransactions: function () {
+            //дублировать транзакции во vuex
+
+            currentDateTransactions: function () {
                 if (this.dateFrom && this.dateTo) {
                     let dateFrom = this.dateFrom.getTime(),
                         dateTo = this.dateTo.getTime();
 
                     return this.transactions.filter(item => {
-                        return item.date >= dateFrom && item.date <= dateTo;
+                        return item.timestamp >= dateFrom && item.timestamp <= dateTo;
                     });
                 }
                 return [];
             },
             getActivity: function () {
                 if (this.searchText) {
-                    return this.transactions.filter(item => {
+                    return this.currentDateTransactions.filter(item => {
                         return this.currentWallet.address === item.walletAddress ? item.walletDestination.toLowerCase().includes(this.searchText.toLowerCase()) :
                             item.walletAddress.toLowerCase().includes(this.searchText.toLowerCase())
                     })
                 }
-                return this.transactions;
+                return this.currentDateTransactions;
             },
         },
         methods: {

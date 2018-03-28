@@ -46,6 +46,7 @@
                 'userHaveWallets',
                 'userHaveTransactions',
                 'transactionStatus',
+                'initiateFilterDateStatus',
                 'lengthWalletList'
             ]),
             // currentToken: function () {
@@ -72,9 +73,9 @@
                 //if (computed)
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
-                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success')) {
 
-                    console.log('IM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEAR');
+                    console.log('Load app');
 
                     return false;
                 }

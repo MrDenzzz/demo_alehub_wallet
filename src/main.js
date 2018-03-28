@@ -74,8 +74,10 @@ if (token !== 'undefined' && token) {
                     store.dispatch('changeCurrentWallet',
                         localStorage.getItem(sha256('current-wallet'))
                     ).then(() => {
-                        store.dispatch('transactionsRequest', store.state.Wallets.currentWallet.address).then(() => {
-                            console.log('successfully reload transactions');
+                        store.dispatch('transactionsRequest',
+                            store.state.Wallets.currentWallet.address
+                        ).then(() => {
+                            console.log('Successfully reload transactions');
                         }).catch(() => {
                             console.log('Error requesting transactions');
                         });
