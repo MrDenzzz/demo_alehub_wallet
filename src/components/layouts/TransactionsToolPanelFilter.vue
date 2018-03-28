@@ -1,42 +1,40 @@
 <template>
     <div class="bottom">
-        <div class="row-tablet">
-            <div class="date">
-                <h3 class="date-title">
-                    {{ $t('pages.summary.searchPanel.dateRange') }}
-                </h3>
-                <div class="datepicker-wrap">
-                    <datepicker
-                            id="datepickerFrom"
-                            v-model="dateFromDatepicker"
-                            language="en"
-                            :placeholder="'Date from'"
-                    />
+        <div class="date">
+            <h3 class="date-title">
+                {{ $t('pages.summary.searchPanel.dateRange') }}
+            </h3>
+            <div class="datepicker-wrap">
+                <datepicker
+                        id="datepickerFrom"
+                        v-model="dateFromDatepicker"
+                        language="en"
+                        :placeholder="'Date from'"
+                />
 
-                    <datepicker
-                            id="datepickerTo"
-                            v-model="dateToDatepicker"
-                            language="en"
-                            :placeholder="'Date to'"
-                    />
-                </div>
+                <datepicker
+                        id="datepickerTo"
+                        v-model="dateToDatepicker"
+                        language="en"
+                        :placeholder="'Date to'"
+                />
             </div>
-            <div class="docs">
-                <button
-                        class="buttons btn-default"
-                        :class="{'disable-gray-button': currentTransactions.length === 0}"
-                        @click="createPDF"
-                        :disabled="currentTransactions.length === 0">
-                    {{ $t('pages.summary.searchPanel.buttons.download') }}
-                </button>
-                <button
-                        class="buttons btn-default"
-                        :class="{'disable-gray-button': currentTransactions.length === 0}"
-                        @click="openModal('shareTransactions')"
-                        :disabled="currentTransactions.length === 0">
-                    {{ $t('pages.summary.searchPanel.buttons.share') }}
-                </button>
-            </div>
+        </div>
+        <div class="docs">
+            <button
+                    class="buttons btn-default"
+                    :class="{'disable-gray-button': currentTransactions.length === 0}"
+                    @click="createPDF"
+                    :disabled="currentTransactions.length === 0">
+                {{ $t('pages.summary.searchPanel.buttons.download') }}
+            </button>
+            <button
+                    class="buttons btn-default"
+                    :class="{'disable-gray-button': currentTransactions.length === 0}"
+                    @click="openModal('shareTransactions')"
+                    :disabled="currentTransactions.length === 0">
+                {{ $t('pages.summary.searchPanel.buttons.share') }}
+            </button>
         </div>
         <div class="info">
             <div class="stats-col">
@@ -442,9 +440,13 @@
         .selected
             background-color #f0f0f0 !important
 
-    @media (max-width: 425px)
+    @media (max-width: 660px)
         input#datepickerFrom, input#datepickerTo
             margin-right 0
+
+    @media (max-width: 560px)
+        input#datepickerFrom, input#datepickerTo
+            margin-right 15px
 
 </style>
 
@@ -458,12 +460,6 @@
         display flex
         justify-content space-between
         align-items center
-
-        .row-tablet
-            display flex
-            flex-direction row
-            justify-content space-between
-            align-items center
 
         .date
             display flex
@@ -544,9 +540,6 @@
                 .datepicker-wrap
                     width 190px
 
-                input#datepickerFrom, input#datepickerTo
-                    margin-right 15px
-
     @media (max-width: 660px)
         .top
             flex-direction column
@@ -556,70 +549,47 @@
                 margin-bottom 20px
 
         .bottom
-            flex-direction column
+            .date
+                .datepicker-wrap
+                    flex-direction column
+                    width auto
 
-            .row-tablet
-                align-self flex-start
+                    .vdp-datepicker
+                        margin-bottom 10px
 
-            .info
-                align-self flex-end
-                padding-top 20px
-
-    @media (max-width: 425px)
-        .searchPanel
-            margin-top 24px
-
+    @media(max-width: 560px)
         .bottom
             flex-direction column
 
-            .row-tablet
-                flex-direction column
-                align-items center
-                align-self center
-
-            .info
-                width 100%
-                justify-content space-between
-
             .date
-                width 100%
-                padding 0
-                align-items center
                 margin-right 0
-                margin-bottom 20px
-
-                input#datepickerFrom, input#datepickerTo
-                    margin-right 15px
 
                 .datepicker-wrap
-                    width 100%
-                    justify-content space-around
-
+                    flex-direction row
+            
             .docs
-                width 100%
-                margin-bottom 20px
-                align-items center
+                flex-direction row
 
-        .title-opt-span
-            padding 5px 0
-
-            .title
-                padding 5px 0
-                margin 0
-
-        .result-opt-span
-            padding 5px 0
-            margin 0
+                button
+                    margin-right 15px
 
     @media (max-width: 375px)
         .bottom
-            .row-tablet
+            .docs
+                flex-direction column
+                margin-top 10px
+                margin-bottom 15px
                 width 100%
 
-                .docs
+                .buttons
                     width 100%
 
-                    .buttons
-                        width 100%
+            .info
+                width 100%
+                justify-content flex-end
+
+                .stats-col
+                    .result-opt-span
+                        margin-right 0
 
 </style>
