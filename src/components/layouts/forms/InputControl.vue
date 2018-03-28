@@ -30,7 +30,7 @@
                 default: 'input-control'
             },
             inputValue: {
-                type: String,
+                type: [String, Object],
                 default: ''
             },
             inputType: {

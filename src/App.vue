@@ -6,6 +6,13 @@
         <div v-else key="edit">
             <!--<New-wallet/>-->
             <router-view/>
+            <div
+                    @click=""
+                    style="position: fixed; bottom: 0; width: 100%; color: #ffffff; background-color: #1bac2c;
+             z-index: 10000; display: flex; justify-content: center; align-items: center; justify-content: center;
+             padding-top: 1em; padding-bottom: 1em; cursor: pointer;">
+                You have received new data. Click to refresh.
+            </div>
             <Connection-modal/>
         </div>
     </div>
@@ -49,12 +56,6 @@
                 'initiateFilterDateStatus',
                 'lengthWalletList'
             ]),
-            // currentToken: function () {
-            //     return this.$store.state.User.token;
-            // },
-            // currentStatus: function () {
-            //     return this.$store.state.User.status;
-            // },
             currentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
             },
@@ -70,7 +71,6 @@
                     return false;
                 }
 
-                //if (computed)
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success')) {

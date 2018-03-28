@@ -231,7 +231,7 @@
         },
         mounted() {
 
-            this.setIntervalId = setInterval(this.getTransactions, 15000);
+            // this.setIntervalId = setInterval(this.getTransactions, 15000);
 
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');

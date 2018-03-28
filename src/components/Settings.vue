@@ -286,8 +286,10 @@
             this.$on('changeFullName', function (value) {
                 if (this.userName !== value) {
                     this.$store.dispatch('changeUserName', {newName: value}).then(() => {
-                        // this.$router.push('/login')
-                        console.log('change user name');
+                        this.$toasted.show('Your name has been successfully changed.', {
+                            duration: 5000,
+                            type: 'success',
+                        });
                     });
                 }
             });
