@@ -35,10 +35,12 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
-    if (store.state.Wallets.wallets.length === 0 && to.name !== 'Summary') {
-        next('/');
-        return;
-    }
+    setTimeout(() => {
+        if (store.state.Wallets.wallets.length === 0 && to.name !== 'Summary') {
+            next('/');
+            return;
+        }
+    }, 100);
     let token = localStorage.getItem(sha256('user-token'));
     if (token !== null && token !== 'undefined' && token !== undefined) {
         next();

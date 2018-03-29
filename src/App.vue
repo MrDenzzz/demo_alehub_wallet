@@ -1,10 +1,8 @@
 <template>
     <div id="app" :class="systemLanguage">
-        <!--<div v-if="isLoading" key="save">-->
         <div v-if="isLoading">
             <sync-loader :load="isLoading"/>
         </div>
-        <!--<div v-else key="edit">-->
         <div v-else>
             <router-view/>
             <div
@@ -80,7 +78,7 @@
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success')) {
 
-                    this.readyToPing = true;
+                    (!this.userHaveWallets) ? this.readyToPing = false : this.readyToPing = true;
 
                     console.log('Load app');
 

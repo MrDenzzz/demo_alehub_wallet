@@ -142,13 +142,13 @@
             ...mapGetters([
                 'currentWalletBalance'
             ]),
-            selectedTheme () {
+            selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
-            navbarLinks() {
+            navbarLinks: function () {
                 return this.$store.state.Navbar.links;
             },
-            notifBadge() {
+            notifBadge: function () {
                 return this.$store.state.Notifications.isNewNotification
             },
             correctLangSep: function () {

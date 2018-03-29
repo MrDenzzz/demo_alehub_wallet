@@ -437,7 +437,12 @@ const getters = {
         });
     },
     changedWallets: state => state.changedWallets,
-    currentWalletBalance: state => state.currentWallet.balance
+    currentWalletBalance: state => {
+        if (state.currentWallet)
+            return state.currentWallet.balance;
+
+         return 0;
+    }
 };
 
 export default {
