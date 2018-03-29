@@ -1,5 +1,5 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
-    <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen">
+    <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen" @closed="modalClosed">
         <div class="heading" v-if="newWalletStep === 1">
             <p class="title">{{ dropDownOption[0].title }}</p>
             <!--<p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>-->
@@ -167,6 +167,7 @@
                         <span class="badge" v-for="mnemonic in mnemonicsRecovery">{{ mnemonic }}</span>
                     </div>
                     <input
+                            id="input-to-mnemonic-recovery"
                             type="text"
                             class="input"
                             :placeholder="$t('modals.newWallet.recovery.finish.fields.phrase.placeholder')"
@@ -267,6 +268,7 @@
             ...mapGetters([
                 'wallets',
                 'currentWallet',
+                'currentWalletAddress',
                 'checkNewWalletMatchPassword'
             ]),
             isImport: function () {
@@ -391,7 +393,7 @@
             openDropDown() {
                 this.isOpenOptions = !this.isOpenOptions;
             },
-            changeType(index) {
+            changeType: function (index) {
                 for (let i = 0; i < this.dropDownOption.length; i++) {
                     this.dropDownOption[i].isSelected = false;
                 }
@@ -406,30 +408,28 @@
                 if (this.walletType === 'redemption')
                     this.focusInput('redemptionWalletName');
             },
-            changePassword(e) {
+            changePassword: function (e) {
                 this.walletPassword(e.target.value);
             },
-            closeModal() {
+            closeModal: function () {
                 this.$modal.hide('newwallet');
             },
-            modalOpen() {
+            modalClosed: function () {
                 this.walletType = 'new';
                 this.newWalletStep = 1;
                 this.recoveryStep = 1;
                 this.isOpenOptions = false;
                 //this.activityChecked(false);
                 //this.walletName('');
-                for (let i = 0; i < this.dropDownOption.length; i++) {
-                    this.dropDownOption[i].isSelected = false;
-                }
-                this.dropDownOption[0].isSelected = true;
+                // for (let i = 0; i < this.dropDownOption.length; i++)
+                //     this.dropDownOption[i].isSelected = false;
+
+                // this.dropDownOption[0].isSelected = true;
                 this.walletName = '';
-                this.focusInput('newWalletName');
                 this.redemtionKey = '';
                 this.newWalletStep = 1;
                 this.countTimer = 3;
                 this.isAgreedRecovery = false;
-                this.recoveryStep = 1;
                 this.mnemonics = [];
                 this.mnemonicField = '';
                 this.recoveryMnemonicPhrase = mnGen.list(10);
@@ -437,6 +437,57 @@
                 this.mnemonicsRecovery = [];
                 this.restorationAgreements.deviceOnly = false;
                 this.restorationAgreements.phraseSecure = false;
+                this.dataProcessing = false;
+            },
+            modalOpen: function () {
+                this.walletType = 'new';
+                this.newWalletStep = 1;
+                this.recoveryStep = 1;
+                this.isOpenOptions = false;
+                //this.activityChecked(false);
+                //this.walletName('');
+                // for (let i = 0; i < this.dropDownOption.length; i++)
+                //     this.dropDownOption[i].isSelected = false;
+
+                // this.dropDownOption[0].isSelected = true;
+                this.walletName = '';
+                this.focusInput('newWalletName');
+                this.redemtionKey = '';
+                this.newWalletStep = 1;
+                this.countTimer = 3;
+                this.isAgreedRecovery = false;
+                this.mnemonics = [];
+                this.mnemonicField = '';
+                this.recoveryMnemonicPhrase = mnGen.list(10);
+                this.mnemonicFieldRecovery = '';
+                this.mnemonicsRecovery = [];
+                this.restorationAgreements.deviceOnly = false;
+                this.restorationAgreements.phraseSecure = false;
+                this.dataProcessing = false;
+
+                // walletType: 'new',
+                //     isOpenOptions: false,
+                //     walletName: '',
+                //     dropDownOption: [
+                //     {title: this.$t('modals.newWallet.new.label'), isSelected: true, value: 'new'},
+                //     // {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
+                // ],
+                //     redemtionKey: '',
+                //     newWalletStep: 1,
+                //     countTimer: 3,
+                //     isAgreedRecovery: false,
+                //     recoveryStep: 1,
+                //     mnemonics: [],
+                //     mnemonicField: '',
+                //     recoveryMnemonicPhrase: '',
+                //     mnemonicFieldRecovery: '',
+                //     mnemonicsRecovery: [],
+                //     restorationAgreements: {
+                //     deviceOnly: false,
+                //         phraseSecure: false
+                // },
+                //
+                // dataProcessing: false
             },
 
             saveDataToFieldLocalStorage: function (data) {
@@ -469,16 +520,15 @@
                     localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
                     this.$store.dispatch('transactionsRequestLazy',
-                        resp.data.walletModel.address
+                        this.currentWalletAddress
                     ).then((resp) => {
-
                         this.$store.dispatch('resetTransactionsUpdated'
                         ).then(() => {
+                            console.log(3);
                             this.closeModal();
                         }).catch(() => {
                             console.log('Error reset transactionsUpdated. WalletList.vue');
                         });
-
                         console.log(resp, 'transactions new wallet resp success');
                     }).catch((err) => {
                         console.log(err, 'transactions new wallet resp err');
@@ -566,7 +616,7 @@
                         }
                     }, 40);
                 }
-                if (this.newWalletStep === 2 && this.recoveryStep === 3) {
+                if (this.newWalletStep === 2 && this.recoveryStep === 3 && document.getElementById('input-to-mnemonic-recovery') !== document.activeElement) {
                     setTimeout(() => {
                         if (event.keyCode === 13 && !document.getElementById('create-new-wallet').disabled) {
                             document.getElementById('create-new-wallet').click();
@@ -580,6 +630,3 @@
         }
     }
 </script>
-
-
-

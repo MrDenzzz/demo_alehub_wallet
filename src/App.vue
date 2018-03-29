@@ -9,12 +9,10 @@
             <router-view/>
             <div
                     v-if="changedTransactions"
-                    @click="refreshCurrentTransactions"
-                    style="position: fixed; bottom: 0; width: 100%; color: #ffffff; background-color: #1bac2c;
-             z-index: 10000; display: flex; justify-content: center; align-items: center; justify-content: center;
-             padding-top: 1em; padding-bottom: 1em; cursor: pointer; font-family: MuseoSansCyrl500;">
+                    class="alert-new-transactions"
+                    @click="refreshCurrentTransactions">
                 You have received new transactions. Click to refresh.
-                <img src="/static/img/reload-white.svg" alt="" style="height: 15px; width: 15px; margin-left: 0.5em;">
+                <img src="/static/img/reload-white.svg" class="alert-new-transactions__img" alt="">
             </div>
             <Connection-modal/>
         </div>
@@ -110,7 +108,7 @@
 
                                 this.$store.dispatch('resetChangedWallets'
                                 ).then(() => {
-                                    console.log('Success reset changed wallets. App.vue');
+                                    // console.log('Success reset changed wallets. App.vue');
                                 }).catch(() => {
                                     console.log('Error reset changed wallets. App.vue');
                                 });
@@ -174,7 +172,7 @@
             }
         },
         mounted() {
-            this.setIntervalId = setInterval(this.pingData, 10000);
+            this.setIntervalId = setInterval(this.pingData, 60000);
 
             if (!navigator.onLine) {
                 this.isLoader = true;
@@ -191,6 +189,27 @@
 </script>
 
 <style lang="stylus">
+    .alert-new-transactions
+        position fixed
+        bottom 0
+        width 100%
+        color #ffffff
+        background-color #1bac2c
+        z-index 10000
+        display flex
+        justify-content center
+        align-items center
+        justify-content center
+        padding-top 1em
+        padding-bottom 1em
+        cursor pointer
+        font-family MuseoSansCyrl500
+
+        .alert-new-transactions__img
+            height 15px
+            width 15px
+            margin-left 0.5em
+
     .toasted-action-hide
         color #f7f7f7 !important
 

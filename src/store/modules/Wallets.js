@@ -231,6 +231,8 @@ const mutations = {
         state.walletStatus = 'success';
     },
     ADD_WALLET: (state, wallet) => {
+        delete wallet.__v;
+
         state.wallets.push(wallet);
         state.currentWallet = state.wallets[state.wallets.length - 1];
     },
@@ -257,6 +259,7 @@ const mutations = {
         state.walletsPingStatus = 'loading';
     },
     SUCCESS_PING_WALLETS: (state, wallets) => {
+
         if (wallets.length !== 0 && !state.wallets.equals(wallets)) {
             state.wallets = wallets;
             state.changedWallets = true;

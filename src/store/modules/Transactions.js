@@ -65,6 +65,8 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
+                // console.log(resp.data, 'get model transactions request lazy');
+                console.log('data');
                 commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
                 resolve(resp);
             }).catch(err => {

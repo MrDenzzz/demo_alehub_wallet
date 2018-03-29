@@ -126,24 +126,24 @@ const router = new Router({
             component: Notifications,
             beforeEnter: ifAuthenticated
         },
-        {
-            path: '/offers',
-            name: 'Offers',
-            component: Offers,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/offers/new',
-            name: 'NewOffer',
-            component: NewOffer,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/resume',
-            name: 'Resume',
-            component: Resume,
-            beforeEnter: ifAuthenticated
-        },
+        // {
+        //     path: '/offers',
+        //     name: 'Offers',
+        //     component: Offers,
+        //     beforeEnter: ifAuthenticated
+        // },
+        // {
+        //     path: '/offers/new',
+        //     name: 'NewOffer',
+        //     component: NewOffer,
+        //     beforeEnter: ifAuthenticated
+        // },
+        // {
+        //     path: '/resume',
+        //     name: 'Resume',
+        //     component: Resume,
+        //     beforeEnter: ifAuthenticated
+        // },
         {
             path: '*',
             name: 'NotFound',
