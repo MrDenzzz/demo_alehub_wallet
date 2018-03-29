@@ -1563,6 +1563,8 @@ td, th {
         margin: 0 10px 0 10px; }
 
 @media (max-width: 1100px) {
+  .bottom .date {
+    width: 210px; }
   .bottom .docs .buttons {
     width: 130px; } }
 
