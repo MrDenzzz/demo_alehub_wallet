@@ -212,6 +212,11 @@
                     console.log('Error set search text');
                 });
             },
+
+            // watchStatus: function () {
+            //     console.log(this.transactionsLazyStatus, 'transactionsLazyStatus');
+            //     console.log(this.transactionsMomentStatus, 'transactionsMomentStatus');
+            // }
         },
         created() {
 
@@ -234,6 +239,8 @@
 
         },
         mounted() {
+
+            // setInterval(this.watchStatus, 1000);
 
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
