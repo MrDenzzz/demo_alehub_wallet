@@ -6,6 +6,7 @@ import sha256 from "sha256";
 const state = {
     wallets: [],
     currentWallet: null,
+    currentWalletHaveTransactions: false,
 
     // walletStatus: 'not found',
     walletStatus: '',
@@ -42,8 +43,8 @@ const actions = {
                 commit('SET_WALLETS', resp.data);
                 resolve(resp);
             }).catch(err => {
-                commit('WALLETS_ERROR', err);
                 console.log(err, 'err from wallets request');
+                commit('WALLETS_ERROR', err);
                 // commit('AUTH_ERROR', err);
 
                 // localStorage.removeItem(sha256('user-token'));
@@ -224,6 +225,8 @@ const mutations = {
         if (wallets.length !== 0) {
             state.wallets = wallets;
             state.currentWallet = state.wallets[0];
+            // (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
+            //     state.currentWalletHaveTransactions = false;
         }
         state.walletStatus = 'success';
     },
@@ -272,7 +275,9 @@ const mutations = {
     CHANGE_CURRENT_WALLET(state, address) {
         state.currentWallet = state.wallets.find(item => {
             return item.address === address;
-        })
+        });
+        (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
+            state.currentWalletHaveTransactions = false;
     },
 
     REQUEST_CHANGE_WALLET_NAME(state) {
@@ -424,6 +429,7 @@ const getters = {
     walletStatus: state => state.walletStatus,
     currentWallet: state => state.currentWallet,
     currentWalletAddress: state => state.currentWallet.address,
+    currentWalletHaveTransactions: state => state.currentWalletHaveTransactions,
     currentWalletIndex: state => {
         return state.wallets.findIndex(item => {
             return item.address === state.currentWallet.address;

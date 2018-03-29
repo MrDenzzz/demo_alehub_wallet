@@ -6,11 +6,10 @@ const state = {
 
     transactions: [],
     transactionsUpdated: [],
-    // dateTransactions: [],
+    changedTransactions: false,
+
     chunkTransactions: [],
     activeFilter: 0,
-
-    // hideFilter: false,
 
     transactionStatus: 'not found',
     transactionsLazyStatus: '',
@@ -20,8 +19,6 @@ const state = {
     initiateFilterDateStatus: '',
 
     transactionsLoader: false,
-
-    changedTransactions: false,
 
     dateFrom: 0,
     dateTo: 0,
@@ -45,7 +42,6 @@ const actions = {
                 method: 'GET'
             }).then(resp => {
                 console.log(resp.data, 'resp.data transactions when new wallet create');
-                // console.log(address, 'current wallet address');
                 commit('SET_TRANSACTIONS', resp.data);
                 commit('SUCCESS_INITIATE_FILTER_DATE');
                 resolve(resp);
@@ -164,7 +160,7 @@ const actions = {
     },
 
     setFilterDate: ({commit}) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             commit('SUCCESS_INITIATE_FILTER_DATE');
             resolve();
         });

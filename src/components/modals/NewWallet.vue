@@ -468,13 +468,18 @@
 
                     localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
-                    this.closeModal();
-
                     this.$store.dispatch('transactionsRequestLazy',
                         resp.data.walletModel.address
                     ).then((resp) => {
-                        console.log(resp, 'transactions new wallet resp success');
 
+                        this.$store.dispatch('resetTransactionsUpdated'
+                        ).then(() => {
+                            this.closeModal();
+                        }).catch(() => {
+                            console.log('Error reset transactionsUpdated. WalletList.vue');
+                        });
+
+                        console.log(resp, 'transactions new wallet resp success');
                     }).catch((err) => {
                         console.log(err, 'transactions new wallet resp err');
                     });

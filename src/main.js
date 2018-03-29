@@ -160,7 +160,7 @@ if (token !== 'undefined' && token) {
                         localStorage.getItem(sha256('current-wallet'))
                     ).then(() => {
 
-                        if (store.state.User.haveTransactions) {
+                        if (store.state.User.haveTransactions && store.state.Wallets.currentWalletHaveTransactions) {
                             store.dispatch('transactionsRequest',
                                 store.state.Wallets.currentWallet.address
                             ).then(() => {
