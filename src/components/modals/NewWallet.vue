@@ -1,5 +1,5 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
-    <modal name="newwallet" height="auto" class="modal-md" :clickToClose="isCloseModal" @opened="modalOpen">
+    <modal name="newwallet" height="auto" class="modal-md newwallet" :clickToClose="isCloseModal" @opened="modalOpen">
         <div class="heading" v-if="newWalletStep === 1">
             <p class="title">{{ dropDownOption[0].title }}</p>
             <!--<p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>-->
