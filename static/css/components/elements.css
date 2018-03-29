@@ -1633,7 +1633,7 @@ input#datepickerFrom, input#datepickerTo {
   background: inherit;
   border: none;
   border-bottom: 1px solid rgba(52, 52, 62, 0.2);
-  width: 80px;
+  width: 84px;
   margin-right: 30px;
   outline: none;
   font-size: 14px;

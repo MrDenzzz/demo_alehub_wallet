@@ -9,6 +9,13 @@
   width: 426px;
   margin: 0 auto;
 
+  :focus {
+    outline:none;
+  }
+  ::-moz-focus-inner {
+    border:0;
+  }
+
   & .control {
     display: flex;
     justify-content: space-between;
@@ -45,6 +52,7 @@
       position: relative;
       z-index: 1;
       opacity: 1;
+      box-shadow: none;
     }
 
     &.noline {

@@ -79,6 +79,8 @@ const messages = {
                     }
                 },
                 activityList: {
+                    today: 'Today',
+                    yesterday: 'Yesterday',
                     from: 'From:',
                     to: 'To:',
                     status: {
@@ -451,6 +453,8 @@ const messages = {
                     }
                 },
                 activityList: {
+                    today: 'Сегодня',
+                    yesterday: 'Вчера',
                     from: 'От:',
                     to: 'В:',
                     status: {

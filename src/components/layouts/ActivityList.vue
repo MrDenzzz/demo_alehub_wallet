@@ -267,10 +267,10 @@
                 let yesterdayDate = new Date();
                 yesterdayDate = yesterdayDate.setDate(yesterdayDate.getDate() - 1);
                 if (Moment(date).format('YYYY/MM/DD') === Moment(currentDate).format('YYYY/MM/DD')) {
-                    return 'today';
+                    return this.$t('pages.summary.activityList.today');
                 }
                 if (Moment(date).format('YYYY/MM/DD') === Moment(yesterdayDate).format('YYYY/MM/DD')) {
-                    return 'yesterday'
+                    return this.$t('pages.summary.activityList.yesterday');
                 }
                 return Moment(date).format('MM/DD');
             },
