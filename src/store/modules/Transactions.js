@@ -21,7 +21,7 @@ const state = {
 
     transactionsLoader: false,
 
-    transactionsChanged: false,
+    changedTransactions: false,
 
     dateFrom: 0,
     dateTo: 0,
@@ -119,9 +119,10 @@ const actions = {
             });
         })
     },
-    refreshTransaction: ({commit}) => {
+    refreshTransactions: ({commit}) => {
         return new Promise((resolve, reject) => {
-
+            commit('SUCCESS_REFRESH_TRANSACTIONS');
+            resolve();
         })
     },
     sendCoins: ({commit, dispatch}, walletDetails) => {
@@ -200,7 +201,6 @@ const mutations = {
         state.transactionsLazyStatus = 'error';
     },
 
-
     REQUEST_LAZY_TRANSACTIONS: (state) => {
         state.transactionsLazyStatus = 'loading';
     },
@@ -219,16 +219,19 @@ const mutations = {
 
         if (!state.transactions.equals(transactionsUpdated) && !state.transactionsUpdated.equals(transactionsUpdated)) {
             state.transactionsUpdated = transactionsUpdated;
-            state.transactionsChanged = true;
+            state.changedTransactions = true;
         }
-
-        // console.log(transactionsUpdated.equals(transactionsUpdated));
-        // console.log(state.transactions);
 
         state.transactionsPingStatus = 'success';
     },
-    ERROR_PING_TRANSACTIONS: () => {
+    ERROR_PING_TRANSACTIONS: (state) => {
         state.transactionsPingStatus = 'error';
+    },
+
+    SUCCESS_REFRESH_TRANSACTIONS: (state) => {
+        state.transactions = state.transactionsUpdated;
+        state.transactionsUpdated = [];
+        state.changedTransactions = false;
     },
 
     REQUEST_MOMENT_TRANSACTIONS: (state) => {
@@ -315,9 +318,9 @@ const mutations = {
             state.transactions.splice(rmTransactionsInd, 1);
         }
     },
-    // SET_HIDE_FILTER(state, prop) {
-    //     state.hideFilter = prop;
-    // },
+
+
+
     SET_DATE_FROM(state, from) {
         state.dateFrom = from;
     },
@@ -355,8 +358,7 @@ const getters = {
     dateFrom: state => state.dateFrom,
     dateTo: state => state.dateTo,
     searchText: state => state.searchText,
-
-    transactionsChanged: state => state.transactionsChanged
+    changedTransactions: state => state.changedTransactions
 };
 
 export default {

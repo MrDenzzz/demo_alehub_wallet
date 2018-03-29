@@ -7,12 +7,13 @@
             <!--<New-wallet/>-->
             <router-view/>
             <div
-                    v-if="transactionsChanged"
-                    @click=""
+                    v-if="changedTransactions"
+                    @click="refreshCurrentTransactions"
                     style="position: fixed; bottom: 0; width: 100%; color: #ffffff; background-color: #1bac2c;
              z-index: 10000; display: flex; justify-content: center; align-items: center; justify-content: center;
              padding-top: 1em; padding-bottom: 1em; cursor: pointer; font-family: MuseoSansCyrl500;">
-                You have received new data. Click to refresh.
+                You have received new transactions. Click to refresh.
+                <img src="/static/img/reload-white.svg" alt="" style="height: 15px; width: 15px; margin-left: 0.5em;">
             </div>
             <Connection-modal/>
         </div>
@@ -48,12 +49,6 @@
                 setIntervalId: 0
             }
         },
-        watch: {
-            // readyToPing: function (val) {
-            //     clearInterval(this.setIntervalId);
-            //     this.setIntervalId = setInterval(this.pingTransactions(), 2000);
-            // }
-        },
         computed: {
             ...mapGetters([
                 'authStatus',
@@ -65,7 +60,7 @@
                 'initiateFilterDateStatus',
                 'lengthWalletList',
                 'currentWalletAddress',
-                'transactionsChanged'
+                'changedTransactions'
             ]),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
@@ -101,7 +96,6 @@
             },
             pingTransactions: function () {
                 if (this.readyToPing) {
-                    console.log('check');
                     this.$store.dispatch('transactionsRequestPing',
                         this.currentWalletAddress
                     ).then(() => {
@@ -111,8 +105,13 @@
                     });
                 }
             },
-            refreshTransactionsCurrentWallet: function () {
-                this.$store.dispatch();
+            refreshCurrentTransactions: function () {
+                this.$store.dispatch('refreshTransactions'
+                ).then(() => {
+                    console.log('Success refresh transactions');
+                }).catch(() => {
+                    console.log('Error refresh transactions');
+                });
             }
         },
         created() {
@@ -138,7 +137,7 @@
             }
         },
         mounted() {
-            // this.setIntervalId = setInterval(this.pingTransactions, 60000);
+            this.setIntervalId = setInterval(this.pingTransactions, 10000);
 
             if (!navigator.onLine) {
                 this.isLoader = true;

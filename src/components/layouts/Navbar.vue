@@ -229,10 +229,10 @@
             openModal: function (name) {
                 this.$modal.show(name);
             },
-            startEvent(type) {
+            startEvent: function (type) {
                 this.$parent.$emit(type)
             },
-            newSelect(value, id) {
+            newSelect: function (value, id) {
                 if (id === 'offersonpage') {
                     this.selectedOffersOnPage = value;
                 }
@@ -240,7 +240,7 @@
                     this.selectedSortBy = value;
                 }
             },
-            getIcon(name) {
+            getIcon: function (name) {
                 if (this.selectedTheme === 'dark') return require(`../../assets/img/${name}.svg`);
                 else if (this.selectedTheme === 'white') return require(`../../assets/img/${name}_white.svg`);
                 else return require(`../../assets/img/${name}.svg`);

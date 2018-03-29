@@ -16,7 +16,7 @@ import axios from 'axios';
 import sha256 from 'sha256';
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://192.168.1.42:4000';
+Vue.prototype.$host = 'http://192.168.1.37:4000';
 // Vue.prototype.$host = 'http://192.168.1.37:4000';
 // Vue.prototype.$host = 'localhost:4000';
 
@@ -45,19 +45,19 @@ import messages from './i18n.js';
 Object.prototype.equals = function (object2) {
 
     for (let propName in this) {
-        if (this.hasOwnProperty(propName) != object2.hasOwnProperty(propName))
+        if (this.hasOwnProperty(propName) !== object2.hasOwnProperty(propName))
             return false;
 
-        else if (typeof this[propName] != typeof object2[propName])
+        else if (typeof this[propName] !== typeof object2[propName])
             return false;
     }
 
     for (let propName in object2) {
 
-        if (this.hasOwnProperty(propName) != object2.hasOwnProperty(propName))
+        if (this.hasOwnProperty(propName) !== object2.hasOwnProperty(propName))
             return false;
 
-        else if (typeof this[propName] != typeof object2[propName])
+        else if (typeof this[propName] !== typeof object2[propName])
             return false;
 
 
@@ -76,7 +76,7 @@ Object.prototype.equals = function (object2) {
             if (!this[propName].equals(object2[propName]))
                 return false;
 
-        } else if (this[propName] != object2[propName]) {
+        } else if (this[propName] !== object2[propName]) {
             return false;
         }
     }
