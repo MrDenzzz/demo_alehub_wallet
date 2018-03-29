@@ -60,7 +60,8 @@
                 'initiateFilterDateStatus',
                 'lengthWalletList',
                 'currentWalletAddress',
-                'changedTransactions'
+                'changedTransactions',
+                'changedWallets'
             ]),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
@@ -101,17 +102,30 @@
                     ).then(() => {
                         this.$store.dispatch('walletsRequestPing'
                         ).then(() => {
-                            console.log('Success ping wallets');
+                            if (this.changedWallets) {
+                                this.$toasted.show('You got money for your wallet', {
+                                    duration: 10000,
+                                    type: 'success',
+                                    action : {
+                                        text : 'hide',
+                                        class: 'toasted-action-hide',
+                                        onClick : (e, toastObject) => {
+                                            console.log(123123);
+                                            toastObject.goAway(0);
+                                        }
+                                    }
+                                })
+                            }
                         }).catch(() => {
                             console.log('Error ping wallets');
                         });
 
-                        // this.$store.dispatch('notificationsRequestPing'
-                        // ).then(() => {
-                        //     console.log('Success ping notifications');
-                        // }).catch(() => {
-                        //     console.log('Error ping notifications');
-                        // });
+                        this.$store.dispatch('notificationsRequestPing'
+                        ).then(() => {
+                            console.log('Success ping notifications');
+                        }).catch(() => {
+                            console.log('Error ping notifications');
+                        });
 
                     }).catch(() => {
                         console.log('Error ping transactions');
@@ -167,6 +181,9 @@
 </script>
 
 <style lang="stylus">
+    .toasted-action-hide
+        color #f7f7f7 !important
+
     .rus
         .navbar
             .title

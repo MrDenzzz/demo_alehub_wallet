@@ -26,7 +26,13 @@ const NotifOptions = {
     singleton: true,
     containerClass: 'notifPanel',
     fitToScreen: true,
-    closeOnSwipe: false
+    closeOnSwipe: true,
+    // action : {
+        onClick : (e, toastObject) => {
+            console.log('clickclickclick');
+            toastObject.goAway(0);
+        }
+    // },
 };
 
 Vue.use(VueI18n);

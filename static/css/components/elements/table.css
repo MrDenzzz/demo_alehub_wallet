@@ -1,0 +1,120 @@
+table {
+  background-color: transparent;
+  border-spacing: 0;
+  border-collapse: collapse; }
+
+th {
+  text-align: left; }
+
+td, th {
+  padding: 16px; }
+
+.table {
+  width: 100%;
+  max-width: 100%; }
+  .table.table-striped tbody tr:nth-child(odd) {
+    background: #ececec; }
+  .table.table-selected tbody tr:not(.disabled):hover {
+    background: #dedfdf;
+    cursor: pointer; }
+  .table.table-bordered tbody tr:not(:first-child) th, .table.table-bordered tbody tr:not(:first-child) td {
+    padding-top: 8px; }
+  .table.table-bordered tbody tr th, .table.table-bordered tbody tr td {
+    padding-bottom: 8px; }
+  .table.table-bordered tbody tr:last-child th, .table.table-bordered tbody tr:last-child td {
+    padding-bottom: 16px; }
+  .table.table-gray tbody tr {
+    background: #ececec; }
+  .table thead tr th {
+    font-size: 16px;
+    vertical-align: bottom;
+    padding: 16px;
+    line-height: 1.42857143;
+    font-family: MuseoSansCyrl700;
+    font-weight: bold;
+    line-height: 1.17;
+    text-align: left;
+    color: #34343e; }
+    .table thead tr th.isArrow {
+      display: flex;
+      align-items: center; }
+  .table thead tr:last-child {
+    width: 1px;
+    white-space: nowrap; }
+  .table thead tr .arrow_down {
+    background-image: url(../img/sort-arrow.svg);
+    width: 7.5px;
+    height: 10px;
+    display: block;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-left: 4px; }
+    .table thead tr .arrow_down:hover {
+      cursor: pointer; }
+  .table tbody tr th, .table tbody tr td {
+    font-size: 12px;
+    padding: 16px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    font-family: MuseoSansCyrl500;
+    font-weight: bold;
+    vertical-align: middle; }
+  .table tbody tr td .btn {
+    font-size: 12px; }
+    .table tbody tr td .btn .play-icon {
+      font-size: 8px; }
+  .table tbody tr th.inline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; }
+  .table tbody tr td.full-btn button {
+    width: 140px; }
+  .table tbody tr.disabled th, .table tbody tr.disabled td {
+    opacity: 0.6; }
+  .table tbody tr.disabled td .badge:hover {
+    cursor: default; }
+  .table tbody tr .badge {
+    text-decoration: none;
+    font-family: MuseoSansCyrl500;
+    color: #ffffff;
+    border-radius: 2px;
+    background-color: #0d1717;
+    font-size: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px; }
+    .table tbody tr .badge:not(:first-child) {
+      margin-left: 6px; }
+    .table tbody tr .badge.active {
+      background-color: #ffd24f;
+      color: #0d1717; }
+  .table tbody tr td:last-child {
+    width: 1px;
+    white-space: nowrap;
+    text-align: right; }
+  .table tbody .uploadfile {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-left: 8px;
+    border-radius: 2px;
+    background-color: #d8d9d9; }
+    .table tbody .uploadfile span {
+      font-family: MuseoSansCyrl500;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.17;
+      text-align: center;
+      color: #0d1717;
+      margin: 12px; }
+    .table tbody .uploadfile:hover {
+      cursor: pointer;
+      background: #b7b9b9; }
+  .table tbody .separator td {
+    padding: 0 16px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important; }
+    .table tbody .separator td .line {
+      background: #d8d9d9;
+      width: 100%;
+      height: 1px; }

@@ -1,0 +1,22 @@
+.pagination .links {
+  list-style: none;
+  display: flex;
+  justify-content: center; }
+  .pagination .links li {
+    font-family: MuseoSansCyrl700;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+    color: #34343e;
+    padding: 3px;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px; }
+    .pagination .links li:not(:first-child) {
+      margin-left: 4px; }
+    .pagination .links li:hover {
+      cursor: pointer;
+      background-color: #ffd24f; }
+  .pagination .links .active {
+    background-color: #ffd24f; }

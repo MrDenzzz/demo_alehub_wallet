@@ -50,7 +50,7 @@
     import Spinner from '../layouts/Spinner';
 
     export default {
-        name: "change-email-modal",
+        name: 'change-email-modal',
         components: {
             Spinner
         },
@@ -102,12 +102,6 @@
                     });
                 }
             }
-        },
-        create() {
-
-        },
-        mounted() {
-
         }
     }
 </script>

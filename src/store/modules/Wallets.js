@@ -19,6 +19,8 @@ const state = {
         isAgreed: false
     },
 
+    changedWallets: false
+
 };
 
 const actions = {
@@ -245,8 +247,9 @@ const mutations = {
         state.walletsPingStatus = 'loading';
     },
     SUCCESS_PING_WALLETS: (state, wallets) => {
-        if (wallets.length !== 0) {
+        if (wallets.length !== 0 && !state.wallets.equals(wallets)) {
             state.wallets = wallets;
+            state.changedWallets = true;
         }
         state.walletsPingStatus = 'success';
     },
@@ -414,7 +417,8 @@ const getters = {
         return state.wallets.findIndex(item => {
             return item.address === state.currentWallet.address;
         });
-    }
+    },
+    changedWallets: state => state.changedWallets
 };
 
 export default {

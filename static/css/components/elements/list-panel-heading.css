@@ -1,0 +1,51 @@
+.list-panel-heading {
+  display: flex;
+  align-items: center;
+  margin: 0 16px 14px 16px;
+  justify-content: flex-start; }
+  .list-panel-heading p {
+    font-family: MuseoSansCyrl500;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 0;
+    line-height: 1.27;
+    letter-spacing: 0.5px;
+    color: rgba(13, 23, 23, 0.5);
+    margin-bottom: 0; }
+    .list-panel-heading p span {
+      color: #0d1717; }
+  .list-panel-heading h3 {
+    font-family: MuseoSansCyrl700;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.29;
+    letter-spacing: 0.5px;
+    color: #0d1717;
+    opacity: 0.5; }
+    .list-panel-heading h3.small {
+      font-size: 11px; }
+    .list-panel-heading h3:not(:first-child) {
+      margin-left: 16px; }
+    .list-panel-heading h3.active {
+      color: #34343e;
+      border-bottom: 1px solid #000;
+      opacity: 1; }
+  .list-panel-heading.mr-t0 h3 {
+    margin-top: 0; }
+  .list-panel-heading.flexleft {
+    justify-content: flex-start; }
+    .list-panel-heading.flexleft h3:hover {
+      cursor: pointer;
+      border-bottom: 1px solid #000;
+      color: #34343e;
+      opacity: 1; }
+
+.list-panel-heading-offers h3 {
+  margin: 0; }
+
+@media (max-width: 375px) {
+  .list-panel-heading p {
+    display: none; }
+  .list-panel-heading h3 {
+    white-space: nowrap; } }
