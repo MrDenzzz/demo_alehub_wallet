@@ -94,12 +94,25 @@
                     return this.$modal.show('connectionmodal');
                 }
             },
-            pingTransactions: function () {
+            pingData: function () {
                 if (this.readyToPing) {
                     this.$store.dispatch('transactionsRequestPing',
                         this.currentWalletAddress
                     ).then(() => {
-                        console.log('Success ping transactions');
+                        this.$store.dispatch('walletsRequestPing'
+                        ).then(() => {
+                            console.log('Success ping wallets');
+                        }).catch(() => {
+                            console.log('Error ping wallets');
+                        });
+
+                        // this.$store.dispatch('notificationsRequestPing'
+                        // ).then(() => {
+                        //     console.log('Success ping notifications');
+                        // }).catch(() => {
+                        //     console.log('Error ping notifications');
+                        // });
+
                     }).catch(() => {
                         console.log('Error ping transactions');
                     });
@@ -137,7 +150,7 @@
             }
         },
         mounted() {
-            this.setIntervalId = setInterval(this.pingTransactions, 10000);
+            this.setIntervalId = setInterval(this.pingData, 10000);
 
             if (!navigator.onLine) {
                 this.isLoader = true;

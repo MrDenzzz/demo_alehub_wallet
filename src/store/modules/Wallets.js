@@ -9,6 +9,7 @@ const state = {
 
     walletStatus: 'not found',
     lazyWalletStatus: '',
+    walletsPingStatus: '',
     changeWalletStatus: '',
     removeWalletStatus: '',
     getRandomSeedStatus: '',
@@ -16,7 +17,8 @@ const state = {
     delWalletProperty: {
         mnemonic: '',
         isAgreed: false
-    }
+    },
+
 };
 
 const actions = {
@@ -32,21 +34,19 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-                    console.log(resp, 'resp from wallets request');
-                    commit('SET_WALLETS', resp.data);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('WALLETS_ERROR', err);
-                    console.log(err, 'err from wallets request');
-                    // commit('AUTH_ERROR', err);
+            }).then(resp => {
+                console.log(resp, 'resp from wallets request');
+                commit('SET_WALLETS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                commit('WALLETS_ERROR', err);
+                console.log(err, 'err from wallets request');
+                // commit('AUTH_ERROR', err);
 
-                    // localStorage.removeItem(sha256('user-token'));
-                    // delete axios.defaults.headers.common['Login'];
-                    reject(err)
-                });
+                // localStorage.removeItem(sha256('user-token'));
+                // delete axios.defaults.headers.common['Login'];
+                reject(err)
+            });
         })
     },
     walletsRequestLazy: ({commit, dispatch}) => {
@@ -61,17 +61,37 @@ const actions = {
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
                 method: 'GET'
-            })
-                .then(resp => {
-                    // console.log(resp.data, 'wallets request lazy');
-                    commit('SET_LAZY_WALLETS', resp.data);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    console.log(err, 'error wallets lazy request');
-                    commit('ERROR_LAZY_WALLETS', err);
-                    reject(err)
-                });
+            }).then(resp => {
+                // console.log(resp.data, 'wallets request lazy');
+                commit('SUCCESS_LAZY_WALLETS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error wallets lazy request');
+                commit('ERROR_LAZY_WALLETS', err);
+                reject(err)
+            });
+        })
+    },
+    walletsRequestPing: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_PING_WALLETS');
+            let host = 'http://192.168.1.37:4000/users/user-wallets';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'GET'
+            }).then(resp => {
+                commit('SUCCESS_PING_WALLETS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error wallets lazy request');
+                commit('ERROR_PING_WALLETS', err);
+                reject(err)
+            });
         })
     },
     newWallet: ({commit, dispatch}, wallet) => {
@@ -87,15 +107,13 @@ const actions = {
                 },
                 data: wallet,
                 method: 'POST'
-            })
-                .then(resp => {
-                    commit('ADD_WALLET', resp.data.walletModel);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit('AUTH_ERROR', err);
-                    reject(err)
-                });
+            }).then(resp => {
+                commit('ADD_WALLET', resp.data.walletModel);
+                resolve(resp);
+            }).catch(err => {
+                commit('AUTH_ERROR', err);
+                reject(err)
+            });
         })
     },
     changeCurrentWallet: ({commit}, address) => {
@@ -190,37 +208,50 @@ const actions = {
 };
 
 const mutations = {
-    WALLETS_REQUEST(state) {
+    WALLETS_REQUEST: (state) => {
         state.walletStatus = 'loading';
     },
-    SET_WALLETS(state, wallets) {
+    SET_WALLETS: (state, wallets) => {
         if (wallets.length !== 0) {
             state.wallets = wallets;
             state.currentWallet = state.wallets[0];
         }
         state.walletStatus = 'success';
     },
-    ADD_WALLET(state, wallet) {
+    ADD_WALLET: (state, wallet) => {
         state.wallets.push(wallet);
         state.currentWallet = state.wallets[state.wallets.length - 1];
     },
-    WALLETS_ERROR(state) {
+    WALLETS_ERROR: (state) => {
         state.walletStatus = 'error';
     },
 
 
-    REQUEST_LAZY_WALLETS(state) {
+    REQUEST_LAZY_WALLETS: (state) => {
         state.lazyWalletStatus = 'loading';
     },
-    SET_LAZY_WALLETS(state, wallets) {
+    SUCCESS_LAZY_WALLETS: (state, wallets) => {
         if (wallets.length !== 0) {
             state.wallets = wallets;
             state.currentWallet = state.wallets[0];
         }
         state.lazyWalletStatus = 'success';
     },
-    ERROR_LAZY_WALLETS(state, err) {
+    ERROR_LAZY_WALLETS: (state, err) => {
         state.lazyWalletStatus = 'error';
+    },
+
+    REQUEST_PING_WALLETS: (state) => {
+        state.walletsPingStatus = 'loading';
+    },
+    SUCCESS_PING_WALLETS: (state, wallets) => {
+        if (wallets.length !== 0) {
+            state.wallets = wallets;
+        }
+        state.walletsPingStatus = 'success';
+    },
+    ERROR_PING_WALLETS: (state) => {
+        state.walletsPingStatus = 'error';
     },
 
 
