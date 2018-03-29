@@ -102,7 +102,15 @@
                     ).then(() => {
                         this.$store.dispatch('walletsRequestPing'
                         ).then(() => {
+
                             if (this.changedWallets) {
+
+                                this.$store.dispatch('resetChangedWallets'
+                                ).then(() => {
+                                    console.log('Success reset changed wallets. App.vue');
+                                }).catch(() => {
+                                    console.log('Error reset changed wallets. App.vue');
+                                });
 
                                 this.$store.dispatch('getNotifications'
                                 ).then(() => {
@@ -118,7 +126,6 @@
                                         text : 'hide',
                                         class: 'toasted-action-hide',
                                         onClick : (e, toastObject) => {
-                                            console.log(123123);
                                             toastObject.goAway(0);
                                         }
                                     }

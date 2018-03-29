@@ -97,6 +97,12 @@ const actions = {
             });
         })
     },
+    resetChangedWallets: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_RESET_CHANGED_WALLETS');
+            resolve();
+        });
+    },
     newWallet: ({commit, dispatch}, wallet) => {
         return new Promise((resolve, reject) => {
             // commit('AUTH_REQUEST');
@@ -256,6 +262,10 @@ const mutations = {
     },
     ERROR_PING_WALLETS: (state) => {
         state.walletsPingStatus = 'error';
+    },
+
+    SUCCESS_RESET_CHANGED_WALLETS: (state) => {
+        state.changedWallets = false;
     },
 
 
