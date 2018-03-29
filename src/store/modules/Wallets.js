@@ -273,7 +273,7 @@ const mutations = {
     },
 
 
-    CHANGE_CURRENT_WALLET(state, address) {
+    CHANGE_CURRENT_WALLET: (state, address) =>{
         state.currentWallet = state.wallets.find(item => {
             return item.address === address;
         });
@@ -281,63 +281,63 @@ const mutations = {
             state.currentWalletHaveTransactions = false;
     },
 
-    REQUEST_CHANGE_WALLET_NAME(state) {
+    REQUEST_CHANGE_WALLET_NAME: (state) => {
         state.changeWalletStatus = 'loading';
     },
-    SUCCESS_CHANGE_WALLET_NAME(state, newWalletName) {
+    SUCCESS_CHANGE_WALLET_NAME: (state, newWalletName) => {
         state.currentWallet.name = newWalletName;
         state.wallets.find(item => {
             return item.address === state.currentWallet.address;
         }).name = newWalletName;
         state.changeWalletStatus = 'loading';
     },
-    ERROR_CHANGE_WALLET_NAME(state) {
+    ERROR_CHANGE_WALLET_NAME: (state) => {
         state.changeWalletStatus = 'error';
     },
 
-    REQUEST_REMOVE_WALLET(state) {
+    REQUEST_REMOVE_WALLET: (state) => {
         state.removeWalletStatus = 'loading';
     },
-    SUCCESS_REMOVE_WALLET(state) {
+    SUCCESS_REMOVE_WALLET: (state) => {
         state.removeWalletStatus = 'success';
     },
-    ERROR_REMOVE_WALLET(state) {
+    ERROR_REMOVE_WALLET: (state) => {
         state.removeWalletStatus = 'error';
     },
 
-    REMOVE_WALLET_FROM_WALLETS(state, index) {
+    REMOVE_WALLET_FROM_WALLETS: (state, index) => {
         state.wallets.splice(index, 1);
     },
 
-    ZEROING_OUT_CURRENT_WALLET(state) {
+    ZEROING_OUT_CURRENT_WALLET: (state) => {
         state.currentWallet = null;
     },
 
-    REQUEST_GET_RANDOM_SEED(state) {
+    REQUEST_GET_RANDOM_SEED: (state) => {
         state.getRandomSeedStatus = 'loading';
     },
 
-    SUCCESS_GET_RANDOM_SEED(state) {
+    SUCCESS_GET_RANDOM_SEED: (state) => {
         state.getRandomSeedStatus = 'success';
     },
 
-    ERROR_GET_RANDOM_SEED(state) {
+    ERROR_GET_RANDOM_SEED: (state) => {
         state.getRandomSeedStatus = 'error';
     },
 
 
-    AGREED_DELETE(state) {
+    AGREED_DELETE: (state) => {
         state.delWalletProperty.isAgreed = !state.delWalletProperty.isAgreed;
         state.delWalletProperty.mnemonic = '';
     },
-    CREATE_NEW_WALLET(state, payload) {
+    CREATE_NEW_WALLET: (state, payload) => {
         state.wallets.push({
             address: payload.address,
             name: payload.name,
             balance: payload.balance
         });
     },
-    SET_MNEMONIC_CODE(state, code) {
+    SET_MNEMONIC_CODE: (state, code) => {
         state.delWalletProperty.mnemonic = code;
     },
     WALLET_REPEAT_PASSWORD(state, repeat) {
