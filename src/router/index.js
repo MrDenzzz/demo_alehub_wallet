@@ -35,12 +35,14 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
+    //заплатка. переписать
     setTimeout(() => {
-        if (store.state.Wallets.wallets.length === 0 && to.name !== 'Summary') {
+        console.log(store.state.Wallets.wallets, 'store.state.Wallets.wallets');
+        if (store.state.Wallets.wallets.length === 0) {
             next('/');
             return;
         }
-    }, 100);
+    }, 1000);
     let token = localStorage.getItem(sha256('user-token'));
     if (token !== null && token !== 'undefined' && token !== undefined) {
         next();

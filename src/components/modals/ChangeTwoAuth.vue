@@ -25,14 +25,16 @@
             <div class="modal-control" v-if="userTwoAuth">
                 <div class="modal-input">
                     <label class="title">{{ $t('modals.changeTwoAuth.fields.secret.label') }}</label>
-                    <input type="text" class="input" :placeholder="$t('modals.changeTwoAuth.fields.secret.placeholder')" v-model="secret">
+                    <input type="text" class="input" :placeholder="$t('modals.changeTwoAuth.fields.secret.placeholder')"
+                           v-model="secret">
                 </div>
             </div>
 
             <div class="modal-control">
                 <div class="modal-input">
                     <label class="title">{{ $t('modals.changeTwoAuth.fields._2fa.label') }}</label>
-                    <input type="text" class="input" :placeholder="$t('modals.changeTwoAuth.fields._2fa.placeholder')" v-model="token">
+                    <input type="text" class="input" :placeholder="$t('modals.changeTwoAuth.fields._2fa.placeholder')"
+                           v-model="token">
                 </div>
             </div>
 
@@ -90,9 +92,10 @@
                 'twoAuthSecret',
                 'userTwoAuth'
             ]),
-            qrcodeWidth () {
-                if (this.windowWidth <= 425) return 220
-                return 300
+            qrcodeWidth: function () {
+                if (this.windowWidth <= 425)
+                    return 220;
+                return 300;
             }
         },
         methods: {
@@ -116,26 +119,45 @@
             makeDisableTwoAuth: function () {
                 this.$modal.hide('change-two-auth');
                 const {token, secret} = this;
-                this.$store.dispatch('disableTwoAuth', {token, secret}).then(() => {
-                    console.log('disable two auth done');
+                this.$store.dispatch('disableTwoAuth', {
+                    token,
+                    secret
+                }).then(() => {
                     this.token = '';
                     this.secret = '';
+
+                    this.$toasted.show('You have successfully DISABLED dual authentication', {
+                        duration: 5000,
+                        type: 'success',
+                    });
+                }).catch(() => {
+                    console.log('Error disable two auth');
                 });
             },
             makeEnableTwoAuth: function () {
                 this.$modal.hide('change-two-auth');
                 const {token, secret} = this;
-                this.$store.dispatch('enableTwoAuth', {token, secret}).then(() => {
+                this.$store.dispatch('enableTwoAuth', {
+                    token,
+                    secret
+                }).then(() => {
                     this.token = '';
                     this.secret = '';
                     this.qrPath = '';
+
+                    this.$toasted.show('You have successfully ENABLED dual authentication', {
+                        duration: 5000,
+                        type: 'success',
+                    });
+                }).catch(() => {
+                    console.log('Error enable two auth');
                 });
             }
         },
         created() {
             let _this = this
             _this.windowWidth = window.outerWidth;
-            window.addEventListener('resize', function(e) {
+            window.addEventListener('resize', function (e) {
                 if (!_this.windowWidth) return false
                 _this.windowWidth = e.target.outerWidth;
                 console.log(_this.windowWidth)
@@ -191,13 +213,13 @@
             .modal-btn
                 .btn-large
                     padding 11px
-    
-    @media(max-width: 425px)
+
+    @media (max-width: 425px)
         .two-auth
             .btn-default
-                    margin-right 0
+                margin-right 0
 
-            .btn-yellow 
+            .btn-yellow
                 margin-left 0
 
 
