@@ -63,3 +63,6 @@ package-lock.json
 
 # distribution folder
 dist/
+
+# static/css/components
+static/css/components
