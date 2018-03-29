@@ -263,12 +263,16 @@
             },
 
             isLoadingCheck: function () {
+                if (!this.email && !this.password) {
+                    this.isLoading = false;
+                    return;
+                }
+
                 (this.userStatus !== 'success') ? this.isLoading = false : this.isLoading = true;
 
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success'))
-
                     this.isLoading = false;
                 else
                     this.isLoading = true;
