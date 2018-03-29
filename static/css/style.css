@@ -878,6 +878,8 @@ body {
     background: transparent;
     margin: 0 10px;
     cursor: pointer; }
+    .group-settings .form img {
+      height: 97px; }
     .group-settings .form.select-main {
       background-color: #474b4b; }
     .group-settings .form.select-dark {
@@ -3135,6 +3137,8 @@ td, th {
         margin: 0 10px 0 10px; }
 
 @media (max-width: 1100px) {
+  .bottom .date {
+    width: 210px; }
   .bottom .docs .buttons {
     width: 130px; } }
 
@@ -3205,7 +3209,7 @@ input#datepickerFrom, input#datepickerTo {
   background: inherit;
   border: none;
   border-bottom: 1px solid rgba(52, 52, 62, 0.2);
-  width: 80px;
+  width: 84px;
   margin-right: 30px;
   outline: none;
   font-size: 14px;
@@ -3588,6 +3592,10 @@ label {
   flex-direction: column;
   width: 426px;
   margin: 0 auto; }
+  .login-form :focus {
+    outline: none; }
+  .login-form ::-moz-focus-inner {
+    border: 0; }
   .login-form .control {
     display: flex;
     justify-content: space-between;
@@ -3616,7 +3624,8 @@ label {
       margin-right: 16px;
       position: relative;
       z-index: 1;
-      opacity: 1; }
+      opacity: 1;
+      box-shadow: none; }
     .login-form .control.noline {
       border-bottom: none; }
   .login-form .btn-control {

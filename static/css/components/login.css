@@ -8,6 +8,10 @@
   flex-direction: column;
   width: 426px;
   margin: 0 auto; }
+  .login-form :focus {
+    outline: none; }
+  .login-form ::-moz-focus-inner {
+    border: 0; }
   .login-form .control {
     display: flex;
     justify-content: space-between;
@@ -36,7 +40,8 @@
       margin-right: 16px;
       position: relative;
       z-index: 1;
-      opacity: 1; }
+      opacity: 1;
+      box-shadow: none; }
     .login-form .control.noline {
       border-bottom: none; }
   .login-form .btn-control {

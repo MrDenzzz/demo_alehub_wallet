@@ -1416,6 +1416,9 @@ body {
     background: transparent;
     margin: 0 10px;
     cursor: pointer;
+    img {
+      height: 97px;
+    }
     &.select-main {
       background-color: #474b4b;
     }
