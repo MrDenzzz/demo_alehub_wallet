@@ -18,8 +18,8 @@
                             <div class="stats-balance">
                                 <div class="stats-col">
                                     <send-request
-                                            v-if="this.transactions.length === 0 && transactionsLazyStatus === 'success' ||
-                                             this.transactions.length === 0 && !userHaveTransactions"/>
+                                            v-if="this.transactions.length === 0 && (transactionsLazyStatus === 'success' ||
+                                            !currentWalletHaveTransactions)"/>
                                 </div>
                             </div>
                         </div>
@@ -51,8 +51,8 @@
                         <div class="col-12">
                             <div class="flex-block-transaction"
                                  :class="{'m-t-center': transactions.length === 0}"
-                                 v-if="getActivity.length === 0 && transactionsLazyStatus === 'success' ||
-                                 getActivity.length === 0 && !userHaveTransactions">
+                                 v-if="getActivity.length === 0 && (transactionsLazyStatus === 'success' ||
+                                 !currentWalletHaveTransactions)">
 
                                 <p class="absence-transactions">No transactions found</p>
 
@@ -140,7 +140,8 @@
                 'currentWallet',
                 'transactionStatus',
                 'transactionsLazyStatus',
-                'userHaveTransactions',
+                'currentWalletHaveTransactions',
+                // 'userHaveTransactions',
                 'dateFrom',
                 'dateTo',
                 'searchText'

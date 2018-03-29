@@ -1,10 +1,11 @@
 <template>
     <div id="app" :class="systemLanguage">
-        <div v-if="isLoading" key="save">
+        <!--<div v-if="isLoading" key="save">-->
+        <div v-if="isLoading">
             <sync-loader :load="isLoading"/>
         </div>
-        <div v-else key="edit">
-            <!--<New-wallet/>-->
+        <!--<div v-else key="edit">-->
+        <div v-else>
             <router-view/>
             <div
                     v-if="changedTransactions"
@@ -73,6 +74,7 @@
             },
             isLoading: function () {
                 if (localStorage.getItem(sha256('user-token')) === null) {
+                    this.readyToPing = false;
                     return false;
                 }
 

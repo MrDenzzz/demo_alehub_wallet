@@ -148,6 +148,12 @@ const actions = {
             });
         });
     },
+    isErrorLoginReset: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_ERROR_LOGIN_RESET');
+            resolve();
+        });
+    },
     enableTwoAuth: ({commit, dispatch}, authData) => {
         return new Promise((resolve, reject) => {
             commit('ENABLE_TWOAUTH_REQUEST');
@@ -290,6 +296,9 @@ const mutations = {
         state.isErrorLogin = true;
         state.isLoader = false;
         state.status = 'error';
+    },
+    SUCCESS_ERROR_LOGIN_RESET: (state) => {
+        state.isErrorLogin = false;
     },
     REQUEST_LOGOUT: (state) => {
         state.logoutStatus = 'loading';

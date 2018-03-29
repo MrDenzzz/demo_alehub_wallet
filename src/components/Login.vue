@@ -9,11 +9,6 @@
         <section class="main">
             <div class="content nomenu">
 
-
-                <!--37 <label for="password">{{ $t('pages.login.password') }}</label>-->
-                <!--45 :placeholder="$t('pages.login.password')"-->
-                <!--53 {{ $t('pages.login.login') }}-->
-
                 <div class="container">
                     <div class="row">
 
@@ -148,13 +143,15 @@
                 'userTwoAuth',
                 'userStatus',
                 'userHaveWallets',
-                'userHaveTransactions',
+                // 'userHaveTransactions',
                 'isLoaderUserAuth',
                 'isErrorLogin',
                 'wallets',
                 'walletStatus',
                 'currentWallet',
-                'transactionStatus'
+                'transactionStatus',
+                'currentWalletHaveTransactions',
+                'initiateFilterDateStatus'
             ]),
         },
         methods: {
@@ -212,6 +209,7 @@
 
 
                 const {email, password} = this;
+                this.isLoading = true;
 
                 this.$store.dispatch('authRequest', {email, password}).then(() => {
                     if (this.authStep === 0) {
@@ -223,17 +221,21 @@
                                 }).catch(() => {
                                     //это не срабатывает???
                                     console.log('You do not have transactions');
+                                    this.isLoading = false;
                                     this.$router.push('/');
                                 });
                             }).catch(() => {
                                 console.log('You do not have wallets');
+                                this.isLoading = false;
                                 this.$router.push('/');
                             });
                         }).catch(() => {
+                            this.isLoading = false;
                             console.log('Wrong user');
                         });
                     }
                 }).catch(() => {
+                    this.isLoading = false;
                     console.log('Wrong auth');
                 });
             },
@@ -261,19 +263,14 @@
             },
 
             isLoadingCheck: function () {
-                if ((this.authStatus !== 'success' && this.userStatus !== 'success') || (this.authStatus === 'success' && this.userStatus !== 'success'))
+                (this.userStatus !== 'success') ? this.isLoading = false : this.isLoading = true;
+
+                if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success'))
+
                     this.isLoading = false;
                 else
-                    this.isLoading = true;
-
-                if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.userHaveTransactions) ||
-                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.userHaveTransactions) ||
-                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.userHaveTransactions && this.transactionStatus === 'success')) {
-
-                    console.log('Success loading');
-
-                    this.isLoading = false;
-                } else
                     this.isLoading = true;
             },
 
@@ -281,16 +278,26 @@
                 document.getElementById(id).focus();
             },
             resetError: function (type) {
-                if (type === 'login')
+                if (type === 'login') {
                     this.isErrorEmail = false;
+                }
 
-                if (type === 'password')
+
+                if (type === 'password') {
                     this.isErrorPassword = false;
+                }
+
             }
         },
-        mounted() {
-            // console.log(sha256('2o_H-Zu7nNDcmSaZX'));
-            console.log(sha256('TdlMDdlYzViMmQ5OCI'));
+        beforeDestroy() {
+            if (this.isErrorLogin) {
+                this.$store.dispatch('isErrorLoginReset'
+                ).then(() => {
+                    console.log('Success is errorLoginReset. Login.vue');
+                }).catch(() => {
+                    console.log('Error is errorLoginReset. Login.vue');
+                });
+            }
         }
     }
 </script>
