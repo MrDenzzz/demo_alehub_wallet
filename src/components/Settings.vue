@@ -20,18 +20,18 @@
                                         :input-type="'text'"
                                 />
 
-                                <div class="control" @click="openModal('changeemail')">
-                                    <div class="wrap-input">
-                                        <label>E-mail</label>
-                                        <div class="textbox">
-                                            <p
-                                                    class="text full-line"
-                                            >
-                                                {{userEmail}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--<div class="control" @click="openModal('changeemail')">-->
+                                    <!--<div class="wrap-input">-->
+                                        <!--<label>E-mail</label>-->
+                                        <!--<div class="textbox">-->
+                                            <!--<p-->
+                                                    <!--class="text full-line"-->
+                                            <!--&gt;-->
+                                                <!--{{//userEmail}}-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <div class="control" @click="openModal('changepassword')">
                                     <div class="wrap-input">
@@ -112,7 +112,7 @@
         </section>
 
         <change-password-modal/>
-        <change-email-modal/>
+        <!--<change-email-modal/>-->
         <change-two-auth-modal/>
 
     </div>
@@ -290,14 +290,14 @@
                 }
             });
 
-            this.$on('changeEmail', function (email) {
-                if (email) {
-                    this.$toasted.show(`A confirmation email has been sent to ${email}`, {
-                        duration: 5000,
-                        type: 'success',
-                    });
-                }
-            });
+            // this.$on('changeEmail', function (email) {
+            //     if (email) {
+            //         this.$toasted.show(`A confirmation email has been sent to ${email}`, {
+            //             duration: 5000,
+            //             type: 'success',
+            //         });
+            //     }
+            // });
 
             this.$on('changePassword', function () {
                 this.$toasted.show(`Password changed`, {

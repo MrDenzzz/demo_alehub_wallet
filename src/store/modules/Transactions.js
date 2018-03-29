@@ -358,6 +358,7 @@ const getters = {
     // dateTransactions: state => state.dateTransactions,
     transactionStatus: state => state.transactionStatus,
     transactionsLazyStatus: state => state.transactionsLazyStatus,
+    transactionsMomentStatus: state => state.transactionsMomentStatus,
     initiateFilterDateStatus: state => state.initiateFilterDateStatus,
     dateFrom: state => state.dateFrom,
     dateTo: state => state.dateTo,

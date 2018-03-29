@@ -53,7 +53,7 @@ const actions = {
             });
         })
     },
-    walletsRequestLazy: ({commit, dispatch}) => {
+    walletsRequestLazy: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LAZY_WALLETS');
             let host = 'http://192.168.1.42:4000/users/user-wallets';
@@ -66,7 +66,6 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                // console.log(resp.data, 'wallets request lazy');
                 commit('SUCCESS_LAZY_WALLETS', resp.data);
                 resolve(resp);
             }).catch(err => {
@@ -247,7 +246,6 @@ const mutations = {
     SUCCESS_LAZY_WALLETS: (state, wallets) => {
         if (wallets.length !== 0) {
             state.wallets = wallets;
-            state.currentWallet = state.wallets[0];
         }
         state.lazyWalletStatus = 'success';
     },
@@ -438,7 +436,8 @@ const getters = {
             return item.address === state.currentWallet.address;
         });
     },
-    changedWallets: state => state.changedWallets
+    changedWallets: state => state.changedWallets,
+    currentWalletBalance: state => state.currentWallet.balance
 };
 
 export default {
