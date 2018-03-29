@@ -54,13 +54,13 @@
                                  v-if="getActivity.length === 0 && (transactionsLazyStatus === 'success' ||
                                  !currentWalletHaveTransactions)">
 
-                                <p class="absence-transactions">No transactions found</p>
+                                <p class="absence-transactions">{{ $t('pages.summary.notFound') }}</p>
 
                                 <button
                                         v-if="transactions.length !== 0"
                                         class="buttons btn-yellow"
                                         @click="resetFilter()">
-                                    Reset filter
+                                    {{ $t('pages.summary.buttons.reset')}}
                                 </button>
                             </div>
                         </div>

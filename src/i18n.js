@@ -48,9 +48,11 @@ const messages = {
             },
             summary: {
                 navbarTitle: 'Summary',
+                notFound: 'No transactions found',
                 buttons: {
                     send: 'Send',
-                    request: 'Request'
+                    request: 'Request',
+                    reset: 'Reset filter'
                 },
                 panelHeadings: {
                     recent: 'Recent activity'
@@ -79,6 +81,10 @@ const messages = {
                 activityList: {
                     from: 'From:',
                     to: 'To:',
+                    status: {
+                        sent: 'Sent',
+                        recieved: 'Recieved'
+                    },
                     resultDay: {
                         received: 'Received',
                         sent: 'Sent',
@@ -414,9 +420,11 @@ const messages = {
             },
             summary: {
                 navbarTitle: 'Обзор',
+                notFound: 'Транзакции не найдены',
                 buttons: {
                     send: 'Отправить',
-                    request: 'Получить'
+                    request: 'Получить',
+                    reset: 'Сбросить фильтр'
                 },
                 panelHeadings: {
                     recent: 'Недавняя активность'
@@ -445,6 +453,10 @@ const messages = {
                 activityList: {
                     from: 'От:',
                     to: 'В:',
+                    status: {
+                        sent: 'Отправлено',
+                        recieved: 'Получено'
+                    },
                     resultDay: {
                         received: 'Получено',
                         sent: 'Отправлено',
