@@ -39,7 +39,7 @@
             <div class="balance" :class="{ 'gridBalance': !rightMenu }">
                 <span class="count" v-if="isBalance">
                     <vue-numeric
-                            :value="getCurrentWalletBalance"
+                            :value="currentWalletBalance"
                             :separator="correctLangSep"
                             :decimal-separator="correctLangDecSep"
                             :precision="correctValuePrecision"
@@ -115,7 +115,7 @@
 </template>
 
 <script>
-    import {mapMutations} from "vuex";
+    import {mapGetters} from "vuex";
 
     export default {
         name: 'Navbar',
@@ -139,6 +139,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'currentWalletBalance'
+            ]),
             selectedTheme () {
                 return this.$store.state.Themes.theme;
             },
@@ -148,19 +151,6 @@
             notifBadge() {
                 return this.$store.state.Notifications.isNewNotification
             },
-
-            getCurrentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
-            },
-
-            getCurrentWalletBalance: function () {
-                if (this.getCurrentWallet !== null){
-                    // console.log(this.getCurrentWallet.balance, 'this.getCurrentWallet.balance');
-                    return this.getCurrentWallet.balance;
-                }
-                return 0;
-            },
-
             correctLangSep: function () {
                 if (localStorage.getItem('systemLang') === 'eng')
                     return ',';
@@ -172,8 +162,8 @@
                 return ',';
             },
             correctValuePrecision: function () {
-                if (Number(this.getCurrentWalletBalance) % 1 !== 0 && Number(this.getCurrentWalletBalance) === this.getCurrentWalletBalance)
-                    return this.getCurrentWalletBalance.toString().split('.')[1].toString().length;
+                if (Number(this.currentWalletBalance) % 1 !== 0)
+                    return this.currentWalletBalance.toString().split('.')[1].toString().length;
                 else
                     return 0;
             }
@@ -183,16 +173,12 @@
                 switch (this.selectedTheme) {
                     case 'main':
                         return require('../../../static/img/logo_main.svg');
-                        break;
                     case 'dark':
                         return require('../../../static/img/logo_dark.svg');
-                        break;
                     case 'white':
                         return require('../../../static/img/logo_white.svg');
-                        break;
                     default:
                         return require('../../../static/img/logo_main.svg');
-                        break;
                 }
             },
             toggleMenu () {

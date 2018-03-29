@@ -512,11 +512,6 @@
                 ).then((resp) => {
                     this.dataProcessing = true;
 
-                    this.$toasted.show(`Wallet '${resp.data.walletModel.name}' successful created!`, {
-                        duration: 5000,
-                        type: 'success',
-                    });
-
                     localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
                     this.$store.dispatch('transactionsRequestLazy',
@@ -524,7 +519,10 @@
                     ).then((resp) => {
                         this.$store.dispatch('resetTransactionsUpdated'
                         ).then(() => {
-                            console.log(3);
+                            this.$toasted.show(`Wallet '${this.currentWallet.name}' successful created!`, {
+                                duration: 5000,
+                                type: 'success',
+                            });
                             this.closeModal();
                         }).catch(() => {
                             console.log('Error reset transactionsUpdated. WalletList.vue');

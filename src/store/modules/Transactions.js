@@ -24,7 +24,6 @@ const state = {
     dateTo: 0,
 
     searchText: '',
-
 };
 
 const actions = {
@@ -68,6 +67,7 @@ const actions = {
                 // console.log(resp.data, 'get model transactions request lazy');
                 console.log('data');
                 commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
+                // commit('SUCCESS_INITIATE_FILTER_DATE');
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_LAZY_TRANSACTIONS', err);
@@ -110,6 +110,7 @@ const actions = {
                 method: 'GET'
             }).then(resp => {
                 commit('SUCCESS_MOMENT_TRANSACTIONS', resp.data);
+                commit('SUCCESS_INITIATE_FILTER_DATE');
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_MOMENT_TRANSACTIONS', err);
@@ -120,6 +121,7 @@ const actions = {
     refreshTransactions: ({commit}) => {
         return new Promise((resolve) => {
             commit('SUCCESS_REFRESH_TRANSACTIONS');
+            commit('SUCCESS_INITIATE_FILTER_DATE');
             resolve();
         })
     },
