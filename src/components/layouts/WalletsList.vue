@@ -131,27 +131,30 @@
                 this.$modal.show('newwallet');
             },
             selectNewWallet: function (address) {
-                // clearInterval(this.setIntervalId);
 
                 if (this.currentWallet.address !== address) {
                     this.$store.dispatch('changeCurrentWallet',
                         address
                     ).then(() => {
 
+                        this.$store.dispatch('resetTransactionsUpdated'
+                        ).then(() => {
+                        }).catch(() => {
+                            console.log('Error reset transactionsUpdated. WalletList.vue');
+                        });
+
                         this.$store.dispatch('setFilterDate'
                         ).then(() => {
                             console.log('Success set filter date');
                         }).catch(() => {
-                            console.log('Error set filter date');
+                            console.log('Error set filter date. WalletList.vue');
                         });
 
                         this.$parent.$emit('changeCurrentWalletEmit', address);
                     }).catch(() => {
-                        console.log('Сan not change the current wallet');
+                        console.log('Сan not change the current wallet. WalletList.vue');
                     });
                 }
-
-                // this.setIntervalId = setInterval(this.getTransactions, 15000);
             },
             parseBalance: function (balance) {
                 return numeral(balance).format('0,0');
@@ -200,17 +203,12 @@
                 let scrollableEl = document.querySelector('.menu');
                 if (!scrollableEl)
                     return false;
-                if (scrollableEl.scrollHeight > scrollableEl.clientHeight) {
-                    this.scrollable = true;
-                } else {
-                    this.scrollable = false;
-                }
+
+                (scrollableEl.scrollHeight > scrollableEl.clientHeight) ? this.scrollable = true :this.scrollable = false;
             }
         },
         created() {
             document.addEventListener('click', this.closeMenu);
-            // let _this = this;
-            // this.setIntervalId = setInterval(_this.getTransactions, 15000);
             window.addEventListener('resize', this.checkScroll);
         },
         mounted() {

@@ -120,8 +120,14 @@ const actions = {
         })
     },
     refreshTransactions: ({commit}) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             commit('SUCCESS_REFRESH_TRANSACTIONS');
+            resolve();
+        })
+    },
+    resetTransactionsUpdated: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_RESET_TRANSACTIONS_UPDATED');
             resolve();
         })
     },
@@ -142,7 +148,6 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 console.log(resp, 'send response');
-                // this.addNewNotificaiton(response.body.model);
                 commit('SUCCESS_SEND_COINS');
 
                 resolve(resp);
@@ -216,12 +221,10 @@ const mutations = {
         state.transactionsPingStatus = 'loading';
     },
     SUCCESS_PING_TRANSACTIONS: (state, transactionsUpdated) => {
-
         if (!state.transactions.equals(transactionsUpdated) && !state.transactionsUpdated.equals(transactionsUpdated)) {
             state.transactionsUpdated = transactionsUpdated;
             state.changedTransactions = true;
         }
-
         state.transactionsPingStatus = 'success';
     },
     ERROR_PING_TRANSACTIONS: (state) => {
@@ -232,6 +235,9 @@ const mutations = {
         state.transactions = state.transactionsUpdated;
         state.transactionsUpdated = [];
         state.changedTransactions = false;
+    },
+    SUCCESS_RESET_TRANSACTIONS_UPDATED: (state) => {
+        state.transactionsUpdated = [];
     },
 
     REQUEST_MOMENT_TRANSACTIONS: (state) => {
