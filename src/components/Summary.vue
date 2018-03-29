@@ -17,15 +17,19 @@
                         <div class="col-12">
                             <div class="stats-balance">
                                 <div class="stats-col">
-                                    <send-request v-if="this.transactions.length === 0 && transactionsLazyStatus === 'success'"/>
+                                    <send-request
+                                            v-if="this.transactions.length === 0 && transactionsLazyStatus === 'success' ||
+                                             this.transactions.length === 0 && !userHaveTransactions"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <div v-if="transactionsLazyStatus !== 'success'" class="wrap-spinner">
-                                <Spinner />
+                            <div v-if="transactionsLazyStatus !== 'success' && (this.transactions.length !== 0 ||
+                            transactionsLazyStatus === 'success')"
+                                 class="wrap-spinner">
+                                <spinner/>
                             </div>
 
                             <transactions-tool-panel
@@ -135,6 +139,7 @@
                 'currentWallet',
                 'transactionStatus',
                 'transactionsLazyStatus',
+                'userHaveTransactions',
                 'dateFrom',
                 'dateTo',
                 'searchText'
@@ -194,7 +199,7 @@
                 });
 
                 this.$store.dispatch('setSearchText',
-                ''
+                    ''
                 ).then(() => {
                     this.resetSearch = true;
                     console.log('Success set search text');
@@ -272,7 +277,6 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
-
 
 
             this.$on('successResetSearchToTool', function () {

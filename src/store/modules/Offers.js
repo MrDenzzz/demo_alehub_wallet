@@ -27,7 +27,7 @@ const actions = {
     getOffers: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('OFFERS_STATUS', 'loading')
-            let host = 'http://192.168.1.37:4000/offers';
+            let host = 'http://192.168.1.42:4000/offers';
             axios({
                 url: host,
                 headers: {
@@ -52,7 +52,7 @@ const actions = {
     },
     createOffer: ({commit, dispatch}, offerModel) => {
         return new Promise((resolve, reject) => {
-            let host = 'http://192.168.1.37:4000/offers';
+            let host = 'http://192.168.1.42:4000/offers';
             axios({
                 url: host,
                 headers: {

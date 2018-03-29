@@ -16,8 +16,8 @@ import axios from 'axios';
 import sha256 from 'sha256';
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://192.168.1.37:4000';
-// Vue.prototype.$host = 'http://192.168.1.37:4000';
+Vue.prototype.$host = 'http://192.168.1.42:4000';
+// Vue.prototype.$host = 'http://192.168.1.42:4000';
 // Vue.prototype.$host = 'localhost:4000';
 
 const NotifOptions = {
@@ -92,9 +92,6 @@ Object.prototype.equals = function (object2) {
 
 Object.defineProperty(Object.prototype, 'equals', {enumerable: false});
 
-// if(Array.prototype.equals)
-//     console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
-
 Array.prototype.equals = function (array) {
 
     let self = this;
@@ -145,38 +142,44 @@ const token = localStorage.getItem(sha256('user-token'));
 if (token !== 'undefined' && token) {
     axios.defaults.headers.common['Authorization'] = token;
 
-    store.dispatch('userRequest').then(() => {
+    store.dispatch('userRequest').then((resp) => {
 
-        console.log('successfully reload');
+        console.log(resp, 'this user');
+
+        console.log('Successfully reload');
 
         if (store.state.User.haveWallets) {
 
             store.dispatch('walletsRequest').then(() => {
 
-                console.log('successfully reload wallets');
+                console.log('Successfully reload wallets');
 
-                if (store.state.Wallets.currentWallet !== null && store.state.User.haveTransactions) {
+                if (store.state.Wallets.currentWallet !== null) {
 
                     store.dispatch('changeCurrentWallet',
                         localStorage.getItem(sha256('current-wallet'))
                     ).then(() => {
-                        store.dispatch('transactionsRequest',
-                            store.state.Wallets.currentWallet.address
-                        ).then(() => {
-                            console.log('Successfully reload transactions');
-                        }).catch(() => {
-                            console.log('Error requesting transactions');
-                        });
+
+                        if (store.state.User.haveTransactions) {
+                            store.dispatch('transactionsRequest',
+                                store.state.Wallets.currentWallet.address
+                            ).then(() => {
+                                console.log('Successfully reload transactions');
+                            }).catch(() => {
+                                console.log('Error requesting transactions. main.js');
+                            });
+                        }
+
                     }).catch(() => {
-                        console.log('Error set current wallet');
+                        console.log('Error set current wallet. main.js');
                     });
                 }
             }).catch(() => {
-                console.log('Error requesting wallets');
+                console.log('Error requesting wallets. main.js');
             });
         }
     }).catch(() => {
-        console.log('Error requesting user');
+        console.log('Error requesting user. main.js');
     });
 
 }

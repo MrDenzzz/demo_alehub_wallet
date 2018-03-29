@@ -103,6 +103,14 @@
                         this.$store.dispatch('walletsRequestPing'
                         ).then(() => {
                             if (this.changedWallets) {
+
+                                this.$store.dispatch('getNotifications'
+                                ).then(() => {
+                                    console.log('Success get notifications');
+                                }).catch(() => {
+                                    console.log('Error get notifications');
+                                });
+
                                 this.$toasted.show('You got money for your wallet', {
                                     duration: 10000,
                                     type: 'success',
@@ -119,14 +127,6 @@
                         }).catch(() => {
                             console.log('Error ping wallets');
                         });
-
-                        this.$store.dispatch('notificationsRequestPing'
-                        ).then(() => {
-                            console.log('Success ping notifications');
-                        }).catch(() => {
-                            console.log('Error ping notifications');
-                        });
-
                     }).catch(() => {
                         console.log('Error ping transactions');
                     });
