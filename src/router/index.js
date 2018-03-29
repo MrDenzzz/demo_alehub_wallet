@@ -37,7 +37,6 @@ const ifNotAuthenticated = (to, from, next) => {
 const ifAuthenticated = (to, from, next) => {
     //заплатка. переписать
     setTimeout(() => {
-        console.log(store.state.Wallets.wallets, 'store.state.Wallets.wallets');
         if (store.state.Wallets.wallets.length === 0) {
             next('/');
             return;

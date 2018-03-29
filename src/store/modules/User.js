@@ -273,6 +273,12 @@ const actions = {
             });
         });
     },
+    resetAuthStep: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_RESET_AUTH_STEP');
+            resolve();
+        });
+    },
 };
 
 const mutations = {
@@ -385,6 +391,10 @@ const mutations = {
     ERROR_CHANGE_PASSWORD: (state) => {
         state.changePasswordStatus = 'error';
     },
+
+    SUCCESS_RESET_AUTH_STEP: (state) => {
+        state.authStep = 0;
+    }
 };
 
 const getters = {

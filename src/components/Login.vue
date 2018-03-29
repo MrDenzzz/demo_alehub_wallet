@@ -44,7 +44,8 @@
                                                 required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-black btn-block nomargin" @click="isLoadingCheck">
+                                    <button type="submit" class="btn btn-black btn-block nomargin"
+                                            @click="isLoadingCheck">
                                         {{ $t('pages.login.login') }}
                                     </button>
                                     <div class="error-block" v-if="isErrorLogin">
@@ -91,7 +92,8 @@
                                         <Spinner/>
                                     </div>
 
-                                    <button type="submit" class="btn btn-black btn-block nomargin">
+                                    <button type="submit" class="btn btn-black btn-block nomargin"
+                                            @click="isLoadingTwoAuthCheck">
                                         Submit code
                                     </button>
 
@@ -211,7 +213,10 @@
                 const {email, password} = this;
                 this.isLoading = true;
 
-                this.$store.dispatch('authRequest', {email, password}).then(() => {
+                this.$store.dispatch('authRequest', {
+                    email,
+                    password
+                }).then(() => {
                     if (this.authStep === 0) {
                         this.$store.dispatch('userRequest').then(() => {
                             this.$store.dispatch('walletsRequest').then(() => {
@@ -233,6 +238,8 @@
                             this.isLoading = false;
                             console.log('Wrong user');
                         });
+                    } else {
+                        this.isLoading = false;
                     }
                 }).catch(() => {
                     this.isLoading = false;
@@ -241,24 +248,42 @@
             },
 
             loginWithTwoAuth: function () {
+                this.isLoading = true;
+
                 const {email, password, token} = this;
-                this.$store.dispatch('authTwoFaRequest', {email, password, token}).then(() => {
-                    this.$store.dispatch('userRequest').then(() => {
-                        this.$store.dispatch('walletsRequest').then(() => {
+                this.$store.dispatch('authTwoFaRequest', {
+                    email,
+                    password,
+                    token
+                }).then(() => {
+                    this.$store.dispatch('userRequest'
+                    ).then(() => {
+                        this.$store.dispatch('walletsRequest'
+                        ).then(() => {
                             localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
-                            this.$store.dispatch('transactionsRequest', this.currentWallet.address || '').then(() => {
+                            this.$store.dispatch('transactionsRequest',
+                                this.currentWallet.address || ''
+                            ).then(() => {
                                 this.$router.push('/');
                             }).catch(() => {
                                 //это не срабатывает???
+                                this.isLoading = false;
                                 console.log('You do not have transactions');
                                 this.$router.push('/');
                             });
                         }).catch(() => {
+                            this.isLoading = false;
                             console.log('You do not have wallets');
                             this.$router.push('/');
                         });
-                        this.$router.push('/');
+                        // this.$router.push('/');
+                    }).catch(() => {
+                        this.isLoading = false;
+                        console.log('Error userRequest');
                     });
+                }).catch(() => {
+                    this.isLoading = false;
+                    console.log('Error authTwoFaRequest');
                 });
             },
 
@@ -278,6 +303,20 @@
                     this.isLoading = true;
             },
 
+            isLoadingTwoAuthCheck: function () {
+                if (!this.token) {
+                    this.isLoading = false;
+                    return;
+                }
+
+                if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
+                    (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success'))
+                    this.isLoading = false;
+                else
+                    this.isLoading = true;
+            },
+
             focusInput: function (id) {
                 document.getElementById(id).focus();
             },
@@ -286,7 +325,6 @@
                     this.isErrorEmail = false;
                 }
 
-
                 if (type === 'password') {
                     this.isErrorPassword = false;
                 }
@@ -294,6 +332,15 @@
             }
         },
         beforeDestroy() {
+            if (this.authStep) {
+                this.$store.dispatch('resetAuthStep'
+                ).then(() => {
+                    console.log('Success resetAuthStep');
+                }).catch(() => {
+                    console.log('Error resetAuthStep');
+                });
+            }
+
             if (this.isErrorLogin) {
                 this.$store.dispatch('isErrorLoginReset'
                 ).then(() => {
