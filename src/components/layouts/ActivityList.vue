@@ -5,10 +5,10 @@
             <Panel-heading :title="showDate(activity.timestamp)" v-if="checkShow(activityIndex) && isShowDate"/>
             <div class="activity-list">
                 <div class="status sent" v-if="typeTransaction(activity.walletAddress)">
-                    <span>Send</span>
+                    <span>{{ $t('pages.summary.activityList.status.sent') }}</span>
                 </div>
                 <div v-else class="status received">
-                    <span>Received</span>
+                    <span>{{ $t('pages.summary.activityList.status.recieved') }}</span>
                 </div>
                 <div class="details" :class="{ 'sent': typeTransaction(activity.walletAddress), 'received': !typeTransaction(activity.walletAddress) }">
                     <div class="info">
@@ -298,7 +298,7 @@
 
     .activity-list {
         & .status {
-            min-width: 100px;
+            min-width: 150px;
 
             & span {
                 color: #34343e;
@@ -306,10 +306,9 @@
             }
         }
         & .details {
-
             margin: 0;
             padding-right: 16px;
-            padding-left: 16px;
+            padding-left: 0;
 
             & .count {
                 background-color: transparent;
@@ -337,7 +336,7 @@
             }
 
             & .info {
-                min-width: 400px;
+                min-width: 380px;
                 word-break: break-all;
             }
 
@@ -454,8 +453,7 @@
             & .details {
                 & .info {
                     word-break: break-all;
-                    min-width: 200px;
-                    max-width: 300px;
+                    min-width: 220px;
                     padding-right: 30px;
                 }
                 & .purpose {
@@ -480,6 +478,7 @@
                 height: 40px;
             }
             & .details {
+                padding-left: 30px;
                 display: flex;
                 flex-direction: column;
                 position: relative;
