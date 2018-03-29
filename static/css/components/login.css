@@ -1,0 +1,70 @@
+.login-form {
+  padding: 16px;
+  height: auto;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+  flex-direction: column;
+  width: 426px;
+  margin: 0 auto; }
+  .login-form .control {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 18px;
+    padding-left: 0; }
+    .login-form .control:not(:last-child) {
+      margin-bottom: 20px; }
+    .login-form .control:first-child {
+      margin-top: 22px; }
+    .login-form .control label {
+      text-transform: uppercase;
+      margin: 0;
+      white-space: pre;
+      margin-left: 16px;
+      margin-right: 12px; }
+    .login-form .control input {
+      width: 100%;
+      font-size: 14px;
+      background: inherit;
+      border: none;
+      text-align: right;
+      outline: none;
+      margin-right: 16px;
+      position: relative;
+      z-index: 1;
+      opacity: 1; }
+    .login-form .control.noline {
+      border-bottom: none; }
+  .login-form .btn-control {
+    display: flex;
+    justify-content: space-between; }
+    .login-form .btn-control button {
+      width: 50%; }
+      .login-form .btn-control button:first-child {
+        margin-right: 8px; }
+      .login-form .btn-control button:last-child {
+        margin-left: 8px; }
+  .login-form .text {
+    font-family: MuseoSansCyrl700;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.29;
+    text-align: center;
+    margin: 18px 0 0 0; }
+    .login-form .text a {
+      font-weight: bold;
+      color: #0d1717;
+      border-bottom: 1px solid #000;
+      text-decoration: none;
+      padding-bottom: 1px; }
+
+@media (max-width: 490px) {
+  .login .container, .register .container {
+    margin: 0; }
+    .login .container .login-form, .register .container .login-form {
+      margin: 10px 5px;
+      width: calc(100% - 10px); } }

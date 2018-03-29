@@ -55,6 +55,7 @@
             .title-opt-span {
                 padding: 5px;
                 align-self: flex-start;
+                margin: 0 10px 0 10px;
 
                 .title {
                     padding: 5px;
@@ -153,7 +154,34 @@
     }
 }
 
+@media(max-width: 425px) {
+    .top {
+        & .transactions-buttons {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            & .buttons {
+                width: 175px;
+            }
+        }
+    }
+}
+
 @media (max-width: 375px) {
+    .top {
+        & .transactions-buttons {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+
+            & .buttons {
+                width: 100%;
+            }
+        }
+    }
+
     .bottom {
         .docs {
             flex-direction: column;
@@ -168,7 +196,7 @@
 
         .info {
             width: 100%;
-            justify-content: flex-end;
+            justify-content: center;
 
             .stats-col {
                 .result-opt-span {

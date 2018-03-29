@@ -9,6 +9,19 @@ body {
   justify-content: center;
   padding: 1em 0; }
 
+.m-t-center {
+  margin-top: 30vh; }
+
+.flex-block-transaction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .flex-block-transaction .absence-transactions {
+    font-size: 14px;
+    font-family: MuseoSansCyrl500;
+    color: #34343e; }
+
 .phrase {
   background-color: rgba(13, 23, 23, 0.04);
   border-radius: 2px;
@@ -20,6 +33,13 @@ body {
     font-size: 14px;
     font-weight: bold;
     color: #34343e; }
+
+.stats-balance {
+  font-size: 14px;
+  font-family: MuseoSansCyrl500;
+  color: #34343e;
+  display: flex;
+  justify-content: space-between; }
 
 .modal-warning {
   margin: 0 42px;
@@ -1500,7 +1520,8 @@ body {
 
 .main {
   display: flex;
-  padding-top: 64px; }
+  padding-top: 64px;
+  height: 100%; }
   .main .content {
     width: 100%;
     /*height: 100vh;*/
@@ -3097,7 +3118,8 @@ td, th {
         color: #34343e; }
       .bottom .info .stats-col .title-opt-span {
         padding: 5px;
-        align-self: flex-start; }
+        align-self: flex-start;
+        margin: 0 10px 0 10px; }
         .bottom .info .stats-col .title-opt-span .title {
           padding: 5px;
           margin: 0 10px 0 10px; }
@@ -3149,7 +3171,22 @@ td, th {
       .bottom .docs button {
         margin-right: 15px; } }
 
+@media (max-width: 425px) {
+  .top .transactions-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; }
+    .top .transactions-buttons .buttons {
+      width: 175px; } }
+
 @media (max-width: 375px) {
+  .top .transactions-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column; }
+    .top .transactions-buttons .buttons {
+      width: 100%; }
   .bottom .docs {
     flex-direction: column;
     margin-top: 10px;
@@ -3159,7 +3196,7 @@ td, th {
       width: 100%; }
   .bottom .info {
     width: 100%;
-    justify-content: flex-end; }
+    justify-content: center; }
     .bottom .info .stats-col .result-opt-span {
       margin-right: 0; } }
 

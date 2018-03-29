@@ -313,76 +313,9 @@
 
 <style lang="stylus" scoped>
     .wrap-spinner
-        display flex
-        justify-content center
-        align-items center
-        padding 1em 0
         margin-top 33vh
 
         img
             margin-top 0
 
-    .main
-        height 100%
-
-    .result-opt-span.sent
-        color #b10303
-
-    .stats-col
-        display flex
-        flex-direction column
-
-    .stats-balance
-        font-size 14px
-        font-family MuseoSansCyrl500
-        color #34343e
-        display flex
-        justify-content space-between
-
-        .result-opt-span
-            align-self flex-end
-
-        .title-opt-span
-            align-self flex-start
-
-    .result-opt-span, .count, .title-opt-span
-        margin 0 10px 0 10px
-        padding 5px
-
-    .absence-transactions
-        font-size 14px
-        font-family MuseoSansCyrl500
-        color #34343e
-
-    .empty-notif
-        background-color #f0f0f0
-        padding 5px
-        p
-            opacity 0.7
-            font-family MuseoSansCyrl500
-            font-size 16px
-            font-weight 500
-            line-height 1.25
-            text-align center
-            color #34343e
-
-    .flex-block-transaction
-        display flex
-        flex-direction column
-        justify-content center
-        align-items center
-
-    .m-t-center
-        margin-top 30vh
-
-    @media (max-width: 600px)
-        .stats-col
-            margin 0 auto
-
-    @media (max-width: 375px)
-        .stats-col
-            width 100%
-
-        .buttons
-            width 100%
 </style>

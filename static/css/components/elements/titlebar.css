@@ -1,0 +1,95 @@
+.isTitleBar .main {
+  padding-top: 86px; }
+
+.isTitleBar .navbar {
+  top: 22px; }
+
+.title-bar-win .title-bar {
+  height: 32px; }
+  .title-bar-win .title-bar .win-controls {
+    margin-top: 10px; }
+
+.title-bar-win .main {
+  padding-top: 96px; }
+
+.title-bar-win .navbar {
+  top: 32px; }
+
+.title-bar {
+  height: 22px;
+  background-color: #474b4b;
+  margin: 0px;
+  width: 100%;
+  position: fixed;
+  z-index: 1001;
+  -webkit-app-region: drag; }
+  .title-bar .controls {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-left: 8px;
+    width: 52px;
+    justify-content: space-between; }
+    .title-bar .controls.win-controls {
+      float: right;
+      margin-right: 16px;
+      width: 65px; }
+      .title-bar .controls.win-controls .button.close {
+        order: 3; }
+        .title-bar .controls.win-controls .button.close .icon {
+          width: 13px;
+          height: 13px;
+          object-fit: contain;
+          background-image: url("../../assets/img/win-close-ic.svg");
+          background-size: cover; }
+      .title-bar .controls.win-controls .button.hidden {
+        order: 1; }
+        .title-bar .controls.win-controls .button.hidden .icon {
+          width: 12px;
+          height: 2px;
+          object-fit: contain;
+          background-image: url("../../assets/img/win-minimize-ic.svg");
+          background-size: cover; }
+      .title-bar .controls.win-controls .button.resize {
+        order: 2; }
+        .title-bar .controls.win-controls .button.resize .icon {
+          width: 12px;
+          height: 12px;
+          object-fit: contain;
+          background-image: url("../../assets/img/win-expand-ic.svg");
+          background-size: cover; }
+    .title-bar .controls.osx-controls .button {
+      width: 12px;
+      height: 12px;
+      border-radius: 100%;
+      background-color: #d3d3d3;
+      border-image-source: linear-gradient(to bottom, #b1b0b1, #b0b0b0); }
+      .title-bar .controls.osx-controls .button.close {
+        background-color: #ff6059;
+        border-image-source: linear-gradient(to bottom, #e1453f, #e0443e); }
+      .title-bar .controls.osx-controls .button.hidden {
+        background-color: #ffbe2f;
+        border-image-source: linear-gradient(to bottom, #dfa023, #df9f22); }
+      .title-bar .controls.osx-controls .button.resize {
+        background-color: #2aca41;
+        border-image-source: linear-gradient(to bottom, #1bac2c, #1bac2c); }
+    .title-bar .controls.osx-controls:hover .close {
+      background-image: url("../../assets/img/close-hover.svg");
+      width: 12px;
+      height: 12px;
+      background-size: cover; }
+    .title-bar .controls.osx-controls:hover .hidden {
+      background-image: url("../../assets/img/minimize-hover.svg");
+      width: 12px;
+      height: 12px;
+      background-size: cover; }
+    .title-bar .controls.osx-controls:hover .resize {
+      background-image: url("../../assets/img/expand-hover.svg");
+      width: 12px;
+      height: 12px;
+      background-size: cover; }
+      .title-bar .controls.osx-controls:hover .resize.osx-fullscreen {
+        background-image: url("../../assets/img/expand-2-hover.svg");
+        width: 12px;
+        height: 12px;
+        background-size: cover; }
