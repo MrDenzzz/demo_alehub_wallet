@@ -837,6 +837,16 @@
   }
 }
 
+@media(max-width: 768px) {
+  .newwallet {
+    & .v--modal-box {
+      &.v--modal {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
 @media(max-width: 320px) {
   .two-auth {
     & .btn-default {
@@ -859,17 +869,21 @@
 
       & .body {
         & .modal-btn {
-          margin-bottom: 15px;
-          margin-top: 20px;
+          margin: 20px 20px 15px;
 
           & .btn-large {
             padding: 5px 10px;
-            font-size: 12px;
+            font-size: 14px;
+            height: 44px;
           }
         }
 
         & .modal-control {
           margin: 0 20px;
+
+          &.modal-control-noMargin {
+            margin: 0 20px;
+          }
         }
 
         & .modal-warning {
