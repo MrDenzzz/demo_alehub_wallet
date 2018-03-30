@@ -65,4 +65,4 @@ package-lock.json
 dist/
 
 # static/css/components
-static/css/components
+static/css/components/
