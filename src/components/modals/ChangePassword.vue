@@ -1,7 +1,7 @@
 <template>
     <modal name="changepassword" height="auto" class="modal-xs">
         <div class="heading">
-            <p class="title">Change password</p>
+            <p class="title">{{ $t('modals.changePassword.title') }}</p>
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
@@ -9,22 +9,22 @@
             <form @submit.prevent="changePassword()">
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">2fa key</label>
+                        <label class="title">{{ $t('modals.changePassword.fields._2fa.label') }}</label>
                         <input
                                 type="number"
                                 class="input"
-                                placeholder="Enter 2fa code"
+                                :placeholder="$t('modals.changePassword.fields._2fa.placeholder')"
                                 v-model="token"
                                 required>
                     </div>
                 </div>
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">Old password</label>
+                        <label class="title">{{ $t('modals.changePassword.fields.oldPass.label') }}</label>
                         <input
                                 type="password"
                                 class="input"
-                                placeholder="Old password"
+                                :placeholder="$t('modals.changePassword.fields.oldPass.placeholder')"
                                 v-model="oldPass"
                                 required>
                     </div>
@@ -32,11 +32,11 @@
 
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">New password</label>
+                        <label class="title">{{ $t('modals.changePassword.fields.newPass.label') }}</label>
                         <input
                                 type="password"
                                 class="input"
-                                placeholder="New password"
+                                :placeholder="$t('modals.changePassword.fields.newPass.placeholder')"
                                 v-model="newPass"
                                 required>
                     </div>
@@ -44,11 +44,11 @@
 
                 <div class="modal-control no-bottom">
                     <div class="modal-input">
-                        <label class="title">Repeat password</label>
+                        <label class="title">{{ $t('modals.changePassword.fields.confirmPass.label') }}</label>
                         <input
                                 type="password"
                                 class="input"
-                                placeholder="Confirm new password"
+                                :placeholder="$t('modals.changePassword.fields.confirmPass.placeholder')"
                                 v-model="confirmPass"
                                 required>
                     </div>
@@ -60,7 +60,7 @@
 
                 <div class="modal-btn text-center">
                     <button class="btn btn-yellow btn-large" type="submit">
-                        Change
+                        {{ $t('modals.changePassword.buttons.change') }}
                     </button>
                 </div>
             </form>

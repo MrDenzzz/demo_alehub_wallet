@@ -363,6 +363,30 @@ const messages = {
                         placeholder: 'Enter your 2fa key'
                     }
                 }
+            },
+            changePassword: {
+                title: 'Изменить пароль',
+                fields: {
+                    _2fa: {
+                        label: '2fa key',
+                        placeholder: 'Enter 2fa key'
+                    },
+                    oldPass: {
+                        label: 'Old password',
+                        placeholder: 'Old password'
+                    },
+                    newPass: {
+                        label: 'New password',
+                        placeholder: 'New password'
+                    },
+                    confirmPass: {
+                        label: 'Repeat password',
+                        placeholder: 'Confirm new password'
+                    }
+                },
+                buttons: {
+                    change: 'Change'
+                }
             }
         },
         navbar: {
@@ -736,6 +760,30 @@ const messages = {
                         label: '2fa ключ',
                         placeholder: 'Введите 2fa ключ'
                     }
+                }
+            },
+            changePassword: {
+                title: 'Изменить пароль',
+                fields: {
+                    _2fa: {
+                        label: '2fa ключ',
+                        placeholder: 'Введите 2fa ключ'
+                    },
+                    oldPass: {
+                        label: 'Старый пароль',
+                        placeholder: 'Старый пароль'
+                    },
+                    newPass: {
+                        label: 'Новый пароль',
+                        placeholder: 'Новый пароль'
+                    },
+                    confirmPass: {
+                        label: 'Повторите пароль',
+                        placeholder: 'Подтвердите новый пароль'
+                    }
+                },
+                buttons: {
+                    change: 'Изменить'
                 }
             }
         },
