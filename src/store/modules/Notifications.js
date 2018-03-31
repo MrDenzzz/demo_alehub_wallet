@@ -55,7 +55,7 @@ const mutations = {
 };
 
 const getters = {
-    notifications: state => state.notifications
+    notifications: state => state.notifications.reverse()
 };
 
 export default {

@@ -45,7 +45,7 @@
                         type="button"
                         class="buttons btn-default"
                         v-clipboard:copy="copySecret()">
-                    <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
+                    <img class="icon-copy" :src="getIcon('tmp_copy_icon')" alt="">
                     {{ $t('modals.changeTwoAuth.buttons.copy') }}
                 </button>
                 <button
@@ -96,6 +96,9 @@
                 if (this.windowWidth <= 425)
                     return 220;
                 return 300;
+            },
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
             }
         },
         methods: {
@@ -152,6 +155,13 @@
                 }).catch(() => {
                     console.log('Error enable two auth');
                 });
+            },
+            getIcon(name) {
+                if (this.selectedTheme === "dark")
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === "white")
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else return require(`../../assets/img/${name}.svg`);
             }
         },
         created() {

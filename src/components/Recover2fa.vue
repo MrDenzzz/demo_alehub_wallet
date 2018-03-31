@@ -111,7 +111,7 @@ export default {
 
             this.isLoader = true;
 
-            this.$http.post(`http://localhost:4000/users/restore-secret`, {
+            this.$http.post(`http://192.168.1.42:4000/users/restore-secret`, {
                 secret: this.secretKey
             }, {
                 headers: {

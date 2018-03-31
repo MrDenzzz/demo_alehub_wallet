@@ -140,7 +140,7 @@
                         class="buttons button-copy btn-default"
                         v-clipboard:copy="copyMnemonic()"
                         @click="successCopyMnemonic">
-                    <img class="icon-copy" src="../../assets/img/tmp_copy_icon.png" alt="">
+                    <img class="icon-copy" :src="getIcon('tmp_copy_icon')" alt="">
                     {{ $t('modals.newWallet.recovery.mnemonic.btnCopy') }}
                 </button>
                 <button class="btn btn-yellow btn-large btn-bottom" @click="changeRecoveryStep('next')">
@@ -306,7 +306,10 @@
             },
             getCurrentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
-            }
+            },
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
+            },
         },
         methods: {
             ...mapMutations({
@@ -377,6 +380,7 @@
                 }
             },
             changeStepCreate(step) {
+                if (this.newWalletStep === 1 && this.walletName === '') return false
                 if (step === 'next') this.newWalletStep = this.newWalletStep + 1;
                 else this.newWalletStep = this.newWalletStep - 1;
                 if (this.newWalletStep === 2) {
@@ -586,6 +590,13 @@
                     duration: 5000,
                     type: 'success',
                 });
+            },
+            getIcon(name) {
+                if (this.selectedTheme === "dark")
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === "white")
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else return require(`../../assets/img/${name}.svg`);
             }
         },
         created() {

@@ -31,7 +31,9 @@
             }
         },
         computed: {
-
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
+            }
         },
         methods: {
             openModal: function (name) {

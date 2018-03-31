@@ -5,7 +5,7 @@ const state = {
 const mutations = {
     SET_THEME(state, theme) {
         state.theme = theme;
-        localStorage.setItem('theme', theme)
+        localStorage.setItem('theme', theme);
     }
 }
 
