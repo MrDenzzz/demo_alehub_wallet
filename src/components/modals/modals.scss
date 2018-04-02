@@ -854,6 +854,18 @@
         & button {
           width: 100%;
         }
+
+        & .modal-footer {
+          margin-right: 20px;
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+  .two-auth {
+    & .btn-default {
+      & .icon-copy {
+        margin-top: 10px;
       }
     }
   }
