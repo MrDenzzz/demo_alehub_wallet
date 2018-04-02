@@ -28,7 +28,7 @@ const state = {
 const actions = {
     authRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
-            commit('AUTH_REQUEST');
+            commit('REQUEST_AUTH');
             let host = 'http://192.168.1.39:4000/users/login';
             axios({
                 url: host,
@@ -36,16 +36,16 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 if (resp.data.statusLogin === 200) {
-                    commit('AUTH_CHANGE_STEP');
+                    commit('SUCCESS_AUTH_CHANGE_STEP');
                 } else {
                     const token = resp.data.user_token;
                     localStorage.setItem(sha256('user-token'), token);
                     axios.defaults.headers.common['Authorization'] = token;
-                    commit('AUTH_SUCCESS');
+                    commit('SUCCESS_AUTH');
                 }
                 resolve(resp);
             }).catch(err => {
-                commit('AUTH_ERROR', err);
+                commit('ERROR_AUTH', err);
                 localStorage.removeItem(sha256('user-token'));
                 delete axios.defaults.headers.common['Login'];
                 reject(err)
@@ -103,7 +103,7 @@ const actions = {
     },
     userRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
-            commit('USER_REQUEST');
+            commit('REQUEST_USER');
             let host = 'http://192.168.1.39:4000/users/get-user-data';
             axios({
                 url: host,
@@ -114,23 +114,23 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                commit('USER_SUCCESS', resp.data);
-                commit('AUTH_SUCCESS');
+                commit('SUCCESS_USER', resp.data);
+                commit('SUCCESS_AUTH');
                 resolve(resp);
             }).catch(err => {
                 if(err.response.data.message === 'User is not found') {
                     localStorage.removeItem(sha256('user-token'));
                     router.push('/login');
                 }
-                commit('USER_ERROR', err);
-                commit('AUTH_ERROR', err);
+                commit('ERROR_USER', err);
+                commit('ERROR_AUTH', err);
                 reject(err);
             });
         });
     },
     twoAuthRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
-            commit('TWOAUTH_REQUEST');
+            commit('REQUEST_TWOAUTH');
             let host = 'http://192.168.1.39:4000/users/generate-qr';
             axios({
                 url: host,
@@ -144,10 +144,10 @@ const actions = {
                     qrPath: resp.data.qr_path,
                     secret: resp.data.secret
                 };
-                commit('TWOAUTH_SUCCESS', twoauth);
+                commit('SUCCESS_TWOAUTH', twoauth);
                 resolve(resp);
             }).catch(err => {
-                commit('TWOAUTH_ERROR', err);
+                commit('ERROR_TWOAUTH', err);
                 reject(err);
             });
         });
@@ -160,7 +160,7 @@ const actions = {
     },
     enableTwoAuth: ({commit, dispatch}, authData) => {
         return new Promise((resolve, reject) => {
-            commit('ENABLE_TWOAUTH_REQUEST');
+            commit('REQUEST_ENABLE_TWOAUTH');
             let host = 'http://192.168.1.39:4000/users/enable-two-auth';
             axios({
                 url: host,
@@ -172,17 +172,17 @@ const actions = {
                 },
                 method: 'POST'
             }).then(resp => {
-                commit('ENABLE_TWOAUTH_SUCCESS');
+                commit('SUCCESS_ENABLE_TWOAUTH');
                 resolve(resp);
             }).catch(err => {
-                commit('ENABLE_TWOAUTH_ERROR', err);
+                commit('ERROR_ENABLE_TWOAUTH', err);
                 reject(err);
             });
         });
     },
     disableTwoAuth: ({commit, dispatch}, confirmDisableData) => {
         return new Promise((resolve, reject) => {
-            commit('DISABLE_TWOAUTH_REQUEST');
+            commit('REQUEST_DISABLE_TWOAUTH');
             let host = 'http://192.168.1.39:4000/users/disable-two-auth';
             axios({
                 url: host,
@@ -195,18 +195,17 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 console.log(resp);
-                commit('DISABLE_TWOAUTH_SUCCESS');
+                commit('SUCCESS_DISABLE_TWOAUTH');
                 resolve(resp);
             }).catch(err => {
                 console.log(err);
-                commit('DISABLE_TWOAUTH_ERROR', err);
+                commit('ERROR_DISABLE_TWOAUTH', err);
                 reject(err);
             });
         });
     },
     changeUserName: ({commit, dispatch}, name) => {
         return new Promise((resolve, reject) => {
-            // commit('DISABLE_TWOAUTH_REQUEST');
             let host = 'http://192.168.1.39:4000/users/change-name';
             axios({
                 url: host,
@@ -218,13 +217,11 @@ const actions = {
                 },
                 method: 'POST'
             }).then(resp => {
-                // console.log(resp);
-                let name = resp;
-                commit('CHANGE_USERNAME_SUCCESS', name);
+                commit('SUCCESS_CHANGE_USERNAME', resp);
                 resolve(resp);
             }).catch(err => {
                 console.log(err);
-                commit('CHANGE_USERNAME_ERROR', err);
+                commit('ERROR_CHANGE_USERNAME', err);
                 reject(err);
             });
         });
@@ -286,23 +283,23 @@ const actions = {
 };
 
 const mutations = {
-    AUTH_CHANGE_STEP: (state) => {
-        state.isErrorLogin = false;
-        state.isLoader = false;
-        state.authStep = 1;
-    },
-    AUTH_REQUEST: (state) => {
+    REQUEST_AUTH: (state) => {
         state.isErrorLogin = false;
         state.isLoader = true;
         state.status = 'loading';
     },
-    AUTH_SUCCESS: (state, token) => {
+    SUCCESS_AUTH_CHANGE_STEP: (state) => {
+        state.isErrorLogin = false;
+        state.isLoader = false;
+        state.authStep = 1;
+    },
+    SUCCESS_AUTH: (state, token) => {
         state.isErrorLogin = false;
         state.isLoader = false;
         state.status = 'success';
         state.token = token;
     },
-    AUTH_ERROR: (state) => {
+    ERROR_AUTH: (state) => {
         state.isErrorLogin = true;
         state.isLoader = false;
         state.status = 'error';
@@ -322,10 +319,10 @@ const mutations = {
     ERROR_LOGOUT: (state) => {
         state.logoutStatus = 'error';
     },
-    USER_REQUEST: (state) => {
+    REQUEST_USER: (state) => {
         state.userStatus = 'loading';
     },
-    USER_SUCCESS: (state, user) => {
+    SUCCESS_USER: (state, user) => {
         state.name = user.name;
         state.email = user.email;
         state.twoAuth = user.isTwoAuth;
@@ -333,48 +330,47 @@ const mutations = {
         user.walletsList.length === 0 ? state.haveWallets = false : state.haveWallets = true;
         state.userStatus = 'success';
     },
-    USER_ERROR: (state) => {
+    ERROR_USER: (state) => {
         state.userStatus = 'error';
     },
-    TWOAUTH_REQUEST: (state) => {
+    REQUEST_TWOAUTH: (state) => {
         state.twoauthStatus = 'loading';
     },
-    TWOAUTH_SUCCESS: (state, twoauth) => {
+    SUCCESS_TWOAUTH: (state, twoauth) => {
         state.twoAuthStatus = 'success';
         state.twoAuthGeneratedCode = twoauth.qrPath;
         state.twoAuthSecret = twoauth.secret;
     },
-    TWOAUTH_ERROR: (state) => {
+    ERROR_TWOAUTH: (state) => {
         state.twoAuthStatus = 'error';
     },
-    ENABLE_TWOAUTH_REQUEST: (state) => {
+    REQUEST_ENABLE_TWOAUTH: (state) => {
         state.enableTwoAuthStatus = 'loading';
     },
-    ENABLE_TWOAUTH_SUCCESS: (state) => {
+    SUCCESS_ENABLE_TWOAUTH: (state) => {
         state.enableTwoAuthStatus = 'success';
         state.twoAuth = true;
     },
-    ENABLE_TWOAUTH_ERROR: (state) => {
+    ERROR_ENABLE_TWOAUTH: (state) => {
         state.enableTwoAuthStatus = 'error'
     },
-    DISABLE_TWOAUTH_REQUEST: (state) => {
+    REQUEST_DISABLE_TWOAUTH: (state) => {
         state.disableTwoAuthStatus = 'loading';
     },
-    DISABLE_TWOAUTH_SUCCESS: (state) => {
+    SUCCESS_DISABLE_TWOAUTH: (state) => {
         state.disableTwoAuthStatus = 'success';
         state.twoAuth = false;
     },
-    DISABLE_TWOAUTH_ERROR: (state) => {
+    ERROR_DISABLE_TWOAUTH: (state) => {
         state.disableTwoAuthStatus = 'error';
     },
-    CHANGE_USERNAME_SUCCESS: (state, name) => {
+    SUCCESS_CHANGE_USERNAME: (state, name) => {
         state.name = name;
         state.changeUserNameStatus = 'success';
     },
-    CHANGE_USERNAME_ERROR: (state, err) => {
+    ERROR_CHANGE_USERNAME: (state, err) => {
         state.changeUserNameStatus = 'error';
     },
-
     REQUEST_CHANGE_EMAIL: (state) => {
         state.changeEmailStatus = 'loading';
     },
@@ -385,7 +381,6 @@ const mutations = {
     ERROR_CHANGE_EMAIL: (state) => {
         state.changeEmailStatus = 'error';
     },
-
     REQUEST_CHANGE_PASSWORD: (state) => {
         state.changePasswordStatus = 'loading';
     },
