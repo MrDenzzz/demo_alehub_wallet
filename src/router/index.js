@@ -98,14 +98,12 @@ const router = new Router({
         {
             path: '/recover',
             name: 'Recover',
-            component: Recover,
-            beforeEnter: ifNotAuthenticated
+            component: Recover
         },
         {
             path: '/recover-twofactor',
             name: 'Recover2fa',
-            component: Recover2fa,
-            beforeEnter: ifNotAuthenticated
+            component: Recover2fa
         },
         {
             path: '/wallet/settings',
