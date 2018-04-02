@@ -1366,6 +1366,7 @@ body {
     top: calc(50% - 60px);
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
+    z-index: -1;
     &:after {
       content: " ";
       font-size: 24pt;

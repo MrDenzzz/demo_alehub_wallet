@@ -840,7 +840,8 @@ body {
     left: calc(100% - 20px);
     top: calc(50% - 60px);
     border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%; }
+    border-bottom-right-radius: 50%;
+    z-index: -1; }
     .drag:after {
       content: " ";
       font-size: 24pt;
