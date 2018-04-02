@@ -847,15 +847,19 @@
   }
 }
 
-@media(max-width: 320px) {
-  .two-auth {
-    & .btn-default {
-      & .icon-copy {
-        margin-top: 10px;
+@media(max-width: 425px) {
+  .v--modal-overlay {
+    & .v--modal-box {
+      & .body {
+        & button {
+          width: 100%;
+        }
       }
     }
   }
+}
 
+@media(max-width: 320px) {
   .v--modal-overlay {
     & .v--modal-box {
       & .heading {
@@ -874,7 +878,6 @@
           & .btn-large {
             padding: 5px 10px;
             font-size: 14px;
-            height: 44px;
           }
         }
 

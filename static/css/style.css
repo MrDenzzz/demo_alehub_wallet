@@ -943,6 +943,8 @@ body {
 @media (max-width: 425px) {
   .phrase {
     padding: 12px; }
+  .stats-col {
+    width: 100%; }
   .control {
     width: 100%; } }
 
