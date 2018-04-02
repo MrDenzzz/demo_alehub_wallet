@@ -642,7 +642,7 @@ body {
           width: calc(360px - 70px) !important; } }
       @media (max-width: 425px) {
         .white .menu .wallet-list.wrap-between {
-          width: calc(100% - 100vh) !important; } }
+          width: calc(100% - 70px) !important; } }
     .white .menu .wallet-list.active {
       margin: 5px 35px;
       width: calc(100% - 70px);
@@ -1284,7 +1284,7 @@ body {
   width: 100%;
   max-width: 360px;
   right: 0;
-  bottom: 100%;
+  bottom: 200%;
   transition: .3s;
   display: none;
   padding: 15px;
