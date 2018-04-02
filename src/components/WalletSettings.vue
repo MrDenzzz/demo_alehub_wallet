@@ -103,12 +103,6 @@
             }
         },
         methods: {
-            ...mapMutations({
-                changeWallet: 'CHANGE_SELECTED_WALLET',
-                updateWalletName: 'CHANGE_WALLET_NAME',
-                deleteWallet: 'DELETE_WALLET',
-
-            }),
             reqChangeWalletName: function (e) {
                 e.target.blur();
 
@@ -126,8 +120,6 @@
                         type: 'error',
                     });
                 });
-
-                this.updateWalletName(this.newWalletName)
             },
             deleteWallet: function () {
                 this.$modal.show('deletewallet');
@@ -149,14 +141,8 @@
             },
 
         },
-        created() {
-            // console.log(this.currentWallet);
-        },
         mounted() {
             this.initWalletName();
-
-            // console.log(this.currentWallet.name, 'wallet name');
-
 
             //разобраться со вьюксом что происходит
             this.$on('selectWallet', function (index) {

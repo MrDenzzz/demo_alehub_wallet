@@ -228,7 +228,6 @@
 <script>
     import Spinner from '../layouts/Spinner';
 
-    import {mapMutations} from "vuex";
     import {mapGetters} from 'vuex';
     import mnGen from 'mngen';
     import sha256 from 'sha256';
@@ -312,10 +311,6 @@
             },
         },
         methods: {
-            ...mapMutations({
-                walletPassword: "NEW_WALLET_PASSWORD",
-                createNewNewWallet: "CREATE_NEW_NEW_WALLET"
-            }),
             getRandomSeed: function () {
                 this.dataProcessing = true;
 
@@ -412,9 +407,6 @@
                     this.focusInput('newWalletName');
                 if (this.walletType === 'redemption')
                     this.focusInput('redemptionWalletName');
-            },
-            changePassword: function (e) {
-                this.walletPassword(e.target.value);
             },
             closeModal: function () {
                 this.$modal.hide('newwallet');
@@ -558,8 +550,6 @@
                         'Accept': 'application/json'
                     }
                 }).then(response => {
-
-                    this.createNewNewWallet(response.body.walletInfo);
 
                     if (localStorage.getItem('wallets')) {
                         this.saveDataToFieldLocalStorage(response.body.walletInfo.address);

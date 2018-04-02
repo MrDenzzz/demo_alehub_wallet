@@ -54,7 +54,7 @@ const actions = {
     },
     authTwoFaRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
-            commit('AUTH_REQUEST');
+            commit('REQUEST_AUTH');
             let host = 'http://192.168.1.39:4000/users/login/2fa';
             axios({
                 url: host,
@@ -65,10 +65,10 @@ const actions = {
                 const token = resp.data.user_token;
                 localStorage.setItem(sha256('user-token'), token);
                 axios.defaults.headers.common['Authorization'] = token;
-                commit('AUTH_SUCCESS');
+                commit('SUCCESS_AUTH');
                 resolve(resp);
             }).catch(err => {
-                commit('AUTH_ERROR', err);
+                commit('ERROR_AUTH', err);
                 localStorage.removeItem(sha256('user-token'));
                 delete axios.defaults.headers.common['Login'];
                 reject(err)

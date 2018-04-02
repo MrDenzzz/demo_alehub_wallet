@@ -58,7 +58,6 @@
     import sha256 from 'sha256';
     import {Draggable} from '@shopify/draggable';
 
-    import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
 
     export default {
@@ -118,10 +117,6 @@
             }
         },
         methods: {
-            ...mapMutations({
-                changeNewWallet: 'CHANGE_NEW_WALLET',
-                addNewTransactions: 'ADD_NEW_TRANSACTION'
-            }),
             checkActive: function (address) {
                 if (address === this.getCurrentWallet.address)
                     return true;

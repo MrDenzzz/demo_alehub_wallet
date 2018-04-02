@@ -117,18 +117,18 @@
             }
         },
         watch: {
-            'changeWalletResult': function (val) {
-                if (val) {
-                    this.setChunkTransactions(this.chunkActivities);
-                    this.$parent.$emit('resetWalletResult', false);
-                }
-            },
-            'newTransaction': function (val) {
-                if (val) {
-                    this.setChunkTransactions(this.chunkActivities);
-                    this.$parent.$emit('resetNewTransactions', false);
-                }
-            }
+            // 'changeWalletResult': function (val) {
+            //     if (val) {
+            //         this.setChunkTransactions(this.chunkActivities);
+            //         this.$parent.$emit('resetWalletResult', false);
+            //     }
+            // },
+            // 'newTransaction': function (val) {
+            //     if (val) {
+            //         this.setChunkTransactions(this.chunkActivities);
+            //         this.$parent.$emit('resetNewTransactions', false);
+            //     }
+            // }
         },
         computed: {
             currentWallet: function () {

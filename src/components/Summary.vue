@@ -177,11 +177,6 @@
         },
         methods: {
             ...mapMutations({
-                changeWallet: "CHANGE_SELECTED_WALLET",
-                sendMoneyToAdress: "SEND_MONEY_TO_ADDRESS",
-                changeNewWallet: 'CHANGE_NEW_WALLET',
-                setNotificationForSend: 'SET_NOTIFICATION_FOR_SEND',
-                setNotificationForSendToProfile: 'SET_NOTIFICATION_FOR_SEND_TO_PROFILE',
                 setDefaultChart: 'SET_DEFAULT_CHARTS',
                 setActivePeriod: 'SET_ACTIVE_PERIOD',
 
@@ -270,11 +265,6 @@
 
             });
 
-            this.$on('resetWalletResult', val => {
-                if (!val) {
-                    this.changeWalletResult = false;
-                }
-            });
 
             this.$on('resetNewTransactions', val => {
                 if (!val) {
