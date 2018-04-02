@@ -30,7 +30,7 @@ const actions = {
     transactionsRequest: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('TRANSACTIONS_REQUEST');
-            let host = `http://192.168.1.42:4000/transactions/${address}`;
+            let host = `http://192.168.1.39:4000/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -54,7 +54,7 @@ const actions = {
     transactionsRequestLazy: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LAZY_TRANSACTIONS');
-            let host = `http://192.168.1.42:4000/transactions/${address}`;
+            let host = `http://192.168.1.39:4000/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -78,7 +78,7 @@ const actions = {
     transactionsRequestPing: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_PING_TRANSACTIONS');
-            let host = `http://192.168.1.42:4000/transactions/${address}`;
+            let host = `http://192.168.1.39:4000/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -99,7 +99,7 @@ const actions = {
     transactionsRequestMoment: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_MOMENT_TRANSACTIONS');
-            let host = `http://192.168.1.42:4000/transactions/${address}`;
+            let host = `http://192.168.1.39:4000/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -136,7 +136,7 @@ const actions = {
 
             commit('REQUEST_SEND_COINS');
 
-            let host = `http://192.168.1.42:4000/transactions/send`;
+            let host = `http://192.168.1.39:4000/transactions/send`;
             axios({
                 url: host,
                 data: walletDetails,

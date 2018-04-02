@@ -12,7 +12,7 @@ const actions = {
 
             commit('REQUEST_GET_NOTIFICATIONS');
 
-            let host = `http://192.168.1.42:4000/notifications`;
+            let host = `http://192.168.1.39:4000/notifications`;
             axios({
                 url: host,
                 headers: {

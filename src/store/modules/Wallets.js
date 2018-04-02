@@ -29,7 +29,7 @@ const actions = {
     walletsRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('WALLETS_REQUEST');
-            let host = 'http://192.168.1.42:4000/users/user-wallets';
+            let host = 'http://192.168.1.39:4000/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -56,7 +56,7 @@ const actions = {
     walletsRequestLazy: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LAZY_WALLETS');
-            let host = 'http://192.168.1.42:4000/users/user-wallets';
+            let host = 'http://192.168.1.39:4000/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -78,7 +78,7 @@ const actions = {
     walletsRequestPing: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_PING_WALLETS');
-            let host = 'http://192.168.1.42:4000/users/user-wallets';
+            let host = 'http://192.168.1.39:4000/users/user-wallets';
             axios({
                 url: host,
                 headers: {
@@ -106,7 +106,7 @@ const actions = {
     newWallet: ({commit, dispatch}, wallet) => {
         return new Promise((resolve, reject) => {
             // commit('AUTH_REQUEST');
-            let host = 'http://192.168.1.42:4000/wallet/new';
+            let host = 'http://192.168.1.39:4000/wallet/new';
             axios({
                 url: host,
                 headers: {
@@ -135,7 +135,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_WALLET_NAME');
 
-            let host = 'http://192.168.1.42:4000/wallet/rename';
+            let host = 'http://192.168.1.39:4000/wallet/rename';
             axios({
                 url: host,
                 headers: {
@@ -158,7 +158,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('REQUEST_REMOVE_WALLET');
 
-            let host = `http://192.168.1.42:4000/wallet/${address.address}`;
+            let host = `http://192.168.1.39:4000/wallet/${address.address}`;
             axios({
                 url: host,
                 headers: {
@@ -194,7 +194,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('REQUEST_GET_RANDOM_SEED');
 
-            let host = `http://192.168.1.42:4000/wallet/seed`;
+            let host = `http://192.168.1.39:4000/wallet/seed`;
             axios({
                 url: host,
                 headers: {

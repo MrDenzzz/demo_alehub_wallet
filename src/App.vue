@@ -42,7 +42,6 @@
                 isLoader: false,
                 token: localStorage.getItem(sha256('user-token')),
                 readyToPing: false,
-
                 setIntervalId: 0
             }
         },
