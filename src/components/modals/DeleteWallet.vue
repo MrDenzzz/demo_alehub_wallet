@@ -17,17 +17,17 @@
                     {{ $t('modals.deleteWallet.confirm.titleStart') }} <b>{{ currentWallet.name }}</b>
                     {{ $t('modals.deleteWallet.confirm.titleEnd') }}
                 </p>
-                <div class="checkbox-contol">
+
+                <label class="control control-checkbox">
+                    <span> {{ $t('modals.deleteWallet.confirm.subtitle') }}</span>
                     <input
                             id="checkbox-access"
+                            class="type_project_arr"
                             type="checkbox"
                             :checked="consentRmWallet"
                             @change="changeStatusConsentRmWallet"/>
-
-                    <span id="label-checkbox" @click="makeFocusCheckbox">
-                        {{ $t('modals.deleteWallet.confirm.subtitle') }}
-                    </span>
-                </div>
+                    <div class="control-indicator"></div>
+                </label>
             </div>
 
             <div class="modal-control nobl" id="modal-wallet-name" @click="makeWalletNameFocus"
@@ -152,9 +152,7 @@
                         this.$store.dispatch('removeTransactions'
                         ).then(() => {
 
-                            // localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
-
-                            this.$store.dispatch('transactionsRequestMoment',
+                            this.$store.dispatch('transactionsRequestLazy',
                                 this.currentWalletAddress
                             ).then(() => {
 

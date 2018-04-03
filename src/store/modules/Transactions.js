@@ -11,7 +11,6 @@ const state = {
     transactionStatus: 'not found',
     transactionsLazyStatus: '',
     transactionsPingStatus: '',
-    transactionsMomentStatus: '',
     transactionSendStatus: '',
     initiateFilterDateStatus: '',
 
@@ -64,10 +63,10 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                // console.log(resp.data, 'get model transactions request lazy');
-                console.log('data');
                 commit('SUCCESS_LAZY_TRANSACTIONS', resp.data);
-                // commit('SUCCESS_INITIATE_FILTER_DATE');
+                if (state.transactions.length !== 0) {
+                    commit('SUCCESS_INITIATE_FILTER_DATE');
+                }
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_LAZY_TRANSACTIONS', err);
@@ -92,28 +91,6 @@ const actions = {
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_PING_TRANSACTIONS', err);
-                reject(err)
-            });
-        })
-    },
-    transactionsRequestMoment: ({commit, dispatch}, address) => {
-        return new Promise((resolve, reject) => {
-            commit('REQUEST_MOMENT_TRANSACTIONS');
-            let host = `http://192.168.1.47:4000/transactions/${address}`;
-            axios({
-                url: host,
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json',
-                    'Authorization': axios.defaults.headers.common['Authorization']
-                },
-                method: 'GET'
-            }).then(resp => {
-                commit('SUCCESS_MOMENT_TRANSACTIONS', resp.data);
-                commit('SUCCESS_INITIATE_FILTER_DATE');
-                resolve(resp);
-            }).catch(err => {
-                commit('ERROR_MOMENT_TRANSACTIONS', err);
                 reject(err)
             });
         })
@@ -239,16 +216,6 @@ const mutations = {
     SUCCESS_RESET_TRANSACTIONS_UPDATED: (state) => {
         state.transactionsUpdated = [];
     },
-    REQUEST_MOMENT_TRANSACTIONS: (state) => {
-        state.transactionsMomentStatus = 'loading';
-    },
-    SUCCESS_MOMENT_TRANSACTIONS: (state, transactions) => {
-        state.transactions = transactions;
-        state.transactionsMomentStatus = 'success';
-    },
-    ERROR_MOMENT_TRANSACTIONS: (state) => {
-        state.transactionsMomentStatus = 'error';
-    },
     SUCCESS_INITIATE_FILTER_DATE: (state) => {
         // state.dateFrom = new Date(state.transactions[0].timestamp);
         // for (let i = 0; i < state.transactions.length; i++) {
@@ -295,7 +262,6 @@ const getters = {
     // dateTransactions: state => state.dateTransactions,
     transactionStatus: state => state.transactionStatus,
     transactionsLazyStatus: state => state.transactionsLazyStatus,
-    transactionsMomentStatus: state => state.transactionsMomentStatus,
     initiateFilterDateStatus: state => state.initiateFilterDateStatus,
     dateFrom: state => state.dateFrom,
     dateTo: state => state.dateTo,

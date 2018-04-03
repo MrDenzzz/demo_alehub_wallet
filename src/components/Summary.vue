@@ -20,8 +20,7 @@
                                     <!--заплатка. переделать-->
                                     <send-request
                                             v-if="this.transactions.length === 0 && (transactionStatus === 'error' ||
-                                             transactionsLazyStatus === 'success' || !currentWalletHaveTransactions ||
-                                             transactionsMomentStatus === 'success')"/>
+                                             transactionsLazyStatus === 'success' || !currentWalletHaveTransactions)"/>
                                 </div>
                             </div>
                         </div>
@@ -29,20 +28,19 @@
                     <div class="row">
                         <div class="col-12">
                             <!--заплатка. переделать-->
-                            <div v-if="(transactionsLazyStatus !== 'success' && transactionsMomentStatus !== 'success') && (this.transactions.length !== 0 ||
-                            transactionsLazyStatus === 'success' || transactionsMomentStatus === 'success')"
+                            <div v-if="checkLoadingSpinner"
                                  class="wrap-spinner">
                                 <spinner/>
                             </div>
 
                             <transactions-tool-panel
-                                    v-if="this.transactions.length !== 0 && (transactionsLazyStatus === 'success' || transactionsMomentStatus === 'success')"
+                                    v-if="this.transactions.length !== 0 && transactionsLazyStatus === 'success'"
                                     :current-transactions="getActivity"
                                     :reset-search="resetSearch"
                             />
 
                             <activity-list
-                                    v-if="getActivity.length !== 0 && (transactionsLazyStatus === 'success' || transactionsMomentStatus === 'success')"
+                                    v-if="getActivity.length !== 0 && transactionsLazyStatus === 'success'"
                                     :activities="getActivity"
                                     :is-show-date="true"
                                     :change-wallet-result="changeWalletResult"
@@ -55,8 +53,7 @@
                             <div class="flex-block-transaction"
                                  :class="{'m-t-center': transactions.length === 0}"
                                  v-if="getActivity.length === 0 && (transactionStatus === 'error' ||
-                                 transactionsLazyStatus === 'success' || !currentWalletHaveTransactions ||
-                                  transactionsMomentStatus === 'success')">
+                                 transactionsLazyStatus === 'success' || !currentWalletHaveTransactions)">
 
                                 <p class="absence-transactions">
                                     {{ $t('pages.summary.notFound') }}
@@ -147,15 +144,20 @@
                 'transactionStatus',
                 'transactionsLazyStatus',
                 'currentWalletHaveTransactions',
-                // 'userHaveTransactions',
                 'dateFrom',
                 'dateTo',
                 'searchText',
-                'transactionsMomentStatus'
             ]),
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
+            },
+            checkLoadingSpinner: function () {
+                if (this.transactionsLazyStatus !== 'success' && (this.transactions.length !== 0 ||
+                        this.transactionsLazyStatus === 'success'))
+                    return true;
+
+                return false;
             },
 
             currentDateTransactions: function () {
