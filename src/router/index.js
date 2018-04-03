@@ -32,7 +32,20 @@ const ifNotAuthenticated = (to, from, next) => {
         next();
         return;
     }
-    next('/');
+    next(from.fullPath);
+};
+
+const ifNotFirstStepAuthenticated = (to, from, next) => {
+    let token = localStorage.getItem(sha256('user-token'));
+    if (from.name !== 'Login' && (token === null || token === 'undefined' || token === undefined)) {
+        localStorage.removeItem(sha256('user-token'));
+        next('/login');
+        return;
+    } else if (token !== null && token !== 'undefined' && token !== undefined) {
+        next(from.fullPath);
+        return;
+    }
+    next();
 };
 
 const ifAuthenticated = (to, from, next) => {
@@ -88,7 +101,7 @@ const router = new Router({
             path: '/login/twoauth',
             name: 'LoginTwoAuth',
             component: LoginTwoAuth,
-            beforeEnter: ifNotAuthenticated
+            beforeEnter: ifNotFirstStepAuthenticated
         },
         {
             path: '/login/twoauth',

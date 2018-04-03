@@ -172,13 +172,12 @@
                     return false;
                 }
 
-
-                const {email, password} = this;
                 this.isLoading = true;
 
                 this.$store.dispatch('authRequest', {
-                    email,
-                    password
+                    email: this.email,
+                    password: this.password,
+                    // password: PasswordEncryption(this.password)
                 }).then(() => {
                     if (this.authStep === 0) {
                         this.$store.dispatch('userRequest').then(() => {
