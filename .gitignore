@@ -67,3 +67,4 @@ dist/
 # static/css/components
 static/css/components/
 .idea/
+src/private_modules/
