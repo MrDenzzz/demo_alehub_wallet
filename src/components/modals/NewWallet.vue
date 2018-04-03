@@ -108,15 +108,15 @@
             </div>
 
             <div v-if="dataProcessing" class="wrap-spinner">
-                <spinner v-if="dataProcessing"/>
+                <spinner/>
             </div>
 
             <div class="modal-btn text-center">
                 <button
                         id="continue-to-recovery"
                         class="btn btn-yellow btn-large btn-bottom btn-timer"
-                        :disabled="countTimer || !isAgreedRecovery"
-                        :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery }"
+                        :disabled="countTimer || !isAgreedRecovery || dataProcessing"
+                        :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery || dataProcessing}"
                         @click="getRandomSeed()">
                     {{ $t('modals.newWallet.recovery.phrase.btn') }}
                     <span v-if="countTimer !== 0">({{ countTimer }})</span>
@@ -146,13 +146,10 @@
                 <button class="btn btn-yellow btn-large btn-bottom" @click="changeRecoveryStep('next')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
                 </button>
-
             </div>
-
         </div>
 
         <div v-if="newWalletStep === 2 && recoveryStep === 3" class="body">
-
             <div class="modal-warning agreed-border">
                 <p class="agreed">
                     {{ $t('modals.newWallet.recovery.finish.each') }}
@@ -197,23 +194,23 @@
             </div>
 
             <div v-if="dataProcessing" class="wrap-spinner">
-                <spinner v-if="dataProcessing"/>
+                <spinner/>
             </div>
 
             <div class="modal-btn text-center">
                 <button
                         class="btn btn-default btn-large"
-                        :class="{ 'disabled': mnemonicsRecovery.length === 0 }"
+                        :class="{ 'disabled': mnemonicsRecovery.length === 0 || dataProcessing}"
                         @click="clearRecoveryPhrase"
-                        :disabled="mnemonicsRecovery.length === 0"
+                        :disabled="mnemonicsRecovery.length === 0 || dataProcessing"
                 >
                     {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
                 </button>
                 <button
                         id="create-new-wallet"
                         class="btn btn-yellow btn-large"
-                        :class="{ 'disabled': isConfirmRecovery }"
-                        :disabled="isConfirmRecovery"
+                        :class="{ 'disabled': isConfirmRecovery || dataProcessing}"
+                        :disabled="isConfirmRecovery || dataProcessing"
                         @click="newCreateWallet"
                 >
                     {{ $t('modals.newWallet.recovery.finish.btn.confirm') }}
@@ -243,7 +240,10 @@
                 isOpenOptions: false,
                 walletName: '',
                 dropDownOption: [
-                    {title: this.$t('modals.newWallet.new.label'), isSelected: true, value: 'new'},
+                    {
+                        title: this.$t('modals.newWallet.new.label'),
+                        isSelected: true, value: 'new'
+                    },
                     // {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
                 ],
                 redemtionKey: '',
@@ -277,7 +277,6 @@
                 return false;
             },
             isConfirmRecovery: function () {
-
                 if (this.restorationAgreements.deviceOnly === false || this.restorationAgreements.phraseSecure === false
                     || JSON.stringify(this.mnemonicsRecovery) !== JSON.stringify(this.recoveryMnemonicPhrase))
                     return true;
@@ -508,7 +507,6 @@
                     }
                 ).then((resp) => {
                     this.dataProcessing = true;
-
                     localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
                     this.$store.dispatch('transactionsRequestLazy',
@@ -520,6 +518,7 @@
                                 duration: 5000,
                                 type: 'success',
                             });
+                            this.dataProcessing = true;
                             this.closeModal();
                         }).catch(() => {
                             console.log('Error reset transactionsUpdated. WalletList.vue');
