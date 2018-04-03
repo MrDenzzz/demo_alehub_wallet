@@ -16,8 +16,8 @@ import axios from 'axios';
 import sha256 from 'sha256';
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://192.168.1.39:4000';
-// Vue.prototype.$host = 'http://192.168.1.39:4000';
+Vue.prototype.$host = 'http://192.168.1.47:4000';
+// Vue.prototype.$host = 'http://192.168.1.47:4000';
 // Vue.prototype.$host = 'localhost:4000';
 
 const NotifOptions = {

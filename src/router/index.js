@@ -20,6 +20,7 @@ import NewOffer from '@/components/NewOffer';
 import Recover from '@/components/Recover';
 import RecoverConfirm from '@/components/RecoverConfirm';
 import Recover2fa from '@/components/Recover2fa';
+import LoginTwoAuth from '@/components/LoginTwoAuth';
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -81,6 +82,12 @@ const router = new Router({
             path: '/login',
             name: 'Login',
             component: Login,
+            beforeEnter: ifNotAuthenticated
+        },
+        {
+            path: '/login/twoauth',
+            name: 'LoginTwoAuth',
+            component: LoginTwoAuth,
             beforeEnter: ifNotAuthenticated
         },
         {

@@ -111,7 +111,7 @@ export default {
 
             this.isLoader = true;
 
-            this.$http.post(`http://192.168.1.39:4000/users/recovery`, {
+            this.$http.post(`http://192.168.1.47:4000/users/recovery`, {
                 email: this.email
             }, {
                 headers: {

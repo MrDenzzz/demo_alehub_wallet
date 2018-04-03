@@ -6,11 +6,12 @@ const state = {
     authStep: 0,
     name: '',
     email: '',
+    password: '',
+    token: localStorage.getItem(sha256('user-token')) || '',
     twoAuth: '',
     haveTransactions: null,
     haveWallets: null,
     userStatus: '',
-    token: localStorage.getItem(sha256('user-token')) || '',
     status: '',
     logoutStatus: '',
     twoAuthGeneratedCode: '',
@@ -29,14 +30,15 @@ const actions = {
     authRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_AUTH');
-            let host = 'http://192.168.1.39:4000/users/login';
+            let host = 'http://192.168.1.47:4000/users/login';
             axios({
                 url: host,
                 data: user,
                 method: 'POST'
             }).then(resp => {
+                console.log(resp);
                 if (resp.data.statusLogin === 200) {
-                    commit('SUCCESS_AUTH_CHANGE_STEP');
+                    commit('SUCCESS_AUTH_CHANGE_STEP', user);
                 } else {
                     const token = resp.data.user_token;
                     localStorage.setItem(sha256('user-token'), token);
@@ -55,7 +57,7 @@ const actions = {
     authTwoFaRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_AUTH');
-            let host = 'http://192.168.1.39:4000/users/login/2fa';
+            let host = 'http://192.168.1.47:4000/users/login/2fa';
             axios({
                 url: host,
                 data: user,
@@ -78,7 +80,7 @@ const actions = {
     authLogout: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LOGOUT');
-            let host = 'http://192.168.1.39:4000/users/logout';
+            let host = 'http://192.168.1.47:4000/users/logout';
             axios({
                 url: host,
                 headers: {
@@ -104,7 +106,7 @@ const actions = {
     userRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_USER');
-            let host = 'http://192.168.1.39:4000/users/get-user-data';
+            let host = 'http://192.168.1.47:4000/users/get-user-data';
             axios({
                 url: host,
                 headers: {
@@ -131,7 +133,7 @@ const actions = {
     twoAuthRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_TWOAUTH');
-            let host = 'http://192.168.1.39:4000/users/generate-qr';
+            let host = 'http://192.168.1.47:4000/users/generate-qr';
             axios({
                 url: host,
                 headers: {
@@ -161,7 +163,7 @@ const actions = {
     enableTwoAuth: ({commit, dispatch}, authData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ENABLE_TWOAUTH');
-            let host = 'http://192.168.1.39:4000/users/enable-two-auth';
+            let host = 'http://192.168.1.47:4000/users/enable-two-auth';
             axios({
                 url: host,
                 data: authData,
@@ -183,7 +185,7 @@ const actions = {
     disableTwoAuth: ({commit, dispatch}, confirmDisableData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_DISABLE_TWOAUTH');
-            let host = 'http://192.168.1.39:4000/users/disable-two-auth';
+            let host = 'http://192.168.1.47:4000/users/disable-two-auth';
             axios({
                 url: host,
                 data: confirmDisableData,
@@ -206,7 +208,7 @@ const actions = {
     },
     changeUserName: ({commit, dispatch}, name) => {
         return new Promise((resolve, reject) => {
-            let host = 'http://192.168.1.39:4000/users/change-name';
+            let host = 'http://192.168.1.47:4000/users/change-name';
             axios({
                 url: host,
                 data: name,
@@ -229,7 +231,7 @@ const actions = {
     changeEmail: ({commit, dispatch}, emailData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_EMAIL');
-            let host = 'http://192.168.1.39:4000/users/changeEmail';
+            let host = 'http://192.168.1.47:4000/users/changeEmail';
             axios({
                 url: host,
                 data: emailData,
@@ -253,7 +255,7 @@ const actions = {
     changePassword: ({commit, dispatch}, passData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_PASSWORD');
-            let host = 'http://192.168.1.39:4000/users/changePassword';
+            let host = 'http://192.168.1.47:4000/users/changePassword';
             axios({
                 url: host,
                 data: passData,
@@ -288,16 +290,18 @@ const mutations = {
         state.isLoader = true;
         state.status = 'loading';
     },
-    SUCCESS_AUTH_CHANGE_STEP: (state) => {
-        state.isErrorLogin = false;
-        state.isLoader = false;
-        state.authStep = 1;
-    },
     SUCCESS_AUTH: (state, token) => {
         state.isErrorLogin = false;
         state.isLoader = false;
         state.status = 'success';
         state.token = token;
+    },
+    SUCCESS_AUTH_CHANGE_STEP: (state, user) => {
+        state.email = user.email;
+        state.password = user.password;
+        state.isErrorLogin = false;
+        state.isLoader = false;
+        state.authStep = 1;
     },
     ERROR_AUTH: (state) => {
         state.isErrorLogin = true;
@@ -402,6 +406,7 @@ const getters = {
     authStatus: state => state.status,
     userName: state => state.name,
     userEmail: state => state.email,
+    userPassword: state => state.password,
     userStatus: state => state.userStatus,
     userTwoAuth: state => state.twoAuth,
     userHaveWallets: state => state.haveWallets,
