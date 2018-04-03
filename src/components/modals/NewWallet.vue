@@ -505,7 +505,7 @@
                         name: this.walletName,
                         seed: this.mnemonicsRecovery
                     }
-                ).then((resp) => {
+                ).then(() => {
                     this.dataProcessing = true;
                     localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
@@ -518,7 +518,7 @@
                                 duration: 5000,
                                 type: 'success',
                             });
-                            this.dataProcessing = true;
+                            this.dataProcessing = false;
                             this.closeModal();
                         }).catch(() => {
                             console.log('Error reset transactionsUpdated. WalletList.vue');

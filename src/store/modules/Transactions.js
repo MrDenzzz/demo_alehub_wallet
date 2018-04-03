@@ -231,6 +231,7 @@ const mutations = {
     },
     SUCCESS_REMOVE_TRANSACTIONS: (state) => {
         state.transactions = [];
+        state.transactionsUpdated = [];
     },
     SUCCESS_RESET_TRANSACTIONS_UPDATED: (state) => {
         state.transactionsUpdated = [];

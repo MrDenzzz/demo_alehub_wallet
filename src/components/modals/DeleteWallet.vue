@@ -50,13 +50,16 @@
             </div>
 
             <div class="modal-btn text-center">
-                <button class="btn btn-default btn-large">
+                <button
+                        class="btn btn-default btn-large"
+                        :class="{ 'disabled': dataProcessing }"
+                        :disabled="dataProcessing">
                     {{ $t('modals.deleteWallet.buttons.cancel') }}
                 </button>
                 <button
                         class="btn btn-yellow btn-large"
-                        :class="{ 'disabled': checkCorrectRmWallet || timer !== 0 }"
-                        :disabled="checkCorrectRmWallet || timer !== 0"
+                        :class="{ 'disabled': checkCorrectRmWallet || timer !== 0 || dataProcessing }"
+                        :disabled="checkCorrectRmWallet || timer !== 0 || dataProcessing"
                         @click="removeCurrentWallet()">
                     {{ $t('modals.deleteWallet.buttons.delete') }}
                     <span v-if="timer !== 0">
@@ -92,6 +95,7 @@
             ...mapGetters([
                 'wallets',
                 'currentWallet',
+                'currentWalletAddress',
                 'currentWalletIndex',
 
                 'transactions'
@@ -139,13 +143,27 @@
                     this.$store.dispatch('removeWalletFromWallets',
                         oldIndex
                     ).then(() => {
-                        this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
-                            duration: 5000,
-                            type: 'success',
+                        this.$store.dispatch('removeTransactions'
+                        ).then(() => {
+
+                            localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
+
+                            this.$store.dispatch('transactionsRequestMoment',
+                                this.currentWalletAddress
+                            ).then(() => {
+
+                                this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
+                                    duration: 5000,
+                                    type: 'success',
+                                });
+                                this.dataProcessing = false;
+                                this.$modal.hide('deletewallet');
+                            }).catch(() => {
+                                console.log('Error wallets request lazy');
+                            });
+                        }).catch(() => {
+                            console.log('Error remove transactions');
                         });
-                        this.dataProcessing = false;
-                        localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
-                        this.$modal.hide('deletewallet');
                     }).catch(() => {
                         console.log('Error removing purse from wallets list');
                     });
@@ -196,10 +214,6 @@
         }
     }
 </script>
-
-<style lang="scss">
-    @import './modals.scss';
-</style>
 
 <style lang="stylus">
     .wrap-spinner

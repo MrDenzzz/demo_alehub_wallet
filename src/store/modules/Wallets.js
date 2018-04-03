@@ -120,6 +120,7 @@ const actions = {
     },
     changeCurrentWallet: ({commit}, address) => {
         return new Promise((resolve) => {
+            console.log('change Current Wallet after deleting');
             commit('SUCCESS_CHANGE_CURRENT_WALLET', address);
             resolve();
         });
