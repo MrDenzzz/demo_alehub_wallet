@@ -676,6 +676,20 @@
     opacity: 0.5;
   }
 }
+
+@media(max-width: 830px) {
+  .newwallet {
+    & .v--modal-box {
+      &.v--modal {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0;
+        border-radius: 0;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .v--modal {
     min-width: 100%;
