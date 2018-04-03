@@ -53,7 +53,7 @@ export default {
         checkRecoveryToken () {
             this.isLoader = true;
             this.isSuccess = false;
-            this.$http.post(`http://192.168.1.39:4000/users/recovery-confirm`, {
+            this.$http.post(`http://192.168.1.47:4000/users/recovery-confirm`, {
                 recoveryToken: this.$route.params.token
             }, {
                 headers: {
