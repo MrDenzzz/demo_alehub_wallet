@@ -8,9 +8,6 @@ const state = {
     transactionsUpdated: [],
     changedTransactions: false,
 
-    chunkTransactions: [],
-    activeFilter: 0,
-
     transactionStatus: 'not found',
     transactionsLazyStatus: '',
     transactionsPingStatus: '',
@@ -157,19 +154,12 @@ const actions = {
             });
         })
     },
-
-    walletTransactions: ({commit, dispatch}, address) => {
-        commit('REQUEST_WALLET_TRANSACTIONS');
-        commit('SET_WALLET_TRANSACTIONS', address);
-    },
-
     setFilterDate: ({commit}) => {
         return new Promise((resolve) => {
             commit('SUCCESS_INITIATE_FILTER_DATE');
             resolve();
         });
     },
-
     changeDateFrom: ({commit}, dateFrom) => {
         return new Promise((resolve, reject) => {
             commit('SUCCESS_CHANGE_DATE_FROM', dateFrom);
@@ -182,7 +172,6 @@ const actions = {
             resolve();
         });
     },
-
     setSearchText: ({commit}, searchText) => {
         return new Promise((resolve, reject) => {
             commit('SUCCESS_SET_SEARCH_TEXT', searchText);
@@ -205,7 +194,6 @@ const mutations = {
         state.transactionStatus = 'error';
         state.transactionsLazyStatus = 'error';
     },
-
     REQUEST_LAZY_TRANSACTIONS: (state) => {
         state.transactionsLazyStatus = 'loading';
     },
@@ -216,7 +204,6 @@ const mutations = {
     ERROR_LAZY_TRANSACTIONS: (state) => {
         state.transactionsLazyStatus = 'error';
     },
-
     REQUEST_PING_TRANSACTIONS: (state) => {
         state.transactionsPingStatus = 'loading';
     },
@@ -230,7 +217,6 @@ const mutations = {
     ERROR_PING_TRANSACTIONS: (state) => {
         state.transactionsPingStatus = 'error';
     },
-
     SUCCESS_REFRESH_TRANSACTIONS: (state) => {
         state.transactions = state.transactionsUpdated;
         state.transactionsUpdated = [];
@@ -239,7 +225,6 @@ const mutations = {
     SUCCESS_RESET_TRANSACTIONS_UPDATED: (state) => {
         state.transactionsUpdated = [];
     },
-
     REQUEST_MOMENT_TRANSACTIONS: (state) => {
         state.transactionsMomentStatus = 'loading';
     },
@@ -250,19 +235,6 @@ const mutations = {
     ERROR_MOMENT_TRANSACTIONS: (state) => {
         state.transactionsMomentStatus = 'error';
     },
-
-
-    REQUEST_WALLET_TRANSACTIONS: (state) => {
-
-    },
-    SET_WALLET_TRANSACTIONS: (state, address) => {
-
-        console.log(address, 'wallet address');
-
-        console.log(state.transactions, 'state.transactions');
-    },
-
-
     SUCCESS_INITIATE_FILTER_DATE: (state) => {
         // state.dateFrom = new Date(state.transactions[0].timestamp);
         // for (let i = 0; i < state.transactions.length; i++) {
@@ -284,65 +256,15 @@ const mutations = {
 
         state.initiateFilterDateStatus = 'success';
     },
-
     SUCCESS_CHANGE_DATE_FROM: (state, dateFrom) => {
         state.dateFrom = dateFrom;
     },
-
     SUCCESS_CHANGE_DATE_TO: (state, dateTo) => {
         state.dateTo = dateTo;
     },
-
     SUCCESS_SET_SEARCH_TEXT: (state, searchText) => {
         state.searchText = searchText;
     },
-
-
-    CHANGE_ACTIVE_FILTER(state, index) {
-        state.activeFilter = index;
-    },
-    CHANGE_FILTER_TEXT(state, searchText) {
-        state.searchText = searchText;
-    },
-    SET_NOTIFICATION_FOR_SEND(state, data) {
-        state.transactions.push({
-            id: state.transactions.length + 1,
-            walletId: data.walletId,
-            type: 'sent',
-            to: data.address,
-            date: new Date(),
-            total: '-' + data.sendedBalance,
-            result: data.result,
-            isActive: false
-        });
-    },
-    REMOVE_TRANSACTIONS(state, transactionsId) {
-        for (let i = 0; i < transactionsId.length; i++) {
-            let rmTransactionsInd = state.transactions.findIndex(item => {
-                return parseInt(item.id) === parseInt(transactionsId[i].id);
-            });
-            state.transactions.splice(rmTransactionsInd, 1);
-        }
-    },
-
-
-
-    SET_DATE_FROM(state, from) {
-        state.dateFrom = from;
-    },
-    SET_DATE_TO(state, to) {
-        state.dateTo = to;
-    },
-    SET_CHUNK_TRANSACTIONS(state, transactions) {
-        state.chunkTransactions = transactions;
-    },
-    ADD_NEW_TRANSACTION(state, transactions) {
-        state.transactions = transactions;
-    },
-    CHANGE_TRANSACTION_LOADER_STATE(state, loaderState) {
-        state.transactionsLoader = loaderState;
-    },
-
     REQUEST_SEND_COINS(state) {
         state.transactionSendStatus = 'loading';
     },
@@ -355,7 +277,6 @@ const mutations = {
 };
 
 const getters = {
-
     transactions: state => state.transactions,
     // dateTransactions: state => state.dateTransactions,
     transactionStatus: state => state.transactionStatus,

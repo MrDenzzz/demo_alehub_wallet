@@ -164,10 +164,6 @@
             },
         },
         methods: {
-            ...mapMutations({
-                setChunkTransactions: 'SET_CHUNK_TRANSACTIONS'
-            }),
-
             currentTransactions: function (date) {
                 return this.activities.filter(item => {
                     let itemDate = Moment(item.timestamp).format('YYYY/MM/DD');

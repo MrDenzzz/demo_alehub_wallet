@@ -176,18 +176,6 @@
             },
         },
         methods: {
-            ...mapMutations({
-                setDefaultChart: 'SET_DEFAULT_CHARTS',
-                setActivePeriod: 'SET_ACTIVE_PERIOD',
-
-                changeActiveFilter: "CHANGE_ACTIVE_FILTER",
-                searchTransaction: "CHANGE_FILTER_TEXT",
-                setDateFrom: 'SET_DATE_FROM',
-                setDateTo: 'SET_DATE_TO',
-                addNewTransactions: 'ADD_NEW_TRANSACTION',
-                changeTransactionLoaderState: 'CHANGE_TRANSACTION_LOADER_STATE'
-            }),
-
             openModal: function (name) {
                 this.$modal.show(name);
             },
@@ -207,14 +195,8 @@
                     console.log('Error set search text');
                 });
             },
-
-            // watchStatus: function () {
-            //     console.log(this.transactionsLazyStatus, 'transactionsLazyStatus');
-            //     console.log(this.transactionsMomentStatus, 'transactionsMomentStatus');
-            // }
         },
         created() {
-
             if (this.wallets.length === 0) {
                 this.$store.dispatch('zeroingOutCurrentWallet'
                 ).then(() => {
@@ -234,22 +216,9 @@
 
         },
         mounted() {
-
-            // setInterval(this.watchStatus, 1000);
-
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
             }
-
-            this.$on('setPeriod', function (period) {
-                this.setActivePeriod(period);
-                if (period !== "alltime") this.setDefaultChart(period);
-            });
-
-            this.$on('changeFilterType', function (index) {
-                this.changeActiveFilter(index);
-            });
-
 
             this.$on('changeCurrentWalletEmit', function (address) {
 
@@ -265,7 +234,6 @@
 
             });
 
-
             this.$on('resetNewTransactions', val => {
                 if (!val) {
                     this.newTransaction = false;
@@ -279,7 +247,6 @@
             this.$on('changeDateTo', function (to) {
                 this.dateTo = to;
             });
-
 
             this.$on('successResetSearchToTool', function () {
                 this.resetSearch = false;
