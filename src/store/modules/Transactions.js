@@ -122,6 +122,13 @@ const actions = {
             resolve();
         })
     },
+    removeTransactions: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_REMOVE_TRANSACTIONS');
+            commit('SUCCESS_RESET_TRANSACTIONS_UPDATED');
+            resolve();
+        });
+    },
     resetTransactionsUpdated: ({commit}) => {
         return new Promise((resolve) => {
             commit('SUCCESS_RESET_TRANSACTIONS_UPDATED');
@@ -221,6 +228,9 @@ const mutations = {
         state.transactions = state.transactionsUpdated;
         state.transactionsUpdated = [];
         state.changedTransactions = false;
+    },
+    SUCCESS_REMOVE_TRANSACTIONS: (state) => {
+        state.transactions = [];
     },
     SUCCESS_RESET_TRANSACTIONS_UPDATED: (state) => {
         state.transactionsUpdated = [];

@@ -92,7 +92,9 @@
             ...mapGetters([
                 'wallets',
                 'currentWallet',
-                'currentWalletIndex'
+                'currentWalletIndex',
+
+                'transactions'
             ]),
             checkCorrectRmWallet: function () {
                 if (this.currentWallet.name === this.rmWalletName)
@@ -165,14 +167,20 @@
                         this.$store.dispatch('removeWalletFromWallets',
                             this.currentWalletIndex
                         ).then(() => {
-                            this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
-                                duration: 5000,
-                                type: 'success',
+                            this.$store.dispatch('removeTransactions'
+                            ).then(() => {
+                                this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
+                                    duration: 5000,
+                                    type: 'success',
+                                });
+                                this.dataProcessing = false;
+                                localStorage.removeItem(sha256('current-wallet'));
+                                this.$router.push('/');
+                                this.$modal.hide('deletewallet');
+                            }).catch(() => {
+                                console.log('Error reset transactions');
                             });
-                            this.dataProcessing = false;
-                            localStorage.removeItem(sha256('current-wallet'));
-                            this.$router.push('/');
-                            this.$modal.hide('deletewallet');
+
                         }).catch(() => {
                             console.log('Error removing wallet from wallets list');
                         });

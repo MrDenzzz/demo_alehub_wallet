@@ -88,7 +88,7 @@
     import FormattingPrice from './FormattingPrice';
     import Loader from './Spinner'
 
-    import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'activityList',
@@ -116,52 +116,10 @@
                 type: Boolean
             }
         },
-        watch: {
-            // 'changeWalletResult': function (val) {
-            //     if (val) {
-            //         this.setChunkTransactions(this.chunkActivities);
-            //         this.$parent.$emit('resetWalletResult', false);
-            //     }
-            // },
-            // 'newTransaction': function (val) {
-            //     if (val) {
-            //         this.setChunkTransactions(this.chunkActivities);
-            //         this.$parent.$emit('resetNewTransactions', false);
-            //     }
-            // }
-        },
         computed: {
-            currentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
-            },
-            currentBalance: function () {
-                return this.currentWallet.balance;
-            },
-            stateChunkTransactions: function () {
-                return this.$store.state.Transactions.chunkTransactions;
-            },
-            chunkActivities: function () {
-                let chunksActivities = [];
-                let chunk = [];
-                let j = 0;
-                for (let i = 0; i < this.activities.length; i++) {
-                    if (i === 0) {
-                        chunk.push(this.activities[i]);
-                    } else if (Moment(this.activities[i].timestamp).format('YYYY/MM/DD') === Moment(this.activities[i - 1].timestamp).format('YYYY/MM/DD')) {
-                        chunk.push(this.activities[i]);
-                    } else {
-                        j++;
-                        chunksActivities.push(chunk);
-
-                        chunk = [];
-                        chunk.push(this.activities[i]);
-                    }
-                }
-
-                chunksActivities.push(chunk);
-
-                return chunksActivities;
-            },
+            ...mapGetters([
+                'currentWallet'
+            ]),
         },
         methods: {
             currentTransactions: function (date) {
@@ -172,9 +130,9 @@
             },
 
             transactionsForTotal (date) {
-                let absolutDate = Number(Moment(Moment(date).format('YYYY/MM/DD')).format('x')) + (24*60*60*1000);
+                let absoluteDate = Number(Moment(Moment(date).format('YYYY/MM/DD')).format('x')) + (24*60*60*1000);
                 return this.activities.filter(item => {
-                    return absolutDate > item.timestamp;
+                    return absoluteDate > item.timestamp;
                 })
             },
 
@@ -227,15 +185,15 @@
                 return received;
             },
 
-            parseTime(date) {
+            parseTime: function (date) {
                 return Moment(date).format('HH:mm');
             },
 
-            parseDate(date) {
+            parseDate: function (date) {
                 return Moment(date).format('MMM DD');
             },
 
-            checkShow(index) {
+            checkShow: function (index) {
                 if (index === 0) return true;
                 if (index === this.activities.length) {
                     if (Moment(this.activities[index].timestamp).format('YYYY/MM/DD') === Moment(this.activities[index + 1].timestamp).format('YYYY/MM/DD')) return false;
@@ -272,15 +230,14 @@
             },
 
             typeTransaction: function (address) {
-                if(address === this.$store.state.Wallets.currentWallet.address) return true;
+                if(address === this.currentWallet.address)
+                    return true;
                 return false;
             }
         },
         created() {
-            this.setChunkTransactions(this.chunkActivities);
         },
         mounted() {
-            // this.setChunkTransactions(this.chunkActivities);
         }
     }
 </script>

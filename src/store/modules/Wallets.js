@@ -319,13 +319,13 @@ const getters = {
             return item.address === state.currentWallet.address;
         });
     },
-    changedWallets: state => state.changedWallets,
     currentWalletBalance: state => {
         if (state.currentWallet)
             return state.currentWallet.balance;
 
-         return 0;
-    }
+        return 0;
+    },
+    changedWallets: state => state.changedWallets,
 };
 
 export default {
