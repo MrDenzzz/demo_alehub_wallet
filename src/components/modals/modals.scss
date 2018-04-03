@@ -847,7 +847,21 @@
   }
 }
 
-@media(max-width: 320px) {
+@media(max-width: 425px) {
+  .v--modal-overlay {
+    & .v--modal-box {
+      & .body {
+        & button {
+          width: 100%;
+        }
+
+        & .modal-footer {
+          margin-right: 20px;
+          margin-left: 20px;
+        }
+      }
+    }
+  }
   .two-auth {
     & .btn-default {
       & .icon-copy {
@@ -855,7 +869,9 @@
       }
     }
   }
+}
 
+@media(max-width: 320px) {
   .v--modal-overlay {
     & .v--modal-box {
       & .heading {
@@ -874,7 +890,6 @@
           & .btn-large {
             padding: 5px 10px;
             font-size: 14px;
-            height: 44px;
           }
         }
 
