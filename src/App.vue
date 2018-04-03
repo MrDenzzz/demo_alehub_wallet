@@ -57,9 +57,10 @@
                 'lengthWalletList',
                 'currentWalletAddress',
                 'changedTransactions',
+                'wallets',
+                'currentWallet',
                 'changedWallets',
                 'currentWalletHaveTransactions',
-                'wallets'
             ]),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
@@ -73,6 +74,14 @@
                     this.readyToPing = false;
                     return false;
                 }
+
+                // console.log(this.authStatus, 'this.authStatus');
+                // console.log(this.userStatus, 'this.userStatus');
+                // console.log(this.userHaveWallets, 'this.userHaveWallets');
+                // console.log(this.currentWalletHaveTransactions, 'this.currentWalletHaveTransactions');
+                // console.log(this.walletStatus, 'this.walletStatus');
+                // console.log(this.transactionStatus, 'this.transactionStatus');
+                // console.log(this.initiateFilterDateStatus, 'this.initiateFilterDateStatus');
 
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||

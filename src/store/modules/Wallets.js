@@ -7,6 +7,9 @@ const state = {
     wallets: [],
     currentWallet: null,
     currentWalletHaveTransactions: false,
+
+    localCurrentWalletHaveTransactions: false,
+
     walletStatus: '',
     lazyWalletStatus: '',
     walletsPingStatus: '',
@@ -37,7 +40,6 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                console.log(resp, 'resp from wallets request');
                 commit('SUCCESS_WALLETS', resp.data);
                 resolve(resp);
             }).catch(err => {
@@ -118,9 +120,14 @@ const actions = {
             });
         })
     },
+    initiateCurrentWallet: ({commit}, address) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_INITIATE_CURRENT_WALLET', address);
+            resolve();
+        });
+    },
     changeCurrentWallet: ({commit}, address) => {
         return new Promise((resolve) => {
-            console.log('change Current Wallet after deleting');
             commit('SUCCESS_CHANGE_CURRENT_WALLET', address);
             resolve();
         });
@@ -218,8 +225,8 @@ const mutations = {
         if (wallets.length !== 0) {
             state.wallets = wallets;
             state.currentWallet = state.wallets[0];
-            // (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
-            //     state.currentWalletHaveTransactions = false;
+            (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
+                state.currentWalletHaveTransactions = false;
         }
         state.walletStatus = 'success';
     },
@@ -262,12 +269,19 @@ const mutations = {
     SUCCESS_RESET_CHANGED_WALLETS: (state) => {
         state.changedWallets = false;
     },
+    SUCCESS_INITIATE_CURRENT_WALLET: (state, address) => {
+        state.currentWallet = state.wallets.find(item => {
+            return item.address === address;
+        });
+        localStorage.setItem(sha256('current-wallet'), state.currentWallet.address);
+        (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
+            state.currentWalletHaveTransactions = false;
+    },
     SUCCESS_CHANGE_CURRENT_WALLET: (state, address) =>{
         state.currentWallet = state.wallets.find(item => {
             return item.address === address;
         });
-        (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
-            state.currentWalletHaveTransactions = false;
+        localStorage.setItem(sha256('current-wallet'), state.currentWallet.address);
     },
     REQUEST_CHANGE_WALLET_NAME: (state) => {
         state.changeWalletStatus = 'loading';

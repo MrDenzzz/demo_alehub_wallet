@@ -37,9 +37,12 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                console.log(resp.data, 'resp.data transactions when new wallet create');
-                commit('SET_TRANSACTIONS', resp.data);
-                commit('SUCCESS_INITIATE_FILTER_DATE');
+                if (resp.data.length > 0) {
+                    commit('SUCCESS_TRANSACTIONS', resp.data);
+                    commit('SUCCESS_INITIATE_FILTER_DATE');
+                } else {
+                    commit('TRANSACTIONS_ERROR');
+                }
                 resolve(resp);
             }).catch(err => {
                 console.log(err, 'error transactions wallet address');
@@ -192,7 +195,7 @@ const mutations = {
         state.transactionStatus = 'loading';
         state.transactionsLazyStatus = 'loading';
     },
-    SET_TRANSACTIONS: (state, transactions) => {
+    SUCCESS_TRANSACTIONS: (state, transactions) => {
         state.transactionStatus = 'success';
         state.transactionsLazyStatus = 'success';
         state.transactions = transactions;

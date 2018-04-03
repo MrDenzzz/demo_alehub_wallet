@@ -156,7 +156,7 @@ if (token !== 'undefined' && token) {
 
                 if (store.state.Wallets.currentWallet !== null) {
 
-                    store.dispatch('changeCurrentWallet',
+                    store.dispatch('initiateCurrentWallet',
                         localStorage.getItem(sha256('current-wallet'))
                     ).then(() => {
 

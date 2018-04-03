@@ -138,14 +138,19 @@
                             console.log('Error reset transactionsUpdated. WalletList.vue');
                         });
 
-                        this.$store.dispatch('setFilterDate'
+                        this.$store.dispatch('transactionsRequestLazy',
+                            address
                         ).then(() => {
-                            console.log('Success set filter date');
-                        }).catch(() => {
-                            console.log('Error set filter date. WalletList.vue');
+                            this.$store.dispatch('setFilterDate'
+                            ).then(() => {
+                                console.log('Success set filter date');
+                            }).catch(() => {
+                                console.log('Error set filter date. WalletList.vue');
+                            });
+                        }).catch((err) => {
+                            console.log(err, 'Get transactions for current wallet impossible');
                         });
 
-                        this.$parent.$emit('changeCurrentWalletEmit', address);
                     }).catch(() => {
                         console.log('Сan not change the current wallet. WalletList.vue');
                     });

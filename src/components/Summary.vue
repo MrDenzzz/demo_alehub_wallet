@@ -19,8 +19,9 @@
                                 <div class="stats-col">
                                     <!--заплатка. переделать-->
                                     <send-request
-                                            v-if="this.transactions.length === 0 && (transactionsLazyStatus === 'success' ||
-                                            !currentWalletHaveTransactions || transactionsMomentStatus === 'success')"/>
+                                            v-if="this.transactions.length === 0 && (transactionStatus === 'error' ||
+                                             transactionsLazyStatus === 'success' || !currentWalletHaveTransactions ||
+                                             transactionsMomentStatus === 'success')"/>
                                 </div>
                             </div>
                         </div>
@@ -53,10 +54,13 @@
                         <div class="col-12">
                             <div class="flex-block-transaction"
                                  :class="{'m-t-center': transactions.length === 0}"
-                                 v-if="getActivity.length === 0 && (transactionsLazyStatus === 'success' ||
-                                 !currentWalletHaveTransactions || transactionsMomentStatus === 'success')">
+                                 v-if="getActivity.length === 0 && (transactionStatus === 'error' ||
+                                 transactionsLazyStatus === 'success' || !currentWalletHaveTransactions ||
+                                  transactionsMomentStatus === 'success')">
 
-                                <p class="absence-transactions">{{ $t('pages.summary.notFound') }}</p>
+                                <p class="absence-transactions">
+                                    {{ $t('pages.summary.notFound') }}
+                                </p>
 
                                 <button
                                         v-if="transactions.length !== 0"
@@ -219,20 +223,6 @@
             if (this.lengthWalletList === 0) {
                 this.openModal('newwallet');
             }
-
-            this.$on('changeCurrentWalletEmit', function (address) {
-
-                localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
-
-                this.$store.dispatch('transactionsRequestLazy',
-                    address
-                ).then(() => {
-                    console.log('Transactions for the current wallet were successfully received');
-                }).catch(() => {
-                    console.log(err, 'Get transactions for current wallet impossible');
-                });
-
-            });
 
             this.$on('resetNewTransactions', val => {
                 if (!val) {

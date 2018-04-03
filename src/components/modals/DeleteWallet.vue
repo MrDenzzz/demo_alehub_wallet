@@ -21,7 +21,7 @@
                     <input
                             id="checkbox-access"
                             type="checkbox"
-                            :value="consentRmWallet"
+                            :checked="consentRmWallet"
                             @change="changeStatusConsentRmWallet"/>
 
                     <span id="label-checkbox" @click="makeFocusCheckbox">
@@ -37,9 +37,9 @@
                         {{ $t('modals.deleteWallet.fields.walletName.label') }}
                     </label>
                     <input
-                            type="text"
-                            class="input"
                             id="wallet-name-input"
+                            class="input"
+                            type="text"
                             :placeholder="$t('modals.deleteWallet.fields.walletName.placeholder')"
                             v-model="rmWalletName"/>
                 </div>
@@ -57,6 +57,7 @@
                     {{ $t('modals.deleteWallet.buttons.cancel') }}
                 </button>
                 <button
+                        id="removing-current-wallet"
                         class="btn btn-yellow btn-large"
                         :class="{ 'disabled': checkCorrectRmWallet || timer !== 0 || dataProcessing }"
                         :disabled="checkCorrectRmWallet || timer !== 0 || dataProcessing"
@@ -129,6 +130,11 @@
             },
             changeStatusConsentRmWallet: function () {
                 this.consentRmWallet = !this.consentRmWallet;
+                if (this.consentRmWallet) {
+                    setTimeout(() => {
+                        document.getElementById('wallet-name-input').focus();
+                    }, 40);
+                }
             },
             makeFocusCheckbox: function () {
                 document.getElementById('checkbox-access').click();
@@ -146,7 +152,7 @@
                         this.$store.dispatch('removeTransactions'
                         ).then(() => {
 
-                            localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
+                            // localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
                             this.$store.dispatch('transactionsRequestMoment',
                                 this.currentWalletAddress
@@ -211,6 +217,21 @@
                     });
                 });
             }
+        },
+        created() {
+            document.addEventListener('keyup', (event) => {
+                if (document.getElementById('removing-current-wallet')) {
+                    if (event.keyCode === 32 && document.getElementById('wallet-name-input') !== document.activeElement) {
+                        document.getElementById('checkbox-access').click();
+                    }
+
+                    setTimeout(() => {
+                        if (event.keyCode === 13 && !document.getElementById('removing-current-wallet').disabled) {
+                            document.getElementById('removing-current-wallet').click();
+                        }
+                    }, 40);
+                }
+            })
         }
     }
 </script>
