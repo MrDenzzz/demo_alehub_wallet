@@ -58,7 +58,8 @@
                 'currentWalletAddress',
                 'changedTransactions',
                 'changedWallets',
-                'currentWalletHaveTransactions'
+                'currentWalletHaveTransactions',
+                'wallets'
             ]),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
@@ -94,7 +95,7 @@
                 }
             },
             pingData: function () {
-                if (this.readyToPing) {
+                if (this.readyToPing && this.wallets.length !== 0) {
                     this.$store.dispatch('transactionsRequestPing',
                         this.currentWalletAddress
                     ).then(() => {

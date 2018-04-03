@@ -1,8 +1,11 @@
 <template>
     <div class="activityList">
-        <!--<loader v-if="loader" />-->
-        <div v-if="!loader" v-for="(activity, activityIndex) in activities" :key="activityIndex" class="activityListBlock">
-            <Panel-heading :title="showDate(activity.timestamp)" v-if="checkShow(activityIndex) && isShowDate"/>
+        <div
+                v-for="(activity, activityIndex) in activities"
+                :key="activityIndex" class="activityListBlock">
+            <panel-heading
+                    :title="showDate(activity.timestamp)"
+                    v-if="checkShow(activityIndex) && isShowDate"/>
             <div class="activity-list">
                 <div class="status sent" v-if="typeTransaction(activity.walletAddress)">
                     <span>{{ $t('pages.summary.activityList.status.sent') }}</span>
@@ -10,24 +13,33 @@
                 <div v-else class="status received">
                     <span>{{ $t('pages.summary.activityList.status.recieved') }}</span>
                 </div>
-                <div class="details" :class="{ 'sent': typeTransaction(activity.walletAddress), 'received': !typeTransaction(activity.walletAddress) }">
+                <div
+                        class="details"
+                        :class="{ 'sent': typeTransaction(activity.walletAddress), 'received': !typeTransaction(activity.walletAddress) }">
                     <div class="info">
-                        <p v-if="typeTransaction(activity.walletAddress)">{{ $t('pages.summary.activityList.to') }} {{ activity.walletDestination }}</p>
-                        <p v-else>{{ $t('pages.summary.activityList.from') }} {{ activity.walletAddress }}</p>
-                        <p>{{ parseDate(activity.timestamp) }} / {{ parseTime(activity.timestamp) }}</p>
+                        <p v-if="typeTransaction(activity.walletAddress)">
+                            {{ $t('pages.summary.activityList.to') }} {{ activity.walletDestination }}
+                        </p>
+                        <p v-else>
+                            {{ $t('pages.summary.activityList.from') }} {{ activity.walletAddress }}
+                        </p>
+                        <p>
+                            {{ parseDate(activity.timestamp) }} / {{ parseTime(activity.timestamp) }}
+                        </p>
                     </div>
                     <div class="purpose">
                         <div>
                             Purpose transaction
                         </div>
                     </div>
-                    <div class="count" :class="{ 'active': !typeTransaction(activity.walletAddress) }">
+                    <div
+                            class="count"
+                            :class="{ 'active': !typeTransaction(activity.walletAddress) }">
                         <span>{{ activity.count }} ALE</span>
                     </div>
                 </div>
             </div>
         <div class="result-day" v-if="checkShowResultActivityPanel(activityIndex)">
-
             <div class="result-day-col">
                     <div class="result-day-status">
                         <span class="result-day-field">
@@ -49,7 +61,7 @@
                     <div class="result-day-line">
                         <span class="result-day-span">
                             <span class="count">
-                                <FormattingPrice
+                                <formatting-price
                                         :value="resultReceived(activity.timestamp)"
                                 />
                             </span>
@@ -59,7 +71,7 @@
                     <div class="result-day-line">
                         <span class="result-day-span sent">
                             <span class="count">
-                                 <FormattingPrice
+                                 <formatting-price
                                          :value="resultSent(activity.timestamp)"
                                  />
                             </span>
@@ -69,7 +81,7 @@
                     <div class="result-day-line">
                         <span class="result-day-span">
                             <span class="count">
-                                <FormattingPrice
+                                <formatting-price
                                         :value="resultTotal(activity.timestamp)"
                                 />
                             </span>
@@ -86,7 +98,6 @@
     import PanelHeading from './PanelHeading';
     import Moment from 'moment';
     import FormattingPrice from './FormattingPrice';
-    import Loader from './Spinner'
 
     import {mapGetters} from 'vuex';
 
@@ -95,7 +106,6 @@
         components: {
             PanelHeading,
             FormattingPrice,
-            Loader
         },
         props: {
             activities: {
@@ -111,9 +121,6 @@
             },
             newTransaction: {
                 type: [Boolean, String]
-            },
-            loader: {
-                type: Boolean
             }
         },
         computed: {
@@ -194,12 +201,15 @@
             },
 
             checkShow: function (index) {
-                if (index === 0) return true;
+                if (index === 0)
+                    return true;
                 if (index === this.activities.length) {
-                    if (Moment(this.activities[index].timestamp).format('YYYY/MM/DD') === Moment(this.activities[index + 1].timestamp).format('YYYY/MM/DD')) return false;
+                    if (Moment(this.activities[index].timestamp).format('YYYY/MM/DD') === Moment(
+                        this.activities[index + 1].timestamp).format('YYYY/MM/DD')) return false;
                     return true;
                 } else {
-                    if (Moment(this.activities[index].timestamp).format('YYYY/MM/DD') === Moment(this.activities[index - 1].timestamp).format('YYYY/MM/DD')) return false;
+                    if (Moment(this.activities[index].timestamp).format('YYYY/MM/DD') === Moment(
+                        this.activities[index - 1].timestamp).format('YYYY/MM/DD')) return false;
                     return true;
                 }
             },
