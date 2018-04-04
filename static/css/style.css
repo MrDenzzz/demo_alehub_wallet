@@ -2360,46 +2360,99 @@ body {
   .logout-link:hover {
     text-decoration: underline; }
 
-.activity-list {
+.activityListBlock:nth-child(odd) .activity-list {
+  background: inherit; }
+
+.activityListBlock:nth-child(even) .activity-list {
+  background: #f0f0f0; }
+
+.activityListBlock:nth-child(1) .activity-list {
+  background: #f0f0f0; }
+
+.activityListBlock .result-day {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px 16px 0 0; }
+  .activityListBlock .result-day .result-day-col {
+    font-family: MuseoSansCyrl500;
+    color: #34343e;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end; }
+    .activityListBlock .result-day .result-day-col .result-day-status {
+      font-size: 14px;
+      padding: 5px; }
+      .activityListBlock .result-day .result-day-col .result-day-status .result-day-field {
+        margin: 0 10px 0 10px;
+        padding: 5px; }
+    .activityListBlock .result-day .result-day-col .result-day-line {
+      font-family: MuseoSansCyrl500;
+      line-height: 1.4;
+      align-self: flex-end;
+      color: #34343e;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 4px; }
+      .activityListBlock .result-day .result-day-col .result-day-line .result-day-span {
+        margin: 0 10px 0 10px;
+        padding: 0 5px; }
+        .activityListBlock .result-day .result-day-col .result-day-line .result-day-span .count {
+          margin: 0 10px 0 10px;
+          padding: 0 5px; }
+      .activityListBlock .result-day .result-day-col .result-day-line .result-day-span.sent {
+        color: #b10303; }
+
+.activityListBlock .activity-list {
   width: 100%;
   height: auto;
   background: #ececec;
   display: flex;
   font-family: MuseoSansCyrl700;
-  justify-content: space-between; }
-  .activity-list:nth-child(even) {
+  justify-content: space-between;
+  margin-bottom: 6px; }
+  .activityListBlock .activity-list .received {
+    background-color: rgba(255, 210, 79, 0.6) !important; }
+  .activityListBlock .activity-list .sent {
+    background-color: #f0f0f0 !important; }
+  .activityListBlock .activity-list:nth-child(even) {
     background: inherit; }
-  .activity-list:not(:last-child) {
+  .activityListBlock .activity-list:not(:last-child) {
     margin-bottom: 5px; }
-  .activity-list .status {
+  .activityListBlock .activity-list .status {
+    min-width: 150px;
     width: 102px;
     height: 56px;
     background: #0d1717;
     display: flex;
     justify-content: center;
     align-items: center; }
-    .activity-list .status.active {
+    .activityListBlock .activity-list .status.active {
       background-color: #ffd24f; }
-      .activity-list .status.active span {
+      .activityListBlock .activity-list .status.active span {
         color: #0d1717; }
-    .activity-list .status span {
-      color: #fcfcfc;
+    .activityListBlock .activity-list .status span {
+      color: #34343e;
       font-size: 14px;
       font-family: MuseoSansCyrl700;
       font-weight: bold;
       line-height: 1.29;
-      letter-spacing: 0.5px; }
-  .activity-list .details {
+      letter-spacing: 0.5px;
+      text-transform: uppercase; }
+  .activityListBlock .activity-list .details {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 16px;
-    margin-right: 16px; }
-    .activity-list .details .count {
-      background-color: #0d1717; }
-      .activity-list .details .count span {
-        color: #fcfcfc;
+    margin: 0;
+    padding-right: 16px;
+    padding-left: 0; }
+    .activityListBlock .activity-list .details .count {
+      background-color: transparent;
+      display: flex;
+      justify-content: flex-end;
+      min-width: 100px; }
+      .activityListBlock .activity-list .details .count span {
+        color: #34343e;
         font-size: 14px;
         font-weight: 500;
         line-height: 30px;
@@ -2407,17 +2460,71 @@ body {
         font-family: MuseoSansCyrl500;
         padding: 5px;
         margin: 0 10px 0 10px; }
-      .activity-list .details .count.active {
-        background-color: #ffd24f; }
-        .activity-list .details .count.active span {
-          color: #34343e; }
-    .activity-list .details .info p {
-      margin: 0;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 1.17;
+      .activityListBlock .activity-list .details .count.active {
+        background-color: transparent !important; }
+        .activityListBlock .activity-list .details .count.active span {
+          color: #34343e !important; }
+    .activityListBlock .activity-list .details .info {
+      min-width: 380px;
+      word-break: break-all; }
+      .activityListBlock .activity-list .details .info p {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.17;
+        color: #34343e;
+        font-family: MuseoSansCyrl500; }
+    .activityListBlock .activity-list .details .purpose {
+      width: 100%;
+      display: flex;
       color: #34343e;
+      justify-content: flex-start;
       font-family: MuseoSansCyrl500; }
+      .activityListBlock .activity-list .details .purpose div {
+        font-weight: 500; }
+    .activityListBlock .activity-list .details .info, .activityListBlock .activity-list .details .count {
+      -webkit-touch-callout: text;
+      -webkit-user-select: text;
+      -khtml-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text; }
+    .activityListBlock .activity-list .details.sent .count span {
+      color: #b10303; }
+
+@media screen and (max-width: 1130px) {
+  .activityListBlock .activity-list .details .info {
+    min-width: 220px;
+    padding-right: 30px; }
+  .activityListBlock .activity-list .details .purpose {
+    max-width: 90px; } }
+
+@media screen and (max-width: 600px) {
+  .activityListBlock .result-day {
+    margin-right: 0; }
+  .activityListBlock .activity-list {
+    flex-direction: column; }
+    .activityListBlock .activity-list .status {
+      width: 100%;
+      height: 40px; }
+    .activityListBlock .activity-list .details {
+      padding-left: 30px;
+      flex-direction: column;
+      position: relative; }
+      .activityListBlock .activity-list .details .count {
+        align-self: flex-end;
+        position: absolute;
+        bottom: 0; }
+        .activityListBlock .activity-list .details .count span {
+          margin: 0;
+          padding: 0; }
+      .activityListBlock .activity-list .details .info {
+        align-self: flex-start;
+        min-width: 200px; }
+        .activityListBlock .activity-list .details .info p {
+          margin-bottom: 10px; }
+      .activityListBlock .activity-list .details .purpose {
+        display: none; } }
 
 .list-panel-heading {
   display: flex;
