@@ -23,7 +23,9 @@ const state = {
     isErrorLogin: false,
 
     changeEmailStatus: '',
-    changePasswordStatus: ''
+    changePasswordStatus: '',
+
+    changeTwoAuthStatus: ''
 };
 
 const actions = {
@@ -36,7 +38,6 @@ const actions = {
                 data: user,
                 method: 'POST'
             }).then(resp => {
-                console.log(resp);
                 if (resp.data.statusLogin === 200) {
                     commit('SUCCESS_AUTH_CHANGE_STEP', user);
                 } else {
@@ -63,7 +64,6 @@ const actions = {
                 data: user,
                 method: 'POST'
             }).then(resp => {
-                console.log(resp);
                 const token = resp.data.user_token;
                 localStorage.setItem(sha256('user-token'), token);
                 axios.defaults.headers.common['Authorization'] = token;
@@ -103,7 +103,7 @@ const actions = {
             });
         })
     },
-    userRequest: ({commit}) => {
+    userRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_USER');
             let host = 'http://192.168.1.47:4000/users/get-user-data';
@@ -116,8 +116,10 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                commit('SUCCESS_USER', resp.data);
+                console.log(resp.data);
                 commit('SUCCESS_AUTH');
+                commit('SUCCESS_USER', resp.data);
+                dispatch('setChangeTwoAuthStatus', resp.data.isTwoAuth);
                 resolve(resp);
             }).catch(err => {
                 if(err.response.data.message === 'User is not found') {
@@ -175,6 +177,7 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 commit('SUCCESS_ENABLE_TWOAUTH');
+                dispatch('setChangeTwoAuthStatus', true);
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_ENABLE_TWOAUTH', err);
@@ -198,6 +201,7 @@ const actions = {
             }).then(resp => {
                 console.log(resp);
                 commit('SUCCESS_DISABLE_TWOAUTH');
+                dispatch('setChangeTwoAuthStatus', false);
                 resolve(resp);
             }).catch(err => {
                 console.log(err);
@@ -282,6 +286,12 @@ const actions = {
             resolve();
         });
     },
+    setChangeTwoAuthStatus: ({commit}, status) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_SET_CHANGE_TWO_AUTH_STATUS', status);
+            resolve();
+        });
+    }
 };
 
 const mutations = {
@@ -394,9 +404,11 @@ const mutations = {
     ERROR_CHANGE_PASSWORD: (state) => {
         state.changePasswordStatus = 'error';
     },
-
     SUCCESS_RESET_AUTH_STEP: (state) => {
         state.authStep = 0;
+    },
+    SUCCESS_SET_CHANGE_TWO_AUTH_STATUS: (state, status) => {
+        state.changeTwoAuthStatus = status;
     }
 };
 
@@ -416,7 +428,8 @@ const getters = {
     twoAuthSecret: state => state.twoAuthSecret,
     changeUserNameStatus: state => state.changeUserNameStatus,
     isLoaderUserAuth: state => state.isLoader,
-    isErrorLogin: state => state.isErrorLogin
+    isErrorLogin: state => state.isErrorLogin,
+    changeTwoAuthStatus: state => state.changeTwoAuthStatus
 };
 
 export default {

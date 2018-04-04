@@ -1,10 +1,10 @@
 <template>
     <label class="switch-control">
         <!--{{ flag }}-->
+        <!--@click="changeChecker()"-->
         <input
                 type="checkbox"
-                @click="changeChecker()"
-                :checked="value">
+                :checked="changeTwoAuthStatus">
         <span class="slider"></span>
     </label>
 </template>
@@ -14,22 +14,6 @@
 
     export default {
         name: 'switchControl',
-        props: {
-            checked: {
-                type: Boolean
-            },
-            flag: {
-                type: [Boolean, String]
-            },
-            id: {
-                type: String
-            }
-        },
-        watch: {
-            'flag': function (val) {
-                this.receiveCaret();
-            }
-        },
         data() {
             return {
                 value: this.checked
@@ -37,26 +21,10 @@
         },
         computed: {
             ...mapGetters([
-                'userTwoAuth'
+                'userTwoAuth', //remove
+
+                'changeTwoAuthStatus'
             ]),
-        },
-        methods: {
-            changeChecker: function () {
-                this.value = !this.value;
-                this.$parent.$emit('changeChecker', this.value);
-            },
-            //shitcode. rewrite.
-            receiveCaret: function () {
-                if (this.userTwoAuth !== this.value) {
-                    this.value = !this.value;
-                    // this.$parent.$emit('changeChecker', this.value);
-                }
-            }
-            // checkUserAuth: function () {
-            //     if (this.userTwoAuth != this.value) {
-            //
-            //     }
-            // }
         }
     }
 </script>

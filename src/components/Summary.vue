@@ -90,8 +90,6 @@
 
     import sha256 from 'sha256';
 
-
-    import {mapMutations} from "vuex";
     import {mapGetters} from "vuex";
 
     export default {

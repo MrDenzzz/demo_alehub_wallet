@@ -21,16 +21,16 @@
                                 />
 
                                 <!--<div class="control" @click="openModal('changeemail')">-->
-                                    <!--<div class="wrap-input">-->
-                                        <!--<label>E-mail</label>-->
-                                        <!--<div class="textbox">-->
-                                            <!--<p-->
-                                                    <!--class="text full-line"-->
-                                            <!--&gt;-->
-                                                <!--{{//userEmail}}-->
-                                            <!--</p>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
+                                <!--<div class="wrap-input">-->
+                                <!--<label>E-mail</label>-->
+                                <!--<div class="textbox">-->
+                                <!--<p-->
+                                <!--class="text full-line"-->
+                                <!--&gt;-->
+                                <!--{{//userEmail}}-->
+                                <!--</p>-->
+                                <!--</div>-->
+                                <!--</div>-->
                                 <!--</div>-->
 
                                 <div class="control" @click="openModal('changepassword')">
@@ -84,17 +84,14 @@
                                             </p>
                                             <switch-control
                                                     v-if="userStatus === 'success'"
-                                                    :checked="updatableTwoAuth"
-                                                    :flag="changeFlag"
-                                                    :id="'twoauth'"
-                                            />
+                                                    @click.native.prevent="openChangeTwoAuthModal"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div v-if="dataProcessing" class="wrap-spinner">
-                                <Spinner />
+                                <Spinner/>
                             </div>
 
                             <div class="text-center">
@@ -102,7 +99,7 @@
                                         href="#"
                                         class="logout-link"
                                         @click="logout">
-                                        {{ $t('pages.settings.logout')}}
+                                    {{ $t('pages.settings.logout')}}
                                 </a>
                             </div>
                         </div>
@@ -133,6 +130,7 @@
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
     import {mapMutations} from 'vuex';
+
     export default {
         name: 'settings',
         components: {
@@ -236,7 +234,16 @@
             openModal: function (name) {
                 this.$modal.show(name);
             },
-            selectTheme (name) {
+            openChangeTwoAuthModal: function () {
+                this.$store.dispatch('setChangeTwoAuthStatus',
+                    !this.userTwoAuth
+                ).then(() => {
+                    this.openModal('change-two-auth');
+                }).catch(() => {
+                    console.log('Error set change two auth status Settings.vue')
+                });
+            },
+            selectTheme: function (name) {
                 let body = document.getElementsByTagName('body')[0];
                 this.setTheme(name);
                 switch (name) {
@@ -268,16 +275,16 @@
                 // } else
                 //     this.closeModal('change-password');
             });
-            this.$on('changeChecker', function (value) {
-                // this.changeableValue = value;
-                this.flag = value;
-                // console.log(this.flag, '111');
-                this.openModal('change-two-auth');
-            });
+            // this.$on('changeChecker', function (value) {
+            //     // this.changeableValue = value;
+            //     this.flag = value;
+            //     // console.log(this.flag, '111');
+            //     this.openModal('change-two-auth');
+            // });
             this.$on('cancelSwitchControl', function (value) {
                 this.switchValueAuth = value;
             });
-            
+
 
             this.$on('changeFullName', function (value) {
                 if (this.userName !== value) {
@@ -318,6 +325,7 @@
             .wrap-input
                 .full-line
                     width 100%
+
     .form .deletelink
         margin-top -8px
         padding-top 0
@@ -325,15 +333,15 @@
     .border-none
         border none
 
-    .form .deletelink 
+    .form .deletelink
         margin-top -8px
         padding-top 0px
-    
+
     @media (max-width: 1024px)
         .main
-            .content 
+            .content
                 padding-left 0
-        
+
     @media (max-width: 425px)
         .form
             .control
