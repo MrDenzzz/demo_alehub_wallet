@@ -285,6 +285,7 @@
 
         .disabled
             opacity 0.4
+            max-width 160px
 
     .modal-xs
         /*.v--modal-box*/
