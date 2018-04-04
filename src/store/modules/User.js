@@ -29,6 +29,8 @@ const state = {
 
     confirmationChangeEmailStatus: '',
     cancellationChangeEmailStatus: '',
+
+    confirmationRegistrationStatus: ''
 };
 
 const actions = {
@@ -131,6 +133,26 @@ const actions = {
                 }
                 commit('ERROR_USER', err);
                 commit('ERROR_AUTH', err);
+                reject(err);
+            });
+        });
+    },
+    confirmationRegistration: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_CONFIRMATION_REGISTRATION');
+            let host = 'http://192.168.1.47:4000/users/generate-qr';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                method: 'GET'
+            }).then(resp => {
+                commit('SUCCESS_CONFIRMATION_REGISTRATION');
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_CONFIRMATION_REGISTRATION', err);
                 reject(err);
             });
         });
@@ -391,6 +413,15 @@ const mutations = {
     },
     ERROR_USER: (state) => {
         state.userStatus = 'error';
+    },
+    REQUEST_CONFIRMATION_REGISTRATION: (state) => {
+        state.confirmationRegistrationStatus = 'loading';
+    },
+    SUCCESS_CONFIRMATION_REGISTRATION: (state) => {
+        state.confirmationRegistrationStatus = 'success';
+    },
+    ERROR_CONFIRMATION_REGISTRATION: (state) => {
+        state.confirmationRegistrationStatus = 'error';
     },
     REQUEST_TWOAUTH: (state) => {
         state.twoauthStatus = 'loading';
