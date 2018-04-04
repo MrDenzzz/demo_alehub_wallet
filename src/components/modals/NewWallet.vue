@@ -1,18 +1,24 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
 
-    <modal name="newwallet" height="auto" class="modal-md newwallet" :clickToClose="isCloseModal" @opened="modalOpen" @closed="modalClosed">
+    <modal name="newwallet" height="auto" class="modal-md newwallet" :clickToClose="isCloseModal" @opened="modalOpen"
+           @closed="modalClosed">
         <div class="heading" v-if="newWalletStep === 1">
-            <p class="title">{{ dropDownOption[0].title }}</p>
-            <!--<p class="title title-expand" @click="openDropDown">{{ modalTitle }}<i class="arrow"></i></p>-->
+            <!--<p class="title">{{ dropDownOption[0].title }}</p>-->
+            <p class="title title-expand" @click="openDropdown">
+                {{ modalTitle }}
+                <i class="arrow"></i>
+            </p>
             <i class="close" @click="closeModal" v-if="isCloseModal"></i>
-            <!--<div class="dropdown-list list-select" v-show="isOpenOptions">-->
-            <!--<ul>-->
-            <!--<li v-for="(option, optionIndex) in dropDownOption" :class="{ 'selected': option.isSelected }"-->
-            <!--@click="changeType(optionIndex)">-->
-            <!--{{ option.title }}-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
+            <div class="dropdown-list list-select" v-show="isOpenOptions">
+                <ul>
+                    <li
+                            v-for="(option, optionIndex) in dropDownOption"
+                            :class="{ 'selected': option.isSelected }"
+                            @click="changeType(optionIndex)">
+                        {{ option.title }}
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="heading" v-if="newWalletStep !== 1">
@@ -46,50 +52,40 @@
                 </div>
             </div>
 
-            <div class="body" v-if="walletType === 'import'">
-
-                <div class="modal-control" @click="focusInput('redemptionWalletName')">
-                    <div class="modal-input">
-                        <label class="title">{{ $t('modals.newWallet.import.fields.title.label') }}</label>
-                        <input
-                                type="text"
-                                id="redemptionWalletName"
-                                class="input"
-                                :placeholder="$t('modals.newWallet.import.fields.title.placeholder')"
-                                v-model="walletName"
-                        />
-                    </div>
-                </div>
-
-                <div class="modal-control" @click="focusInput('redemptionKey')">
+            <div class="body" v-if="walletType === 'redeem'">
+                <div class="modal-control">
                     <div class="modal-input input-phrase">
-                        <label class="title">{{ $t('modals.newWallet.import.fields.mnemonic.label') }}</label>
-                        <div class="badge-control" v-if="mnemonicsRecovery.length !== 0">
-                            <span class="badge" v-for="mnemonic in mnemonicsRecovery">{{ mnemonic }}</span>
+                        <label class="title">{{ $t('modals.newWallet.redeem.fields.decrypt.label') }}</label>
+                        <div class="badge-control" v-if="mnemonics.length !== 0">
+                            <span class="badge" v-for="mnemonic in mnemonics">{{ mnemonic }}</span>
                         </div>
                         <input
-                                type="text"
+                                id="redemption-key"
                                 class="input"
-                                id="redemptionKey"
+                                type="text"
                                 placeholder="Mnemonic phrase"
                                 v-on:keyup.188="addMnemonic"
-                                v-model="mnemonicFieldRecovery"
-                                @keyup.enter="addMnemonicRecovery"
-                                @keyup.delete="removeMnemonicRecovery"
-                                @keyup.space="addMnemonicRecovery"
+                                v-model="mnemonicField"
+                                @keyup.enter="addMnemonic"
+                                @keyup.delete="removeMnemonic"
+                                @keyup.space="addMnemonic"
                                 @blur="onBlurNewWallet"
                         />
                     </div>
                 </div>
 
+                <div v-if="dataProcessing" class="wrap-spinner">
+                    <spinner/>
+                </div>
+
                 <div class="modal-btn text-center">
                     <button
+                            id="button-redemption-wallet"
                             class="btn btn-yellow btn-large"
-                            @click="importWallet()"
-                            :disabled="isImport"
-                            :class="{ 'disabled': isImport }"
-                    >
-                        {{ $t('modals.newWallet.import.button') }}
+                            @click="redeemCreateWallet"
+                            :disabled="!checkFilledRedemption"
+                            :class="{ 'disabled': !checkFilledRedemption }">
+                        {{ $t('modals.newWallet.redeem.button') }}
                     </button>
                 </div>
             </div>
@@ -202,8 +198,7 @@
                         class="btn btn-default btn-large"
                         :class="{ 'disabled': mnemonicsRecovery.length === 0 || dataProcessing}"
                         @click="clearRecoveryPhrase"
-                        :disabled="mnemonicsRecovery.length === 0 || dataProcessing"
-                >
+                        :disabled="mnemonicsRecovery.length === 0 || dataProcessing">
                     {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
                 </button>
                 <button
@@ -211,14 +206,11 @@
                         class="btn btn-yellow btn-large"
                         :class="{ 'disabled': isConfirmRecovery || dataProcessing}"
                         :disabled="isConfirmRecovery || dataProcessing"
-                        @click="newCreateWallet"
-                >
+                        @click="newCreateWallet">
                     {{ $t('modals.newWallet.recovery.finish.btn.confirm') }}
                 </button>
             </div>
-
         </div>
-
     </modal>
 </template>
 
@@ -242,11 +234,20 @@
                 dropDownOption: [
                     {
                         title: this.$t('modals.newWallet.new.label'),
-                        isSelected: true, value: 'new'
+                        isSelected: true,
+                        value: 'new'
                     },
-                    // {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
+                    {
+                        title: this.$t('modals.newWallet.redeem.label'),
+                        isSelected: false,
+                        value: 'redeem'
+                    }
+                    // {
+                    //     title: this.$t('modals.newWallet.import.label'),
+                    //     isSelected: false, value: 'import'
+                    // },
                 ],
-                redemtionKey: '',
+                redemptionKey: '',  //redemptionKey
                 newWalletStep: 1,
                 countTimer: 3,
                 isAgreedRecovery: false,
@@ -271,11 +272,11 @@
                 'currentWalletAddress',
                 'checkNewWalletMatchPassword'
             ]),
-            isImport: function () {
-                if (this.mnemonicsRecovery.length === 0 || this.walletName === '')
-                    return true;
-                return false;
-            },
+            // isImport: function () {
+            //     if (this.mnemonicsRecovery.length === 0 || this.walletName === '')
+            //         return true;
+            //     return false;
+            // },
             isConfirmRecovery: function () {
                 if (this.restorationAgreements.deviceOnly === false || this.restorationAgreements.phraseSecure === false
                     || JSON.stringify(this.mnemonicsRecovery) !== JSON.stringify(this.recoveryMnemonicPhrase))
@@ -302,12 +303,15 @@
                     return false;
                 return true;
             },
-            getCurrentWallet: function () {
-                return this.$store.state.Wallets.currentWallet;
+            checkFilledRedemption: function () {
+                if (this.mnemonics.length === 12)
+                    return true;
+
+                return false;
             },
-            selectedTheme() {
+            selectedTheme: function () {
                 return this.$store.state.Themes.theme;
-            },
+            }
         },
         methods: {
             getRandomSeed: function () {
@@ -326,13 +330,13 @@
             recoveryBlur: function () {
                 this.mnemonicFieldRecovery = '';
             },
-            onBlurNewWallet() {
+            onBlurNewWallet: function () {
                 this.mnemonicField = '';
             },
-            clearRecoveryPhrase() {
+            clearRecoveryPhrase: function () {
                 this.mnemonicsRecovery = [];
             },
-            changeRecoveryStep(step) {
+            changeRecoveryStep: function (step) {
                 if (step === 'next') {
                     return this.recoveryStep = this.recoveryStep + 1;
                 }
@@ -341,31 +345,41 @@
                 }
                 else this.recoveryStep = this.recoveryStep - 1;
             },
-            removeMnemonicRecovery() {
-                if (this.mnemonicFieldRecovery !== '' || this.mnemonicsRecovery.length === '') return false;
+            removeMnemonicRecovery: function () {
+                if (this.mnemonicFieldRecovery !== '' || this.mnemonicsRecovery.length === '')
+                    return false;
                 this.mnemonicFieldRecovery = this.mnemonicsRecovery[this.mnemonicsRecovery.length - 1];
                 this.mnemonicsRecovery.pop();
             },
-            removeMnemonic() {
-                if (this.mnemonics.length === 0 || this.mnemonicField !== '') return false;
+            removeMnemonic: function () {
+                if (this.mnemonics.length === 0 || this.mnemonicField !== '')
+                    return false;
                 this.mnemonicField = this.mnemonics[this.mnemonics.length - 1];
                 this.mnemonics.pop();
             },
-            addMnemonic() {
+            addMnemonic: function () {
                 let newMnemonic = this.mnemonicField.replace(/,/g, '');
-                if (newMnemonic === '') return false;
-                this.mnemonics.push(newMnemonic);
+                if (newMnemonic === '')
+                    return false;
+
+                newMnemonic = newMnemonic.split(' ');
+                for (let i = 0; i < newMnemonic.length; i++) {
+                    if (newMnemonic[i] !== '')
+                        this.mnemonics.push(newMnemonic[i])
+                }
                 this.mnemonicField = '';
             },
-            addMnemonicRecovery() {
+            addMnemonicRecovery: function () {
                 let newMnemonic = this.mnemonicFieldRecovery.replace(/,/g, ' ');
-                if (newMnemonic === '') return false;
+                if (newMnemonic === '')
+                    return false;
                 for (let i = 0; i < newMnemonic.split(' ').length; i++) {
-                    if (newMnemonic.split(' ')[i] !== '') this.mnemonicsRecovery.push(newMnemonic.split(' ')[i]);
+                    if (newMnemonic.split(' ')[i] !== '')
+                        this.mnemonicsRecovery.push(newMnemonic.split(' ')[i]);
                 }
                 this.mnemonicFieldRecovery = '';
             },
-            countDown() {
+            countDown: function () {
                 if (this.countTimer !== 0) {
                     setTimeout(() => {
                         this.countTimer--;
@@ -373,7 +387,7 @@
                     }, 1000);
                 }
             },
-            changeStepCreate(step) {
+            changeStepCreate: function (step) {
                 if (this.newWalletStep === 1 && this.walletName === '') return false
                 if (step === 'next') this.newWalletStep = this.newWalletStep + 1;
                 else this.newWalletStep = this.newWalletStep - 1;
@@ -389,7 +403,7 @@
                 document.getElementById(id).focus();
                 // }, 40);
             },
-            openDropDown() {
+            openDropdown: function () {
                 this.isOpenOptions = !this.isOpenOptions;
             },
             changeType: function (index) {
@@ -410,7 +424,7 @@
             closeModal: function () {
                 this.$modal.hide('newwallet');
             },
-            modalClosed: function () {
+            modalClosed: function () { //rename this function
                 this.walletType = 'new';
                 this.newWalletStep = 1;
                 this.recoveryStep = 1;
@@ -422,7 +436,7 @@
 
                 // this.dropDownOption[0].isSelected = true;
                 this.walletName = '';
-                this.redemtionKey = '';
+                this.redemptionKey = '';
                 this.newWalletStep = 1;
                 this.countTimer = 3;
                 this.isAgreedRecovery = false;
@@ -448,7 +462,7 @@
                 // this.dropDownOption[0].isSelected = true;
                 this.walletName = '';
                 this.focusInput('newWalletName');
-                this.redemtionKey = '';
+                this.redemptionKey = '';
                 this.newWalletStep = 1;
                 this.countTimer = 3;
                 this.isAgreedRecovery = false;
@@ -468,7 +482,7 @@
                 //     {title: this.$t('modals.newWallet.new.label'), isSelected: true, value: 'new'},
                 //     // {title: this.$t('modals.newWallet.import.label'), isSelected: false, value: 'import'}
                 // ],
-                //     redemtionKey: '',
+                //     redemptionKey: '',
                 //     newWalletStep: 1,
                 //     countTimer: 3,
                 //     isAgreedRecovery: false,
@@ -486,26 +500,13 @@
                 // dataProcessing: false
             },
 
-            saveDataToFieldLocalStorage: function (data) {
-                let items = [];
-                items = JSON.parse(localStorage.getItem('wallets'));
-                items.push(data);
-                localStorage.setItem('wallets', JSON.stringify(items));
-            },
-            saveDataToEmptyLocalStorage: function (data) {
-                let item = [];
-                item.push(JSON.parse('"' + data + '"'));
-                localStorage.setItem('wallets', JSON.stringify(item));
-            },
-
             newCreateWallet: function () {
                 this.dataProcessing = true;
 
                 this.$store.dispatch('newWallet', {
-                        name: this.walletName,
-                        seed: this.mnemonicsRecovery
-                    }
-                ).then(() => {
+                    name: this.walletName,
+                    seed: this.mnemonicsRecovery
+                }).then(() => {
                     this.dataProcessing = true;
                     localStorage.setItem(sha256('current-wallet'), this.currentWallet.address);
 
@@ -531,46 +532,65 @@
                     console.log('Error request new wallet');
                 });
             },
-
-
-            importWallet: function () {
-                if (!this.walletName) {
-                    this.focusInput('redemptionWalletName');
-                    return false;
-                }
-                if (!this.mnemonicField) {
-                    this.focusInput('redemptionKey')
-                }
-                this.$http.post(`${this.$host}/wallet/redeem`, {
-                    seed: this.mnemonicsRecovery
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-
-                    if (localStorage.getItem('wallets')) {
-                        this.saveDataToFieldLocalStorage(response.body.walletInfo.address);
-                    } else {
-                        this.saveDataToEmptyLocalStorage(response.body.walletInfo.address);
-                    }
-                    this.$toasted.show(`Wallet "${response.body.walletInfo.name}" successful created!`, {
+            redeemCreateWallet: function () {
+                this.dataProcessing = true;
+                this.$store.dispatch('redeemWallet', {
+                    seed: this.mnemonics
+                }).then((resp) => {
+                    this.dataProcessing = false;
+                    this.closeModal();
+                    this.$toasted.show(`Wallet '${resp.data.walletInfo.name}' successful created!`, {
                         duration: 5000,
                         type: 'success',
                     });
-
-                    this.closeModal();
-
-                }, response => {
-                    this.$toasted.show('Wallet not found', {
+                }).catch(() => {
+                    this.dataProcessing = false;
+                    this.$toasted.show('Wallet was failed redeem', {
                         duration: 10000,
                         type: 'error',
                     });
-
-                    this.closeModal();
                 });
             },
+
+            // importWallet: function () {
+            //     if (!this.walletName) {
+            //         this.focusInput('redemptionWalletName');
+            //         return false;
+            //     }
+            //     if (!this.mnemonicField) {
+            //         this.focusInput('redemptionKey')
+            //     }
+            //     this.$http.post(`${this.$host}/wallet/redeem`, {
+            //         seed: this.mnemonicsRecovery
+            //     }, {
+            //         headers: {
+            //             'Content-Type': 'application/json; charset=UTF-8',
+            //             'Accept': 'application/json'
+            //         }
+            //     }).then(response => {
+            //
+            //         if (localStorage.getItem('wallets')) {
+            //             this.saveDataToFieldLocalStorage(response.body.walletInfo.address);
+            //         } else {
+            //             this.saveDataToEmptyLocalStorage(response.body.walletInfo.address);
+            //         }
+            //         this.$toasted.show(`Wallet "${response.body.walletInfo.name}" successful created!`, {
+            //             duration: 5000,
+            //             type: 'success',
+            //         });
+            //
+            //         this.closeModal();
+            //
+            //     }, response => {
+            //         this.$toasted.show('Wallet not found', {
+            //             duration: 10000,
+            //             type: 'error',
+            //         });
+            //
+            //         this.closeModal();
+            //     });
+            // },
+
             copyMnemonic: function () {
                 return this.recoveryMnemonicPhrase.join(' ');
             },

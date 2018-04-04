@@ -16,13 +16,15 @@ const state = {
     changeWalletStatus: '',
     removeWalletStatus: '',
     getRandomSeedStatus: '',
+    redeemWalletStatus: '',
+    newWalletStatus: '',
 
     delWalletProperty: {
         mnemonic: '',
         isAgreed: false
     },
 
-    changedWallets: false
+    changedWallets: false,
 
 };
 
@@ -101,6 +103,7 @@ const actions = {
     },
     newWallet: ({commit, dispatch}, wallet) => {
         return new Promise((resolve, reject) => {
+            commit('REQUEST_NEW_WALLET');
             let host = 'http://192.168.1.47:4000/wallet/new';
             axios({
                 url: host,
@@ -119,6 +122,29 @@ const actions = {
                 reject(err)
             });
         })
+    },
+    redeemWallet: ({commit}, mnemonic) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_REDEEM_WALLET');
+            let host = 'http://192.168.1.47:4000/wallet/redemption-wallet';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: mnemonic,
+                method: 'POST'
+            }).then(resp => {
+                console.log(resp, 'RESP REDEEM');
+                commit('SUCCESS_REDEEM_WALLET', resp.data.walletInfo);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_REDEEM_WALLET', err);
+                reject(err)
+            });
+        });
     },
     initiateCurrentWallet: ({commit}, address) => {
         return new Promise((resolve) => {
@@ -230,14 +256,30 @@ const mutations = {
         }
         state.walletStatus = 'success';
     },
+    REQUEST_NEW_WALLET: (state) => {
+        state.newWalletStatus = 'loading';
+    },
     SUCCESS_NEW_WALLET: (state, wallet) => {
         delete wallet.__v;
 
         state.wallets.push(wallet);
         state.currentWallet = state.wallets[state.wallets.length - 1];
+
+        state.newWalletStatus = 'success';
     },
     ERROR_WALLETS: (state) => {
+        state.newWalletStatus = 'error';
         state.walletStatus = 'error';
+    },
+    REQUEST_REDEEM_WALLET: (state) => {
+        state.redeemWalletStatus = 'loading';
+    },
+    SUCCESS_REDEEM_WALLET: (state, redemptionWallet) => {
+        state.wallets.push(redemptionWallet);
+        state.redeemWalletStatus = 'success';
+    },
+    ERROR_REDEEM_WALLET: (state) => {
+        state.redeemWalletStatus = 'error';
     },
     REQUEST_LAZY_WALLETS: (state) => {
         state.lazyWalletStatus = 'loading';
@@ -251,7 +293,6 @@ const mutations = {
     ERROR_LAZY_WALLETS: (state, err) => {
         state.lazyWalletStatus = 'error';
     },
-
     REQUEST_PING_WALLETS: (state) => {
         state.walletsPingStatus = 'loading';
     },
