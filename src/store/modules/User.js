@@ -125,7 +125,7 @@ const actions = {
                 dispatch('setChangeTwoAuthStatus', resp.data.isTwoAuth);
                 resolve(resp);
             }).catch(err => {
-                if(err.response.data.message === 'User is not found') {
+                if (err.response.data.message === 'User is not found') {
                     localStorage.removeItem(sha256('user-token'));
                     router.push('/login');
                 }
@@ -274,7 +274,6 @@ const actions = {
             }).then(resp => {
                 console.log(resp, 'confirmation change email success');
                 if (resp.data.message === 'Cancellation of mail changes was successful') {
-                    console.log('im in cancellation');
                     commit('SUCCESS_CANCELLATION_CHANGE_EMAIL');
                 } else {
                     const token = resp.data.user_token;
@@ -288,6 +287,18 @@ const actions = {
                 commit('ERROR_CONFIRMATION_CHANGE_EMAIL', err);
                 reject(err);
             });
+        });
+    },
+    resetConfirmationChangeEmailStatus: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_RESET_CONFIRMATION_CHANGE_EMAIL_STATUS');
+            resolve();
+        });
+    },
+    resetCancellationChangeEmailStatus: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_RESET_CANCELLATION_CHANGE_EMAIL_STATUS');
+            resolve();
         });
     },
     changePassword: ({commit, dispatch}, passData) => {
@@ -436,11 +447,16 @@ const mutations = {
         state.confirmationChangeEmailStatus = 'success';
     },
     SUCCESS_CANCELLATION_CHANGE_EMAIL: (state) => {
-        console.log('asdasdasdasdasd');
         state.cancellationChangeEmailStatus = 'success';
     },
     ERROR_CONFIRMATION_CHANGE_EMAIL: (state) => {
         state.confirmationChangeEmailStatus = 'error';
+    },
+    SUCCESS_RESET_CONFIRMATION_CHANGE_EMAIL_STATUS: (state) => {
+        state.confirmationChangeEmailStatus = '';
+    },
+    SUCCESS_RESET_CANCELLATION_CHANGE_EMAIL_STATUS: (state) => {
+        state.cancellationChangeEmailStatus = '';
     },
     REQUEST_CHANGE_PASSWORD: (state) => {
         state.changePasswordStatus = 'loading';

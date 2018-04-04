@@ -145,6 +145,8 @@
                 'dateFrom',
                 'dateTo',
                 'searchText',
+                'confirmationChangeEmailStatus',
+                'cancellationChangeEmailStatus'
             ]),
 
             selectedTheme: function () {
@@ -241,6 +243,36 @@
             this.$on('successResetSearchToTool', function () {
                 this.resetSearch = false;
             });
+
+            if (this.confirmationChangeEmailStatus === 'success') {
+                this.$store.dispatch('resetConfirmationChangeEmailStatus'
+                ).then(() => {
+                    this.$toasted.show('You have successfully confirm the email address change', {
+                        duration: 5000,
+                        type: 'success',
+                    });
+                }).catch(() => {
+                    this.$toasted.show('You have failed confirm the email address change', {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                });
+            }
+
+            if (this.cancellationChangeEmailStatus === 'success') {
+                this.$store.dispatch('resetCancellationChangeEmailStatus'
+                ).then(() => {
+                    this.$toasted.show('You have successfully canceled the email address change', {
+                        duration: 5000,
+                        type: 'success',
+                    });
+                }).catch(() => {
+                    this.$toasted.show('You have failed canceled the email address change', {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                });
+            }
         }
     }
 </script>
