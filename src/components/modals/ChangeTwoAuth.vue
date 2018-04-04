@@ -50,6 +50,10 @@
                 </div>
             </div>
 
+            <div v-if="dataProcessing" class="wrap-spinner">
+                <spinner/>
+            </div>
+
             <div class="modal-btn two-auth">
                 <button
                         v-if="!userTwoAuth"
@@ -99,7 +103,8 @@
                 token: '',
                 qrPath: '',
                 secret: '',
-                windowWidth: ''
+                windowWidth: '',
+                dataProcessing: false
             }
         },
         computed: {
@@ -136,6 +141,8 @@
                 this.$modal.hide('change-two-auth');
             },
             resetChangeTwoAuthStatus: function () {
+                this.token = '';
+                this.secret = '';
                 this.$store.dispatch('setChangeTwoAuthStatus',
                     this.userTwoAuth
                 ).then(() => {
@@ -162,6 +169,7 @@
                 });
             },
             makeDisableTwoAuth: function () {
+                this.dataProcessing = true;
                 const {token, secret} = this;
                 this.$store.dispatch('disableTwoAuth', {
                     token,
@@ -169,12 +177,14 @@
                 }).then(() => {
                     this.token = '';
                     this.secret = '';
+                    this.dataProcessing = false;
                     this.$modal.hide('change-two-auth');
                     this.$toasted.show('You have successfully DISABLED dual authentication', {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
+                    this.dataProcessing = false;
                     this.$toasted.show('You have failed DISABLE dual authentication', {
                         duration: 10000,
                         type: 'error',
@@ -182,6 +192,7 @@
                 });
             },
             makeEnableTwoAuth: function () {
+                this.dataProcessing = true;
                 const {token, secret} = this;
                 this.$store.dispatch('enableTwoAuth', {
                     token,
@@ -190,12 +201,14 @@
                     this.token = '';
                     this.secret = '';
                     this.qrPath = '';
+                    this.dataProcessing = false;
                     this.$modal.hide('change-two-auth');
                     this.$toasted.show('You have successfully ENABLED dual authentication', {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
+                    this.dataProcessing = false;
                     this.$toasted.show('You have failed ENABLE dual authentication', {
                         duration: 10000,
                         type: 'error',
