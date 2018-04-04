@@ -1,5 +1,6 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
-    <modal name="change-two-auth" height="auto" class="modal-xs" @opened="getQr()" @before-close="resetChangeTwoAuthStatus">
+    <modal name="change-two-auth" height="auto" class="modal-xs" @opened="getQr()"
+           @before-close="resetChangeTwoAuthStatus">
         <div class="heading">
             <p class="title" v-if="!userTwoAuth">
                 {{ $t('modals.changeTwoAuth.title.enable') }}
@@ -68,6 +69,7 @@
                 <button
                         v-if="!userTwoAuth"
                         type="button"
+                        id="enable-two-auth"
                         class="buttons btn-yellow"
                         :class="{'disabled': !checkFilledEnableTwoAuth || dataProcessing}"
                         :disabled="!checkFilledEnableTwoAuth || dataProcessing"
@@ -77,6 +79,7 @@
                 <button
                         v-if="userTwoAuth"
                         type="button"
+                        id="disable-two-auth"
                         class="buttons btn-default"
                         :class="{'disabled': !checkFilledDisableTwoAuth || dataProcessing}"
                         :disabled="!checkFilledDisableTwoAuth || dataProcessing"
@@ -230,16 +233,25 @@
                 if (!this.windowWidth)
                     return false;
                 this.windowWidth = e.target.outerWidth;
-            })
+            });
         },
         mounted() {
+            document.addEventListener('keyup', (event) => {
+                if (this.userTwoAuth && (this.checkFilledDisableTwoAuth || !this.dataProcessing)) {
+                    if (event.keyCode === 13) {
+                        document.getElementById('disable-two-auth').click();
+                    }
+                }
+
+                if (!this.userTwoAuth && (this.checkFilledEnableTwoAuth || !this.dataProcessing)) {
+                    if (event.keyCode === 13) {
+                        document.getElementById('enable-two-auth').click();
+                    }
+                }
+            });
         }
     }
 </script>
-
-<style lang="stylus" scoped>
-
-</style>
 
 <style lang="stylus">
     .warning-title
@@ -262,6 +274,7 @@
             display flex
             align-content center
             justify-content center
+            background-color rgba(13, 23, 23, 0.08)
             margin-right 4px
 
             .icon-copy

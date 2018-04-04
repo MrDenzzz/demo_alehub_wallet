@@ -623,9 +623,6 @@
                     }, 40);
                 }
             })
-        },
-        mounted() {
-            this.mountClipboard = true;
         }
     }
 </script>
