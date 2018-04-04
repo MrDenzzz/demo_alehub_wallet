@@ -278,15 +278,13 @@
 
                         this.$store.dispatch('walletsRequestLazy'
                         ).then(() => {
-                            this.$store.dispatch('transactionsRequestMoment',
+                            this.$store.dispatch('transactionsRequestLazy',
                                 this.currentWallet.address
                             ).then(() => {
                                 this.$toasted.show('Sending was successful', {
                                     duration: 5000,
                                     type: 'success',
                                 });
-
-                                console.log('Moment transactions was successful');
 
                                 this.$store.dispatch('getNotifications'
                                 ).then(() => {

@@ -110,7 +110,6 @@
                                 type: 'success',
                             });
                             this.closeModal();
-                            this.$parent.$emit('changePassword');
                         }).catch(() => {
                             this.token = '';
                             this.oldPass = '';

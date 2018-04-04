@@ -140,7 +140,6 @@
         },
         methods: {
             closeModal: function () {
-                this.$parent.$emit('cancelSwitchControl', this.userTwoAuth);
                 this.$modal.hide('change-two-auth');
             },
             resetChangeTwoAuthStatus: function () {

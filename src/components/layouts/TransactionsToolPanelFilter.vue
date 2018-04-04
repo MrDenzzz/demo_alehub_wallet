@@ -134,18 +134,18 @@
                 this.$store.dispatch('changeDateFrom',
                     val
                 ).then(() => {
-                    console.log('Success change date from');
+
                 }).catch(() => {
-                    console.log('Error change date from');
+
                 });
             },
             dateToDatepicker: function (val) {
                 this.$store.dispatch('changeDateTo',
                     val
                 ).then(() => {
-                    console.log('Success change date to');
+
                 }).catch(() => {
-                    console.log('Error change date to');
+
                 });
             }
         },
@@ -188,6 +188,7 @@
                     for (let i = 0; i < receiveTransactions.length; i++)
                         sum += receiveTransactions[i].count;
                     return sum;
+
                 } else if (receiveTransactions.length === 1)
                     return receiveTransactions[0].count;
 
@@ -203,6 +204,7 @@
                 this.dateToDatepicker = this.dateTo;
             },
             createPDF: function () {
+                //сделать цифры с нулём в датах,
                 let pdfName = 'test';
                 let doc = new JsPDF();
 
@@ -211,7 +213,6 @@
 
                 let countPage = 1;
 
-                console.log(this.transactions, 'this.transactions');
                 let summaryString = '',
                     summaryBalance = '',
                     summaryTitle = '',
@@ -230,7 +231,7 @@
                 doc.text('ALE', 175, 20);
 
                 doc.setTextColor(177, 3, 3);
-                doc.text('Send', 130, 25);
+                doc.text('Sent', 130, 25);
                 doc.text(this.currentSentBalance.toString(), 160, 25);
                 doc.text('ALE', 175, 25);
 
@@ -263,23 +264,27 @@
 
                     let count = this.transactions[i].count;
                     let time = Moment(this.transactions[i].timestamp).format("HH:mm:ss");
-                    let date = Moment(this.transactions[i].timestamp).format("D.M.YYYY");
+                    let date = Moment(this.transactions[i].timestamp).format("DD.MM.YYYY");
                     let walletAddress = this.transactions[i].walletAddress;
                     let walletDestination = this.transactions[i].walletDestination;
 
-                    if (i === 0 || date !== Moment(this.transactions[i - 1].timestamp).format("D.M.YYYY")) {
+                    if (i === 0 || date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
                         doc.setFontSize(16);
 
                         if (countPage === 1) {
                             doc.text(date, 10, 40 * (j + 1));
                         } else {
-
+                            //проверить на целесообразность
                             currentTotal = this.transactions[i - 1].balanceInfo.after;
 
                             doc.setFontSize(12);
 
-                            let currentTransactionsSummaryTitle = 'Received' + '\n' + 'Sent' + '\n' + 'Total';
-                            doc.text(currentTransactionsSummaryTitle, 130, offset + 25 * j);
+                            doc.setTextColor(75, 177, 3);
+                            doc.text('Received', 130, offset + 25 * j);
+                            doc.setTextColor(177, 3, 3);
+                            doc.text('Sent', 130, offset + 5 + 25 * j);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Total', 130, offset + 10 + 25 * j);
 
                             doc.text(currentReceived.toString(), 160, offset + 25 * j);
                             doc.setTextColor(177, 3, 3);
@@ -290,6 +295,7 @@
                             currentSent = 0;
                             currentReceived = 0;
 
+                            doc.setTextColor(75, 177, 3);
                             doc.text('ALE', 175, offset + 25 * j);
                             doc.setTextColor(177, 3, 3);
                             doc.text('ALE', 175, offset + 5 + 25 * j);
@@ -299,8 +305,42 @@
                             doc.setFontSize(16);
                             doc.text(date, 10, offset + 20 + 25 * j);
                             offset += 30;
-
                         }
+
+                        if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
+                            currentTotal = this.transactions[i - 1].balanceInfo.after;
+
+                            doc.setFontSize(12);
+
+                            doc.setTextColor(75, 177, 3);
+                            doc.text('Received', 130, offset + 25 * j);
+                            doc.setTextColor(177, 3, 3);
+                            doc.text('Sent', 130, offset + 5 + 25 * j);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Total', 130, offset + 10 + 25 * j);
+
+                            doc.setTextColor(75, 177, 3);
+                            doc.text(currentReceived.toString(), 160, offset + 25 * j);
+                            doc.setTextColor(177, 3, 3);
+                            doc.text(currentSent.toString(), 160, offset + 5 + 25 * j);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text(currentTotal.toString(), 160, offset + 10 + 25 * j);
+
+                            currentSent = 0;
+                            currentReceived = 0;
+
+                            doc.setTextColor(75, 177, 3);
+                            doc.text('ALE', 175, offset + 25 * j);
+                            doc.setTextColor(177, 3, 3);
+                            doc.text('ALE', 175, offset + 5 + 25 * j);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('ALE', 175, offset + 10 + 25 * j);
+
+                            doc.setFontSize(16);
+                            doc.text(date, 10, offset + 20 + 25 * j);
+                            offset += 30;
+                        }
+
                     }
 
                     if (type === 'SEND') {
@@ -326,7 +366,7 @@
                         doc.setTextColor(0, 0, 0);
                         doc.text(summaryString, 40, offset + 25 * j);
 
-                    } else {
+                    } else if (type === 'RECEIVED') {
                         currentReceived += count;
                         if (offset + 25 * j > height - 20) {
                             doc.addPage();
@@ -356,9 +396,14 @@
 
                         doc.setFontSize(12);
 
-                        let currentTransactionsSummaryTitle = 'Received' + '\n' + 'Sent' + '\n' + 'Total';
-                        doc.text(currentTransactionsSummaryTitle, 130, offset + 25 * j);
+                        doc.setTextColor(75, 177, 3);
+                        doc.text('Received', 130, offset + 25 * j);
+                        doc.setTextColor(177, 3, 3);
+                        doc.text('Sent', 130, offset + 5 + 25 * j);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text('Total', 130, offset + 10 + 25 * j);
 
+                        doc.setTextColor(75, 177, 3);
                         doc.text(currentReceived.toString(), 160, offset + 25 * j);
                         doc.setTextColor(177, 3, 3);
                         doc.text(currentSent.toString(), 160, offset + 5 + 25 * j);
@@ -368,6 +413,7 @@
                         currentSent = 0;
                         currentReceived = 0;
 
+                        doc.setTextColor(75, 177, 3);
                         doc.text('ALE', 175, offset + 25 * j);
                         doc.setTextColor(177, 3, 3);
                         doc.text('ALE', 175, offset + 5 + 25 * j);

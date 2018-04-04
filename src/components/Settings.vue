@@ -245,30 +245,10 @@
                 }
             }
         },
-        created() {
-        },
         mounted() {
             this.$on('onselect', function (id, value) {
                 this.newSelect(id, value)
             });
-            this.$on('changePassword', function (password) {
-                // if (data.new === '') {
-                //     this.isShow = true;
-                //     this.isSuccessNotif = false;
-                //     this.notifText = 'Password is not';
-                // } else
-                //     this.closeModal('change-password');
-            });
-            // this.$on('changeChecker', function (value) {
-            //     // this.changeableValue = value;
-            //     this.flag = value;
-            //     // console.log(this.flag, '111');
-            //     this.openModal('change-two-auth');
-            // });
-            this.$on('cancelSwitchControl', function (value) {
-                this.switchValueAuth = value;
-            });
-
 
             this.$on('changeFullName', function (value) {
                 if (this.userName !== value) {
@@ -279,22 +259,6 @@
                         });
                     });
                 }
-            });
-
-            // this.$on('changeEmail', function (email) {
-            //     if (email) {
-            //         this.$toasted.show(`A confirmation email has been sent to ${email}`, {
-            //             duration: 5000,
-            //             type: 'success',
-            //         });
-            //     }
-            // });
-
-            this.$on('changePassword', function () {
-                this.$toasted.show(`Password changed`, {
-                    duration: 5000,
-                    type: 'success',
-                });
             });
         }
     }

@@ -26,8 +26,6 @@
     import Navbar from './layouts/Navbar';
     import Spinner from './layouts/Spinner';
 
-    import sha256 from 'sha256';
-
     export default {
         name: 'confirmation-email',
         components: {
