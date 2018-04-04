@@ -11,7 +11,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <spinner v-if="loading" />
+                            <div v-if="dataProcessing" class="wrap-spinner">
+                                <spinner/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,7 +36,7 @@
         },
         data() {
             return {
-                loading: true
+                dataProcessing: true
             }
         },
         created() {
@@ -48,7 +50,7 @@
             }).then(response => {
                 localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
                 localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
-                this.loading = false;
+                this.dataProcessing = false;
                 this.$router.push('/');
             }, response => {
                 console.log('error', response);

@@ -25,7 +25,10 @@ const state = {
     changeEmailStatus: '',
     changePasswordStatus: '',
 
-    changeTwoAuthStatus: ''
+    changeTwoAuthStatus: '',
+
+    confirmationChangeEmailStatus: '',
+    cancellationChangeEmailStatus: '',
 };
 
 const actions = {
@@ -258,7 +261,7 @@ const actions = {
     confirmationChangeEmail: ({commit}, token) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CONFIRMATION_CHANGE_EMAIL');
-            let host = 'http://192.168.1.47:4000/users/change-email';
+            let host = 'http://192.168.1.47:4000/users/confirm-change-email';
             axios({
                 url: host,
                 data: token,
@@ -270,7 +273,15 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 console.log(resp, 'confirmation change email success');
-                // commit('SUCCESS_CONFIRMATION_CHANGE_EMAIL', resp);
+                if (resp.data.message === 'Cancellation of mail changes was successful') {
+                    console.log('im in cancellation');
+                    commit('SUCCESS_CANCELLATION_CHANGE_EMAIL');
+                } else {
+                    const token = resp.data.user_token;
+                    localStorage.setItem(sha256('user-token'), token);
+                    axios.defaults.headers.common['Authorization'] = token;
+                    commit('SUCCESS_CONFIRMATION_CHANGE_EMAIL', resp.data.user_email);
+                }
                 resolve(resp);
             }).catch(err => {
                 console.log(err);
@@ -412,7 +423,6 @@ const mutations = {
         state.changeEmailStatus = 'loading';
     },
     SUCCESS_CHANGE_EMAIL: (state) => {
-        // state.email = email;
         state.changeEmailStatus = 'success';
     },
     ERROR_CHANGE_EMAIL: (state) => {
@@ -422,7 +432,12 @@ const mutations = {
         state.confirmationChangeEmailStatus = 'loading';
     },
     SUCCESS_CONFIRMATION_CHANGE_EMAIL: (state, email) => {
+        state.email = email;
         state.confirmationChangeEmailStatus = 'success';
+    },
+    SUCCESS_CANCELLATION_CHANGE_EMAIL: (state) => {
+        console.log('asdasdasdasdasd');
+        state.cancellationChangeEmailStatus = 'success';
     },
     ERROR_CONFIRMATION_CHANGE_EMAIL: (state) => {
         state.confirmationChangeEmailStatus = 'error';
@@ -461,7 +476,10 @@ const getters = {
     changeUserNameStatus: state => state.changeUserNameStatus,
     isLoaderUserAuth: state => state.isLoader,
     isErrorLogin: state => state.isErrorLogin,
-    changeTwoAuthStatus: state => state.changeTwoAuthStatus
+    changeTwoAuthStatus: state => state.changeTwoAuthStatus,
+
+    confirmationChangeEmailStatus: state => state.confirmationChangeEmailStatus,
+    cancellationChangeEmailStatus: state => state.cancellationChangeEmailStatus,
 };
 
 export default {

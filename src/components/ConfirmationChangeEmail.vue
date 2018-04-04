@@ -11,7 +11,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <spinner v-if="loading" />
+                            <div v-if="dataProcessing" class="wrap-spinner">
+                                <spinner/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -24,6 +26,8 @@
     import Navbar from './layouts/Navbar';
     import Spinner from './layouts/Spinner';
 
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'confirmation-change-email',
         components: {
@@ -32,14 +36,22 @@
         },
         data() {
             return {
-                loading: true
+                dataProcessing: true
             }
         },
+        computed: {
+            ...mapGetters([
+                'confirmationChangeEmailStatus',
+                'cancellationChangeEmailStatus'
+            ])
+        },
         created() {
-            this.$store.dispatch('confirmationChangeEmail',
-                this.$route.params.token
-            ).then(() => {
-                console.log('Success confirmation change email');
+            this.$store.dispatch('confirmationChangeEmail', {
+                confirmToken: this.$route.params.token
+        }).then(() => {
+                if (this.confirmationChangeEmailStatus === 'success' || this.cancellationChangeEmailStatus === 'success') {
+                    this.$router.push('/');
+                }
             }).catch(() => {
                 console.log('Error confirmation change email');
             });
