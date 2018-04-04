@@ -235,7 +235,7 @@ const actions = {
     changeEmail: ({commit, dispatch}, emailData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_EMAIL');
-            let host = 'http://192.168.1.47:4000/users/changeEmail';
+            let host = 'http://192.168.1.47:4000/users/change-email';
             axios({
                 url: host,
                 data: emailData,
@@ -246,8 +246,7 @@ const actions = {
                 },
                 method: 'POST'
             }).then(resp => {
-                console.log(resp, 'change email success');
-                commit('SUCCESS_CHANGE_EMAIL', emailData.email);
+                commit('SUCCESS_CHANGE_EMAIL');
                 resolve(resp);
             }).catch(err => {
                 console.log(err);
@@ -256,10 +255,34 @@ const actions = {
             });
         });
     },
+    confirmationChangeEmail: ({commit}, token) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_CONFIRMATION_CHANGE_EMAIL');
+            let host = 'http://192.168.1.47:4000/users/change-email';
+            axios({
+                url: host,
+                data: token,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            }).then(resp => {
+                console.log(resp, 'confirmation change email success');
+                // commit('SUCCESS_CONFIRMATION_CHANGE_EMAIL', resp);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err);
+                commit('ERROR_CONFIRMATION_CHANGE_EMAIL', err);
+                reject(err);
+            });
+        });
+    },
     changePassword: ({commit, dispatch}, passData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_PASSWORD');
-            let host = 'http://192.168.1.47:4000/users/changePassword';
+            let host = 'http://192.168.1.47:4000/users/change-password';
             axios({
                 url: host,
                 data: passData,
@@ -388,12 +411,21 @@ const mutations = {
     REQUEST_CHANGE_EMAIL: (state) => {
         state.changeEmailStatus = 'loading';
     },
-    SUCCESS_CHANGE_EMAIL: (state, email) => {
-        state.email = email;
+    SUCCESS_CHANGE_EMAIL: (state) => {
+        // state.email = email;
         state.changeEmailStatus = 'success';
     },
     ERROR_CHANGE_EMAIL: (state) => {
         state.changeEmailStatus = 'error';
+    },
+    REQUEST_CONFIRMATION_CHANGE_EMAIL: (state) => {
+        state.confirmationChangeEmailStatus = 'loading';
+    },
+    SUCCESS_CONFIRMATION_CHANGE_EMAIL: (state, email) => {
+        state.confirmationChangeEmailStatus = 'success';
+    },
+    ERROR_CONFIRMATION_CHANGE_EMAIL: (state) => {
+        state.confirmationChangeEmailStatus = 'error';
     },
     REQUEST_CHANGE_PASSWORD: (state) => {
         state.changePasswordStatus = 'loading';

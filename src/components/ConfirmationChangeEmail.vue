@@ -1,5 +1,5 @@
 <template>
-    <div class="confirmation-user">
+    <div class="confirmation-change-email">
         <navbar
                 :title="'ALE'"
                 :isNavigate="false"
@@ -24,10 +24,8 @@
     import Navbar from './layouts/Navbar';
     import Spinner from './layouts/Spinner';
 
-    import sha256 from 'sha256';
-
     export default {
-        name: 'confirmation-email',
+        name: 'confirmation-change-email',
         components: {
             Navbar,
             Spinner
@@ -38,20 +36,12 @@
             }
         },
         created() {
-            this.$http.post(`${this.$host}/users/confirm-reg`, {
-                token: this.$route.params.token
-            }, {
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                localStorage.setItem(sha256('2o_H-Zu7nNDcmSaZX'), response.body.user_id);
-                localStorage.setItem(sha256('TdlMDdlYzViMmQ5OCI'), response.body.user_token);
-                this.loading = false;
-                this.$router.push('/');
-            }, response => {
-                console.log('error', response);
+            this.$store.dispatch('confirmationChangeEmail',
+                this.$route.params.token
+            ).then(() => {
+                console.log('Success confirmation change email');
+            }).catch(() => {
+                console.log('Error confirmation change email');
             });
         }
     }

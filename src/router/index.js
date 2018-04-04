@@ -21,6 +21,7 @@ import Recover from '@/components/Recover';
 import RecoverConfirm from '@/components/RecoverConfirm';
 import Recover2fa from '@/components/Recover2fa';
 import LoginTwoAuth from '@/components/LoginTwoAuth';
+import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -81,10 +82,16 @@ const router = new Router({
             beforeEnter: ifNotAuthenticated
         },
         {
-            path: '/registration/confirmationuser/:token',
+            path: '/registration/confirmationuser/:token',  //set kebab case url
             name: 'ConfirmationUser',
             component: ConfirmationUser,
             beforeEnter: ifNotAuthenticated
+        },
+        {
+            path: '/confirmation-change-email/:token',
+            name: 'ConfirmationChangeEmail',
+            component: ConfirmationChangeEmail,
+            beforeEnter: ifAuthenticated
         },
         // {
         //     path: '/registration/confirmationuser',

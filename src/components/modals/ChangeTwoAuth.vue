@@ -69,8 +69,8 @@
                         v-if="!userTwoAuth"
                         type="button"
                         class="buttons btn-yellow"
-                        :class="{'disable': !checkFilledEnableTwoAuth}"
-                        :disabled="!checkFilledEnableTwoAuth"
+                        :class="{'disabled': !checkFilledEnableTwoAuth || dataProcessing}"
+                        :disabled="!checkFilledEnableTwoAuth || dataProcessing"
                         @click="makeEnableTwoAuth()">
                     {{ $t('modals.changeTwoAuth.buttons.enable') }}
                 </button>
@@ -78,8 +78,8 @@
                         v-if="userTwoAuth"
                         type="button"
                         class="buttons btn-default"
-                        :class="{'disable': !checkFilledDisableTwoAuth}"
-                        :disabled="!checkFilledDisableTwoAuth"
+                        :class="{'disabled': !checkFilledDisableTwoAuth || dataProcessing}"
+                        :disabled="!checkFilledDisableTwoAuth || dataProcessing"
                         @click="makeDisableTwoAuth()">
                     {{ $t('modals.changeTwoAuth.buttons.disable') }}
                 </button>
@@ -271,7 +271,7 @@
         .btn-yellow
             margin-left 4px
 
-        .disable
+        .disabled
             opacity 0.4
 
     .modal-xs

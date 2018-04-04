@@ -20,18 +20,16 @@
                                         :input-type="'text'"
                                 />
 
-                                <!--<div class="control" @click="openModal('changeemail')">-->
-                                <!--<div class="wrap-input">-->
-                                <!--<label>E-mail</label>-->
-                                <!--<div class="textbox">-->
-                                <!--<p-->
-                                <!--class="text full-line"-->
-                                <!--&gt;-->
-                                <!--{{//userEmail}}-->
-                                <!--</p>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
+                                <div class="control" @click="openModal('changeemail')">
+                                    <div class="wrap-input">
+                                        <label>E-mail</label>
+                                        <div class="textbox">
+                                            <p class="text full-line">
+                                                {{ userEmail }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="control" @click="openModal('changepassword')">
                                     <div class="wrap-input">
@@ -109,7 +107,7 @@
         </section>
 
         <change-password-modal/>
-        <!--<change-email-modal/>-->
+        <change-email-modal/>
         <change-two-auth-modal/>
 
     </div>
@@ -148,13 +146,8 @@
             return {
                 isShow: false,
                 notifText: '',
-                // switchValueAuth: this.userTwoAuth,
                 switchValueAuth: true,
-                // changeableValue: false,
                 selectedLanguage: 'English',
-
-                flag: null,
-
                 newName: '',
                 dataProcessing: false
             }
@@ -169,12 +162,6 @@
                 'userTwoAuth',
                 'twoAuthStatus'
             ]),
-            changeFlag: function () {
-                return this.flag;
-            },
-            updatableTwoAuth: function () {
-                return this.userTwoAuth;
-            },
             selectedLang: function () {
                 switch (localStorage.getItem('systemLang')) {
                     case 'eng':
@@ -190,9 +177,6 @@
             ...mapMutations({
                 setTheme: 'SET_THEME'
             }),
-            ...mapActions([
-                'authLogout'
-            ]),
 
             logout: function () {
                 this.dataProcessing = true;

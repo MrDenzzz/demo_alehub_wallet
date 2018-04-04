@@ -33,11 +33,15 @@
                 </div>
 
                 <div v-if="dataProcessing" class="wrap-spinner">
-                    <spinner v-if="dataProcessing" />
+                    <spinner/>
                 </div>
 
                 <div class="modal-btn text-center">
-                    <button type="submit" class="btn btn-yellow btn-large">
+                    <button
+                            type="submit"
+                            class="btn btn-yellow btn-large"
+                            :class="{ 'disabled': !checkFilledChangeEmail || dataProcessing }"
+                            :disabled="!checkFilledChangeEmail || dataProcessing">
                         Change
                     </button>
                 </div>
@@ -56,12 +60,19 @@
         },
         data() {
             return {
-                email: '',
                 token: '',
+                email: '',
                 dataProcessing: false
             }
         },
-        computed: {},
+        computed: {
+            checkFilledChangeEmail: function () {
+                if (this.token.length === 6 && this.email.length !== 0)
+                    return true;
+
+                return false;
+            }
+        },
         methods: {
             closeModal: function () {
                 this.$modal.hide('changeemail');
@@ -71,16 +82,20 @@
                     this.dataProcessing = true;
                     document.getElementById('twoauth-change-email').disabled = true;
                     document.getElementById('email-change-email').disabled = true;
-                    const {email, token} = this;
+                    const {token, email} = this;
+
                     this.$store.dispatch('changeEmail', {
-                        email, token
+                        token,
+                        email
                     }).then(() => {
                         this.email = '';
                         this.token = '';
                         this.dataProcessing = false;
+                        document.getElementById('twoauth-change-email').disabled = false;
+                        document.getElementById('email-change-email').disabled = false;
                         this.closeModal();
                         this.$toasted.show(`Confirmation of the change of email was sent to this address '${this.email}'`, {
-                            duration: 5000,
+                            duration: 10000,
                             type: 'success',
                         });
                         this.$parent.$emit('changeEmail', email);
@@ -116,4 +131,7 @@
         display flex
         justify-content center
         padding 1em 0
+
+    .disabled
+        opacity 0.4
 </style>
