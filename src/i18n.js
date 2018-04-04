@@ -270,7 +270,7 @@ const messages = {
                             placeholder: 'Redemption key'
                         },
                         decrypt: {
-                            label: 'Phrase to decrypt certificate'
+                            label: 'Phrase to restore your wallet'
                         }
                     }
                 },
@@ -668,7 +668,7 @@ const messages = {
                             placeholder: 'Ключ выкупа'
                         },
                         decrypt: {
-                            label: 'Фраза для расшифровки'
+                            label: 'Фраза для восстановления кошелька'
                         }
                     }
                 },

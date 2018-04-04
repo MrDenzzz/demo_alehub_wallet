@@ -34,7 +34,11 @@
                 <div class="modal-control">
                     <div class="modal-input">
                         <label class="title">{{ $t('modals.newWallet.new.fields.title.label') }}</label>
-                        <input id="newWalletName" type="text" class="input" v-model="walletName"
+                        <input
+                                id="newWalletName"
+                                type="text"
+                                class="input"
+                                v-model="walletName"
                                :placeholder="$t('modals.newWallet.new.fields.title.placeholder')"
                                @keyup.enter="changeStepCreate('next')">
                     </div>
@@ -69,8 +73,7 @@
                                 @keyup.enter="addMnemonic"
                                 @keyup.delete="removeMnemonic"
                                 @keyup.space="addMnemonic"
-                                @blur="onBlurNewWallet"
-                        />
+                                @blur="onBlurNewWallet"/>
                     </div>
                 </div>
 
@@ -94,11 +97,16 @@
 
         <div v-if="newWalletStep === 2 && recoveryStep === 1">
             <div class="modal-warning">
-                <p class="agreed">{{ $t('modals.newWallet.recovery.phrase.text') }}</p>
+                <p class="agreed">
+                    {{ $t('modals.newWallet.recovery.phrase.text') }}
+                </p>
 
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.phrase.checkbox') }}</span>
-                    <input type="checkbox" class="type_project_arr" v-model="isAgreedRecovery"/>
+                    <input
+                            type="checkbox"
+                            class="type_project_arr"
+                            v-model="isAgreedRecovery"/>
                     <div class="control-indicator"></div>
                 </label>
             </div>
@@ -170,21 +178,26 @@
                             @keyup.enter="addMnemonicRecovery"
                             @keyup.delete="removeMnemonicRecovery"
                             @keyup.space="addMnemonicRecovery"
-                            @blur="recoveryBlur"
-                    />
+                            @blur="recoveryBlur"/>
                 </div>
             </div>
 
             <div class="modal-warning">
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.finish.fields.deviceOnly') }}</span>
-                    <input type="checkbox" class="type_project_arr" v-model="restorationAgreements.deviceOnly"/>
+                    <input
+                            type="checkbox"
+                            class="type_project_arr"
+                            v-model="restorationAgreements.deviceOnly"/>
                     <div class="control-indicator"></div>
                 </label>
 
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.finish.fields.secure') }}</span>
-                    <input type="checkbox" class="type_project_arr" v-model="restorationAgreements.phraseSecure"/>
+                    <input
+                            type="checkbox"
+                            class="type_project_arr"
+                            v-model="restorationAgreements.phraseSecure"/>
                     <div class="control-indicator"></div>
                 </label>
             </div>
@@ -373,9 +386,11 @@
                 let newMnemonic = this.mnemonicFieldRecovery.replace(/,/g, ' ');
                 if (newMnemonic === '')
                     return false;
-                for (let i = 0; i < newMnemonic.split(' ').length; i++) {
-                    if (newMnemonic.split(' ')[i] !== '')
-                        this.mnemonicsRecovery.push(newMnemonic.split(' ')[i]);
+
+                newMnemonic = newMnemonic.split(' ');
+                for (let i = 0; i < newMnemonic.length; i++) {
+                    if (newMnemonic[i] !== '')
+                        this.mnemonicsRecovery.push(newMnemonic[i]);
                 }
                 this.mnemonicFieldRecovery = '';
             },
@@ -399,9 +414,9 @@
                 }
             },
             focusInput: function (id) {
-                // setTimeout(() => {
-                document.getElementById(id).focus();
-                // }, 40);
+                setTimeout(() => {
+                    document.getElementById(id).focus();
+                }, 40);
             },
             openDropdown: function () {
                 this.isOpenOptions = !this.isOpenOptions;
@@ -431,10 +446,10 @@
                 this.isOpenOptions = false;
                 //this.activityChecked(false);
                 //this.walletName('');
-                // for (let i = 0; i < this.dropDownOption.length; i++)
-                //     this.dropDownOption[i].isSelected = false;
+                for (let i = 0; i < this.dropDownOption.length; i++)
+                    this.dropDownOption[i].isSelected = false;
 
-                // this.dropDownOption[0].isSelected = true;
+                this.dropDownOption[0].isSelected = true;
                 this.walletName = '';
                 this.redemptionKey = '';
                 this.newWalletStep = 1;
@@ -600,7 +615,7 @@
                     type: 'success',
                 });
             },
-            getIcon(name) {
+            getIcon: function (name) {
                 if (this.selectedTheme === "dark")
                     return require(`../../assets/img/${name}_dark.svg`);
                 else if (this.selectedTheme === "white")
@@ -621,7 +636,6 @@
                     }
                 }
             }, 5);
-
 
             document.addEventListener('keyup', (event) => {
                 if (this.newWalletStep === 2 && this.recoveryStep === 1) {
