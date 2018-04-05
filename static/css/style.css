@@ -1306,9 +1306,6 @@ body {
     display: none !important; }
   .navbar .navbar-nav {
     width: auto; }
-  .navbar .title {
-    position: initial;
-    transform: translateX(50%); }
   .mobile-menu {
     display: block; }
     .mobile-menu a {
