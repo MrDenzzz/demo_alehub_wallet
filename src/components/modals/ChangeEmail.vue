@@ -1,19 +1,19 @@
 <template>
     <modal name="changeemail" height="auto" class="modal-xs">
         <div class="heading">
-            <p class="title">Change email</p>
+            <p class="title">{{ $t('modals.changeEmail.title') }}</p>
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
             <form @submit.prevent="changeEmail()">
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">2fa key</label>
+                        <label class="title">{{ $t('modals.changeEmail.fields._2fa.label') }}</label>
                         <input
                                 id="twoauth-change-email"
                                 type="number"
                                 class="input"
-                                placeholder="Enter 2fa code"
+                                :placeholder="$t('modals.changeEmail.fields._2fa.placeholder')"
                                 v-model="token"
                                 required>
                     </div>
@@ -21,12 +21,12 @@
 
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">Email</label>
+                        <label class="title">{{ $t('modals.changeEmail.fields._2fa.label') }}</label>
                         <input
                                 id="email-change-email"
                                 type="email"
                                 class="input"
-                                placeholder="Enter new email"
+                                :placeholder="$t('modals.changeEmail.fields._2fa.placeholder')"
                                 v-model="email"
                                 required>
                     </div>
@@ -42,7 +42,7 @@
                             class="btn btn-yellow btn-large"
                             :class="{ 'disabled': !checkFilledChangeEmail || dataProcessing }"
                             :disabled="!checkFilledChangeEmail || dataProcessing">
-                        Change
+                        {{ $t('modals.changeEmail.buttons.change') }}
                     </button>
                 </div>
             </form>
