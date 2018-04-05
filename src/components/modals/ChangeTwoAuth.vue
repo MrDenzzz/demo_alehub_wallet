@@ -11,7 +11,6 @@
             <i class="close" @click="closeModal"></i>
         </div>
         <div class="body">
-
             <div class="qr-code" v-if="!userTwoAuth">
                 <Spinner v-if="twoAuthStatus !== 'success'"/>
                 <qriously

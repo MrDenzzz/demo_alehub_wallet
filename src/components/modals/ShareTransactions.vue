@@ -1,5 +1,5 @@
 <template>
-    <modal name="shareTransactions" height="auto" class="modal-xs">
+    <modal name="share-transactions" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">Share</p>
             <i class="close" @click="closeModal"></i>
