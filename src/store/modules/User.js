@@ -137,17 +137,18 @@ const actions = {
             });
         });
     },
-    confirmationRegistration: ({commit}) => {
+    confirmationRegistration: ({commit}, token) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CONFIRMATION_REGISTRATION');
-            let host = 'http://192.168.1.47:4000/users/generate-qr';
+            let host = 'http://192.168.1.47:4000/users/confirm-reg';
             axios({
                 url: host,
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json'
                 },
-                method: 'GET'
+                data: token,
+                method: 'POST'
             }).then(resp => {
                 commit('SUCCESS_CONFIRMATION_REGISTRATION');
                 resolve(resp);
@@ -193,12 +194,12 @@ const actions = {
             let host = 'http://192.168.1.47:4000/users/enable-two-auth';
             axios({
                 url: host,
-                data: authData,
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json',
                     'Authorization': axios.defaults.headers.common['Authorization']
                 },
+                data: authData,
                 method: 'POST'
             }).then(resp => {
                 commit('SUCCESS_ENABLE_TWOAUTH');
@@ -419,6 +420,7 @@ const mutations = {
     },
     SUCCESS_CONFIRMATION_REGISTRATION: (state) => {
         state.confirmationRegistrationStatus = 'success';
+        console.log(state.confirmationRegistrationStatus, 'state.confirmationRegistrationStatus check');
     },
     ERROR_CONFIRMATION_REGISTRATION: (state) => {
         state.confirmationRegistrationStatus = 'error';

@@ -9,29 +9,27 @@
                         id="datepickerFrom"
                         v-model="dateFromDatepicker"
                         language="en"
-                        :placeholder="'Date from'"
-                />
+                        :placeholder="'Date from'"/>
 
                 <datepicker
                         id="datepickerTo"
                         v-model="dateToDatepicker"
                         language="en"
-                        :placeholder="'Date to'"
-                />
+                        :placeholder="'Date to'"/>
             </div>
         </div>
         <div class="docs">
             <button
                     class="buttons btn-default"
-                    :class="{'disable-gray-button': currentTransactions.length === 0}"
-                    @click="createPDF"
+                    :class="{ 'disable-gray-button': currentTransactions.length === 0 }"
+                    @click="openModal('download-pdf')"
                     :disabled="currentTransactions.length === 0">
                 {{ $t('pages.summary.searchPanel.buttons.download') }}
             </button>
             <button
                     class="buttons btn-default"
-                    :class="{'disable-gray-button': currentTransactions.length === 0}"
-                    @click="openModal('shareTransactions')"
+                    :class="{ 'disable-gray-button': currentTransactions.length === 0 }"
+                    @click="openModal('share-transactions')"
                     :disabled="currentTransactions.length === 0">
                 {{ $t('pages.summary.searchPanel.buttons.share') }}
             </button>
@@ -62,40 +60,33 @@
             <div class="stats-col">
                 <div class="result-opt-span">
                         <span class="count">
-                            <formatting-price
-                                    :value="currentReceivedBalance"
-                            />
+                            <formatting-price :value="currentReceivedBalance"/>
                         </span>
-                    ALC
+                    ALE
                 </div>
                 <div class="result-opt-span sent">
                         <span class="count">
-                            <formatting-price
-                                    :value="currentSentBalance"
-                            />
+                            <formatting-price :value="currentSentBalance"/>
                         </span>
-                    ALC
+                    ALE
                 </div>
                 <div class="result-opt-span">
                         <span class="count">
-                            <formatting-price
-                                    :value="currentBalanceBeginPeriod"
-                            />
+                            <formatting-price :value="currentBalanceBeginPeriod"/>
                         </span>
-                    ALC
+                    ALE
                 </div>
                 <div class="result-opt-span">
                         <span class="count">
-                            <formatting-price
-                                    :value="currentBalanceEndPeriod"
-                            />
+                            <formatting-price :value="currentBalanceEndPeriod"/>
                         </span>
-                    ALC
+                    ALE
                 </div>
             </div>
         </div>
 
         <modal-share-transactions/>
+        <modal-download-p-d-f/>
 
     </div>
 </template>
@@ -104,6 +95,7 @@
     import Datepicker from 'vuejs-datepicker';
     import FormattingPrice from '../layouts/FormattingPrice';
     import ModalShareTransactions from '../modals/ShareTransactions';
+    import ModalDownloadPDF from '../modals/DownloadPDF';
 
     import JsPDF from 'jspdf';
     import Moment from 'moment';
@@ -115,7 +107,8 @@
         components: {
             Datepicker,
             FormattingPrice,
-            ModalShareTransactions
+            ModalShareTransactions,
+            ModalDownloadPDF
         },
         props: {
             currentTransactions: {
@@ -196,8 +189,8 @@
             },
         },
         methods: {
-            openModal: function (name) {
-                this.$modal.show(name);
+            openModal: function (nameModal) {
+                this.$modal.show(nameModal);
             },
             watchResetStateDate: function () {
                 this.dateFromDatepicker = this.dateFrom;
@@ -431,4 +424,3 @@
         },
     }
 </script>
-

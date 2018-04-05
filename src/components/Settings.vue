@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
 
-                                <div class="control" @click="openModal('changepassword')">
+                                <div class="control" @click="openModal('change-password')">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">

@@ -1,11 +1,10 @@
 <template>
-    <modal name="changepassword" height="auto" class="modal-xs">
+    <modal name="change-password" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">{{ $t('modals.changePassword.title') }}</p>
-            <i class="close" @click="closeModal"></i>
+            <i class="close" @click="closeModal('change-password')"></i>
         </div>
         <div class="body">
-
             <form @submit.prevent="changePassword()">
                 <div class="modal-control">
                     <div class="modal-input">
@@ -55,7 +54,7 @@
                 </div>
 
                 <div v-if="dataProcessing" class="wrap-spinner">
-                    <Spinner />
+                    <spinner />
                 </div>
 
                 <div class="modal-btn text-center">
@@ -88,8 +87,8 @@
         computed: {
         },
         methods: {
-            closeModal() {
-                this.$modal.hide('changepassword');
+            closeModal: function (nameModal) {
+                this.$modal.hide(nameModal);
             },
             changePassword: function () {
                 if (this.oldPass.length >= 8 || this.newPass.length >= 8 || this.confirmPass.length >= 8) {

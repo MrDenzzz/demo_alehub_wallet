@@ -44,7 +44,9 @@
                                                 required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-black btn-block nomargin"
+                                    <button
+                                            type="submit"
+                                            class="btn btn-black btn-block nomargin"
                                             @click="isLoadingCheck">
                                         {{ $t('pages.login.login') }}
                                     </button>
