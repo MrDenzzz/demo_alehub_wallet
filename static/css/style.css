@@ -1308,7 +1308,7 @@ body {
     width: auto; }
   .navbar .title {
     position: initial;
-    transform: unset; }
+    transform: translateX(50%); }
   .mobile-menu {
     display: block; }
     .mobile-menu a {
