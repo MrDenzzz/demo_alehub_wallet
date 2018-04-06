@@ -371,3 +371,22 @@
     }
   }
 }
+
+.confirmation-user {
+  .navbar {
+    @media(max-width: 425px) {
+      justify-content: center;
+    }
+
+    .title {
+      display: block;
+
+      @media(max-width: 425px) {
+        position: unset;
+        left: unset;
+        transform: unset;
+        padding-left: unset;
+      }
+    }
+  }
+}
