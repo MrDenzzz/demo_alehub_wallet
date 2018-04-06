@@ -1243,6 +1243,9 @@ body {
 .nav-center {
   justify-content: center; }
 
+.confirmation-user .hamburger {
+  display: none; }
+
 .hamburger {
   display: none;
   cursor: pointer;
