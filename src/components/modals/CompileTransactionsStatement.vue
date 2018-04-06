@@ -39,6 +39,12 @@
                     </div>
                 </div>
 
+                <div class="modal-control">
+                    <div class="modal-input__pdf">
+                        <input class="search-transactions" type="text" placeholder="Search transactions">
+                    </div>
+                </div>
+
                 <div class="modal-control"
                      style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div class="wrap">
@@ -127,7 +133,7 @@
                 dateToDatepicker: '',
                 dataProcessing: false,
 
-                selectionTypeStatement: 'current',
+                selectionTypeStatement: 'all',
 
 
                 heightDoc: 297,
@@ -178,22 +184,49 @@
             closeModal: function (name) {
                 this.$modal.hide(name);
             },
-            getTypeTransaction: function (i) {
-                if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
-                    return 'RECEIVED';
-                return 'SEND';
-            },
+
+            //в computed
             checkTypeTransaction: function (type) {
                 if (type === 'SEND')
                     return true;
                 return false;
             },
+
+            getTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
+                if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
+                    return 'RECEIVED';
+                return 'SEND';
+            },
+
+            //tmp solution
+            getTypeTransactionAll: function (item) {
+                if (item.after - item.before > 0)
+                    return 'RECEIVED';
+                return 'SEND';
+            },
+
+            calcBalance: function (i, count) {
+                this.currentTotal = this.transactions[i].balanceInfo.after;
+                if (this.checkTypeTransaction(this.getTypeTransaction(i)))
+                    this.currentSent += count;
+                else
+                    this.currentReceived += count;
+            },
+
+            calcBalanceAll: function (item, count) {
+                this.currentTotal = item.after;
+                if (this.checkTypeTransaction(this.getTypeTransactionAll(item)))
+                    this.currentSent += count;
+                else
+                    this.currentReceived += count;
+            },
+
             generateHeaderTransactionsStatement: function (doc, name) {
                 doc.setFontSize(this.titleFontSize);
                 // doc.text(this.currentWallet.name, 90, 10);
 
                 //написать рассчёт положения начала названия по оси Х в зависимости от длины названия кошелька
-                doc.text(name, 90, this.offset);
+                doc.text(name, 10, this.offset);
 
                 //add date range
 
@@ -226,6 +259,12 @@
                 this.offset += 15;
             },
 
+            generateDateTransactions: function (doc, date, j) {
+                doc.setFontSize(this.dateDayFontSize);
+                doc.text(date, this.xPositionDateTitleDay, this.offset + 25 * j);
+                this.offset += 15;
+            },
+
             generateTransactionsDayStatement: function (doc, j, isLast) {
                 if (isLast)
                     this.offset += 25;
@@ -248,7 +287,7 @@
                 doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
 
-                this.offset += 25;
+                this.offset += 15;
             },
 
             generateTransaction: function (doc, type, count, date, time, walletAddress, walletDestination, j) {
@@ -266,20 +305,6 @@
                 doc.text(summaryString, 40, this.offset + 25 * j);
             },
 
-            generateDateTransactions: function (doc, date, j) {
-                doc.setFontSize(this.dateDayFontSize);
-                doc.text(date, this.xPositionDateTitleDay, this.offset + 25 * j);
-                this.offset += 15;
-            },
-
-            calcBalance: function (i, count) {
-                this.currentTotal = this.transactions[i].balanceInfo.after;
-                if (this.checkTypeTransaction(this.getTypeTransaction(i)))
-                    this.currentSent += count;
-                else
-                    this.currentReceived += count;
-            },
-
             makePDF: function () {
                 let doc = new JsPDF(),
                     pdfName = 'test',
@@ -294,6 +319,7 @@
                     //     console.log(item.transactions[0].timestamp, 'item.transactions[0].timestamp');
                     // });
 
+                    console.log(this.allTransactions, 'this.allTransactions');
 
                     for (let i = 0; i < this.allTransactions.length; i++) {
 
@@ -302,13 +328,71 @@
 
                         for (let k = 0, factor = 0; k < this.allTransactions[i].transactions.length; k++, factor = k - balancer) {
 
+                            let count = this.allTransactions[i].transactions[k].count,
+                                time = Moment(this.allTransactions[i].transactions[k].timestamp).format("HH:mm:ss"),
+                                date = Moment(this.allTransactions[i].transactions[k].timestamp).format("DD.MM.YYYY"),
+                                walletAddress = this.allTransactions[i].transactions[k].walletAddress,
+                                walletDestination = this.allTransactions[i].transactions[k].walletDestination;
+
+
+                            if (this.offset + 25 * factor > this.heightDoc - 25) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = k;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+
+
+                            if (k !== 0 && date !== Moment(this.allTransactions[i].transactions[k - 1].timestamp).format("DD.MM.YYYY")) {
+
+                                this.generateTransactionsDayStatement(doc, factor, false);
+                                this.generateDateTransactions(doc, date, factor);
+
+                                this.currentReceived = 0;
+                                this.currentSent = 0;
+                            }
+
+                            if (this.offset + 25 * factor > this.heightDoc - 25) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = k;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+
+                            this.calcBalanceAll(this.allTransactions[i].transactions[k].balanceInfo, count);
+                            this.generateTransaction(doc, this.getTypeTransactionAll(this.allTransactions[i].transactions[k].balanceInfo),
+                                count, date, time, walletAddress, walletDestination, factor);
+
+
+                            if (this.offset + 25 * factor > this.heightDoc - 25) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = k;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+
+
+                            if (k === this.allTransactions[i].transactions.length - 1) {
+                                this.calcBalanceAll(this.allTransactions[i].transactions[k].balanceInfo, count);
+                                this.generateTransactionsDayStatement(doc, factor, true);
+
+                                this.currentReceived = 0;
+                                this.currentSent = 0;
+                            }
+
                             if (k === this.allTransactions[i].transactions.length - 1 && i !== this.allTransactions.length - 1) {
                                 doc.addPage();
                                 countPage++;
                                 doc.setPage(countPage);
-                                balancer = factor;
+                                balancer = 0;
                                 factor = 0;
-                                this.offset = 25;
+                                this.offset = 10;
                             }
                         }
 
@@ -318,6 +402,7 @@
                     }
 
                     doc.save(pdfName + '.pdf');
+                    return;
                 }
 
 
@@ -370,6 +455,7 @@
                     }
 
                     doc.save(pdfName + '.pdf');
+                    return;
                 }
             },
 
@@ -431,6 +517,11 @@
 </style>
 
 <style lang="stylus" scoped>
+    .search-transactions
+        background-color transparent
+        border none
+        border-bottom 1px solid #ccc
+
     .body
         .modal-control
             .modal-input__pdf
