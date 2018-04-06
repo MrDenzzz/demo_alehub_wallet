@@ -1351,6 +1351,19 @@ body {
   .navbar .title {
     display: none; } }
 
+@media (max-width: 425px) {
+  .confirmation-user .navbar {
+    justify-content: center; } }
+
+.confirmation-user .navbar .title {
+  display: block; }
+  @media (max-width: 425px) {
+    .confirmation-user .navbar .title {
+      position: unset;
+      left: unset;
+      transform: unset;
+      padding-left: unset; } }
+
 .menu {
   z-index: 4;
   width: 360px;
