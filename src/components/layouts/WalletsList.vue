@@ -3,33 +3,34 @@
         <div class="menu" :class="{'is-opened': isToggle, 'scrollable': scrollable}">
             <div class="wallet-list wallet-search" v-if="newWallets.length">
                 <div class="wrap-in-wallet">
-                    <img :src="getIcon('loupe')" width="18" height="15" class="icon" id="loupe">
-                    <input
-                            type="text"
-                            :placeholder="$t('pages.walletsList.search')"
-                            v-model="searchField"
+                    <img id="loupe"
+                         class="icon"
+                         :src="getIcon('loupe')"
+                         width="18"
+                         height="15">
+                    <input type="text"
+                           :placeholder="$t('pages.walletsList.search')"
+                           v-model="searchField"
                     >
                 </div>
             </div>
 
-            <div
-                    class="wallet-list wallet-element"
-                    v-for="wallet in newWalletsList"
-                    :key="wallet.address"
-                    :id="wallet.address"
-                    :class="{ active: checkActive(wallet.address) }"
-                    @click="selectNewWallet(wallet.address)"
-            >
+            <div class="wallet-list wallet-element"
+                 v-for="wallet in newWalletsList"
+                 :key="wallet.address"
+                 :id="wallet.address"
+                 :class="{ active: checkActive(wallet.address) }"
+                 @click="selectNewWallet(wallet.address)">
+
                 <div class="wrap-in-wallet">
                     <p>{{ wallet.name }}</p>
                     <div class="separator"></div>
                     <p class="wallet">
-                        <vue-numeric
-                                :separator='correctLangSep'
-                                :decimal-separator='correctLangDecSep'
-                                :value="wallet.balance"
-                                :precision="correctValuePrecision(wallet.balance)"
-                                :read-only="true">
+                        <vue-numeric :separator='correctLangSep'
+                                     :decimal-separator='correctLangDecSep'
+                                     :value="wallet.balance"
+                                     :precision="correctValuePrecision(wallet.balance)"
+                                     :read-only="true">
                         </vue-numeric>
                         {{ ' ' + 'ALE'}}
                     </p>
@@ -218,7 +219,7 @@
                 if (!scrollableEl)
                     return false;
 
-                (scrollableEl.scrollHeight > scrollableEl.clientHeight) ? this.scrollable = true :this.scrollable = false;
+                (scrollableEl.scrollHeight > scrollableEl.clientHeight) ? this.scrollable = true : this.scrollable = false;
             }
         },
         created() {

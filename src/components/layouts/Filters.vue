@@ -5,26 +5,22 @@
         <div class="two-input">
             <div>
                 <label for="price_from" class="label-from">{{ $t('pages.jobOffers.filtersBlock.price.from') }}</label>
-                <input
-                        id="price_from"
-                        type="number"
-                        class="input input-from"
-                        :placeholder="getMinPriceOffers"
-                        @blur="filterPriceFrom"
-                        @keydown.enter="filterPriceFrom"
-                >
+                <input id="price_from"
+                       type="number"
+                       class="input input-from"
+                       :placeholder="getMinPriceOffers"
+                       @blur="filterPriceFrom"
+                       @keydown.enter="filterPriceFrom">
             </div>
             <div>
                 <label for="price_to" class="label-to">{{ $t('pages.jobOffers.filtersBlock.price.to') }}</label>
                 <!-- забирать эти значения не из геттера, а из стейта -->
-                <input
-                        id="price_to"
-                        type="number"
-                        class="input input-to"
-                        :placeholder="getMaxPriceOffers"
-                        @blur="filterPriceTo"
-                        @keydown.enter="filterPriceTo"
-                >
+                <input id="price_to"
+                       type="number"
+                       class="input input-to"
+                       :placeholder="getMaxPriceOffers"
+                       @blur="filterPriceTo"
+                       @keydown.enter="filterPriceTo">
             </div>
         </div>
 
@@ -33,13 +29,11 @@
         <div class="control-group group-double">
             <label class="control control-checkbox" v-for="item in typeOffer">
                 {{ item.title }}
-                <input
-                        type="checkbox"
-                        class="type_project_arr"
-                        :key="item.key"
-                        :value="item.value"
-                        @click="filterType"
-                >
+                <input type="checkbox"
+                       class="type_project_arr"
+                       :key="item.key"
+                       :value="item.value"
+                       @click="filterType">
                 <div class="control-indicator"></div>
             </label>
         </div>
@@ -48,26 +42,24 @@
 
         <div class="two-input">
             <div>
-                <label for="rating_from" class="label-from">{{ $t('pages.jobOffers.filtersBlock.contractor.from') }}</label>
-                <input
-                        id="rating_from"
-                        type="number"
-                        class="input input-from"
-                        :placeholder="getMinRatingOffers"
-                        @blur="filterRatingFrom"
-                        @keydown.enter="filterRatingFrom"
-                >
+                <label for="rating_from" class="label-from">
+                    {{ $t('pages.jobOffers.filtersBlock.contractor.from') }}
+                </label>
+                <input id="rating_from"
+                       type="number"
+                       class="input input-from"
+                       :placeholder="getMinRatingOffers"
+                       @blur="filterRatingFrom"
+                       @keydown.enter="filterRatingFrom">
             </div>
             <div>
                 <label for="rating_to" class="label-to">{{ $t('pages.jobOffers.filtersBlock.contractor.to') }}</label>
-                <input
-                        id="rating_to"
-                        type="number"
-                        class="input input-to"
-                        :placeholder="getMaxRatingOffers"
-                        @blur="filterRatingTo"
-                        @keydown.enter="filterRatingTo"
-                >
+                <input id="rating_to"
+                       type="number"
+                       class="input input-to"
+                       :placeholder="getMaxRatingOffers"
+                       @blur="filterRatingTo"
+                       @keydown.enter="filterRatingTo">
             </div>
         </div>
 
@@ -76,12 +68,10 @@
         <div class="control-group one-col">
             <label class="control control-checkbox" v-for="item in professionalArea">
                 {{ item.title }}
-                <input
-                        type="checkbox"
-                        class="professional_area_arr"
-                        :value="item.value"
-                        @click="filterProfessionalArea"
-                >
+                <input type="checkbox"
+                       class="professional_area_arr"
+                       :value="item.value"
+                       @click="filterProfessionalArea">
                 <div class="control-indicator"></div>
             </label>
         </div>
@@ -92,13 +82,11 @@
             <div class="project-duration" v-for="item in projectDuration">
                 <label class="control control-radio">
                     {{ item.title }}
-                    <input
-                            type="radio"
-                            class="duration_arr"
-                            :value="item.value" name="duration"
-                            @click="filterProjectDuration"
-                            checked="item.checked"
-                    >
+                    <input type="radio"
+                           class="duration_arr"
+                           :value="item.value" name="duration"
+                           @click="filterProjectDuration"
+                           checked="item.checked">
                     <div class="control-indicator"></div>
                 </label>
             </div>
@@ -109,12 +97,10 @@
                 <span class="bold">
                     {{ item.title }}
                 </span>
-                <input
-                        type="checkbox"
-                        id="check_premium"
-                        value="premium"
-                        @click="filterPremium"
-                >
+                <input type="checkbox"
+                       id="check_premium"
+                       value="premium"
+                       @click="filterPremium">
                 <div class="control-indicator"></div>
             </label>
         </div>

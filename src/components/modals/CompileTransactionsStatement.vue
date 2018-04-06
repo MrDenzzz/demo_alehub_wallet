@@ -1,83 +1,173 @@
 <template>
     <modal name="download-pdf" width="700" height="auto">
         <div class="heading">
-            <p class="title">Download statistics</p>
+            <p class="title">Export to PDF</p>
             <i class="close" @click="closeModal('download-pdf')"></i>
         </div>
         <div class="body">
             <form @submit.prevent="downloadPDF">
                 <div class="modal-control">
-                    <div class="modal-input__pdf">
+                    <div class="modal-line">
+                        <p class="modal-control__title">
+                            Select from where you want to export transactions
+                        </p>
+                    </div>
+                    <div class="modal-line">
                         <input type="radio"
                                id="radio1"
                                name="transaction-selection"
                                value="current"
                                v-model="selectionTypeStatement">
-                        <label for="radio2">Транзакции текущего кошелька</label>
+                        <label for="radio1" class="input-label">Current wallet transactions</label>
                     </div>
-                <!--</div>-->
-                <!--<div class="modal-control" style="border-bottom: none;">-->
-                    <div class="modal-input__pdf">
+                    <div class="modal-line">
                         <input
                                 type="radio"
                                 id="radio2"
                                 name="transaction-selection"
                                 value="all"
                                 v-model="selectionTypeStatement">
-                        <label for="radio1">Все транзакции</label>
+                        <label for="radio2" class="input-label">All wallets transactions</label>
                     </div>
-                <!--</div>-->
-                <!--<div class="modal-control">-->
-                    <div class="modal-input__pdf">
+                    <div class="modal-line">
                         <input
                                 type="radio"
                                 id="radio3"
                                 name="transaction-selection"
                                 value="optional"
                                 v-model="selectionTypeStatement">
-                        <label for="radio3">Опционально</label>
+                        <label for="radio3" class="input-label">Custom</label>
                     </div>
                 </div>
 
                 <div class="modal-control">
-                    <div class="modal-input__pdf">
-                        <input class="search-transactions" type="text" placeholder="Search transactions">
+                    <div class="modal-line">
+                        <p class="modal-control__title">
+                            Select from where you want to export transactions
+                        </p>
                     </div>
-                </div>
-
-                <div class="modal-control"
-                     style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div class="wrap">
-                        <div class="modal-input__pdf" v-for="wallet in wallets">
+                    <div class="modal-control__wrap">
+                        <div class="modal-control__block" v-for="wallet in wallets">
                             <input type="checkbox" name="wallets">
-                            <label>{{ wallet.name }}</label>
+                            <label class="input-label">{{ wallet.name }}</label>
                         </div>
-                    </div>
-
-                    <div class="modal-input__pdf">
-                        <button type="button">
-                            Скрыть пустые кошельки
-                        </button>
                     </div>
                 </div>
 
                 <div class="modal-control">
                     <div class="modal-input">
-                        <datepicker
-                                id="datepickerFrom1"
-                                v-model="dateFromDatepicker"
-                                language="en"
-                                :inline="true"
-                                :placeholder="'Date from'"/>
-
-                        <datepicker
-                                id="datepickerTo1"
-                                v-model="dateToDatepicker"
-                                language="en"
-                                :inline="true"
-                                :placeholder="'Date to'"/>
+                        <label class="title">Tags</label>
+                        <input type="text" class="input"
+                               placeholder="Type a tag here to choose specific transactions (optional)">
                     </div>
                 </div>
+
+                <div class="modal-control border-none">
+                    <div class="row-flex">
+                        <div class="col-6">
+                            <div class="modal-block">
+                                <div class="modal-line">
+                                    <p class="modal-control__title">
+                                        Transaction's type
+                                    </p>
+                                </div>
+                                <div class="modal-line">
+                                    <input type="radio"
+                                           id="income"
+                                           name="transaction-type"
+                                           value="income"
+                                           v-model="selectionTypeTransactions">
+                                    <label for="income" class="input-label">Income</label>
+                                </div>
+                                <div class="modal-line">
+                                    <input type="radio"
+                                           id="outcome"
+                                           name="transaction-type"
+                                           value="outcome"
+                                           v-model="selectionTypeTransactions">
+                                    <label for="outcome" class="input-label">Outcome</label>
+                                </div>
+                                <div class="modal-line">
+                                    <input type="radio"
+                                           id="all"
+                                           name="transaction-type"
+                                           value="all"
+                                           v-model="selectionTypeTransactions">
+                                    <label for="all" class="input-label">All</label>
+                                </div>
+                            </div>
+                            <div class="modal-block">
+                                <div class="modal-line">
+                                    <p class="modal-control__title">
+                                        Transaction's amount range
+                                    </p>
+                                </div>
+                                <div class="modal-line">
+
+                                    <!--<div class="two-input">-->
+                                    <!--<div>-->
+                                    <!--<label for="price_from" class="label-from">{{ $t('pages.jobOffers.filtersBlock.price.from') }}</label>-->
+                                    <!--<input id="price_from"-->
+                                    <!--type="number"-->
+                                    <!--class="input input-from"-->
+                                    <!--:placeholder="123">-->
+                                    <!--</div>-->
+                                    <!--<div>-->
+                                    <!--<label for="price_to" class="label-to">{{ $t('pages.jobOffers.filtersBlock.price.to') }}</label>-->
+                                    <!--<input id="price_to"-->
+                                    <!--type="number"-->
+                                    <!--class="input input-to"-->
+                                    <!--:placeholder="33321">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <div class="two-input">
+                                        <div>
+                                            <label for="balance-from" class="label-from">from</label>
+                                            <input type="number"
+                                                   id="balance-from"
+                                                   class="input input-from"
+                                                   name="transaction-selection"
+                                                   value="income"
+                                                   placeholder="2000"
+                                                   v-model="balanceFilter.from">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-line">
+                                    <label for="balance-to" class="label-to">to</label>
+                                    <input type="number"
+                                           class="input input-to"
+                                           id="balance-to"
+                                           name="transaction-selection"
+                                           value="outcome"
+                                           placeholder="9123445"
+                                           v-model="balanceFilter.to">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="modal-control">-->
+                <!--<div class="modal-input">-->
+                <!--<datepicker-->
+                <!--id="datepickerFrom1"-->
+                <!--v-model="dateFromDatepicker"-->
+                <!--language="en"-->
+                <!--:inline="true"-->
+                <!--:placeholder="'Date from'"/>-->
+
+                <!--<datepicker-->
+                <!--id="datepickerTo1"-->
+                <!--v-model="dateToDatepicker"-->
+                <!--language="en"-->
+                <!--:inline="true"-->
+                <!--:placeholder="'Date to'"/>-->
+                <!--</div>-->
+                <!--</div>-->
 
 
                 <div v-if="dataProcessing" class="wrap-spinner">
@@ -86,7 +176,7 @@
 
                 <div class="modal-footer">
                     <button class="buttons btn-yellow btn-large" type="submit">
-                        Download
+                        Export <span style="font-weight: 700;">{{5}}</span> transactions
                     </button>
                 </div>
             </form>
@@ -134,6 +224,12 @@
                 dataProcessing: false,
 
                 selectionTypeStatement: 'all',
+                selectionTypeTransactions: 'all',
+
+                balanceFilter: {
+                    from: '',
+                    to: ''
+                },
 
 
                 heightDoc: 297,
@@ -519,18 +615,71 @@
 </style>
 
 <style lang="stylus" scoped>
-    .search-transactions
-        background-color transparent
-        border none
-        border-bottom 1px solid #ccc
+    .modal-line
+        /*label.label-from,*/
+        /*label.label-to*/
+        /*font-family MuseoSansCyrl700*/
+        /*font-size 13px*/
+        /*font-weight bold*/
+        /*line-height 1.08*/
+        /*color #34343e*/
+        /*margin-bottom 16px*/
 
-    .body
-        .modal-control
-            .modal-input__pdf
+        /*.input.input-from,*/
+        /*.input.input-to*/
+        /*width 100%*/
+        /*border-radius 2px*/
+        /*background-color #f7f7f7*/
+        /*border solid 1px #979797*/
+        /*padding 6px 8px*/
+        /*font-family MuseoSansCyrl700*/
+        /*font-size 12px*/
+        /*font-weight 500*/
+        /*line-height 1.17*/
+        /*color #34343e*/
+
+        .border-none
+            border-bottom none !important
+
+        .body
+            .modal-control
+                .modal-control__title
+                    margin 0
+                    font-family MuseoSansCyrl500
+                    font-weight 700
+                    font-size 13px
+                    color #34343e
+
+                .modal-control__wrap
+                    display flex
+                    justify-content flex-start
+                    flex-wrap wrap
+
+                .modal-control__block
+                    width 33.3%
+
+                .modal-line:not(:last-child), .modal-control__block:not(:last-child)
+                    margin-bottom 8px
+
+                .modal-input
+                    .title
+                        text-transform none !important
+                    .input::-webkit-input-placeholder
+                        text-decoration none !important
+                    .input::-moz-placeholder
+                        text-decoration none !important
+                    .input:-ms-input-placeholder
+                        text-decoration none !important
+                    .input:-moz-placeholder
+                        text-decoration none !important
+
+                .input-label
+                    font-family MuseoSansCyrl500
+                    font-weight 300;
+                    color #34343e
+
+            .modal-footer
+                display flex
                 justify-content center
-
-        .modal-footer
-            display flex
-            justify-content center
 
 </style>
