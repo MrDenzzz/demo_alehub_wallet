@@ -99,7 +99,7 @@
     import Datepicker from 'vuejs-datepicker';
     import FormattingPrice from '../layouts/FormattingPrice';
     import ModalShareTransactions from '../modals/ShareTransactions';
-    import ModalDownloadPDF from '../modals/DownloadPDF';
+    import ModalDownloadPDF from '../modals/CompileTransactionsStatement';
 
     import {mapGetters} from 'vuex';
 

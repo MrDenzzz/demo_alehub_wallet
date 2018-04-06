@@ -2,7 +2,7 @@
     <modal name="share-transactions" height="auto" class="modal-xs">
         <div class="heading">
             <p class="title">Share</p>
-            <i class="close" @click="closeModal"></i>
+            <i class="close" @click="closeModal('share-transactions')"></i>
         </div>
         <div class="body">
             <div class="modal-control double">
@@ -69,8 +69,8 @@
             }
         },
         methods: {
-            closeModal: function() {
-                this.$modal.hide('shareTransactions');
+            closeModal: function(name) {
+                this.$modal.hide(name);
             },
             parseBalance: function(balance) {
                 return numeral(balance).format('0,0') + " " + "ALC";
