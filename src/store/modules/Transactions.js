@@ -21,6 +21,9 @@ const state = {
 
     dateFrom: 0,
     dateTo: 0,
+    disabledDate: {
+        to: 0
+    },
 
     searchText: '',
 };
@@ -173,19 +176,25 @@ const actions = {
         });
     },
     changeDateFrom: ({commit}, dateFrom) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             commit('SUCCESS_CHANGE_DATE_FROM', dateFrom);
             resolve();
         });
     },
     changeDateTo: ({commit}, dateTo) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             commit('SUCCESS_CHANGE_DATE_TO', dateTo);
             resolve();
         });
     },
+    setDisabledDate: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_SET_DISABLED_DATE');
+            resolve();
+        });
+    },
     setSearchText: ({commit}, searchText) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             commit('SUCCESS_SET_SEARCH_TEXT', searchText);
             resolve();
         });
@@ -278,6 +287,13 @@ const mutations = {
     SUCCESS_CHANGE_DATE_TO: (state, dateTo) => {
         state.dateTo = dateTo;
     },
+    SUCCESS_SET_DISABLED_DATE: (state) => {
+        state.disabledDate.to = new Date(state.transactions[state.transactions.length - 1].timestamp);
+        state.disabledDate.to.setHours(0);
+        state.disabledDate.to.setMinutes(0);
+        state.disabledDate.to.setSeconds(0);
+        state.disabledDate.to.setMilliseconds(0);
+    },
     SUCCESS_SET_SEARCH_TEXT: (state, searchText) => {
         state.searchText = searchText;
     },
@@ -303,6 +319,7 @@ const getters = {
     initiateFilterDateStatus: state => state.initiateFilterDateStatus,
     dateFrom: state => state.dateFrom,
     dateTo: state => state.dateTo,
+    disabledDate: state => state.disabledDate,
     searchText: state => state.searchText,
     changedTransactions: state => state.changedTransactions
 };

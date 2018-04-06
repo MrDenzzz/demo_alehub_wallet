@@ -9,13 +9,14 @@
                         id="datepickerFrom"
                         language="en"
                         v-model="dateFromDatepicker"
-                        :disabled="disabled"
+                        :disabled="disabledDate"
                         :placeholder="'Date from'"/>
 
                 <datepicker
                         id="datepickerTo"
                         v-model="dateToDatepicker"
                         language="en"
+                        :disabled="disabledDate"
                         :placeholder="'Date to'"/>
             </div>
         </div>
@@ -152,7 +153,8 @@
                 'transactions',
                 'currentWallet',
                 'dateFrom',
-                'dateTo'
+                'dateTo',
+                'disabledDate'
             ]),
             currentBalanceBeginPeriod: function () {
                 this.watchResetStateDate();
@@ -206,7 +208,12 @@
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
 
-            this.disabled.to = this.dateFrom;
+            this.$store.dispatch('setDisabledDate'
+            ).then(() => {
+
+            }).catch(() => {
+
+            });
         },
     }
 </script>

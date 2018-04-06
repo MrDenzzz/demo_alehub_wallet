@@ -108,10 +108,6 @@
         data() {
             return {
                 isSuccessNotif: true,
-                // dateFrom: null,
-                // dateTo: null,
-                placeholderDateFrom: 'Date from',
-                placeholderDateTo: 'Date to',
                 newTransaction: false,
                 rightMenu: {
                     horizontal: false,
