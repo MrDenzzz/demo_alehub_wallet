@@ -1,18 +1,18 @@
 <template>
     <modal name="share-transactions" height="auto" class="modal-xs">
         <div class="heading">
-            <p class="title">Share</p>
+            <p class="title">{{ $t('modals.share.title') }}</p>
             <i class="close" @click="closeModal('share-transactions')"></i>
         </div>
         <div class="body">
             <div class="modal-control double">
                 <div class="modal-input modal-input-textarea">
                     <div class="control">
-                        <label class="title">Add your comment</label>
+                        <label class="title">{{ $t('modals.share.label') }}</label>
                     </div>
                     <textarea-control
                         :textarea-id="'comment'"
-                        :placeholder="'Write your comment here'"
+                        :placeholder="$t('modals.share.label')"
                         :inputValue="inputValue"
                     />
                 </div>

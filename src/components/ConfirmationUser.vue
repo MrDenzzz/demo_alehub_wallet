@@ -53,4 +53,5 @@
 <style lang="stylus" scoped>
     .d-block
         display block
+
 </style>

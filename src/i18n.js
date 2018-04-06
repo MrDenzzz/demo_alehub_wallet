@@ -387,6 +387,27 @@ const messages = {
                 buttons: {
                     change: 'Change'
                 }
+            },
+            changeEmail: {
+                title: 'Change email',
+                fields: {
+                    _2fa: {
+                        label: '2fa key',
+                        placeholder: 'Enter 2fa code'
+                    },
+                    newPass: {
+                        label: 'Email',
+                        placeholder: 'Enter new email'
+                    },
+                },
+                buttons: {
+                    change: 'Change'
+                }
+            },
+            share: {
+                title: 'Share',
+                label: 'Add your comment',
+                placeholder: 'Write your comment here'
             }
         },
         navbar: {
@@ -785,6 +806,27 @@ const messages = {
                 buttons: {
                     change: 'Изменить'
                 }
+            },
+            changeEmail: {
+                title: 'Изменить email',
+                fields: {
+                    _2fa: {
+                        label: '2fa ключ',
+                        placeholder: 'Введите 2fa ключ'
+                    },
+                    newPass: {
+                        label: 'Email',
+                        placeholder: 'Введите новый email'
+                    },
+                },
+                buttons: {
+                    change: 'Изменить'
+                }
+            },
+            share: {
+                title: 'Поделиться',
+                label: 'Добавить комментарий',
+                placeholder: 'Напишите свой комментарий здесь'
             }
         },
         navbar: {

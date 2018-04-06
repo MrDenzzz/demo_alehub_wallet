@@ -1243,6 +1243,9 @@ body {
 .nav-center {
   justify-content: center; }
 
+.confirmation-user .hamburger {
+  display: none; }
+
 .hamburger {
   display: none;
   cursor: pointer;
@@ -1306,9 +1309,6 @@ body {
     display: none !important; }
   .navbar .navbar-nav {
     width: auto; }
-  .navbar .title {
-    position: initial;
-    transform: unset; }
   .mobile-menu {
     display: block; }
     .mobile-menu a {

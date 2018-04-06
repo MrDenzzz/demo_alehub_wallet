@@ -209,6 +209,12 @@
   justify-content: center;
 }
 
+.confirmation-user {
+  .hamburger {
+    display: none;
+  }
+}
+
 .hamburger {
   display: none;
   cursor: pointer;
@@ -295,10 +301,6 @@
   .navbar {
     .navbar-nav {
       width: auto;
-    }
-    .title {
-      position: initial;
-      transform: unset;
     }
   }
   .mobile-menu {
