@@ -77,7 +77,9 @@
                 searchField: '',
                 setIntervalId: 0,
                 isToggle: false,
-                scrollable: false
+                scrollable: false,
+
+                // walletsAddressesList: []
             }
         },
         watch: {
@@ -89,7 +91,11 @@
         },
         computed: {
             ...mapGetters([
-                'currentWallet'
+                'wallets',
+                'currentWallet',
+                'allTransactions',
+
+                'walletsLoadedAddresses'
             ]),
             newWalletsList: function () {
                 if (this.searchField !== '') {
@@ -136,6 +142,14 @@
                         ).then(() => {
                         }).catch(() => {
                             console.log('Error reset transactionsUpdated. WalletList.vue');
+                        });
+
+                        this.$store.dispatch('allTransactionsRequest', {
+                            addresses: this.walletsLoadedAddresses
+                        }).then(() => {
+                            console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
+                        }).catch(() => {
+                            console.log('Error request all transactions');
                         });
 
                         this.$store.dispatch('transactionsRequestLazy',
@@ -210,6 +224,7 @@
         created() {
             document.addEventListener('click', this.closeMenu);
             window.addEventListener('resize', this.checkScroll);
+
         },
         mounted() {
             this.initDrag();

@@ -161,6 +161,15 @@ if (token !== 'undefined' && token) {
                     ).then(() => {
 
                         if (store.state.User.haveTransactions && store.state.Wallets.currentWalletHaveTransactions) {
+
+                            store.dispatch('allTransactionsRequest', {
+                                addresses: [store.state.Wallets.currentWallet.address]
+                            }).then(() => {
+                                console.log('Success request all transactions');
+                            }).catch(() => {
+                                console.log('Error request all transactions');
+                            });
+
                             store.dispatch('transactionsRequest',
                                 store.state.Wallets.currentWallet.address
                             ).then(() => {

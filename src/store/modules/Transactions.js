@@ -43,6 +43,7 @@ const actions = {
                 data: walletsAddressList,
                 method: 'POST'
             }).then(resp => {
+                console.log('IM HERE');
                 commit('SUCCESS_ALL_TRANSACTIONS', resp.data);
                 resolve(resp);
             }).catch(err => {

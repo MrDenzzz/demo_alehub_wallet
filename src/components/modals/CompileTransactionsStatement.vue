@@ -479,6 +479,8 @@
                         addresses: walletsAddressList
                     }).then(() => {
                         this.dataProcessing = false;
+                        this.makePDF();
+                        this.closeModal('download-pdf');
                     }).catch(() => {
                         this.$toasted.show('An error occurred while loading transactions statement', {
                             duration: 10000,
@@ -487,12 +489,12 @@
                     });
 
                     //после тестирования перенести в then() =>
-                    setTimeout(() => {
-                        if (this.allTransactionsStatus === 'success') {
-                            this.makePDF();
-                            // this.closeModal('download-pdf');
-                        }
-                    }, 150);
+                    // setTimeout(() => {
+                    //     if (this.allTransactionsStatus === 'success') {
+                    //         this.makePDF();
+                    //         this.closeModal('download-pdf');
+                    //     }
+                    // }, 150);
                 }
 
                 if (this.selectionTypeStatement === 'optional') {

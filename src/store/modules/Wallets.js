@@ -5,6 +5,9 @@ import sha256 from "sha256";
 
 const state = {
     wallets: [],
+
+    walletsLoadedAddresses: [],
+
     currentWallet: null,
     currentWalletHaveTransactions: false,
 
@@ -146,15 +149,28 @@ const actions = {
             });
         });
     },
-    initiateCurrentWallet: ({commit}, address) => {
+    initiateCurrentWallet: ({commit, dispatch}, address) => {
         return new Promise((resolve) => {
             commit('SUCCESS_INITIATE_CURRENT_WALLET', address);
+            dispatch('addLoadWalletAddress', address);
             resolve();
         });
     },
-    changeCurrentWallet: ({commit}, address) => {
+    changeCurrentWallet: ({commit, dispatch}, address) => {
         return new Promise((resolve) => {
             commit('SUCCESS_CHANGE_CURRENT_WALLET', address);
+            if (!state.walletsLoadedAddresses.find((item) => {
+                    return item === address;
+                })) {
+                dispatch('addLoadWalletAddress', address);
+            }
+            resolve();
+        });
+    },
+    //rename
+    addLoadWalletAddress: ({commit}, address) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_ADD_LOAD_WALLET_ADDRESS', address);
             resolve();
         });
     },
@@ -318,11 +334,16 @@ const mutations = {
         (state.currentWallet.total_transactions > 0) ? state.currentWalletHaveTransactions = true :
             state.currentWalletHaveTransactions = false;
     },
-    SUCCESS_CHANGE_CURRENT_WALLET: (state, address) =>{
+    SUCCESS_CHANGE_CURRENT_WALLET: (state, address) => {
         state.currentWallet = state.wallets.find(item => {
             return item.address === address;
         });
         localStorage.setItem(sha256('current-wallet'), state.currentWallet.address);
+    },
+    SUCCESS_ADD_LOAD_WALLET_ADDRESS: (state, address) => {
+        // console.log(address, 'address');
+        state.walletsLoadedAddresses.push(address);
+        // console.log(state.walletsLoadedAddresses, 'state.walletsLoadedAddresses');
     },
     REQUEST_CHANGE_WALLET_NAME: (state) => {
         state.changeWalletStatus = 'loading';
@@ -382,6 +403,8 @@ const getters = {
         return 0;
     },
     changedWallets: state => state.changedWallets,
+
+    walletsLoadedAddresses: state => state.walletsLoadedAddresses
 };
 
 export default {
