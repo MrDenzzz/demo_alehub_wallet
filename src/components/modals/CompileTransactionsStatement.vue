@@ -134,7 +134,10 @@
                 widthDoc: 210,
 
                 titleFontSize: 20,
+                dateDayFontSize: 16,
                 normalFontSize: 12,
+
+                offset: 50,
 
                 receivedText: 'Received',
                 sentText: 'Sent',
@@ -153,6 +156,10 @@
 
                 xPositionTransactionType: 10,
 
+                currentSent: 0,
+                currentReceived: 0,
+                currentTotal: 0,
+
             }
         },
         computed: {
@@ -169,18 +176,13 @@
             closeModal: function (name) {
                 this.$modal.hide(name);
             },
-            checkTypeTransaction: function (i) {
+            getTypeTransaction: function (i) {
                 if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
                     return 'RECEIVED';
                 return 'SEND';
             },
-            checkSend: function (type) {
+            checkTypeTransaction: function (type) {
                 if (type === 'SEND')
-                    return true;
-                return false;
-            },
-            checkReceived: function (type) {
-                if (type === 'RECEIVED')
                     return true;
                 return false;
             },
@@ -214,26 +216,26 @@
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, 35);
             },
 
-            generateDayTransactionsStatement: function (doc, receivedBalance, sentBalance, totalBalance, offset, j) {
+            generateTransactionsDayStatement: function (doc, j) {
                 doc.setFontSize(this.normalFontSize);
 
                 doc.setTextColor(75, 177, 3);
-                doc.text(this.receivedText, this.xPositionSummaryAction, offset + 25 * j);
-                doc.text(receivedBalance.toString(), this.xPositionSummaryCount, offset + 25 * j);
-                doc.text(this.currencyText, this.xPositionSummaryCurrency, offset + 25 * j);
+                doc.text(this.receivedText, this.xPositionSummaryAction, this.offset + 25 * j);
+                doc.text(this.currentReceived.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
+                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
 
                 doc.setTextColor(177, 3, 3);
-                doc.text(this.sentText, this.xPositionSummaryAction, offset + 5 + 25 * j);
-                doc.text(sentBalance.toString(), this.xPositionSummaryCount, offset + 5 + 25 * j);
-                doc.text(this.currencyText, this.xPositionSummaryCurrency, offset + 5 + 25 * j);
+                doc.text(this.sentText, this.xPositionSummaryAction, this.offset + 5 + 25 * j);
+                doc.text(this.currentSent.toString(), this.xPositionSummaryCount, this.offset + 5 + 25 * j);
+                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 5 + 25 * j);
 
                 doc.setTextColor(0, 0, 0);
-                doc.text(this.totalText, this.xPositionSummaryAction, offset + 10 + 25 * j);
-                doc.text(totalBalance.toString(), this.xPositionSummaryCount, offset + 10 + 25 * j);
-                doc.text(this.currencyText, this.xPositionSummaryCurrency, offset + 10 + 25 * j);
+                doc.text(this.totalText, this.xPositionSummaryAction, this.offset + 10 + 25 * j);
+                doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 10 + 25 * j);
+                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 10 + 25 * j);
             },
 
-            generateTransaction: function (doc, type, count, date, time, walletAddress, walletDestination, offset, j) {
+            generateTransaction: function (doc, type, count, date, time, walletAddress, walletDestination, j) {
                 let summaryString = count + ' ALE' + '\n' +
                     date + ' - ' + time + '\n' +
                     'wallet address: ' + walletAddress + '\n' +
@@ -241,52 +243,52 @@
 
                 doc.setFontSize(this.normalFontSize);
 
-                (this.checkSend(type)) ? doc.setTextColor(177, 3, 3) : doc.setTextColor(75, 177, 3);
-                doc.text(type, this.xPositionTransactionType, offset + 25 * j);
+                (this.checkTypeTransaction(type)) ? doc.setTextColor(177, 3, 3) : doc.setTextColor(75, 177, 3);
+                doc.text(type, this.xPositionTransactionType, this.offset + 25 * j);
 
                 doc.setTextColor(0, 0, 0);
-                doc.text(summaryString, 40, offset + 25 * j);
+                doc.text(summaryString, 40, this.offset + 25 * j);
+            },
+
+            generateDateTransactions: function (doc, date, j) {
+                doc.setFontSize(this.dateDayFontSize);
+                this.offset += 25;
+                doc.text(date, this.xPositionDateTitleDay, this.offset + 25 * j);
+                this.offset += 25;
+            },
+
+            calcBalance: function (i, count) {
+                this.currentTotal = this.transactions[i].balanceInfo.after;
+                if (this.checkTypeTransaction(this.getTypeTransaction(i)))
+                    this.currentSent += count;
+                else
+                    this.currentReceived += count;
             },
 
 
             makeAndDownloadPDF: function () {
                 let doc = new JsPDF(),
                     pdfName = 'test',
-                    countPage = 1;
-
-                const height = 297;
+                    countPage = 1,
+                    balancer = 0;
 
                 this.generateHeaderTransactionsStatement(doc);
 
+                for (let i = 0, j = 0; i < this.transactions.length; i++, j = i - balancer) {
 
-                let balancer = 0;
-                let offset = 50;
+                    let count = this.transactions[i].count,
+                        time = Moment(this.transactions[i].timestamp).format("HH:mm:ss"),
+                        date = Moment(this.transactions[i].timestamp).format("DD.MM.YYYY"),
+                        walletAddress = this.transactions[i].walletAddress,
+                        walletDestination = this.transactions[i].walletDestination;
 
-                let currentSent = 0;
-                let currentReceived = 0;
-                let currentTotal = 0;
+                    if (i === 0) {
 
-                for (let i = 0; i < this.transactions.length; i++) {
+                        // if (countPage === 1) {
 
-                    let j = i - balancer;
-                    let type = '';
+                            this.generateDateTransactions(doc, date, j);
 
-                    type = this.checkTypeTransaction(i);
-
-                    let count = this.transactions[i].count;
-                    let time = Moment(this.transactions[i].timestamp).format("HH:mm:ss");
-                    let date = Moment(this.transactions[i].timestamp).format("DD.MM.YYYY");
-                    let walletAddress = this.transactions[i].walletAddress;
-                    let walletDestination = this.transactions[i].walletDestination;
-
-                    if (i === 0 || date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
-                        doc.setFontSize(16);
-
-                        if (countPage === 1) {
-
-                            doc.text(date, this.xPositionDateTitleDay, 40 * (j + 1));
-
-                        } else {
+                        // } else {
                             //проверить на целесообразность
 
                             // currentTotal = this.transactions[i - 1].balanceInfo.after;
@@ -300,49 +302,48 @@
                             // doc.setFontSize(16);
                             // doc.text(date, 10, offset + 20 + 25 * j);
                             // offset += 30;
-                        }
+                        // }
                     }
 
 
-                    if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
-
-                        currentTotal = this.transactions[i - 1].balanceInfo.after;
-
-                        this.generateDayTransactionsStatement(doc, currentReceived, currentSent, currentTotal, offset, j);
-
-                        currentReceived = 0;
-                        currentSent = 0;
-
-                        doc.setFontSize(16);
-                        doc.text(date, this.xPositionDateTitleDay, offset + 20 + 25 * j);
-                        offset += 30;
-                    }
-
-
-                    currentSent += count;
-
-                    if (offset + 25 * j > height - 20) {
+                    if (this.offset + 25 * j > this.heightDoc - 25) {
                         doc.addPage();
                         countPage++;
                         doc.setPage(countPage);
                         balancer = i;
                         j = i - balancer;
-                        offset = 10;
+                        this.offset = 25;
                     }
+
+
+                    if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
+
+                        this.generateTransactionsDayStatement(doc, j);
+
+                        this.currentReceived = 0;
+                        this.currentSent = 0;
+
+                        this.generateDateTransactions(doc, date, j);
+                    }
+
+
+                    this.calcBalance(i, count);
 
                     //уменьшить количество аргументов
 
-                    this.generateTransaction(doc, type, count, date, time, walletAddress, walletDestination, offset, j);
+                    this.generateTransaction(doc, this.getTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
 
 
                     if (i === this.transactions.length - 1) {
 
-                        offset += 25;
-                        currentTotal = this.transactions[i].balanceInfo.after;
+                        this.offset += 25;
 
-                        this.generateDayTransactionsStatement(doc, currentReceived, currentSent, currentTotal, offset, j);
+                        this.calcBalance(i - 1, count);
+
+                        this.generateTransactionsDayStatement(doc, j);
                     }
                 }
+
 
                 doc.save(pdfName + '.pdf');
 
