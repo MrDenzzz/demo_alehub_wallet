@@ -5,36 +5,36 @@
             <i class="close" @click="closeModal('download-pdf')"></i>
         </div>
         <div class="body">
-            <form @submit.prevent="makeAndDownloadPDF">
-                <div class="modal-control" style="border-bottom: none;">
+            <form @submit.prevent="downloadPDF">
+                <div class="modal-control">
                     <div class="modal-input__pdf">
                         <input type="radio"
                                id="radio1"
                                name="transaction-selection"
                                value="current"
-                               v-model="selectionTypeTransaction">
+                               v-model="selectionTypeStatement">
                         <label for="radio2">Транзакции текущего кошелька</label>
                     </div>
-                </div>
-                <div class="modal-control" style="border-bottom: none;">
+                <!--</div>-->
+                <!--<div class="modal-control" style="border-bottom: none;">-->
                     <div class="modal-input__pdf">
                         <input
                                 type="radio"
                                 id="radio2"
                                 name="transaction-selection"
                                 value="all"
-                                v-model="selectionTypeTransaction">
+                                v-model="selectionTypeStatement">
                         <label for="radio1">Все транзакции</label>
                     </div>
-                </div>
-                <div class="modal-control">
+                <!--</div>-->
+                <!--<div class="modal-control">-->
                     <div class="modal-input__pdf">
                         <input
                                 type="radio"
                                 id="radio3"
                                 name="transaction-selection"
                                 value="optional"
-                                v-model="selectionTypeTransaction">
+                                v-model="selectionTypeStatement">
                         <label for="radio3">Опционально</label>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                 dateToDatepicker: '',
                 dataProcessing: false,
 
-                selectionTypeTransaction: 'current',
+                selectionTypeStatement: 'current',
 
 
                 heightDoc: 297,
@@ -167,6 +167,8 @@
                 'wallets',
                 'currentWallet',
                 'transactions',
+                'allTransactions',
+                'allTransactionsStatus',
                 'dateFrom', //make another getters with date
                 'dateTo'
             ])
@@ -223,16 +225,20 @@
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentReceived.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
+                this.offset += 5;
 
                 doc.setTextColor(177, 3, 3);
-                doc.text(this.sentText, this.xPositionSummaryAction, this.offset + 5 + 25 * j);
-                doc.text(this.currentSent.toString(), this.xPositionSummaryCount, this.offset + 5 + 25 * j);
-                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 5 + 25 * j);
+                doc.text(this.sentText, this.xPositionSummaryAction, this.offset + 25 * j);
+                doc.text(this.currentSent.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
+                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
+                this.offset += 5;
 
                 doc.setTextColor(0, 0, 0);
-                doc.text(this.totalText, this.xPositionSummaryAction, this.offset + 10 + 25 * j);
-                doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 10 + 25 * j);
-                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 10 + 25 * j);
+                doc.text(this.totalText, this.xPositionSummaryAction, this.offset + 25 * j);
+                doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
+                doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
+
+                this.offset += 25;
             },
 
             generateTransaction: function (doc, type, count, date, time, walletAddress, walletDestination, j) {
@@ -252,9 +258,8 @@
 
             generateDateTransactions: function (doc, date, j) {
                 doc.setFontSize(this.dateDayFontSize);
-                this.offset += 25;
                 doc.text(date, this.xPositionDateTitleDay, this.offset + 25 * j);
-                this.offset += 25;
+                this.offset += 15;
             },
 
             calcBalance: function (i, count) {
@@ -265,14 +270,14 @@
                     this.currentReceived += count;
             },
 
-
-            makeAndDownloadPDF: function () {
+            makePDF: function () {
                 let doc = new JsPDF(),
                     pdfName = 'test',
                     countPage = 1,
                     balancer = 0;
 
                 this.generateHeaderTransactionsStatement(doc);
+                this.generateDateTransactions(doc, Moment(this.transactions[0].timestamp).format("DD.MM.YYYY"), 0);
 
                 for (let i = 0, j = 0; i < this.transactions.length; i++, j = i - balancer) {
 
@@ -281,29 +286,6 @@
                         date = Moment(this.transactions[i].timestamp).format("DD.MM.YYYY"),
                         walletAddress = this.transactions[i].walletAddress,
                         walletDestination = this.transactions[i].walletDestination;
-
-                    if (i === 0) {
-
-                        // if (countPage === 1) {
-
-                            this.generateDateTransactions(doc, date, j);
-
-                        // } else {
-                            //проверить на целесообразность
-
-                            // currentTotal = this.transactions[i - 1].balanceInfo.after;
-                            //
-                            // this.generateDayTransactionsStatement(doc, currentReceived, currentSent, currentTotal);
-                            //
-                            // currentReceived = 0;
-                            // currentSent = 0;
-                            //
-                            // doc.setTextColor(0, 0, 0);
-                            // doc.setFontSize(16);
-                            // doc.text(date, 10, offset + 20 + 25 * j);
-                            // offset += 30;
-                        // }
-                    }
 
 
                     if (this.offset + 25 * j > this.heightDoc - 25) {
@@ -319,11 +301,10 @@
                     if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
 
                         this.generateTransactionsDayStatement(doc, j);
+                        this.generateDateTransactions(doc, date, j);
 
                         this.currentReceived = 0;
                         this.currentSent = 0;
-
-                        this.generateDateTransactions(doc, date, j);
                     }
 
 
@@ -346,8 +327,38 @@
 
 
                 doc.save(pdfName + '.pdf');
+            },
 
-                this.closeModal('download-pdf');
+            downloadPDF: function () {
+
+                this.dataProcessing = true;
+
+                // if (this.selectionTypeStatement === 'all') {
+                if (this.selectionTypeStatement === 'all') {
+
+                    // if (получены не все транзакции в списке кошельков)
+
+                    let walletsAddressList = this.wallets.map(function (wallet) {
+                        return wallet.address;
+                    });
+
+                    this.$store.dispatch('allTransactionsRequest', {
+                        addresses: walletsAddressList
+                    }).then(() => {
+                        this.dataProcessing = false;
+                        this.makePDF();
+                        this.closeModal('download-pdf');
+                    }).catch(() => {
+                        this.$toasted.show('An error occured while loading transactions statement', {
+                            duration: 10000,
+                            type: 'error',
+                        });
+                    });
+                }
+
+                if (this.selectionTypeStatement === 'optional') {
+
+                }
             }
         },
         created() {

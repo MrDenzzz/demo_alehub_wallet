@@ -7,8 +7,9 @@
             <div class="datepicker-wrap">
                 <datepicker
                         id="datepickerFrom"
-                        v-model="dateFromDatepicker"
                         language="en"
+                        v-model="dateFromDatepicker"
+                        :disabled="disabled"
                         :placeholder="'Date from'"/>
 
                 <datepicker
@@ -120,7 +121,10 @@
         data() {
             return {
                 dateFromDatepicker: '',
-                dateToDatepicker: ''
+                dateToDatepicker: '',
+                disabled: {
+                    to: ''
+                }
             }
         },
         watch: {
@@ -201,6 +205,8 @@
         created() {
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
+
+            this.disabled.to = this.dateFrom;
         },
     }
 </script>

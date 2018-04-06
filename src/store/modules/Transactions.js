@@ -4,6 +4,8 @@ const state = {
 
     //мб подгружать сразу все транзакции или только для текущего воллета, а потом по требованию, но не сохранять, а дозаписывать?
 
+    allTransactions: [],
+
     transactions: [],
     transactionsUpdated: [],
     changedTransactions: false,
@@ -13,6 +15,7 @@ const state = {
     transactionsPingStatus: '',
     transactionSendStatus: '',
     initiateFilterDateStatus: '',
+    allTransactionsStatus: '',
 
     transactionsLoader: false,
 
@@ -23,9 +26,33 @@ const state = {
 };
 
 const actions = {
+    allTransactionsRequest: ({commit}, walletsAddressList) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_ALL_TRANSACTIONS');
+            let host = 'http://192.168.1.47:4000/transactions/list';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: walletsAddressList,
+                method: 'POST'
+            }).then(resp => {
+                console.log(resp.data, 'resp data all transactions');
+                // commit('SUCCESS_ALL_TRANSACTIONS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error transactions wallet address');
+                commit('ERROR_ALL_TRANSACTIONS', err);
+                reject(err)
+            });
+        });
+    },
     transactionsRequest: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
-            commit('TRANSACTIONS_REQUEST');
+            commit('REQUEST_TRANSACTIONS');
             let host = `http://192.168.1.47:4000/transactions/${address}`;
             axios({
                 url: host,
@@ -40,12 +67,12 @@ const actions = {
                     commit('SUCCESS_TRANSACTIONS', resp.data);
                     commit('SUCCESS_INITIATE_FILTER_DATE');
                 } else {
-                    commit('TRANSACTIONS_ERROR');
+                    commit('ERROR_TRANSACTIONS');
                 }
                 resolve(resp);
             }).catch(err => {
                 console.log(err, 'error transactions wallet address');
-                commit('TRANSACTIONS_ERROR', err);
+                commit('ERROR_TRANSACTIONS', err);
                 reject(err)
             });
         })
@@ -117,9 +144,7 @@ const actions = {
     },
     sendCoins: ({commit, dispatch}, walletDetails) => {
         return new Promise((resolve, reject) => {
-
             commit('REQUEST_SEND_COINS');
-
             let host = `http://192.168.1.47:4000/transactions/send`;
             axios({
                 url: host,
@@ -168,7 +193,17 @@ const actions = {
 };
 
 const mutations = {
-    TRANSACTIONS_REQUEST: (state) => {
+    REQUEST_ALL_TRANSACTIONS: (state) => {
+        state.allTransactionsStatus = 'loading';
+    },
+    SUCCESS_ALL_TRANSACTIONS: (state, allTransactions) => {
+        state.allTransactions = allTransactions;
+        state.allTransactionsStatus = 'success';
+    },
+    ERROR_ALL_TRANSACTIONS: (state) => {
+        state.allTransactionsStatus = 'error';
+    },
+    REQUEST_TRANSACTIONS: (state) => {
         state.transactionStatus = 'loading';
         state.transactionsLazyStatus = 'loading';
     },
@@ -177,7 +212,7 @@ const mutations = {
         state.transactionsLazyStatus = 'success';
         state.transactions = transactions;
     },
-    TRANSACTIONS_ERROR: (state, err) => {
+    ERROR_TRANSACTIONS: (state, err) => {
         state.transactionStatus = 'error';
         state.transactionsLazyStatus = 'error';
     },
@@ -258,6 +293,9 @@ const mutations = {
 };
 
 const getters = {
+    allTransactions: state => state.allTransactions,
+    allTransactionsStatus: state => state.allTransactionsStatus,
+
     transactions: state => state.transactions,
     // dateTransactions: state => state.dateTransactions,
     transactionStatus: state => state.transactionStatus,
