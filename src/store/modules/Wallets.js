@@ -280,9 +280,9 @@ const mutations = {
         }
         state.walletStatus = 'success';
     },
-    ERROR_WALLETS: (state) => {
-        state.walletStatus = 'error';
-    },
+    // ERROR_WALLETS: (state) => {
+    //     state.walletStatus = 'error';
+    // },
     SUCCESS_ADD_MISSING_TO_LOADED_WALLETS: (state) => {
         state.diffWalletsAddresses = state.wallets.filter(item => {
             return state.walletsLoadedAddresses.find(address => {
@@ -334,7 +334,6 @@ const mutations = {
         state.walletsPingStatus = 'loading';
     },
     SUCCESS_PING_WALLETS: (state, wallets) => {
-
         if (wallets.length !== 0 && !state.wallets.equals(wallets)) {
             state.wallets = wallets;
             state.changedWallets = true;

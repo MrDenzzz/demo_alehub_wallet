@@ -70,7 +70,9 @@
                                        :class="{ 'disabled-label__control': checkDisabled }">
                                     <input type="checkbox"
                                            name="wallet-names"
-                                           :disabled="checkDisabled"/>
+                                           :disabled="checkDisabled"
+                                           :value="wallet.address"
+                                           v-model="selectedWallets"/>
                                     <div class="control-indicator"></div>
                                     <div class="wrap__input-label">
                                         <span class="input-label"
@@ -217,14 +219,22 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="buttons btn-yellow btn-large" type="submit">
-                        Export
-                        <span class="count-transactions">
-                            <formatting-price
-                                    :value="countAllTransactions"
-                            />
+                    <button
+                            class="buttons btn-yellow btn-large"
+                            type="submit"
+                            :class="{ 'btn-yellow__disabled': countTransactions === 0 }"
+                            :disabled="countTransactions === 0">
+                        <span v-if="countTransactions > 0">
+                            Export
+                            <span class="count-transactions">
+                                <formatting-price
+                                        :value="countTransactions"/>
+                            </span>
+                            transactions
                         </span>
-                        transactions
+                        <span v-else>
+                            You have no transactions
+                        </span>
                     </button>
                 </div>
             </form>
@@ -267,14 +277,24 @@
                 required: true
             }
         },
+        watch: {
+            selectedWallets: function (val) {
+                //может быть отправлять экшн в транзакшнс.жс, который бы выдавал релевантный список транзакций?
+                console.log(val, 'selectedWallets');
+            }
+        },
         data() {
             return {
                 dateFromDatepicker: '',
                 dateToDatepicker: '',
                 dataProcessing: false,
 
+                haveCurrentTransactions: false,
+
                 selectionTypeStatement: 'current',
                 selectionTypeTransactions: 'all',
+
+                selectedWallets: [],
 
                 balanceFilter: {
                     from: '',
@@ -325,7 +345,39 @@
                     return true;
                 return false;
             },
+            countTransactions: function () {
+                if (this.selectionTypeStatement === 'current') {
+                    return this.transactions.length;
+                } else if (this.selectionTypeStatement === 'all') {
+                    return this.countAllTransactions;
+                } else if (this.selectionTypeStatement === 'optional') {
+                    //fix this optional count
+                    //или забрать количество транзакций из воллета?
 
+                    if (this.selectedWallets.length !== 0) {
+                        return this.wallets.filter(wallet => {
+                            return this.selectedWallets.find(address => {
+                                return wallet.address === address;
+                            });
+                        }).map(wallet => {
+                            return wallet.total_transactions;
+                        }).reduce((sum, curr) => {
+                            return sum + curr;
+                        });
+
+                        // return this.allTransactions.filter(item => {
+                        //     return this.selectedWallets.find(address => {
+                        //         return item.address === address;
+                        //     });
+                        // }).map(item => {
+                        //     return item.transactions.length;
+                        // }).reduce((sum, curr) => {
+                        //     return sum + curr;
+                        // });
+                    }
+                    return 0;
+                }
+            }
         },
         methods: {
             closeModal: function (name) {
@@ -835,6 +887,10 @@
             display flex
             justify-content center
             margin-top 0 !important
+
+            .btn-yellow__disabled
+                cursor default
+                opacity 0.4
 
             .buttons
 
