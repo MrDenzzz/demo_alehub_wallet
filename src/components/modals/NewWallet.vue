@@ -1,6 +1,9 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
-
-    <modal name="newwallet" height="auto" class="modal-md newwallet" :clickToClose="isCloseModal" @opened="modalOpen"
+    <modal name="newwallet"
+           height="auto"
+           class="modal-md newwallet"
+           :clickToClose="isCloseModal"
+           @opened="modalOpen"
            @closed="modalClosed">
         <div class="heading" v-if="newWalletStep === 1">
             <!--<p class="title">{{ dropDownOption[0].title }}</p>-->
@@ -8,13 +11,14 @@
                 {{ modalTitle }}
                 <i class="arrow"></i>
             </p>
-            <i class="close" @click="closeModal" v-if="isCloseModal"></i>
+            <i class="close"
+               v-if="isCloseModal"
+               @click="closeModal"></i>
             <div class="dropdown-list list-select" v-show="isOpenOptions">
                 <ul>
-                    <li
-                            v-for="(option, optionIndex) in dropDownOption"
-                            :class="{ 'selected': option.isSelected }"
-                            @click="changeType(optionIndex)">
+                    <li v-for="(option, optionIndex) in dropDownOption"
+                        :class="{ 'selected': option.isSelected }"
+                        @click="changeType(optionIndex)">
                         {{ option.title }}
                     </li>
                 </ul>
@@ -28,25 +32,22 @@
         </div>
 
         <div v-if="newWalletStep === 1">
-
             <div class="body" v-if="walletType === 'new'">
                 <!--<div class="modal-control" @click="focusInput('newWalletName')">-->
                 <div class="modal-control">
                     <div class="modal-input">
                         <label class="title">{{ $t('modals.newWallet.new.fields.title.label') }}</label>
-                        <input
-                                id="newWalletName"
-                                type="text"
-                                class="input"
-                                v-model="walletName"
+                        <input id="newWalletName"
+                               type="text"
+                               class="input"
+                               v-model="walletName"
                                :placeholder="$t('modals.newWallet.new.fields.title.placeholder')"
                                @keyup.enter="changeStepCreate('next')">
                     </div>
                 </div>
 
                 <div class="modal-btn text-center">
-                    <button
-                            class="btn btn-yellow btn-large"
+                    <button class="btn btn-yellow btn-large"
                             @click="changeStepCreate('next')"
                             :disabled="checkNewWalletFields"
                             :class="{ 'disabled': checkNewWalletFields }"
@@ -63,17 +64,16 @@
                         <div class="badge-control" v-if="mnemonics.length !== 0">
                             <span class="badge" v-for="mnemonic in mnemonics">{{ mnemonic }}</span>
                         </div>
-                        <input
-                                id="redemption-key"
-                                class="input"
-                                type="text"
-                                placeholder="Mnemonic phrase"
-                                v-on:keyup.188="addMnemonic"
-                                v-model="mnemonicField"
-                                @keyup.enter="addMnemonic"
-                                @keyup.delete="removeMnemonic"
-                                @keyup.space="addMnemonic"
-                                @blur="onBlurNewWallet"/>
+                        <input id="redemption-key"
+                               class="input"
+                               type="text"
+                               placeholder="Mnemonic phrase"
+                               v-on:keyup.188="addMnemonic"
+                               v-model="mnemonicField"
+                               @keyup.enter="addMnemonic"
+                               @keyup.delete="removeMnemonic"
+                               @keyup.space="addMnemonic"
+                               @blur="onBlurNewWallet"/>
                     </div>
                 </div>
 
@@ -82,8 +82,7 @@
                 </div>
 
                 <div class="modal-btn text-center">
-                    <button
-                            id="button-redemption-wallet"
+                    <button id="button-redemption-wallet"
                             class="btn btn-yellow btn-large"
                             @click="redeemCreateWallet"
                             :disabled="!checkFilledRedemption"
@@ -103,10 +102,9 @@
 
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.phrase.checkbox') }}</span>
-                    <input
-                            type="checkbox"
-                            class="type_project_arr"
-                            v-model="isAgreedRecovery"/>
+                    <input type="checkbox"
+                           class="type_project_arr"
+                           v-model="isAgreedRecovery"/>
                     <div class="control-indicator"></div>
                 </label>
             </div>
@@ -116,8 +114,7 @@
             </div>
 
             <div class="modal-btn text-center">
-                <button
-                        id="continue-to-recovery"
+                <button id="continue-to-recovery"
                         class="btn btn-yellow btn-large btn-bottom btn-timer"
                         :disabled="countTimer || !isAgreedRecovery || dataProcessing"
                         :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery || dataProcessing}"
@@ -130,7 +127,9 @@
 
         <div v-if="newWalletStep === 2 && recoveryStep === 2">
             <div class="modal-warning">
-                <p class="agreed">{{ $t('modals.newWallet.recovery.mnemonic.text') }}</p>
+                <p class="agreed">
+                    {{ $t('modals.newWallet.recovery.mnemonic.text') }}
+                </p>
             </div>
 
             <div class="phrase">
@@ -138,8 +137,7 @@
             </div>
 
             <div class="modal-btn text-center">
-                <button
-                        id="copy-mnemonic"
+                <button id="copy-mnemonic"
                         type="button"
                         class="buttons button-copy btn-default"
                         v-clipboard:copy="copyMnemonic()"
@@ -147,7 +145,8 @@
                     <img class="icon-copy" :src="getIcon('tmp_copy_icon')" alt="">
                     {{ $t('modals.newWallet.recovery.mnemonic.btnCopy') }}
                 </button>
-                <button class="btn btn-yellow btn-large btn-bottom" @click="changeRecoveryStep('next')">
+                <button class="btn btn-yellow btn-large btn-bottom"
+                        @click="changeRecoveryStep('next')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
                 </button>
             </div>
@@ -166,38 +165,38 @@
                         {{ $t('modals.newWallet.recovery.finish.fields.phrase.title') }}
                     </label>
                     <div class="badge-control" v-if="mnemonicsRecovery.length !== 0">
-                        <span class="badge" v-for="mnemonic in mnemonicsRecovery">{{ mnemonic }}</span>
+                        <span class="badge"
+                              v-for="mnemonic in mnemonicsRecovery">
+                            {{ mnemonic }}
+                        </span>
                     </div>
-                    <input
-                            id="input-to-mnemonic-recovery"
-                            type="text"
-                            class="input"
-                            :placeholder="$t('modals.newWallet.recovery.finish.fields.phrase.placeholder')"
-                            v-on:keyup.188="addMnemonicRecovery"
-                            v-model="mnemonicFieldRecovery"
-                            @keyup.enter="addMnemonicRecovery"
-                            @keyup.delete="removeMnemonicRecovery"
-                            @keyup.space="addMnemonicRecovery"
-                            @blur="recoveryBlur"/>
+                    <input id="input-to-mnemonic-recovery"
+                           type="text"
+                           class="input"
+                           :placeholder="$t('modals.newWallet.recovery.finish.fields.phrase.placeholder')"
+                           v-on:keyup.188="addMnemonicRecovery"
+                           v-model="mnemonicFieldRecovery"
+                           @keyup.enter="addMnemonicRecovery"
+                           @keyup.delete="removeMnemonicRecovery"
+                           @keyup.space="addMnemonicRecovery"
+                           @blur="recoveryBlur"/>
                 </div>
             </div>
 
             <div class="modal-warning">
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.finish.fields.deviceOnly') }}</span>
-                    <input
-                            type="checkbox"
-                            class="type_project_arr"
-                            v-model="restorationAgreements.deviceOnly"/>
+                    <input type="checkbox"
+                           class="type_project_arr"
+                           v-model="restorationAgreements.deviceOnly"/>
                     <div class="control-indicator"></div>
                 </label>
 
                 <label class="control control-checkbox">
                     <span>{{ $t('modals.newWallet.recovery.finish.fields.secure') }}</span>
-                    <input
-                            type="checkbox"
-                            class="type_project_arr"
-                            v-model="restorationAgreements.phraseSecure"/>
+                    <input type="checkbox"
+                           class="type_project_arr"
+                           v-model="restorationAgreements.phraseSecure"/>
                     <div class="control-indicator"></div>
                 </label>
             </div>
@@ -207,15 +206,13 @@
             </div>
 
             <div class="modal-btn text-center">
-                <button
-                        class="btn btn-default btn-large"
+                <button class="btn btn-default btn-large"
                         :class="{ 'disabled': mnemonicsRecovery.length === 0 || dataProcessing}"
                         @click="clearRecoveryPhrase"
                         :disabled="mnemonicsRecovery.length === 0 || dataProcessing">
                     {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
                 </button>
-                <button
-                        id="create-new-wallet"
+                <button id="create-new-wallet"
                         class="btn btn-yellow btn-large"
                         :class="{ 'disabled': isConfirmRecovery || dataProcessing}"
                         :disabled="isConfirmRecovery || dataProcessing"
