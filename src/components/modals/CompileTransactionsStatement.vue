@@ -115,51 +115,51 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': checkDisabled }">
+                                           :class="{ 'disabled-title': checkDisabledByTransactions }">
                                             Transaction's type
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabled }">
+                                               :class="{ 'disabled-label__control': checkDisabledByTransactions }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="income"
-                                                   :disabled="checkDisabled"
+                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabled }">
+                                                  :class="{ 'disabled-label': checkDisabledByTransactions }">
                                                 Income
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabled }">
+                                               :class="{ 'disabled-label__control': checkDisabledByTransactions }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="outcome"
-                                                   :disabled="checkDisabled"
+                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabled }">
+                                                  :class="{ 'disabled-label': checkDisabledByTransactions }">
                                                 Outcome
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line m-b-20">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabled }">
+                                               :class="{ 'disabled-label__control': checkDisabledByTransactions}">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="all"
-                                                   :disabled="checkDisabled"
+                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabled }">
+                                                  :class="{ 'disabled-label': checkDisabledByTransactions}">
                                                 All
                                             </span>
                                         </label>
@@ -168,35 +168,35 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': checkDisabled }">
+                                           :class="{ 'disabled-title': checkDisabledByTransactions }">
                                             Transaction's amount range
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{ 'wrap-double-input__disabled': checkDisabled }">
+                                             :class="{ 'wrap-double-input__disabled': checkDisabledByTransactions }">
                                             <label for="balance-from" class="label-from">from</label>
                                             <input type="number"
                                                    id="balance-from"
                                                    class="input input-from"
                                                    name="transaction-selection"
                                                    value="income"
-                                                   placeholder="2000"
-                                                   :disabled="checkDisabled"
+                                                   placeholder="undefined"
+                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="balanceFilter.from">
                                         </div>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{'wrap-double-input__disabled': selectionTypeStatement !== 'optional'}">
+                                             :class="{'wrap-double-input__disabled': checkDisabledByTransactions }">
                                             <label for="balance-to" class="label-to">to</label>
                                             <input type="number"
                                                    class="input input-to"
                                                    id="balance-to"
                                                    name="transaction-selection"
                                                    value="outcome"
-                                                   placeholder="9123445"
-                                                   :disabled="checkDisabled"
+                                                   placeholder="undefined"
+                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="balanceFilter.to">
                                         </div>
                                     </div>
@@ -345,6 +345,11 @@
                     return true;
                 return false;
             },
+            checkDisabledByTransactions: function () {
+                if (this.selectionTypeStatement !== 'optional' || this.countTransactions === 0)
+                    return true;
+                return false;
+            },
             countTransactions: function () {
                 if (this.selectionTypeStatement === 'current') {
                     return this.transactions.length;
@@ -355,7 +360,8 @@
                     //или забрать количество транзакций из воллета?
 
                     if (this.selectedWallets.length !== 0) {
-                        return this.wallets.filter(wallet => {
+                        //вынести во vuex
+                        let countCurrentTransactions = this.wallets.filter(wallet => {
                             return this.selectedWallets.find(address => {
                                 return wallet.address === address;
                             });
@@ -364,6 +370,10 @@
                         }).reduce((sum, curr) => {
                             return sum + curr;
                         });
+
+                        this.setBalanceValues();
+
+                        return countCurrentTransactions;
 
                         // return this.allTransactions.filter(item => {
                         //     return this.selectedWallets.find(address => {
@@ -377,20 +387,56 @@
                     }
                     return 0;
                 }
+            },
+
+            //во vuex
+            currentChooseTransactions: function () {
+                return this.allTransactions.filter(item => {
+                    return this.selectedWallets.find(address => {
+                        return item.address === address;
+                    });
+                }).map(item => {
+                    return item.transactions;
+                }).reduce((combArr, currArr) => {
+                    return combArr.concat(currArr);
+                });
             }
         },
         methods: {
             closeModal: function (name) {
                 this.$modal.hide(name);
             },
+            minValBalance: function (arr) {
 
+            },
+            maxValBalance: function (arr) {
+
+            },
+            setBalanceValues: function () {
+                // this.balanceFilter.from = this.currentChooseTransactions.reduce((prev, curr) => {
+                //     return Math.min(prev.count, curr.count);
+                // });
+                // this.balanceFilter.to = this.currentChooseTransactions.reduce((prev, curr) => {
+                //     return Math.max(prev.count, curr.count);
+                // });
+
+                let min = this.currentChooseTransactions[0].count,
+                    max = this.currentChooseTransactions[0].count;
+                this.currentChooseTransactions.forEach(item => {
+                    if (item.count < min)
+                        min = item.count;
+                    if (item.count > max)
+                        max = item.count;
+                });
+                this.balanceFilter.from = min;
+                this.balanceFilter.to = max;
+            },
             //в computed
             checkTypeTransaction: function (type) {
                 if (type === 'SEND')
                     return true;
                 return false;
             },
-
             getTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
                 if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
                     return 'RECEIVED';
