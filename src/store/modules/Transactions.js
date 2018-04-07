@@ -390,7 +390,15 @@ const getters = {
     dateTo: state => state.dateTo,
     disabledDate: state => state.disabledDate,
     searchText: state => state.searchText,
-    changedTransactions: state => state.changedTransactions
+    changedTransactions: state => state.changedTransactions,
+
+    countAllTransactions: state => {
+        let count = 0;
+        for (let i = 0; i < state.allTransactions.length; i++) {
+            count += state.allTransactions[i].transactions.length;
+        }
+        return count;
+    }
 };
 
 export default {

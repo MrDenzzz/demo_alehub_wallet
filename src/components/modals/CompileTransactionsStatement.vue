@@ -218,7 +218,13 @@
 
                 <div class="modal-footer">
                     <button class="buttons btn-yellow btn-large" type="submit">
-                        Export <span class="count-transactions">{{5}}</span> transactions
+                        Export
+                        <span class="count-transactions">
+                            <formatting-price
+                                    :value="countAllTransactions"
+                            />
+                        </span>
+                        transactions
                     </button>
                 </div>
             </form>
@@ -267,7 +273,7 @@
                 dateToDatepicker: '',
                 dataProcessing: false,
 
-                selectionTypeStatement: 'all',
+                selectionTypeStatement: 'current',
                 selectionTypeTransactions: 'all',
 
                 balanceFilter: {
@@ -311,13 +317,14 @@
                 'allTransactions',
                 'allTransactionsStatus',
                 'dateFrom', //make another getters with date
-                'dateTo'
+                'dateTo',
+                'countAllTransactions'
             ]),
             checkDisabled: function () {
                 if (this.selectionTypeStatement !== 'optional')
                     return true;
                 return false;
-            }
+            },
 
         },
         methods: {
@@ -600,7 +607,6 @@
             },
 
             downloadPDF: function () {
-
                 if (this.selectionTypeStatement === 'current') {
                     this.makePDF();
                     this.closeModal('download-pdf');
@@ -816,9 +822,9 @@
                 color #979797 !important
                 cursor default
 
-             .disabled-label__balance
-                 color #b3b3b3 !important
-                 cursor default
+            .disabled-label__balance
+                color #b3b3b3 !important
+                cursor default
 
             .input-label
                 font-family MuseoSansCyrl500

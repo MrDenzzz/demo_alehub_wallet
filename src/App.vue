@@ -157,13 +157,13 @@
                 this.$store.dispatch('addMissingToLoadedWallets'
                 ).then(() => {
 
-                    console.log(this.walletsLoadedAddresses, 'this.walletsLoadedAddresses');
-                    console.log(this.diffWalletsAddresses, 'this.diffWalletsAddresses');
+                    // console.log(this.walletsLoadedAddresses, 'this.walletsLoadedAddresses');
+                    // console.log(this.diffWalletsAddresses, 'this.diffWalletsAddresses');
 
                     this.$store.dispatch('addMissingTransactionsRequest', {
                         addresses: this.diffWalletsAddresses
                     }).then(() => {
-                        console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
+                        // console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
                     }).catch(() => {
                         console.log('Error request all transactions');
                     });
