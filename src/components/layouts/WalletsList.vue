@@ -144,7 +144,7 @@
                         this.$store.dispatch('additionTransactionRequest', {
                             addresses: [this.currentWallet.address]
                         }).then(() => {
-                            console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
+                            // console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
                         }).catch(() => {
                             console.log('Error request all transactions');
                         });

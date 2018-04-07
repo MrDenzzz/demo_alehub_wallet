@@ -61,6 +61,12 @@
                 'currentWallet',
                 'changedWallets',
                 'currentWalletHaveTransactions',
+
+                'allTransactions',
+
+                'walletsLoadedAddresses',
+
+                'diffWalletsAddresses'
             ]),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
@@ -75,25 +81,17 @@
                     return false;
                 }
 
-                // console.log(this.authStatus, 'this.authStatus');
-                // console.log(this.userStatus, 'this.userStatus');
-                // console.log(this.userHaveWallets, 'this.userHaveWallets');
-                // console.log(this.currentWalletHaveTransactions, 'this.currentWalletHaveTransactions');
-                // console.log(this.walletStatus, 'this.walletStatus');
-                // console.log(this.transactionStatus, 'this.transactionStatus');
-                // console.log(this.initiateFilterDateStatus, 'this.initiateFilterDateStatus');
-
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success')) {
 
                     (!this.userHaveWallets) ? this.readyToPing = false : this.readyToPing = true;
 
-                    console.log('Load app');
+                    this.downloadMissingTransactions();
 
+                    console.log('Load app');
                     return false;
                 }
-
                 return true;
             }
         },
@@ -153,6 +151,24 @@
                     console.log('Success refresh transactions');
                 }).catch(() => {
                     console.log('Error refresh transactions');
+                });
+            },
+            downloadMissingTransactions: function () {
+                this.$store.dispatch('addMissingToLoadedWallets'
+                ).then(() => {
+
+                    console.log(this.walletsLoadedAddresses, 'this.walletsLoadedAddresses');
+                    console.log(this.diffWalletsAddresses, 'this.diffWalletsAddresses');
+
+                    this.$store.dispatch('addMissingTransactionsRequest', {
+                        addresses: this.diffWalletsAddresses
+                    }).then(() => {
+                        console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
+                    }).catch(() => {
+                        console.log('Error request all transactions');
+                    });
+                }).catch(() => {
+                    console.log('Error addition missing wallets to loaded wallets');
                 });
             }
         },

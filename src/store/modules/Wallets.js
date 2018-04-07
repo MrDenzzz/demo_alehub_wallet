@@ -8,6 +8,8 @@ const state = {
 
     walletsLoadedAddresses: [],
 
+    diffWalletsAddresses: [],
+
     currentWallet: null,
     currentWalletHaveTransactions: false,
 
@@ -53,6 +55,12 @@ const actions = {
                 reject(err)
             });
         })
+    },
+    addMissingToLoadedWallets: ({commit}) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_ADD_MISSING_TO_LOADED_WALLETS');
+            resolve();
+        });
     },
     walletsRequestLazy: ({commit}) => {
         return new Promise((resolve, reject) => {
@@ -159,7 +167,7 @@ const actions = {
     changeCurrentWallet: ({commit, dispatch}, address) => {
         return new Promise((resolve) => {
             commit('SUCCESS_CHANGE_CURRENT_WALLET', address);
-            if (!state.walletsLoadedAddresses.find((item) => {
+            if (!state.walletsLoadedAddresses.find(item => {
                     return item === address;
                 })) {
                 dispatch('addLoadWalletAddress', address);
@@ -272,15 +280,28 @@ const mutations = {
         }
         state.walletStatus = 'success';
     },
+    ERROR_WALLETS: (state) => {
+        state.walletStatus = 'error';
+    },
+    SUCCESS_ADD_MISSING_TO_LOADED_WALLETS: (state) => {
+        state.diffWalletsAddresses = state.wallets.filter(item => {
+            return state.walletsLoadedAddresses.find(address => {
+                return item.address !== address;
+            });
+        }).map(item => {
+            return item.address;
+        });
+        state.walletsLoadedAddresses = state.wallets.map(item => {
+            return item.address;
+        });
+    },
     REQUEST_NEW_WALLET: (state) => {
         state.newWalletStatus = 'loading';
     },
     SUCCESS_NEW_WALLET: (state, wallet) => {
         delete wallet.__v;
-
         state.wallets.push(wallet);
         state.currentWallet = state.wallets[state.wallets.length - 1];
-
         state.newWalletStatus = 'success';
     },
     ERROR_WALLETS: (state) => {
@@ -389,6 +410,7 @@ const getters = {
             return item.total_transactions > 0;
         });
     },
+
     lengthWalletList: state => state.wallets.length,
     walletStatus: state => state.walletStatus,
     currentWallet: state => state.currentWallet,
@@ -407,7 +429,9 @@ const getters = {
     },
     changedWallets: state => state.changedWallets,
 
-    walletsLoadedAddresses: state => state.walletsLoadedAddresses
+    walletsLoadedAddresses: state => state.walletsLoadedAddresses,
+
+    diffWalletsAddresses: state => state.diffWalletsAddresses
 };
 
 export default {

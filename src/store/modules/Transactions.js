@@ -17,6 +17,7 @@ const state = {
     initiateFilterDateStatus: '',
     allTransactionsStatus: '',
     additionTransactionStatus: '',
+    addMissingTransactionsStatus: '',
 
     transactionsLoader: false,
 
@@ -72,6 +73,29 @@ const actions = {
             }).catch(err => {
                 console.log(err, 'error transactions wallet address');
                 commit('ERROR_ADDITION_TRANSACTION', err);
+                reject(err)
+            });
+        });
+    },
+    addMissingTransactionsRequest: ({commit}, addresses) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_ADD_MISSING_TRANSACTIONS');
+            let host = 'http://192.168.1.47:4000/transactions/list';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: addresses,
+                method: 'POST'
+            }).then(resp => {
+                commit('SUCCESS_ADD_MISSING_TRANSACTIONS', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error transactions wallet address');
+                commit('ERROR_ADD_MISSING_TRANSACTIONS', err);
                 reject(err)
             });
         });
@@ -245,6 +269,18 @@ const mutations = {
     ERROR_ADDITION_TRANSACTION: (state) => {
         state.additionTransactionStatus = 'error';
     },
+    REQUEST_ADD_MISSING_TRANSACTIONS: (state) => {
+        state.addMissingTransactionsStatus = 'loading';
+    },
+    SUCCESS_ADD_MISSING_TRANSACTIONS: (state, missingTransactions) => {
+        missingTransactions.forEach(item => {
+            state.allTransactions.push(item);
+        });
+        state.addMissingTransactionsStatus = 'success';
+    },
+    ERROR_ADD_MISSING_TRANSACTIONS: (state) => {
+        state.addMissingTransactionsStatus = 'error';
+    },
     REQUEST_TRANSACTIONS: (state) => {
         state.transactionStatus = 'loading';
         state.transactionsLazyStatus = 'loading';
@@ -254,7 +290,7 @@ const mutations = {
         state.transactionsLazyStatus = 'success';
         state.transactions = transactions;
     },
-    ERROR_TRANSACTIONS: (state, err) => {
+    ERROR_TRANSACTIONS: (state) => {
         state.transactionStatus = 'error';
         state.transactionsLazyStatus = 'error';
     },
