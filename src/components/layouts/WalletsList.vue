@@ -10,8 +10,7 @@
                          height="15">
                     <input type="text"
                            :placeholder="$t('pages.walletsList.search')"
-                           v-model="searchField"
-                    >
+                           v-model="searchField">
                 </div>
             </div>
 
@@ -35,7 +34,6 @@
                         {{ ' ' + 'ALE'}}
                     </p>
                 </div>
-
             </div>
 
             <div class="wallet-list wrap-between cursor-p" @click="addNewWalletModal">
@@ -46,7 +44,6 @@
             </div>
 
             <div class="drag" @click="checkScroll()"></div>
-
         </div>
     </div>
 </template>
@@ -133,7 +130,6 @@
                 this.$modal.show('newwallet');
             },
             selectNewWallet: function (address) {
-
                 if (this.currentWallet.address !== address) {
                     this.$store.dispatch('changeCurrentWallet',
                         address
@@ -145,8 +141,8 @@
                             console.log('Error reset transactionsUpdated. WalletList.vue');
                         });
 
-                        this.$store.dispatch('allTransactionsRequest', {
-                            addresses: this.walletsLoadedAddresses
+                        this.$store.dispatch('additionTransactionRequest', {
+                            addresses: [this.currentWallet.address]
                         }).then(() => {
                             console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
                         }).catch(() => {

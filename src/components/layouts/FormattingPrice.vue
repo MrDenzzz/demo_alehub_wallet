@@ -1,20 +1,28 @@
 <template>
-    <vue-numeric
-            :separator='correctLangSep()'
-            :decimal-separator='correctLangDecSep()'
-            :value="value"
-            :precision="correctValuePrecision(value)"
-            :read-only="true">
-    </vue-numeric>
+    <!--<span>-->
+        <vue-numeric
+                :separator='correctLangSep()'
+                :decimal-separator='correctLangDecSep()'
+                :value="value"
+                :precision="correctValuePrecision(value)"
+                :read-only="true">
+        </vue-numeric>
+        <!--<span v-if="balance">-->
+            <!--ALE-->
+        <!--</span>-->
+    <!--</span>-->
 </template>
 
 <script>
     export default {
-        name: "formatting-price",
+        name: 'formatting-price',
         props: {
             value: {
                 type: [String, Number],
                 required: true
+            },
+            balance: {
+                type: Boolean,
             }
         },
         methods: {

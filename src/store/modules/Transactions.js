@@ -16,6 +16,7 @@ const state = {
     transactionSendStatus: '',
     initiateFilterDateStatus: '',
     allTransactionsStatus: '',
+    additionTransactionStatus: '',
 
     transactionsLoader: false,
 
@@ -43,12 +44,34 @@ const actions = {
                 data: walletsAddressList,
                 method: 'POST'
             }).then(resp => {
-                console.log('IM HERE');
                 commit('SUCCESS_ALL_TRANSACTIONS', resp.data);
                 resolve(resp);
             }).catch(err => {
                 console.log(err, 'error transactions wallet address');
                 commit('ERROR_ALL_TRANSACTIONS', err);
+                reject(err)
+            });
+        });
+    },
+    additionTransactionRequest: ({commit}, walletAddressArray) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_ADDITION_TRANSACTION');
+            let host = 'http://192.168.1.47:4000/transactions/list';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                data: walletAddressArray,
+                method: 'POST'
+            }).then(resp => {
+                commit('SUCCESS_ADDITION_TRANSACTION', resp.data);
+                resolve(resp);
+            }).catch(err => {
+                console.log(err, 'error transactions wallet address');
+                commit('ERROR_ADDITION_TRANSACTION', err);
                 reject(err)
             });
         });
@@ -211,6 +234,16 @@ const mutations = {
     },
     ERROR_ALL_TRANSACTIONS: (state) => {
         state.allTransactionsStatus = 'error';
+    },
+    REQUEST_ADDITION_TRANSACTION: (state) => {
+        state.additionTransactionStatus = 'loading';
+    },
+    SUCCESS_ADDITION_TRANSACTION: (state, walletTransactions) => {
+        state.allTransactions.push(walletTransactions[0]);
+        state.additionTransactionStatus = 'success';
+    },
+    ERROR_ADDITION_TRANSACTION: (state) => {
+        state.additionTransactionStatus = 'error';
     },
     REQUEST_TRANSACTIONS: (state) => {
         state.transactionStatus = 'loading';

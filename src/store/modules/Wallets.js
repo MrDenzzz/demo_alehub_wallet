@@ -341,9 +341,7 @@ const mutations = {
         localStorage.setItem(sha256('current-wallet'), state.currentWallet.address);
     },
     SUCCESS_ADD_LOAD_WALLET_ADDRESS: (state, address) => {
-        // console.log(address, 'address');
         state.walletsLoadedAddresses.push(address);
-        // console.log(state.walletsLoadedAddresses, 'state.walletsLoadedAddresses');
     },
     REQUEST_CHANGE_WALLET_NAME: (state) => {
         state.changeWalletStatus = 'loading';
@@ -386,6 +384,11 @@ const mutations = {
 
 const getters = {
     wallets: state => state.wallets,
+    filledWallets: state => {
+        return state.wallets.filter(item => {
+            return item.total_transactions > 0;
+        });
+    },
     lengthWalletList: state => state.wallets.length,
     walletStatus: state => state.walletStatus,
     currentWallet: state => state.currentWallet,

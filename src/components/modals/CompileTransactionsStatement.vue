@@ -60,26 +60,30 @@
                     <div class="modal-wrap">
                         <div class="modal-line">
                             <p class="modal-control__title"
-                               :class="{ 'disabled-title': selectionTypeStatement !== 'optional' }">
+                               :class="{ 'disabled-title': checkDisabled }">
                                 Select from where you want to export transactions
                             </p>
                         </div>
                         <div class="modal-control__wrap">
-                            <div class="modal-control__block" v-for="wallet in wallets">
+                            <div class="modal-control__block" v-for="wallet in filledWallets">
                                 <label class="control control-checkbox"
-                                       :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
+                                       :class="{ 'disabled-label__control': checkDisabled }">
                                     <input type="checkbox"
                                            name="wallet-names"
-                                           :disabled="selectionTypeStatement !== 'optional'"/>
+                                           :disabled="checkDisabled"/>
                                     <div class="control-indicator"></div>
                                     <div class="wrap__input-label">
                                         <span class="input-label"
-                                              :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
+                                              :class="{ 'disabled-label': checkDisabled }">
                                             {{ wallet.name }}
                                         </span>
                                         <span class="input-label input-label__balance"
-                                              :class="{ 'disabled-label__balance': selectionTypeStatement !== 'optional' }">
-                                            23 ALE
+                                              :class="{ 'disabled-label__balance': checkDisabled }">
+                                            <formatting-price
+                                                    :value="wallet.balance"
+                                                    :balance="true"
+                                            />
+                                            &nbsp;ALE
                                         </span>
                                     </div>
                                 </label>
@@ -91,14 +95,14 @@
                 <div class="modal-control">
                     <div class="modal-input">
                         <label class="title"
-                               :class="{ 'disabled-title': selectionTypeStatement !== 'optional' }">
+                               :class="{ 'disabled-title': checkDisabled }">
                             Tag's
                         </label>
                         <input type="text"
                                class="input"
                                placeholder="Type a tag here to choose specific transactions (optional)"
-                               :class="{ 'input-disabled': selectionTypeStatement !== 'optional' }"
-                               :disabled="selectionTypeStatement !== 'optional'">
+                               :class="{ 'input-disabled': checkDisabled }"
+                               :disabled="checkDisabled">
                     </div>
                 </div>
 
@@ -109,51 +113,51 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': selectionTypeStatement !== 'optional' }">
+                                           :class="{ 'disabled-title': checkDisabled }">
                                             Transaction's type
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
+                                               :class="{ 'disabled-label__control': checkDisabled }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="income"
-                                                   :disabled="selectionTypeStatement !== 'optional'"
+                                                   :disabled="checkDisabled"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
+                                                  :class="{ 'disabled-label': checkDisabled }">
                                                 Income
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
+                                               :class="{ 'disabled-label__control': checkDisabled }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="outcome"
-                                                   :disabled="selectionTypeStatement !== 'optional'"
+                                                   :disabled="checkDisabled"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
+                                                  :class="{ 'disabled-label': checkDisabled }">
                                                 Outcome
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line m-b-20">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
+                                               :class="{ 'disabled-label__control': checkDisabled }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="all"
-                                                   :disabled="selectionTypeStatement !== 'optional'"
+                                                   :disabled="checkDisabled"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
+                                                  :class="{ 'disabled-label': checkDisabled }">
                                                 All
                                             </span>
                                         </label>
@@ -162,13 +166,13 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': selectionTypeStatement !== 'optional' }">
+                                           :class="{ 'disabled-title': checkDisabled }">
                                             Transaction's amount range
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{'wrap-double-input__disabled': selectionTypeStatement !== 'optional'}">
+                                             :class="{ 'wrap-double-input__disabled': checkDisabled }">
                                             <label for="balance-from" class="label-from">from</label>
                                             <input type="number"
                                                    id="balance-from"
@@ -176,8 +180,8 @@
                                                    name="transaction-selection"
                                                    value="income"
                                                    placeholder="2000"
-                                                   v-model="balanceFilter.from"
-                                                   :disabled="selectionTypeStatement !== 'optional'">
+                                                   :disabled="checkDisabled"
+                                                   v-model="balanceFilter.from">
                                         </div>
                                     </div>
                                     <div class="modal-line">
@@ -190,8 +194,8 @@
                                                    name="transaction-selection"
                                                    value="outcome"
                                                    placeholder="9123445"
-                                                   v-model="balanceFilter.to"
-                                                   :disabled="selectionTypeStatement !== 'optional'">
+                                                   :disabled="checkDisabled"
+                                                   v-model="balanceFilter.to">
                                         </div>
                                     </div>
                                 </div>
@@ -208,14 +212,13 @@
                     </div>
                 </div>
 
-
                 <div v-if="dataProcessing" class="wrap-spinner">
                     <spinner/>
                 </div>
 
                 <div class="modal-footer">
                     <button class="buttons btn-yellow btn-large" type="submit">
-                        Export <span style="font-weight: 700;">{{5}}</span> transactions
+                        Export <span class="count-transactions">{{5}}</span> transactions
                     </button>
                 </div>
             </form>
@@ -272,15 +275,13 @@
                     to: ''
                 },
 
-
                 heightDoc: 297,
                 widthDoc: 210,
+                offset: 10,
 
                 titleFontSize: 20,
                 dateDayFontSize: 16,
                 normalFontSize: 12,
-
-                offset: 10,
 
                 receivedText: 'Received',
                 sentText: 'Sent',
@@ -290,13 +291,9 @@
                 currencyText: 'ALE',
 
                 xPositionSummaryAction: 130,
-
                 xPositionSummaryCount: 160,
-
                 xPositionSummaryCurrency: 175,
-
                 xPositionDateTitleDay: 10,
-
                 xPositionTransactionType: 10,
 
                 currentSent: 0,
@@ -308,13 +305,19 @@
         computed: {
             ...mapGetters([
                 'wallets',
+                'filledWallets',
                 'currentWallet',
                 'transactions',
                 'allTransactions',
                 'allTransactionsStatus',
                 'dateFrom', //make another getters with date
                 'dateTo'
-            ])
+            ]),
+            checkDisabled: function () {
+                if (this.selectionTypeStatement !== 'optional')
+                    return true;
+                return false;
+            }
 
         },
         methods: {
@@ -826,5 +829,10 @@
             display flex
             justify-content center
             margin-top 0 !important
+
+            .buttons
+
+                .count-transactions
+                    font-weight 700
 
 </style>
