@@ -66,14 +66,21 @@
                         </div>
                         <div class="modal-control__wrap">
                             <div class="modal-control__block" v-for="wallet in wallets">
-                                <label class="control control-checkbox">
+                                <label class="control control-checkbox"
+                                       :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
                                     <input type="checkbox"
                                            name="wallet-names"
                                            :disabled="selectionTypeStatement !== 'optional'"/>
                                     <div class="control-indicator"></div>
                                     <div class="wrap__input-label">
-                                        <span class="input-label">{{ wallet.name }}</span>
-                                        <span class="input-label input-label__balance">23 ALE</span>
+                                        <span class="input-label"
+                                              :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
+                                            {{ wallet.name }}
+                                        </span>
+                                        <span class="input-label input-label__balance"
+                                              :class="{ 'disabled-label__balance': selectionTypeStatement !== 'optional' }">
+                                            23 ALE
+                                        </span>
                                     </div>
                                 </label>
                             </div>
@@ -107,78 +114,49 @@
                                         </p>
                                     </div>
                                     <div class="modal-line">
-                                        <label class="control control-radio">
+                                        <label class="control control-radio"
+                                               :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="income"
+                                                   :disabled="selectionTypeStatement !== 'optional'"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
-                                            <span class="input-label">
+                                            <span class="input-label"
+                                                  :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
                                                 Income
                                             </span>
                                         </label>
-
-                                        <!--<input type="radio"-->
-                                               <!--id="income"-->
-                                               <!--name="transaction-type"-->
-                                               <!--value="income"-->
-                                               <!--v-model="selectionTypeTransactions"-->
-                                               <!--:disabled="selectionTypeStatement !== 'optional'">-->
-                                        <!--<label for="income"-->
-                                               <!--class="input-label"-->
-                                               <!--:class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">-->
-                                            <!--Income-->
-                                        <!--</label>-->
                                     </div>
                                     <div class="modal-line">
-                                        <label class="control control-radio">
+                                        <label class="control control-radio"
+                                               :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="outcome"
+                                                   :disabled="selectionTypeStatement !== 'optional'"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
-                                            <span class="input-label">
+                                            <span class="input-label"
+                                                  :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
                                                 Outcome
                                             </span>
                                         </label>
-
-                                        <!--<input type="radio"-->
-                                               <!--id="outcome"-->
-                                               <!--name="transaction-type"-->
-                                               <!--value="outcome"-->
-                                               <!--v-model="selectionTypeTransactions"-->
-                                               <!--:disabled="selectionTypeStatement !== 'optional'">-->
-                                        <!--<label-->
-                                                <!--for="outcome"-->
-                                                <!--class="input-label"-->
-                                                <!--:class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">-->
-                                            <!--Outcome-->
-                                        <!--</label>-->
                                     </div>
                                     <div class="modal-line m-b-20">
-                                        <label class="control control-radio">
+                                        <label class="control control-radio"
+                                               :class="{ 'disabled-label__control': selectionTypeStatement !== 'optional' }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="all"
+                                                   :disabled="selectionTypeStatement !== 'optional'"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
-                                            <span class="input-label">
+                                            <span class="input-label"
+                                                  :class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">
                                                 All
                                             </span>
                                         </label>
-
-                                        <!--<input type="radio"-->
-                                               <!--id="all"-->
-                                               <!--name="transaction-type"-->
-                                               <!--value="all"-->
-                                               <!--v-model="selectionTypeTransactions"-->
-                                               <!--:disabled="selectionTypeStatement !== 'optional'">-->
-                                        <!--<label-->
-                                                <!--for="all"-->
-                                                <!--class="input-label"-->
-                                                <!--:class="{ 'disabled-label': selectionTypeStatement !== 'optional' }">-->
-                                            <!--All-->
-                                        <!--</label>-->
                                     </div>
                                 </div>
                                 <div class="modal-block">
@@ -683,7 +661,11 @@
 </style>
 
 <style lang="stylus" scoped>
+    .disabled-label__control
+        cursor default
+
     .control-radio
+        width auto
         display flex
         align-items center
 
@@ -705,6 +687,7 @@
                 height 6px
 
     .control-checkbox
+        width auto
         display flex
         align-items center
 
@@ -829,6 +812,10 @@
             .disabled-label, .disabled-title
                 color #979797 !important
                 cursor default
+
+             .disabled-label__balance
+                 color #b3b3b3 !important
+                 cursor default
 
             .input-label
                 font-family MuseoSansCyrl500
