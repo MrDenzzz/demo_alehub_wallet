@@ -7,7 +7,6 @@
                 :rightMenu="rightMenu"
         />
         <section class="main">
-
             <wallets-list
                     :new-wallets="wallets"
             />

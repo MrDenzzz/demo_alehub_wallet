@@ -115,51 +115,51 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': checkDisabledByTransactions }">
+                                           :class="{ 'disabled-title': checkDisabled }">
                                             Transaction's type
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabledByTransactions }">
+                                               :class="{ 'disabled-label__control': checkDisabled }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="income"
-                                                   :disabled="checkDisabledByTransactions"
+                                                   :disabled="checkDisabled"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabledByTransactions }">
+                                                  :class="{ 'disabled-label': checkDisabled }">
                                                 Income
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabledByTransactions }">
+                                               :class="{ 'disabled-label__control': checkDisabled }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="outcome"
-                                                   :disabled="checkDisabledByTransactions"
+                                                   :disabled="checkDisabled"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabledByTransactions }">
+                                                  :class="{ 'disabled-label': checkDisabled }">
                                                 Outcome
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line m-b-20">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabledByTransactions}">
+                                               :class="{ 'disabled-label__control': checkDisabled}">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="all"
-                                                   :disabled="checkDisabledByTransactions"
+                                                   :disabled="checkDisabled"
                                                    v-model="selectionTypeTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabledByTransactions}">
+                                                  :class="{ 'disabled-label': checkDisabled}">
                                                 All
                                             </span>
                                         </label>
@@ -168,35 +168,33 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': checkDisabledByTransactions }">
+                                           :class="{ 'disabled-title': checkDisabled }">
                                             Transaction's amount range
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{ 'wrap-double-input__disabled': checkDisabledByTransactions }">
+                                             :class="{ 'wrap-double-input__disabled': checkDisabled }">
                                             <label for="balance-from" class="label-from">from</label>
                                             <input type="number"
                                                    id="balance-from"
                                                    class="input input-from"
                                                    name="transaction-selection"
-                                                   value="income"
                                                    placeholder="undefined"
-                                                   :disabled="checkDisabledByTransactions"
+                                                   :disabled="checkDisabled"
                                                    v-model="balanceFilter.from">
                                         </div>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{'wrap-double-input__disabled': checkDisabledByTransactions }">
+                                             :class="{'wrap-double-input__disabled': checkDisabled }">
                                             <label for="balance-to" class="label-to">to</label>
                                             <input type="number"
                                                    class="input input-to"
                                                    id="balance-to"
                                                    name="transaction-selection"
-                                                   value="outcome"
                                                    placeholder="undefined"
-                                                   :disabled="checkDisabledByTransactions"
+                                                   :disabled="checkDisabled"
                                                    v-model="balanceFilter.to">
                                         </div>
                                     </div>
@@ -205,10 +203,11 @@
                             <div class="col-6">
                                 <datepicker id="datepickerFrom1"
                                             class="datepicker-for-export"
-                                            v-model="dateFromDatepicker"
+                                            v-model="dateLocalFrom"
                                             language="en"
-                                            :inline="true"
-                                            :placeholder="'Date from'"/>
+                                            :highlighted="highlighted"
+                                            :disabled="disabledDate1"
+                                            :inline="true"/>
                             </div>
                         </div>
                     </div>
@@ -281,6 +280,18 @@
             selectedWallets: function (val) {
                 //может быть отправлять экшн в транзакшнс.жс, который бы выдавал релевантный список транзакций?
                 console.log(val, 'selectedWallets');
+            },
+            'balanceFilter.from': function (val) {
+                console.log(val, 'balanceFilter.from');
+            },
+            'balanceFilter.to': function (val) {
+                console.log(val, 'balanceFilter.to');
+            },
+            dateFrom: function (val) {
+                console.log(val, 'date from');
+            },
+            dateTo: function (val) {
+                console.log(val, 'date to');
             }
         },
         data() {
@@ -291,12 +302,24 @@
 
                 haveCurrentTransactions: false,
 
-                selectionTypeStatement: 'current',
+                selectionTypeStatement: 'optional',
                 selectionTypeTransactions: 'all',
 
                 selectedWallets: [],
 
                 balanceFilter: {
+                    from: '',
+                    to: ''
+                },
+
+                dateLocalFrom: '',
+                dateLocalTo: '',
+
+                highlighted: {
+                    from: 0,
+                    to: 0
+                },
+                disabledDate1: {
                     from: '',
                     to: ''
                 },
@@ -338,8 +361,18 @@
                 'allTransactionsStatus',
                 'dateFrom', //make another getters with date
                 'dateTo',
-                'countAllTransactions'
+                'countAllTransactions',
+                'disabledDate'
             ]),
+
+            //date
+
+
+
+            // end date
+
+
+
             checkDisabled: function () {
                 if (this.selectionTypeStatement !== 'optional')
                     return true;
@@ -352,12 +385,16 @@
             },
             countTransactions: function () {
                 if (this.selectionTypeStatement === 'current') {
+                    this.makeDisableDatepicker();
                     return this.transactions.length;
                 } else if (this.selectionTypeStatement === 'all') {
+                    this.makeDisableDatepicker();
                     return this.countAllTransactions;
                 } else if (this.selectionTypeStatement === 'optional') {
                     //fix this optional count
                     //или забрать количество транзакций из воллета?
+
+                    this.makeEnableDatepicker();
 
                     if (this.selectedWallets.length !== 0) {
                         //вынести во vuex
@@ -373,6 +410,50 @@
 
                         this.setBalanceValues();
 
+
+                        this.dateLocalFrom = this.allTransactions.filter(item => {
+                            return this.selectedWallets.find(address => {
+                                return item.address === address;
+                            });
+                        }).map(item => {
+                            return item.transactions;
+                        }).reduce((prev, curr) => {
+                            return prev.concat(curr);
+                        }).map(item => {
+                            return item.timestamp;
+                        }).reduce((prev, curr) => {
+                            return (prev < curr) ? prev : curr;
+                        });
+
+                        this.dateLocalTo = this.allTransactions.filter(item => {
+                            return this.selectedWallets.find(address => {
+                                return item.address === address;
+                            });
+                        }).map(item => {
+                            return item.transactions;
+                        }).reduce((prev, curr) => {
+                            return prev.concat(curr);
+                        }).map(item => {
+                            return item.timestamp;
+                        }).reduce((prev, curr) => {
+                            return (prev > curr) ? prev : curr;
+                        });
+
+                        let oneDay = 86400000;
+
+                        this.highlighted.from = this.dateLocalFrom;
+                        this.highlighted.to = this.dateLocalTo + oneDay;
+
+                        this.disabledDate1.from = '';
+                        this.disabledDate1.to = '';
+
+                        // this.disabledDate1.to = new Date(this.dateLocalFrom);
+                        // this.disabledDate1.to.setHours(0);
+                        // this.disabledDate1.to.setMinutes(0);
+                        // this.disabledDate1.to.setSeconds(0);
+                        // this.disabledDate1.to.setMilliseconds(0);
+
+
                         return countCurrentTransactions;
 
                         // return this.allTransactions.filter(item => {
@@ -385,6 +466,12 @@
                         //     return sum + curr;
                         // });
                     }
+                    this.dateLocalFrom = '';
+                    this.dateLocalTo = '';
+                    this.highlighted.from = 0;
+                    this.highlighted.to = 0;
+                    this.balanceFilter.from = 'undefined';
+                    this.balanceFilter.to = 'undefined';
                     return 0;
                 }
             },
@@ -405,6 +492,56 @@
         methods: {
             closeModal: function (name) {
                 this.$modal.hide(name);
+            },
+            setBalance: function () {
+
+            },
+            makeEnableDatepicker: function () {
+                this.disabledDate1.from = '';
+                this.disabledDate1.to = '';
+
+                let prevs = document.getElementsByClassName('prev');
+                for (let i = 0; i < prevs.length; i++) {
+                    if (prevs[i].classList.contains('disabled')) {
+                        prevs[i].classList.remove('disabled');
+                    }
+                }
+
+                let ups = document.getElementsByClassName('up');
+                for (let i = 0; i < ups.length; i++) {
+                    if (ups[i].classList.contains('disabled')) {
+                        ups[i].classList.remove('disabled');
+                    }
+                }
+
+                let dayHeaders = document.getElementsByClassName('day-header');
+                for (let i = 0; i < dayHeaders.length; i++) {
+                    dayHeaders[i].classList.remove('day-disable');
+                }
+            },
+            makeDisableDatepicker: function () {
+                this.disabledDate1.from = new Date(0);
+                this.disabledDate1.to = new Date(2147483647000);
+
+                let prevs = document.getElementsByClassName('prev');
+                for (let i = 0; i < prevs.length; i++) {
+                    if (!prevs[i].classList.contains('disabled')) {
+                        prevs[i].classList.add('disabled');
+                    }
+                }
+
+                let ups = document.getElementsByClassName('up');
+                for (let i = 0; i < ups.length; i++) {
+                    if (!ups[i].classList.contains('disabled')) {
+                        ups[i].classList.add('disabled');
+                    }
+                }
+
+                let dayHeaders = document.getElementsByClassName('day-header');
+                for (let i = 0; i < dayHeaders.length; i++) {
+                    dayHeaders[i].classList.add('day-disable');
+                }
+
             },
             minValBalance: function (arr) {
 
@@ -762,8 +899,14 @@
             box-shadow none
             background-color #fafafa
 
-            .day.selected
+            .day.selected, .day.highlighted
                 background-color #ffd24f !important
+            & :hover
+                border none !important
+
+            .day-disable
+                color #ddd !important
+
 
 </style>
 
@@ -788,7 +931,7 @@
             top auto
 
             &:after
-                top 5px
+                top 5.5px
                 left 6px
                 width 6px
                 height 6px
