@@ -1,5 +1,10 @@
 <template>
-    <modal name="download-pdf" width="700" height="auto">
+    <modal name="download-pdf"
+           width="700"
+           height="auto"
+           @opened="setStateDatepicker"
+           @before-open="initPosLabelCurrency"
+           @closed="resetLocalData">
         <div class="heading">
             <p class="title">Export to PDF</p>
             <i class="close" @click="closeModal('download-pdf')"></i>
@@ -181,8 +186,14 @@
                                                    class="input input-from"
                                                    name="transaction-selection"
                                                    placeholder="undefined"
+                                                   @input="moveFromLabelCurrency"
                                                    :disabled="checkDisabled"
                                                    v-model="balanceFilter.from">
+                                            <span id="label-currency-from"
+                                                  class="labelCurrencyFrom"
+                                                  @click="focusInput('balance-from')">
+                                                ALE
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="modal-line">
@@ -194,8 +205,14 @@
                                                    id="balance-to"
                                                    name="transaction-selection"
                                                    placeholder="undefined"
+                                                   @input="moveToLabelCurrency"
                                                    :disabled="checkDisabled"
                                                    v-model="balanceFilter.to">
+                                            <span id="label-currency-to"
+                                                  class="labelCurrencyTo"
+                                                  @click="focusInput('balance-to')">
+                                                ALE
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -368,9 +385,7 @@
             //date
 
 
-
             // end date
-
 
 
             checkDisabled: function () {
@@ -385,10 +400,10 @@
             },
             countTransactions: function () {
                 if (this.selectionTypeStatement === 'current') {
-                    this.makeDisableDatepicker();
+                    this.setStateDatepicker();
                     return this.transactions.length;
                 } else if (this.selectionTypeStatement === 'all') {
-                    this.makeDisableDatepicker();
+                    this.setStateDatepicker();
                     return this.countAllTransactions;
                 } else if (this.selectionTypeStatement === 'optional') {
                     //fix this optional count
@@ -409,7 +424,6 @@
                         });
 
                         this.setBalanceValues();
-
 
                         this.dateLocalFrom = this.allTransactions.filter(item => {
                             return this.selectedWallets.find(address => {
@@ -438,6 +452,7 @@
                         }).reduce((prev, curr) => {
                             return (prev > curr) ? prev : curr;
                         });
+
 
                         let oneDay = 86400000;
 
@@ -470,8 +485,7 @@
                     this.dateLocalTo = '';
                     this.highlighted.from = 0;
                     this.highlighted.to = 0;
-                    this.balanceFilter.from = 'undefined';
-                    this.balanceFilter.to = 'undefined';
+                    this.initiateBalance();
                     return 0;
                 }
             },
@@ -490,11 +504,94 @@
             }
         },
         methods: {
+            focusInput: function (id) {
+                document.getElementById(id).focus();
+            },
+            initPosLabelCurrency: function () {
+                setTimeout(() => {
+                    document.getElementById('label-currency-from').style.left = (95 + this.balanceFilter.from.toString().length * 8).toString() + 'px';
+                    document.getElementById('label-currency-to').style.left = (80 + this.balanceFilter.to.toString().length * 8).toString() + 'px';
+                }, 40);
+            },
+            moveFromLabelCurrency: function () { //rename
+                document.getElementById('label-currency-from').style.left = (95 + this.balanceFilter.from.toString().length * 8).toString() + 'px';
+
+                // if (this.selectedWallets.length === 0) {
+                //
+                //     this.allTransactions.map(item => {
+                //         return item.transactions;
+                //     }).reduce((combArr, currArr) => {
+                //         return combArr.concat(currArr);
+                //     }).forEach(item => {
+                //         if (item.count < min)
+                //             min = item.count;
+                //     });
+                //
+                //     this.balanceFilter.from = min;
+                // } else {
+                //     let min = this.currentChooseTransactions[0].count;
+                //
+                //     this.currentChooseTransactions.forEach(item => {
+                //         if (item.count < min)
+                //             min = item.count;
+                //     });
+                //     this.balanceFilter.from = min;
+                // }
+
+            },
+            moveToLabelCurrency: function () { //rename
+                document.getElementById('label-currency-to').style.left = (80 + this.balanceFilter.to.toString().length * 8).toString() + 'px';
+            },
             closeModal: function (name) {
                 this.$modal.hide(name);
             },
-            setBalance: function () {
+            resetLocalData: function () {
+                this.dateFromDatepicker = '';
+                this.dateToDatepicker = '';
+                this.dataProcessing = false;
 
+                this.haveCurrentTransactions = false;
+
+                this.selectionTypeStatement = 'current';
+                this.selectionTypeTransactions = 'all';
+
+                this.selectedWallets = [];
+
+                this.balanceFilter = {
+                    from: '',
+                    to: ''
+                };
+
+                this.dateLocalFrom = '';
+                this.dateLocalTo = '';
+
+                this.highlighted = {
+                    from: 0,
+                    to: 0
+                };
+                this.disabledDate1 = {
+                    from: '',
+                    to: ''
+                };
+            },
+            initiateBalance: function () {
+                let zxc = this.allTransactions.map(item => {
+                    return item.transactions;
+                }).reduce((combArr, currArr) => {
+                    return combArr.concat(currArr);
+                });
+
+                let max = zxc[0].count,
+                    min = zxc[0].count;
+
+                zxc.forEach(item => {
+                    if (item.count < min)
+                        min = item.count;
+                    if (item.count > max)
+                        max = item.count;
+                });
+                this.balanceFilter.from = min;
+                this.balanceFilter.to = max;
             },
             makeEnableDatepicker: function () {
                 this.disabledDate1.from = '';
@@ -519,29 +616,30 @@
                     dayHeaders[i].classList.remove('day-disable');
                 }
             },
-            makeDisableDatepicker: function () {
-                this.disabledDate1.from = new Date(0);
-                this.disabledDate1.to = new Date(2147483647000);
+            setStateDatepicker: function () {
+                if (this.selectionTypeStatement !== 'optional') {
+                    this.disabledDate1.from = new Date(0);
+                    this.disabledDate1.to = new Date(2147483647000);
 
-                let prevs = document.getElementsByClassName('prev');
-                for (let i = 0; i < prevs.length; i++) {
-                    if (!prevs[i].classList.contains('disabled')) {
-                        prevs[i].classList.add('disabled');
+                    let prevs = document.getElementsByClassName('prev');
+                    for (let i = 0; i < prevs.length; i++) {
+                        if (!prevs[i].classList.contains('disabled')) {
+                            prevs[i].classList.add('disabled');
+                        }
+                    }
+
+                    let ups = document.getElementsByClassName('up');
+                    for (let i = 0; i < ups.length; i++) {
+                        if (!ups[i].classList.contains('disabled')) {
+                            ups[i].classList.add('disabled');
+                        }
+                    }
+
+                    let dayHeaders = document.getElementsByClassName('day-header');
+                    for (let i = 0; i < dayHeaders.length; i++) {
+                        dayHeaders[i].classList.add('day-disable');
                     }
                 }
-
-                let ups = document.getElementsByClassName('up');
-                for (let i = 0; i < ups.length; i++) {
-                    if (!ups[i].classList.contains('disabled')) {
-                        ups[i].classList.add('disabled');
-                    }
-                }
-
-                let dayHeaders = document.getElementsByClassName('day-header');
-                for (let i = 0; i < dayHeaders.length; i++) {
-                    dayHeaders[i].classList.add('day-disable');
-                }
-
             },
             minValBalance: function (arr) {
 
@@ -884,6 +982,8 @@
             }
         },
         created() {
+            this.initiateBalance();
+
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
         },
@@ -911,6 +1011,17 @@
 </style>
 
 <style lang="stylus" scoped>
+    .labelCurrencyFrom
+        font-family MuseoSansCyrl500
+        font-size 13px
+        position absolute
+
+    .labelCurrencyTo
+        font-family MuseoSansCyrl500
+        font-size 13px
+        position absolute
+        left 90px
+
     .disabled-label__control
         cursor default
 
