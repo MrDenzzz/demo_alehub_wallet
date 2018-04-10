@@ -2,9 +2,10 @@
     <modal name="download-pdf"
            width="700"
            height="auto"
-           @opened="setStateDatepicker"
+           @opened="makeDisableDatepicker"
            @before-open="initPosLabelCurrency"
            @closed="resetLocalData">
+        <!--@opened="setStateDatepicker"-->
         <div class="heading">
             <p class="title">Export to PDF</p>
             <i class="close" @click="closeModal('download-pdf')"></i>
@@ -300,8 +301,10 @@
             }
         },
         watch: {
-            'filterOptions.selectedWallets': function (val) {
-                // console.log(val, 'selectedWallets');
+            'filterOptions.selectedWallets': function (selectedWallets) {
+                // if (selectedWallets.length === 0) {
+                //
+                // }
             },
             'filterOptions.balance.from': function (val) {
                 console.log(val, 'filterOptions.balanceFrom');
@@ -419,7 +422,10 @@
                 'clearAllTransactions',
 
                 'constantTransactions',
-                'constantTransactionsCount'
+                'constantTransactionsCount',
+
+                'dateFromFilterAllTransactions',
+                'dateToFilterAllTransactions',
             ]),
             checkDisabled: function () {
                 if (this.selectionTypeStatement !== 'optional')
@@ -431,16 +437,22 @@
                     return true;
                 return false;
             },
+        },
+        methods: {
+            closeModal: function (name) {
+                this.$modal.hide(name);
+            },
+            focusInput: function (id) {
+                document.getElementById(id).focus();
+            },
             checkDisabledWallets: function () {
                 let absentWallets = [],
-                    existingWallets = [];
+                    existingWallets = [],
+                    disabledList = [],
+                    enableList = [];
 
                 let itemsWallets = document.getElementsByClassName('wallet-names-checkbox'),
                     addresses = this.wallets.map(wallet => wallet.address);
-
-                let disabledList = [],
-                    enableList = [];
-                
 
                 if (this.filterOptions.selectedWallets.length !== 0) {
                     absentWallets = this.filterOptions.selectedWallets.filter(wallet => {
@@ -480,19 +492,21 @@
                     }
                 }
             },
-        },
-        methods: {
+
             changeTypeStatement: function () {
                 if (this.selectionTypeStatement === 'current') {
                     this.countTransactions.current = this.transactionsCount;
                     this.countChooseTransactions = this.transactionsCount;
+                    this.makeDisableDatepicker();
                 } else if (this.selectionTypeStatement === 'all') {
                     this.countTransactions.all = this.constantTransactionsCount;
                     this.countChooseTransactions = this.constantTransactionsCount;
+                    this.makeDisableDatepicker();
                 } else if (this.selectionTypeStatement === 'optional') {
                     this.filterOptions.balance.from = this.minCountAllTransactions;
                     this.filterOptions.balance.to = this.maxCountAllTransactions;
                     this.countChooseTransactions = this.countTransactions.optional;
+                    // this.makeEnableDatepicker();
                 } else {
                     console.error('YOU CHOOSE A NON-EXISTENT VALUE');
                 }
@@ -509,7 +523,16 @@
                         this.countChooseTransactions = this.filteredAllTransactions.count;
                         this.countTransactions.optional = this.filteredAllTransactions.count;
 
-                        this.checkDisabledWallets;
+                        this.checkDisabledWallets();
+
+                        if (this.filteredAllTransactions.transactions.length === 0) {
+                            this.makeDisableDatepicker();
+                        } else {
+                            this.makeEnableDatepicker();
+                        }
+
+                        console.log(new Date(this.dateFromFilterAllTransactions), 'dateFromFilterAllTransactions');
+                        console.log(new Date(this.dateToFilterAllTransactions), 'dateFromFilterAllTransactions');
 
                     }).catch((err) => {
                         console.log(err, 'Filter error');
@@ -527,15 +550,21 @@
                     ).then(() => {
                         this.countChooseTransactions = this.filteredAllTransactions.count;
                         this.countTransactions.optional = this.filteredAllTransactions.count;
+
+                        this.checkDisabledWallets();
+
+                        if (this.filteredAllTransactions.transactions.length === 0) {
+                            this.makeDisableDatepicker();
+                        } else {
+                            this.makeEnableDatepicker();
+                        }
+
                     }).catch((err) => {
                         console.log(err, 'Filter error');
                     });
                 }).catch((err) => {
                     console.log(err, 'Restore error');
                 });
-            },
-            focusInput: function (id) {
-                document.getElementById(id).focus();
             },
             initPosLabelCurrency: function () {
                 this.filterOptions.balance.from = this.minCountAllTransactions;
@@ -558,9 +587,6 @@
                 this.filterOptions.balance.to = this.balance.value.to;
                 this.filterTransactionsByBalance();
                 document.getElementById('label-currency-to').style.left = (80 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
-            },
-            closeModal: function (name) {
-                this.$modal.hide(name);
             },
             resetLocalData: function () {
                 this.dateFromDatepicker = '';
@@ -614,31 +640,57 @@
                     dayHeaders[i].classList.remove('day-disable');
                 }
             },
-            setStateDatepicker: function () {
-                if (this.selectionTypeStatement !== 'optional') {
-                    this.disabledDate1.from = new Date(0);
-                    this.disabledDate1.to = new Date(2147483647000);
+            makeDisableDatepicker: function () {
+                this.disabledDate1.from = new Date(0);
+                this.disabledDate1.to = new Date(2147483647000);
 
-                    let prevs = document.getElementsByClassName('prev');
-                    for (let i = 0; i < prevs.length; i++) {
-                        if (!prevs[i].classList.contains('disabled')) {
-                            prevs[i].classList.add('disabled');
-                        }
-                    }
-
-                    let ups = document.getElementsByClassName('up');
-                    for (let i = 0; i < ups.length; i++) {
-                        if (!ups[i].classList.contains('disabled')) {
-                            ups[i].classList.add('disabled');
-                        }
-                    }
-
-                    let dayHeaders = document.getElementsByClassName('day-header');
-                    for (let i = 0; i < dayHeaders.length; i++) {
-                        dayHeaders[i].classList.add('day-disable');
+                let prevs = document.getElementsByClassName('prev');
+                for (let i = 0; i < prevs.length; i++) {
+                    if (!prevs[i].classList.contains('disabled')) {
+                        prevs[i].classList.add('disabled');
                     }
                 }
+
+                let ups = document.getElementsByClassName('up');
+                for (let i = 0; i < ups.length; i++) {
+                    if (!ups[i].classList.contains('disabled')) {
+                        ups[i].classList.add('disabled');
+                    }
+                }
+
+                let dayHeaders = document.getElementsByClassName('day-header');
+                console.log(dayHeaders, 'dayHeaders');
+                for (let i = 0; i < dayHeaders.length; i++) {
+                    dayHeaders[i].classList.add('day-disable');
+                }
+                console.log(dayHeaders, 'dayHeaders');
+
             },
+            // setStateDatepicker: function () {
+            //     if (this.selectionTypeStatement !== 'optional') {
+            //         this.disabledDate1.from = new Date(0);
+            //         this.disabledDate1.to = new Date(2147483647000);
+            //
+            //         let prevs = document.getElementsByClassName('prev');
+            //         for (let i = 0; i < prevs.length; i++) {
+            //             if (!prevs[i].classList.contains('disabled')) {
+            //                 prevs[i].classList.add('disabled');
+            //             }
+            //         }
+            //
+            //         let ups = document.getElementsByClassName('up');
+            //         for (let i = 0; i < ups.length; i++) {
+            //             if (!ups[i].classList.contains('disabled')) {
+            //                 ups[i].classList.add('disabled');
+            //             }
+            //         }
+            //
+            //         let dayHeaders = document.getElementsByClassName('day-header');
+            //         for (let i = 0; i < dayHeaders.length; i++) {
+            //             dayHeaders[i].classList.add('day-disable');
+            //         }
+            //     }
+            // },
             // setBalanceValues: function () {
             //     // this.balanceFilter.from = this.currentChooseTransactions.reduce((prev, curr) => {
             //     //     return Math.min(prev.count, curr.count);
@@ -1067,6 +1119,9 @@
             this.dateToDatepicker = this.dateTo;
         },
         mounted() {
+
+            // this.makeDisableDatepicker();
+
             // this.$store.dispatch('copyAllTransactions',
             //     this.allTransactions
             // ).then(() => {

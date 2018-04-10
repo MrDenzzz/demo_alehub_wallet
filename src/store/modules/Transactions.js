@@ -329,39 +329,46 @@ const mutations = {
         state.allTransactions = JSON.parse(JSON.stringify(arr));
     },
     SUCCESS_FILTER_ALL_TRANSACTIONS: (state, options) => {
-        (!options.balance.from) ? options.balance.from = 0 : options.balance.from;
-        state.allTransactions = state.allTransactions.filter(item => {
-            return options.selectedWallets.find(address => {
-                return item.address === address;
-            }) && item.transactions.filter(transaction => {
-                return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
-            }).length !== 0;
-        });
+        //сделать тоже самое для options.balance.to
+        if (!options.balance.from)
+            options.balance.from = 0;
 
-        state.allTransactions.forEach((item, i, arr) => {
-            arr[i].transactions = item.transactions.filter(transaction => {
-                return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+        if (options.selectedWallets.length !== 0) {
+            state.allTransactions = state.allTransactions.filter(item => {
+                return options.selectedWallets.find(address => {
+                    return item.address === address;
+                }) && item.transactions.filter(transaction => {
+                    return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+                }).length !== 0;
             });
-        });
 
-
-        if (options.typeTransaction === 'income') {
             state.allTransactions.forEach((item, i, arr) => {
-                // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before > 0)) {
+                arr[i].transactions = item.transactions.filter(transaction => {
+                    return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+                });
+            });
+
+            if (options.typeTransaction === 'income') {
+                state.allTransactions.forEach((item, i, arr) => {
+                    // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before > 0)) {
                     arr[i].transactions = item.transactions.filter(transaction => {
                         return transaction.balanceInfo.after - transaction.balanceInfo.before > 0;
                     });
-                // }
-            });
-        } else if (options.typeTransaction === 'outcome') {
-            state.allTransactions.forEach((item, i, arr) => {
-                // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before < 0)) {
+                    // }
+                });
+            } else if (options.typeTransaction === 'outcome') {
+                state.allTransactions.forEach((item, i, arr) => {
+                    // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before < 0)) {
                     arr[i].transactions = item.transactions.filter(transaction => {
                         return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
                     });
-                // }
-            });
+                    // }
+                });
+            }
+        } else {
+            state.allTransactions = [];
         }
+
     },
     REQUEST_ADDITION_TRANSACTION: (state) => {
         state.additionTransactionStatus = 'loading';
@@ -486,8 +493,8 @@ const getters = {
     allTransactionsStatus: state => state.allTransactionsStatus,
 
     minCountAllTransactions: state => {
-        let min = state.allTransactions[0].transactions[0].count;
-        state.allTransactions.map(item => {
+        let min = state.filteredAllTransactions[0].transactions[0].count;
+        state.filteredAllTransactions.map(item => {
             return item.transactions;
         }).reduce((combArr, currArr) => {
             return combArr.concat(currArr);
@@ -498,8 +505,8 @@ const getters = {
         return min;
     },
     maxCountAllTransactions: state => {
-        let max = state.allTransactions[0].transactions[0].count;
-        state.allTransactions.map(item => {
+        let max = state.filteredAllTransactions[0].transactions[0].count;
+        state.filteredAllTransactions.map(item => {
             return item.transactions;
         }).reduce((combArr, currArr) => {
             return combArr.concat(currArr);
@@ -517,36 +524,35 @@ const getters = {
 
     filteredAllTransactions: state => {
         //разбить всё таки на несколько геттеров
-        let count = null;
+        let count = null,
+            min = null,
+            max = null;
+        
         if (state.allTransactions.length !== 0) {
             count = state.allTransactions.map(item => {
                 return item.transactions.length;
             }).reduce((sum, curr) => {
                 return sum + curr;
             });
-        }
 
-        //check null transaction arrays
-        state.allTransactions = state.allTransactions.filter(item => {
-            return item.transactions.length !== 0;
-        });
-
-        let min = null,
-            max = null;
-
-        if (state.allTransactions.length !== 0) {
-            min = state.allTransactions[0].transactions[0].count;
-            max = state.allTransactions[0].transactions[0].count;
-            state.allTransactions.map(item => {
-                return item.transactions;
-            }).reduce((combArr, currArr) => {
-                return combArr.concat(currArr);
-            }).forEach(item => {
-                if (item.count < min)
-                    min = item.count;
-                if (item.count > max)
-                    max = item.count;
+            state.allTransactions = state.allTransactions.filter(item => {
+                return item.transactions.length !== 0;
             });
+
+            if (state.allTransactions.length !== 0) {
+                min = state.allTransactions[0].transactions[0].count;
+                max = state.allTransactions[0].transactions[0].count;
+                state.allTransactions.map(item => {
+                    return item.transactions;
+                }).reduce((combArr, currArr) => {
+                    return combArr.concat(currArr);
+                }).forEach(item => {
+                    if (item.count < min)
+                        min = item.count;
+                    if (item.count > max)
+                        max = item.count;
+                });
+            }
         }
 
         return {
@@ -555,6 +561,29 @@ const getters = {
             min: min,
             max: max
         };
+    },
+
+    dateFromFilterAllTransactions: state => {
+        return state.allTransactions.map(item =>
+            item.transactions
+        ).reduce((prev, curr) =>
+            prev.concat(curr)
+        ).map(item =>
+            item.timestamp
+        ).reduce((prev, curr) =>
+            (curr < prev) ? curr : prev
+        );
+    },
+    dateToFilterAllTransactions: state => {
+        return state.allTransactions.map(item =>
+            item.transactions
+        ).reduce((prev, curr) =>
+            prev.concat(curr)
+        ).map(item =>
+            item.timestamp
+        ).reduce((prev, curr) =>
+            (curr > prev) ? curr : prev
+        );
     },
 
 
