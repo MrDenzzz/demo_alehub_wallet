@@ -6,6 +6,16 @@ const state = {
 
     allTransactions: [],
 
+    filteredAllTransactions: [],
+
+    options: {
+        selectedWallets: [],
+        balance: {
+            from: '',
+            to: ''
+        },
+    },
+
     transactions: [],
     transactionsUpdated: [],
     changedTransactions: false,
@@ -31,7 +41,7 @@ const state = {
 };
 
 const actions = {
-    allTransactionsRequest: ({commit}, walletsAddressList) => {
+    allTransactionsRequest: ({commit, dispatch}, walletsAddressList) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ALL_TRANSACTIONS');
             let host = 'http://192.168.1.47:4000/transactions/list';
@@ -46,12 +56,31 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 commit('SUCCESS_ALL_TRANSACTIONS', resp.data);
+                dispatch('copyAllTransactions', resp.data);
                 resolve(resp);
             }).catch(err => {
                 console.log(err, 'error transactions wallet address');
                 commit('ERROR_ALL_TRANSACTIONS', err);
                 reject(err)
             });
+        });
+    },
+    copyAllTransactions: ({commit, dispatch}, arr) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_COPY_ALL_TRANSACTIONS', arr);
+            resolve();
+        });
+    },
+    restoreAllTransactions: ({commit, dispatch}, arr) => {
+        return new Promise((resolve, reject) => {
+            commit('RESTORE_ALL_TRANSACTIONS', arr);
+            resolve();
+        });
+    },
+    filterAllTransactions: ({commit, dispatch}, options) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_FILTER_ALL_TRANSACTIONS', options);
+            resolve();
         });
     },
     additionTransactionRequest: ({commit}, walletAddressArray) => {
@@ -77,7 +106,7 @@ const actions = {
             });
         });
     },
-    addMissingTransactionsRequest: ({commit}, addresses) => {
+    addMissingTransactionsRequest: ({commit, dispatch}, addresses) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ADD_MISSING_TRANSACTIONS');
             let host = 'http://192.168.1.47:4000/transactions/list';
@@ -92,6 +121,7 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 commit('SUCCESS_ADD_MISSING_TRANSACTIONS', resp.data);
+                dispatch('copyAllTransactions', resp.data);
                 resolve(resp);
             }).catch(err => {
                 console.log(err, 'error transactions wallet address');
@@ -259,6 +289,30 @@ const mutations = {
     ERROR_ALL_TRANSACTIONS: (state) => {
         state.allTransactionsStatus = 'error';
     },
+    SUCCESS_COPY_ALL_TRANSACTIONS: (state, arr) => {
+        arr.forEach(item => {
+            state.filteredAllTransactions.push(item);
+        });
+    },
+    RESTORE_ALL_TRANSACTIONS: (state, arr) => {
+        state.allTransactions = JSON.parse(JSON.stringify(arr));
+    },
+    SUCCESS_FILTER_ALL_TRANSACTIONS: (state, options) => {
+        (!options.balance.from) ? options.balance.from = 0 : options.balance.from;
+        state.allTransactions = state.allTransactions.filter(item => {
+            return options.selectedWallets.find(address => {
+                return item.address === address;
+            }) && item.transactions.filter(transaction => {
+                return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+            }).length !== 0;
+        });
+
+        state.allTransactions.forEach((item, i, arr) => {
+             arr[i].transactions = item.transactions.filter(transaction => {
+                 return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+             });
+        });
+    },
     REQUEST_ADDITION_TRANSACTION: (state) => {
         state.additionTransactionStatus = 'loading';
     },
@@ -380,6 +434,121 @@ const mutations = {
 const getters = {
     allTransactions: state => state.allTransactions,
     allTransactionsStatus: state => state.allTransactionsStatus,
+
+    minCountAllTransactions: state => {
+        let min = state.allTransactions[0].transactions[0].count;
+        state.allTransactions.map(item => {
+            return item.transactions;
+        }).reduce((combArr, currArr) => {
+            return combArr.concat(currArr);
+        }).forEach(item => {
+            if (item.count < min)
+                min = item.count;
+        });
+        return min;
+    },
+    maxCountAllTransactions: state => {
+        let max = state.allTransactions[0].transactions[0].count;
+        state.allTransactions.map(item => {
+            return item.transactions;
+        }).reduce((combArr, currArr) => {
+            return combArr.concat(currArr);
+        }).forEach(item => {
+            if (item.count > max)
+                max = item.count;
+        });
+        return max;
+    },
+
+    clearAllTransactions: state => {
+        // console.log(state.filteredAllTransactions, 'clearAllTransactions: state => {');
+        // return state.filteredAllTransactions;
+    },
+
+    filteredAllTransactions: state => {
+        // let arr1 = state.allTransactions.filter(item => {
+        //     return state.options.selectedWallets.find(address => {
+        //         return item.address === address;
+        //     }) && item.transactions.filter(transaction => {
+        //         return transaction.count >= parseInt(state.options.balance.from) && transaction.count <= parseInt(state.options.balance.to);
+        //     }).length !== 0;
+        // });
+        //
+        // arr1.forEach((item, i, arr) => {
+        //      arr[i].transactions = item.transactions.filter(transaction => {
+        //          return transaction.count >= parseInt(state.options.balance.from) && transaction.count <= parseInt(state.options.balance.to);
+        //      });
+        // });
+
+        let count = null;
+        if (state.allTransactions.length !== 0) {
+            count = state.allTransactions.map(item => {
+                return item.transactions.length;
+            }).reduce((sum, curr) => {
+                return sum + curr;
+            });
+        }
+
+        console.log(state.filteredAllTransactions, 'state.filteredAllTransactions');
+
+        return {
+            transactions: state.allTransactions,
+            count: count || 0
+        };
+        // return [1,2,3,4,5];
+    },
+
+    minCountFilteredAT: state => {
+        // console.log(this.filteredAllTransactions, 'this.filteredAllTransactions');
+        // if (state.filteredAllTransactions.length !== 0) {
+        // if (state.filteredAllTransactions.length !== 0) {
+        //     let min = state.filteredAllTransactions[0].transactions[0].count;
+        //     state.filteredAllTransactions.map(item => {
+        //         return item.transactions;
+        //     }).reduce((combArr, currArr) => {
+        //         return combArr.concat(currArr);
+        //     }).forEach(item => {
+        //         if (item.count < min)
+        //             min = item.count;
+        //     });
+        //     return min;
+        // }
+        return null;
+    },
+    maxCountFilteredAT: state => {
+        // console.log(this.filteredAllTransactions, 'this.filteredAllTransactions');
+        // if (state.filteredAllTransactions.length !== 0) {
+        //     let max = state.filteredAllTransactions[0].transactions[0].count;
+        //     state.filteredAllTransactions.map(item => {
+        //         return item.transactions;
+        //     }).reduce((combArr, currArr) => {
+        //         return combArr.concat(currArr);
+        //     }).forEach(item => {
+        //         if (item.count > max)
+        //             max = item.count;
+        //     });
+        //     return max;
+        // }
+        return null;
+    },
+
+    dateFromFilteredAT: state => {
+
+    },
+    dateToFilteredAT: state => {
+
+    },
+
+    countAllFilteredTransactions: state => {
+        // if (state.filteredAllTransactions.length !== 0) {
+        //     return state.filteredAllTransactions.map(item => {
+        //         return item.transactions.length;
+        //     }).reduce((sum, curr) => {
+        //         return sum + curr;
+        //     });
+        // }
+        return 0;
+    },
 
     transactions: state => state.transactions,
     // dateTransactions: state => state.dateTransactions,
