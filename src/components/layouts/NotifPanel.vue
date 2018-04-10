@@ -1,10 +1,18 @@
 <template>
     <div class="notifications-panel" style="width: 100%;">
+        <div class="action-buttons">
+            <button class="buttons btn-default" @click="showCheckbox">
+                Edit
+            </button>
+            <button class="buttons btn-default btn-delete" @click="removeCheckedNotif(checkedNotif)">
+                <img src="../../assets/img/bin.svg" width="22" height="22" class="icon">
+            </button>
+        </div>
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
             <Panel-heading :title="parseDate(notification.date)" :isTop="true" v-if="check(notificationIndex)"/>
-
-            <div class="notif-panel">
-                <div class="panel-heading">
+            <div class="notif-panel" :class="{checked: isChecked(notification._id)}">
+                <input type="checkbox" :value="notification._id" id="notification._id" v-model="checkedNotif" class="notif-checkbox" v-show="isShown"> 
+                <div class="panel-heading" :class="{'shift-right': isShown}">
                     <h3 class="title" v-html="parseMarkDown(notification.title)"></h3>
                     <h3 class="datetime">{{ parseDate(notification.date) }} {{ $t('pages.notifications.in') }} <span class="bold">{{ parseTime(notification.date) }}</span>
                     </h3>
@@ -34,6 +42,12 @@
             notifications: {
                 type: [Array, Object],
                 required: true
+            }
+        },
+        data() {
+            return {
+                checkedNotif: [],
+                isShown: false
             }
         },
         components: {
@@ -67,7 +81,29 @@
             },
             parseTime(date) {
                 return Moment(date).format('HH:mm');
+            },
+            isChecked(id) {
+               return this.checkedNotif.indexOf(id) !== -1 ? true : false;
+            },
+            showCheckbox() {
+                this.isShown = !this.isShown;
+                this.checkedNotif = [];
+            },
+            removeCheckedNotif(checkedNotif) {
+                console.log('from removeCheckedNotif method');
             }
         }
     }
 </script>
+
+<style lang="stylus" scoped>
+    .notif-checkbox
+        position absolute
+
+    .shift-right
+        padding-left 30px
+
+    .checked
+        background-color #f5e9c5
+</style>
+

@@ -2019,6 +2019,11 @@ body {
     background: rgba(13, 23, 23, 0.16);
     cursor: pointer; }
 
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; }
+
 .btn:not(:first-child) {
   margin-left: 14px; }
 
@@ -2117,6 +2122,11 @@ body {
   line-height: 1.25;
   color: #34343e;
   margin: 0; }
+
+.btn-delete {
+  width: 50px; }
+  .btn-delete .icon {
+    left: unset; }
 
 @media (max-width: 425px) {
   .button-copy {
