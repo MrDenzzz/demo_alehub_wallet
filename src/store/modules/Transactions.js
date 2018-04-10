@@ -347,15 +347,19 @@ const mutations = {
 
         if (options.typeTransaction === 'income') {
             state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.balanceInfo.after - transaction.balanceInfo.before > 0
-                });
+                // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before > 0)) {
+                    arr[i].transactions = item.transactions.filter(transaction => {
+                        return transaction.balanceInfo.after - transaction.balanceInfo.before > 0;
+                    });
+                // }
             });
         } else if (options.typeTransaction === 'outcome') {
             state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
-                });
+                // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before < 0)) {
+                    arr[i].transactions = item.transactions.filter(transaction => {
+                        return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
+                    });
+                // }
             });
         }
     },
@@ -512,6 +516,7 @@ const getters = {
     },
 
     filteredAllTransactions: state => {
+        //разбить всё таки на несколько геттеров
         let count = null;
         if (state.allTransactions.length !== 0) {
             count = state.allTransactions.map(item => {
@@ -520,6 +525,11 @@ const getters = {
                 return sum + curr;
             });
         }
+
+        //check null transaction arrays
+        state.allTransactions = state.allTransactions.filter(item => {
+            return item.transactions.length !== 0;
+        });
 
         let min = null,
             max = null;
@@ -550,7 +560,11 @@ const getters = {
 
     transactions: state => state.transactions,
     transactionsCount: state => state.transactions.length,
-    constantTransactions: state => state.filteredAllTransactions,
+    constantTransactions: state => {
+        return state.filteredAllTransactions.filter(item => {
+            return item.transactions.length !== 0;
+        });
+    },
     constantTransactionsCount: state => {
         return state.filteredAllTransactions.map(item => {
             return item.transactions;
