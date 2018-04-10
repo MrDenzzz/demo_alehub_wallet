@@ -432,49 +432,53 @@
                 return false;
             },
             checkDisabledWallets: function () {
-                // console.log(this.filteredAllTransactions.transactions, 'this.filteredAllTransactions');
-                let tmp = [];
+                let absentWallets = [],
+                    existingWallets = [];
 
-                let elems = document.getElementsByClassName('wallet-names-checkbox');
-                let elemsValues = [];
+                let itemsWallets = document.getElementsByClassName('wallet-names-checkbox'),
+                    addresses = this.wallets.map(wallet => wallet.address);
 
-                //забирать адреса не отсюда, а из списка кошельков
-                for (let i = 0; i < elems.length; i++) {
-                    elemsValues.push(elems[i].value);
-                }
-
-                let disabledList = [];
-
-                console.log(this.filteredAllTransactions.transactions, 'this.filteredAllTransactions.transactions');
+                let disabledList = [],
+                    enableList = [];
+                
 
                 if (this.filterOptions.selectedWallets.length !== 0) {
-                    tmp = this.filterOptions.selectedWallets.filter(wallet => {
+                    absentWallets = this.filterOptions.selectedWallets.filter(wallet => {
                         return !this.filteredAllTransactions.transactions.find(item => wallet === item.address);
                     });
 
-                    console.log(elems, 'elems');
-
-                    console.log(tmp, 'tmp');
-
-                    tmp.forEach(item => {
-                        disabledList.push(elemsValues.findIndex(elem => {
-                            return elem === item;
-                        }));
+                    existingWallets = this.filterOptions.selectedWallets.filter(wallet => {
+                        return this.filteredAllTransactions.transactions.find(item => wallet === item.address);
                     });
 
-                    if (disabledList.length !== 0) {
-                        disabledList.forEach(index => {
-                            elems[index].disabled = true;
-                        })
+                    if (absentWallets.length !== 0) {
+                        absentWallets.forEach(item => {
+                            disabledList.push(addresses.findIndex(elem => {
+                                return elem === item;
+                            }));
+                        });
+
+                        if (disabledList.length !== 0) {
+                            disabledList.forEach(index => {
+                                itemsWallets[index].disabled = true;
+                            })
+                        }
+                    }
+
+                    if (existingWallets.length !== 0) {
+                        existingWallets.forEach(item => {
+                            enableList.push(addresses.findIndex(elem => {
+                                return elem === item;
+                            }));
+                        });
+
+                        if (enableList.length !== 0) {
+                            enableList.forEach(index => {
+                                itemsWallets[index].disabled = false;
+                            })
+                        }
                     }
                 }
-
-
-
-
-                console.log(disabledList, 'disabledList');
-                // console.log(this.filterOptions.selectedWallets, 'this.filterOptions.selectedWallets');
-                // return false;
             },
         },
         methods: {
