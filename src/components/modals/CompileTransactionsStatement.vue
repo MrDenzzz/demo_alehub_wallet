@@ -77,6 +77,7 @@
                                 <label class="control control-checkbox"
                                        :class="{ 'disabled-label__control': checkDisabled }">
                                     <input type="checkbox"
+                                           class="wallet-names-checkbox"
                                            name="wallet-names"
                                            :disabled="checkDisabled"
                                            :value="wallet.address"
@@ -430,6 +431,51 @@
                     return true;
                 return false;
             },
+            checkDisabledWallets: function () {
+                // console.log(this.filteredAllTransactions.transactions, 'this.filteredAllTransactions');
+                let tmp = [];
+
+                let elems = document.getElementsByClassName('wallet-names-checkbox');
+                let elemsValues = [];
+
+                //забирать адреса не отсюда, а из списка кошельков
+                for (let i = 0; i < elems.length; i++) {
+                    elemsValues.push(elems[i].value);
+                }
+
+                let disabledList = [];
+
+                console.log(this.filteredAllTransactions.transactions, 'this.filteredAllTransactions.transactions');
+
+                if (this.filterOptions.selectedWallets.length !== 0) {
+                    tmp = this.filterOptions.selectedWallets.filter(wallet => {
+                        return !this.filteredAllTransactions.transactions.find(item => wallet === item.address);
+                    });
+
+                    console.log(elems, 'elems');
+
+                    console.log(tmp, 'tmp');
+
+                    tmp.forEach(item => {
+                        disabledList.push(elemsValues.findIndex(elem => {
+                            return elem === item;
+                        }));
+                    });
+
+                    if (disabledList.length !== 0) {
+                        disabledList.forEach(index => {
+                            elems[index].disabled = true;
+                        })
+                    }
+                }
+
+
+
+
+                console.log(disabledList, 'disabledList');
+                // console.log(this.filterOptions.selectedWallets, 'this.filterOptions.selectedWallets');
+                // return false;
+            },
         },
         methods: {
             changeTypeStatement: function () {
@@ -458,6 +504,9 @@
                         this.balance.placeholder.to = this.filteredAllTransactions.to || this.maxCountAllTransactions;
                         this.countChooseTransactions = this.filteredAllTransactions.count;
                         this.countTransactions.optional = this.filteredAllTransactions.count;
+
+                        this.checkDisabledWallets;
+
                     }).catch((err) => {
                         console.log(err, 'Filter error');
                     });
