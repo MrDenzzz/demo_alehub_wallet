@@ -5,7 +5,7 @@
                 Edit
             </button>
             <button class="buttons btn-default btn-delete" @click="removeCheckedNotif(checkedNotif)">
-                <img src="../../assets/img/bin.svg" width="22" height="22" class="icon">
+                <img :src="getIcon('bin')" width="22" height="22" class="icon">
             </button>
         </div>
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
@@ -53,6 +53,11 @@
         components: {
             PanelHeading
         },
+        computed: {
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
+            }
+        },
         methods: {
             parseMarkDown(text) {
                 return md(text);
@@ -91,6 +96,14 @@
             },
             removeCheckedNotif(checkedNotif) {
                 console.log('from removeCheckedNotif method');
+            },
+            getIcon: function (name) {
+                if (this.selectedTheme === 'dark')
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === 'white')
+                    return require(`../../assets/img/${name}_dark.svg`);
+
+                return require(`../../assets/img/${name}.svg`);
             }
         }
     }

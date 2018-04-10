@@ -699,7 +699,7 @@ body {
             .small {
               color: #dedfdf;
             }
-            .input {
+            .input, .textarea{
               color: #fff;
               &::-webkit-input-placeholder {
                 color: #dedfdf;
@@ -849,6 +849,9 @@ body {
   }
   .notif-panel {
     background-color: #27272f;
+    &.checked {
+      background-color: #28388e;
+    }
     .title {
       color: #fcfcfc;
     }
@@ -969,6 +972,11 @@ body {
 
 .white {
   background: #fff !important;
+  .notif-panel {
+    &.checked {
+      background-color: #d7d8da;
+    }
+  }
   .select-white {
     background: #f0f0f0;
   }

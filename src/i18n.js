@@ -395,7 +395,7 @@ const messages = {
                         label: '2fa key',
                         placeholder: 'Enter 2fa code'
                     },
-                    newPass: {
+                    newEmail: {
                         label: 'Email',
                         placeholder: 'Enter new email'
                     },
@@ -814,7 +814,7 @@ const messages = {
                         label: '2fa ключ',
                         placeholder: 'Введите 2fa ключ'
                     },
-                    newPass: {
+                    newEmail: {
                         label: 'Email',
                         placeholder: 'Введите новый email'
                     },
