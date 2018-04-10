@@ -81,7 +81,7 @@
                                            :disabled="checkDisabled"
                                            :value="wallet.address"
                                            v-model="filterOptions.selectedWallets"
-                                           @change="filterTransactionsByWallets"/>
+                                           @change="filterTransactions"/>
                                     <div class="control-indicator"></div>
                                     <div class="wrap__input-label">
                                         <span class="input-label"
@@ -106,14 +106,14 @@
                 <div class="modal-control">
                     <div class="modal-input">
                         <label class="title"
-                               :class="{ 'disabled-title': checkDisabled }">
+                               :class="{ 'disabled-title': checkDisabledByTransactions }">
                             Tag's
                         </label>
                         <input type="text"
                                class="input"
                                placeholder="Type a tag here to choose specific transactions (optional)"
-                               :class="{ 'input-disabled': checkDisabled }"
-                               :disabled="checkDisabled">
+                               :class="{ 'input-disabled': checkDisabledByTransactions }"
+                               :disabled="checkDisabledByTransactions">
                     </div>
                 </div>
 
@@ -124,51 +124,54 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': checkDisabled }">
+                                           :class="{ 'disabled-title': checkDisabledByTransactions }">
                                             Transaction's type
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabled }">
+                                               :class="{ 'disabled-label__control': checkDisabledByTransactions }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="income"
-                                                   :disabled="checkDisabled"
-                                                   v-model="selectionTypeTransactions"/>
+                                                   :disabled="checkDisabledByTransactions"
+                                                   v-model="filterOptions.typeTransaction"
+                                                   @change="filterTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabled }">
+                                                  :class="{ 'disabled-label': checkDisabledByTransactions }">
                                                 Income
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabled }">
+                                               :class="{ 'disabled-label__control': checkDisabledByTransactions }">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="outcome"
-                                                   :disabled="checkDisabled"
-                                                   v-model="selectionTypeTransactions"/>
+                                                   :disabled="checkDisabledByTransactions"
+                                                   v-model="filterOptions.typeTransaction"
+                                                   @change="filterTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabled }">
+                                                  :class="{ 'disabled-label': checkDisabledByTransactions }">
                                                 Outcome
                                             </span>
                                         </label>
                                     </div>
                                     <div class="modal-line m-b-20">
                                         <label class="control control-radio"
-                                               :class="{ 'disabled-label__control': checkDisabled}">
+                                               :class="{ 'disabled-label__control': checkDisabledByTransactions}">
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="all"
-                                                   :disabled="checkDisabled"
-                                                   v-model="selectionTypeTransactions"/>
+                                                   :disabled="checkDisabledByTransactions"
+                                                   v-model="filterOptions.typeTransaction"
+                                                   @change="filterTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
-                                                  :class="{ 'disabled-label': checkDisabled}">
+                                                  :class="{ 'disabled-label': checkDisabledByTransactions}">
                                                 All
                                             </span>
                                         </label>
@@ -177,24 +180,24 @@
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
-                                           :class="{ 'disabled-title': checkDisabled }">
+                                           :class="{ 'disabled-title': checkDisabledByTransactions }">
                                             Transaction's amount range
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{ 'wrap-double-input__disabled': checkDisabled }">
+                                             :class="{ 'wrap-double-input__disabled': checkDisabledByTransactions }">
                                             <label for="balance-from" class="label-from">from</label>
                                             <input type="number"
                                                    id="balance-from"
                                                    class="input input-from"
                                                    name="transaction-selection"
-                                                   placeholder="undefined"
-                                                   :disabled="checkDisabled"
-                                                   v-model="filterOptions.balance.from"
+                                                   :placeholder="balance.placeholder.from"
+                                                   :disabled="checkDisabledByTransactions"
+                                                   v-model="balance.value.from"
                                                    @input="changeValBalanceFrom">
                                             <span id="label-currency-from"
-                                                  class="labelCurrencyFrom"
+                                                  class="label-сurrency"
                                                   @click="focusInput('balance-from')">
                                                 ALE
                                             </span>
@@ -202,18 +205,18 @@
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
-                                             :class="{'wrap-double-input__disabled': checkDisabled }">
+                                             :class="{'wrap-double-input__disabled': checkDisabledByTransactions }">
                                             <label for="balance-to" class="label-to">to</label>
                                             <input type="number"
                                                    class="input input-to"
                                                    id="balance-to"
                                                    name="transaction-selection"
-                                                   placeholder="undefined"
-                                                   :disabled="checkDisabled"
-                                                   v-model="filterOptions.balance.to"
+                                                   :placeholder="balance.placeholder.to"
+                                                   :disabled="checkDisabledByTransactions"
+                                                   v-model="balance.value.to"
                                                    @input="changeValBalanceTo">
                                             <span id="label-currency-to"
-                                                  class="labelCurrencyTo"
+                                                  class="label-сurrency"
                                                   @click="focusInput('balance-to')">
                                                 ALE
                                             </span>
@@ -239,16 +242,14 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button
-                            class="buttons btn-yellow btn-large"
+                    <button class="buttons btn-yellow btn-large"
                             type="submit"
-                            :class="{ 'btn-yellow__disabled': countTransactions === 0 }"
-                            :disabled="countTransactions === 0">
-                        <span v-if="countTransactions > 0">
+                            :class="{ 'btn-yellow__disabled': countChooseTransactions === 0 }"
+                            :disabled="countChooseTransactions === 0">
+                        <span v-if="countChooseTransactions > 0">
                             Export
                             <span class="count-transactions">
-                                <formatting-price
-                                        :value="countTransactions"/>
+                                <formatting-price :value="countChooseTransactions"/>
                             </span>
                             transactions
                         </span>
@@ -299,8 +300,7 @@
         },
         watch: {
             'filterOptions.selectedWallets': function (val) {
-                //может быть отправлять экшн в транзакшнс.жс, который бы выдавал релевантный список транзакций?
-                console.log(val, 'selectedWallets');
+                // console.log(val, 'selectedWallets');
             },
             'filterOptions.balance.from': function (val) {
                 console.log(val, 'filterOptions.balanceFrom');
@@ -326,7 +326,13 @@
                 selectionTypeStatement: 'optional',
                 selectionTypeTransactions: 'all',
 
-                countTransactions: 0,
+                countChooseTransactions: 0,
+
+                countTransactions: {
+                    current: 0,
+                    all: 0,
+                    optional: 0,
+                },
 
                 filterOptions: {
                     selectedWallets: [],
@@ -334,16 +340,18 @@
                         from: '',
                         to: ''
                     },
+                    typeTransaction: 'all'
                 },
 
                 balance: {
-                    from: '',
-                    to: ''
-                },
-
-                balanceFilter: {
-                    from: '',
-                    to: ''
+                    value: {
+                        from: '',
+                        to: ''
+                    },
+                    placeholder: {
+                        from: '',
+                        to: ''
+                    }
                 },
 
                 dateLocalFrom: '',
@@ -391,6 +399,9 @@
                 'filledWallets',
                 'currentWallet',
                 'transactions',
+
+                'transactionsCount',
+
                 'allTransactions',
                 'allTransactionsStatus',
 
@@ -403,163 +414,56 @@
                 'disabledDate',
 
                 'filteredAllTransactions',
-                'minCountFilteredAT',
-                'maxCountFilteredAT',
 
-                'countAllFilteredTransactions',
+                'clearAllTransactions',
 
-                'clearAllTransactions'
+                'constantTransactions',
+                'constantTransactionsCount'
             ]),
-
-            //date
-
-
-            // end date
-
-
             checkDisabled: function () {
                 if (this.selectionTypeStatement !== 'optional')
                     return true;
                 return false;
             },
             checkDisabledByTransactions: function () {
-                if (this.selectionTypeStatement !== 'optional' || this.countTransactions === 0)
+                if (this.selectionTypeStatement !== 'optional' || this.filterOptions.selectedWallets.length === 0)
                     return true;
                 return false;
             },
-            // countTransactions: function () {
-                // if (this.selectionTypeStatement === 'current') {
-                //     this.setStateDatepicker();
-                //     return this.transactions.length;
-                // } else if (this.selectionTypeStatement === 'all') {
-                //     this.setStateDatepicker();
-                //     return this.countAllTransactions;
-                // } else if (this.selectionTypeStatement === 'optional') {
-                //     //fix this optional count
-                //     //или забрать количество транзакций из воллета?
-                //
-                //     this.makeEnableDatepicker();
-                //
-                //     if (this.filterOptions.selectedWallets.length !== 0) {
-                //         //вынести во vuex
-                //         let countCurrentTransactions = this.wallets.filter(wallet => {
-                //             return this.filterOptions.selectedWallets.find(address => {
-                //                 return wallet.address === address;
-                //             });
-                //         }).map(wallet => {
-                //             return wallet.total_transactions;
-                //         }).reduce((sum, curr) => {
-                //             return sum + curr;
-                //         });
-                //
-                //         // this.setBalanceValues();
-                //
-                //         this.dateLocalFrom = this.allTransactions.filter(item => {
-                //             return this.filterOptions.selectedWallets.find(address => {
-                //                 return item.address === address;
-                //             });
-                //         }).map(item => {
-                //             return item.transactions;
-                //         }).reduce((prev, curr) => {
-                //             return prev.concat(curr);
-                //         }).map(item => {
-                //             return item.timestamp;
-                //         }).reduce((prev, curr) => {
-                //             return (prev < curr) ? prev : curr;
-                //         });
-                //
-                //         this.dateLocalTo = this.allTransactions.filter(item => {
-                //             return this.filterOptions.selectedWallets.find(address => {
-                //                 return item.address === address;
-                //             });
-                //         }).map(item => {
-                //             return item.transactions;
-                //         }).reduce((prev, curr) => {
-                //             return prev.concat(curr);
-                //         }).map(item => {
-                //             return item.timestamp;
-                //         }).reduce((prev, curr) => {
-                //             return (prev > curr) ? prev : curr;
-                //         });
-                //
-                //
-                //         let oneDay = 86400000;
-                //
-                //         this.highlighted.from = this.dateLocalFrom;
-                //         this.highlighted.to = this.dateLocalTo + oneDay;
-                //
-                //         this.disabledDate1.from = '';
-                //         this.disabledDate1.to = '';
-                //
-                //         // this.disabledDate1.to = new Date(this.dateLocalFrom);
-                //         // this.disabledDate1.to.setHours(0);
-                //         // this.disabledDate1.to.setMinutes(0);
-                //         // this.disabledDate1.to.setSeconds(0);
-                //         // this.disabledDate1.to.setMilliseconds(0);
-                //
-                //
-                //         return countCurrentTransactions;
-                //
-                //         // return this.allTransactions.filter(item => {
-                //         //     return this.selectedWallets.find(address => {
-                //         //         return item.address === address;
-                //         //     });
-                //         // }).map(item => {
-                //         //     return item.transactions.length;
-                //         // }).reduce((sum, curr) => {
-                //         //     return sum + curr;
-                //         // });
-                //     }
-                //     this.dateLocalFrom = '';
-                //     this.dateLocalTo = '';
-                //     this.highlighted.from = 0;
-                //     this.highlighted.to = 0;
-                //     this.initiateBalance();
-                //     return 0;
-                // }
-            // },
-
-            //во vuex
-            currentChooseTransactions: function () {
-                return this.allTransactions.filter(item => {
-                    return this.filterOptions.selectedWallets.find(address => {
-                        return item.address === address;
-                    });
-                }).map(item => {
-                    return item.transactions;
-                }).reduce((combArr, currArr) => {
-                    return combArr.concat(currArr);
-                });
-            }
         },
         methods: {
             changeTypeStatement: function () {
                 if (this.selectionTypeStatement === 'current') {
-                    console.log('you choose CURRENT');
+                    this.countTransactions.current = this.transactionsCount;
+                    this.countChooseTransactions = this.transactionsCount;
                 } else if (this.selectionTypeStatement === 'all') {
-                    console.log('you choose ALL');
+                    this.countTransactions.all = this.constantTransactionsCount;
+                    this.countChooseTransactions = this.constantTransactionsCount;
                 } else if (this.selectionTypeStatement === 'optional') {
                     this.filterOptions.balance.from = this.minCountAllTransactions;
                     this.filterOptions.balance.to = this.maxCountAllTransactions;
-                    console.log('you choose OPTIONAL');
+                    this.countChooseTransactions = this.countTransactions.optional;
                 } else {
-                    console.log('YOU CHOOSE A NON-EXISTENT VALUE');
+                    console.error('YOU CHOOSE A NON-EXISTENT VALUE');
                 }
             },
-            filterTransactionsByWallets: function () {
+            filterTransactions: function () {
                 this.$store.dispatch('filterAllTransactions',
                     this.filterOptions
                 ).then(() => {
-                    this.filterOptions.balance.from = this.minCountFilteredAT || this.minCountAllTransactions;
-                    this.filterOptions.balance.to = this.maxCountFilteredAT || this.maxCountAllTransactions;
-                    this.countTransactions = this.filteredAllTransactions.count;
-                    console.log(this.filteredAllTransactions.transactions, 'Succcess filter');
+                    this.balance.placeholder.from = this.filteredAllTransactions.from || this.minCountAllTransactions;
+                    this.balance.placeholder.to = this.filteredAllTransactions.to || this.maxCountAllTransactions;
+                    this.countChooseTransactions = this.filteredAllTransactions.count;
+                    this.countTransactions.optional = this.filteredAllTransactions.count;
+
+                    console.log(this.filteredAllTransactions, 'filteredAllTransactions');
+
                     this.$store.dispatch('restoreAllTransactions',
                         this.$store.state.Transactions.filteredAllTransactions
                     ).then(() => {
 
-                    }).catch(() => {
-
+                    }).catch((err) => {
+                        console.log(err, 'Restore error');
                     });
                 }).catch((err) => {
                     console.log(err, 'Filter error');
@@ -569,14 +473,17 @@
                 this.$store.dispatch('filterAllTransactions',
                     this.filterOptions
                 ).then(() => {
-                    this.countTransactions = this.filteredAllTransactions.count;
-                    console.log(this.filteredAllTransactions, 'Filter transactions ');
+                    this.countChooseTransactions = this.filteredAllTransactions.count;
+                    this.countTransactions.optional = this.filteredAllTransactions.count;
+
+                    console.log(this.filteredAllTransactions, 'filteredAllTransactions');
+
                     this.$store.dispatch('restoreAllTransactions',
                         this.$store.state.Transactions.filteredAllTransactions
                     ).then(() => {
 
-                    }).catch(() => {
-
+                    }).catch((err) => {
+                        console.log(err, 'Restore error');
                     });
                 }).catch((err) => {
                     console.log(err, 'Filter error');
@@ -587,21 +494,25 @@
             },
             initPosLabelCurrency: function () {
                 this.filterOptions.balance.from = this.minCountAllTransactions;
+                this.balance.placeholder.from = this.minCountAllTransactions;
+
                 this.filterOptions.balance.to = this.maxCountAllTransactions;
-                // setTimeout(() => {
-                //     document.getElementById('label-currency-from').style.left = (95 + this.balanceFilter.from.toString().length * 8).toString() + 'px';
-                //     document.getElementById('label-currency-to').style.left = (80 + this.balanceFilter.to.toString().length * 8).toString() + 'px';
-                // }, 40);
+                this.balance.placeholder.to = this.maxCountAllTransactions;
+
+                setTimeout(() => {
+                    document.getElementById('label-currency-from').style.left = (95 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
+                    document.getElementById('label-currency-to').style.left = (80 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
+                }, 40);
             },
             changeValBalanceFrom: function () {
-                // this.filterOptions.balance.from = this.balance.from;
+                this.filterOptions.balance.from = this.balance.value.from;
                 this.filterTransactionsByBalance();
-                // document.getElementById('label-currency-from').style.left = (95 + this.balanceFilter.from.toString().length * 8).toString() + 'px';
+                document.getElementById('label-currency-from').style.left = (95 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
             },
             changeValBalanceTo: function () {
-                // this.filterOptions.balance.to = this.balance.to;
+                this.filterOptions.balance.to = this.balance.value.to;
                 this.filterTransactionsByBalance();
-                // document.getElementById('label-currency-to').style.left = (80 + this.balanceFilter.to.toString().length * 8).toString() + 'px';
+                document.getElementById('label-currency-to').style.left = (80 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
             },
             closeModal: function (name) {
                 this.$modal.hide(name);
@@ -618,10 +529,10 @@
 
                 this.filterOptions.selectedWallets = [];
 
-                this.balanceFilter = {
-                    from: '',
-                    to: ''
-                };
+                // this.balanceFilter = {
+                //     from: '',
+                //     to: ''
+                // };
 
                 this.dateLocalFrom = '';
                 this.dateLocalTo = '';
@@ -634,25 +545,6 @@
                     from: '',
                     to: ''
                 };
-            },
-            initiateBalance: function () {
-                // let zxc = this.allTransactions.map(item => {
-                //     return item.transactions;
-                // }).reduce((combArr, currArr) => {
-                //     return combArr.concat(currArr);
-                // });
-                //
-                // let max = zxc[0].count,
-                //     min = zxc[0].count;
-                //
-                // zxc.forEach(item => {
-                //     if (item.count < min)
-                //         min = item.count;
-                //     if (item.count > max)
-                //         max = item.count;
-                // });
-                // this.balanceFilter.from = min;
-                // this.balanceFilter.to = max;
             },
             makeEnableDatepicker: function () {
                 this.disabledDate1.from = '';
@@ -702,31 +594,25 @@
                     }
                 }
             },
-            minValBalance: function (arr) {
-
-            },
-            maxValBalance: function (arr) {
-
-            },
-            setBalanceValues: function () {
-                // this.balanceFilter.from = this.currentChooseTransactions.reduce((prev, curr) => {
-                //     return Math.min(prev.count, curr.count);
-                // });
-                // this.balanceFilter.to = this.currentChooseTransactions.reduce((prev, curr) => {
-                //     return Math.max(prev.count, curr.count);
-                // });
-
-                let min = this.currentChooseTransactions[0].count,
-                    max = this.currentChooseTransactions[0].count;
-                this.currentChooseTransactions.forEach(item => {
-                    if (item.count < min)
-                        min = item.count;
-                    if (item.count > max)
-                        max = item.count;
-                });
-                // this.balanceFilter.from = min;
-                // this.balanceFilter.to = max;
-            },
+            // setBalanceValues: function () {
+            //     // this.balanceFilter.from = this.currentChooseTransactions.reduce((prev, curr) => {
+            //     //     return Math.min(prev.count, curr.count);
+            //     // });
+            //     // this.balanceFilter.to = this.currentChooseTransactions.reduce((prev, curr) => {
+            //     //     return Math.max(prev.count, curr.count);
+            //     // });
+            //
+            //     let min = this.currentChooseTransactions[0].count,
+            //         max = this.currentChooseTransactions[0].count;
+            //     this.currentChooseTransactions.forEach(item => {
+            //         if (item.count < min)
+            //             min = item.count;
+            //         if (item.count > max)
+            //             max = item.count;
+            //     });
+            //     // this.balanceFilter.from = min;
+            //     // this.balanceFilter.to = max;
+            // },
             //в computed
             checkTypeTransaction: function (type) {
                 if (type === 'SEND')
@@ -859,8 +745,6 @@
                     // this.allTransactions.forEach(function (item, i) {
                     //     console.log(item.transactions[0].timestamp, 'item.transactions[0].timestamp');
                     // });
-
-                    console.log(this.allTransactions, 'this.allTransactions');
 
                     for (let i = 0; i < this.allTransactions.length; i++) {
 
@@ -998,6 +882,92 @@
                     doc.save(pdfName + '.pdf');
                     return;
                 }
+
+                if (this.selectionTypeStatement === 'optional') {
+
+                    for (let i = 0; i < this.filteredAllTransactions.length; i++) {
+
+                        this.generateHeaderTransactionsStatement(doc, this.filteredAllTransactions[i].address);
+                        this.generateDateTransactions(doc, Moment(this.filteredAllTransactions[i].transactions[0].timestamp).format("DD.MM.YYYY"), 0);
+
+                        for (let k = 0, factor = 0; k < this.filteredAllTransactions[i].transactions.length; k++, factor = k - balancer) {
+
+                            let count = this.filteredAllTransactions[i].transactions[k].count,
+                                time = Moment(this.filteredAllTransactions[i].transactions[k].timestamp).format("HH:mm:ss"),
+                                date = Moment(this.filteredAllTransactions[i].transactions[k].timestamp).format("DD.MM.YYYY"),
+                                walletAddress = this.filteredAllTransactions[i].transactions[k].walletAddress,
+                                walletDestination = this.filteredAllTransactions[i].transactions[k].walletDestination;
+
+
+                            if (this.offset + 25 * factor > this.heightDoc - 25) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = k;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+
+
+                            if (k !== 0 && date !== Moment(this.filteredAllTransactions[i].transactions[k - 1].timestamp).format("DD.MM.YYYY")) {
+
+                                this.generateTransactionsDayStatement(doc, factor, false);
+                                this.generateDateTransactions(doc, date, factor);
+
+                                this.currentReceived = 0;
+                                this.currentSent = 0;
+                            }
+
+                            if (this.offset + 25 * factor > this.heightDoc - 25) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = k;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+
+                            this.calcBalanceAll(this.filteredAllTransactions[i].transactions[k].balanceInfo, count);
+                            this.generateTransaction(doc, this.getTypeTransactionAll(this.filteredAllTransactions[i].transactions[k].balanceInfo),
+                                count, date, time, walletAddress, walletDestination, factor);
+
+
+                            if (this.offset + 25 * factor > this.heightDoc - 25) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = k;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+
+
+                            if (k === this.filteredAllTransactions[i].transactions.length - 1) {
+                                this.calcBalanceAll(this.filteredAllTransactions[i].transactions[k].balanceInfo, count);
+                                this.generateTransactionsDayStatement(doc, factor, true);
+
+                                this.currentReceived = 0;
+                                this.currentSent = 0;
+                            }
+
+                            if (k === this.filteredAllTransactions[i].transactions.length - 1 && i !== this.filteredAllTransactions.length - 1) {
+                                doc.addPage();
+                                countPage++;
+                                doc.setPage(countPage);
+                                balancer = 0;
+                                factor = 0;
+                                this.offset = 10;
+                            }
+                        }
+
+                        if (i === this.filteredAllTransactions.length - 1) {
+
+                        }
+                    }
+
+                    doc.save(pdfName + '.pdf');
+                    return;
+                }
             },
 
             downloadPDF: function () {
@@ -1038,13 +1008,15 @@
                 }
 
                 if (this.selectionTypeStatement === 'optional') {
+                    this.dataProcessing = true;
 
+                    this.makePDF();
+
+                    this.dataProcessing = false;
                 }
             }
         },
         created() {
-            this.initiateBalance();
-
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
         },
@@ -1078,17 +1050,6 @@
 </style>
 
 <style lang="stylus" scoped>
-    .labelCurrencyFrom
-        font-family MuseoSansCyrl500
-        font-size 13px
-        position absolute
-
-    .labelCurrencyTo
-        font-family MuseoSansCyrl500
-        font-size 13px
-        position absolute
-        left 90px
-
     .disabled-label__control
         cursor default
 
@@ -1180,12 +1141,11 @@
                     cursor default
 
                     label.label-from,
-                    label.label-to
-                        color #979797 !important
-                        cursor default
-
+                    label.label-to,
+                    .label-сurrency,
                     .input.input-from,
                     .input.input-to
+                        color #979797 !important
                         cursor default
 
                 .wrap-double-input
@@ -1215,6 +1175,11 @@
                         font-weight 500
                         line-height 1.17
                         color #34343e
+
+                    .label-сurrency
+                        font-family MuseoSansCyrl500
+                        font-size 13px
+                        position absolute
 
             .modal-line:not(:last-child), .modal-control__block:not(:last-child)
                 margin-bottom 10px
