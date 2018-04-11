@@ -689,7 +689,30 @@
     }
   }
 }
+.modal-btn {
+  & .btn-timer {
+    margin-top: 24px;
+  }
 
+  & .btn-yellow {
+    color: #34343e;
+    &.disabled {
+      opacity: 0.5;
+      border-radius: 2px;
+      background-color: #ffd24f;
+
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    &.btn-bottom {
+      margin-bottom: 24px;
+    }
+
+
+  }
+}
 @media screen and (max-width: 768px) {
   .v--modal {
     min-width: 100%;
@@ -721,17 +744,35 @@
       }
     }
   }
-}
-@media(max-width: 580px) {
-  .two-auth {
-    & .btn-default {
-      & .icon-copy {
-        margin-top: 10px;
+  .newwallet {
+    & .v--modal-box {
+      &.v--modal {
+        width: 100% !important;
       }
     }
   }
 }
+
 @media (max-width: 425px) {
+  .two-auth-modal {
+    &.v--modal-overlay {
+      & .v--modal-box {
+        & .body {
+          & .modal-control {
+            & .modal-input {
+              flex-direction: row;
+              & .title {
+                padding: 0;
+              }
+              & .input {
+                text-align: right;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   .share-area {
     & .row {
       flex-wrap: wrap;
@@ -777,6 +818,18 @@
           }
         }
         & .modal-control {
+          &.two-auth-enable {
+            & .modal-input {
+              flex-direction: row;
+              align-items: flex-end;
+              & .input {
+                text-align: right;
+              }
+              & .title {
+                padding: 0;
+              }
+            }
+          }
           margin: 0 42px;
           & .badge-control {
             padding-bottom: 10px;
@@ -804,6 +857,13 @@
             }
           }
         }
+        & button {
+          width: 100%;
+        }
+        & .modal-footer {
+          margin-right: 20px;
+          margin-left: 20px;
+        }
       }
     }
   }
@@ -819,64 +879,24 @@
   }
   .two-auth-secret {
     word-break: break-all;
-    padding: 0 30px;
+    padding: 0 42px;
   }
 }
 
-.modal-btn {
-  & .btn-timer {
-    margin-top: 24px;
+@media(max-width: 375px) {
+  .two-auth-secret {
+    padding: 0 20px;
   }
-
-  & .btn-yellow {
-    color: #34343e;
-    &.disabled {
-      opacity: 0.5;
-      border-radius: 2px;
-      background-color: #ffd24f;
-
-      &:hover {
-        cursor: default;
-      }
-    }
-
-    &.btn-bottom {
-      margin-bottom: 24px;
-    }
-
-
-  }
-}
-
-@media(max-width: 768px) {
-  .newwallet {
-    & .v--modal-box {
-      &.v--modal {
-        width: 100% !important;
-      }
-    }
-  }
-}
-
-@media(max-width: 425px) {
   .v--modal-overlay {
     & .v--modal-box {
       & .body {
-        & button {
-          width: 100%;
+        & .modal-control {
+          margin: 0 24px;
         }
-
-        & .modal-footer {
-          margin-right: 20px;
-          margin-left: 20px;
+        & .modal-btn {
+          margin-right: 24px;
+          margin-left: 24px;
         }
-      }
-    }
-  }
-  .two-auth {
-    & .btn-default {
-      & .icon-copy {
-        margin-top: 10px;
       }
     }
   }

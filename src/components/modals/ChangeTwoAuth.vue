@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="modal-control">
+            <div class="modal-control" :class="{'two-auth-enable': !userTwoAuth }">
                 <div class="modal-input">
                     <label class="title">{{ $t('modals.changeTwoAuth.fields._2fa.label') }}</label>
                     <input
@@ -303,5 +303,7 @@
             .btn-yellow
                 margin-left 0
 
+            .disabled
+                max-width unset
 
 </style>
