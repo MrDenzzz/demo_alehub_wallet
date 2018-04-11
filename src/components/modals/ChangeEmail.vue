@@ -21,12 +21,12 @@
 
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changeEmail.fields._2fa.label') }}</label>
+                        <label class="title">{{ $t('modals.changeEmail.fields.newEmail.label') }}</label>
                         <input
                                 id="email-change-email"
                                 type="email"
                                 class="input"
-                                :placeholder="$t('modals.changeEmail.fields._2fa.placeholder')"
+                                :placeholder="$t('modals.changeEmail.fields.newEmail.placeholder')"
                                 v-model="email"
                                 required>
                     </div>

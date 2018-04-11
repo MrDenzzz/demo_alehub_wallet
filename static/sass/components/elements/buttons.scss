@@ -105,6 +105,12 @@
   }
 }
 
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
 .btn:not(:first-child) {
   margin-left: 14px;
 }
@@ -222,6 +228,14 @@
   line-height: 1.25;
   color: #34343e;
   margin: 0;
+}
+
+.btn-delete {
+  width: 50px;
+
+  & .icon {
+    left: unset;
+  }
 }
 
 @media(max-width: 425px) {

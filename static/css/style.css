@@ -440,15 +440,15 @@ body {
         opacity: 0.6; }
       .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .small {
         color: #dedfdf; }
-      .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input {
+      .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .textarea {
         color: #fff; }
-        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input::-webkit-input-placeholder {
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input::-webkit-input-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .textarea::-webkit-input-placeholder {
           color: #dedfdf; }
-        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input::-moz-placeholder {
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input::-moz-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .textarea::-moz-placeholder {
           color: #dedfdf; }
-        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input:-ms-input-placeholder {
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input:-ms-input-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .textarea:-ms-input-placeholder {
           color: #dedfdf; }
-        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input:-moz-placeholder {
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .input:-moz-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .textarea:-moz-placeholder {
           color: #dedfdf; }
       .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-input .total {
         color: #fff; }
@@ -527,6 +527,8 @@ body {
     background-color: #28388e; }
   .dark .notif-panel {
     background-color: #27272f; }
+    .dark .notif-panel.checked {
+      background-color: #28388e; }
     .dark .notif-panel .title {
       color: #fcfcfc; }
     .dark .notif-panel .panel-heading .datetime {
@@ -603,6 +605,8 @@ body {
 
 .white {
   background: #fff !important; }
+  .white .notif-panel.checked {
+    background-color: #d7d8da; }
   .white .select-white {
     background: #f0f0f0; }
   .white .drag {
@@ -2019,6 +2023,11 @@ body {
     background: rgba(13, 23, 23, 0.16);
     cursor: pointer; }
 
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; }
+
 .btn:not(:first-child) {
   margin-left: 14px; }
 
@@ -2117,6 +2126,11 @@ body {
   line-height: 1.25;
   color: #34343e;
   margin: 0; }
+
+.btn-delete {
+  width: 50px; }
+  .btn-delete .icon {
+    left: unset; }
 
 @media (max-width: 425px) {
   .button-copy {
