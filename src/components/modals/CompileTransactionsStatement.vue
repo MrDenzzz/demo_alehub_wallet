@@ -5,7 +5,6 @@
            @opened="initModal"
            @before-open="initPosLabelCurrency"
            @closed="resetLocalData">
-        <!--@opened="setStateDatepicker"-->
         <div class="heading">
             <p class="title">Export to PDF</p>
             <i class="close" @click="closeModal('download-pdf')"></i>
@@ -61,9 +60,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!--<div v-if="true" :class="'disable-area'" style="background-color: rgba(30, 30, 30, 0.2);">-->
-                <!--</div>-->
 
                 <div class="modal-control">
                     <div class="modal-wrap">
@@ -354,6 +350,8 @@
                     }
                 },
 
+                prevSelectedWallets: [],
+
                 changingDates: null,
 
                 balance: {
@@ -548,38 +546,72 @@
                     tmpFrom = null,
                     tmpTo = null;
 
-                console.log(this.filterOptions.date.from, 'this.filterOptions.date.from');
-                console.log(this.filterOptions.date.to, 'this.filterOptions.date.to');
+                let selectDay = null,
+                    leftDay = null,
+                    rightDay = null;
 
                 if (this.changingDates) {
                     tmpDate = this.changingDates;
-                    tmpDate.setHours(0);
-                    tmpDate.setMinutes(0);
-                    tmpDate.setSeconds(0);
-                    tmpDate.setMilliseconds(0);
-                    tmpDate = tmpDate.getTime();
+
+                    //в computed
+
+                    // tmpDate.setHours(0);
+                    // tmpDate.setMinutes(0);
+                    // tmpDate.setSeconds(0);
+                    // tmpDate.setMilliseconds(0);
+
+                    // selectDay = tmpDate.getDay();
+                    //
+                    // tmpDate = tmpDate.getTime();
+
 
                     tmpFrom = new Date(this.filterOptions.date.from);
+                    //в computed
                     tmpFrom.setHours(0);
                     tmpFrom.setMinutes(0);
                     tmpFrom.setSeconds(0);
                     tmpFrom.setMilliseconds(0);
-                    tmpFrom = tmpFrom.getTime();
+
+                    // leftDay = tmpFrom.getDay();
+                    //
+                    // tmpFrom = tmpFrom.getTime();
 
                     tmpTo = new Date(this.filterOptions.date.to);
-                    tmpTo.setHours(23);
-                    tmpTo.setMinutes(59);
-                    tmpTo.setSeconds(59);
-                    tmpTo.setMilliseconds(999);
-                    tmpTo = tmpTo.getTime();
+                    //в computed
+                    tmpTo.setHours(0);
+                    tmpTo.setMinutes(0);
+                    tmpTo.setSeconds(0);
+                    tmpTo.setMilliseconds(0);
 
-                    // //проверить со нестрогими сравнениями
-                    if (tmpDate < tmpFrom) {
-                        // console.log();
-                        this.filterOptions.date.from = tmpDate;
-                    } else if (tmpDate > tmpFrom) {
-                        this.filterOptions.date.to = tmpDate;
+                    // tmpTo = tmpTo.getTime();
+
+                    //проверять ещё на месяца и на года
+                    let toLeft = tmpDate.getDay() - tmpFrom.getDay(),
+                        toRight = tmpTo.getDay() - tmpDate.getDay();
+
+                    //при клике на крайние точки - оставляем только их, т.е. один день
+                    //два последовательных клика по одному дню - остаётся только он
+                    //выделять более ярким цветом дни, в которых есть транзакции, а область сделать чуть менее яркой
+
+                    if (toLeft !== 0 && (toLeft < toRight || toLeft === toRight)) {
+                        tmpDate.setHours(0);
+                        tmpDate.setMinutes(0);
+                        tmpDate.setSeconds(0);
+                        tmpDate.setMilliseconds(0);
+                        this.filterOptions.date.from = tmpDate.getTime();
+                    } else if (toRight !== 0 && toRight < toLeft) {
+                        tmpDate.setHours(23);
+                        tmpDate.setMinutes(59);
+                        tmpDate.setSeconds(59);
+                        tmpDate.setMilliseconds(999);
+                        this.filterOptions.date.to = tmpDate.getTime();
                     }
+
+                    // if (tmpDate > tmpFrom) {
+                    //     this.filterOptions.date.from = tmpDate;
+                    // } else if (tmpDate < tmpFrom) {
+                    //     this.filterOptions.date.to = tmpDate;
+                    // }
                 }
 
                 this.$store.dispatch('restoreAllTransactions',
@@ -591,8 +623,6 @@
                         //в функцию типа changeLocalData
                         //подумать с обработкой пустого массива this.filteredAllTransactions
 
-                        console.log('something ');
-
                         this.balance.placeholder.from = this.filteredAllTransactions.from || this.minCountAllTransactions;
                         this.balance.placeholder.to = this.filteredAllTransactions.to || this.maxCountAllTransactions;
                         this.countChooseTransactions = this.filteredAllTransactions.count;
@@ -600,13 +630,25 @@
 
                         this.checkDisabledWallets();  //rename
 
-                        this.makeEnableDatepicker();
+                        if (this.prevSelectedWallets.length === 0) {
+                            this.makeEnableDatepicker();
+                        }
 
                         this.filterOptions.date.from = this.dateFromFilterAllTransactions;
                         this.filterOptions.date.to = this.dateToFilterAllTransactions;
 
+                        //отсылаем данные выбранной даты и они там меняются на минимальные и максимальные
+
                         this.highlightDatepicker.from = this.dateFromFilterAllTransactions;
                         this.highlightDatepicker.to = this.dateToFilterAllTransactions;
+
+                        if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
+                            this.disableDatepicker.from = new Date(this.dateToFilterAllTransactions);
+                            this.disableDatepicker.to = new Date(this.dateFromFilterAllTransactions);
+
+                            this.prevSelectedWallets = this.filterOptions.selectedWallets;
+                        }
+
 
                     }).catch((err) => {
                         this.balance.placeholder.from = this.minCountAllTransactions;
@@ -621,6 +663,10 @@
 
                         this.highlightDatepicker.from = null;
                         this.highlightDatepicker.to = null;
+
+                        if (this.filterOptions.selectedWallets.length === 0) {
+                            this.prevSelectedWallets = this.filterOptions.selectedWallets;
+                        }
 
                         console.log(err);
                     });

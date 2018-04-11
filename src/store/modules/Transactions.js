@@ -338,20 +338,27 @@ const mutations = {
         if (!options.balance.from)
             options.balance.from = 0;
 
-        // if ()
-
         if (options.selectedWallets.length !== 0) {
             state.allTransactions = state.allTransactions.filter(item => {
                 return options.selectedWallets.find(address => {
                     return item.address === address;
                 }) && item.transactions.filter(transaction => {
                     return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+                }).length !== 0
+                    && item.transactions.filter(transaction => {
+                    return transaction.timestamp >= parseInt(options.date.from) && transaction.timestamp <= parseInt(options.date.to);
                 }).length !== 0;
             });
 
             state.allTransactions.forEach((item, i, arr) => {
                 arr[i].transactions = item.transactions.filter(transaction => {
                     return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+                });
+            });
+
+            state.allTransactions.forEach((item, i, arr) => {
+                arr[i].transactions = item.transactions.filter(transaction => {
+                    return transaction.timestamp >= parseInt(options.date.from) && transaction.timestamp <= parseInt(options.date.to);
                 });
             });
 
