@@ -227,12 +227,12 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <datepicker id="datepickerFrom1"
+                                <datepicker id="datepicker-filter"
                                             class="datepicker-for-export"
-                                            v-model="dateLocalFrom"
+                                            v-model="filterOptions.date.from"
                                             language="en"
-                                            :highlighted="highlighted"
-                                            :disabled="disabledDate1"
+                                            :disabled="disableDatepicker"
+                                            :highlighted="highlightDatepicker"
                                             :inline="true"/>
                             </div>
                         </div>
@@ -340,11 +340,15 @@
 
                 filterOptions: {
                     selectedWallets: [],
+                    typeTransaction: 'all',
                     balance: {
                         from: '',
                         to: ''
                     },
-                    typeTransaction: 'all'
+                    date: {
+                        from: null,
+                        to: null
+                    }
                 },
 
                 balance: {
@@ -361,13 +365,16 @@
                 dateLocalFrom: '',
                 dateLocalTo: '',
 
-                highlighted: {
-                    from: 0,
-                    to: 0
+                constDurationDay: 86400000,
+
+                //мб в одно свойство?
+                highlightDatepicker: {
+                    from: null,
+                    to: null
                 },
-                disabledDate1: {
-                    from: '',
-                    to: ''
+                disableDatepicker: {
+                    from: null,
+                    to: null
                 },
 
                 heightDoc: 297,
@@ -518,6 +525,10 @@
                     this.$store.dispatch('filterAllTransactions',
                         this.filterOptions
                     ).then(() => {
+
+                        //в функцию типа changeLocalData
+                        //подумать с обработкой пустого массива this.filteredAllTransactions
+
                         this.balance.placeholder.from = this.filteredAllTransactions.from || this.minCountAllTransactions;
                         this.balance.placeholder.to = this.filteredAllTransactions.to || this.maxCountAllTransactions;
                         this.countChooseTransactions = this.filteredAllTransactions.count;
@@ -525,47 +536,61 @@
 
                         this.checkDisabledWallets();
 
-                        if (this.filteredAllTransactions.transactions.length === 0) {
-                            this.makeDisableDatepicker();
-                        } else {
-                            this.makeEnableDatepicker();
-                        }
+                        this.makeEnableDatepicker();
 
-                        console.log(new Date(this.dateFromFilterAllTransactions), 'dateFromFilterAllTransactions');
-                        console.log(new Date(this.dateToFilterAllTransactions), 'dateFromFilterAllTransactions');
+                        this.filterOptions.date.from = this.dateFromFilterAllTransactions;
+                        this.filterOptions.date.to = this.dateToFilterAllTransactions;
+
+                        this.highlightDatepicker.from = this.dateFromFilterAllTransactions;
+                        this.highlightDatepicker.to = this.dateToFilterAllTransactions;
 
                     }).catch((err) => {
-                        console.log(err, 'Filter error');
+                        this.balance.placeholder.from = this.minCountAllTransactions;
+                        this.balance.placeholder.to = this.maxCountAllTransactions;
+                        this.countChooseTransactions = 0;
+                        this.countTransactions.optional = 'all';
+
+                        this.makeDisableDatepicker();
+
+                        this.filterOptions.date.from = null;
+                        this.filterOptions.date.to = null;
+
+                        this.highlightDatepicker.from = null;
+                        this.highlightDatepicker.to = null;
+
+                        console.log(err);
                     });
                 }).catch((err) => {
                     console.log(err, 'Restore error');
                 });
+
+                // this.highlightDatepicker.from = 1523226797000;//this.dateFromFilterAllTransactions;
+                // this.highlightDatepicker.to = 1523882357000; //this.dateToFilterAllTransactions;
             },
-            filterTransactionsByBalance: function () {
-                this.$store.dispatch('restoreAllTransactions',
-                    this.$store.state.Transactions.filteredAllTransactions
-                ).then(() => {
-                    this.$store.dispatch('filterAllTransactions',
-                        this.filterOptions
-                    ).then(() => {
-                        this.countChooseTransactions = this.filteredAllTransactions.count;
-                        this.countTransactions.optional = this.filteredAllTransactions.count;
-
-                        this.checkDisabledWallets();
-
-                        if (this.filteredAllTransactions.transactions.length === 0) {
-                            this.makeDisableDatepicker();
-                        } else {
-                            this.makeEnableDatepicker();
-                        }
-
-                    }).catch((err) => {
-                        console.log(err, 'Filter error');
-                    });
-                }).catch((err) => {
-                    console.log(err, 'Restore error');
-                });
-            },
+            // filterTransactionsByBalance: function () {
+            //     this.$store.dispatch('restoreAllTransactions',
+            //         this.$store.state.Transactions.filteredAllTransactions
+            //     ).then(() => {
+            //         this.$store.dispatch('filterAllTransactions',
+            //             this.filterOptions
+            //         ).then(() => {
+            //             this.countChooseTransactions = this.filteredAllTransactions.count;
+            //             this.countTransactions.optional = this.filteredAllTransactions.count;
+            //
+            //             this.checkDisabledWallets();
+            //
+            //             (this.filteredAllTransactions.transactions.length === 0) ? this.makeDisableDatepicker() : this.makeEnableDatepicker();
+            //
+            //             this.filterOptions.date.from = this.dateFromFilterAllTransactions;
+            //             this.filterOptions.date.to = this.dateToFilterAllTransactions;
+            //
+            //         }).catch((err) => {
+            //             console.log(err, 'Filter error');
+            //         });
+            //     }).catch((err) => {
+            //         console.log(err, 'Restore error');
+            //     });
+            // },
             initPosLabelCurrency: function () {
                 this.filterOptions.balance.from = this.minCountAllTransactions;
                 this.balance.placeholder.from = this.minCountAllTransactions;
@@ -580,12 +605,12 @@
             },
             changeValBalanceFrom: function () {
                 this.filterOptions.balance.from = this.balance.value.from;
-                this.filterTransactionsByBalance();
+                this.filterTransactions();
                 document.getElementById('label-currency-from').style.left = (95 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
             },
             changeValBalanceTo: function () {
                 this.filterOptions.balance.to = this.balance.value.to;
-                this.filterTransactionsByBalance();
+                this.filterTransactions();
                 document.getElementById('label-currency-to').style.left = (80 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
             },
             resetLocalData: function () {
@@ -608,18 +633,20 @@
                 this.dateLocalFrom = '';
                 this.dateLocalTo = '';
 
-                this.highlighted = {
+                this.highlightDatepicker = {
                     from: 0,
                     to: 0
                 };
-                this.disabledDate1 = {
+                this.disableDatepicker = {
                     from: '',
                     to: ''
                 };
             },
             makeEnableDatepicker: function () {
-                this.disabledDate1.from = '';
-                this.disabledDate1.to = '';
+                this.disableDatepicker.from = null;
+                this.disableDatepicker.to = null;
+
+                //сделать выборку элементов календаря через инит document.getElementById('datepicker-filter')
 
                 let prevs = document.getElementsByClassName('prev');
                 for (let i = 0; i < prevs.length; i++) {
@@ -641,8 +668,8 @@
                 }
             },
             makeDisableDatepicker: function () {
-                this.disabledDate1.from = new Date(0);
-                this.disabledDate1.to = new Date(2147483647000);
+                this.disableDatepicker.from = new Date(0);
+                this.disableDatepicker.to = new Date(2147483647000);
 
                 let prevs = document.getElementsByClassName('prev');
                 for (let i = 0; i < prevs.length; i++) {
@@ -659,17 +686,14 @@
                 }
 
                 let dayHeaders = document.getElementsByClassName('day-header');
-                console.log(dayHeaders, 'dayHeaders');
                 for (let i = 0; i < dayHeaders.length; i++) {
                     dayHeaders[i].classList.add('day-disable');
                 }
-                console.log(dayHeaders, 'dayHeaders');
-
             },
             // setStateDatepicker: function () {
             //     if (this.selectionTypeStatement !== 'optional') {
-            //         this.disabledDate1.from = new Date(0);
-            //         this.disabledDate1.to = new Date(2147483647000);
+            //         this.disableDatepicker.from = new Date(0);
+            //         this.disableDatepicker.to = new Date(2147483647000);
             //
             //         let prevs = document.getElementsByClassName('prev');
             //         for (let i = 0; i < prevs.length; i++) {
@@ -829,6 +853,10 @@
                 doc.text(summaryString, 40, this.offset + 25 * j);
             },
 
+            /**
+             * @return {Boolean}
+             */
+
             makePDF: function () {
                 let doc = new JsPDF(),
                     pdfName = 'test',
@@ -884,7 +912,7 @@
                     }
 
                     doc.save(pdfName + '.pdf');
-                    return;
+                    return true;
                 }
 
                 if (this.selectionTypeStatement === 'all') {
@@ -974,7 +1002,7 @@
                     }
 
                     doc.save(pdfName + '.pdf');
-                    return;
+                    return true;
                 }
 
                 if (this.selectionTypeStatement === 'optional') {
@@ -1064,7 +1092,7 @@
                     }
 
                     doc.save(pdfName + '.pdf');
-                    return;
+                    return true;
                 }
             },
 

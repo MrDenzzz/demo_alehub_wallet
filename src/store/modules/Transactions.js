@@ -56,15 +56,15 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 //временно
-                for (let i = 0; i < resp.data.length; i++) {
-                    for (let j = 0; j < resp.data[i].transactions.length; j++) {
-                        if (resp.data[i].transactions[j].walletDestination === resp.data[i].address) {
-                            resp.data[i].transactions[j].balanceInfo.before = resp.data[i].transactions[j].balanceInfoDest.before;
-                            resp.data[i].transactions[j].balanceInfo.after = resp.data[i].transactions[j].balanceInfoDest.after;
-                        }
-                        delete resp.data[i].transactions[j].balanceInfoDest
-                    }
-                }
+                // for (let i = 0; i < resp.data.length; i++) {
+                //     for (let j = 0; j < resp.data[i].transactions.length; j++) {
+                //         if (resp.data[i].transactions[j].walletDestination === resp.data[i].address) {
+                //             resp.data[i].transactions[j].balanceInfo.before = resp.data[i].transactions[j].balanceInfoDest.before;
+                //             resp.data[i].transactions[j].balanceInfo.after = resp.data[i].transactions[j].balanceInfoDest.after;
+                //         }
+                //         delete resp.data[i].transactions[j].balanceInfoDest
+                //     }
+                // }
 
                 commit('SUCCESS_ALL_TRANSACTIONS', resp.data);
                 dispatch('copyAllTransactions', resp.data);
@@ -90,8 +90,12 @@ const actions = {
     },
     filterAllTransactions: ({commit, dispatch}, options) => {
         return new Promise((resolve, reject) => {
-            commit('SUCCESS_FILTER_ALL_TRANSACTIONS', options);
-            resolve();
+            if (options.selectedWallets.length !== 0) {
+                commit('SUCCESS_FILTER_ALL_TRANSACTIONS', options);
+                resolve();
+            } else {
+                reject('Selected wallets is not found');
+            }
         });
     },
     additionTransactionRequest: ({commit}, walletAddressArray) => {
@@ -109,15 +113,15 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 //временно
-                for (let i = 0; i < resp.data.length; i++) {
-                    for (let j = 0; j < resp.data[i].transactions.length; j++) {
-                        if (resp.data[i].transactions[j].walletDestination === resp.data[i].address) {
-                            resp.data[i].transactions[j].balanceInfo.before = resp.data[i].transactions[j].balanceInfoDest.before;
-                            resp.data[i].transactions[j].balanceInfo.after = resp.data[i].transactions[j].balanceInfoDest.after;
-                        }
-                        delete resp.data[i].transactions[j].balanceInfoDest
-                    }
-                }
+                // for (let i = 0; i < resp.data.length; i++) {
+                //     for (let j = 0; j < resp.data[i].transactions.length; j++) {
+                //         if (resp.data[i].transactions[j].walletDestination === resp.data[i].address) {
+                //             resp.data[i].transactions[j].balanceInfo.before = resp.data[i].transactions[j].balanceInfoDest.before;
+                //             resp.data[i].transactions[j].balanceInfo.after = resp.data[i].transactions[j].balanceInfoDest.after;
+                //         }
+                //         delete resp.data[i].transactions[j].balanceInfoDest
+                //     }
+                // }
                 commit('SUCCESS_ADDITION_TRANSACTION', resp.data);
                 resolve(resp);
             }).catch(err => {
@@ -142,15 +146,15 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 //временно
-                for (let i = 0; i < resp.data.length; i++) {
-                    for (let j = 0; j < resp.data[i].transactions.length; j++) {
-                        if (resp.data[i].transactions[j].walletDestination === resp.data[i].address) {
-                            resp.data[i].transactions[j].balanceInfo.before = resp.data[i].transactions[j].balanceInfoDest.before;
-                            resp.data[i].transactions[j].balanceInfo.after = resp.data[i].transactions[j].balanceInfoDest.after;
-                        }
-                        delete resp.data[i].transactions[j].balanceInfoDest
-                    }
-                }
+                // for (let i = 0; i < resp.data.length; i++) {
+                //     for (let j = 0; j < resp.data[i].transactions.length; j++) {
+                //         if (resp.data[i].transactions[j].walletDestination === resp.data[i].address) {
+                //             resp.data[i].transactions[j].balanceInfo.before = resp.data[i].transactions[j].balanceInfoDest.before;
+                //             resp.data[i].transactions[j].balanceInfo.after = resp.data[i].transactions[j].balanceInfoDest.after;
+                //         }
+                //         delete resp.data[i].transactions[j].balanceInfoDest
+                //     }
+                // }
                 commit('SUCCESS_ADD_MISSING_TRANSACTIONS', resp.data);
                 dispatch('copyAllTransactions', resp.data);
                 resolve(resp);
@@ -528,7 +532,7 @@ const getters = {
             min = null,
             max = null;
         
-        if (state.allTransactions.length !== 0) {
+        // if (state.allTransactions.length !== 0) {
             count = state.allTransactions.map(item => {
                 return item.transactions.length;
             }).reduce((sum, curr) => {
@@ -553,7 +557,7 @@ const getters = {
                         max = item.count;
                 });
             }
-        }
+        // }
 
         return {
             transactions: state.allTransactions,
@@ -564,7 +568,7 @@ const getters = {
     },
 
     dateFromFilterAllTransactions: state => {
-        return state.allTransactions.map(item =>
+        let from = new Date(state.allTransactions.map(item =>
             item.transactions
         ).reduce((prev, curr) =>
             prev.concat(curr)
@@ -572,10 +576,15 @@ const getters = {
             item.timestamp
         ).reduce((prev, curr) =>
             (curr < prev) ? curr : prev
-        );
+        ));
+        from.setHours(0);
+        from.setMinutes(0);
+        from.setSeconds(0);
+        from.setMilliseconds(0);
+        return from.getTime();
     },
     dateToFilterAllTransactions: state => {
-        return state.allTransactions.map(item =>
+        let to = new Date(state.allTransactions.map(item =>
             item.transactions
         ).reduce((prev, curr) =>
             prev.concat(curr)
@@ -583,7 +592,12 @@ const getters = {
             item.timestamp
         ).reduce((prev, curr) =>
             (curr > prev) ? curr : prev
-        );
+        ));
+        to.setHours(23);
+        to.setMinutes(59);
+        to.setSeconds(59);
+        to.setMilliseconds(999);
+        return to.getTime();
     },
 
 
