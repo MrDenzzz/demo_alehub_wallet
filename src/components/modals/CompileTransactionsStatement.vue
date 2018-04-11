@@ -229,7 +229,7 @@
                             <div class="col-6">
                                 <datepicker id="datepicker-filter"
                                             class="datepicker-for-export"
-                                            v-model="filterOptions.changingDates"
+                                            v-model="changingDates"
                                             language="en"
                                             :disabled="disableDatepicker"
                                             :highlighted="highlightDatepicker"
@@ -318,7 +318,7 @@
             dateTo: function (val) {
                 console.log(val, 'date to');
             },
-            'filterOptions.changingDates': function (val) {
+            changingDates: function (val) {
                 this.filterTransactions();
             }
         },
@@ -351,9 +351,10 @@
                     date: {
                         from: null,
                         to: null
-                    },
-                    changingDates: null,
+                    }
                 },
+
+                changingDates: null,
 
                 balance: {
                     value: {
@@ -542,6 +543,45 @@
                 }
             },
             filterTransactions: function () {
+
+                let tmpDate = null,
+                    tmpFrom = null,
+                    tmpTo = null;
+
+                console.log(this.filterOptions.date.from, 'this.filterOptions.date.from');
+                console.log(this.filterOptions.date.to, 'this.filterOptions.date.to');
+
+                if (this.changingDates) {
+                    tmpDate = this.changingDates;
+                    tmpDate.setHours(0);
+                    tmpDate.setMinutes(0);
+                    tmpDate.setSeconds(0);
+                    tmpDate.setMilliseconds(0);
+                    tmpDate = tmpDate.getTime();
+
+                    tmpFrom = new Date(this.filterOptions.date.from);
+                    tmpFrom.setHours(0);
+                    tmpFrom.setMinutes(0);
+                    tmpFrom.setSeconds(0);
+                    tmpFrom.setMilliseconds(0);
+                    tmpFrom = tmpFrom.getTime();
+
+                    tmpTo = new Date(this.filterOptions.date.to);
+                    tmpTo.setHours(23);
+                    tmpTo.setMinutes(59);
+                    tmpTo.setSeconds(59);
+                    tmpTo.setMilliseconds(999);
+                    tmpTo = tmpTo.getTime();
+
+                    // //проверить со нестрогими сравнениями
+                    if (tmpDate < tmpFrom) {
+                        // console.log();
+                        this.filterOptions.date.from = tmpDate;
+                    } else if (tmpDate > tmpFrom) {
+                        this.filterOptions.date.to = tmpDate;
+                    }
+                }
+
                 this.$store.dispatch('restoreAllTransactions',
                     this.$store.state.Transactions.filteredAllTransactions
                 ).then(() => {
@@ -551,12 +591,14 @@
                         //в функцию типа changeLocalData
                         //подумать с обработкой пустого массива this.filteredAllTransactions
 
+                        console.log('something ');
+
                         this.balance.placeholder.from = this.filteredAllTransactions.from || this.minCountAllTransactions;
                         this.balance.placeholder.to = this.filteredAllTransactions.to || this.maxCountAllTransactions;
                         this.countChooseTransactions = this.filteredAllTransactions.count;
                         this.countTransactions.optional = this.filteredAllTransactions.count;
 
-                        this.checkDisabledWallets();
+                        this.checkDisabledWallets();  //rename
 
                         this.makeEnableDatepicker();
 

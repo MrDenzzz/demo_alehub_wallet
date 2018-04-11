@@ -334,8 +334,11 @@ const mutations = {
     },
     SUCCESS_FILTER_ALL_TRANSACTIONS: (state, options) => {
         //сделать тоже самое для options.balance.to
+
         if (!options.balance.from)
             options.balance.from = 0;
+
+        // if ()
 
         if (options.selectedWallets.length !== 0) {
             state.allTransactions = state.allTransactions.filter(item => {
