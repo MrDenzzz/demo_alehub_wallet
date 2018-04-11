@@ -2,7 +2,7 @@
     <modal name="download-pdf"
            width="700"
            height="auto"
-           @opened="makeDisableDatepicker"
+           @opened="initModal"
            @before-open="initPosLabelCurrency"
            @closed="resetLocalData">
         <!--@opened="setStateDatepicker"-->
@@ -136,8 +136,8 @@
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="income"
-                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="filterOptions.typeTransaction"
+                                                   :disabled="checkDisabledByTransactions"
                                                    @change="filterTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
@@ -152,8 +152,8 @@
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="outcome"
-                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="filterOptions.typeTransaction"
+                                                   :disabled="checkDisabledByTransactions"
                                                    @change="filterTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
@@ -168,8 +168,8 @@
                                             <input type="radio"
                                                    name="transaction-type"
                                                    value="all"
-                                                   :disabled="checkDisabledByTransactions"
                                                    v-model="filterOptions.typeTransaction"
+                                                   :disabled="checkDisabledByTransactions"
                                                    @change="filterTransactions"/>
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
@@ -194,9 +194,9 @@
                                                    id="balance-from"
                                                    class="input input-from"
                                                    name="transaction-selection"
+                                                   v-model="balance.value.from"
                                                    :placeholder="balance.placeholder.from"
                                                    :disabled="checkDisabledByTransactions"
-                                                   v-model="balance.value.from"
                                                    @input="changeValBalanceFrom">
                                             <span id="label-currency-from"
                                                   class="label-сurrency"
@@ -213,9 +213,9 @@
                                                    class="input input-to"
                                                    id="balance-to"
                                                    name="transaction-selection"
+                                                   v-model="balance.value.to"
                                                    :placeholder="balance.placeholder.to"
                                                    :disabled="checkDisabledByTransactions"
-                                                   v-model="balance.value.to"
                                                    @input="changeValBalanceTo">
                                             <span id="label-currency-to"
                                                   class="label-сurrency"
@@ -229,7 +229,7 @@
                             <div class="col-6">
                                 <datepicker id="datepicker-filter"
                                             class="datepicker-for-export"
-                                            v-model="filterOptions.date.from"
+                                            v-model="filterOptions.changingDates"
                                             language="en"
                                             :disabled="disableDatepicker"
                                             :highlighted="highlightDatepicker"
@@ -317,6 +317,9 @@
             },
             dateTo: function (val) {
                 console.log(val, 'date to');
+            },
+            'filterOptions.changingDates': function (val) {
+                this.filterTransactions();
             }
         },
         data() {
@@ -348,7 +351,8 @@
                     date: {
                         from: null,
                         to: null
-                    }
+                    },
+                    changingDates: null,
                 },
 
                 balance: {
@@ -433,6 +437,9 @@
 
                 'dateFromFilterAllTransactions',
                 'dateToFilterAllTransactions',
+
+                'dateFromFilterConstTransactions',
+                'dateToFilterConstTransactions'
             ]),
             checkDisabled: function () {
                 if (this.selectionTypeStatement !== 'optional')
@@ -446,6 +453,22 @@
             },
         },
         methods: {
+            initModal: function () {
+                this.makeDisableDatepicker();
+
+                this.filterOptions.date.from = this.dateFromFilterConstTransactions;
+                this.filterOptions.date.to = this.dateToFilterConstTransactions;
+
+                // let datepickerDay = document.getElementsByClassName('day');
+                // for (let i = 0; i < datepickerDay.length; i++) {
+                //     datepickerDay[i].addEventListener('click', function(e) {
+                //         e.preventDefault();
+                //         console.log(this);
+                //     })
+                // }
+            },
+
+
             closeModal: function (name) {
                 this.$modal.hide(name);
             },
@@ -525,7 +548,6 @@
                     this.$store.dispatch('filterAllTransactions',
                         this.filterOptions
                     ).then(() => {
-
                         //в функцию типа changeLocalData
                         //подумать с обработкой пустого массива this.filteredAllTransactions
 
