@@ -118,7 +118,7 @@
                 <div class="modal-control border-none">
                     <div class="modal-wrap">
                         <div class="row-flex" style="align-items: flex-start; margin-bottom: 0;">
-                            <div class="col-5" style="padding-top: 20px;">
+                            <div class="col-5 modal-blocks">
                                 <div class="modal-block">
                                     <div class="modal-line">
                                         <p class="modal-control__title"
@@ -1285,7 +1285,10 @@
             .day-disable
                 color #ddd !important
 
-
+    @media(max-width: 320px)
+        .datepicker-for-export
+            .vdp-datepicker__calendar
+                width auto
 </style>
 
 <style lang="stylus" scoped>
@@ -1358,6 +1361,9 @@
         .modal-control
             .modal-wrap
                 margin 0 18px
+
+                .modal-blocks
+                    padding-top 20px
 
             .modal-control__title
                 margin 0
@@ -1467,5 +1473,80 @@
 
                 .count-transactions
                     font-weight 700
+
+    // @media(max-width: 660px)
+
+    @media(max-width: 425px)
+        .v--modal-overlay 
+            & .v--modal-box 
+                & .body
+                    & .modal-control
+                        &.border-none
+                            padding-top 0
+
+        .row-flex
+            flex-direction column
+
+        .m-b-20
+            margin-bottom 0
+
+        .body
+            .modal-control
+                &.border-none
+                    padding-top 0
+
+                .modal-control__block
+                    margin-right 10px
+                    width auto
+
+                .modal-wrap
+                    margin-right 5px
+                    margin-left 5px
+
+                    .modal-blocks
+                        padding-top 0
+
+                        .modal-block
+                            border-bottom 1px solid #d1d1d1
+                            padding-top 18px
+                            padding-bottom 18px
+
+                    .modal-block:last-child
+                        border-bottom none
+
+                .modal-line
+                    width 100%
+                    
+                    .wrap-double-input
+                        max-width 200px
+
+        .col-5, .col-6
+            width 100%
+
+        .border-none
+            &.modal-control
+                padding-top 0
+
+        .vdp-datepicker
+            padding-top 18px
+            padding-bottom 18px
+
+        .modal-footer
+            & button 
+                margin-right 22px
+                margin-left 22px
+
+    @media(max-width: 375px)
+        .modal-footer
+            & button 
+                margin-right 5px
+                margin-left 5px
+
+    @media(max-width: 320px)
+        .body
+            .modal-control
+                .modal-line
+                    .wrap-double-input
+                        max-width 100%
 
 </style>
