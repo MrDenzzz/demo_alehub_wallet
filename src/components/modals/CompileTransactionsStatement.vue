@@ -457,7 +457,9 @@
                 'dateToFilterConstTransactions',
 
                 'dateIntervalFromFilterAllTransactions',
-                'dateIntervalToFilterAllTransactions'
+                'dateIntervalToFilterAllTransactions',
+
+                'disableFieldsFilter'
             ]),
             checkDisabled: function () {
                 if (this.selectionTypeStatement !== 'optional')
@@ -465,7 +467,8 @@
                 return false;
             },
             checkDisabledByTransactions: function () {
-                if (this.selectionTypeStatement !== 'optional' || this.filterOptions.selectedWallets.length === 0)
+                if (this.selectionTypeStatement !== 'optional')
+                // if (this.selectionTypeStatement !== 'optional' || this.filterOptions.selectedWallets.length === 0)
                     return true;
                 return false;
             },
@@ -487,7 +490,7 @@
                 return date;
             },
             initModal: function () {
-                this.makeDisableDatepicker();
+                // this.makeDisableDatepicker();
 
                 this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                 this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
@@ -512,33 +515,45 @@
                 document.getElementById(id).focus();
             },
             checkDisabledWallets: function () {
+                //хранить эти данные локально
                 let absentWallets = [],
                     existingWallets = [],
                     disabledList = [],
                     enableList = [];
 
                 let itemsWallets = document.getElementsByClassName('wallet-names-checkbox'),
+                    controlIndicators = document.querySelectorAll('.wallet-names-checkbox + .control-indicator'),
                     addresses = this.wallets.map(wallet => wallet.address);
 
-                if (this.filterOptions.selectedWallets.length !== 0) {
-                    absentWallets = this.filterOptions.selectedWallets.filter(wallet => {
-                        return !this.filteredAllTransactions.transactions.find(item => wallet === item.address);
-                    });
+                for (let i = 0; i < itemsWallets.length; i++) {
+                    if (!itemsWallets[i].checked && controlIndicators[i].classList.contains('control-indicator__disable')) {
+                        controlIndicators[i].classList.remove('control-indicator__disable');
+                    }
+                }
 
-                    existingWallets = this.filterOptions.selectedWallets.filter(wallet => {
-                        return this.filteredAllTransactions.transactions.find(item => wallet === item.address);
-                    });
+                if (this.filterOptions.selectedWallets.length !== 0) {
+                    absentWallets = this.filterOptions.selectedWallets.filter(wallet =>
+                        !this.filteredAllTransactions.transactions.find(item => wallet === item.address)
+                    );
+
+                    existingWallets = this.filterOptions.selectedWallets.filter(wallet =>
+                        this.filteredAllTransactions.transactions.find(item => wallet === item.address)
+                    );
 
                     if (absentWallets.length !== 0) {
                         absentWallets.forEach(item => {
-                            disabledList.push(addresses.findIndex(elem => {
-                                return elem === item;
-                            }));
+                            disabledList.push(addresses.findIndex(elem =>
+                                elem === item
+                            ));
                         });
+
 
                         if (disabledList.length !== 0) {
                             disabledList.forEach(index => {
-                                itemsWallets[index].disabled = true;
+                                // if (itemsWallets[index].checked) {
+                                controlIndicators[index].classList.add('control-indicator__disable')
+                                // }
+                                // itemsWallets[index].disabled = true;
                             })
                         }
                     }
@@ -552,7 +567,7 @@
 
                         if (enableList.length !== 0) {
                             enableList.forEach(index => {
-                                itemsWallets[index].disabled = false;
+                                controlIndicators[index].classList.remove('control-indicator__disable')
                             })
                         }
                     }
@@ -580,6 +595,15 @@
             filterTransactions: function () {
 
                 if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
+                    // this.filterOptions.date.secondary.from = this.dateIntervalFromFilterAllTransactions;
+                    // this.filterOptions.date.secondary.to = this.dateIntervalToFilterAllTransactions;
+
+                    this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
+                    this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
+
+                    this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
+                    this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
+
                     this.changingDates = null;
                 }
 
@@ -639,8 +663,10 @@
                     // console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
                 }
 
-                console.log(new Date(this.filterOptions.date.secondary.from), 'this.filterOptions.date.secondary.from');
-                console.log(new Date(this.filterOptions.date.secondary.to), 'this.filterOptions.date.secondary.to');
+                console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
+                console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
+                console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
+                console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
 
                 this.$store.dispatch('restoreAllTransactions',
                     this.$store.state.Transactions.filteredAllTransactions
@@ -675,25 +701,35 @@
 
                         //добавить похожее условие наверх к тмп
                         if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
-                            this.disableDatepicker.from = new Date(this.dateIntervalToFilterAllTransactions);
-                            this.disableDatepicker.to = new Date(this.dateIntervalFromFilterAllTransactions);
+                            // this.disableDatepicker.from = new Date(this.dateIntervalToFilterAllTransactions);
+                            // this.disableDatepicker.to = new Date(this.dateIntervalFromFilterAllTransactions);
 
                             //добавить обработку готовой области дейтпикера при фильтре по типу и балансу
 
                             this.filterOptions.date.primary.from = this.dateIntervalFromFilterAllTransactions;
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
 
-                            this.highlightDatepicker.from = this.dateFromFilterAllTransactions; //ломается при фильтре дат при переключении
-                            this.highlightDatepicker.to = this.dateToFilterAllTransactions;
+                            this.filterOptions.date.secondary.from = this.dateIntervalFromFilterAllTransactions;
+                            this.filterOptions.date.secondary.to = this.dateIntervalToFilterAllTransactions;
 
-                            this.filterOptions.date.secondary.from = this.dateFromFilterAllTransactions;
-                            this.filterOptions.date.secondary.to = this.dateToFilterAllTransactions;
+                            console.log(new Date(this.filterOptions.date.secondary.from));
+                            console.log(new Date(this.filterOptions.date.secondary.to));
+
+                            // this.highlightDatepicker.from = this.dateFromFilterAllTransactions;
+                            // this.highlightDatepicker.to = this.dateToFilterAllTransactions;
+
+                            this.highlightDatepicker.from = this.dateIntervalFromFilterAllTransactions;
+                            this.highlightDatepicker.to = this.dateIntervalToFilterAllTransactions;
+
+                            // this.filterOptions.date.secondary.from = this.dateFromFilterAllTransactions;
+                            // this.filterOptions.date.secondary.to = this.dateToFilterAllTransactions;
 
                             this.prevSelectedWallets = this.filterOptions.selectedWallets;
+                            this.changingDates = null;
                         }
 
-                        console.log(new Date(this.dateFromFilterAllTransactions));
-                        console.log(new Date(this.dateToFilterAllTransactions));
+                        // console.log(new Date(this.dateFromFilterAllTransactions));
+                        // console.log(new Date(this.dateToFilterAllTransactions));
 
                     }).catch((err) => {
                         console.log(err);
@@ -703,14 +739,14 @@
                         this.countChooseTransactions = 0;
                         this.countTransactions.optional = 'all';
 
-                        this.makeDisableDatepicker();
+                        // this.makeDisableDatepicker();
 
                         this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                         this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
 
                         this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
                         this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
-
+                        this.checkDisabledWallets();
                         this.changingDates = null;
 
                         this.highlightDatepicker.from = null;
@@ -843,8 +879,6 @@
             makeEnableDatepicker: function () {
                 this.disableDatepicker.from = null;
                 this.disableDatepicker.to = null;
-
-                //сделать выборку элементов календаря через инит document.getElementById('datepicker-filter')
 
                 let prevs = document.getElementsByClassName('prev');
                 for (let i = 0; i < prevs.length; i++) {
@@ -1391,6 +1425,9 @@
 <style lang="stylus" scoped>
     .disabled-label__control
         cursor default
+
+    .control-indicator__disable
+        opacity 0.6
 
     .control-radio
         width auto
