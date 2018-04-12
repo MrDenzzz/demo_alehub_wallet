@@ -470,14 +470,14 @@
 
         },
         methods: {
-            makeMinDateTime: function (date) {
+            makeMinDate: function (date) {
                 date.setHours(0);
                 date.setMinutes(0);
                 date.setSeconds(0);
                 date.setMilliseconds(0);
                 return date;
             },
-            makeMaxDateTime: function (date) {
+            makeMaxDate: function (date) {
                 date.setHours(23);
                 date.setMinutes(59);
                 date.setSeconds(59);
@@ -576,127 +576,49 @@
                 }
             },
             filterTransactions: function () {
-
-                let tmpDate = null,
-                    tmpFrom = null,
-                    tmpTo = null,
-                    tmpSecFrom = null,
-                    tmpSecTo = null;
-
-                let selectDay = null,
-                    leftDay = null,
-                    rightDay = null;
-
                 if (this.changingDates) {
-                    tmpDate = this.changingDates;
-
-                    //в computed
-
-                    // tmpDate.setHours(0);
-                    // tmpDate.setMinutes(0);
-                    // tmpDate.setSeconds(0);
-                    // tmpDate.setMilliseconds(0);
-
-                    // selectDay = tmpDate.getDay();
-                    //
-                    // tmpDate = tmpDate.getTime();
-
-
-                    tmpFrom = this.makeMinDateTime(new Date(this.filterOptions.date.primary.from));
-
-                    tmpTo = this.makeMaxDateTime(new Date(this.filterOptions.date.primary.to));
-
-                    tmpSecFrom = this.makeMinDateTime(new Date(this.filterOptions.date.secondary.from));
-
-                    tmpSecTo = this.makeMaxDateTime(new Date(this.filterOptions.date.secondary.to));
-                    //в computed
-                    tmpSecTo.setHours(23);
-                    tmpSecTo.setMinutes(59);
-                    tmpSecTo.setSeconds(59);
-                    tmpSecTo.setMilliseconds(999);
-
-                    // tmpTo = tmpTo.getTime();
+                    let selectDate = this.changingDates,
+                        areaFromDate = this.makeMinDate(new Date(this.filterOptions.date.primary.from)),
+                        areaToDate = this.makeMaxDate(new Date(this.filterOptions.date.primary.to)),
+                        filterFromDate = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
+                        filterToDate = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
 
                     //проверять ещё на месяца и на года
-                    let toLeft = tmpDate.getDay() - tmpSecFrom.getDay(),
-                        toRight = tmpSecTo.getDay() - tmpDate.getDay(),
-                        asd = tmpDate.getDay() > tmpSecTo.getDay(),
-                        zxc = tmpDate.getDay() < tmpSecFrom.getDay(),
-                        extLeft = tmpDate.getDay() - tmpFrom.getDay() === 0,
-                        extRight = tmpTo.getDay() - tmpDate.getDay() === 0;
+                    let countToLeft = selectDate.getDay() - filterFromDate.getDay(),
+                        countToRight = filterToDate.getDay() - selectDate.getDay(),
+                        isFilterLeft = countToLeft === 0,
+                        isFilterRight = countToRight === 0,
+                        isExtLeft = selectDate.getDay() - areaFromDate.getDay() === 0,
+                        isExtRight = areaToDate.getDay() - selectDate.getDay() === 0,
+                        isLarge = selectDate.getDay() > filterToDate.getDay(),
+                        isLess = selectDate.getDay() < filterFromDate.getDay();
 
-                    //при клике на крайние точки - оставляем только их, т.е. один день
-                    //два последовательных клика по одному дню - остаётся только он
                     //выделять более ярким цветом дни, в которых есть транзакции, а область сделать чуть менее яркой
-
-                    if (!extLeft && !asd && (toLeft < toRight || toLeft === toRight) || extLeft && zxc) {
-                        tmpDate.setHours(0);
-                        tmpDate.setMinutes(0);
-                        tmpDate.setSeconds(0);
-                        tmpDate.setMilliseconds(0);
-                        this.filterOptions.date.secondary.from = tmpDate.getTime();
+                    if (!isExtLeft && !isLarge && (countToLeft < countToRight || countToLeft === countToRight) || isExtLeft && isLess) {
+                        this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
                         console.log('first');
 
-                        if (toLeft === 0) {
-                            tmpDate.setHours(0);
-                            tmpDate.setMinutes(0);
-                            tmpDate.setSeconds(0);
-                            tmpDate.setMilliseconds(0);
-                            this.filterOptions.date.secondary.from = tmpDate.getTime();
-                            tmpDate.setHours(23);
-                            tmpDate.setMinutes(59);
-                            tmpDate.setSeconds(59);
-                            tmpDate.setMilliseconds(999);
-                            this.filterOptions.date.secondary.to = tmpDate.getTime();
+                        if (isFilterLeft) {
+                            this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
+                            this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
                         }
-                        // tmpDate.setHours(23);
-                        // tmpDate.setMinutes(59);
-                        // tmpDate.setSeconds(59);
-                        // tmpDate.setMilliseconds(999);
-                        // this.filterOptions.date.secondary.to = tmpDate.getTime();
-                    } else if (!extRight && !zxc && toRight < toLeft || extRight && asd) {
-                        tmpDate.setHours(23);
-                        tmpDate.setMinutes(59);
-                        tmpDate.setSeconds(59);
-                        tmpDate.setMilliseconds(999);
-                        this.filterOptions.date.secondary.to = tmpDate.getTime();
+
+                    } else if (!isExtRight && !isLess && countToRight < countToLeft || isExtRight && isLarge) {
+                        this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
+
                         console.log('second');
 
-                        if (toRight === 0) {
-                            tmpDate.setHours(0);
-                            tmpDate.setMinutes(0);
-                            tmpDate.setSeconds(0);
-                            tmpDate.setMilliseconds(0);
-                            this.filterOptions.date.secondary.from = tmpDate.getTime();
-                            tmpDate.setHours(23);
-                            tmpDate.setMinutes(59);
-                            tmpDate.setSeconds(59);
-                            tmpDate.setMilliseconds(999);
-                            this.filterOptions.date.secondary.to = tmpDate.getTime();
+                        if (isFilterRight) {
+                            this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
+                            this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
                         }
-                    } else if (extLeft) {
-                        tmpFrom.setHours(0);
-                        tmpFrom.setMinutes(0);
-                        tmpFrom.setSeconds(0);
-                        tmpFrom.setMilliseconds(0);
-                        this.filterOptions.date.secondary.from = tmpFrom.getTime();
-                        tmpFrom.setHours(23);
-                        tmpFrom.setMinutes(59);
-                        tmpFrom.setSeconds(59);
-                        tmpFrom.setMilliseconds(999);
-                        this.filterOptions.date.secondary.to = tmpFrom.getTime();
+                    } else if (isExtLeft) {
+                        this.filterOptions.date.secondary.from = this.makeMinDate(areaFromDate).getTime();
+                        this.filterOptions.date.secondary.to = this.makeMaxDate(areaFromDate).getTime();
                         console.log('third');
-                    } else if (extRight) {
-                        tmpTo.setHours(0);
-                        tmpTo.setMinutes(0);
-                        tmpTo.setSeconds(0);
-                        tmpTo.setMilliseconds(0);
-                        this.filterOptions.date.secondary.from = tmpTo.getTime();
-                        tmpTo.setHours(23);
-                        tmpTo.setMinutes(59);
-                        tmpTo.setSeconds(59);
-                        tmpTo.setMilliseconds(999);
-                        this.filterOptions.date.secondary.to = tmpTo.getTime();
+                    } else if (isExtRight) {
+                        this.filterOptions.date.secondary.from = this.makeMinDate(areaToDate).getTime();
+                        this.filterOptions.date.secondary.to = this.makeMaxDate(areaToDate).getTime();
                         console.log('fourth');
                     }
 
@@ -707,12 +629,6 @@
                     console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
                     console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
                     console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
-
-                    // if (tmpDate > tmpFrom) {
-                    //     this.filterOptions.date.from = tmpDate;
-                    // } else if (tmpDate < tmpFrom) {
-                    //     this.filterOptions.date.to = tmpDate;
-                    // }
                 }
 
                 this.$store.dispatch('restoreAllTransactions',
