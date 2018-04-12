@@ -38,6 +38,9 @@ const state = {
     },
 
     searchText: '',
+
+    dateIntervalFromFilterAllTransactions: 0,
+    dateIntervalToFilterAllTransactions: 0
 };
 
 const actions = {
@@ -338,6 +341,7 @@ const mutations = {
         if (!options.balance.from)
             options.balance.from = 0;
 
+        //убрать обработку длины массива выбранных воллетов, тк делаю это в экшене
         if (options.selectedWallets.length !== 0) {
             state.allTransactions = state.allTransactions.filter(item => {
                 return options.selectedWallets.find(address => {
@@ -346,19 +350,13 @@ const mutations = {
                     return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
                 }).length !== 0
                     && item.transactions.filter(transaction => {
-                    return transaction.timestamp >= parseInt(options.date.from) && transaction.timestamp <= parseInt(options.date.to);
+                    return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
                 }).length !== 0;
             });
 
             state.allTransactions.forEach((item, i, arr) => {
                 arr[i].transactions = item.transactions.filter(transaction => {
                     return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
-                });
-            });
-
-            state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.timestamp >= parseInt(options.date.from) && transaction.timestamp <= parseInt(options.date.to);
                 });
             });
 
@@ -379,6 +377,45 @@ const mutations = {
                     // }
                 });
             }
+
+
+            state.dateIntervalFromFilterAllTransactions = new Date(state.allTransactions.map(item =>
+                item.transactions
+            ).reduce((prev, curr) =>
+                prev.concat(curr)
+            ).map(item =>
+                item.timestamp
+            ).reduce((prev, curr) =>
+                (curr < prev) ? curr : prev
+            ));
+            state.dateIntervalFromFilterAllTransactions.setHours(0);
+            state.dateIntervalFromFilterAllTransactions.setMinutes(0);
+            state.dateIntervalFromFilterAllTransactions.setSeconds(0);
+            state.dateIntervalFromFilterAllTransactions.setMilliseconds(0);
+            state.dateIntervalFromFilterAllTransactions = state.dateIntervalFromFilterAllTransactions.getTime();
+
+            state.dateIntervalToFilterAllTransactions = new Date(state.allTransactions.map(item =>
+                item.transactions
+            ).reduce((prev, curr) =>
+                prev.concat(curr)
+            ).map(item =>
+                item.timestamp
+            ).reduce((prev, curr) =>
+                (curr > prev) ? curr : prev
+            ));
+            state.dateIntervalToFilterAllTransactions.setHours(23);
+            state.dateIntervalToFilterAllTransactions.setMinutes(59);
+            state.dateIntervalToFilterAllTransactions.setSeconds(59);
+            state.dateIntervalToFilterAllTransactions.setMilliseconds(999);
+            state.dateIntervalToFilterAllTransactions = state.dateIntervalToFilterAllTransactions.getTime();
+            
+
+            state.allTransactions.forEach((item, i, arr) => {
+                arr[i].transactions = item.transactions.filter(transaction => {
+                    return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
+                });
+            });
+            
         } else {
             state.allTransactions = [];
         }
@@ -564,10 +601,10 @@ const getters = {
     },
 
 
-    clearAllTransactions: state => {
-        // console.log(state.filteredAllTransactions, 'clearAllTransactions: state => {');
-        // return state.filteredAllTransactions;
-    },
+    // clearAllTransactions: state => {
+    //     // console.log(state.filteredAllTransactions, 'clearAllTransactions: state => {');
+    //     // return state.filteredAllTransactions;
+    // },
 
     filteredAllTransactions: state => {
         //разбить всё таки на несколько геттеров
@@ -609,6 +646,10 @@ const getters = {
             max: max
         };
     },
+
+    dateIntervalFromFilterAllTransactions: state => state.dateIntervalFromFilterAllTransactions,
+
+    dateIntervalToFilterAllTransactions: state => state.dateIntervalToFilterAllTransactions,
 
     dateFromFilterAllTransactions: state => {
         let from = new Date(state.allTransactions.map(item =>
