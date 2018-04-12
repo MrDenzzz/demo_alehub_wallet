@@ -163,7 +163,11 @@ const messages = {
                     name: {
                         walletName: 'Wallet name'
                     },
-                    deleteWallet: 'Delete wallet'
+                    spendingPass: {
+                        label: 'Spending password',
+                        text: 'Turn on spending password to approve your transactions'
+                    },
+                    deleteWallet: 'Delete wallet',
                 }
             },
             walletOffers: {
@@ -581,6 +585,10 @@ const messages = {
                 fields: {
                     name: {
                         walletName: 'Имя кошелька'
+                    },
+                    spendingPass: {
+                        label: 'Spending password',
+                        text: 'Включить пароль для одобрения транзакций'
                     },
                     deleteWallet: 'Удалить кошелек'
                 }

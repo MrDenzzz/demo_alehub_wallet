@@ -30,6 +30,17 @@
                                             @keyup.enter="reqChangeWalletName">
                                     </div>
                                 </div>
+                                <div class="control">
+                                    <div class="wrap-input">
+                                        <label>{{ $t('pages.walletSettings.fields.spendingPass.label') }}</label>
+                                        <div class="wrap-container">
+                                            <p class="text">
+                                                {{ $t('pages.walletSettings.fields.spendingPass.text') }}
+                                            </p>
+                                            <switch-control/>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="text-center">
                                     <a class="deletelink" @click="deleteWallet">
@@ -171,4 +182,9 @@
                 &:focus
                     color #1f202a
                     opacity 1
+    
+    .deletelink
+        margin-top 30px
+        margin-bottom 30px
+        
 </style>
