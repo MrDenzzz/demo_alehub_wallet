@@ -348,6 +348,9 @@ const mutations = {
 
         //сделать тоже самое для options.balance.to
 
+        let filterDateFrom = null,
+            filterDateTo = null;
+
         if (!options.balance.from)
             options.balance.from = 0;
 
@@ -364,9 +367,17 @@ const mutations = {
                 // }).length !== 0;
             });
 
+            if (options.date.secondary.from && options.date.secondary.to) {
+                filterDateFrom = options.date.secondary.from;
+                filterDateTo = options.date.secondary.to;
+            } else {
+                filterDateFrom = options.date.primary.from;
+                filterDateTo = options.date.primary.to;
+            }
+
             state.allTransactions = state.allTransactions.filter(item => {
                 return item.transactions.filter(transaction => {
-                    return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
+                    return transaction.timestamp >= parseInt(filterDateFrom) && transaction.timestamp <= parseInt(filterDateTo);
                 }).length !== 0;
             });
 
@@ -443,7 +454,7 @@ const mutations = {
 
                     state.allTransactions.forEach((item, i, arr) => {
                         arr[i].transactions = item.transactions.filter(transaction => {
-                            return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
+                            return transaction.timestamp >= parseInt(filterDateFrom) && transaction.timestamp <= parseInt(filterDateTo);
                         });
                     });
                 }

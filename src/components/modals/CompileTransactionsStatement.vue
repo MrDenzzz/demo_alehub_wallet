@@ -315,7 +315,12 @@
                 console.log(val, 'date to');
             },
             changingDates: function (val) {
-                if (val) {
+                if (this.filterOptions.date.secondary.from && this.filterOptions.date.secondary.to) {
+                    this.setDateFilterInterval();
+                } else {
+                    this.makeInitSelectDate();
+                }
+                if (val && this.filterOptions.selectedWallets.length !== 0) {
                     this.filterTransactions();
                 }
             },
@@ -356,7 +361,7 @@
                     },
                     date: {
                         primary: {
-                            from: null,
+                            from: null,  //set 0 instead null
                             to: null
                         },
                         secondary: {
@@ -475,28 +480,15 @@
 
         },
         methods: {
-            makeMinDate: function (date) {
-                date.setHours(0);
-                date.setMinutes(0);
-                date.setSeconds(0);
-                date.setMilliseconds(0);
-                return date;
-            },
-            makeMaxDate: function (date) {
-                date.setHours(23);
-                date.setMinutes(59);
-                date.setSeconds(59);
-                date.setMilliseconds(999);
-                return date;
-            },
+
             initModal: function () {
                 // this.makeDisableDatepicker();
 
                 this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                 this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
 
-                this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
-                this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
+                // this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
+                // this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
 
                 // let datepickerDay = document.getElementsByClassName('day');
                 // for (let i = 0; i < datepickerDay.length; i++) {
@@ -521,9 +513,15 @@
                     disabledList = [],
                     enableList = [];
 
+                //вынести во вьюкс
+                let fullWallets = this.wallets.filter(wallet => {
+                    return wallet.total_transactions !== 0;
+                });
+
                 let itemsWallets = document.getElementsByClassName('wallet-names-checkbox'),
                     controlIndicators = document.querySelectorAll('.wallet-names-checkbox + .control-indicator'),
-                    addresses = this.wallets.map(wallet => wallet.address);
+                    addresses = fullWallets.map(wallet => wallet.address);
+
 
                 for (let i = 0; i < itemsWallets.length; i++) {
                     if (!itemsWallets[i].checked && controlIndicators[i].classList.contains('control-indicator__disable')) {
@@ -540,6 +538,8 @@
                         this.filteredAllTransactions.transactions.find(item => wallet === item.address)
                     );
 
+
+                    //rename absent to empty
                     if (absentWallets.length !== 0) {
                         absentWallets.forEach(item => {
                             disabledList.push(addresses.findIndex(elem =>
@@ -565,6 +565,7 @@
                             }));
                         });
 
+
                         if (enableList.length !== 0) {
                             enableList.forEach(index => {
                                 controlIndicators[index].classList.remove('control-indicator__disable')
@@ -587,10 +588,172 @@
                     this.filterOptions.balance.from = this.minCountAllTransactions;
                     this.filterOptions.balance.to = this.maxCountAllTransactions;
                     this.countChooseTransactions = this.countTransactions.optional;
-                    // this.makeEnableDatepicker();
+                    this.makeEnableDatepicker();
                 } else {
                     console.error('YOU CHOOSE A NON-EXISTENT VALUE');
                 }
+            },
+            checkNotNull: function (val) {
+                if (val !== null)
+                    return true;
+                return false;
+            },
+            makeMinDate: function (date) {
+                date.setHours(0);
+                date.setMinutes(0);
+                date.setSeconds(0);
+                date.setMilliseconds(0);
+                return date;
+            },
+            makeMaxDate: function (date) {
+                date.setHours(23);
+                date.setMinutes(59);
+                date.setSeconds(59);
+                date.setMilliseconds(999);
+                return date;
+            },
+            makeInitSelectDate: function () {
+                this.filterOptions.date.secondary.from = this.makeMinDate(this.changingDates).getTime();
+                this.filterOptions.date.secondary.to = this.makeMaxDate(this.changingDates).getTime();
+                this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
+                this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
+            },
+
+            calcSerialDay: function (date) {
+                date.setHours(0);
+                date.setMinutes(0);
+                date.setSeconds(0);
+                date.setMilliseconds(0);
+                return date;
+            },
+
+
+            //добавить комплексную функцию проверок на undefined, null и пр прототипы в main.js
+            setDateFilterInterval: function () {
+                // if (this.changingDates) {
+                // let selectDate = this.changingDates,
+                //     areaFromDate = this.makeMinDate(new Date(this.filterOptions.date.primary.from)),
+                //     areaToDate = this.makeMaxDate(new Date(this.filterOptions.date.primary.to)),
+                //     filterFromDate = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
+                //     filterToDate = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
+
+
+                let dateCurrent = this.changingDates,
+                    dateFrom = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
+                    dateTo = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
+
+                // areaFromDate = this.makeMinDate(new Date(this.filterOptions.date.primary.from)),
+                // areaToDate = this.makeMaxDate(new Date(this.filterOptions.date.primary.to)),
+
+                // filterFromDate = (this.filterOptions.date.secondary.from) ? this.makeMinDate(new Date(this.filterOptions.date.secondary.from)) : null,
+                // filterToDate = (this.filterOptions.date.secondary.to) ? this.makeMaxDate(new Date(this.filterOptions.date.secondary.to)) : null;
+
+                let hasInterval = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateFrom).getTime() !== 0;
+
+                let countFrom = this.calcSerialDay(dateCurrent).getTime() - this.calcSerialDay(dateFrom).getTime(),
+                    countTo = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateCurrent).getTime(),
+                    isFilterLeft = countFrom === 0,
+                    isFilterRight = countTo === 0,
+                    //в компьютед
+                    isLargeTo = this.calcSerialDay(dateCurrent) > this.calcSerialDay(dateTo),
+                    isLessFrom = this.calcSerialDay(dateCurrent) < this.calcSerialDay(dateFrom),
+                    inAreaFrom = countFrom > 0 && countFrom < countTo && !isLargeTo && !isLessFrom || countFrom === countTo ||
+                        this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateTo).getTime(),
+                    inAreaTo = countTo > 0 && countTo < countFrom && !isLargeTo && !isLessFrom ||
+                        this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateFrom).getTime();
+                    // isExtLeft = selectDate.getDay() - areaFromDate.getDay() === 0,
+                    // isExtRight = areaToDate.getDay() - selectDate.getDay() === 0,
+
+
+                // console.log(this.calcSerialDay(dateCurrent), 'this.calcSerialDay(selectDate)');
+                // console.log(this.calcSerialDay(dateFrom), 'this.calcSerialDay(filterFromDate)');
+                // console.log(this.calcSerialDay(dateTo), 'this.calcSerialDay(filterToDate)');
+                //
+                // console.log(isLargeTo, 'isLarge');
+                // console.log(isLessFrom, 'isLess');
+                //
+                // console.log(selectDate, 'selectDate');
+                // console.log(selectDate.getDate() * (selectDate.getMonth() + 1) * selectDate.getFullYear(), 'isLarge');
+                // console.log(filterToDate.getDate() * (filterToDate.getMonth() + 1) * filterToDate.getFullYear(), 'isLess');
+
+                //проверять ещё на месяца и на года
+                //пересмотреть необходимость нуллов и проверки на существование
+                // let countToLeft = (this.checkNotNull(filterFromDate)) ? selectDate.getDay() - filterFromDate.getDay() : null,
+                //     countToRight = (this.checkNotNull(filterToDate)) ? filterToDate.getDay() - selectDate.getDay() : null,
+                //     isFilterLeft = (this.checkNotNull(countToLeft)) ? countToLeft === 0 : null,
+                //     isFilterRight = (this.checkNotNull(countToRight)) ? countToRight === 0 : null,
+                //     isExtLeft = selectDate.getDay() - areaFromDate.getDay() === 0,
+                //     isExtRight = areaToDate.getDay() - selectDate.getDay() === 0,
+                //     isLarge = (this.checkNotNull(countToRight)) ? selectDate.getDay() > filterToDate.getDay() : null,
+                //     isLess = (this.checkNotNull(countToRight)) ? selectDate.getDay() < filterFromDate.getDay() : null;
+
+
+                if (isLessFrom) {
+                    console.log('less 1');
+                    if (!hasInterval) {
+                        console.log('less 2');
+                        this.filterOptions.date.secondary.to = this.makeMaxDate(new Date(this.filterOptions.date.secondary.from)).getTime();
+                    }
+                    this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
+
+                } else if (isLargeTo) {
+                    console.log('large 1');
+                    if (!hasInterval) {
+                        console.log('large 2');
+                        this.filterOptions.date.secondary.from = this.makeMinDate(new Date(this.filterOptions.date.secondary.to)).getTime();
+                    }
+                    this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
+
+                } else if (inAreaFrom) {
+                    console.log('in area from');
+
+                    this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
+
+                } else if (inAreaTo) {
+                    console.log('in area to');
+
+                    this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
+
+                }
+
+
+                //выделять более ярким цветом дни, в которых есть транзакции, а область сделать чуть менее яркой
+                // if (!isExtLeft && !isLarge && (countToLeft < countToRight || countToLeft === countToRight) || isExtLeft && isLess) {
+                //     this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
+                //     console.log('first');
+                //
+                //     if (isFilterLeft) {
+                //         this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
+                //         this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
+                //     }
+                //
+                // } else if (!isExtRight && !isLess && countToRight < countToLeft || isExtRight && isLarge) {
+                //     this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
+                //
+                //     console.log('second');
+                //
+                //     if (isFilterRight) {
+                //         this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
+                //         this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
+                //     }
+                // } else if (isExtLeft) {
+                //     this.filterOptions.date.secondary.from = this.makeMinDate(areaFromDate).getTime();
+                //     this.filterOptions.date.secondary.to = this.makeMaxDate(areaFromDate).getTime();
+                //     console.log('third');
+                // } else if (isExtRight) {
+                //     this.filterOptions.date.secondary.from = this.makeMinDate(areaToDate).getTime();
+                //     this.filterOptions.date.secondary.to = this.makeMaxDate(areaToDate).getTime();
+                //     console.log('fourth');
+                // }
+
+                this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
+                this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
+
+                // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
+                // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
+                console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
+                console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
+                // }
             },
             filterTransactions: function () {
 
@@ -601,67 +764,12 @@
                     this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                     this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
 
-                    this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
-                    this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
+                    // this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
+                    // this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
 
                     this.changingDates = null;
                 }
 
-                //вынести в отдельную функцию
-                if (this.changingDates) {
-                    let selectDate = this.changingDates,
-                        areaFromDate = this.makeMinDate(new Date(this.filterOptions.date.primary.from)),
-                        areaToDate = this.makeMaxDate(new Date(this.filterOptions.date.primary.to)),
-                        filterFromDate = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
-                        filterToDate = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
-
-                    //проверять ещё на месяца и на года
-                    let countToLeft = selectDate.getDay() - filterFromDate.getDay(),
-                        countToRight = filterToDate.getDay() - selectDate.getDay(),
-                        isFilterLeft = countToLeft === 0,
-                        isFilterRight = countToRight === 0,
-                        isExtLeft = selectDate.getDay() - areaFromDate.getDay() === 0,
-                        isExtRight = areaToDate.getDay() - selectDate.getDay() === 0,
-                        isLarge = selectDate.getDay() > filterToDate.getDay(),
-                        isLess = selectDate.getDay() < filterFromDate.getDay();
-
-                    //выделять более ярким цветом дни, в которых есть транзакции, а область сделать чуть менее яркой
-                    if (!isExtLeft && !isLarge && (countToLeft < countToRight || countToLeft === countToRight) || isExtLeft && isLess) {
-                        this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
-                        console.log('first');
-
-                        if (isFilterLeft) {
-                            this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
-                            this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
-                        }
-
-                    } else if (!isExtRight && !isLess && countToRight < countToLeft || isExtRight && isLarge) {
-                        this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
-
-                        console.log('second');
-
-                        if (isFilterRight) {
-                            this.filterOptions.date.secondary.from = this.makeMinDate(selectDate).getTime();
-                            this.filterOptions.date.secondary.to = this.makeMaxDate(selectDate).getTime();
-                        }
-                    } else if (isExtLeft) {
-                        this.filterOptions.date.secondary.from = this.makeMinDate(areaFromDate).getTime();
-                        this.filterOptions.date.secondary.to = this.makeMaxDate(areaFromDate).getTime();
-                        console.log('third');
-                    } else if (isExtRight) {
-                        this.filterOptions.date.secondary.from = this.makeMinDate(areaToDate).getTime();
-                        this.filterOptions.date.secondary.to = this.makeMaxDate(areaToDate).getTime();
-                        console.log('fourth');
-                    }
-
-                    this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
-                    this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
-
-                    // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
-                    // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
-                    // console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
-                    // console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
-                }
 
                 console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
                 console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
@@ -709,8 +817,8 @@
                             this.filterOptions.date.primary.from = this.dateIntervalFromFilterAllTransactions;
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
 
-                            this.filterOptions.date.secondary.from = this.dateIntervalFromFilterAllTransactions;
-                            this.filterOptions.date.secondary.to = this.dateIntervalToFilterAllTransactions;
+                            // this.filterOptions.date.secondary.from = this.dateIntervalFromFilterAllTransactions;
+                            // this.filterOptions.date.secondary.to = this.dateIntervalToFilterAllTransactions;
 
                             console.log(new Date(this.filterOptions.date.secondary.from));
                             console.log(new Date(this.filterOptions.date.secondary.to));
@@ -744,8 +852,8 @@
                         this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                         this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
 
-                        this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
-                        this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
+                        // this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
+                        // this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
                         this.checkDisabledWallets();
                         this.changingDates = null;
 
@@ -821,12 +929,10 @@
 
                 this.countChooseTransactions = 0;
 
-                this.dateFromDatepicker = {
-                    countTransactions: {
-                        current: 0,
-                        all: 0,
-                        optional: 0,
-                    }
+                this.countTransactions = {
+                    current: 0,
+                    all: 0,
+                    optional: 0,
                 };
 
                 this.filterOptions = {
@@ -898,8 +1004,7 @@
                 for (let i = 0; i < dayHeaders.length; i++) {
                     dayHeaders[i].classList.remove('day-disable');
                 }
-            }
-            ,
+            },
             makeDisableDatepicker: function () {
                 this.disableDatepicker.from = new Date(0);
                 this.disableDatepicker.to = new Date(2147483647000);
@@ -922,8 +1027,8 @@
                 for (let i = 0; i < dayHeaders.length; i++) {
                     dayHeaders[i].classList.add('day-disable');
                 }
-            }
-            ,
+            },
+
             // setStateDatepicker: function () {
             //     if (this.selectionTypeStatement !== 'optional') {
             //         this.disableDatepicker.from = new Date(0);
@@ -968,27 +1073,25 @@
             //     // this.balanceFilter.from = min;
             //     // this.balanceFilter.to = max;
             // },
+
             //в computed
             checkTypeTransaction: function (type) {
                 if (type === 'SEND')
                     return true;
                 return false;
-            }
-            ,
+            },
             getTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
                 if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
                     return 'RECEIVED';
                 return 'SEND';
-            }
-            ,
+            },
 
             //tmp solution
             getTypeTransactionAll: function (item) {
                 if (item.after - item.before > 0)
                     return 'RECEIVED';
                 return 'SEND';
-            }
-            ,
+            },
 
             calcBalance: function (i, count) {
                 this.currentTotal = this.transactions[i].balanceInfo.after;
@@ -996,8 +1099,7 @@
                     this.currentSent += count;
                 else
                     this.currentReceived += count;
-            }
-            ,
+            },
 
             calcBalanceAll: function (item, count) {
                 this.currentTotal = item.after;
@@ -1005,8 +1107,7 @@
                     this.currentSent += count;
                 else
                     this.currentReceived += count;
-            }
-            ,
+            },
 
             generateHeaderTransactionsStatement: function (doc, name) {
                 doc.setFontSize(this.titleFontSize);
@@ -1044,15 +1145,13 @@
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
 
                 this.offset += 15;
-            }
-            ,
+            },
 
             generateDateTransactions: function (doc, date, j) {
                 doc.setFontSize(this.dateDayFontSize);
                 doc.text(date, this.xPositionDateTitleDay, this.offset + 25 * j);
                 this.offset += 15;
-            }
-            ,
+            },
 
             generateTransactionsDayStatement: function (doc, j, isLast) {
                 if (isLast)
@@ -1077,8 +1176,7 @@
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
 
                 this.offset += 15;
-            }
-            ,
+            },
 
             generateTransaction: function (doc, type, count, date, time, walletAddress, walletDestination, j) {
                 let summaryString = count + ' ALE' + '\n' +
@@ -1093,8 +1191,7 @@
 
                 doc.setTextColor(0, 0, 0);
                 doc.text(summaryString, 40, this.offset + 25 * j);
-            }
-            ,
+            },
 
             /**
              * @return {Boolean}
@@ -1337,8 +1434,7 @@
                     doc.save(pdfName + '.pdf');
                     return true;
                 }
-            }
-            ,
+            },
 
             downloadPDF: function () {
                 if (this.selectionTypeStatement === 'current') {
@@ -1412,6 +1508,8 @@
             background-color #fafafa
 
             .day.selected, .day.highlighted
+                background-color #fce9b5 !important
+            .day.special
                 background-color #ffd24f !important
             & :hover
                 border none !important
