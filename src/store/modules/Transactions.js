@@ -410,11 +410,17 @@ const mutations = {
             state.dateIntervalToFilterAllTransactions = state.dateIntervalToFilterAllTransactions.getTime();
             
 
+            // console.log(state.allTransactions[0].transactions, 'before');
+            // console.log(new Date(options.date.secondary.from), 'options.date.secondary.from');
+            // console.log(new Date(options.date.secondary.to), 'options.date.secondary.to');
+
             state.allTransactions.forEach((item, i, arr) => {
                 arr[i].transactions = item.transactions.filter(transaction => {
                     return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
                 });
             });
+
+            // console.log(state.allTransactions[0].transactions, 'after');
             
         } else {
             state.allTransactions = [];

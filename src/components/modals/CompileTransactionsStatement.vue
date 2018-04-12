@@ -315,7 +315,9 @@
                 console.log(val, 'date to');
             },
             changingDates: function (val) {
-                this.filterTransactions();
+                if (val) {
+                    this.filterTransactions();
+                }
             },
 
 
@@ -576,6 +578,12 @@
                 }
             },
             filterTransactions: function () {
+
+                if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
+                    this.changingDates = null;
+                }
+
+                //вынести в отдельную функцию
                 if (this.changingDates) {
                     let selectDate = this.changingDates,
                         areaFromDate = this.makeMinDate(new Date(this.filterOptions.date.primary.from)),
@@ -625,11 +633,14 @@
                     this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
                     this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
 
-                    console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
-                    console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
-                    console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
-                    console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
+                    // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
+                    // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
+                    // console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
+                    // console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
                 }
+
+                console.log(new Date(this.filterOptions.date.secondary.from), 'this.filterOptions.date.secondary.from');
+                console.log(new Date(this.filterOptions.date.secondary.to), 'this.filterOptions.date.secondary.to');
 
                 this.$store.dispatch('restoreAllTransactions',
                     this.$store.state.Transactions.filteredAllTransactions
@@ -667,11 +678,14 @@
 
                             //добавить обработку готовой области дейтпикера при фильтре по типу и балансу
 
-                            this.highlightDatepicker.from = this.dateFromFilterAllTransactions;
-                            this.highlightDatepicker.to = this.dateToFilterAllTransactions;
-
                             this.filterOptions.date.primary.from = this.dateIntervalFromFilterAllTransactions;
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
+
+                            this.highlightDatepicker.from = this.dateFromFilterAllTransactions; //ломается при фильтре дат при переключении
+                            this.highlightDatepicker.to = this.dateToFilterAllTransactions;
+
+                            this.filterOptions.date.secondary.from = this.dateFromFilterAllTransactions;
+                            this.filterOptions.date.secondary.to = this.dateToFilterAllTransactions;
 
                             this.prevSelectedWallets = this.filterOptions.selectedWallets;
                         }
@@ -689,8 +703,13 @@
 
                         this.makeDisableDatepicker();
 
-                        this.filterOptions.date.primary.from = null;
-                        this.filterOptions.date.primary.to = null;
+                        this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
+                        this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
+
+                        this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
+                        this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
+
+                        this.changingDates = null;
 
                         this.highlightDatepicker.from = null;
                         this.highlightDatepicker.to = null;
