@@ -316,6 +316,10 @@ const actions = {
     },
 };
 
+// function kek () {
+//
+// }
+
 const mutations = {
     REQUEST_ALL_TRANSACTIONS: (state) => {
         state.allTransactionsStatus = 'loading';
@@ -336,6 +340,9 @@ const mutations = {
         state.allTransactions = JSON.parse(JSON.stringify(arr));
     },
     SUCCESS_FILTER_ALL_TRANSACTIONS: (state, options) => {
+
+        //раскидать эту мутацию на несколько
+
         //сделать тоже самое для options.balance.to
 
         if (!options.balance.from)
@@ -354,73 +361,74 @@ const mutations = {
                 }).length !== 0;
             });
 
-            state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+            if (state.allTransactions.length !== 0) {
+                state.allTransactions.forEach((item, i, arr) => {
+                    arr[i].transactions = item.transactions.filter(transaction => {
+                        return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
+                    });
                 });
-            });
 
-            if (options.typeTransaction === 'income') {
-                state.allTransactions.forEach((item, i, arr) => {
-                    // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before > 0)) {
-                    arr[i].transactions = item.transactions.filter(transaction => {
-                        return transaction.balanceInfo.after - transaction.balanceInfo.before > 0;
+                if (options.typeTransaction === 'income') {
+                    state.allTransactions.forEach((item, i, arr) => {
+                        // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before > 0)) {
+                        arr[i].transactions = item.transactions.filter(transaction => {
+                            return transaction.balanceInfo.after - transaction.balanceInfo.before > 0;
+                        });
+                        // }
                     });
-                    // }
-                });
-            } else if (options.typeTransaction === 'outcome') {
-                state.allTransactions.forEach((item, i, arr) => {
-                    // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before < 0)) {
-                    arr[i].transactions = item.transactions.filter(transaction => {
-                        return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
+                } else if (options.typeTransaction === 'outcome') {
+                    state.allTransactions.forEach((item, i, arr) => {
+                        // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before < 0)) {
+                        arr[i].transactions = item.transactions.filter(transaction => {
+                            return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
+                        });
+                        // }
                     });
-                    // }
+                }
+
+                state.dateIntervalFromFilterAllTransactions = new Date(state.allTransactions.map(item =>
+                    item.transactions
+                ).reduce((prev, curr) =>
+                    prev.concat(curr)
+                ).map(item =>
+                    item.timestamp
+                ).reduce((prev, curr) =>
+                    (curr < prev) ? curr : prev
+                ));
+                state.dateIntervalFromFilterAllTransactions.setHours(0);
+                state.dateIntervalFromFilterAllTransactions.setMinutes(0);
+                state.dateIntervalFromFilterAllTransactions.setSeconds(0);
+                state.dateIntervalFromFilterAllTransactions.setMilliseconds(0);
+                state.dateIntervalFromFilterAllTransactions = state.dateIntervalFromFilterAllTransactions.getTime();
+
+                state.dateIntervalToFilterAllTransactions = new Date(state.allTransactions.map(item =>
+                    item.transactions
+                ).reduce((prev, curr) =>
+                    prev.concat(curr)
+                ).map(item =>
+                    item.timestamp
+                ).reduce((prev, curr) =>
+                    (curr > prev) ? curr : prev
+                ));
+                state.dateIntervalToFilterAllTransactions.setHours(23);
+                state.dateIntervalToFilterAllTransactions.setMinutes(59);
+                state.dateIntervalToFilterAllTransactions.setSeconds(59);
+                state.dateIntervalToFilterAllTransactions.setMilliseconds(999);
+                state.dateIntervalToFilterAllTransactions = state.dateIntervalToFilterAllTransactions.getTime();
+
+
+                // console.log(state.allTransactions[0].transactions, 'before');
+                // console.log(new Date(options.date.secondary.from), 'options.date.secondary.from');
+                // console.log(new Date(options.date.secondary.to), 'options.date.secondary.to');
+
+                state.allTransactions.forEach((item, i, arr) => {
+                    arr[i].transactions = item.transactions.filter(transaction => {
+                        return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
+                    });
                 });
+
+                // console.log(state.allTransactions[0].transactions, 'after');
             }
-
-
-            state.dateIntervalFromFilterAllTransactions = new Date(state.allTransactions.map(item =>
-                item.transactions
-            ).reduce((prev, curr) =>
-                prev.concat(curr)
-            ).map(item =>
-                item.timestamp
-            ).reduce((prev, curr) =>
-                (curr < prev) ? curr : prev
-            ));
-            state.dateIntervalFromFilterAllTransactions.setHours(0);
-            state.dateIntervalFromFilterAllTransactions.setMinutes(0);
-            state.dateIntervalFromFilterAllTransactions.setSeconds(0);
-            state.dateIntervalFromFilterAllTransactions.setMilliseconds(0);
-            state.dateIntervalFromFilterAllTransactions = state.dateIntervalFromFilterAllTransactions.getTime();
-
-            state.dateIntervalToFilterAllTransactions = new Date(state.allTransactions.map(item =>
-                item.transactions
-            ).reduce((prev, curr) =>
-                prev.concat(curr)
-            ).map(item =>
-                item.timestamp
-            ).reduce((prev, curr) =>
-                (curr > prev) ? curr : prev
-            ));
-            state.dateIntervalToFilterAllTransactions.setHours(23);
-            state.dateIntervalToFilterAllTransactions.setMinutes(59);
-            state.dateIntervalToFilterAllTransactions.setSeconds(59);
-            state.dateIntervalToFilterAllTransactions.setMilliseconds(999);
-            state.dateIntervalToFilterAllTransactions = state.dateIntervalToFilterAllTransactions.getTime();
-            
-
-            // console.log(state.allTransactions[0].transactions, 'before');
-            // console.log(new Date(options.date.secondary.from), 'options.date.secondary.from');
-            // console.log(new Date(options.date.secondary.to), 'options.date.secondary.to');
-
-            state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
-                });
-            });
-
-            // console.log(state.allTransactions[0].transactions, 'after');
             
         } else {
             state.allTransactions = [];
@@ -618,7 +626,7 @@ const getters = {
             min = null,
             max = null;
         
-        // if (state.allTransactions.length !== 0) {
+        if (state.allTransactions.length !== 0) {
             count = state.allTransactions.map(item => {
                 return item.transactions.length;
             }).reduce((sum, curr) => {
@@ -643,7 +651,7 @@ const getters = {
                         max = item.count;
                 });
             }
-        // }
+        }
 
         return {
             transactions: state.allTransactions,
@@ -658,36 +666,42 @@ const getters = {
     dateIntervalToFilterAllTransactions: state => state.dateIntervalToFilterAllTransactions,
 
     dateFromFilterAllTransactions: state => {
-        let from = new Date(state.allTransactions.map(item =>
-            item.transactions
-        ).reduce((prev, curr) =>
-            prev.concat(curr)
-        ).map(item =>
-            item.timestamp
-        ).reduce((prev, curr) =>
-            (curr < prev) ? curr : prev
-        ));
-        from.setHours(0);
-        from.setMinutes(0);
-        from.setSeconds(0);
-        from.setMilliseconds(0);
-        return from.getTime();
+        if (state.allTransactions.length !== 0) {
+            let from = new Date(state.allTransactions.map(item =>
+                item.transactions
+            ).reduce((prev, curr) =>
+                prev.concat(curr)
+            ).map(item =>
+                item.timestamp
+            ).reduce((prev, curr) =>
+                (curr < prev) ? curr : prev
+            ));
+            from.setHours(0);
+            from.setMinutes(0);
+            from.setSeconds(0);
+            from.setMilliseconds(0);
+            return from.getTime();
+        }
+        return null;
     },
     dateToFilterAllTransactions: state => {
-        let to = new Date(state.allTransactions.map(item =>
-            item.transactions
-        ).reduce((prev, curr) =>
-            prev.concat(curr)
-        ).map(item =>
-            item.timestamp
-        ).reduce((prev, curr) =>
-            (curr > prev) ? curr : prev
-        ));
-        to.setHours(23);
-        to.setMinutes(59);
-        to.setSeconds(59);
-        to.setMilliseconds(999);
-        return to.getTime();
+        if (state.allTransactions.length !== 0) {
+            let to = new Date(state.allTransactions.map(item =>
+                item.transactions
+            ).reduce((prev, curr) =>
+                prev.concat(curr)
+            ).map(item =>
+                item.timestamp
+            ).reduce((prev, curr) =>
+                (curr > prev) ? curr : prev
+            ));
+            to.setHours(23);
+            to.setMinutes(59);
+            to.setSeconds(59);
+            to.setMilliseconds(999);
+            return to.getTime();
+        }
+        return null;
     },
 
 

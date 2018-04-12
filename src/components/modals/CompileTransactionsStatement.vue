@@ -384,7 +384,7 @@
                 dateLocalFrom: '',
                 dateLocalTo: '',
 
-                constDurationDay: 86400000,
+                // constDurationDay: 86400000,
 
                 //мб в одно свойство?
                 highlightDatepicker: {
@@ -662,8 +662,10 @@
                             this.makeEnableDatepicker();
                         }
 
-                        this.filterOptions.date.primary.from = this.dateIntervalFromFilterAllTransactions;
-                        this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
+                        if (this.filteredAllTransactions.transactions.length !== 0) {
+                            this.filterOptions.date.primary.from = this.dateIntervalFromFilterAllTransactions;
+                            this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
+                        }
 
                         //отсылаем данные выбранной даты и они там меняются на минимальные и максимальные
 
@@ -781,23 +783,61 @@
                 this.selectionTypeStatement = 'current';
                 this.selectionTypeTransactions = 'all';
 
-                this.filterOptions.selectedWallets = [];
+                this.countChooseTransactions = 0;
 
-                // this.balanceFilter = {
-                //     from: '',
-                //     to: ''
-                // };
+                this.dateFromDatepicker = {
+                    countTransactions: {
+                        current: 0,
+                        all: 0,
+                        optional: 0,
+                    }
+                };
+
+                this.filterOptions = {
+                    selectedWallets: [],
+                    typeTransaction: 'all',
+                    balance: {
+                        from: '',
+                        to: ''
+                    },
+                    date: {
+                        primary: {
+                            from: null,
+                            to: null
+                        },
+                        secondary: {
+                            from: null,
+                            to: null
+                        }
+                    }
+                };
+
+                this.prevSelectedWallets = [];
+
+                this.changingDates = null;
+
+                this.balance = {
+                    value: {
+                        from: '',
+                        to: ''
+                    },
+                    placeholder: {
+                        from: '',
+                        to: ''
+                    }
+                };
 
                 this.dateLocalFrom = '';
                 this.dateLocalTo = '';
 
+                //мб в одно свойство?
                 this.highlightDatepicker = {
-                    from: 0,
-                    to: 0
+                    from: null,
+                    to: null
                 };
                 this.disableDatepicker = {
-                    from: '',
-                    to: ''
+                    from: null,
+                    to: null
                 };
             },
             makeEnableDatepicker: function () {
@@ -824,7 +864,8 @@
                 for (let i = 0; i < dayHeaders.length; i++) {
                     dayHeaders[i].classList.remove('day-disable');
                 }
-            },
+            }
+            ,
             makeDisableDatepicker: function () {
                 this.disableDatepicker.from = new Date(0);
                 this.disableDatepicker.to = new Date(2147483647000);
@@ -847,7 +888,8 @@
                 for (let i = 0; i < dayHeaders.length; i++) {
                     dayHeaders[i].classList.add('day-disable');
                 }
-            },
+            }
+            ,
             // setStateDatepicker: function () {
             //     if (this.selectionTypeStatement !== 'optional') {
             //         this.disableDatepicker.from = new Date(0);
@@ -897,19 +939,22 @@
                 if (type === 'SEND')
                     return true;
                 return false;
-            },
+            }
+            ,
             getTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
                 if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
                     return 'RECEIVED';
                 return 'SEND';
-            },
+            }
+            ,
 
             //tmp solution
             getTypeTransactionAll: function (item) {
                 if (item.after - item.before > 0)
                     return 'RECEIVED';
                 return 'SEND';
-            },
+            }
+            ,
 
             calcBalance: function (i, count) {
                 this.currentTotal = this.transactions[i].balanceInfo.after;
@@ -917,7 +962,8 @@
                     this.currentSent += count;
                 else
                     this.currentReceived += count;
-            },
+            }
+            ,
 
             calcBalanceAll: function (item, count) {
                 this.currentTotal = item.after;
@@ -925,7 +971,8 @@
                     this.currentSent += count;
                 else
                     this.currentReceived += count;
-            },
+            }
+            ,
 
             generateHeaderTransactionsStatement: function (doc, name) {
                 doc.setFontSize(this.titleFontSize);
@@ -963,13 +1010,15 @@
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
 
                 this.offset += 15;
-            },
+            }
+            ,
 
             generateDateTransactions: function (doc, date, j) {
                 doc.setFontSize(this.dateDayFontSize);
                 doc.text(date, this.xPositionDateTitleDay, this.offset + 25 * j);
                 this.offset += 15;
-            },
+            }
+            ,
 
             generateTransactionsDayStatement: function (doc, j, isLast) {
                 if (isLast)
@@ -994,7 +1043,8 @@
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
 
                 this.offset += 15;
-            },
+            }
+            ,
 
             generateTransaction: function (doc, type, count, date, time, walletAddress, walletDestination, j) {
                 let summaryString = count + ' ALE' + '\n' +
@@ -1009,7 +1059,8 @@
 
                 doc.setTextColor(0, 0, 0);
                 doc.text(summaryString, 40, this.offset + 25 * j);
-            },
+            }
+            ,
 
             /**
              * @return {Boolean}
@@ -1252,7 +1303,8 @@
                     doc.save(pdfName + '.pdf');
                     return true;
                 }
-            },
+            }
+            ,
 
             downloadPDF: function () {
                 if (this.selectionTypeStatement === 'current') {
