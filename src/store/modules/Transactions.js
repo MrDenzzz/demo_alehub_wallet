@@ -342,6 +342,18 @@ const mutations = {
     RESTORE_ALL_TRANSACTIONS: (state, arr) => {
         state.allTransactions = JSON.parse(JSON.stringify(arr));
     },
+    SUCCESS_BALANCE_FILTER_ALL_TRANSACTIONS: (state, balance) => {
+
+    },
+    ERROR_BALANCE_FILTER_ALL_TRANSACTIONS: (state) => {
+
+    },
+    SUCCESS_DATE_FILTER_ALL_TRANSACTIONS: (state, date) => {
+
+    },
+    ERROR_DATE_FILTER_ALL_TRANSACTIONS: (state) => {
+
+    },
     SUCCESS_FILTER_ALL_TRANSACTIONS: (state, options) => {
 
         //раскидать эту мутацию на несколько
@@ -457,6 +469,8 @@ const mutations = {
                             return transaction.timestamp >= parseInt(filterDateFrom) && transaction.timestamp <= parseInt(filterDateTo);
                         });
                     });
+
+
                 }
 
                 // state.isDisableType = false;

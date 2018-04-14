@@ -315,9 +315,12 @@
                 console.log(val, 'date to');
             },
             changingDates: function (val) {
-                if (this.filterOptions.date.secondary.from && this.filterOptions.date.secondary.to) {
+                if (val && this.filterOptions.date.secondary.from && this.filterOptions.date.secondary.to) {
+                    console.log('00000000000');
                     this.setDateFilterInterval();
-                } else {
+                } else if (this.filterOptions.date.primary.from && this.filterOptions.date.primary.to &&
+                    !this.filterOptions.date.secondary.from && !this.filterOptions.date.secondary.to) {
+                    console.log('11111111111');
                     this.makeInitSelectDate();
                 }
                 if (val && this.filterOptions.selectedWallets.length !== 0) {
@@ -351,6 +354,8 @@
                     all: 0,
                     optional: 0,
                 },
+
+                transactionsByDay: [],
 
                 filterOptions: {
                     selectedWallets: [],
@@ -661,8 +666,8 @@
                         this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateTo).getTime(),
                     inAreaTo = countTo > 0 && countTo < countFrom && !isLargeTo && !isLessFrom ||
                         this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateFrom).getTime();
-                    // isExtLeft = selectDate.getDay() - areaFromDate.getDay() === 0,
-                    // isExtRight = areaToDate.getDay() - selectDate.getDay() === 0,
+                // isExtLeft = selectDate.getDay() - areaFromDate.getDay() === 0,
+                // isExtRight = areaToDate.getDay() - selectDate.getDay() === 0,
 
 
                 // console.log(this.calcSerialDay(dateCurrent), 'this.calcSerialDay(selectDate)');
@@ -801,6 +806,47 @@
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
                         }
 
+                        let a = '';
+
+                        this.transactionsByDay = this.filteredAllTransactions.transactions.map(item => {
+                            return item.transactions;
+                        }).reduce((prev, curr) => {
+                            return prev.concat(curr)
+                        }).map(item => {
+                            a = new Date(item.timestamp);
+                            a.setHours(0);
+                            a.setMinutes(0);
+                            a.setSeconds(0);
+                            a.setMilliseconds(0);
+                            return a.getTime();
+                        });
+
+                        let asd = [];
+
+                        console.log(this.transactionsByDay, 'this.transactionsByDay');
+
+
+                        let days = [];
+
+                        // this.transactionsByDay.forEach(item => {
+                        //
+                        // });
+
+                        // console.log(this.transactionsByDay, 'this.transactionsByDay');
+
+                        this.transactionsByDay = this.transactionsByDay.filter(function(item, pos, arr) {
+                            return arr.indexOf(item) === pos;
+                        });
+
+                        console.log(this.transactionsByDay, 'this.transactionsByDay');
+
+                        // for (let i = 0; i < this.transactionsByDay.length; i++) {
+                        //     if (!days.find(item => this.transactionsByDay[i] === item)) {
+                        //         days.push(this.transactionsByDay[i]);
+                        //     }
+                        // }
+
+
                         //отсылаем данные выбранной даты и они там меняются на минимальные и максимальные
 
                         // this.highlightDatepicker.from = this.dateFromFilterAllTransactions;
@@ -833,7 +879,7 @@
                             // this.filterOptions.date.secondary.to = this.dateToFilterAllTransactions;
 
                             this.prevSelectedWallets = this.filterOptions.selectedWallets;
-                            this.changingDates = null;
+                            // this.changingDates = 'stop';
                         }
 
                         // console.log(new Date(this.dateFromFilterAllTransactions));
@@ -855,7 +901,7 @@
                         // this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
                         // this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
                         this.checkDisabledWallets();
-                        this.changingDates = null;
+                        // this.changingDates = 'stop';
 
                         this.highlightDatepicker.from = null;
                         this.highlightDatepicker.to = null;
