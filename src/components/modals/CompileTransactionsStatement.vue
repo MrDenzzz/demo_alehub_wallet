@@ -229,6 +229,7 @@
                                             language="en"
                                             :disabled="disableDatepicker"
                                             :highlighted="highlightDatepicker"
+                                            :marked="marked"
                                             :inline="true"/>
                             </div>
                         </div>
@@ -262,7 +263,7 @@
 </template>
 
 <script>
-    import Datepicker from 'vuejs-datepicker';
+    import Datepicker from 'zhiskar-vuejs-datepicker';
     import Spinner from '../layouts/Spinner';
     import FormattingPrice from '../layouts/FormattingPrice';
 
@@ -327,6 +328,9 @@
                     this.filterTransactions();
                 }
             },
+            marked: function (val) {
+                console.log(val, 'marked');
+            }
 
 
             // 'filterOptions.date.secondary.from': function (val) {
@@ -354,6 +358,12 @@
                     all: 0,
                     optional: 0,
                 },
+
+                marked: [
+                    // {date: 1523511222593, density: 1},
+                    // {date: 1523252022593, density: 0.25},
+                    // {date: 1522992822593, density: 0.5}
+                ],
 
                 transactionsByDay: [],
 
@@ -430,7 +440,6 @@
                 currentSent: 0,
                 currentReceived: 0,
                 currentTotal: 0,
-
             }
         },
         computed: {
@@ -834,11 +843,74 @@
 
                         // console.log(this.transactionsByDay, 'this.transactionsByDay');
 
-                        this.transactionsByDay = this.transactionsByDay.filter(function(item, pos, arr) {
-                            return arr.indexOf(item) === pos;
+                        let count = 1;
+                        // this.transactionsByDay.forEach((item, i, arr) => {
+                        //     count++;
+                        //     if (arr.indexOf(item) === i) {
+                        //         days.push({date: item, density: count});
+                        //         console.log(i, 'i');
+                        //         count = 1;
+                        //     }
+                        // });
+
+                        for (let i = 0; i < this.transactionsByDay.length; i++) {
+                            if (i === 0) {
+                                // count++;
+                            }
+                            if (i !== 0 && this.transactionsByDay[i] === this.transactionsByDay[i - 1]) {
+                                count++;
+                            } else if (i !== 0 && this.transactionsByDay[i] !== this.transactionsByDay[i - 1]) {
+                                days.push({date: this.transactionsByDay[i - 1], density: count});
+                                count = 1;
+                            }
+                            //если текущий элемент массива - последний или массив состоит всего из одного элемента
+                            if (i === this.transactionsByDay.length - 1) {
+                                days.push({date: this.transactionsByDay[i], density: count});
+                            }
+
+                        }
+
+                        console.log(days, 'days');
+
+                        // this.transactionsByDay = this.transactionsByDay.filter(function(item, pos, arr) {
+                        //     return arr.indexOf(item) === pos;
+                        // });
+
+                        let max = days[0].density, min = days[0].density;
+                        days.forEach(item => {
+                            if (item.density < min)
+                                min = item.density;
+                            if (item.density > max)
+                                max = item.density;
                         });
 
-                        console.log(this.transactionsByDay, 'this.transactionsByDay');
+                        // console.log(max, 'max');
+                        // console.log(min, 'min');
+
+                        // console.log(days, 'days');
+
+                        days.forEach(item => {
+                            console.log(max, 'max');
+                            console.log(max - (max - min) / 4, 'max - (max - min) / 4');
+                            console.log(max - (max - min) / 2, 'max - (max - min) / 2');
+                            console.log(max - 3 * (max - min) / 4, 'max - 3 * (max - min) / 4');
+                            console.log(min, 'min');
+                            if (item.density === max ) {
+                                item.density = 1;
+                            } else if (item.density < max && item.density >= max - (max - min) / 4) {
+                                item.density = 0.75;
+                            } else if (item.density < max - (max - min) / 4 && item.density >= max - (max - min) / 2) {
+                                item.density = 0.5;
+                            } else if (item.density < max - (max - min) / 2 && item.density >= max - 3 * (max - min) / 4) {
+                                item.density = 0.25;
+                            } else if (item.density < max - 3 * (max - min) / 4 && item.density >= min) {
+                                item.density = 0;
+                            }
+                        });
+
+                        this.marked = days;
+
+                        // console.log(days, 'days');
 
                         // for (let i = 0; i < this.transactionsByDay.length; i++) {
                         //     if (!days.find(item => this.transactionsByDay[i] === item)) {
@@ -905,6 +977,8 @@
 
                         this.highlightDatepicker.from = null;
                         this.highlightDatepicker.to = null;
+
+                        this.marked = [];
 
                         if (this.filterOptions.selectedWallets.length === 0) {
                             this.prevSelectedWallets = this.filterOptions.selectedWallets;
@@ -1553,17 +1627,15 @@
             box-shadow none
             background-color #fafafa
 
-            .day.selected, .day.highlighted
-                background-color #fce9b5 !important
-            .day.special
-                background-color #ffd24f !important
+            /*.day.selected, .day.highlighted*/
+            /*background-color #fce9b5 !important*/
             & :hover
                 border none !important
 
             .day-disable
                 color #ddd !important
 
-    @media(max-width: 320px)
+    @media (max-width: 320px)
         .datepicker-for-export
             .vdp-datepicker__calendar
                 width auto
@@ -1757,9 +1829,9 @@
 
     // @media(max-width: 660px)
 
-    @media(max-width: 425px)
-        .v--modal-overlay 
-            & .v--modal-box 
+    @media (max-width: 425px)
+        .v--modal-overlay
+            & .v--modal-box
                 & .body
                     & .modal-control
                         &.border-none
@@ -1797,7 +1869,7 @@
 
                 .modal-line
                     width 100%
-                    
+
                     .wrap-double-input
                         max-width 200px
 
@@ -1813,17 +1885,17 @@
             padding-bottom 18px
 
         .modal-footer
-            & button 
+            & button
                 margin-right 22px
                 margin-left 22px
 
-    @media(max-width: 375px)
+    @media (max-width: 375px)
         .modal-footer
-            & button 
+            & button
                 margin-right 5px
                 margin-left 5px
 
-    @media(max-width: 320px)
+    @media (max-width: 320px)
         .body
             .modal-control
                 .modal-line
