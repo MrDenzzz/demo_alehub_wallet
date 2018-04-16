@@ -63,11 +63,26 @@
 
                 <div class="modal-control">
                     <div class="modal-wrap">
-                        <div class="modal-line">
+                        <div class="modal-line" style="display: flex; justify-content: space-between;">
                             <p class="modal-control__title"
                                :class="{ 'disabled-title': checkDisabled }">
                                 Select from where you want to export transactions
                             </p>
+                            <label class="control control-checkbox"
+                                   :class="{ 'disabled-label__control': checkDisabled }">
+                                <input type="checkbox"
+                                       name="wallet-names"
+                                       :disabled="checkDisabled"
+                                       v-model="isAllWallets"
+                                       @change="setAllWallets"/>
+                                <div class="control-indicator control-indicator__mini"></div>
+                                <div class="wrap__input-label">
+                                    <span class="input-label"
+                                          :class="{ 'disabled-label': checkDisabled }">
+                                        select all
+                                    </span>
+                                </div>
+                            </label>
                         </div>
                         <div class="modal-control__wrap">
                             <div class="modal-control__block" v-for="wallet in filledWallets">
@@ -241,6 +256,10 @@
                 </div>
 
                 <div class="modal-footer">
+                    <button class="buttons btn-default btn-large" style="margin-right: 12px;"
+                            :disabled="checkDisabled">
+                        Reset filters
+                    </button>
                     <button class="buttons btn-yellow btn-large"
                             type="submit"
                             :class="{ 'btn-yellow__disabled': countChooseTransactions === 0 }"
@@ -330,6 +349,9 @@
             },
             marked: function (val) {
                 console.log(val, 'marked');
+            },
+            isAllWallets: function (val) {
+                console.log(val, 'valvalvalval');
             }
 
 
@@ -358,6 +380,8 @@
                     all: 0,
                     optional: 0,
                 },
+
+                isAllWallets: false,
 
                 marked: [
                     // {date: 1523511222593, density: 1},
@@ -494,6 +518,16 @@
 
         },
         methods: {
+            setAllWallets: function () {
+                let checkboxes = document.getElementsByClassName('wallet-names-checkbox');
+
+                for (let i = 0; i < checkboxes.length; i++) {
+                    if (this.isAllWallets && !checkboxes[i].checked)
+                        checkboxes[i].click();
+                    else if (!this.isAllWallets && checkboxes[i].checked)
+                        checkboxes[i].click();
+                }
+            },
 
             initModal: function () {
                 // this.makeDisableDatepicker();
@@ -895,7 +929,7 @@
                             console.log(max - (max - min) / 2, 'max - (max - min) / 2');
                             console.log(max - 3 * (max - min) / 4, 'max - 3 * (max - min) / 4');
                             console.log(min, 'min');
-                            if (item.density === max ) {
+                            if (item.density === max) {
                                 item.density = 1;
                             } else if (item.density < max && item.density >= max - (max - min) / 4) {
                                 item.density = 0.75;
@@ -1642,6 +1676,10 @@
 </style>
 
 <style lang="stylus" scoped>
+    .btn-default:disabled
+        background-color rgba(13, 23, 23, 0.08)
+        opacity 0.4 !important
+
     .disabled-label__control
         cursor default
 
@@ -1691,7 +1729,6 @@
                 font-size 10px
                 color #979797 !important
                 font-weight 700 !important
-
         .control-indicator
             position relative
             height 18px
@@ -1703,6 +1740,16 @@
                 left 6px
                 width 4px
                 height 8px
+
+        .control-indicator__mini
+            height 14px
+            width 14px
+
+            &:after
+                top 2px
+                left 4px
+                width 2px
+                height 6px
 
     .m-b-20
         margin-bottom 20px
