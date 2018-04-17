@@ -2,7 +2,7 @@
     <div class="notifications-panel" style="width: 100%;">
         <div class="action-buttons">
             <button class="buttons btn-default" @click="showCheckbox">
-                Edit
+                {{ $t('pages.notifications.edit') }}
             </button>
             <button class="buttons btn-default btn-delete" @click="removeCheckedNotif(checkedNotif)">
                 <img :src="getIcon('bin')" width="22" height="22" class="icon">

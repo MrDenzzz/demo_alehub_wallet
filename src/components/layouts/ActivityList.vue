@@ -29,7 +29,7 @@
                     </div>
                     <div class="purpose">
                         <div>
-                            Purpose transaction
+                            {{ $t('pages.summary.activityList.purpose') }}
                         </div>
                     </div>
                     <div

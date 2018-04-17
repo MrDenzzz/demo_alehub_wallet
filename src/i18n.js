@@ -28,6 +28,7 @@ const messages = {
                 enterMatchPassword: 'Passwords do not match'
             },
             notifications: {
+                edit:'Edit',
                 navbarTitle: 'Notifications feed',
                 notFound: 'No notifications found',
                 today: 'today',
@@ -39,6 +40,7 @@ const messages = {
                 panelHeadingGeneral: 'General',
                 fullName: 'Full name',
                 password: 'Password',
+                passwordLabel: 'Last updated 15 days ago',
                 language: 'Language',
                 logout: 'Log out',
                 security: 'Security',
@@ -83,6 +85,7 @@ const messages = {
                     yesterday: 'Yesterday',
                     from: 'From:',
                     to: 'To:',
+                    purpose:'Purpose transaction',
                     status: {
                         sent: 'Sent',
                         recieved: 'Recieved'
@@ -451,6 +454,7 @@ const messages = {
                 enterMatchPassword: 'Пароли не совпадают'
             },
             notifications: {
+                edit:'Выбрать',
                 navbarTitle: 'Уведомления',
                 notFound: 'Уведомления не найдены',
                 today: 'сегодня',
@@ -462,6 +466,7 @@ const messages = {
                 panelHeadingGeneral: 'Общие',
                 fullName: 'Полное имя',
                 password: 'Пароль',
+                passwordLabel: 'Пароль обновлялся 15 дней назад',
                 language: 'Язык',
                 logout: 'Выход',
                 security: 'Безопасность',
@@ -506,6 +511,7 @@ const messages = {
                     yesterday: 'Вчера',
                     from: 'От:',
                     to: 'В:',
+                    purpose:'Целевая сделка',
                     status: {
                         sent: 'Отправлено',
                         recieved: 'Получено'

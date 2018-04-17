@@ -38,7 +38,7 @@
                                             <p
                                                     class="text full-line"
                                             >
-                                                Last updated 15 days ago
+                                                {{ $t('pages.settings.passwordLabel') }}
                                             </p>
                                         </div>
                                     </div>
