@@ -69,6 +69,7 @@ const messages = {
                 searchPanel: {
                     search: 'Search Transactions...',
                     dateRange: 'Select a date range',
+                    langDate:"en",
                     buttons: {
                         download: 'Download PDF',
                         share: 'Share'
@@ -495,6 +496,7 @@ const messages = {
                 searchPanel: {
                     search: 'Поиск транзакций...',
                     dateRange: 'Выберите диапазон дат',
+                    langDate:"ru",
                     buttons: {
                         download: 'Загрузить PDF',
                         share: 'Поделиться'
