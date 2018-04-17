@@ -181,4 +181,30 @@ export default {
 
             a
                 font-family MuseoSansCyrl700
+
+    @media(max-width: 425px)
+        .login-form
+            .control
+                flex-direction column
+                align-items flex-start
+
+                label
+                    margin-left 0
+                    margin-bottom 10px
+
+                input 
+                    text-align left
+
+    @media(max-width: 320px) 
+        .login-form
+            .control
+                input
+                    font-size 12px
+                
+            .qr-code
+                p
+                    b
+                        word-break break-all
+
+
 </style>
