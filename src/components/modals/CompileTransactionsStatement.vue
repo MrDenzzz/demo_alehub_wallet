@@ -338,17 +338,54 @@
                 console.log(val, 'date to');
             },
             changingDates: function (val) {
-                if (val && this.filterOptions.date.secondary.from && this.filterOptions.date.secondary.to) {
-                    console.log('00000000000');
+                // this.countChanging++;
+
+                if (!this.dateFromPick && !this.dateToPick) {
+                    this.dateFromPick = this.makeMinDate(val).getTime();
+                    // this.filterOptions.date.secondary.from = this.makeMinDate(this.changingDates).getTime();
+                    // this.filterOptions.date.secondary.to = this.makeMaxDate(this.changingDates).getTime();
+                    this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
+                    this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
+                } else if (this.dateFromPick && !this.dateToPick) {
+                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
+                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
+                        this.dateFromPick = this.makeMinDate(val).getTime();
+                    } else {
+                        this.dateToPick = this.makeMaxDate(val).getTime();
+                    }
+                }
+
+                console.log(this.dateFromPick, 'this.dateFromPick');
+                console.log(this.dateToPick, 'this.dateToPick');
+
+                // if (this.dateFromPick && this.dateToPick) {
+                if (val && this.dateFromPick && this.dateToPick) {
                     this.setDateFilterInterval();
-                } else if (this.filterOptions.date.primary.from && this.filterOptions.date.primary.to &&
-                    !this.filterOptions.date.secondary.from && !this.filterOptions.date.secondary.to) {
-                    console.log('11111111111');
-                    this.makeInitSelectDate();
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
                 }
-                if (val && this.filterOptions.selectedWallets.length !== 0) {
-                    this.filterTransactions();
+                // if (this.filterOptions.date.primary.from && this.filterOptions.date.primary.to &&
+                //     !this.filterOptions.date.secondary.from && !this.filterOptions.date.secondary.to && this.dateFromPick && this.dateToPick) {
+                //     this.makeInitSelectDate();
+                //     // console.log('im in make init select date');
+                // }
+                // }
+
+                if (this.dateFromPick && this.dateToPick) {
+
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+
+                    // this.countChanging = 0;
                 }
+
+                // console.log(new Date(this.filterOptions.date.secondary.from), 'this.filterOptions.date.secondary.from');
+                // console.log(new Date(this.filterOptions.date.secondary.to), 'this.filterOptions.date.secondary.to');
+                // console.log(new Date(this.dateFromPick), 'this.dateFromPick');
+                // console.log(this.dateToPick, 'this.dateToPick');
+
             },
             marked: function (val) {
                 console.log(val, 'marked');
@@ -411,7 +448,11 @@
 
                 prevSelectedWallets: [],
 
+                dateFromPick: null,
+                dateToPick: null,
                 changingDates: null,
+                countChanging: 0,
+
 
                 balance: {
                     value: {
@@ -554,7 +595,7 @@
 
                 this.prevSelectedWallets = [];
 
-                this.changingDates = null;
+                // this.changingDates = null;
             },
             setAllWallets: function () {
                 let checkboxes = document.getElementsByClassName('wallet-names-checkbox');
@@ -676,6 +717,7 @@
                     return true;
                 return false;
             },
+            //записать обработку если дается таймштамп, а не дата
             makeMinDate: function (date) {
                 date.setHours(0);
                 date.setMinutes(0);
@@ -683,6 +725,7 @@
                 date.setMilliseconds(0);
                 return date;
             },
+            //записать обработку если дается таймштамп, а не дата
             makeMaxDate: function (date) {
                 date.setHours(23);
                 date.setMinutes(59);
@@ -691,10 +734,14 @@
                 return date;
             },
             makeInitSelectDate: function () {
+                // this.dateFromPick = this.makeMinDate(this.changingDates).getTime();
                 this.filterOptions.date.secondary.from = this.makeMinDate(this.changingDates).getTime();
                 this.filterOptions.date.secondary.to = this.makeMaxDate(this.changingDates).getTime();
                 this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
                 this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
+
+                console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
+                console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.to');
             },
 
             calcSerialDay: function (date) {
@@ -706,46 +753,58 @@
             },
             //добавить комплексную функцию проверок на undefined, null и пр прототипы в main.js
             setDateFilterInterval: function () {
-                let dateCurrent = this.changingDates,
-                    dateFrom = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
-                    dateTo = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
+                // let pickFrom = this.dateFromPick,
+                //     pickTo = this.dateToPick;
 
-                // areaFromDate = this.makeMinDate(new Date(this.filterOptions.date.primary.from)),
-                // areaToDate = this.makeMaxDate(new Date(this.filterOptions.date.primary.to)),
 
-                // filterFromDate = (this.filterOptions.date.secondary.from) ? this.makeMinDate(new Date(this.filterOptions.date.secondary.from)) : null,
-                // filterToDate = (this.filterOptions.date.secondary.to) ? this.makeMaxDate(new Date(this.filterOptions.date.secondary.to)) : null;
+                // console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
+                // console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.from');
+                // console.log(this.dateFromPick, 'this.filterOptions.date.secondary.from');
+                // console.log(this.dateToPick, 'this.filterOptions.date.secondary.from');
 
-                let hasInterval = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateFrom).getTime() !== 0;
+                this.filterOptions.date.secondary.from = this.dateFromPick;
+                this.filterOptions.date.secondary.to = this.dateToPick;
+                this.highlightDatepicker.from = this.dateFromPick;
+                this.highlightDatepicker.to = this.dateToPick;
 
-                let countFrom = this.calcSerialDay(dateCurrent).getTime() - this.calcSerialDay(dateFrom).getTime(),
-                    countTo = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateCurrent).getTime(),
-                    //в компьютед
-                    isLargeTo = this.calcSerialDay(dateCurrent) > this.calcSerialDay(dateTo),
-                    isLessFrom = this.calcSerialDay(dateCurrent) < this.calcSerialDay(dateFrom),
-                    inAreaFrom = countFrom > 0 && countFrom < countTo && !isLargeTo && !isLessFrom || countFrom === countTo ||
-                        this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateTo).getTime(),
-                    inAreaTo = countTo > 0 && countTo < countFrom && !isLargeTo && !isLessFrom ||
-                        this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateFrom).getTime();
+                this.dateFromPick = null;
+                this.dateToPick = null;
 
-                if (isLessFrom) {
-                    if (!hasInterval) {
-                        this.filterOptions.date.secondary.to = this.makeMaxDate(new Date(this.filterOptions.date.secondary.from)).getTime();
-                    }
-                    this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
-                } else if (isLargeTo) {
-                    if (!hasInterval) {
-                        this.filterOptions.date.secondary.from = this.makeMinDate(new Date(this.filterOptions.date.secondary.to)).getTime();
-                    }
-                    this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
-                } else if (inAreaFrom) {
-                    this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
-                } else if (inAreaTo) {
-                    this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
-                }
+                // console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
+                // console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.from');
 
-                this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
-                this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
+
+                // let dateCurrent = this.changingDates,
+                //     dateFrom = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
+                //     dateTo = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
+                //
+                // let hasInterval = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateFrom).getTime() !== 0;
+                //
+                // let countFrom = this.calcSerialDay(dateCurrent).getTime() - this.calcSerialDay(dateFrom).getTime(),
+                //     countTo = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateCurrent).getTime(),
+                //     //в компьютед
+                //     isLargeTo = this.calcSerialDay(dateCurrent) > this.calcSerialDay(dateTo),
+                //     isLessFrom = this.calcSerialDay(dateCurrent) < this.calcSerialDay(dateFrom),
+                //     inAreaFrom = countFrom > 0 && countFrom < countTo && !isLargeTo && !isLessFrom || countFrom === countTo ||
+                //         this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateTo).getTime(),
+                //     inAreaTo = countTo > 0 && countTo < countFrom && !isLargeTo && !isLessFrom ||
+                //         this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateFrom).getTime();
+
+                // if (isLessFrom) {
+                //     if (!hasInterval) {
+                //         this.filterOptions.date.secondary.to = this.makeMaxDate(new Date(this.filterOptions.date.secondary.from)).getTime();
+                //     }
+                //     this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
+                // } else if (isLargeTo) {
+                //     if (!hasInterval) {
+                //         this.filterOptions.date.secondary.from = this.makeMinDate(new Date(this.filterOptions.date.secondary.to)).getTime();
+                //     }
+                //     this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
+                // } else if (inAreaFrom) {
+                //     this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
+                // } else if (inAreaTo) {
+                //     this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
+                // }
 
                 // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
                 // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
@@ -757,13 +816,13 @@
                     this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                     this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
 
-                    this.changingDates = null;
+                    // this.changingDates = null;
                 }
 
-                console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
-                console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
-                console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
-                console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
+                // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
+                // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
+                // console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
+                // console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
 
                 this.$store.dispatch('restoreAllTransactions',
                     this.$store.state.Transactions.filteredAllTransactions
@@ -834,11 +893,11 @@
                         });
 
                         days.forEach(item => {
-                            console.log(max, 'max');
-                            console.log(max - (max - min) / 4, 'max - (max - min) / 4');
-                            console.log(max - (max - min) / 2, 'max - (max - min) / 2');
-                            console.log(max - 3 * (max - min) / 4, 'max - 3 * (max - min) / 4');
-                            console.log(min, 'min');
+                            // console.log(max, 'max');
+                            // console.log(max - (max - min) / 4, 'max - (max - min) / 4');
+                            // console.log(max - (max - min) / 2, 'max - (max - min) / 2');
+                            // console.log(max - 3 * (max - min) / 4, 'max - 3 * (max - min) / 4');
+                            // console.log(min, 'min');
                             if (item.density === max) {
                                 item.density = 1;
                             } else if (item.density < max && item.density >= max - (max - min) / 4) {
@@ -884,8 +943,8 @@
                         // this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
                         this.checkDisabledWallets();
 
-                        this.highlightDatepicker.from = null;
-                        this.highlightDatepicker.to = null;
+                        // this.highlightDatepicker.from = null;
+                        // this.highlightDatepicker.to = null;
 
                         this.marked = [];
 
@@ -935,6 +994,8 @@
                     optional: 0,
                 };
 
+                this.marked = [];
+
                 this.filterOptions = {
                     selectedWallets: [],
                     typeTransaction: 'all',
@@ -956,7 +1017,7 @@
 
                 this.prevSelectedWallets = [];
 
-                this.changingDates = null;
+                // this.changingDates = null;
 
                 this.balance = {
                     value: {
@@ -1666,7 +1727,7 @@
 
                     .input.input-from:focus,
                     .input.input-to:focus
-                            color #34343e
+                        color #34343e
 
                     .label-сurrency
                         font-family MuseoSansCyrl500
