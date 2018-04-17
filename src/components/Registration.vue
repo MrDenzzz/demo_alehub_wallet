@@ -14,9 +14,9 @@
                             </div>
 
                             <div v-if="!processingSendRequest && successSendRequest"
-                                 style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
+                                 class="wrap-completion-reg">
                                 <p>{{ $t('pages.registration.completionRegistration') }}
-                                    <span style="font-family: MuseoSansCyrl700;">
+                                    <span class="alert-completion-reg">
                                         {{email}}
                                     </span>
                                 </p>
@@ -238,6 +238,14 @@
 </style>
 
 <style lang="stylus" scoped>
+    .wrap-completion-reg
+        display flex
+        justify-content center
+        font-family MuseoSansCyrl500
+
+        .alert-completion-reg
+            font-family MuseoSansCyrl700
+
     .is-center
         display flex
         justify-content center
