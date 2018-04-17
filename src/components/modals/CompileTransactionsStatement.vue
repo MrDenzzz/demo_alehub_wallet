@@ -441,6 +441,10 @@
                 dateDayFontSize: 16,
                 normalFontSize: 12,
 
+                red: [177, 3, 3],
+                green: [75, 177, 3],
+                black: [0, 0, 0],
+
                 receivedText: 'Received',
                 sentText: 'Sent',
                 startingText: 'Starting',
@@ -1004,7 +1008,6 @@
 
             generateHeaderTransactionsStatement: function (doc, wallet, balanceStats) {
                 doc.setFontSize(this.titleFontSize);
-                // doc.text(this.currentWallet.name, 90, 10);
 
                 doc.text(wallet.name, 10, this.offset);
                 this.offset += 7.5;
@@ -1015,19 +1018,19 @@
                 //разбить эти блоки на ещё функции
 
                 doc.setFontSize(this.normalFontSize);
-                doc.setTextColor(75, 177, 3);
+                doc.setTextColor(...this.green);
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset);
                 doc.text(balanceStats.received.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
                 this.offset += 5;
 
-                doc.setTextColor(177, 3, 3);
+                doc.setTextColor(...this.red);
                 doc.text(this.sentText, this.xPositionSummaryAction, this.offset);
                 doc.text(balanceStats.sent.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
                 this.offset += 5;
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(this.startingText, this.xPositionSummaryAction, this.offset);
                 doc.text(balanceStats.starting.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
@@ -1051,19 +1054,20 @@
                     this.offset += 25;
 
                 doc.setFontSize(this.normalFontSize);
-                doc.setTextColor(75, 177, 3);
+
+                doc.setTextColor(...this.green);
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentReceived.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
                 this.offset += 5;
 
-                doc.setTextColor(177, 3, 3);
+                doc.setTextColor(...this.red);
                 doc.text(this.sentText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentSent.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
                 this.offset += 5;
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(this.totalText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
@@ -1079,10 +1083,10 @@
 
                 doc.setFontSize(this.normalFontSize);
 
-                (this.checkTypeTransaction(type)) ? doc.setTextColor(177, 3, 3) : doc.setTextColor(75, 177, 3);
+                (this.checkTypeTransaction(type)) ? doc.setTextColor(...this.red) : doc.setTextColor(...this.green);
                 doc.text(type, this.xPositionTransactionType, this.offset + 25 * j);
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(summaryString, 40, this.offset + 25 * j);
             },
 
@@ -1096,28 +1100,20 @@
                     countPage = 1,
                     balancer = 0;
 
-                let currDayBalanceStats = {
-                        received: 0,
-                        sent: 0,
-                        starting: 0,
-                        total: 0
-                    },
-                    currTransactions = [],
-                    walletAttr = {
-                        name: '',
-                        address: ''
-                    };
-
                 if (this.selectionTypeStatement === 'current') {
 
                     //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
-
-                    currDayBalanceStats.received = 0;
-                    currDayBalanceStats.sent = 0;
-                    currDayBalanceStats.starting = 0;
-                    currDayBalanceStats.total = 0;
-
-                    currTransactions = this.transactions;
+                    let currDayBalanceStats = {
+                            received: 0,
+                            sent: 0,
+                            starting: 0,
+                            total: 0
+                        },
+                        currTransactions = this.transactions,
+                        walletAttr = {
+                            name: '',
+                            address: ''
+                        };
 
                     currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
                     currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
@@ -1163,7 +1159,6 @@
 
 
                         if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
-
                             this.generateTransactionsDayStatement(doc, j, false);
                             this.generateDateTransactions(doc, date, j);
 
@@ -1171,10 +1166,8 @@
                             this.currentSent = 0;
                         }
 
-
                         this.calcBalance(i, count);
                         this.generateTransaction(doc, this.getTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
-
 
                         if (i === this.transactions.length - 1) {
                             this.calcBalance(i - 1, count);
@@ -1190,23 +1183,20 @@
 
                 if (this.selectionTypeStatement === 'all') {
 
-                    //обрабатывать на пустые массивы транзакций
-
-                    // this.allTransactions.forEach(function (item, i) {
-                    //     console.log(item.transactions[0].timestamp, 'item.transactions[0].timestamp');
-                    // });
-
-
                     for (let i = 0; i < this.constantTransactions.length; i++) {
 
-                        currDayBalanceStats.received = 0;
-                        currDayBalanceStats.sent = 0;
-                        currDayBalanceStats.starting = 0;
-                        currDayBalanceStats.total = 0;
-
-                        currTransactions = this.constantTransactions[i].transactions;
-
                         //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                        let currDayBalanceStats = {
+                                received: 0,
+                                sent: 0,
+                                starting: 0,
+                                total: 0
+                            },
+                            currTransactions = this.constantTransactions[i].transactions,
+                            walletAttr = {
+                                name: '',
+                                address: ''
+                            };
 
                         currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
                         currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
@@ -1232,7 +1222,6 @@
                         }).name;
 
 
-                        //передавать объект, а не несколько символов
                         this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
                         this.generateDateTransactions(doc, Moment(currTransactions[0].timestamp).format("DD.MM.YYYY"), 0);
 
@@ -1272,6 +1261,7 @@
                             }
 
                             this.calcBalanceAll(currTransactions[k].balanceInfo, count);
+
                             this.generateTransaction(doc, this.getTypeTransactionAll(currTransactions[k].balanceInfo),
                                 count, date, time, walletAddress, walletDestination, factor);
 
@@ -1287,7 +1277,6 @@
 
 
                             if (k === currTransactions.length - 1) {
-                                this.calcBalanceAll(currTransactions[k].balanceInfo, count);
                                 this.generateTransactionsDayStatement(doc, factor, true);
 
                                 this.currentReceived = 0;
@@ -1315,14 +1304,18 @@
 
                     for (let i = 0; i < this.filteredAllTransactions.transactions.length; i++) {
 
-                        currDayBalanceStats.received = 0;
-                        currDayBalanceStats.sent = 0;
-                        currDayBalanceStats.starting = 0;
-                        currDayBalanceStats.total = 0;
-
-                        currTransactions = this.filteredAllTransactions.transactions[i].transactions;
-
                         //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                        let currDayBalanceStats = {
+                                received: 0,
+                                sent: 0,
+                                starting: 0,
+                                total: 0
+                            },
+                            currTransactions = this.filteredAllTransactions.transactions[i].transactions,
+                            walletAttr = {
+                                name: '',
+                                address: ''
+                            };
 
                         currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
                         currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
@@ -1403,7 +1396,6 @@
 
 
                             if (k === this.filteredAllTransactions.transactions[i].transactions.length - 1) {
-                                this.calcBalanceAll(this.filteredAllTransactions.transactions[i].transactions[k].balanceInfo, count);
                                 this.generateTransactionsDayStatement(doc, factor, true);
 
                                 this.currentReceived = 0;
