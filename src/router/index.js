@@ -27,8 +27,11 @@ Vue.use(Router);
 Vue.use(VModal);
 
 const ifNotAuthenticated = (to, from, next) => {
+    // console.log(to, 'to');
+    // console.log(from, 'from');
     let token = localStorage.getItem(sha256('user-token'));
     if (token === null || token === 'undefined' || token === undefined) {
+        console.log('mistake');
         localStorage.removeItem(sha256('user-token'));
         next();
         return;
@@ -37,6 +40,7 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifNotFirstStepAuthenticated = (to, from, next) => {
+    console.log('mistake 1');
     let token = localStorage.getItem(sha256('user-token'));
     if (from.name !== 'Login' && (token === null || token === 'undefined' || token === undefined)) {
         localStorage.removeItem(sha256('user-token'));
@@ -50,6 +54,7 @@ const ifNotFirstStepAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
+    console.log('mistake 2');
     //заплатка. переписать
     setTimeout(() => {
         if (store.state.Wallets.wallets.length === 0) {

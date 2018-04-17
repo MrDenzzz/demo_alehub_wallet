@@ -232,6 +232,18 @@ body {
 
 .dark {
   background: #4a4e65 !important;
+
+  .datepicker-for-export {
+    .vdp-datepicker__calendar {
+      .day {
+        &.highlighted,
+        &.selected {
+          background-color: #28388e !important;
+        }
+      }
+    }
+  }
+
   .logout-link {
     color: #b53939;
     background-color: #282730;
@@ -291,20 +303,28 @@ body {
     }
   }
   .vdp-datepicker__calendar {
-    background-color: #282730;
+    background-color: #282730 !important;
+    .day-header {
+      color: #aaaec1 !important;
+    }
     header {
       .prev {
         &:after {
-          border-right: 10px solid #dedfdf;
+          border-right: 10px solid #dedfdf !important;
         }
       }
       .next {
         &:after {
-          border-left: 10px solid #dedfdf;
+          border-left: 10px solid #dedfdf !important;
         }
       }
       .up {
-        color: #dedfdf;
+        color: #dedfdf !important;
+      }
+    }
+    .day {
+      &:hover {
+        background-color: #414454 !important;
       }
     }
   }
@@ -312,7 +332,7 @@ body {
     color: #aaaec1 !important;
   }
   .cell.day {
-    color: #dedfdf;
+    color: #dedfdf !important;
   }
   .title-opt-span,
   .result-opt-span {
@@ -323,24 +343,24 @@ body {
   }
   .switch-control {
     .slider {
-      background-color: #aaaec1;
+      background-color: #aaaec1 !important;
       &:before {
-        background-color: #282730;
+        background-color: #282730 !important;
       }
     }
     input {
       &:checked {
         .slider {
-          background-color: #494d64;
+          background-color: #494d64 !important;
         }
       }
     }
   }
   .filter-panel {
-    background: #27272f;
+    background: #27272f !important;
     .two-input {
       input {
-        background-color: #3c3e4a;
+        background-color: #3c3e4a !important;
         border: solid 0.5px #484848;
         color: #dedfdf;
         &::-webkit-input-placeholder {
@@ -676,6 +696,38 @@ body {
       background-color: #27272f;
       .body {
         .modal-control {
+          .input-label {
+            color: #959595 !important;
+          }
+          .modal-control__title {
+            color: #dedfdf !important;
+          }
+          .modal-line {
+            .wrap-double-input__disabled {
+              background-color: #414454 !important;
+            }
+            .wrap-double-input {
+              border: solid 1px #3c3e4b !important;
+
+              .input {
+                &.input-from,
+                &.input-to {
+                  &::-webkit-input-placeholder {
+                    color: #dedfdf !important;
+                  }
+                  &::-moz-placeholder {
+                    color: #dedfdf !important;
+                  }
+                  &:-ms-input-placeholder {
+                    color: #dedfdf !important;
+                  }
+                  &:-moz-placeholder {
+                    color: #dedfdf !important;
+                  }
+                }
+              }
+            }
+          }
           .badge-control {
             .badge {
               background-color: rgba(13, 23, 23, 0.7) !important;

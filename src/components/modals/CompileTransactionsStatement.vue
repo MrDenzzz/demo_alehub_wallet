@@ -338,14 +338,8 @@
                 console.log(val, 'date to');
             },
             changingDates: function (val) {
-                // this.countChanging++;
-
                 if (!this.dateFromPick && !this.dateToPick) {
                     this.dateFromPick = this.makeMinDate(val).getTime();
-                    // this.filterOptions.date.secondary.from = this.makeMinDate(this.changingDates).getTime();
-                    // this.filterOptions.date.secondary.to = this.makeMaxDate(this.changingDates).getTime();
-                    this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
-                    this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
                 } else if (this.dateFromPick && !this.dateToPick) {
                     if (this.makeMinDate(val).getTime() < this.dateFromPick) {
                         this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
@@ -355,60 +349,26 @@
                     }
                 }
 
-                console.log(this.dateFromPick, 'this.dateFromPick');
-                console.log(this.dateToPick, 'this.dateToPick');
-
-                // if (this.dateFromPick && this.dateToPick) {
                 if (val && this.dateFromPick && this.dateToPick) {
                     this.setDateFilterInterval();
                     if (val && this.filterOptions.selectedWallets.length !== 0) {
                         this.filterTransactions();
                     }
                 }
-                // if (this.filterOptions.date.primary.from && this.filterOptions.date.primary.to &&
-                //     !this.filterOptions.date.secondary.from && !this.filterOptions.date.secondary.to && this.dateFromPick && this.dateToPick) {
-                //     this.makeInitSelectDate();
-                //     // console.log('im in make init select date');
-                // }
-                // }
 
                 if (this.dateFromPick && this.dateToPick) {
 
                     if (val && this.filterOptions.selectedWallets.length !== 0) {
                         this.filterTransactions();
                     }
-
-                    // this.countChanging = 0;
                 }
-
-                // console.log(new Date(this.filterOptions.date.secondary.from), 'this.filterOptions.date.secondary.from');
-                // console.log(new Date(this.filterOptions.date.secondary.to), 'this.filterOptions.date.secondary.to');
-                // console.log(new Date(this.dateFromPick), 'this.dateFromPick');
-                // console.log(this.dateToPick, 'this.dateToPick');
-
             },
-            marked: function (val) {
-                console.log(val, 'marked');
-            },
-            isAllWallets: function (val) {
-                console.log(val, 'valvalvalval');
-            }
-
-
-            // 'filterOptions.date.secondary.from': function (val) {
-            //     console.log(new Date(val), 'check secondary.from');
-            // },
-            // 'filterOptions.date.secondary.to': function (val) {
-            //     console.log(new Date(val), 'check secondary.to');
-            // }
         },
         data() {
             return {
                 dateFromDatepicker: '',
                 dateToDatepicker: '',
                 dataProcessing: false,
-
-                // haveCurrentTransactions: false,
 
                 selectionTypeStatement: 'current',
                 selectionTypeTransactions: 'all',
@@ -451,8 +411,6 @@
                 dateFromPick: null,
                 dateToPick: null,
                 changingDates: null,
-                countChanging: 0,
-
 
                 balance: {
                     value: {
@@ -464,8 +422,6 @@
                         to: ''
                     }
                 },
-
-                // constDurationDay: 86400000,
 
                 //мб в одно свойство?
                 highlightDatepicker: {
@@ -484,6 +440,10 @@
                 titleFontSize: 16,
                 dateDayFontSize: 16,
                 normalFontSize: 12,
+
+                red: [177, 3, 3],
+                green: [75, 177, 3],
+                black: [0, 0, 0],
 
                 receivedText: 'Received',
                 sentText: 'Sent',
@@ -524,8 +484,6 @@
                 'disabledDate',
 
                 'filteredAllTransactions',
-
-                // 'clearAllTransactions',
 
                 'constantTransactions',
                 'constantTransactionsCount',
@@ -594,8 +552,6 @@
                 };
 
                 this.prevSelectedWallets = [];
-
-                // this.changingDates = null;
             },
             setAllWallets: function () {
                 let checkboxes = document.getElementsByClassName('wallet-names-checkbox');
@@ -753,76 +709,18 @@
             },
             //добавить комплексную функцию проверок на undefined, null и пр прототипы в main.js
             setDateFilterInterval: function () {
-                // let pickFrom = this.dateFromPick,
-                //     pickTo = this.dateToPick;
-
-
-                // console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
-                // console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.from');
-                // console.log(this.dateFromPick, 'this.filterOptions.date.secondary.from');
-                // console.log(this.dateToPick, 'this.filterOptions.date.secondary.from');
-
                 this.filterOptions.date.secondary.from = this.dateFromPick;
                 this.filterOptions.date.secondary.to = this.dateToPick;
                 this.highlightDatepicker.from = this.dateFromPick;
                 this.highlightDatepicker.to = this.dateToPick;
-
                 this.dateFromPick = null;
                 this.dateToPick = null;
-
-                // console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
-                // console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.from');
-
-
-                // let dateCurrent = this.changingDates,
-                //     dateFrom = this.makeMinDate(new Date(this.filterOptions.date.secondary.from)),
-                //     dateTo = this.makeMaxDate(new Date(this.filterOptions.date.secondary.to));
-                //
-                // let hasInterval = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateFrom).getTime() !== 0;
-                //
-                // let countFrom = this.calcSerialDay(dateCurrent).getTime() - this.calcSerialDay(dateFrom).getTime(),
-                //     countTo = this.calcSerialDay(dateTo).getTime() - this.calcSerialDay(dateCurrent).getTime(),
-                //     //в компьютед
-                //     isLargeTo = this.calcSerialDay(dateCurrent) > this.calcSerialDay(dateTo),
-                //     isLessFrom = this.calcSerialDay(dateCurrent) < this.calcSerialDay(dateFrom),
-                //     inAreaFrom = countFrom > 0 && countFrom < countTo && !isLargeTo && !isLessFrom || countFrom === countTo ||
-                //         this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateTo).getTime(),
-                //     inAreaTo = countTo > 0 && countTo < countFrom && !isLargeTo && !isLessFrom ||
-                //         this.calcSerialDay(dateCurrent).getTime() === this.calcSerialDay(dateFrom).getTime();
-
-                // if (isLessFrom) {
-                //     if (!hasInterval) {
-                //         this.filterOptions.date.secondary.to = this.makeMaxDate(new Date(this.filterOptions.date.secondary.from)).getTime();
-                //     }
-                //     this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
-                // } else if (isLargeTo) {
-                //     if (!hasInterval) {
-                //         this.filterOptions.date.secondary.from = this.makeMinDate(new Date(this.filterOptions.date.secondary.to)).getTime();
-                //     }
-                //     this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
-                // } else if (inAreaFrom) {
-                //     this.filterOptions.date.secondary.from = this.makeMinDate(dateCurrent).getTime();
-                // } else if (inAreaTo) {
-                //     this.filterOptions.date.secondary.to = this.makeMaxDate(dateCurrent).getTime();
-                // }
-
-                // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
-                // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
-                // console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
-                // console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
             },
             filterTransactions: function () {
                 if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
                     this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                     this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
-
-                    // this.changingDates = null;
                 }
-
-                // console.log(new Date(this.filterOptions.date.primary.from), 'primary.from');
-                // console.log(new Date(this.filterOptions.date.primary.to), 'primary.to');
-                // console.log(new Date(this.filterOptions.date.secondary.from), 'secondary.from');
-                // console.log(new Date(this.filterOptions.date.secondary.to), 'secondary.to');
 
                 this.$store.dispatch('restoreAllTransactions',
                     this.$store.state.Transactions.filteredAllTransactions
@@ -893,11 +791,6 @@
                         });
 
                         days.forEach(item => {
-                            // console.log(max, 'max');
-                            // console.log(max - (max - min) / 4, 'max - (max - min) / 4');
-                            // console.log(max - (max - min) / 2, 'max - (max - min) / 2');
-                            // console.log(max - 3 * (max - min) / 4, 'max - 3 * (max - min) / 4');
-                            // console.log(min, 'min');
                             if (item.density === max) {
                                 item.density = 1;
                             } else if (item.density < max && item.density >= max - (max - min) / 4) {
@@ -919,7 +812,7 @@
                             this.filterOptions.date.primary.from = this.dateIntervalFromFilterAllTransactions;
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
 
-                            if (!this.highlightDatepicker.from && !this.highlightDatepicker.to) {
+                            if (!this.filterOptions.date.secondary.from && !this.filterOptions.date.secondary.to) {
                                 this.highlightDatepicker.from = this.dateIntervalFromFilterAllTransactions;
                                 this.highlightDatepicker.to = this.dateIntervalToFilterAllTransactions;
                             }
@@ -934,17 +827,10 @@
                         this.countChooseTransactions = 0;
                         this.countTransactions.optional = 'all';
 
-                        // this.makeDisableDatepicker();
-
                         this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                         this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
 
-                        // this.filterOptions.date.secondary.from = this.dateFromFilterConstTransactions;
-                        // this.filterOptions.date.secondary.to = this.dateToFilterConstTransactions;
                         this.checkDisabledWallets();
-
-                        // this.highlightDatepicker.from = null;
-                        // this.highlightDatepicker.to = null;
 
                         this.marked = [];
 
@@ -1017,8 +903,6 @@
 
                 this.prevSelectedWallets = [];
 
-                // this.changingDates = null;
-
                 this.balance = {
                     value: {
                         from: '',
@@ -1087,51 +971,6 @@
                 }
             },
 
-            // setStateDatepicker: function () {
-            //     if (this.selectionTypeStatement !== 'optional') {
-            //         this.disableDatepicker.from = new Date(0);
-            //         this.disableDatepicker.to = new Date(2147483647000);
-            //
-            //         let prevs = document.getElementsByClassName('prev');
-            //         for (let i = 0; i < prevs.length; i++) {
-            //             if (!prevs[i].classList.contains('disabled')) {
-            //                 prevs[i].classList.add('disabled');
-            //             }
-            //         }
-            //
-            //         let ups = document.getElementsByClassName('up');
-            //         for (let i = 0; i < ups.length; i++) {
-            //             if (!ups[i].classList.contains('disabled')) {
-            //                 ups[i].classList.add('disabled');
-            //             }
-            //         }
-            //
-            //         let dayHeaders = document.getElementsByClassName('day-header');
-            //         for (let i = 0; i < dayHeaders.length; i++) {
-            //             dayHeaders[i].classList.add('day-disable');
-            //         }
-            //     }
-            // },
-            // setBalanceValues: function () {
-            //     // this.balanceFilter.from = this.currentChooseTransactions.reduce((prev, curr) => {
-            //     //     return Math.min(prev.count, curr.count);
-            //     // });
-            //     // this.balanceFilter.to = this.currentChooseTransactions.reduce((prev, curr) => {
-            //     //     return Math.max(prev.count, curr.count);
-            //     // });
-            //
-            //     let min = this.currentChooseTransactions[0].count,
-            //         max = this.currentChooseTransactions[0].count;
-            //     this.currentChooseTransactions.forEach(item => {
-            //         if (item.count < min)
-            //             min = item.count;
-            //         if (item.count > max)
-            //             max = item.count;
-            //     });
-            //     // this.balanceFilter.from = min;
-            //     // this.balanceFilter.to = max;
-            // },
-
             //в computed
             checkTypeTransaction: function (type) {
                 if (type === 'SEND')
@@ -1167,39 +1006,38 @@
                     this.currentReceived += count;
             },
 
-            generateHeaderTransactionsStatement: function (doc, name) {
+            generateHeaderTransactionsStatement: function (doc, wallet, balanceStats) {
                 doc.setFontSize(this.titleFontSize);
-                // doc.text(this.currentWallet.name, 90, 10);
 
-                //написать рассчёт положения начала названия по оси Х в зависимости от длины названия кошелька
-                doc.text(name, 10, this.offset);
-
+                doc.text(wallet.name, 10, this.offset);
+                this.offset += 7.5;
+                doc.text(wallet.address, 10, this.offset);
+                this.offset += 10;
                 //add date range
 
                 //разбить эти блоки на ещё функции
 
                 doc.setFontSize(this.normalFontSize);
-                doc.setTextColor(75, 177, 3);
-                this.offset += 10;
+                doc.setTextColor(...this.green);
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentReceivedBalance.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.received.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
-
-                doc.setTextColor(177, 3, 3);
                 this.offset += 5;
+
+                doc.setTextColor(...this.red);
                 doc.text(this.sentText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentSentBalance.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.sent.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
-
-                doc.setTextColor(0, 0, 0);
                 this.offset += 5;
+
+                doc.setTextColor(...this.black);
                 doc.text(this.startingText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentBalanceBeginPeriod.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.starting.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
-
                 this.offset += 5;
+
                 doc.text(this.totalText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentBalanceEndPeriod.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.total.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
 
                 this.offset += 15;
@@ -1216,19 +1054,20 @@
                     this.offset += 25;
 
                 doc.setFontSize(this.normalFontSize);
-                doc.setTextColor(75, 177, 3);
+
+                doc.setTextColor(...this.green);
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentReceived.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
                 this.offset += 5;
 
-                doc.setTextColor(177, 3, 3);
+                doc.setTextColor(...this.red);
                 doc.text(this.sentText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentSent.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
                 this.offset += 5;
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(this.totalText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
@@ -1244,10 +1083,10 @@
 
                 doc.setFontSize(this.normalFontSize);
 
-                (this.checkTypeTransaction(type)) ? doc.setTextColor(177, 3, 3) : doc.setTextColor(75, 177, 3);
+                (this.checkTypeTransaction(type)) ? doc.setTextColor(...this.red) : doc.setTextColor(...this.green);
                 doc.text(type, this.xPositionTransactionType, this.offset + 25 * j);
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(summaryString, 40, this.offset + 25 * j);
             },
 
@@ -1263,10 +1102,41 @@
 
                 if (this.selectionTypeStatement === 'current') {
 
-                    console.log(this.transactions, 'this.transactions');
-                    console.log(this.transactions.length, 'this.transactions.length');
+                    //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                    let currDayBalanceStats = {
+                            received: 0,
+                            sent: 0,
+                            starting: 0,
+                            total: 0
+                        },
+                        currTransactions = this.transactions,
+                        walletAttr = {
+                            name: '',
+                            address: ''
+                        };
 
-                    this.generateHeaderTransactionsStatement(doc, this.currentWallet.name);
+                    currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
+                    currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
+
+                    currTransactions.forEach((item, i, arr) => {
+                        if (item.balanceInfo.after - item.balanceInfo.before > 0)
+                            currDayBalanceStats.received += item.count;
+
+                        if (item.balanceInfo.after - item.balanceInfo.before < 0)
+                            currDayBalanceStats.sent += item.count;
+
+                        if (i !== 0 && item.timestamp < arr[i - 1].timestamp)
+                            currDayBalanceStats.starting = item.balanceInfo.before;
+
+                        if (i !== 0 && item.timestamp > arr[i - 1].timestamp)
+                            currDayBalanceStats.total = item.balanceInfo.after;
+
+                    });
+
+                    walletAttr.address = this.currentWallet.address;
+                    walletAttr.name = this.currentWallet.name;
+
+                    this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
                     this.generateDateTransactions(doc, Moment(this.transactions[0].timestamp).format("DD.MM.YYYY"), 0);
 
                     for (let i = 0, j = 0; i < this.transactions.length; i++, j = i - balancer) {
@@ -1283,14 +1153,12 @@
                             countPage++;
                             doc.setPage(countPage);
                             balancer = i;
-                            // j = i - balancer;
                             j = 0;
                             this.offset = 25;
                         }
 
 
                         if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
-
                             this.generateTransactionsDayStatement(doc, j, false);
                             this.generateDateTransactions(doc, date, j);
 
@@ -1298,10 +1166,8 @@
                             this.currentSent = 0;
                         }
 
-
                         this.calcBalance(i, count);
                         this.generateTransaction(doc, this.getTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
-
 
                         if (i === this.transactions.length - 1) {
                             this.calcBalance(i - 1, count);
@@ -1309,30 +1175,63 @@
                         }
                     }
 
+                    this.offset = 10;
+
                     doc.save(pdfName + '.pdf');
                     return true;
                 }
 
                 if (this.selectionTypeStatement === 'all') {
 
-                    //обрабатывать на пустые массивы транзакций
-
-                    // this.allTransactions.forEach(function (item, i) {
-                    //     console.log(item.transactions[0].timestamp, 'item.transactions[0].timestamp');
-                    // });
-
                     for (let i = 0; i < this.constantTransactions.length; i++) {
 
-                        this.generateHeaderTransactionsStatement(doc, this.constantTransactions[i].address);
-                        this.generateDateTransactions(doc, Moment(this.constantTransactions[i].transactions[0].timestamp).format("DD.MM.YYYY"), 0);
+                        //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                        let currDayBalanceStats = {
+                                received: 0,
+                                sent: 0,
+                                starting: 0,
+                                total: 0
+                            },
+                            currTransactions = this.constantTransactions[i].transactions,
+                            walletAttr = {
+                                name: '',
+                                address: ''
+                            };
 
-                        for (let k = 0, factor = 0; k < this.constantTransactions[i].transactions.length; k++, factor = k - balancer) {
+                        currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
+                        currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
 
-                            let count = this.constantTransactions[i].transactions[k].count,
-                                time = Moment(this.constantTransactions[i].transactions[k].timestamp).format("HH:mm:ss"),
-                                date = Moment(this.constantTransactions[i].transactions[k].timestamp).format("DD.MM.YYYY"),
-                                walletAddress = this.constantTransactions[i].transactions[k].walletAddress,
-                                walletDestination = this.constantTransactions[i].transactions[k].walletDestination;
+                        currTransactions.forEach((item, i, arr) => {
+                            if (item.balanceInfo.after - item.balanceInfo.before > 0)
+                                currDayBalanceStats.received += item.count;
+
+                            if (item.balanceInfo.after - item.balanceInfo.before < 0)
+                                currDayBalanceStats.sent += item.count;
+
+                            if (i !== 0 && item.timestamp < arr[i - 1].timestamp)
+                                currDayBalanceStats.starting = item.balanceInfo.before;
+
+                            if (i !== 0 && item.timestamp > arr[i - 1].timestamp)
+                                currDayBalanceStats.total = item.balanceInfo.after;
+
+                        });
+
+                        walletAttr.address = this.constantTransactions[i].address;
+                        walletAttr.name = this.wallets.find(item => {
+                            return item.address === walletAttr.address;
+                        }).name;
+
+
+                        this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
+                        this.generateDateTransactions(doc, Moment(currTransactions[0].timestamp).format("DD.MM.YYYY"), 0);
+
+                        for (let k = 0, factor = 0; k < currTransactions.length; k++, factor = k - balancer) {
+
+                            let count = currTransactions[k].count,
+                                time = Moment(currTransactions[k].timestamp).format("HH:mm:ss"),
+                                date = Moment(currTransactions[k].timestamp).format("DD.MM.YYYY"),
+                                walletAddress = currTransactions[k].walletAddress,
+                                walletDestination = currTransactions[k].walletDestination;
 
 
                             if (this.offset + 25 * factor > this.heightDoc - 25) {
@@ -1344,7 +1243,7 @@
                                 this.offset = 10;
                             }
 
-                            if (k !== 0 && date !== Moment(this.constantTransactions[i].transactions[k - 1].timestamp).format("DD.MM.YYYY")) {
+                            if (k !== 0 && date !== Moment(currTransactions[k - 1].timestamp).format("DD.MM.YYYY")) {
                                 this.generateTransactionsDayStatement(doc, factor, false);
                                 this.generateDateTransactions(doc, date, factor);
 
@@ -1361,8 +1260,9 @@
                                 this.offset = 10;
                             }
 
-                            this.calcBalanceAll(this.constantTransactions[i].transactions[k].balanceInfo, count);
-                            this.generateTransaction(doc, this.getTypeTransactionAll(this.constantTransactions[i].transactions[k].balanceInfo),
+                            this.calcBalanceAll(currTransactions[k].balanceInfo, count);
+
+                            this.generateTransaction(doc, this.getTypeTransactionAll(currTransactions[k].balanceInfo),
                                 count, date, time, walletAddress, walletDestination, factor);
 
 
@@ -1376,15 +1276,14 @@
                             }
 
 
-                            if (k === this.constantTransactions[i].transactions.length - 1) {
-                                this.calcBalanceAll(this.constantTransactions[i].transactions[k].balanceInfo, count);
+                            if (k === currTransactions.length - 1) {
                                 this.generateTransactionsDayStatement(doc, factor, true);
 
                                 this.currentReceived = 0;
                                 this.currentSent = 0;
                             }
 
-                            if (k === this.constantTransactions[i].transactions.length - 1 && i !== this.constantTransactions.length - 1) {
+                            if (k === currTransactions.length - 1 && i !== this.constantTransactions.length - 1) {
                                 doc.addPage();
                                 countPage++;
                                 doc.setPage(countPage);
@@ -1393,11 +1292,9 @@
                                 this.offset = 10;
                             }
                         }
-
-                        if (i === this.constantTransactions.length - 1) {
-
-                        }
                     }
+
+                    this.offset = 10;
 
                     doc.save(pdfName + '.pdf');
                     return true;
@@ -1405,13 +1302,45 @@
 
                 if (this.selectionTypeStatement === 'optional') {
 
-                    console.log(this.filteredAllTransactions.transactions, 'this.filteredAllTransactions.transactions');
-
                     for (let i = 0; i < this.filteredAllTransactions.transactions.length; i++) {
 
-                        // console.log(this.filteredAllTransactions.transactions[i].transactions[0].timestamp, 'this.filteredAllTransactions.transactions[i].transactions[0].timestamp');
+                        //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                        let currDayBalanceStats = {
+                                received: 0,
+                                sent: 0,
+                                starting: 0,
+                                total: 0
+                            },
+                            currTransactions = this.filteredAllTransactions.transactions[i].transactions,
+                            walletAttr = {
+                                name: '',
+                                address: ''
+                            };
 
-                        this.generateHeaderTransactionsStatement(doc, this.filteredAllTransactions.transactions[i].address);
+                        currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
+                        currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
+
+                        currTransactions.forEach((item, i, arr) => {
+                            if (item.balanceInfo.after - item.balanceInfo.before > 0)
+                                currDayBalanceStats.received += item.count;
+
+                            if (item.balanceInfo.after - item.balanceInfo.before < 0)
+                                currDayBalanceStats.sent += item.count;
+
+                            if (i !== 0 && item.timestamp < arr[i - 1].timestamp)
+                                currDayBalanceStats.starting = item.balanceInfo.before;
+
+                            if (i !== 0 && item.timestamp > arr[i - 1].timestamp)
+                                currDayBalanceStats.total = item.balanceInfo.after;
+
+                        });
+
+                        walletAttr.address = this.filteredAllTransactions.transactions[i].address;
+                        walletAttr.name = this.wallets.find(item => {
+                            return item.address === walletAttr.address;
+                        }).name;
+
+                        this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
                         this.generateDateTransactions(doc, Moment(this.filteredAllTransactions.transactions[i].transactions[0].timestamp).format("DD.MM.YYYY"), 0);
 
                         for (let k = 0, factor = 0; k < this.filteredAllTransactions.transactions[i].transactions.length; k++, factor = k - balancer) {
@@ -1467,7 +1396,6 @@
 
 
                             if (k === this.filteredAllTransactions.transactions[i].transactions.length - 1) {
-                                this.calcBalanceAll(this.filteredAllTransactions.transactions[i].transactions[k].balanceInfo, count);
                                 this.generateTransactionsDayStatement(doc, factor, true);
 
                                 this.currentReceived = 0;
@@ -1483,11 +1411,9 @@
                                 this.offset = 10;
                             }
                         }
-
-                        if (i === this.filteredAllTransactions.transactions.length - 1) {
-
-                        }
                     }
+
+                    this.offset = 10;
 
                     doc.save(pdfName + '.pdf');
                     return true;
@@ -1497,64 +1423,22 @@
             downloadPDF: function () {
                 if (this.selectionTypeStatement === 'current') {
                     this.makePDF();
-                    this.closeModal('download-pdf');
-                }
-
-                if (this.selectionTypeStatement === 'all') {
-                    // if (получены не все транзакции в списке кошельков)
-
+                    // this.closeModal('download-pdf');
+                } else if (this.selectionTypeStatement === 'all') {
                     this.dataProcessing = true;
-
-                    // let walletsAddressList = this.wallets.map(function (wallet) {
-                    //     return wallet.address;
-                    // });
-
-                    // this.$store.dispatch('allTransactionsRequest', {
-                    //     addresses: walletsAddressList
-                    // }).then(() => {
                     this.makePDF();
                     this.dataProcessing = false;
-                    this.closeModal('download-pdf');
-                    // }).catch(() => {
-                    //     this.$toasted.show('An error occurred while loading transactions statement', {
-                    //         duration: 10000,
-                    //         type: 'error',
-                    //     });
-                    // });
-
-                    //после тестирования перенести в then() =>
-                    // setTimeout(() => {
-                    //     if (this.allTransactionsStatus === 'success') {
-                    //         this.makePDF();
-                    //         this.closeModal('download-pdf');
-                    //     }
-                    // }, 150);
-                }
-
-                if (this.selectionTypeStatement === 'optional') {
+                } else if (this.selectionTypeStatement === 'optional') {
                     this.dataProcessing = true;
-
                     this.makePDF();
-
                     this.dataProcessing = false;
+                    // this.closeModal('download-pdf');
                 }
             }
         },
         created() {
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
-        },
-        mounted() {
-
-            // this.makeDisableDatepicker();
-
-            // this.$store.dispatch('copyAllTransactions',
-            //     this.allTransactions
-            // ).then(() => {
-            //
-            // }).catch(() => {
-            //
-            // });
         }
     }
 </script>
