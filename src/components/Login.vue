@@ -1,51 +1,44 @@
 <template>
     <div class="login">
-        <Navbar
+        <navbar
                 :title="'ALE'"
                 :isNavigate="false"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
-
                 <div class="container">
                     <div class="row">
-
                         <div class="col-12">
                             <div class="login-form" v-if="authStep !== 1">
                                 <form @submit.prevent="login">
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
-                                        <input
-                                                v-validate="'required|email'"
-                                                class="d-block"
-                                                :class="{error: isErrorEmail}"
-                                                @input="resetError('login')"
-                                                type="text"
-                                                placeholder="e-mail"
-                                                id="email"
-                                                v-model="email"
-                                                required
-                                                autofocus
-                                        >
+                                        <input v-validate="'required|email'"
+                                               class="d-block"
+                                               :class="{error: isErrorEmail}"
+                                               @input="resetError('login')"
+                                               type="text"
+                                               placeholder="e-mail"
+                                               id="email"
+                                               v-model="email"
+                                               required
+                                               autofocus>
                                     </div>
 
                                     <div class="control" @click="focusInput('password')">
                                         <label for="password">{{ $t('pages.login.password') }}</label>
-                                        <input
-                                                class="d-block"
-                                                :class="{error: isErrorPassword}"
-                                                @input="resetError('password')"
-                                                type="password"
-                                                placeholder="password"
-                                                id="password"
-                                                v-model="password"
-                                                required>
+                                        <input class="d-block"
+                                               :class="{error: isErrorPassword}"
+                                               @input="resetError('password')"
+                                               type="password"
+                                               placeholder="password"
+                                               id="password"
+                                               v-model="password"
+                                               required>
                                     </div>
 
-                                    <button
-                                            type="submit"
+                                    <button type="submit"
                                             class="btn btn-black btn-block nomargin"
                                             @click="isLoadingCheck">
                                         {{ $t('pages.login.login') }}
@@ -110,7 +103,6 @@
                 'userTwoAuth',
                 'userStatus',
                 'userHaveWallets',
-                // 'userHaveTransactions',
                 'isLoaderUserAuth',
                 'isErrorLogin',
                 'wallets',
