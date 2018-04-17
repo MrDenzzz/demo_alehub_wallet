@@ -38,6 +38,12 @@ const state = {
     },
 
     searchText: '',
+
+    dateIntervalFromFilterAllTransactions: 0,
+    dateIntervalToFilterAllTransactions: 0,
+
+    // isDisableType: false,
+    // isDisableBalance: false
 };
 
 const actions = {
@@ -313,6 +319,10 @@ const actions = {
     },
 };
 
+// function kek () {
+//
+// }
+
 const mutations = {
     REQUEST_ALL_TRANSACTIONS: (state) => {
         state.allTransactionsStatus = 'loading';
@@ -332,12 +342,31 @@ const mutations = {
     RESTORE_ALL_TRANSACTIONS: (state, arr) => {
         state.allTransactions = JSON.parse(JSON.stringify(arr));
     },
+    SUCCESS_BALANCE_FILTER_ALL_TRANSACTIONS: (state, balance) => {
+
+    },
+    ERROR_BALANCE_FILTER_ALL_TRANSACTIONS: (state) => {
+
+    },
+    SUCCESS_DATE_FILTER_ALL_TRANSACTIONS: (state, date) => {
+
+    },
+    ERROR_DATE_FILTER_ALL_TRANSACTIONS: (state) => {
+
+    },
     SUCCESS_FILTER_ALL_TRANSACTIONS: (state, options) => {
+
+        //раскидать эту мутацию на несколько
+
         //сделать тоже самое для options.balance.to
+
+        let filterDateFrom = null,
+            filterDateTo = null;
 
         if (!options.balance.from)
             options.balance.from = 0;
 
+        //убрать обработку длины массива выбранных воллетов, тк делаю это в экшене
         if (options.selectedWallets.length !== 0) {
             state.allTransactions = state.allTransactions.filter(item => {
                 return options.selectedWallets.find(address => {
@@ -345,40 +374,111 @@ const mutations = {
                 }) && item.transactions.filter(transaction => {
                     return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
                 }).length !== 0
-                    && item.transactions.filter(transaction => {
-                    return transaction.timestamp >= parseInt(options.date.from) && transaction.timestamp <= parseInt(options.date.to);
+                //     && item.transactions.filter(transaction => {
+                //     return transaction.timestamp >= parseInt(options.date.secondary.from) && transaction.timestamp <= parseInt(options.date.secondary.to);
+                // }).length !== 0;
+            });
+
+            if (options.date.secondary.from && options.date.secondary.to) {
+                filterDateFrom = options.date.secondary.from;
+                filterDateTo = options.date.secondary.to;
+            } else {
+                filterDateFrom = options.date.primary.from;
+                filterDateTo = options.date.primary.to;
+            }
+
+            state.allTransactions = state.allTransactions.filter(item => {
+                return item.transactions.filter(transaction => {
+                    return transaction.timestamp >= parseInt(filterDateFrom) && transaction.timestamp <= parseInt(filterDateTo);
                 }).length !== 0;
             });
 
-            state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
-                });
-            });
+            // if (state.allTransactions.length === 0) {
+            //     state.isDisableType = true;
+            //     state.isDisableBalance = true;
+            // }
 
-            state.allTransactions.forEach((item, i, arr) => {
-                arr[i].transactions = item.transactions.filter(transaction => {
-                    return transaction.timestamp >= parseInt(options.date.from) && transaction.timestamp <= parseInt(options.date.to);
-                });
-            });
 
-            if (options.typeTransaction === 'income') {
+            if (state.allTransactions.length !== 0) {
                 state.allTransactions.forEach((item, i, arr) => {
-                    // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before > 0)) {
                     arr[i].transactions = item.transactions.filter(transaction => {
-                        return transaction.balanceInfo.after - transaction.balanceInfo.before > 0;
+                        return transaction.count >= parseInt(options.balance.from) && transaction.count <= parseInt(options.balance.to);
                     });
-                    // }
                 });
-            } else if (options.typeTransaction === 'outcome') {
-                state.allTransactions.forEach((item, i, arr) => {
-                    // if (item.transactions.find(check => check.balanceInfo.after - check.balanceInfo.before < 0)) {
-                    arr[i].transactions = item.transactions.filter(transaction => {
-                        return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
+
+                state.allTransactions = state.allTransactions.filter(item => {
+                    return item.transactions.length !== 0;
+                });
+
+                if (options.typeTransaction === 'income') {
+                    state.allTransactions.forEach((item, i, arr) => {
+                        arr[i].transactions = item.transactions.filter(transaction => {
+                            return transaction.balanceInfo.after - transaction.balanceInfo.before > 0;
+                        });
                     });
-                    // }
+                } else if (options.typeTransaction === 'outcome') {
+                    state.allTransactions.forEach((item, i, arr) => {
+                        arr[i].transactions = item.transactions.filter(transaction => {
+                            return transaction.balanceInfo.after - transaction.balanceInfo.before < 0;
+                        });
+                    });
+                }
+
+                state.allTransactions = state.allTransactions.filter(item => {
+                    return item.transactions.length !== 0;
                 });
+
+                if (state.allTransactions.length !== 0) {
+                    state.dateIntervalFromFilterAllTransactions = new Date(state.allTransactions.map(item =>
+                        item.transactions
+                    ).reduce((prev, curr) =>
+                        prev.concat(curr)
+                    ).map(item =>
+                        item.timestamp
+                    ).reduce((prev, curr) =>
+                        (curr < prev) ? curr : prev
+                    ));
+                    state.dateIntervalFromFilterAllTransactions.setHours(0);
+                    state.dateIntervalFromFilterAllTransactions.setMinutes(0);
+                    state.dateIntervalFromFilterAllTransactions.setSeconds(0);
+                    state.dateIntervalFromFilterAllTransactions.setMilliseconds(0);
+                    state.dateIntervalFromFilterAllTransactions = state.dateIntervalFromFilterAllTransactions.getTime();
+
+                    state.dateIntervalToFilterAllTransactions = new Date(state.allTransactions.map(item =>
+                        item.transactions
+                    ).reduce((prev, curr) =>
+                        prev.concat(curr)
+                    ).map(item =>
+                        item.timestamp
+                    ).reduce((prev, curr) =>
+                        (curr > prev) ? curr : prev
+                    ));
+                    state.dateIntervalToFilterAllTransactions.setHours(23);
+                    state.dateIntervalToFilterAllTransactions.setMinutes(59);
+                    state.dateIntervalToFilterAllTransactions.setSeconds(59);
+                    state.dateIntervalToFilterAllTransactions.setMilliseconds(999);
+                    state.dateIntervalToFilterAllTransactions = state.dateIntervalToFilterAllTransactions.getTime();
+
+
+                    // console.log(state.allTransactions[0].transactions, 'before');
+                    // console.log(new Date(options.date.secondary.from), 'options.date.secondary.from');
+                    // console.log(new Date(options.date.secondary.to), 'options.date.secondary.to');
+
+                    state.allTransactions.forEach((item, i, arr) => {
+                        arr[i].transactions = item.transactions.filter(transaction => {
+                            return transaction.timestamp >= parseInt(filterDateFrom) && transaction.timestamp <= parseInt(filterDateTo);
+                        });
+                    });
+
+
+                }
+
+                // state.isDisableType = false;
+                // state.isDisableBalance = false;
+
+                // console.log(state.allTransactions[0].transactions, 'after');
             }
+
         } else {
             state.allTransactions = [];
         }
@@ -564,18 +664,18 @@ const getters = {
     },
 
 
-    clearAllTransactions: state => {
-        // console.log(state.filteredAllTransactions, 'clearAllTransactions: state => {');
-        // return state.filteredAllTransactions;
-    },
+    // clearAllTransactions: state => {
+    //     // console.log(state.filteredAllTransactions, 'clearAllTransactions: state => {');
+    //     // return state.filteredAllTransactions;
+    // },
 
     filteredAllTransactions: state => {
         //разбить всё таки на несколько геттеров
         let count = null,
             min = null,
             max = null;
-        
-        // if (state.allTransactions.length !== 0) {
+
+        if (state.allTransactions.length !== 0) {
             count = state.allTransactions.map(item => {
                 return item.transactions.length;
             }).reduce((sum, curr) => {
@@ -600,7 +700,7 @@ const getters = {
                         max = item.count;
                 });
             }
-        // }
+        }
 
         return {
             transactions: state.allTransactions,
@@ -610,37 +710,53 @@ const getters = {
         };
     },
 
+    dateIntervalFromFilterAllTransactions: state => state.dateIntervalFromFilterAllTransactions,
+
+    dateIntervalToFilterAllTransactions: state => state.dateIntervalToFilterAllTransactions,
+
     dateFromFilterAllTransactions: state => {
-        let from = new Date(state.allTransactions.map(item =>
-            item.transactions
-        ).reduce((prev, curr) =>
-            prev.concat(curr)
-        ).map(item =>
-            item.timestamp
-        ).reduce((prev, curr) =>
-            (curr < prev) ? curr : prev
-        ));
-        from.setHours(0);
-        from.setMinutes(0);
-        from.setSeconds(0);
-        from.setMilliseconds(0);
-        return from.getTime();
+        if (state.allTransactions.length !== 0) {
+            let from = new Date(state.allTransactions.map(item =>
+                item.transactions
+            ).reduce((prev, curr) =>
+                prev.concat(curr)
+            ).map(item =>
+                item.timestamp
+            ).reduce((prev, curr) =>
+                (curr < prev) ? curr : prev
+            ));
+            from.setHours(0);
+            from.setMinutes(0);
+            from.setSeconds(0);
+            from.setMilliseconds(0);
+            return from.getTime();
+        }
+        return null;
     },
     dateToFilterAllTransactions: state => {
-        let to = new Date(state.allTransactions.map(item =>
-            item.transactions
-        ).reduce((prev, curr) =>
-            prev.concat(curr)
-        ).map(item =>
-            item.timestamp
-        ).reduce((prev, curr) =>
-            (curr > prev) ? curr : prev
-        ));
-        to.setHours(23);
-        to.setMinutes(59);
-        to.setSeconds(59);
-        to.setMilliseconds(999);
-        return to.getTime();
+        if (state.allTransactions.length !== 0) {
+            let to = new Date(state.allTransactions.map(item =>
+                item.transactions
+            ).reduce((prev, curr) =>
+                prev.concat(curr)
+            ).map(item =>
+                item.timestamp
+            ).reduce((prev, curr) =>
+                (curr > prev) ? curr : prev
+            ));
+            to.setHours(23);
+            to.setMinutes(59);
+            to.setSeconds(59);
+            to.setMilliseconds(999);
+            return to.getTime();
+        }
+        return null;
+    },
+    disableFieldsFilter: state => {
+        return {
+            type: state.isDisableType,
+            balance: state.isDisableBalance
+        }
     },
 
 

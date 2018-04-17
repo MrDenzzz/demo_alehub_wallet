@@ -1,10 +1,8 @@
 <template>
     <div class="register">
-        <Navbar
-                :title="'ALE'"
+        <navbar :title="'ALE'"
                 :isNavigate="false"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
@@ -15,7 +13,8 @@
                                 <Spinner/>
                             </div>
 
-                            <div v-if="!processingSendRequest && successSendRequest" style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
+                            <div v-if="!processingSendRequest && successSendRequest"
+                                 style="display: flex; justify-content: center; font-family: MuseoSansCyrl500;">
                                 <p>{{ $t('pages.registration.completionRegistration') }}
                                     <span style="font-family: MuseoSansCyrl700;">
                                         {{email}}
@@ -25,71 +24,61 @@
                             <div class="login-form" v-if="!processingSendRequest && !successSendRequest">
                                 <div class="control" @click="focusInput('fullname')">
                                     <label for="fullname">{{ $t('pages.registration.fullName') }}</label>
-                                    <input
-                                            type="text"
-                                            id="fullname"
-                                            class="d-block"
-                                            placeholder="full name"
-                                            @keyup.enter="register"
-                                            v-model="fullName"
-                                            autofocus
-                                    >
+                                    <input type="text"
+                                           id="fullname"
+                                           class="d-block"
+                                           placeholder="full name"
+                                           @keyup.enter="register"
+                                           v-model="fullName"
+                                           autofocus>
                                 </div>
 
                                 <div class="control" @click="focusInput('email')">
                                     <label for="email">{{ $t('pages.registration.email') }}</label>
-                                    <input
-                                            type="text"
-                                            id="email"
-                                            class="d-block"
-                                            placeholder="e-mail"
-                                            v-validate="'email'"
-                                            @keyup.enter="register"
-                                            v-model="email"
-                                    >
+                                    <input type="text"
+                                           id="email"
+                                           class="d-block"
+                                           placeholder="e-mail"
+                                           v-validate="'email'"
+                                           @keyup.enter="register"
+                                           v-model="email">
                                 </div>
 
                                 <div class="control" @click="focusInput('password')">
                                     <label for="password">{{ $t('pages.registration.password') }}</label>
-                                    <input
-                                            type="password"
-                                            id="password"
-                                            class="d-block"
-                                            placeholder="password"
-                                            @keyup.enter="register"
-                                            v-model="password"
-                                    >
+                                    <input type="password"
+                                           id="password"
+                                           class="d-block"
+                                           placeholder="password"
+                                           @keyup.enter="register"
+                                           v-model="password">
                                 </div>
 
                                 <div class="control" @click="focusInput('repeatpass')">
                                     <label for="repeatpass">{{ $t('pages.registration.repeatPassword') }}</label>
-                                    <input
-                                            type="password"
-                                            id="repeatpass"
-                                            class="d-block"
-                                            placeholder="password"
-                                            @keyup.enter="register"
-                                            v-model="passwordConfirm"
-                                    >
+                                    <input type="password"
+                                           id="repeatpass"
+                                           class="d-block"
+                                           placeholder="password"
+                                           @keyup.enter="register"
+                                           v-model="passwordConfirm">
                                 </div>
 
                                 <div class="is-center" v-if="isLoader">
-                                    <Spinner  />
+                                    <Spinner/>
                                 </div>
 
                                 <div class="error-block" v-if="isExistUser">
                                     <p>Error login</p>
                                 </div>
 
-                                <button
-                                        class="btn btn-yellow btn-block nomargin"
-                                        @click="registerUser()"
-                                >
+                                <button class="btn btn-yellow btn-block nomargin"
+                                        @click="registerUser()">
                                     {{ $t('pages.registration.create') }}
                                 </button>
 
                                 <p class="text">{{ $t('pages.registration.haveAccount') }}
-                                    <router-link :to="{ path: '/' }">
+                                    <router-link :to="{ path: '/login' }">
                                         {{ $t('pages.registration.login') }}
                                     </router-link>
                                 </p>
@@ -202,7 +191,7 @@
                     return false;
                 }
 
-                
+
                 this.isLoader = true;
 
                 this.$http.post(`${this.$host}/users/new`, {
@@ -215,7 +204,7 @@
                         'Accept': 'application/json'
                     }
                 }).then(response => {
-                    if(response.body.message === 'User already exist!') {
+                    if (response.body.message === 'User already exist!') {
                         this.isLoader = false;
                         return this.isExistUser = true;
                     }
