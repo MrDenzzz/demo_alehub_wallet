@@ -173,6 +173,8 @@ body {
 
 .dark {
   background: #4a4e65 !important; }
+  .dark .datepicker-for-export .vdp-datepicker__calendar .day.highlighted, .dark .datepicker-for-export .vdp-datepicker__calendar .day.selected {
+    background-color: #28388e !important; }
   .dark .logout-link {
     color: #b53939;
     background-color: #282730;
@@ -211,17 +213,21 @@ body {
       .dark .searchPanel .bottom .date input:-moz-placeholder {
         color: rgba(222, 223, 223, 0.8) !important; }
   .dark .vdp-datepicker__calendar {
-    background-color: #282730; }
+    background-color: #282730 !important; }
+    .dark .vdp-datepicker__calendar .day-header {
+      color: #aaaec1 !important; }
     .dark .vdp-datepicker__calendar header .prev:after {
-      border-right: 10px solid #dedfdf; }
+      border-right: 10px solid #dedfdf !important; }
     .dark .vdp-datepicker__calendar header .next:after {
-      border-left: 10px solid #dedfdf; }
+      border-left: 10px solid #dedfdf !important; }
     .dark .vdp-datepicker__calendar header .up {
-      color: #dedfdf; }
+      color: #dedfdf !important; }
+    .dark .vdp-datepicker__calendar .day:hover {
+      background-color: #414454 !important; }
   .dark .day-header {
     color: #aaaec1 !important; }
   .dark .cell.day {
-    color: #dedfdf; }
+    color: #dedfdf !important; }
   .dark .title-opt-span,
   .dark .result-opt-span {
     color: #f4f3fc !important; }
@@ -229,15 +235,15 @@ body {
     .dark .result-opt-span.sent {
       color: #455bd6 !important; }
   .dark .switch-control .slider {
-    background-color: #aaaec1; }
+    background-color: #aaaec1 !important; }
     .dark .switch-control .slider:before {
-      background-color: #282730; }
+      background-color: #282730 !important; }
   .dark .switch-control input:checked .slider {
-    background-color: #494d64; }
+    background-color: #494d64 !important; }
   .dark .filter-panel {
-    background: #27272f; }
+    background: #27272f !important; }
     .dark .filter-panel .two-input input {
-      background-color: #3c3e4a;
+      background-color: #3c3e4a !important;
       border: solid 0.5px #484848;
       color: #dedfdf; }
       .dark .filter-panel .two-input input::-webkit-input-placeholder {
@@ -431,6 +437,22 @@ body {
     background-color: #27272f; }
     .dark .v--modal-overlay .v--modal-box .body .modal-control {
       border-bottom: 1px solid #565656; }
+      .dark .v--modal-overlay .v--modal-box .body .modal-control .input-label {
+        color: #959595 !important; }
+      .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-control__title {
+        color: #dedfdf !important; }
+      .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input__disabled {
+        background-color: #414454 !important; }
+      .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input {
+        border: solid 1px #3c3e4b !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-from::-webkit-input-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-to::-webkit-input-placeholder {
+          color: #dedfdf !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-from::-moz-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-to::-moz-placeholder {
+          color: #dedfdf !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-from:-ms-input-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-to:-ms-input-placeholder {
+          color: #dedfdf !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-from:-moz-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-to:-moz-placeholder {
+          color: #dedfdf !important; }
       .dark .v--modal-overlay .v--modal-box .body .modal-control .badge-control .badge {
         background-color: rgba(13, 23, 23, 0.7) !important;
         color: #dedfdf !important; }
