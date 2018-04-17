@@ -595,7 +595,7 @@ const messages = {
                         walletName: 'Имя кошелька'
                     },
                     spendingPass: {
-                        label: 'Spending password',
+                        label: 'Транзакия с паролем',
                         text: 'Включить пароль для одобрения транзакций'
                     },
                     deleteWallet: 'Удалить кошелек'
