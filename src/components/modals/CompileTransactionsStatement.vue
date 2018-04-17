@@ -1464,9 +1464,10 @@
 </style>
 
 <style lang="stylus" scoped>
-    .btn-default:disabled
-        background-color rgba(13, 23, 23, 0.08)
-        opacity 0.4 !important
+    .btn-default
+        &:disabled
+            background-color rgba(13, 23, 23, 0.08)
+            opacity 0.4 !important
 
     .disabled-label__control
         cursor default
