@@ -400,6 +400,7 @@
             /*
             * */
             formatVal: function (val) {
+                //put this to external module
                 let formatArr = val.split(''),
                     flag = false;
 
