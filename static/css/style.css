@@ -175,6 +175,8 @@ body {
   background: #4a4e65 !important; }
   .dark .datepicker-for-export .vdp-datepicker__calendar .day.highlighted, .dark .datepicker-for-export .vdp-datepicker__calendar .day.selected {
     background-color: #28388e !important; }
+  .dark .datepicker-for-export .vdp-datepicker__calendar .cell.day.marked__min.highlighted {
+    background-color: #3e4ea7 !important; }
   .dark .logout-link {
     color: #b53939;
     background-color: #282730;
@@ -1402,7 +1404,8 @@ body {
     .menu {
       overflow-y: unset; } }
   .menu.is-opened {
-    overflow-y: auto; }
+    overflow-y: auto;
+    overflow-x: hidden; }
     @media (max-width: 425px) {
       .menu.is-opened .wallet-search {
         width: 100vh !important; } }
