@@ -9,17 +9,17 @@
             </button>
         </div>
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
-            <Panel-heading :title="parseDate(notification.date)" :isTop="true" v-if="check(notificationIndex)"/>
+            <Panel-heading :title="parseDate(notification.timestamp)" :isTop="true" v-if="check(notificationIndex)"/>
             <div class="notif-panel" :class="{checked: isChecked(notification._id)}">
-                <input type="checkbox" :value="notification._id" id="notification._id" v-model="checkedNotif" class="notif-checkbox" v-show="isShown"> 
+                <input type="checkbox" :value="notification._id" :id="notification._id" v-model="checkedNotif" class="notif-checkbox" v-show="isShown"> 
                 <div class="panel-heading" :class="{'shift-right': isShown}">
-                    <h3 class="title" v-html="parseMarkDown('dfsdf')"></h3>
+                    <h3 class="title" v-html="parseMarkDown(createMarkDown(notification).title)"></h3>
                     <h3 class="datetime">{{ parseDate(notification.timestamp) }} {{ $t('pages.notifications.in') }} <span class="bold">{{ parseTime(notification.timestamp) }}</span>
                     </h3>
                 </div>
                 <h4 class="subtitle" v-if="notification.isSubtitle">{{ notification.subTitle }}:</h4>
                 <div class="changed-line" v-for="change in notification.changes" v-if="notification.changes.length"
-                     :class="{ 'line-update': change.status == 'updated' }">
+                    :class="{ 'line-update': change.status == 'updated' }">
                     <span class="icon" v-if="change.status == 'old'">–</span>
                     <span class="icon" v-if="change.status == 'updated'">+</span>
                     <span class="message" v-html="parseMarkDown(change.text)"></span>
@@ -65,10 +65,10 @@
             check(index) {
                 if (index === 0) return true;
                 if (index === this.notifications.length) {
-                    if (Moment(this.notifications[index].date).format('YYYY/MM/DD') === Moment(this.notifications[index + 1].date).format('YYYY/MM/DD')) return false;
+                    if (Moment(this.notifications[index].timestamp).format('YYYY/MM/DD') === Moment(this.notifications[index + 1].timestamp).format('YYYY/MM/DD')) return false;
                     return true;
                 } else {
-                    if (Moment(this.notifications[index].date).format('YYYY/MM/DD') === Moment(this.notifications[index - 1].date).format('YYYY/MM/DD')) return false;
+                    if (Moment(this.notifications[index].timestamp).format('YYYY/MM/DD') === Moment(this.notifications[index - 1].timestamp).format('YYYY/MM/DD')) return false;
                     return true;
                 }
             },
@@ -104,6 +104,21 @@
                     return require(`../../assets/img/${name}_dark.svg`);
 
                 return require(`../../assets/img/${name}.svg`);
+            },
+            createMarkDown: function (data) {
+                let markDown = {};
+                let checTransactionType = function (data) {
+                    if (data.balanceInfo.before > data.balanceInfo.after) return 'send';
+                    if (data.balanceInfo.before < data.balanceInfo.after) return 'received';
+                    return false
+                }
+                if (checTransactionType(data) === 'send') {
+                    markDown.title = `Вы **отправили** <span class="deleted">${data.count}</span> ALE на адрес **${data.walletDestination}**.`
+                }
+                if (checTransactionType(data) === 'received') {
+                    markDown.title = `Вы **получили** <span class="accepted">${data.count}</span> ALE на адрес **${data.walletDestination}**.`
+                }
+                return markDown;
             }
         }
     }

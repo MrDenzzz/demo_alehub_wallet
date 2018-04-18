@@ -48,14 +48,15 @@
         },
         computed: {
             ...mapGetters([
-                'notifications'
+                'notifications',
+                'currentWallet'
             ]),
         },
         methods: {
             getCurrentNotifications: function () {
                 this.isLoader = true;
 
-                this.$store.dispatch('getNotifications'
+                this.$store.dispatch('getNotifications', this.currentWallet.address
                 ).then(() => {
                     this.isLoader = false;
                     console.log('Success getting notifications');

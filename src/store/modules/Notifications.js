@@ -7,12 +7,12 @@ const state = {
 };
 
 const actions = {
-    getNotifications: ({commit}) => {
+    getNotifications: ({commit}, address) => {
         return new Promise((resolve, reject) => {
 
             commit('REQUEST_GET_NOTIFICATIONS');
 
-            let host = `http://192.168.1.47:4000/notifications`;
+            let host = `http://192.168.1.47:4000/notifications/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -55,7 +55,7 @@ const mutations = {
 };
 
 const getters = {
-    notifications: state => state.notifications.reverse()
+    notifications: state => state.notifications
 };
 
 export default {
