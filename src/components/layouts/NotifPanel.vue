@@ -13,7 +13,7 @@
             <div class="notif-panel" :class="{checked: isChecked(notification._id)}">
                 <input type="checkbox" :value="notification._id" id="notification._id" v-model="checkedNotif" class="notif-checkbox" v-show="isShown"> 
                 <div class="panel-heading" :class="{'shift-right': isShown}">
-                    <!-- <h3 class="title" v-html="parseMarkDown(notification.title)"></h3> -->
+                    <h3 class="title" v-html="parseMarkDown('dfsdf')"></h3>
                     <h3 class="datetime">{{ parseDate(notification.timestamp) }} {{ $t('pages.notifications.in') }} <span class="bold">{{ parseTime(notification.timestamp) }}</span>
                     </h3>
                 </div>
