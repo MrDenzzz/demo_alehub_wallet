@@ -50,8 +50,7 @@
                     <button class="btn btn-yellow btn-large"
                             @click="changeStepCreate('next')"
                             :disabled="checkNewWalletFields"
-                            :class="{ 'disabled': checkNewWalletFields }"
-                    >
+                            :class="{ 'disabled': checkNewWalletFields }">
                         {{ $t('modals.newWallet.new.button') }}
                     </button>
                 </div>
@@ -91,7 +90,6 @@
                     </button>
                 </div>
             </div>
-
         </div>
 
         <div v-if="newWalletStep === 2 && recoveryStep === 1">
@@ -399,10 +397,62 @@
                     }, 1000);
                 }
             },
+            /*
+            * */
+            formatVal: function (val) {
+                let formatArr = val.split(''),
+                    flag = false;
+
+                if (formatArr[0] === ' ') {
+                    flag = true;
+                    formatArr = formatArr.filter(item => {
+                        if (flag && item !== ' ') {
+                            flag = false;
+                        }
+                        return !flag;
+                    });
+                }
+                if (formatArr[formatArr.length - 1] === ' ') {
+                    flag = true;
+                    formatArr.reverse();
+                    formatArr = formatArr.filter(item => {
+                        if (flag && item !== ' ') {
+                            flag = false;
+                        }
+                        return !flag;
+                    });
+                    formatArr.reverse();
+                }
+                return formatArr.join('');
+            },
+            /*
+            * */
+            validateVal: function (val) {
+                //добавить проверки на специальные символы
+                if (val.length === 0)
+                    return false;
+                return true;
+            },
             changeStepCreate: function (step) {
-                if (this.newWalletStep === 1 && this.walletName === '') return false
-                if (step === 'next') this.newWalletStep = this.newWalletStep + 1;
-                else this.newWalletStep = this.newWalletStep - 1;
+                if (this.newWalletStep === 1) {
+                    this.walletName = this.formatVal(this.walletName);
+                    if (!this.validateVal(this.walletName)) {
+                        this.$toasted.show('Your wallet name does not contain letters or numbers', {
+                            duration: 5000,
+                            type: 'error',
+                        });
+                        return false;
+                    }
+                }
+
+                if (this.newWalletStep === 1 && this.walletName === '')
+                    return false;
+
+                if (step === 'next')
+                    this.newWalletStep = this.newWalletStep + 1;
+                else
+                    this.newWalletStep = this.newWalletStep - 1;
+
                 if (this.newWalletStep === 2) {
                     this.countTimer = 3;
                     this.countDown();

@@ -44,7 +44,11 @@
             </div>
 
             <div class="drag" @click="checkScroll()"></div>
-            <div class="hide-drag" v-if="isToggle" id="hide-drag" @click="hideDrag()"></div>
+            <div class="hide-drag"
+                 id="hide-drag"
+                 v-if="isToggle"
+                 @click="hideDrag()">
+            </div>
         </div>
     </div>
 </template>

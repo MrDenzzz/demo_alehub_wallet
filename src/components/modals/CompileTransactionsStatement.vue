@@ -71,7 +71,7 @@
                             <label class="control control-checkbox"
                                    :class="{ 'disabled-label__control': checkDisabled }">
                                 <input type="checkbox"
-                                       name="wallet-names"
+                                       name="select-all-wallets"
                                        :disabled="checkDisabled"
                                        v-model="isAllWallets"
                                        @change="setAllWallets"/>
@@ -302,6 +302,7 @@
             FormattingPrice
         },
         props: {
+            //unnecessary. remove.
             currentBalanceBeginPeriod: {
                 type: [Number, String],
                 required: true
@@ -318,51 +319,6 @@
                 type: [Number, String],
                 required: true
             }
-        },
-        watch: {
-            'filterOptions.selectedWallets': function (selectedWallets) {
-                // if (selectedWallets.length === 0) {
-                //
-                // }
-            },
-            'filterOptions.balance.from': function (val) {
-                console.log(val, 'filterOptions.balanceFrom');
-            },
-            'filterOptions.balance.to': function (val) {
-                console.log(val, 'filterOptions.balanceTo');
-            },
-            dateFrom: function (val) {
-                console.log(val, 'date from');
-            },
-            dateTo: function (val) {
-                console.log(val, 'date to');
-            },
-            changingDates: function (val) {
-                if (!this.dateFromPick && !this.dateToPick) {
-                    this.dateFromPick = this.makeMinDate(val).getTime();
-                } else if (this.dateFromPick && !this.dateToPick) {
-                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
-                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
-                        this.dateFromPick = this.makeMinDate(val).getTime();
-                    } else {
-                        this.dateToPick = this.makeMaxDate(val).getTime();
-                    }
-                }
-
-                if (val && this.dateFromPick && this.dateToPick) {
-                    this.setDateFilterInterval();
-                    if (val && this.filterOptions.selectedWallets.length !== 0) {
-                        this.filterTransactions();
-                    }
-                }
-
-                if (this.dateFromPick && this.dateToPick) {
-
-                    if (val && this.filterOptions.selectedWallets.length !== 0) {
-                        this.filterTransactions();
-                    }
-                }
-            },
         },
         data() {
             return {
@@ -463,6 +419,38 @@
                 currentTotal: 0,
             }
         },
+        watch: {
+            'filterOptions.selectedWallets': function (listSelectedWallets) {
+                if (this.isAllWallets && !this.listWalletAddress.equals(listSelectedWallets)) {
+                    this.isAllWallets = false;
+                }
+            },
+            changingDates: function (val) {
+                if (!this.dateFromPick && !this.dateToPick) {
+                    this.dateFromPick = this.makeMinDate(val).getTime();
+                } else if (this.dateFromPick && !this.dateToPick) {
+                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
+                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
+                        this.dateFromPick = this.makeMinDate(val).getTime();
+                    } else {
+                        this.dateToPick = this.makeMaxDate(val).getTime();
+                    }
+                }
+
+                if (val && this.dateFromPick && this.dateToPick) {
+                    this.setDateFilterInterval();
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+                }
+
+                if (this.dateFromPick && this.dateToPick) {
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+                }
+            },
+        },
         computed: {
             ...mapGetters([
                 'wallets',
@@ -510,7 +498,15 @@
                     return true;
                 return false;
             },
-
+            /*
+            * */
+            listWalletAddress: function () {
+                let list = [];
+                this.constantTransactions.forEach(item => {
+                    list.push(item.address);
+                });
+                return list;
+            },
         },
         methods: {
             /*
