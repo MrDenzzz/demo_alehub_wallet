@@ -113,10 +113,10 @@
                     return false
                 }
                 if (checTransactionType(data) === 'send') {
-                    markDown.title = `Вы **отправили** <span class="deleted">${data.count}</span> ALE на адрес **${data.walletDestination}**.`
+                    markDown.title = `${this.$t('pages.notifications.youSend')} <span class="deleted">${data.count}</span> ALE ${this.$t('pages.notifications.toAddress')} **${data.walletDestination}**.`
                 }
                 if (checTransactionType(data) === 'received') {
-                    markDown.title = `Вы **получили** <span class="accepted">${data.count}</span> ALE на адрес **${data.walletDestination}**.`
+                    markDown.title = `${this.$t('pages.notifications.youReceive')} <span class="accepted">${data.count}</span> ALE ${this.$t('pages.notifications.fromAddress')} **${data.walletAddress}**.`
                 }
                 return markDown;
             }
