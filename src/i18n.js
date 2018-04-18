@@ -321,6 +321,7 @@ const messages = {
                 total: 'Total',
                 sendText: 'You are sending',
                 to: 'to',
+                footerModal:'Sending was successful',
                 buttons: {
                     next: 'Next',
                     send: 'Send'
@@ -416,6 +417,50 @@ const messages = {
                 title: 'Share',
                 label: 'Add your comment',
                 placeholder: 'Write your comment here'
+            },
+            pdf: {
+                title: 'EXPORT TO PDF',
+                firstDesc: 'Select from where you want to export transactions',
+                firstRadio: {
+                    first: 'Current wallet transactions',
+                    second: 'All wallets transactions',
+                    third: 'Custom',
+                },
+                secondDesc: 'Select wallets from where you want to export transactions',
+                selectAll: 'select all',
+                tags: 'Tag\'s',
+                thirdDesc: 'Type a tag here to choose specific transactions (optional)',
+                TransactionsType: 'Transaction\'s type',
+                secondRadio: {
+                    first: 'Income',
+                    second: 'Outcome',
+                    third: 'All',
+                },
+                range: 'Transaction\'s amount range',
+                from: 'from',
+                to: 'to',
+                button: {
+                    reset: 'Reset filters',
+                    export1: "Export",
+                    export2: "transactions"
+                },
+                lang: 'en'
+            },
+            error:{
+                moreThanZero:'Transaction amount must be greater than 0',
+                moreThanHave:'You can not send more coins than there are in your account',
+                toYourself:'You can not send tokens to yourself',
+                sendFail:'Sending failed',
+                wrongMail:'You are sent to me wrong email data',
+                lenght2faCheck:'The 2fa code length must be 6 digits',
+                projectData:'You are submitting incorrect project data',
+                differentPass:'New password and confirmed password do not match',
+                lengthPass:'The password must be at least 8 characters in length',
+            },
+            success:{
+                changeMail:'Confirmation of the change of email was sent to this address',
+                changePass:'You have successfully changed your password',
+                changeName:'Your name has been successfully changed',
             }
         },
         navbar: {
@@ -424,7 +469,7 @@ const messages = {
             resume: 'Resumes',
             notifications: 'Notifications',
             settings: 'Settings'
-        }
+        },
     },
     rus: {
         pages: {
@@ -748,6 +793,7 @@ const messages = {
                 total: 'Всего',
                 sendText: 'Вы отправляете',
                 to: 'в',
+                footerModal:'Отправление прошло успешно',
                 buttons: {
                     next: 'Далее',
                     send: 'Отправить'
@@ -843,7 +889,64 @@ const messages = {
                 title: 'Поделиться',
                 label: 'Добавить комментарий',
                 placeholder: 'Напишите свой комментарий здесь'
+            },
+            pdf: {
+                title:'Экспорт в PDF',
+                firstDesc:'Выбирите как Вы хотите вывести транзакции',
+                firstRadio: {
+                    first: 'Текущие транзакции кошелька',
+                    second: 'Все транзакции',
+                    third: 'Персональная настройка',
+                },
+                secondDesc: 'Выбирите транзакции каких кошельков Вы хотите вывести',
+                selectAll:'Выбрать все',
+                tags:'Теги',
+                thirdDesc:'Введите теги чтобы выбрать определенные транзакции (необязательно)',
+                TransactionsType:'Вид транзакции',
+                secondRadio: {
+                    first: 'Полученные',
+                    second: 'Отправленные',
+                    third: 'Все',
+                },
+                range:'Размер суммы транзакции',
+                from: 'от',
+                to: 'до',
+                button: {
+                    reset:'Сбросить фильтры',
+                    export1:"Экспортировать",
+                    export2:"транзакции"
+                },
+                lang:'ru'
+            },
+            error:{
+                // moreThanZero:'Transaction amount must be greater than 0'
+                moreThanZero:'Транзакция должна быть больше чем 0',
+                // moreThanHave:'You can not send more coins than there are in your account'
+                moreThanHave:'Не хватает золота',
+                // toYourself:'You can not send tokens to yourself'
+                toYourself:'Вы не можете отправлять токены самому себе',
+                // sendFail:'Sending failed'
+                sendFail:'Отправка не удалась',
+                // wrongMail:'You are sent to me wrong email data',
+                wrongMail:'Вы ввели не верные данные',
+                // wrongMail:'The 2fa code length must be 6 digits',
+                lenght2faCheck:'Длина кода должна быть не меньше 6 символов',
+                // projectData:'You are submitting incorrect project data',
+                projectData:'Вы отправляете неверные данные проекта',
+                // differentPass:'New password and confirmed password do not match',
+                differentPass:'Новый и подтвержденный пароль не совпадают',
+                // lengthPass:'The password must be at least 8 characters in length',
+                lengthPass:'Длина пароля должна быть не менее 8 символов.',
+            },
+            success:{
+                // changeMail:'Confirmation of the change of email was sent to this address',
+                changeMail:'Подтверждение на изменение почты было отправлено на этот адрес',
+                // changePass:'You have successfully changed your password',
+                changePass:'Пароль был успешно изменен',
+                // changeName:'Your name has been successfully changed',
+                changeName:'Ваше имя было успешно изменено',
             }
+
         },
         navbar: {
             wallet: 'Кошелек',

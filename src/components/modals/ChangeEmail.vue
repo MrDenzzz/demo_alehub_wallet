@@ -94,7 +94,7 @@
                         document.getElementById('twoauth-change-email').disabled = false;
                         document.getElementById('email-change-email').disabled = false;
                         this.closeModal();
-                        this.$toasted.show(`Confirmation of the change of email was sent to this address '${this.email}'`, {
+                        this.$toasted.show(this.$t('modals.success.changeMail')+this.email, {
                             duration: 10000,
                             type: 'success',
                         });
@@ -102,7 +102,7 @@
                     }).catch((err) => {
                         this.email = '';
                         this.token = '';
-                        this.$toasted.show(`You are sent to me wrong email data`, {
+                        this.$toasted.show(this.$t('modals.success.wrongMail'), {
                             duration: 10000,
                             type: 'error',
                         });
@@ -111,7 +111,7 @@
                 } else {
                     this.email = '';
                     this.token = '';
-                    this.$toasted.show(`The 2fa code length must be 6 digits`, {
+                    this.$toasted.show(this.$t('modals.success.lenght2faCheck'), {
                         duration: 10000,
                         type: 'error',
                     });

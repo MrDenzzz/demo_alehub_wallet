@@ -171,7 +171,7 @@
                     default:
                         return 'English';
                 }
-            }
+            },
         },
         methods: {
             ...mapMutations({
@@ -253,7 +253,7 @@
             this.$on('changeFullName', function (value) {
                 if (this.userName !== value) {
                     this.$store.dispatch('changeUserName', {newName: value}).then(() => {
-                        this.$toasted.show('Your name has been successfully changed.', {
+                        this.$toasted.show(this.$t('modals.success.changeName'), {
                             duration: 5000,
                             type: 'success',
                         });
