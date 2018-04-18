@@ -32,7 +32,7 @@
                     class="buttons btn-default"
                     :class="{ 'disable-gray-button': currentTransactions.length === 0 }"
                     @click="openModal('share-transactions')"
-                    :disabled="currentTransactions.length === 0">
+                    :disabled="currentTransactions.length === 0 || 'true'">
                 {{ $t('pages.summary.searchPanel.buttons.share') }}
             </button>
         </div>
@@ -217,3 +217,9 @@
         },
     }
 </script>
+
+<style lang="stylus" scoped>
+    .btn-default:disabled
+        background-color rgba(13, 23, 23, 0.08)
+        opacity 0.4
+</style>

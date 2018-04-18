@@ -1,59 +1,52 @@
 <template>
     <div class="login">
-        <Navbar
+        <navbar
                 :title="'ALE'"
                 :isNavigate="false"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
-
                 <div class="container">
                     <div class="row">
-
                         <div class="col-12">
                             <div class="login-form" v-if="authStep !== 1">
                                 <form @submit.prevent="login">
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
-                                        <input
-                                                v-validate="'required|email'"
-                                                class="d-block"
-                                                :class="{error: isErrorEmail}"
-                                                @input="resetError('login')"
-                                                type="text"
-                                                placeholder="e-mail"
-                                                id="email"
-                                                v-model="email"
-                                                required
-                                                autofocus
-                                        >
+                                        <input v-validate="'required|email'"
+                                               class="d-block"
+                                               :class="{error: isErrorEmail}"
+                                               @input="resetError('login')"
+                                               type="text"
+                                               placeholder="e-mail"
+                                               id="email"
+                                               v-model="email"
+                                               required
+                                               autofocus>
                                     </div>
 
                                     <div class="control" @click="focusInput('password')">
                                         <label for="password">{{ $t('pages.login.password') }}</label>
-                                        <input
-                                                class="d-block"
-                                                :class="{error: isErrorPassword}"
-                                                @input="resetError('password')"
-                                                type="password"
-                                                placeholder="password"
-                                                id="password"
-                                                v-model="password"
-                                                required>
+                                        <input class="d-block"
+                                               :class="{error: isErrorPassword}"
+                                               @input="resetError('password')"
+                                               type="password"
+                                               placeholder="password"
+                                               id="password"
+                                               v-model="password"
+                                               required>
                                     </div>
 
-                                    <button
-                                            type="submit"
+                                    <button type="submit"
                                             class="btn btn-black btn-block nomargin"
-                                            @click="isLoadingCheck">
+                                            @click="dataProcessingCheck">
                                         {{ $t('pages.login.login') }}
                                     </button>
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Login or password is incorrect</p>
                                     </div>
-                                    <div class="is-center" v-if="isLoading">
+                                    <div class="is-center" v-if="dataProcessing">
                                         <Spinner/>
                                     </div>
                                 </form>
@@ -99,7 +92,7 @@
                 isErrorEmail: false,
                 isErrorPassword: false,
                 isError2fa: false,
-                isLoading: false,
+                dataProcessing: false,
                 initialLoading: true
             }
         },
@@ -110,7 +103,6 @@
                 'userTwoAuth',
                 'userStatus',
                 'userHaveWallets',
-                // 'userHaveTransactions',
                 'isLoaderUserAuth',
                 'isErrorLogin',
                 'wallets',
@@ -174,7 +166,7 @@
                     return false;
                 }
 
-                this.isLoading = true;
+                this.dataProcessing = true;
 
                 this.$store.dispatch('authRequest', {
                     email: this.email,
@@ -190,41 +182,41 @@
                                 }).catch(() => {
                                     //это не срабатывает???
                                     console.log('You do not have transactions');
-                                    this.isLoading = false;
+                                    this.dataProcessing = false;
                                     this.$router.push('/');
                                 });
                             }).catch(() => {
                                 console.log('You do not have wallets');
-                                this.isLoading = false;
+                                this.dataProcessing = false;
                                 this.$router.push('/');
                             });
                         }).catch(() => {
-                            this.isLoading = false;
+                            this.dataProcessing = false;
                             console.log('Wrong user');
                         });
                     } else {
-                        this.isLoading = false;
+                        this.dataProcessing = false;
                         this.$router.push('/login/twoauth');
                     }
                 }).catch(() => {
-                    this.isLoading = false;
+                    this.dataProcessing = false;
                     console.log('Wrong auth');
                 });
             },
-            isLoadingCheck: function () {
+            dataProcessingCheck: function () {
                 if (!this.email && !this.password) {
-                    this.isLoading = false;
+                    this.dataProcessing = false;
                     return;
                 }
 
-                (this.userStatus !== 'success') ? this.isLoading = false : this.isLoading = true;
+                (this.userStatus !== 'success') ? this.dataProcessing = false : this.dataProcessing = true;
 
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success'))
-                    this.isLoading = false;
+                    this.dataProcessing = false;
                 else
-                    this.isLoading = true;
+                    this.dataProcessing = true;
             },
             focusInput: function (id) {
                 document.getElementById(id).focus();

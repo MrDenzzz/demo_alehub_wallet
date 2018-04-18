@@ -71,7 +71,7 @@
                             <label class="control control-checkbox"
                                    :class="{ 'disabled-label__control': checkDisabled }">
                                 <input type="checkbox"
-                                       name="wallet-names"
+                                       name="select-all-wallets"
                                        :disabled="checkDisabled"
                                        v-model="isAllWallets"
                                        @change="setAllWallets"/>
@@ -302,6 +302,7 @@
             FormattingPrice
         },
         props: {
+            //unnecessary. remove.
             currentBalanceBeginPeriod: {
                 type: [Number, String],
                 required: true
@@ -318,51 +319,6 @@
                 type: [Number, String],
                 required: true
             }
-        },
-        watch: {
-            'filterOptions.selectedWallets': function (selectedWallets) {
-                // if (selectedWallets.length === 0) {
-                //
-                // }
-            },
-            'filterOptions.balance.from': function (val) {
-                console.log(val, 'filterOptions.balanceFrom');
-            },
-            'filterOptions.balance.to': function (val) {
-                console.log(val, 'filterOptions.balanceTo');
-            },
-            dateFrom: function (val) {
-                console.log(val, 'date from');
-            },
-            dateTo: function (val) {
-                console.log(val, 'date to');
-            },
-            changingDates: function (val) {
-                if (!this.dateFromPick && !this.dateToPick) {
-                    this.dateFromPick = this.makeMinDate(val).getTime();
-                } else if (this.dateFromPick && !this.dateToPick) {
-                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
-                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
-                        this.dateFromPick = this.makeMinDate(val).getTime();
-                    } else {
-                        this.dateToPick = this.makeMaxDate(val).getTime();
-                    }
-                }
-
-                if (val && this.dateFromPick && this.dateToPick) {
-                    this.setDateFilterInterval();
-                    if (val && this.filterOptions.selectedWallets.length !== 0) {
-                        this.filterTransactions();
-                    }
-                }
-
-                if (this.dateFromPick && this.dateToPick) {
-
-                    if (val && this.filterOptions.selectedWallets.length !== 0) {
-                        this.filterTransactions();
-                    }
-                }
-            },
         },
         data() {
             return {
@@ -441,6 +397,10 @@
                 dateDayFontSize: 16,
                 normalFontSize: 12,
 
+                red: [177, 3, 3],
+                green: [75, 177, 3],
+                black: [0, 0, 0],
+
                 receivedText: 'Received',
                 sentText: 'Sent',
                 startingText: 'Starting',
@@ -458,6 +418,38 @@
                 currentReceived: 0,
                 currentTotal: 0,
             }
+        },
+        watch: {
+            'filterOptions.selectedWallets': function (listSelectedWallets) {
+                if (this.isAllWallets && !this.listWalletAddress.equals(listSelectedWallets)) {
+                    this.isAllWallets = false;
+                }
+            },
+            changingDates: function (val) {
+                if (!this.dateFromPick && !this.dateToPick) {
+                    this.dateFromPick = this.makeMinDate(val).getTime();
+                } else if (this.dateFromPick && !this.dateToPick) {
+                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
+                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
+                        this.dateFromPick = this.makeMinDate(val).getTime();
+                    } else {
+                        this.dateToPick = this.makeMaxDate(val).getTime();
+                    }
+                }
+
+                if (val && this.dateFromPick && this.dateToPick) {
+                    this.setDateFilterInterval();
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+                }
+
+                if (this.dateFromPick && this.dateToPick) {
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+                }
+            },
         },
         computed: {
             ...mapGetters([
@@ -506,7 +498,15 @@
                     return true;
                 return false;
             },
-
+            /*
+            * */
+            listWalletAddress: function () {
+                let list = [];
+                this.constantTransactions.forEach(item => {
+                    list.push(item.address);
+                });
+                return list;
+            },
         },
         methods: {
             /*
@@ -1002,39 +1002,38 @@
                     this.currentReceived += count;
             },
 
-            generateHeaderTransactionsStatement: function (doc, name) {
+            generateHeaderTransactionsStatement: function (doc, wallet, balanceStats) {
                 doc.setFontSize(this.titleFontSize);
-                // doc.text(this.currentWallet.name, 90, 10);
 
-                //написать рассчёт положения начала названия по оси Х в зависимости от длины названия кошелька
-                doc.text(name, 10, this.offset);
-
+                doc.text(wallet.name, 10, this.offset);
+                this.offset += 7.5;
+                doc.text(wallet.address, 10, this.offset);
+                this.offset += 10;
                 //add date range
 
                 //разбить эти блоки на ещё функции
 
                 doc.setFontSize(this.normalFontSize);
-                doc.setTextColor(75, 177, 3);
-                this.offset += 10;
+                doc.setTextColor(...this.green);
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentReceivedBalance.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.received.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
-
-                doc.setTextColor(177, 3, 3);
                 this.offset += 5;
+
+                doc.setTextColor(...this.red);
                 doc.text(this.sentText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentSentBalance.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.sent.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
-
-                doc.setTextColor(0, 0, 0);
                 this.offset += 5;
+
+                doc.setTextColor(...this.black);
                 doc.text(this.startingText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentBalanceBeginPeriod.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.starting.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
-
                 this.offset += 5;
+
                 doc.text(this.totalText, this.xPositionSummaryAction, this.offset);
-                doc.text(this.currentBalanceEndPeriod.toString(), this.xPositionSummaryCount, this.offset);
+                doc.text(balanceStats.total.toString(), this.xPositionSummaryCount, this.offset);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset);
 
                 this.offset += 15;
@@ -1051,19 +1050,20 @@
                     this.offset += 25;
 
                 doc.setFontSize(this.normalFontSize);
-                doc.setTextColor(75, 177, 3);
+
+                doc.setTextColor(...this.green);
                 doc.text(this.receivedText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentReceived.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
                 this.offset += 5;
 
-                doc.setTextColor(177, 3, 3);
+                doc.setTextColor(...this.red);
                 doc.text(this.sentText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentSent.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
                 this.offset += 5;
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(this.totalText, this.xPositionSummaryAction, this.offset + 25 * j);
                 doc.text(this.currentTotal.toString(), this.xPositionSummaryCount, this.offset + 25 * j);
                 doc.text(this.currencyText, this.xPositionSummaryCurrency, this.offset + 25 * j);
@@ -1079,10 +1079,10 @@
 
                 doc.setFontSize(this.normalFontSize);
 
-                (this.checkTypeTransaction(type)) ? doc.setTextColor(177, 3, 3) : doc.setTextColor(75, 177, 3);
+                (this.checkTypeTransaction(type)) ? doc.setTextColor(...this.red) : doc.setTextColor(...this.green);
                 doc.text(type, this.xPositionTransactionType, this.offset + 25 * j);
 
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(...this.black);
                 doc.text(summaryString, 40, this.offset + 25 * j);
             },
 
@@ -1098,10 +1098,41 @@
 
                 if (this.selectionTypeStatement === 'current') {
 
-                    console.log(this.transactions, 'this.transactions');
-                    console.log(this.transactions.length, 'this.transactions.length');
+                    //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                    let currDayBalanceStats = {
+                            received: 0,
+                            sent: 0,
+                            starting: 0,
+                            total: 0
+                        },
+                        currTransactions = this.transactions,
+                        walletAttr = {
+                            name: '',
+                            address: ''
+                        };
 
-                    this.generateHeaderTransactionsStatement(doc, this.currentWallet.name);
+                    currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
+                    currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
+
+                    currTransactions.forEach((item, i, arr) => {
+                        if (item.balanceInfo.after - item.balanceInfo.before > 0)
+                            currDayBalanceStats.received += item.count;
+
+                        if (item.balanceInfo.after - item.balanceInfo.before < 0)
+                            currDayBalanceStats.sent += item.count;
+
+                        if (i !== 0 && item.timestamp < arr[i - 1].timestamp)
+                            currDayBalanceStats.starting = item.balanceInfo.before;
+
+                        if (i !== 0 && item.timestamp > arr[i - 1].timestamp)
+                            currDayBalanceStats.total = item.balanceInfo.after;
+
+                    });
+
+                    walletAttr.address = this.currentWallet.address;
+                    walletAttr.name = this.currentWallet.name;
+
+                    this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
                     this.generateDateTransactions(doc, Moment(this.transactions[0].timestamp).format("DD.MM.YYYY"), 0);
 
                     for (let i = 0, j = 0; i < this.transactions.length; i++, j = i - balancer) {
@@ -1118,14 +1149,12 @@
                             countPage++;
                             doc.setPage(countPage);
                             balancer = i;
-                            // j = i - balancer;
                             j = 0;
                             this.offset = 25;
                         }
 
 
                         if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
-
                             this.generateTransactionsDayStatement(doc, j, false);
                             this.generateDateTransactions(doc, date, j);
 
@@ -1133,10 +1162,8 @@
                             this.currentSent = 0;
                         }
 
-
                         this.calcBalance(i, count);
                         this.generateTransaction(doc, this.getTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
-
 
                         if (i === this.transactions.length - 1) {
                             this.calcBalance(i - 1, count);
@@ -1144,30 +1171,63 @@
                         }
                     }
 
+                    this.offset = 10;
+
                     doc.save(pdfName + '.pdf');
                     return true;
                 }
 
                 if (this.selectionTypeStatement === 'all') {
 
-                    //обрабатывать на пустые массивы транзакций
-
-                    // this.allTransactions.forEach(function (item, i) {
-                    //     console.log(item.transactions[0].timestamp, 'item.transactions[0].timestamp');
-                    // });
-
                     for (let i = 0; i < this.constantTransactions.length; i++) {
 
-                        this.generateHeaderTransactionsStatement(doc, this.constantTransactions[i].address);
-                        this.generateDateTransactions(doc, Moment(this.constantTransactions[i].transactions[0].timestamp).format("DD.MM.YYYY"), 0);
+                        //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                        let currDayBalanceStats = {
+                                received: 0,
+                                sent: 0,
+                                starting: 0,
+                                total: 0
+                            },
+                            currTransactions = this.constantTransactions[i].transactions,
+                            walletAttr = {
+                                name: '',
+                                address: ''
+                            };
 
-                        for (let k = 0, factor = 0; k < this.constantTransactions[i].transactions.length; k++, factor = k - balancer) {
+                        currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
+                        currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
 
-                            let count = this.constantTransactions[i].transactions[k].count,
-                                time = Moment(this.constantTransactions[i].transactions[k].timestamp).format("HH:mm:ss"),
-                                date = Moment(this.constantTransactions[i].transactions[k].timestamp).format("DD.MM.YYYY"),
-                                walletAddress = this.constantTransactions[i].transactions[k].walletAddress,
-                                walletDestination = this.constantTransactions[i].transactions[k].walletDestination;
+                        currTransactions.forEach((item, i, arr) => {
+                            if (item.balanceInfo.after - item.balanceInfo.before > 0)
+                                currDayBalanceStats.received += item.count;
+
+                            if (item.balanceInfo.after - item.balanceInfo.before < 0)
+                                currDayBalanceStats.sent += item.count;
+
+                            if (i !== 0 && item.timestamp < arr[i - 1].timestamp)
+                                currDayBalanceStats.starting = item.balanceInfo.before;
+
+                            if (i !== 0 && item.timestamp > arr[i - 1].timestamp)
+                                currDayBalanceStats.total = item.balanceInfo.after;
+
+                        });
+
+                        walletAttr.address = this.constantTransactions[i].address;
+                        walletAttr.name = this.wallets.find(item => {
+                            return item.address === walletAttr.address;
+                        }).name;
+
+
+                        this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
+                        this.generateDateTransactions(doc, Moment(currTransactions[0].timestamp).format("DD.MM.YYYY"), 0);
+
+                        for (let k = 0, factor = 0; k < currTransactions.length; k++, factor = k - balancer) {
+
+                            let count = currTransactions[k].count,
+                                time = Moment(currTransactions[k].timestamp).format("HH:mm:ss"),
+                                date = Moment(currTransactions[k].timestamp).format("DD.MM.YYYY"),
+                                walletAddress = currTransactions[k].walletAddress,
+                                walletDestination = currTransactions[k].walletDestination;
 
 
                             if (this.offset + 25 * factor > this.heightDoc - 25) {
@@ -1179,7 +1239,7 @@
                                 this.offset = 10;
                             }
 
-                            if (k !== 0 && date !== Moment(this.constantTransactions[i].transactions[k - 1].timestamp).format("DD.MM.YYYY")) {
+                            if (k !== 0 && date !== Moment(currTransactions[k - 1].timestamp).format("DD.MM.YYYY")) {
                                 this.generateTransactionsDayStatement(doc, factor, false);
                                 this.generateDateTransactions(doc, date, factor);
 
@@ -1196,8 +1256,9 @@
                                 this.offset = 10;
                             }
 
-                            this.calcBalanceAll(this.constantTransactions[i].transactions[k].balanceInfo, count);
-                            this.generateTransaction(doc, this.getTypeTransactionAll(this.constantTransactions[i].transactions[k].balanceInfo),
+                            this.calcBalanceAll(currTransactions[k].balanceInfo, count);
+
+                            this.generateTransaction(doc, this.getTypeTransactionAll(currTransactions[k].balanceInfo),
                                 count, date, time, walletAddress, walletDestination, factor);
 
 
@@ -1211,15 +1272,14 @@
                             }
 
 
-                            if (k === this.constantTransactions[i].transactions.length - 1) {
-                                this.calcBalanceAll(this.constantTransactions[i].transactions[k].balanceInfo, count);
+                            if (k === currTransactions.length - 1) {
                                 this.generateTransactionsDayStatement(doc, factor, true);
 
                                 this.currentReceived = 0;
                                 this.currentSent = 0;
                             }
 
-                            if (k === this.constantTransactions[i].transactions.length - 1 && i !== this.constantTransactions.length - 1) {
+                            if (k === currTransactions.length - 1 && i !== this.constantTransactions.length - 1) {
                                 doc.addPage();
                                 countPage++;
                                 doc.setPage(countPage);
@@ -1228,11 +1288,9 @@
                                 this.offset = 10;
                             }
                         }
-
-                        if (i === this.constantTransactions.length - 1) {
-
-                        }
                     }
+
+                    this.offset = 10;
 
                     doc.save(pdfName + '.pdf');
                     return true;
@@ -1240,13 +1298,45 @@
 
                 if (this.selectionTypeStatement === 'optional') {
 
-                    console.log(this.filteredAllTransactions.transactions, 'this.filteredAllTransactions.transactions');
-
                     for (let i = 0; i < this.filteredAllTransactions.transactions.length; i++) {
 
-                        // console.log(this.filteredAllTransactions.transactions[i].transactions[0].timestamp, 'this.filteredAllTransactions.transactions[i].transactions[0].timestamp');
+                        //написать свой модуль для подсчёта всех входящих денег из переданного массива транзакций
+                        let currDayBalanceStats = {
+                                received: 0,
+                                sent: 0,
+                                starting: 0,
+                                total: 0
+                            },
+                            currTransactions = this.filteredAllTransactions.transactions[i].transactions,
+                            walletAttr = {
+                                name: '',
+                                address: ''
+                            };
 
-                        this.generateHeaderTransactionsStatement(doc, this.filteredAllTransactions.transactions[i].address);
+                        currDayBalanceStats.starting = currTransactions[0].balanceInfo.before;
+                        currDayBalanceStats.total = currTransactions[0].balanceInfo.after;
+
+                        currTransactions.forEach((item, i, arr) => {
+                            if (item.balanceInfo.after - item.balanceInfo.before > 0)
+                                currDayBalanceStats.received += item.count;
+
+                            if (item.balanceInfo.after - item.balanceInfo.before < 0)
+                                currDayBalanceStats.sent += item.count;
+
+                            if (i !== 0 && item.timestamp < arr[i - 1].timestamp)
+                                currDayBalanceStats.starting = item.balanceInfo.before;
+
+                            if (i !== 0 && item.timestamp > arr[i - 1].timestamp)
+                                currDayBalanceStats.total = item.balanceInfo.after;
+
+                        });
+
+                        walletAttr.address = this.filteredAllTransactions.transactions[i].address;
+                        walletAttr.name = this.wallets.find(item => {
+                            return item.address === walletAttr.address;
+                        }).name;
+
+                        this.generateHeaderTransactionsStatement(doc, walletAttr, currDayBalanceStats);
                         this.generateDateTransactions(doc, Moment(this.filteredAllTransactions.transactions[i].transactions[0].timestamp).format("DD.MM.YYYY"), 0);
 
                         for (let k = 0, factor = 0; k < this.filteredAllTransactions.transactions[i].transactions.length; k++, factor = k - balancer) {
@@ -1302,7 +1392,6 @@
 
 
                             if (k === this.filteredAllTransactions.transactions[i].transactions.length - 1) {
-                                this.calcBalanceAll(this.filteredAllTransactions.transactions[i].transactions[k].balanceInfo, count);
                                 this.generateTransactionsDayStatement(doc, factor, true);
 
                                 this.currentReceived = 0;
@@ -1318,11 +1407,9 @@
                                 this.offset = 10;
                             }
                         }
-
-                        if (i === this.filteredAllTransactions.transactions.length - 1) {
-
-                        }
                     }
+
+                    this.offset = 10;
 
                     doc.save(pdfName + '.pdf');
                     return true;
@@ -1332,64 +1419,22 @@
             downloadPDF: function () {
                 if (this.selectionTypeStatement === 'current') {
                     this.makePDF();
-                    this.closeModal('download-pdf');
-                }
-
-                if (this.selectionTypeStatement === 'all') {
-                    // if (получены не все транзакции в списке кошельков)
-
+                    // this.closeModal('download-pdf');
+                } else if (this.selectionTypeStatement === 'all') {
                     this.dataProcessing = true;
-
-                    // let walletsAddressList = this.wallets.map(function (wallet) {
-                    //     return wallet.address;
-                    // });
-
-                    // this.$store.dispatch('allTransactionsRequest', {
-                    //     addresses: walletsAddressList
-                    // }).then(() => {
                     this.makePDF();
                     this.dataProcessing = false;
-                    this.closeModal('download-pdf');
-                    // }).catch(() => {
-                    //     this.$toasted.show('An error occurred while loading transactions statement', {
-                    //         duration: 10000,
-                    //         type: 'error',
-                    //     });
-                    // });
-
-                    //после тестирования перенести в then() =>
-                    // setTimeout(() => {
-                    //     if (this.allTransactionsStatus === 'success') {
-                    //         this.makePDF();
-                    //         this.closeModal('download-pdf');
-                    //     }
-                    // }, 150);
-                }
-
-                if (this.selectionTypeStatement === 'optional') {
+                } else if (this.selectionTypeStatement === 'optional') {
                     this.dataProcessing = true;
-
                     this.makePDF();
-
                     this.dataProcessing = false;
+                    // this.closeModal('download-pdf');
                 }
             }
         },
         created() {
             this.dateFromDatepicker = this.dateFrom;
             this.dateToDatepicker = this.dateTo;
-        },
-        mounted() {
-
-            // this.makeDisableDatepicker();
-
-            // this.$store.dispatch('copyAllTransactions',
-            //     this.allTransactions
-            // ).then(() => {
-            //
-            // }).catch(() => {
-            //
-            // });
         }
     }
 </script>
@@ -1415,9 +1460,10 @@
 </style>
 
 <style lang="stylus" scoped>
-    .btn-default:disabled
-        background-color rgba(13, 23, 23, 0.08)
-        opacity 0.4 !important
+    .btn-default
+        &:disabled
+            background-color rgba(13, 23, 23, 0.08)
+            opacity 0.4 !important
 
     .disabled-label__control
         cursor default
