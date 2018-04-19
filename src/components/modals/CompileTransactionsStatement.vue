@@ -63,7 +63,7 @@
 
                 <div class="modal-control">
                     <div class="modal-wrap">
-                        <div class="modal-line" style="display: flex; justify-content: space-between;">
+                        <div class="modal-line modal-line__between">
                             <p class="modal-control__title"
                                :class="{ 'disabled-title': checkDisabled }">
                                 Select from where you want to export transactions
@@ -103,10 +103,8 @@
                                         </span>
                                         <span class="input-label input-label__balance"
                                               :class="{ 'disabled-label__balance': checkDisabled }">
-                                            <formatting-price
-                                                    :value="wallet.balance"
-                                                    :balance="true"
-                                            />
+                                            <formatting-price :value="wallet.balance"
+                                                              :balance="true"/>
                                             &nbsp;ALE
                                         </span>
                                     </div>
@@ -132,7 +130,7 @@
 
                 <div class="modal-control border-none">
                     <div class="modal-wrap">
-                        <div class="row-flex" style="align-items: flex-start; margin-bottom: 0;">
+                        <div class="row-flex row-flex__top">
                             <div class="col-5 modal-blocks">
                                 <div class="modal-block">
                                     <div class="modal-line">
@@ -257,7 +255,6 @@
 
                 <div class="modal-footer">
                     <button class="buttons btn-default btn-large"
-                            style="margin-right: 12px;"
                             type="button"
                             @click="resetFilters"
                             :disabled="checkDisabled">
@@ -300,25 +297,6 @@
             Datepicker,
             Spinner,
             FormattingPrice
-        },
-        props: {
-            //unnecessary. remove.
-            currentBalanceBeginPeriod: {
-                type: [Number, String],
-                required: true
-            },
-            currentBalanceEndPeriod: {
-                type: [Number, String],
-                required: true
-            },
-            currentReceivedBalance: {
-                type: [Number, String],
-                required: true
-            },
-            currentSentBalance: {
-                type: [Number, String],
-                required: true
-            }
         },
         data() {
             return {
@@ -420,11 +398,6 @@
             }
         },
         watch: {
-            'filterOptions.selectedWallets': function (listSelectedWallets) {
-                if (this.isAllWallets && !this.listWalletAddress.equals(listSelectedWallets)) {
-                    this.isAllWallets = false;
-                }
-            },
             changingDates: function (val) {
                 if (!this.dateFromPick && !this.dateToPick) {
                     this.dateFromPick = this.makeMinDate(val).getTime();
@@ -716,6 +689,11 @@
                 if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
                     this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                     this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
+                }
+
+                if (this.isAllWallets && !this.listWalletAddress.equals(this.filterOptions.selectedWallets) &&
+                    this.listWalletAddress.equals(this.prevSelectedWallets)) {
+                    this.isAllWallets = false;
                 }
 
                 this.$store.dispatch('restoreAllTransactions',
@@ -1460,6 +1438,10 @@
 </style>
 
 <style lang="stylus" scoped>
+    .row-flex.row-flex__top
+        align-items flex-start
+        margin-bottom 0
+
     .btn-default
         &:disabled
             background-color rgba(13, 23, 23, 0.08)
@@ -1615,6 +1597,10 @@
                         font-size 13px
                         position absolute
 
+            .modal-line.modal-line__between
+                display flex
+                justify-content space-between
+
             .modal-line:not(:last-child), .modal-control__block:not(:last-child)
                 margin-bottom 10px
 
@@ -1659,7 +1645,8 @@
                 opacity 0.4
 
             .buttons
-
+                &:first-child
+                    margin-right 12px
                 .count-transactions
                     font-weight 700
 

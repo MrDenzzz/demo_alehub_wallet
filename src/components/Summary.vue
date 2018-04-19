@@ -1,15 +1,12 @@
 <template>
     <div class="wallet">
-        <navbar
-                :title="$t('pages.summary.navbarTitle')"
+        <navbar :title="$t('pages.summary.navbarTitle')"
                 :isNavigate="true"
                 :isBalance="true"
-                :rightMenu="rightMenu"
-        />
+                :rightMenu="rightMenu"/>
+
         <section class="main">
-            <wallets-list
-                    :new-wallets="wallets"
-            />
+            <wallets-list :new-wallets="wallets"/>
             <div class="content">
                 <div class="container">
                     <div class="row">
@@ -17,8 +14,7 @@
                             <div class="stats-balance">
                                 <div class="stats-col">
                                     <!--заплатка. переделать-->
-                                    <send-request
-                                            v-if="this.transactions.length === 0 && (transactionStatus === 'error' ||
+                                    <send-request v-if="this.transactions.length === 0 && (transactionStatus === 'error' ||
                                              transactionsLazyStatus === 'success' || !currentWalletHaveTransactions)"/>
                                 </div>
                             </div>
@@ -32,19 +28,16 @@
                                 <spinner/>
                             </div>
 
-                            <transactions-tool-panel
-                                    v-if="this.transactions.length !== 0 && transactionsLazyStatus === 'success'"
-                                    :current-transactions="getActivity"
-                                    :reset-search="resetSearch"
-                            />
+                            <transactions-tool-panel v-if="this.transactions.length !== 0 &&
+                                                     transactionsLazyStatus === 'success'"
+                                                     :current-transactions="getActivity"
+                                                     :reset-search="resetSearch"/>
 
-                            <activity-list
-                                    v-if="getActivity.length !== 0 && transactionsLazyStatus === 'success'"
-                                    :activities="getActivity"
-                                    :is-show-date="true"
-                                    :change-wallet-result="changeWalletResult"
-                                    :new-transaction="newTransaction"
-                            />
+                            <activity-list v-if="getActivity.length !== 0 && transactionsLazyStatus === 'success'"
+                                           :activities="getActivity"
+                                           :is-show-date="true"
+                                           :change-wallet-result="changeWalletResult"
+                                           :new-transaction="newTransaction"/>
                         </div>
                     </div>
                     <div class="row">
@@ -58,8 +51,7 @@
                                     {{ $t('pages.summary.notFound') }}
                                 </p>
 
-                                <button
-                                        v-if="transactions.length !== 0"
+                                <button v-if="transactions.length !== 0"
                                         class="buttons btn-yellow"
                                         @click="resetFilter()">
                                     {{ $t('pages.summary.buttons.reset')}}
@@ -149,7 +141,7 @@
             },
             checkLoadingSpinner: function () {
                 if (this.transactionsLazyStatus !== 'success' && (this.transactions.length !== 0 ||
-                        this.transactionsLazyStatus === 'success'))
+                    this.transactionsLazyStatus === 'success'))
                     return true;
 
                 return false;
