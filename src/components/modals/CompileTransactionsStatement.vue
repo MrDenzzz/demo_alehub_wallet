@@ -19,7 +19,6 @@
                             </p>
                         </div>
                         <div class="modal-line">
-
                             <label class="control control-radio">
                                 <input type="radio"
                                        name="transaction-selection"
@@ -461,15 +460,11 @@
                 'disableFieldsFilter'
             ]),
             checkDisabled: function () {
-                if (this.selectionTypeStatement !== 'optional')
-                    return true;
-                return false;
+                return (this.selectionTypeStatement !== 'optional');
             },
+            //replace
             checkDisabledByTransactions: function () {
-                if (this.selectionTypeStatement !== 'optional')
-                // if (this.selectionTypeStatement !== 'optional' || this.filterOptions.selectedWallets.length === 0)
-                    return true;
-                return false;
+                return (this.selectionTypeStatement !== 'optional');
             },
             /*
             * */
@@ -638,9 +633,7 @@
                 }
             },
             checkNotNull: function (val) {
-                if (val !== null)
-                    return true;
-                return false;
+                return (val !== null);
             },
             //записать обработку если дается таймштамп, а не дата
             makeMinDate: function (date) {
@@ -664,11 +657,7 @@
                 this.filterOptions.date.secondary.to = this.makeMaxDate(this.changingDates).getTime();
                 this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
                 this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
-
-                console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
-                console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.to');
             },
-
             calcSerialDay: function (date) {
                 date.setHours(0);
                 date.setMinutes(0);
@@ -721,6 +710,8 @@
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
                         }
 
+                        //REFACTOR
+
                         let a = '';
 
                         this.transactionsByDay = this.filteredAllTransactions.transactions.map(item => {
@@ -736,9 +727,8 @@
                             return a.getTime();
                         });
 
-                        let days = [];
-
-                        let count = 1;
+                        let days = [],
+                            count = 1;
 
                         for (let i = 0; i < this.transactionsByDay.length; i++) {
                             if (i === 0) {
@@ -945,39 +935,24 @@
                 }
             },
 
-            //в computed
-            checkTypeTransaction: function (type) {
-                if (type === 'SEND')
-                    return true;
-                return false;
-            },
-            getTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
-                if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
-                    return 'RECEIVED';
-                return 'SEND';
+            //rec - recognize
+            recTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
+                return (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0);
             },
 
             //tmp solution
-            getTypeTransactionAll: function (item) {
-                if (item.after - item.before > 0)
-                    return 'RECEIVED';
-                return 'SEND';
+            recTypeTransactionAll: function (item) {
+                return (item.after - item.before > 0);
             },
 
             calcBalance: function (i, count) {
                 this.currentTotal = this.transactions[i].balanceInfo.after;
-                if (this.checkTypeTransaction(this.getTypeTransaction(i)))
-                    this.currentSent += count;
-                else
-                    this.currentReceived += count;
+                (this.recTypeTransaction(i)) ? this.currentReceived += count : this.currentSent += count;
             },
 
             calcBalanceAll: function (item, count) {
                 this.currentTotal = item.after;
-                if (this.checkTypeTransaction(this.getTypeTransactionAll(item)))
-                    this.currentSent += count;
-                else
-                    this.currentReceived += count;
+                (this.recTypeTransactionAll(item)) ? this.currentReceived += count : this.currentSent += count;
             },
 
             generateHeaderTransactionsStatement: function (doc, wallet, balanceStats) {
@@ -1057,8 +1032,8 @@
 
                 doc.setFontSize(this.normalFontSize);
 
-                (this.checkTypeTransaction(type)) ? doc.setTextColor(...this.red) : doc.setTextColor(...this.green);
-                doc.text(type, this.xPositionTransactionType, this.offset + 25 * j);
+                (type) ? doc.setTextColor(...this.green) : doc.setTextColor(...this.red);
+                doc.text((type) ? this.receivedText : this.sentText, this.xPositionTransactionType, this.offset + 25 * j);
 
                 doc.setTextColor(...this.black);
                 doc.text(summaryString, 40, this.offset + 25 * j);
@@ -1131,7 +1106,6 @@
                             this.offset = 25;
                         }
 
-
                         if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
                             this.generateTransactionsDayStatement(doc, j, false);
                             this.generateDateTransactions(doc, date, j);
@@ -1141,10 +1115,10 @@
                         }
 
                         this.calcBalance(i, count);
-                        this.generateTransaction(doc, this.getTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
+                        this.generateTransaction(doc, this.recTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
 
                         if (i === this.transactions.length - 1) {
-                            this.calcBalance(i - 1, count);
+                            i === 0 || this.calcBalance(i - 1, count);
                             this.generateTransactionsDayStatement(doc, j, true);
                         }
                     }
