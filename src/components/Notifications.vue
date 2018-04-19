@@ -72,14 +72,26 @@
                 }).catch(() => {
                     console.log('Error toggle notifications badge');
                 });
-            }
+            },
+            removeCheckedNotif(checkedNotif) {
+                this.isLoader = true;
+                this.$store.dispatch('deleteNotifications', checkedNotif
+                ).then(() => {
+                    this.isLoader = false;
+                    console.log('Success deleting notifications');
+                }).catch(() => {
+                    console.log('Error deleting notifications');
+                });
+            },
         },
         created() {
             this.changeToggleNotificationBadge(false);
             this.getCurrentNotifications();
         },
         mounted() {
-
+            this.$on('removeCheckedNotif', function (checkedNotif) {
+                this.removeCheckedNotif(checkedNotif);
+            });
         }
     };
 </script>

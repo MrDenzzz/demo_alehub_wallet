@@ -7,12 +7,12 @@ const state = {
 };
 
 const actions = {
-    getNotifications: ({commit}, address) => {
+    getNotifications: ({commit}) => {
         return new Promise((resolve, reject) => {
 
             commit('REQUEST_GET_NOTIFICATIONS');
 
-            let host = `http://192.168.1.47:4000/notifications/${address}`;
+            let host = `http://192.168.1.47:4000/notifications`;
             axios({
                 url: host,
                 headers: {
@@ -36,6 +36,28 @@ const actions = {
             resolve(value);
         });
     },
+    deleteNotifications: ({commit, dispatch}, notifArray) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_GET_NOTIFICATIONS');
+            let host = `http://192.168.1.47:4000/notifications/list`;
+            axios({
+                url: host,
+                data: {list: notifArray},
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'DELETE'
+            }).then(resp => {
+                dispatch('getNotifications');
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_GET_NOTIFICATIONS', err);
+                reject(err)
+            });
+        })
+    }
 };
 
 const mutations = {
@@ -55,7 +77,7 @@ const mutations = {
 };
 
 const getters = {
-    notifications: state => state.notifications
+    notifications: state => state.notifications.reverse()
 };
 
 export default {
