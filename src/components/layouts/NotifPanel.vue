@@ -9,23 +9,41 @@
             </button>
         </div>
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
-            <Panel-heading :title="parseDate(notification.date)" :isTop="true" v-if="check(notificationIndex)"/>
-            <div class="notif-panel" :class="{checked: isChecked(notification._id)}">
-                <input type="checkbox" :value="notification._id" id="notification._id" v-model="checkedNotif" class="notif-checkbox" v-show="isShown"> 
-                <div class="panel-heading" :class="{'shift-right': isShown}">
+            <panel-heading :title="parseDate(notification.date)" :isTop="true"
+                           v-if="check(notificationIndex)"/>
+            <div class="notif-panel"
+                 :class="{checked: isChecked(notification._id)}">
+                <input type="checkbox"
+                       id="notification._id"
+                       class="notif-checkbox"
+                       :value="notification._id"
+                       v-show="isShown"
+                       v-model="checkedNotif">
+                <div class="panel-heading"
+                     :class="{'shift-right': isShown}">
                     <!-- <h3 class="title" v-html="parseMarkDown(notification.title)"></h3> -->
-                    <h3 class="datetime">{{ parseDate(notification.timestamp) }} {{ $t('pages.notifications.in') }} <span class="bold">{{ parseTime(notification.timestamp) }}</span>
+                    <h3 class="datetime">
+                        {{ parseDate(notification.timestamp) }} {{ $t('pages.notifications.in') }}
+                        <span class="bold">
+                            {{ parseTime(notification.timestamp) }}
+                        </span>
                     </h3>
                 </div>
-                <h4 class="subtitle" v-if="notification.isSubtitle">{{ notification.subTitle }}:</h4>
-                <div class="changed-line" v-for="change in notification.changes" v-if="notification.changes.length"
-                     :class="{ 'line-update': change.status == 'updated' }">
-                    <span class="icon" v-if="change.status == 'old'">–</span>
-                    <span class="icon" v-if="change.status == 'updated'">+</span>
-                    <span class="message" v-html="parseMarkDown(change.text)"></span>
+                <h4 class="subtitle" v-if="notification.isSubtitle">
+                    {{ notification.subTitle }}:
+                </h4>
+                <div class="changed-line"
+                     v-if="notification.changes.length"
+                     v-for="change in notification.changes"
+                     :class="{ 'line-update': change.status === 'updated' }">
+                    <span class="icon"
+                          v-if="change.status === 'old'">–</span>
+                    <span class="icon"
+                          v-if="change.status === 'updated'">+</span>
+                    <span class="message"
+                          v-html="parseMarkDown(change.text)"></span>
                 </div>
             </div>
-
         </div>
     </div>
 </template>

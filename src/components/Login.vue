@@ -47,7 +47,7 @@
                                         <p>Login or password is incorrect</p>
                                     </div>
                                     <div class="is-center" v-if="dataProcessing">
-                                        <Spinner/>
+                                        <spinner/>
                                     </div>
                                 </form>
 

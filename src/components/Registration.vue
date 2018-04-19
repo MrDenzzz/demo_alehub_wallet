@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="is-center" v-if="processingSendRequest">
-                                <Spinner/>
+                                <spinner/>
                             </div>
 
                             <div v-if="!processingSendRequest && successSendRequest"
