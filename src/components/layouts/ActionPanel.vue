@@ -2,30 +2,68 @@
     <div :class="{'apply-panel': !isBottomOffersAction, 'offers-apply-panel': btnRouterText, 'top-offers-apply-panel': topOffersApplyPanel}">
 
         <div>
-            <h1 v-if="price"><vue-numeric :value="price" :separator="correctLangSep" :precision="correctValuePrecision"
-                                          :decimal-separator="correctLangDecSep" :read-only="true"></vue-numeric>{{ " " + "ALC" }}</h1>
-            <p v-if="text" class="text">{{ text }}</p>
-            <p v-if="textMuted" class="text muted">{{ textMuted }}</p>
+            <h1 v-if="price">
+                <vue-numeric :value="price"
+                             :separator="correctLangSep"
+                             :precision="correctValuePrecision"
+                             :decimal-separator="correctLangDecSep"
+                             :read-only="true"></vue-numeric>
+                {{ " " + "ALC" }}
+            </h1>
+            <p class="text"
+               v-if="text">
+                {{ text }}
+            </p>
+            <p class="text muted"
+               v-if="textMuted">
+                {{ textMuted }}
+            </p>
         </div>
 
-        <button v-if="btnText && !applyOffer && !isSubmit" class="btn btn-yellow btn-create btn-block" @click="openModalApply" id="btnApply">{{ btnText }}</button>
-        <a v-if="applyOffer" class="btn btn-yellow btn-block btn-create-task" :href="'mailto:' + mailto" id="btnContractor"> {{ formatedActionText }} </a>
-        <div v-if="isAction && !applyOffer" class="text-center" id="actionText">
-            <a href="mailto:asdasd@zxc.ru" class="link">{{ actionText }}</a>
+        <button id="btnApply"
+                class="btn btn-yellow btn-create btn-block"
+                v-if="btnText && !applyOffer && !isSubmit"
+                @click="openModalApply">
+            {{ btnText }}
+        </button>
+        <a id="btnContractor"
+           class="btn btn-yellow btn-block btn-create-task"
+           v-if="applyOffer"
+           :href="'mailto:' + mailto">
+            {{ formatedActionText }}
+        </a>
+        <div v-if="isAction && !applyOffer"
+             class="text-center"
+             id="actionText">
+            <a href="mailto:asdasd@zxc.ru"
+               class="link">
+                {{ actionText }}
+            </a>
         </div>
 
-        <button v-if="isSubmit" class="btn btn-yellow btn-block btn-create" @click="submitOffer">
+        <button class="btn btn-yellow btn-block btn-create"
+                v-if="isSubmit"
+                @click="submitOffer">
             {{ btnText }}
         </button>
 
-        <div v-if="actionRouterText" class="row-flex">
+        <div class="row-flex"
+             v-if="actionRouterText">
             <div class="col">
-                <h3 class="title-btn-create-task" :class="{'title-btn-create-task-bottom': isBottomOffersAction}">{{ actionRouterText }}</h3>
+                <h3 class="title-btn-create-task"
+                    :class="{'title-btn-create-task-bottom': isBottomOffersAction}">
+                    {{ actionRouterText }}
+                </h3>
             </div>
         </div>
-        <div v-if="btnRouterText && to" class="row-flex row-flex-router">
-            <div class="col" :class="{'is-350': isBottomOffersAction || topOffersApplyPanel}">
-                <router-link :to="to" tag="a" class="btn btn-block btn-create" :class="[isBottomOffersAction ? 'btn-grey': 'btn-yellow']">
+        <div class="row-flex row-flex-router"
+             v-if="btnRouterText && to">
+            <div class="col"
+                 :class="{'is-350': isBottomOffersAction || topOffersApplyPanel}">
+                <router-link class="btn btn-block btn-create"
+                             tag="a"
+                             :class="[isBottomOffersAction ? 'btn-grey': 'btn-yellow']"
+                             :to="to">
                     {{ btnRouterText }}
                 </router-link>
             </div>
@@ -136,8 +174,6 @@
         text-decoration none
         color inherit
         font-family MuseoSansCyrl500
-
-
 
     .apply-panel
         -webkit-touch-callout text

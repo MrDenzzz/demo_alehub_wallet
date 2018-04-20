@@ -1,7 +1,6 @@
 <template>
     <div class="settings">
-        <navbar
-                :title="$t('pages.settings.navbarTitle')"
+        <navbar :title="$t('pages.settings.navbarTitle')"
                 :isNavigate="true"
                 :isBalance="false"/>
 
@@ -18,7 +17,8 @@
                                                :input-value="userName"
                                                :input-type="'text'"/>
 
-                                <div class="control" @click="checkPossibleOpenModal('changeemail', 'E-MAIL')">
+                                <div class="control"
+                                     @click="checkPossibleOpenModal('changeemail', 'E-MAIL')">
                                     <div class="wrap-input">
                                         <label>E-mail</label>
                                         <div class="textbox">
@@ -29,7 +29,8 @@
                                     </div>
                                 </div>
 
-                                <div class="control" @click="checkPossibleOpenModal('change-password', 'PASSWORD')">
+                                <div class="control"
+                                     @click="checkPossibleOpenModal('change-password', 'PASSWORD')">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
@@ -39,7 +40,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="control border-none" @click.stop="changeLanguage">
+                                <div class="control border-none"
+                                     @click.stop="changeLanguage">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.language') }}</label>
                                         <select-control
@@ -167,7 +169,7 @@
             },
             textLastUpdatedPass: function () {
                 let now = new Date(),
-                    diff = Math.floor((now.getTime() - parseInt(this.userLastUpdatedPassword))/(86400000));
+                    diff = Math.floor((now.getTime() - parseInt(this.userLastUpdatedPassword)) / (86400000));
                 if (diff === 0)
                     return 'The last password change was today';
                 else if (diff === 1)
@@ -190,10 +192,10 @@
                     this.$toasted.show(`You cannot change ${type} without enabling two factor authentication`, {
                         duration: 10000,
                         type: 'error',
-                        action : {
-                            text : 'hide',
+                        action: {
+                            text: 'hide',
                             class: 'toasted-action-hide',
-                            onClick : (e, toastObject) => {
+                            onClick: (e, toastObject) => {
                                 toastObject.goAway(0);
                             }
                         }

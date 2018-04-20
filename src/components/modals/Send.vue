@@ -1,65 +1,87 @@
 <template>
     <div>
-        <modal name="send" height="auto" class="modal-md" @opened="resetState" :adaptive="true">
+        <modal name="send"
+               height="auto"
+               class="modal-md"
+               @opened="resetState"
+               :adaptive="true">
             <div @click="hideDesc">
                 <div class="heading">
-                    <i v-if="parseInt(step) === 2" class="back" @click="step = 1"></i>
-                    <p class="title">{{ $t('modals.send.title') }}</p>
+                    <i class="back"
+                       v-if="parseInt(step) === 2"
+                       @click="step = 1"></i>
+                    <p class="title">
+                        {{ $t('modals.send.title') }}
+                    </p>
                     <i class="close" @click="closeModal"></i>
                 </div>
-                <div class="body" v-if="parseInt(step) === 1">
-                    <div class="modal-control double" @click="focusInput('amount')">
+                <div class="body"
+                     v-if="parseInt(step) === 1">
+                    <div class="modal-control double"
+                         @click="focusInput('amount')">
                         <div class="modal-input">
-                            <label class="title">{{ $t('modals.send.amount') }}</label>
+                            <label class="title">
+                                {{ $t('modals.send.amount') }}
+                            </label>
                             <p class="count">
-                                <input
-                                    type="text"
-                                    v-model="amountAle"
-                                    id="amount"
-                                    placeholder="0"
-                                    @keypress="checkTypingChar"
-                                    :maxlength="maxlength">
-                                ALC
+                                <input type="text"
+                                       v-model="amountAle"
+                                       id="amount"
+                                       placeholder="0"
+                                       @keypress="checkTypingChar"
+                                       :maxlength="maxlength">
+                                {{ 'ALC' }}
                             </p>
                         </div>
                     </div>
                     <div class="modal-control double">
                         <div class="modal-input">
-                            <label class="title clicked" @click="useMax">{{ $t('modals.send.max') }}</label>
+                            <label class="title clicked"
+                                   @click="useMax">
+                                {{ $t('modals.send.max') }}
+                            </label>
                         </div>
                     </div>
-                    <div class="modal-control" @click="focusInput('address')">
+                    <div class="modal-control"
+                         @click="focusInput('address')">
                         <div class="modal-input address">
-                            <label class="title">{{ $t('modals.send.address')}}</label>
+                            <label class="title">
+                                {{ $t('modals.send.address')}}
+                            </label>
                             <the-mask
-                                mask="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                                type="text"
-                                :masked="false"
-                                :placeholder="$t('modals.send.addressPlaceholder')"
-                                class="input"
-                                :class="{error:errorAddress}"
-                                @keyup.enter.native="nextCheck"
-                                @input="resetError('address')"
-                                v-model="address"
-                                id="address"
-                                @paste.native="pasteHandler">
+                                    mask="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                                    type="text"
+                                    :masked="false"
+                                    :placeholder="$t('modals.send.addressPlaceholder')"
+                                    class="input"
+                                    :class="{error:errorAddress}"
+                                    @keyup.enter.native="nextCheck"
+                                    @input="resetError('address')"
+                                    v-model="address"
+                                    id="address"
+                                    @paste.native="pasteHandler">
                             </the-mask>
                         </div>
                     </div>
                     <div class="modal-control last">
                         <div class="modal-input">
-                            <label class="title">{{ $t('modals.send.total') }}</label>
+                            <label class="title">
+                                {{ $t('modals.send.total') }}
+                            </label>
                             <p class="total">
-                                <vue-numeric :separator='correctLangSep' :decimal-separator='correctLangDecSep'
-                                             :value="amountAle" :precision="correctValuePrecision"
+                                <vue-numeric :separator='correctLangSep'
+                                             :decimal-separator='correctLangDecSep'
+                                             :value="amountAle"
+                                             :precision="correctValuePrecision"
                                              :read-only="true"></vue-numeric>
-                                ALC
+                                {{ 'ALC' }}
                             </p>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="buttons btn-yellow openModal" @click="nextCheck"
-                                :disabled="!amountAle || !address">
+                        <button class="buttons btn-yellow openModal"
+                                :disabled="!amountAle || !address"
+                                @click="nextCheck">
                             {{ $t('modals.send.buttons.next') }}
                         </button>
                     </div>
@@ -69,20 +91,26 @@
                         <div class="modal-input">
                             <p class="small">
                                 {{ $t('modals.send.sendText') }}
-                                <vue-numeric separator="," v-model="amountAle" :precision="2"
-                                             :read-only="true"></vue-numeric>
-                                <span>ALC</span> <!-- (with <span>{{fees}}</span> ALC of fees) --> {{ $t('modals.send.to') }}
-                                <span>{{address}}</span>. <!-- Type your spending password to confirm transaction. -->
+                                <vue-numeric separator=","
+                                             v-model="amountAle"
+                                             :precision="2"
+                                             :read-only="true">
+                                </vue-numeric>
+                                <span>{{ 'ALC' }}</span>
+                                <span>{{ $t('modals.send.to') }}</span>
+                                <span>{{ address }}</span>
                             </p>
                         </div>
                     </div>
 
-                    <div v-if="dataProcessing" class="wrap-spinner">
+                    <div v-if="dataProcessing"
+                         class="wrap-spinner">
                         <spinner v-if="dataProcessing"/>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="buttons btn-yellow openModal" @click="send">
+                        <button class="buttons btn-yellow openModal"
+                                @click="send">
                             {{ $t('modals.send.buttons.send') }}
                         </button>
                     </div>
