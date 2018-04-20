@@ -10,7 +10,7 @@
         </div>
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
             <Panel-heading :title="parseDate(notification.date)" :isTop="true" v-if="check(notificationIndex)"/>
-            <div @click="clickCheckbox(notification._id)" class="notif-panel" :class="{checked: isChecked(notification._id), pointer: isShown}">
+            <div @click="clickCheckbox($event, notification._id)" class="notif-panel" :class="{checked: isChecked(notification._id), pointer: isShown}">
                 <label v-show="isShown" class="control control-checkbox">
                     <input type="checkbox"
                         class="notif-checkbox"
@@ -69,7 +69,8 @@
             parseMarkDown(text) {
                 return md(text);
             },
-            clickCheckbox: function (id) {
+            clickCheckbox: function (event, id) {
+                if (event.target.className === "control-indicator") return false
                 if (!this.isShown) return false
                 document.querySelector(`#checkbox${id}`).click();
             },
