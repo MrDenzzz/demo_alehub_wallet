@@ -13,7 +13,9 @@
                     <p class="title">
                         {{ $t('modals.send.title') }}
                     </p>
-                    <i class="close" @click="closeModal"></i>
+                    <i class="close"
+                       @click="closeModal">
+                    </i>
                 </div>
                 <div class="body"
                      v-if="parseInt(step) === 1">
@@ -79,14 +81,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="buttons btn-yellow openModal"
+                        <button id="check-poss-send"
+                                class="buttons btn-yellow openModal"
                                 :disabled="!amountAle || !address"
                                 @click="nextCheck">
                             {{ $t('modals.send.buttons.next') }}
                         </button>
                     </div>
                 </div>
-                <div class="body" v-if="step === 2">
+                <div class="body"
+                     v-if="step === 2">
                     <div class="modal-control">
                         <div class="modal-input">
                             <p class="small">
@@ -109,7 +113,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button class="buttons btn-yellow openModal"
+                        <button id="send-coins"
+                                class="buttons btn-yellow openModal"
                                 @click="send">
                             {{ $t('modals.send.buttons.send') }}
                         </button>
@@ -160,10 +165,10 @@
             currentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;
             },
-            getWalletPassword() {
+            getWalletPassword: function () {
                 return this.$store.state.Wallets.selectedWallet.password;
             },
-            getWalletId() {
+            getWalletId: function () {
                 return this.$store.state.Wallets.currentWallet.id;
             },
             correctLangSep: function () {
@@ -177,39 +182,43 @@
                 return ',';
             },
             correctValuePrecision: function () {
-                if (Number(this.amountAle) % 1 !== 0) {
+                if (Number(this.amountAle) % 1 !== 0)
                     return this.amountAle.toString().split('.')[1].toString().length;
-                }
-                else
-                    return 0;
+                return 0;
             }
         },
         methods: {
             checkTypingChar: function (e) {
-                let event = e || window.event;
-                let key = event.keyCode || event.which;
+                let event = e || window.event,
+                    key = event.keyCode || event.which,
+                    regex = /[0-9]/;
+
                 key = String.fromCharCode(key);
-                let regex = /[0-9]/;
+
                 if (key === '.')
                     this.maxlength;
+
                 if (!regex.test(key)) {
                     event.returnValue = false;
-                    if (event.preventDefault) event.preventDefault();
+                    if (event.preventDefault)
+                        event.preventDefault();
                 }
             },
             amountEnterHandler: function () {
-                let self = this;
-                setTimeout(() => {
-                    document.getElementById('amount').addEventListener('keypress', function (e) {
-                        if (e.keyCode == 13) {
-                            if (!self.address) {
-                                self.focusInput('address');
-                            } else {
-                                self.nextCheck();
-                            }
-                        }
-                    })
-                }, 40);
+                document.addEventListener('keyup', (event) => {
+                    if (this.step === 1) {
+                        setTimeout(() => {
+                            if (event.key === 'Enter')
+                                document.getElementById('check-poss-send').click();
+                        }, 40);
+                    }
+                    if (this.step === 2) {
+                        setTimeout(() => {
+                            if (event.key === 'Enter')
+                                document.getElementById('send-coins').click();
+                        }, 40);
+                    }
+                })
             },
             resetState: function () {
                 this.step = 1;
@@ -242,13 +251,14 @@
                     event.target.id !== 'description-child' &&
                     event.target.id !== 'description-label') {
                     this.description.selected = false;
-                    if (this.description.text === '') this.description.text = this.defaultDescriptionText;
+
+                    if (this.description.text === '')
+                        this.description.text = this.defaultDescriptionText;
                 }
             },
             newSelect: function (value, id) {
-                if (id === "selectFeesType") {
+                if (id === "selectFeesType")
                     this.selectedType = value;
-                }
             },
             nextCheck: function () {
                 if (this.amountAle <= 0) {

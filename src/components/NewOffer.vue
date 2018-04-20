@@ -311,17 +311,17 @@
                 this.offer.deadline = value;
             },
             fileUploader: function () {
-                document.getElementById("customButton").addEventListener("click", function () {
-                    document.getElementById("fileUpload").click();
+                document.getElementById('customButton').addEventListener('click', function () {
+                    document.getElementById('fileUpload').click();
                 });
 
-                var _this  = this;
+                let _this  = this;
 
-                document.getElementById("fileUpload").addEventListener("change", function () {
+                document.getElementById('fileUpload').addEventListener('change', function () {
                     let fullPath = document.getElementById('fileUpload').value;
                     if (fullPath !== '') {
                         _this.tmpFileSolution = fullPath;
-                        document.getElementById("uploadField").innerHTML = fullPath.split(/(\\|\/)/g).pop();
+                        document.getElementById('uploadField').innerHTML = fullPath.split(/(\\|\/)/g).pop();
                     }
                 }, false);
             },
@@ -343,7 +343,7 @@
 
             this.$on('imitVModel', function (value, id) {
                 this.offer[id] = value;
-            })
+            });
 
             this.$on('receiveDescriptionOffer', function (desc) {
                 this.setOfferDesc(desc);
