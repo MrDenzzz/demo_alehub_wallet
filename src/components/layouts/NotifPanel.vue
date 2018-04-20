@@ -1,16 +1,25 @@
 <template>
     <div class="notifications-panel" style="width: 100%;">
         <div class="action-buttons">
-            <button class="buttons btn-default" @click="showCheckbox">
-                Edit
-            </button>
+            <div class="left-buttons">
+                <button v-if="isShown" class="buttons btn-default btn-check-all" @click="selectAll">
+                    <label class="control control-checkbox">
+                        <input type="checkbox" class="notif-checkbox" :checked="notifications.length == checkedNotif.length">
+                        <div class="control-indicator"></div>
+                    </label>
+                    {{$t('pages.notifications.selectAll')}}
+                </button>
+                <button class="buttons btn-default" @click="showCheckbox">
+                    Edit
+                </button>
+            </div>
             <button v-if="isShown" :disabled="checkedNotif.length == 0" class="buttons btn-default btn-delete" @click="removeCheckedNotif(checkedNotif)">
                 <img :src="getIcon('bin')" width="22" height="22" class="icon">
             </button>
         </div>
         <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
             <Panel-heading :title="parseDate(notification.date)" :isTop="true" v-if="check(notificationIndex)"/>
-            <div @click="clickCheckbox(notification._id)" class="notif-panel" :class="{checked: isChecked(notification._id), pointer: isShown}">
+            <div @click="clickCheckbox($event, notification._id)" class="notif-panel" :class="{checked: isChecked(notification._id), pointer: isShown}">
                 <label v-show="isShown" class="control control-checkbox">
                     <input type="checkbox"
                         class="notif-checkbox"
@@ -69,7 +78,19 @@
             parseMarkDown(text) {
                 return md(text);
             },
-            clickCheckbox: function (id) {
+            selectAll: function (event) {
+                if (event.target.className === "control-indicator") return false
+                if (this.checkedNotif.length < this.notifications.length) {
+                    this.checkedNotif = [];
+                    for (let i = 0; i < this.notifications.length; i++) {
+                        this.checkedNotif.push(this.notifications[i]._id);
+                    }
+                } else {
+                    this.checkedNotif = [];
+                }
+            },
+            clickCheckbox: function (event, id) {
+                if (event.target.className === "control-indicator") return false
                 if (!this.isShown) return false
                 document.querySelector(`#checkbox${id}`).click();
             },
@@ -135,5 +156,17 @@
 
     .pointer
         cursor pointer
+
+    .left-buttons
+        display flex
+
+    .btn-check-all
+        width auto
+        margin-right 10px
+        padding-left 36px
+        padding-right 15px
+        .control-indicator
+            top 2px
+            left -20px
 </style>
 
