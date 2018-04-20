@@ -1027,6 +1027,9 @@ body {
 .v--modal {
   overflow-y: auto !important; }
 
+.v--modal-overlay {
+  overflow-y: auto !important; }
+
 .container {
   margin: 24px 24px; }
 
@@ -3732,7 +3735,12 @@ input#datepickerFrom, input#datepickerTo {
 
 @media (max-width: 425px) {
   .qr-code {
-    margin-top: 24px; } }
+    margin-top: 24px; }
+  .modal-footer {
+    display: flex;
+    flex-direction: column; }
+    .modal-footer button {
+      margin: 0; } }
 
 label {
   font-family: MuseoSansCyrl700;

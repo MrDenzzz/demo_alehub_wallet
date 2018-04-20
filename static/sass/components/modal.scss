@@ -354,4 +354,13 @@
   .qr-code {
     margin-top: 24px;
   }
+
+  .modal-footer {
+    display: flex;
+    flex-direction: column;
+
+      & button {
+        margin: 0;
+      }
+  }
 }
