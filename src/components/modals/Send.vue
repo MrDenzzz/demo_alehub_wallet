@@ -229,7 +229,7 @@
                     this.address = document.getElementById('address').value;
                 }, 100);
             },
-            closeModal() {
+            closeModal: function () {
                 this.$modal.hide("send");
             },
             focusInput: function (id) {
@@ -303,7 +303,6 @@
                         walletDestination: this.address,
                         count: parseInt(this.amountAle),
                     }).then(() => {
-
                         this.$store.dispatch('walletsRequestLazy'
                         ).then(() => {
                             this.$store.dispatch('transactionsRequestLazy',
@@ -325,11 +324,11 @@
                                 this.dataProcessing = false;
                                 this.closeModal();
 
-                            }).catch(() => {
-                                console.log('Moment transactions has an error');
+                            }).catch((err) => {
+                                console.log(err);
                             });
-                        }).catch(() => {
-                            console.log('Lazy wallets has an error');
+                        }).catch((err) => {
+                            console.log(err);
                         });
 
                     }).catch(() => {

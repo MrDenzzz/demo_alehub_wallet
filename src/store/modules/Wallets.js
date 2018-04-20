@@ -324,6 +324,10 @@ const mutations = {
     SUCCESS_LAZY_WALLETS: (state, wallets) => {
         if (wallets.length !== 0) {
             state.wallets = wallets;
+
+            state.currentWallet = state.wallets.find(item => {
+                return state.currentWallet.address === item.address;
+            });
         }
         state.lazyWalletStatus = 'success';
     },

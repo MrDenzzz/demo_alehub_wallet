@@ -1,14 +1,22 @@
 <template>
-    <modal name="change-password" height="auto" class="modal-xs">
+    <modal name="change-password"
+           height="auto"
+           class="modal-xs">
         <div class="heading">
-            <p class="title">{{ $t('modals.changePassword.title') }}</p>
-            <i class="close" @click="closeModal('change-password')"></i>
+            <p class="title">
+                {{ $t('modals.changePassword.title') }}
+            </p>
+            <i class="close"
+               @click="closeModal('change-password')">
+            </i>
         </div>
         <div class="body">
             <form @submit.prevent="changePassword()">
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields._2fa.label') }}</label>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields._2fa.label') }}
+                        </label>
                         <input type="number"
                                class="input"
                                :placeholder="$t('modals.changePassword.fields._2fa.placeholder')"
@@ -18,7 +26,9 @@
                 </div>
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields.oldPass.label') }}</label>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields.oldPass.label') }}
+                        </label>
                         <input type="password"
                                class="input"
                                :placeholder="$t('modals.changePassword.fields.oldPass.placeholder')"
@@ -29,7 +39,9 @@
 
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields.newPass.label') }}</label>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields.newPass.label') }}
+                        </label>
                         <input type="password"
                                class="input"
                                :placeholder="$t('modals.changePassword.fields.newPass.placeholder')"
@@ -40,7 +52,9 @@
 
                 <div class="modal-control no-bottom">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields.confirmPass.label') }}</label>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields.confirmPass.label') }}
+                        </label>
                         <input type="password"
                                class="input"
                                :placeholder="$t('modals.changePassword.fields.confirmPass.placeholder')"
@@ -49,12 +63,14 @@
                     </div>
                 </div>
 
-                <div v-if="dataProcessing" class="wrap-spinner">
+                <div v-if="dataProcessing"
+                     class="wrap-spinner">
                     <spinner/>
                 </div>
 
                 <div class="modal-btn text-center">
-                    <button class="btn btn-yellow btn-large" type="submit">
+                    <button type="submit"
+                            class="btn btn-yellow btn-large">
                         {{ $t('modals.changePassword.buttons.change') }}
                     </button>
                 </div>
@@ -80,7 +96,6 @@
                 dataProcessing: false
             }
         },
-        computed: {},
         methods: {
             closeModal: function (nameModal) {
                 this.$modal.hide(nameModal);
@@ -103,7 +118,7 @@
                                 duration: 5000,
                                 type: 'success',
                             });
-                            this.closeModal();
+                            this.closeModal('change-password');
                         }).catch((err) => {
                             console.log(err);
                             this.token = '';

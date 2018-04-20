@@ -44,10 +44,9 @@
                                      @click.stop="changeLanguage">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.language') }}</label>
-                                        <select-control
-                                                :current="selectedLang"
-                                                :all-options="['English', 'Русский']"
-                                                :id="'language'"/>
+                                        <select-control :current="selectedLang"
+                                                        :all-options="['English', 'Русский']"
+                                                        :id="'language'"/>
                                     </div>
                                 </div>
                             </div>
@@ -75,15 +74,15 @@
                                             <p class="text">
                                                 {{ $t('pages.settings._2faText') }}
                                             </p>
-                                            <switch-control
-                                                    v-if="userStatus === 'success'"
-                                                    @click.native.prevent="openChangeTwoAuthModal"/>
+                                            <switch-control v-if="userStatus === 'success'"
+                                                            @click.native.prevent="openChangeTwoAuthModal"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div v-if="dataProcessing" class="wrap-spinner">
+                            <div v-if="dataProcessing"
+                                 class="wrap-spinner">
                                 <spinner/>
                             </div>
 
