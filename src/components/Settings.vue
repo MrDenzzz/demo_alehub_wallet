@@ -35,7 +35,6 @@
                                         <div class="textbox">
                                             <p class="text full-line">
                                                 {{ textLastUpdatedPass }}
-                                                Last updated 15 days ago
                                             </p>
                                         </div>
                                     </div>
@@ -153,6 +152,7 @@
                 'userName',
                 'userEmail',
                 'userTwoAuth',
+                'userLastUpdatedPassword',
                 'twoAuthStatus'
             ]),
             selectedLang: function () {
@@ -166,7 +166,14 @@
                 }
             },
             textLastUpdatedPass: function () {
-                return '';
+                let now = new Date(),
+                    diff = Math.floor((now.getTime() - parseInt(this.userLastUpdatedPassword))/(86400000));
+                if (diff === 0)
+                    return 'The last password change was today';
+                else if (diff === 1)
+                    return 'Last password change was yesterday';
+                else if (diff > 1)
+                    return `Last password change was ${diff} day's ago`;
             }
         },
         methods: {

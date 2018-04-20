@@ -7,6 +7,7 @@ const state = {
     name: '',
     email: '',
     password: '',
+    lastUpdatedPassword: '',
     token: localStorage.getItem(sha256('user-token')) || '',
     twoAuth: '',
     haveTransactions: null,
@@ -409,6 +410,7 @@ const mutations = {
         state.name = user.name;
         state.email = user.email;
         state.twoAuth = user.isTwoAuth;
+        state.lastUpdatedPassword = user.lastUpdatedPassword;
         state.haveTransactions = user.haveTransactions;
         user.walletsList.length === 0 ? state.haveWallets = false : state.haveWallets = true;
         state.userStatus = 'success';
@@ -520,6 +522,7 @@ const getters = {
     userTwoAuth: state => state.twoAuth,
     userHaveWallets: state => state.haveWallets,
     userHaveTransactions: state => state.haveTransactions,
+    userLastUpdatedPassword: state => state.lastUpdatedPassword,
     twoAuthStatus: state => state.twoAuthStatus,
     twoAuthGeneratedCode: state => state.twoAuthGeneratedCode,
     twoAuthSecret: state => state.twoAuthSecret,
