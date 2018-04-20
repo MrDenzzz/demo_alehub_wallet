@@ -327,6 +327,7 @@ const actions = {
     changePassword: ({commit, dispatch}, passData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_PASSWORD');
+            console.log(passData, 'passData');
             let host = 'http://192.168.1.47:4000/users/change-password';
             axios({
                 url: host,
@@ -342,7 +343,7 @@ const actions = {
                 commit('SUCCESS_CHANGE_PASSWORD');
                 resolve(resp);
             }).catch(err => {
-                console.log(err);
+                // console.log(err);
                 commit('ERROR_CHANGE_PASSWORD', err);
                 reject(err);
             });

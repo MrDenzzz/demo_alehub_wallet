@@ -1392,6 +1392,8 @@
 </script>
 
 <style lang="stylus">
+    .vdp-datepicker
+        user-select none
     .datepicker-for-export
         .vdp-datepicker__calendar
             box-shadow none

@@ -1,24 +1,22 @@
 <template>
     <div class="settings">
-        <Navbar
+        <navbar
                 :title="$t('pages.settings.navbarTitle')"
                 :isNavigate="true"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <panel-heading :title="$t('pages.settings.panelHeadingGeneral')" :isTop="true"/>
+                            <panel-heading :title="$t('pages.settings.panelHeadingGeneral')"
+                                           :isTop="true"/>
                             <div class="form">
-                                <input-control
-                                        :label-value="$t('pages.settings.fullName')"
-                                        :input-id="'fullname'"
-                                        :input-value="userName"
-                                        :input-type="'text'"
-                                />
+                                <input-control :label-value="$t('pages.settings.fullName')"
+                                               :input-id="'fullname'"
+                                               :input-value="userName"
+                                               :input-type="'text'"/>
 
                                 <div class="control" @click="openModal('changeemail')">
                                     <div class="wrap-input">
@@ -35,9 +33,7 @@
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
-                                            <p
-                                                    class="text full-line"
-                                            >
+                                            <p class="text full-line">
                                                 Last updated 15 days ago
                                             </p>
                                         </div>
@@ -49,14 +45,13 @@
                                         <select-control
                                                 :current="selectedLang"
                                                 :all-options="['English', 'Русский']"
-                                                :id="'language'"
-                                        />
+                                                :id="'language'"/>
                                     </div>
                                 </div>
                             </div>
 
-                            <Panel-heading :title="$t('pages.settings.theme')" :isTop="false"/>
-
+                            <panel-heading :title="$t('pages.settings.theme')"
+                                           :isTop="false"/>
                             <div class="group-settings">
                                 <div class="form select-main" @click="selectTheme('main')">
                                     <img src="../../static/img/logo_main.svg" alt="">
@@ -69,9 +64,7 @@
                                 </div>
                             </div>
 
-                            <panel-heading
-                                    :title="$t('pages.settings.security')"
-                            />
+                            <panel-heading :title="$t('pages.settings.security')"/>
                             <div class="form">
                                 <div class="control">
                                     <div class="wrap-input">
@@ -89,14 +82,13 @@
                             </div>
 
                             <div v-if="dataProcessing" class="wrap-spinner">
-                                <Spinner/>
+                                <spinner/>
                             </div>
 
                             <div class="text-center">
-                                <a
-                                        href="#"
-                                        class="logout-link"
-                                        @click="logout">
+                                <a href="#"
+                                   class="logout-link"
+                                   @click="logout">
                                     {{ $t('pages.settings.logout')}}
                                 </a>
                             </div>
