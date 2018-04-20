@@ -83,7 +83,7 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="modal-control__wrap">
+                        <div class="modal-control__wrap wrap__wallets">
                             <div class="modal-control__block" v-for="wallet in filledWallets">
                                 <label class="control control-checkbox"
                                        :class="{ 'disabled-label__control': checkDisabled }">
@@ -1514,6 +1514,10 @@
                 font-weight 700
                 font-size 13px
                 color #34343e
+
+            .modal-control__wrap.wrap__wallets
+                max-height 130px
+                overflow-y scroll
 
             .modal-control__wrap
                 display flex

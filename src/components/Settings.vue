@@ -34,6 +34,7 @@
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
                                             <p class="text full-line">
+                                                {{ textLastUpdatedPass }}
                                                 Last updated 15 days ago
                                             </p>
                                         </div>
@@ -163,6 +164,9 @@
                     default:
                         return 'English';
                 }
+            },
+            textLastUpdatedPass: function () {
+                return '';
             }
         },
         methods: {
