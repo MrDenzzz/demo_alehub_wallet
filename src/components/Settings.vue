@@ -18,7 +18,7 @@
                                                :input-value="userName"
                                                :input-type="'text'"/>
 
-                                <div class="control" @click="openModal('changeemail')">
+                                <div class="control" @click="checkPossibleOpenModal('changeemail', 'E-MAIL')">
                                     <div class="wrap-input">
                                         <label>E-mail</label>
                                         <div class="textbox">
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
 
-                                <div class="control" @click="openModal('change-password')">
+                                <div class="control" @click="checkPossibleOpenModal('change-password', 'PASSWORD')">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
@@ -169,14 +169,31 @@
             ...mapMutations({
                 setTheme: 'SET_THEME'
             }),
-
+            openModal: function (name) {
+                this.$modal.show(name);
+            },
+            checkPossibleOpenModal: function (name, type) {
+                if (this.userTwoAuth)
+                    this.openModal(name);
+                else
+                    this.$toasted.show(`You cannot change ${type} without enabling two factor authentication`, {
+                        duration: 10000,
+                        type: 'error',
+                        action : {
+                            text : 'hide',
+                            class: 'toasted-action-hide',
+                            onClick : (e, toastObject) => {
+                                toastObject.goAway(0);
+                            }
+                        }
+                    });
+            },
             logout: function () {
                 this.dataProcessing = true;
 
                 setTimeout(() => {
                     window.scrollTo(0, document.body.scrollHeight);
                 }, 40);
-
                 this.$store.dispatch('authLogout'
                 ).then(() => {
                     this.dataProcessing = false;
@@ -206,9 +223,6 @@
                 if (e.target.className === 'value')
                     return false;
                 document.getElementsByClassName('value')[0].click();
-            },
-            openModal: function (name) {
-                this.$modal.show(name);
             },
             openChangeTwoAuthModal: function () {
                 this.$store.dispatch('setChangeTwoAuthStatus',
