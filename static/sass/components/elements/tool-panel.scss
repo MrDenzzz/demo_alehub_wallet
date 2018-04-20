@@ -142,17 +142,44 @@
 
         .date {
             margin-right: 0;
+            margin-bottom: 16px;
+            width: 100%;
+
+            .date-title {
+                text-align: center;
+            }
 
             .datepicker-wrap {
                 flex-direction: row;
+                justify-content: center;
             }
         }
         
         .docs {
             flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            padding-right: 16px;
+            padding-left: 16px;
 
-            button {
-                margin-right: 15px;
+            & .buttons {
+                width: 100%;
+
+                &:first-child {
+                    margin-right: 32px;
+                }
+            }
+        }
+
+        .info {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            & .stats-col {
+               .title-opt-span {
+                   margin: 0;
+               } 
             }
         }
     }
@@ -166,7 +193,24 @@
             justify-content: space-between;
 
             & .buttons {
-                width: 175px;
+                width: 100%;
+
+                &:first-child {
+                    margin-right: 16px;
+                }
+            }
+        }
+    }
+    .bottom {
+        & .docs {
+            width: 100%;
+
+            & .buttons {
+                width: 100%;
+
+                &:first-child {
+                    margin-right: 16px;
+                }
             }
         }
     }
@@ -201,12 +245,6 @@
         .info {
             width: 100%;
             justify-content: center;
-
-            .stats-col {
-                .result-opt-span {
-                    margin-right: 0;
-                }
-            }
         }
     }
 }

@@ -2582,6 +2582,12 @@ body {
       .activityListBlock .activity-list .details .purpose {
         display: none; } }
 
+@media (max-width: 560px) {
+  .activityListBlock .activity-list .details .info {
+    margin-bottom: 12px; }
+  .activityListBlock .activity-list .details .count {
+    bottom: 10px; } }
+
 .list-panel-heading {
   display: flex;
   align-items: center;
@@ -3333,13 +3339,30 @@ td, th {
   .bottom {
     flex-direction: column; }
     .bottom .date {
-      margin-right: 0; }
+      margin-right: 0;
+      margin-bottom: 16px;
+      width: 100%; }
+      .bottom .date .date-title {
+        text-align: center; }
       .bottom .date .datepicker-wrap {
-        flex-direction: row; }
+        flex-direction: row;
+        justify-content: center; }
     .bottom .docs {
-      flex-direction: row; }
-      .bottom .docs button {
-        margin-right: 15px; } }
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      padding-right: 16px;
+      padding-left: 16px; }
+      .bottom .docs .buttons {
+        width: 100%; }
+        .bottom .docs .buttons:first-child {
+          margin-right: 32px; }
+    .bottom .info {
+      width: 100%;
+      display: flex;
+      justify-content: space-between; }
+      .bottom .info .stats-col .title-opt-span {
+        margin: 0; } }
 
 @media (max-width: 425px) {
   .top .transactions-buttons {
@@ -3347,7 +3370,15 @@ td, th {
     display: flex;
     justify-content: space-between; }
     .top .transactions-buttons .buttons {
-      width: 175px; } }
+      width: 100%; }
+      .top .transactions-buttons .buttons:first-child {
+        margin-right: 16px; }
+  .bottom .docs {
+    width: 100%; }
+    .bottom .docs .buttons {
+      width: 100%; }
+      .bottom .docs .buttons:first-child {
+        margin-right: 16px; } }
 
 @media (max-width: 375px) {
   .top .transactions-buttons {
@@ -3366,9 +3397,7 @@ td, th {
       width: 100%; }
   .bottom .info {
     width: 100%;
-    justify-content: center; }
-    .bottom .info .stats-col .result-opt-span {
-      margin-right: 0; } }
+    justify-content: center; } }
 
 input#datepickerFrom, input#datepickerTo {
   font-family: MuseoSansCyrl500;
@@ -3422,8 +3451,12 @@ input#datepickerFrom, input#datepickerTo {
     margin-right: 0; } }
 
 @media (max-width: 560px) {
-  input#datepickerFrom, input#datepickerTo {
-    margin-right: 15px; } }
+  input#datepickerTo {
+    margin-left: 32px; } }
+
+@media (max-width: 425px) {
+  input#datepickerTo {
+    margin-left: 16px; } }
 
 .modal-backdrop {
   position: fixed;
