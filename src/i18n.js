@@ -36,7 +36,8 @@ const messages = {
                 youSend: 'You **send**',
                 youReceive: 'You **receive**',
                 toAddress: 'to address',
-                fromAddress: 'from address'
+                fromAddress: 'from address',
+                selectAll: 'Select All'
             },
             settings: {
                 navbarTitle: 'Settings',
@@ -463,7 +464,8 @@ const messages = {
                 youSend: 'Вы **отправили**',
                 youReceive: 'Вы **получили**',
                 toAddress: 'на адрес',
-                fromAddress: 'с адреса'
+                fromAddress: 'с адреса',
+                selectAll: 'Выбрать все'
             },
             settings: {
                 navbarTitle: 'Настройки',
