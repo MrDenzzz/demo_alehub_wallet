@@ -1,6 +1,10 @@
 <template>
     <div>
         <modal name="selectLanguage" height="auto" class="modal-md" :adaptive="true">
+            <div class="heading">
+                <i v-if="parseInt(step) === 2" class="back" @click="step = 1"></i>
+                <p class="title">{{ $t('modals.lang.title') }}</p>
+            </div>
             <div class="langModal">
                 <div class="body">
                         <div class="langButtons">

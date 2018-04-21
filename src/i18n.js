@@ -495,7 +495,9 @@ const messages = {
                 enable2fa:'You have successfully ENABLED dual authentication',
             },
             lang:{
-                submit:"Submit"
+                submit:"Submit",
+                title:"Select language"
+
             }
         },
         navbar: {
@@ -982,7 +984,8 @@ const messages = {
                 walletDelete:'Ошибка при удалении кошелька',
             },
             lang:{
-                submit:"Принять"
+                submit:"Принять",
+                title:"Выберите язык"
             },
             success:{
                 changeMail:'Подтверждение на изменение почты было отправлено на этот адрес',
