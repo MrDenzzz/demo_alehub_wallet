@@ -71,7 +71,7 @@
             </div>
         </section>
 
-        <!--<new-wallet/>z-->
+        <new-wallet/>
         <select-language/>
     </div>
 </template>
