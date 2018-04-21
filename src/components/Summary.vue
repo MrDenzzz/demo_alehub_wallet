@@ -6,6 +6,7 @@
                 :rightMenu="rightMenu"/>
 
         <section class="main">
+            <!--<h1 class="test-test">im testing</h1>-->
             <wallets-list :new-wallets="wallets"/>
             <div class="content">
                 <div class="container">
