@@ -6,14 +6,14 @@
             </h3>
             <div class="datepicker-wrap">
                 <datepicker id="datepickerFrom"
-                            language="en"
+                            :language="$t('pages.summary.searchPanel.langDate')"
                             v-model="dateFromDatepicker"
                             :disabled="disabledDate"
                             :placeholder="'Date from'"/>
 
                 <datepicker id="datepickerTo"
                             v-model="dateToDatepicker"
-                            language="en"
+                            :language="$t('pages.summary.searchPanel.langDate')"
                             :disabled="disabledDate"
                             :placeholder="'Date to'"/>
             </div>

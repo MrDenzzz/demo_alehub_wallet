@@ -81,7 +81,7 @@
             SwitchControl,
             ModalDeleteWallet,
             ModalSend,
-            NewWallet
+            NewWallet,
         },
         data() {
             return {
@@ -121,12 +121,12 @@
                     walletAddress: this.currentWallet.address,
                     newWalletName: this.newWalletName
                 }).then(() => {
-                    this.$toasted.show('The name of the wallet was successfully changed', {
+                    this.$toasted.show(this.$t('modals.success.changeNameWallet'), {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
-                    this.$toasted.show('There was an error changing your wallet name', {
+                    this.$toasted.show(this.$t('modals.error.changeNameWallet'), {
                         duration: 10000,
                         type: 'error',
                     });

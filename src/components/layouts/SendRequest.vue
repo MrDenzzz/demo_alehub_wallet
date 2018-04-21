@@ -55,7 +55,7 @@
             this.$on('successCopyAddress', function () {
                 this.$modal.hide('request');
 
-                this.$toasted.show('You have successfully copied the address of the wallet', {
+                this.$toasted.show(this.$t('modals.success.copyWallet'), {
                     duration: 5000,
                     type: 'success',
                 });

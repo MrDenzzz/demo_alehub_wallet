@@ -289,7 +289,7 @@
             },
             checkFillTitleField: function () {
                 if (this.offer.title.length === 0) {
-                    this.$toasted.show("Fill out the OFFER NAME field", {
+                    this.$toasted.show(this.$t('modals.error.checkOffer'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -299,14 +299,14 @@
             },
             checkFillPriceField: function () {
                 if (this.offer.price.length === 0) {
-                    this.$toasted.show("Fill out the PRICE field", {
+                    this.$toasted.show(this.$t('modals.error.checkPrice'), {
                         duration: 10000,
                         type: 'error',
                     });
                     return false;
                 }
                 if (parseInt(this.offer.price) === 0) {
-                    this.$toasted.show("You can not set the value of the PRICE field to zero", {
+                    this.$toasted.show(this.$t('modals.error.checkPriceZero'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -316,7 +316,7 @@
             },
             checkFillDescField: function () {
                 if (this.offer.desc.length === 0) {
-                    this.$toasted.show("Fill out the DESCRIPTION field", {
+                    this.$toasted.show(this.$t('modals.error.checkDesc'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -326,7 +326,7 @@
             },
             checkFillReqsField: function () {
                 if (this.offer.reqs.length === 0) {
-                    this.$toasted.show("Fill out the REQUIREMENTS field", {
+                    this.$toasted.show(this.$t('modals.error.checkRequirements'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -336,7 +336,7 @@
             },
             checkFillDateField: function () {
                 if (this.offer.date.length === 0) {
-                    this.$toasted.show("Fill out the DEADLINE field", {
+                    this.$toasted.show(this.$t('modals.error.checkDeadline'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -346,13 +346,13 @@
             },
             checkFillFileSolution: function () {
                 if (this.tmpFileSolution === '') {
-                    this.$toasted.show("You should select the UPLOAD file", {
+                    this.$toasted.show(this.$t('modals.error.checkUpload'), {
                         duration: 10000,
                         type: 'error',
                     });
                     return false;
                 } else if (this.offer.fileSolution === '' && this.tmpFileSolution !== '') {
-                    this.$toasted.show("You should click the UPLOAD file button", {
+                    this.$toasted.show(this.$t('modals.error.checkUploadButton'), {
                         duration: 10000,
                         type: 'error',
                     });

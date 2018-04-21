@@ -114,31 +114,30 @@
                             this.newPass = '';
                             this.confirmPass = '';
                             this.dataProcessing = false;
-                            this.$toasted.show('You have successfully changed your password', {
+                            this.$toasted.show(this.$t("modals.success.changePass"), {
                                 duration: 5000,
                                 type: 'success',
                             });
-                            this.closeModal('change-password');
-                        }).catch((err) => {
-                            console.log(err);
+                            this.closeModal();
+                        }).catch(() => {
                             this.token = '';
                             this.oldPass = '';
                             this.newPass = '';
                             this.confirmPass = '';
                             this.dataProcessing = false;
-                            this.$toasted.show('You are submitting incorrect data', {
-                                duration: 10000,
+                            this.$toasted.show(this.$t("modals.error.projectData"), {
+                                duration: 5000,
                                 type: 'error',
                             });
                         });
                     } else {
-                        this.$toasted.show('New password and confirmed password do not match', {
+                        this.$toasted.show(this.$t("modals.error.differentPass"), {
                             duration: 10000,
                             type: 'error',
                         });
                     }
                 } else {
-                    this.$toasted.show('The password must be at least 8 characters in length', {
+                    this.$toasted.show(this.$t("modals.error.lengthPass"), {
                         duration: 10000,
                         type: 'error',
                     });

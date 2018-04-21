@@ -36,6 +36,7 @@
                                         <div class="textbox">
                                             <p class="text full-line">
                                                 {{ textLastUpdatedPass }}
+                                                <!--{{ $t('pages.settings.passwordLabel') }}-->
                                             </p>
                                         </div>
                                     </div>
@@ -212,7 +213,7 @@
                     this.$router.push('/login')
                 }).catch(() => {
                     this.dataProcessing = false;
-                    this.$toasted.show('An error occurred while logout', {
+                    this.$toasted.show(this.$t('modals.error.logout'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -271,7 +272,7 @@
             this.$on('changeFullName', function (value) {
                 if (this.userName !== value) {
                     this.$store.dispatch('changeUserName', {newName: value}).then(() => {
-                        this.$toasted.show('Your name has been successfully changed.', {
+                        this.$toasted.show(this.$t('modals.success.changeName'), {
                             duration: 5000,
                             type: 'success',
                         });

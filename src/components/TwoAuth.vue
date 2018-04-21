@@ -64,7 +64,7 @@
         methods: {
             checkTwoAuth() {
                 if (this.twoauth.length !== 6) {
-                    this.$toasted.show("The two-factor code should consist of 6 symbols", {
+                    this.$toasted.show(this.$t('modals.error.lenght2faCheck'), {
                         duration: 10000,
                         type: 'error',
                     });

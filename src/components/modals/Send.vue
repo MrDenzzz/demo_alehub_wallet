@@ -262,7 +262,7 @@
             },
             nextCheck: function () {
                 if (this.amountAle <= 0) {
-                    this.$toasted.show('Transaction amount must be greater than 0', {
+                    this.$toasted.show(this.$t("modals.error.moreThanZero"), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -272,7 +272,7 @@
                 }
 
                 if (this.currentWallet.balance < this.amountAle) {
-                    this.$toasted.show('You can not send more coins than there are in your account', {
+                    this.$toasted.show(this.$t("modals.error.moreThanHave"), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -293,7 +293,7 @@
                 }
 
                 if (this.address === this.currentWallet.address) {
-                    this.$toasted.show('You can not send tokens to yourself', {
+                    this.$toasted.show(this.$t("modals.error.toYourself"), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -318,7 +318,7 @@
                             this.$store.dispatch('transactionsRequestLazy',
                                 this.currentWallet.address
                             ).then(() => {
-                                this.$toasted.show('Sending was successful', {
+                                this.$toasted.show('this.$t("modals.send.footerModal")', {
                                     duration: 5000,
                                     type: 'success',
                                 });
@@ -344,9 +344,9 @@
                     }).catch(() => {
                         this.dataProcessing = false;
                         this.closeModal();
-                        this.$toasted.show('Sending failed', {
+                        this.$toasted.show(this.$t("modals.error.sendFail"), {
                             duration: 10000,
-                            type: 'success',
+                            type: 'error',
                         });
                     });
                 }

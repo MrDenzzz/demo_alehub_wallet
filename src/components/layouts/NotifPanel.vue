@@ -15,7 +15,7 @@
                 </button>
                 <button class="buttons btn-default"
                         @click="showCheckbox">
-                    Edit
+                    {{ $t('pages.notifications.edit') }}
                 </button>
             </div>
             <button class="buttons btn-default btn-delete"

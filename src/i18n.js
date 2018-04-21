@@ -28,6 +28,7 @@ const messages = {
                 enterMatchPassword: 'Passwords do not match'
             },
             notifications: {
+                edit:'Edit',
                 navbarTitle: 'Notifications feed',
                 notFound: 'No notifications found',
                 today: 'today',
@@ -44,6 +45,7 @@ const messages = {
                 panelHeadingGeneral: 'General',
                 fullName: 'Full name',
                 password: 'Password',
+                passwordLabel: 'Last updated 15 days ago',
                 language: 'Language',
                 logout: 'Log out',
                 security: 'Security',
@@ -72,6 +74,7 @@ const messages = {
                 searchPanel: {
                     search: 'Search Transactions...',
                     dateRange: 'Select a date range',
+                    langDate:"en",
                     buttons: {
                         download: 'Download PDF',
                         share: 'Share'
@@ -88,6 +91,7 @@ const messages = {
                     yesterday: 'Yesterday',
                     from: 'From:',
                     to: 'To:',
+                    purpose:'Purpose transaction',
                     status: {
                         sent: 'Sent',
                         recieved: 'Recieved'
@@ -322,6 +326,7 @@ const messages = {
                 total: 'Total',
                 sendText: 'You are sending',
                 to: 'to',
+                footerModal:'Sending was successful',
                 buttons: {
                     next: 'Next',
                     send: 'Send'
@@ -417,6 +422,87 @@ const messages = {
                 title: 'Share',
                 label: 'Add your comment',
                 placeholder: 'Write your comment here'
+            },
+            pdf: {
+                title: 'EXPORT TO PDF',
+                firstDesc: 'Select from where you want to export transactions',
+                firstRadio: {
+                    first: 'Current wallet transactions',
+                    second: 'All wallets transactions',
+                    third: 'Custom',
+                },
+                secondDesc: 'Select wallets from where you want to export transactions',
+                selectAll: 'select all',
+                tags: 'Tag\'s',
+                thirdDesc: 'Type a tag here to choose specific transactions (optional)',
+                TransactionsType: 'Transaction\'s type',
+                secondRadio: {
+                    first: 'Income',
+                    second: 'Outcome',
+                    third: 'All',
+                },
+                range: 'Transaction\'s amount range',
+                from: 'from',
+                to: 'to',
+                button: {
+                    reset: 'Reset filters',
+                    export1: "Export",
+                    export2: "transactions"
+                },
+                lang: 'en'
+            },
+            error:{
+                moreThanZero:'Transaction amount must be greater than 0',
+                moreThanHave:'You can not send more coins than there are in your account',
+                toYourself:'You can not send tokens to yourself',
+                sendFail:'Sending failed',
+                wrongMail:'You are sent to me wrong email data',
+                lenght2faCheck:'The 2fa code length must be 6 digits',
+                projectData:'You are submitting incorrect project data',
+                differentPass:'New password and confirmed password do not match',
+                lengthPass:'The password must be at least 8 characters in length',
+                changeAddr:'You have failed confirm the email address change',
+                cancelChangeAddr:'You have failed canceled the email address change',
+                logout:'An error occurred while logout',
+                changeNameWallet:'There was an error changing your wallet name',
+                checkOffer:"Fill out the OFFER NAME field",
+                checkPrice:"Fill out the PRICE field",
+                checkPriceZero:"You can not set the value of the PRICE field to zero",
+                checkDesc:"Fill out the DESCRIPTION field",
+                checkRequirements:"Fill out the REQUIREMENTS field",
+                checkDeadline:"Fill out the DEADLINE field",
+                checkUpload:"You should select the UPLOAD file",
+                checkUploadButton:"You should click the UPLOAD file button",
+                checkSolution:"Upload your SOLUTION before SUBMIT",
+                walletRedeem:'Wallet was failed redeem',
+                disable2fa:'You have failed DISABLE dual authentication',
+                enable2fa:'You have failed ENABLE dual authentication',
+                walletDelete:'There was an error deleting the wallet',
+            },
+            success:{
+                changeMail:'Confirmation of the change of email was sent to this address',
+                changePass:'You have successfully changed your password',
+                changeName:'Your name has been successfully changed',
+                newWallet:{
+                    wallet:"Wallet",
+                    create:"successful created!",
+                    delete:"successful deleted!"
+                },
+                copyWallet:'You have successfully copied the address of the wallet',
+                changeAddr:'You have successfully confirm the email address change',
+                cancelChangeAddr:'You have successfully canceled the email address change',
+                changeNameWallet:'The name of the wallet was successfully changed',
+                checkUpload:"Selected file was successfully uploaded",
+                saveOffer:"Offer saved",
+                removeOffer:"Offer was removed from saved",
+                copySecretCode:'You have successfully copied the secret code',
+                disable2fa:'You have successfully DISABLED dual authentication',
+                enable2fa:'You have successfully ENABLED dual authentication',
+            },
+            lang:{
+                submit:"Submit",
+                title:"Select language"
+
             }
         },
         navbar: {
@@ -425,7 +511,7 @@ const messages = {
             resume: 'Resumes',
             notifications: 'Notifications',
             settings: 'Settings'
-        }
+        },
     },
     rus: {
         pages: {
@@ -456,6 +542,7 @@ const messages = {
                 enterMatchPassword: 'Пароли не совпадают'
             },
             notifications: {
+                edit:'Выбрать',
                 navbarTitle: 'Уведомления',
                 notFound: 'Уведомления не найдены',
                 today: 'сегодня',
@@ -472,6 +559,7 @@ const messages = {
                 panelHeadingGeneral: 'Общие',
                 fullName: 'Полное имя',
                 password: 'Пароль',
+                passwordLabel: 'Пароль обновлялся 15 дней назад',
                 language: 'Язык',
                 logout: 'Выход',
                 security: 'Безопасность',
@@ -500,6 +588,7 @@ const messages = {
                 searchPanel: {
                     search: 'Поиск транзакций...',
                     dateRange: 'Выберите диапазон дат',
+                    langDate:"ru",
                     buttons: {
                         download: 'Загрузить PDF',
                         share: 'Поделиться'
@@ -516,6 +605,7 @@ const messages = {
                     yesterday: 'Вчера',
                     from: 'От:',
                     to: 'В:',
+                    purpose:'Целевая сделка',
                     status: {
                         sent: 'Отправлено',
                         recieved: 'Получено'
@@ -597,7 +687,7 @@ const messages = {
                         walletName: 'Имя кошелька'
                     },
                     spendingPass: {
-                        label: 'Spending password',
+                        label: 'Транзакия с паролем',
                         text: 'Включить пароль для одобрения транзакций'
                     },
                     deleteWallet: 'Удалить кошелек'
@@ -750,6 +840,7 @@ const messages = {
                 total: 'Всего',
                 sendText: 'Вы отправляете',
                 to: 'в',
+                footerModal:'Отправление прошло успешно',
                 buttons: {
                     next: 'Далее',
                     send: 'Отправить'
@@ -845,7 +936,88 @@ const messages = {
                 title: 'Поделиться',
                 label: 'Добавить комментарий',
                 placeholder: 'Напишите свой комментарий здесь'
+            },
+            pdf: {
+                title:'Экспорт в PDF',
+                firstDesc:'Выбирите как Вы хотите вывести транзакции',
+                firstRadio: {
+                    first: 'Текущие транзакции кошелька',
+                    second: 'Все транзакции',
+                    third: 'Персональная настройка',
+                },
+                secondDesc: 'Выбирите транзакции каких кошельков Вы хотите вывести',
+                selectAll:'Выбрать все',
+                tags:'Теги',
+                thirdDesc:'Введите теги чтобы выбрать определенные транзакции (необязательно)',
+                TransactionsType:'Вид транзакции',
+                secondRadio: {
+                    first: 'Полученные',
+                    second: 'Отправленные',
+                    third: 'Все',
+                },
+                range:'Размер суммы транзакции',
+                from: 'от',
+                to: 'до',
+                button: {
+                    reset:'Сбросить фильтры',
+                    export1:"Экспортировать",
+                    export2:"транзакции"
+                },
+                lang:'ru'
+            },
+            error:{
+                moreThanZero:'Транзакция должна быть больше чем 0',
+                moreThanHave:'Вы не можете отправить токенов больше, чем есть у вас в кошельке',
+                toYourself:'Вы не можете отправлять токены на кошелек с которого отправляете',
+                sendFail:'Отправка не удалась',
+                wrongMail:'Вы ввели не верные данные',
+                lenght2faCheck:'Длина кода должна быть не меньше 6 символов',
+                projectData:'Вы отправляете неверные данные для смены пароля',
+                differentPass:'Пароли не совпадают',
+                lengthPass:'Длина пароля должна быть не менее 8 символов.',
+                changeAddr:'Вы не подтвердили изменение адреса электронной почты',
+                cancelChangeAddr:'Вы отказались от изменения адреса электронной почты',
+                logout:'Ошибка при выходе из системы',
+                changeNameWallet:'Не удалось изменить имя вашего кошелька',
+                checkOffer:'Заполните поле предложения работы',
+                checkPrice:'Заполните поле вознаграждения за работу',
+                checkPriceZero:'Поле вознаградения должно быть больше чем 0',
+                checkDesc:'Поле описания не должно быть пустым',
+                checkRequirements:'Поле требований не должно быть пустым',
+                checkDeadline:'Поле дедлайна не должно быть пустым',
+                checkUpload:'Файл для загрузки не был выбран',
+                checkUploadButton:'Кнопка загрузки файлов не была нажата',
+                checkRedeem:'Загрузите ваше решение прежде чем принять',
+                walletRedeem:'Не удалось создать кошелек',
+                disable2fa:'Двойная аутентификация не была отключена',
+                enable2fa:'Двойная аутентификация не была включена',
+                walletDelete:'Ошибка при удалении кошелька',
+            },
+            lang:{
+                submit:"Принять",
+                title:"Выберите язык"
+            },
+            success:{
+                changeMail:'Подтверждение на изменение почты было отправлено на этот адрес',
+                changePass:'Пароль был успешно изменен',
+                changeName:'Ваше имя было успешно изменено',
+                newWallet:{
+                    wallet:"Кошелек",
+                    create:"успешно создан!",
+                    delete:"успешно удален!"
+                },
+                copyWallet:'Вы успешно скопировали адрес кошелька',
+                changeAddr:'Вы успешно подтвердили изменение адреса электронной почты',
+                cancelChangeAddr:'Вы успешно отменили изменение адреса электронной почты',
+                changeNameWallet:'Название кошелька было успешно изменено',
+                checkUpload:'Выбранный файл был успешно загружен',
+                saveOffer:'Предложение сохранено',
+                removeOffer:'Предложение было успешно удалено из сохраненных',
+                copySecretCode:'секретный код был успешно скопирован',
+                disable2fa:'Вы успешно отключили двойную аутентификацию',
+                enable2fa:'Вы успешно включили двойную аутентификацию',
             }
+
         },
         navbar: {
             wallet: 'Кошелек',
@@ -853,7 +1025,7 @@ const messages = {
             resume: 'Резюме',
             notifications: 'Оповещения',
             settings: 'Настройки'
-        }
+        },
     }
 };
 

@@ -64,6 +64,7 @@
         </section>
 
         <new-wallet/>
+        <select-language/>
     </div>
 </template>
 
@@ -73,10 +74,12 @@
     import ActivityList from './layouts/ActivityList';
     import PanelHeading from './layouts/PanelHeading';
     import NewWallet from './modals/NewWallet';
+    import SelectLanguage from './modals/SelectLanguage';
     import SendRequest from './layouts/SendRequest';
     import TransactionsToolPanel from './layouts/TransactionsToolPanel';
     import FormattingPrice from './layouts/FormattingPrice';
     import Spinner from './layouts/Spinner';
+
     import Moment from 'moment';
 
     import sha256 from 'sha256';
@@ -94,7 +97,8 @@
             SendRequest,
             TransactionsToolPanel,
             FormattingPrice,
-            Spinner
+            Spinner,
+            SelectLanguage //z
         },
         data() {
             return {
@@ -210,7 +214,8 @@
         },
         mounted() {
             if (this.lengthWalletList === 0) {
-                this.openModal('newwallet');
+                this.openModal('selectLanguage');//z
+                // this.openModal('newwallet');//z
             }
 
             this.$on('resetNewTransactions', val => {
@@ -234,12 +239,12 @@
             if (this.confirmationChangeEmailStatus === 'success') {
                 this.$store.dispatch('resetConfirmationChangeEmailStatus'
                 ).then(() => {
-                    this.$toasted.show('You have successfully confirm the email address change', {
+                    this.$toasted.show(this.$t('modals.success.changeAddr'), {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
-                    this.$toasted.show('You have failed confirm the email address change', {
+                    this.$toasted.show(this.$t('modals.error.changeAddr'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -249,12 +254,12 @@
             if (this.cancellationChangeEmailStatus === 'success') {
                 this.$store.dispatch('resetCancellationChangeEmailStatus'
                 ).then(() => {
-                    this.$toasted.show('You have successfully canceled the email address change', {
+                    this.$toasted.show(this.$t('modals.success.cancelChangeAddr'), {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
-                    this.$toasted.show('You have failed canceled the email address change', {
+                    this.$toasted.show(this.$t('modals.error.cancelChangeAddr'), {
                         duration: 10000,
                         type: 'error',
                     });

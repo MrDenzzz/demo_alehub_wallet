@@ -6,7 +6,7 @@
            @before-open="initPosLabelCurrency"
            @closed="resetLocalData">
         <div class="heading">
-            <p class="title">Export to PDF</p>
+            <p class="title">{{ $t('modals.pdf.title') }}</p>
             <i class="close" @click="closeModal('download-pdf')"></i>
         </div>
         <div class="body">
@@ -15,7 +15,7 @@
                     <div class="modal-wrap">
                         <div class="modal-line">
                             <p class="modal-control__title">
-                                Select from where you want to export transactions
+                                {{ $t('modals.pdf.firstDesc') }}
                             </p>
                         </div>
                         <div class="modal-line">
@@ -27,7 +27,7 @@
                                        @change="changeTypeStatement"/>
                                 <div class="control-indicator"></div>
                                 <span class="input-label">
-                                    Current wallet transactions
+                                    {{ $t('modals.pdf.firstRadio.first') }}
                                 </span>
                             </label>
                         </div>
@@ -40,7 +40,7 @@
                                        @change="changeTypeStatement"/>
                                 <div class="control-indicator"></div>
                                 <span class="input-label">
-                                    All wallets transactions
+                                    {{ $t('modals.pdf.firstRadio.second') }}
                                 </span>
                             </label>
                         </div>
@@ -53,7 +53,7 @@
                                        @change="changeTypeStatement"/>
                                 <div class="control-indicator"></div>
                                 <span class="input-label">
-                                    Custom
+                                    {{ $t('modals.pdf.firstRadio.third') }}
                                 </span>
                             </label>
                         </div>
@@ -65,7 +65,7 @@
                         <div class="modal-line modal-line__between">
                             <p class="modal-control__title"
                                :class="{ 'disabled-title': checkDisabled }">
-                                Select from where you want to export transactions
+                                {{ $t('modals.pdf.secondDesc') }}
                             </p>
                             <label class="control control-checkbox"
                                    :class="{ 'disabled-label__control': checkDisabled }">
@@ -78,7 +78,7 @@
                                 <div class="wrap__input-label">
                                     <span class="input-label"
                                           :class="{ 'disabled-label': checkDisabled }">
-                                        select all
+                                         {{ $t('modals.pdf.selectAll') }}
                                     </span>
                                 </div>
                             </label>
@@ -117,11 +117,11 @@
                     <div class="modal-input">
                         <label class="title"
                                :class="{ 'disabled-title': checkDisabledByTransactions }">
-                            Tag's
+                            {{ $t('modals.pdf.tags') }}
                         </label>
                         <input type="text"
                                class="input"
-                               placeholder="Type a tag here to choose specific transactions (optional)"
+                               :placeholder= "$t('modals.pdf.thirdDesc')"
                                :class="{ 'input-disabled': checkDisabledByTransactions }"
                                :disabled="checkDisabledByTransactions">
                     </div>
@@ -135,7 +135,7 @@
                                     <div class="modal-line">
                                         <p class="modal-control__title"
                                            :class="{ 'disabled-title': checkDisabledByTransactions }">
-                                            Transaction's type
+                                            {{ $t('modals.pdf.TransactionsType') }}
                                         </p>
                                     </div>
                                     <div class="modal-line">
@@ -150,7 +150,7 @@
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
                                                   :class="{ 'disabled-label': checkDisabledByTransactions }">
-                                                Income
+                                                 {{ $t('modals.pdf.secondRadio.first') }}
                                             </span>
                                         </label>
                                     </div>
@@ -166,7 +166,7 @@
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
                                                   :class="{ 'disabled-label': checkDisabledByTransactions }">
-                                                Outcome
+                                                {{ $t('modals.pdf.secondRadio.second') }}
                                             </span>
                                         </label>
                                     </div>
@@ -182,7 +182,7 @@
                                             <div class="control-indicator"></div>
                                             <span class="input-label"
                                                   :class="{ 'disabled-label': checkDisabledByTransactions}">
-                                                All
+                                                {{ $t('modals.pdf.secondRadio.third') }}
                                             </span>
                                         </label>
                                     </div>
@@ -191,13 +191,15 @@
                                     <div class="modal-line">
                                         <p class="modal-control__title"
                                            :class="{ 'disabled-title': checkDisabledByTransactions }">
-                                            Transaction's amount range
+                                            {{ $t('modals.pdf.range') }}
                                         </p>
                                     </div>
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
                                              :class="{ 'wrap-double-input__disabled': checkDisabledByTransactions }">
-                                            <label for="balance-from" class="label-from">from</label>
+                                            <label for="balance-from" class="label-from">
+                                                {{ $t('modals.pdf.from') }}
+                                            </label>
                                             <input type="number"
                                                    id="balance-from"
                                                    class="input input-from"
@@ -216,7 +218,7 @@
                                     <div class="modal-line">
                                         <div class="wrap-double-input"
                                              :class="{'wrap-double-input__disabled': checkDisabledByTransactions }">
-                                            <label for="balance-to" class="label-to">to</label>
+                                            <label for="balance-to" class="label-to">{{ $t('modals.pdf.to') }}</label>
                                             <input type="number"
                                                    class="input input-to"
                                                    id="balance-to"
@@ -238,7 +240,7 @@
                                 <datepicker id="datepicker-filter"
                                             class="datepicker-for-export"
                                             v-model="changingDates"
-                                            language="en"
+                                            :language="$t('modals.pdf.lang')"
                                             :disabled="disableDatepicker"
                                             :highlighted="highlightDatepicker"
                                             :marked="marked"
@@ -257,18 +259,18 @@
                             type="button"
                             @click="resetFilters"
                             :disabled="checkDisabled">
-                        Reset filters
+                        {{ $t('modals.pdf.button.reset') }}
                     </button>
                     <button class="buttons btn-yellow btn-large"
                             type="submit"
                             :class="{ 'btn-yellow__disabled': countChooseTransactions === 0 }"
                             :disabled="countChooseTransactions === 0">
                         <span v-if="countChooseTransactions > 0">
-                            Export
+                            {{ $t('modals.pdf.button.export1') }}
                             <span class="count-transactions">
                                 <formatting-price :value="countChooseTransactions"/>
                             </span>
-                            transactions
+                            {{ $t('modals.pdf.button.export2') }}
                         </span>
                         <span v-else>
                             You have no transactions
