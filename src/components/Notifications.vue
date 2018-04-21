@@ -1,21 +1,18 @@
 <template>
     <div class="wallet">
-
-        <Navbar
+        <navbar
             :title="$t('pages.notifications.navbarTitle')"
             :isNavigate="true"
             :isBalance="false"
-            :isHide="true"
-        />
+            :isHide="true"/>
 
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <Spinner v-if="isLoader"/>
-                            <Notif-panel
-                                    v-else-if="!isLoader && notifications.length !== 0"
+                            <spinner v-if="dataProcessing"/>
+                            <notif-panel v-else-if="!dataProcessing && notifications.length !== 0"
                                     :notifications="notifications"/>
 
                             <p v-else class="no-found">{{ $t('pages.notifications.notFound') }}</p>
@@ -28,14 +25,14 @@
 </template>
 
 <script>
-    import Navbar from "./layouts/Navbar";
-    import NotifPanel from "./layouts/NotifPanel";
+    import Navbar from './layouts/Navbar';
+    import NotifPanel from './layouts/NotifPanel';
     import Spinner from './layouts/Spinner';
 
-    import {mapGetters} from "vuex";
+    import {mapGetters} from 'vuex';
 
     export default {
-        name: "Notifications",
+        name: 'Notifications',
         components: {
             Navbar,
             NotifPanel,
@@ -43,21 +40,22 @@
         },
         data() {
             return {
-                isLoader: false
+                dataProcessing: false
             }
         },
         computed: {
             ...mapGetters([
-                'notifications'
+                'notifications',
+                'currentWallet'
             ]),
         },
         methods: {
             getCurrentNotifications: function () {
-                this.isLoader = true;
+                this.dataProcessing = true;
 
-                this.$store.dispatch('getNotifications'
+                this.$store.dispatch('getNotifications', this.currentWallet.address
                 ).then(() => {
-                    this.isLoader = false;
+                    this.dataProcessing = false;
                     console.log('Success getting notifications');
                 }).catch(() => {
                     console.log('Error getting notifications');
@@ -71,14 +69,26 @@
                 }).catch(() => {
                     console.log('Error toggle notifications badge');
                 });
-            }
+            },
+            removeCheckedNotif(checkedNotif) {
+                this.isLoader = true;
+                this.$store.dispatch('deleteNotifications', checkedNotif
+                ).then(() => {
+                    this.isLoader = false;
+                    console.log('Success deleting notifications');
+                }).catch(() => {
+                    console.log('Error deleting notifications');
+                });
+            },
         },
         created() {
             this.changeToggleNotificationBadge(false);
             this.getCurrentNotifications();
         },
         mounted() {
-
+            this.$on('removeCheckedNotif', function (checkedNotif) {
+                this.removeCheckedNotif(checkedNotif);
+            });
         }
     };
 </script>

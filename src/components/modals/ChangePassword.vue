@@ -1,64 +1,76 @@
 <template>
-    <modal name="change-password" height="auto" class="modal-xs">
+    <modal name="change-password"
+           height="auto"
+           class="modal-xs">
         <div class="heading">
-            <p class="title">{{ $t('modals.changePassword.title') }}</p>
-            <i class="close" @click="closeModal('change-password')"></i>
+            <p class="title">
+                {{ $t('modals.changePassword.title') }}
+            </p>
+            <i class="close"
+               @click="closeModal('change-password')">
+            </i>
         </div>
         <div class="body">
             <form @submit.prevent="changePassword()">
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields._2fa.label') }}</label>
-                        <input
-                                type="number"
-                                class="input"
-                                :placeholder="$t('modals.changePassword.fields._2fa.placeholder')"
-                                v-model="token"
-                                required>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields._2fa.label') }}
+                        </label>
+                        <input type="number"
+                               class="input"
+                               :placeholder="$t('modals.changePassword.fields._2fa.placeholder')"
+                               v-model="token"
+                               required>
                     </div>
                 </div>
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields.oldPass.label') }}</label>
-                        <input
-                                type="password"
-                                class="input"
-                                :placeholder="$t('modals.changePassword.fields.oldPass.placeholder')"
-                                v-model="oldPass"
-                                required>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields.oldPass.label') }}
+                        </label>
+                        <input type="password"
+                               class="input"
+                               :placeholder="$t('modals.changePassword.fields.oldPass.placeholder')"
+                               v-model="oldPass"
+                               required>
                     </div>
                 </div>
 
                 <div class="modal-control">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields.newPass.label') }}</label>
-                        <input
-                                type="password"
-                                class="input"
-                                :placeholder="$t('modals.changePassword.fields.newPass.placeholder')"
-                                v-model="newPass"
-                                required>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields.newPass.label') }}
+                        </label>
+                        <input type="password"
+                               class="input"
+                               :placeholder="$t('modals.changePassword.fields.newPass.placeholder')"
+                               v-model="newPass"
+                               required>
                     </div>
                 </div>
 
                 <div class="modal-control no-bottom">
                     <div class="modal-input">
-                        <label class="title">{{ $t('modals.changePassword.fields.confirmPass.label') }}</label>
-                        <input
-                                type="password"
-                                class="input"
-                                :placeholder="$t('modals.changePassword.fields.confirmPass.placeholder')"
-                                v-model="confirmPass"
-                                required>
+                        <label class="title">
+                            {{ $t('modals.changePassword.fields.confirmPass.label') }}
+                        </label>
+                        <input type="password"
+                               class="input"
+                               :placeholder="$t('modals.changePassword.fields.confirmPass.placeholder')"
+                               v-model="confirmPass"
+                               required>
                     </div>
                 </div>
 
-                <div v-if="dataProcessing" class="wrap-spinner">
-                    <spinner />
+                <div v-if="dataProcessing"
+                     class="wrap-spinner">
+                    <spinner/>
                 </div>
 
                 <div class="modal-btn text-center">
-                    <button class="btn btn-yellow btn-large" type="submit">
+                    <button type="submit"
+                            class="btn btn-yellow btn-large">
                         {{ $t('modals.changePassword.buttons.change') }}
                     </button>
                 </div>
@@ -83,8 +95,6 @@
                 confirmPass: '',
                 dataProcessing: false
             }
-        },
-        computed: {
         },
         methods: {
             closeModal: function (nameModal) {
@@ -158,7 +168,7 @@
 
     .modal-xs
         .v--modal-box
-            width 426px 
+            width 426px
 
     .modal-btn
         .btn-yellow
@@ -170,7 +180,7 @@
                 &:hover
                     cursor default
 
-    @media(max-width: 425px)
+    @media (max-width: 425px)
         .v--modal-overlay
             .v--modal-box
                 .body
@@ -182,14 +192,14 @@
 
                             .input
                                 text-align right
-                                 
-    @media(max-width: 320px)
+
+    @media (max-width: 320px)
         .v--modal-overlay
             .v--modal-box
                 .body
                     .modal-control
                         .modal-input
-                            display flex 
+                            display flex
                             flex-direction column
                             align-items flex-start
 
@@ -198,5 +208,5 @@
                                 padding-bottom 10px
 
                             .input
-                                text-align left 
+                                text-align left
 </style>

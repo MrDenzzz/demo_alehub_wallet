@@ -33,7 +33,12 @@ const messages = {
                 notFound: 'No notifications found',
                 today: 'today',
                 yesterday: 'yesterday',
-                in: 'in'
+                in: 'in',
+                youSend: 'You **send**',
+                youReceive: 'You **receive**',
+                toAddress: 'to address',
+                fromAddress: 'from address',
+                selectAll: 'Select All'
             },
             settings: {
                 navbarTitle: 'Settings',
@@ -542,7 +547,12 @@ const messages = {
                 notFound: 'Уведомления не найдены',
                 today: 'сегодня',
                 yesterday: 'вчера',
-                in: 'в'
+                in: 'в',
+                youSend: 'Вы **отправили**',
+                youReceive: 'Вы **получили**',
+                toAddress: 'на адрес',
+                fromAddress: 'с адреса',
+                selectAll: 'Выбрать все'
             },
             settings: {
                 navbarTitle: 'Настройки',

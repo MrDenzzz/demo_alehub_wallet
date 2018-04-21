@@ -1,26 +1,24 @@
 <template>
     <div class="settings">
-        <Navbar
-                :title="$t('pages.settings.navbarTitle')"
+        <navbar :title="$t('pages.settings.navbarTitle')"
                 :isNavigate="true"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <panel-heading :title="$t('pages.settings.panelHeadingGeneral')" :isTop="true"/>
+                            <panel-heading :title="$t('pages.settings.panelHeadingGeneral')"
+                                           :isTop="true"/>
                             <div class="form">
-                                <input-control
-                                        :label-value="$t('pages.settings.fullName')"
-                                        :input-id="'fullname'"
-                                        :input-value="userName"
-                                        :input-type="'text'"
-                                />
+                                <input-control :label-value="$t('pages.settings.fullName')"
+                                               :input-id="'fullname'"
+                                               :input-value="userName"
+                                               :input-type="'text'"/>
 
-                                <div class="control" @click="openModal('changeemail')">
+                                <div class="control"
+                                     @click="checkPossibleOpenModal('changeemail', 'E-MAIL')">
                                     <div class="wrap-input">
                                         <label>E-mail</label>
                                         <div class="textbox">
@@ -31,32 +29,31 @@
                                     </div>
                                 </div>
 
-                                <div class="control" @click="openModal('change-password')">
+                                <div class="control"
+                                     @click="checkPossibleOpenModal('change-password', 'PASSWORD')">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
-                                            <p
-                                                    class="text full-line"
-                                            >
-                                                {{ $t('pages.settings.passwordLabel') }}
+                                            <p class="text full-line">
+                                                {{ textLastUpdatedPass }}
+                                                <!--{{ $t('pages.settings.passwordLabel') }}-->
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="control border-none" @click.stop="changeLanguage">
+                                <div class="control border-none"
+                                     @click.stop="changeLanguage">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.language') }}</label>
-                                        <select-control
-                                                :current="selectedLang"
-                                                :all-options="['English', 'Русский']"
-                                                :id="'language'"
-                                        />
+                                        <select-control :current="selectedLang"
+                                                        :all-options="['English', 'Русский']"
+                                                        :id="'language'"/>
                                     </div>
                                 </div>
                             </div>
 
-                            <Panel-heading :title="$t('pages.settings.theme')" :isTop="false"/>
-
+                            <panel-heading :title="$t('pages.settings.theme')"
+                                           :isTop="false"/>
                             <div class="group-settings">
                                 <div class="form select-main" @click="selectTheme('main')">
                                     <img src="../../static/img/logo_main.svg" alt="">
@@ -69,9 +66,7 @@
                                 </div>
                             </div>
 
-                            <panel-heading
-                                    :title="$t('pages.settings.security')"
-                            />
+                            <panel-heading :title="$t('pages.settings.security')"/>
                             <div class="form">
                                 <div class="control">
                                     <div class="wrap-input">
@@ -80,23 +75,22 @@
                                             <p class="text">
                                                 {{ $t('pages.settings._2faText') }}
                                             </p>
-                                            <switch-control
-                                                    v-if="userStatus === 'success'"
-                                                    @click.native.prevent="openChangeTwoAuthModal"/>
+                                            <switch-control v-if="userStatus === 'success'"
+                                                            @click.native.prevent="openChangeTwoAuthModal"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div v-if="dataProcessing" class="wrap-spinner">
-                                <Spinner/>
+                            <div v-if="dataProcessing"
+                                 class="wrap-spinner">
+                                <spinner/>
                             </div>
 
                             <div class="text-center">
-                                <a
-                                        href="#"
-                                        class="logout-link"
-                                        @click="logout">
+                                <a href="#"
+                                   class="logout-link"
+                                   @click="logout">
                                     {{ $t('pages.settings.logout')}}
                                 </a>
                             </div>
@@ -160,6 +154,7 @@
                 'userName',
                 'userEmail',
                 'userTwoAuth',
+                'userLastUpdatedPassword',
                 'twoAuthStatus'
             ]),
             selectedLang: function () {
@@ -172,19 +167,46 @@
                         return 'English';
                 }
             },
+            textLastUpdatedPass: function () {
+                let now = new Date(),
+                    diff = Math.floor((now.getTime() - parseInt(this.userLastUpdatedPassword)) / (86400000));
+                if (diff === 0)
+                    return 'The last password change was today';
+                else if (diff === 1)
+                    return 'Last password change was yesterday';
+                else if (diff > 1)
+                    return `Last password change was ${diff} day's ago`;
+            }
         },
         methods: {
             ...mapMutations({
                 setTheme: 'SET_THEME'
             }),
-
+            openModal: function (name) {
+                this.$modal.show(name);
+            },
+            checkPossibleOpenModal: function (name, type) {
+                if (this.userTwoAuth)
+                    this.openModal(name);
+                else
+                    this.$toasted.show(`You cannot change ${type} without enabling two factor authentication`, {
+                        duration: 10000,
+                        type: 'error',
+                        action: {
+                            text: 'hide',
+                            class: 'toasted-action-hide',
+                            onClick: (e, toastObject) => {
+                                toastObject.goAway(0);
+                            }
+                        }
+                    });
+            },
             logout: function () {
                 this.dataProcessing = true;
 
                 setTimeout(() => {
                     window.scrollTo(0, document.body.scrollHeight);
                 }, 40);
-
                 this.$store.dispatch('authLogout'
                 ).then(() => {
                     this.dataProcessing = false;
@@ -214,9 +236,6 @@
                 if (e.target.className === 'value')
                     return false;
                 document.getElementsByClassName('value')[0].click();
-            },
-            openModal: function (name) {
-                this.$modal.show(name);
             },
             openChangeTwoAuthModal: function () {
                 this.$store.dispatch('setChangeTwoAuthStatus',

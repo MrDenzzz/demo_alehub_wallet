@@ -241,6 +241,15 @@ body {
           background-color: #28388e !important;
         }
       }
+      .cell {
+        &.day{
+          &.marked__min {
+            &.highlighted {
+              background-color: #3e4ea7 !important;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -1652,5 +1661,9 @@ body {
 }
 
 .v--modal {
+  overflow-y: auto !important;
+}
+
+.v--modal-overlay {
   overflow-y: auto !important;
 }

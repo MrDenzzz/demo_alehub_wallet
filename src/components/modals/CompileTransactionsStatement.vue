@@ -19,7 +19,6 @@
                             </p>
                         </div>
                         <div class="modal-line">
-
                             <label class="control control-radio">
                                 <input type="radio"
                                        name="transaction-selection"
@@ -63,7 +62,7 @@
 
                 <div class="modal-control">
                     <div class="modal-wrap">
-                        <div class="modal-line" style="display: flex; justify-content: space-between;">
+                        <div class="modal-line modal-line__between">
                             <p class="modal-control__title"
                                :class="{ 'disabled-title': checkDisabled }">
                                 {{ $t('modals.pdf.secondDesc') }}
@@ -71,7 +70,7 @@
                             <label class="control control-checkbox"
                                    :class="{ 'disabled-label__control': checkDisabled }">
                                 <input type="checkbox"
-                                       name="wallet-names"
+                                       name="select-all-wallets"
                                        :disabled="checkDisabled"
                                        v-model="isAllWallets"
                                        @change="setAllWallets"/>
@@ -84,7 +83,7 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="modal-control__wrap">
+                        <div class="modal-control__wrap wrap__wallets">
                             <div class="modal-control__block" v-for="wallet in filledWallets">
                                 <label class="control control-checkbox"
                                        :class="{ 'disabled-label__control': checkDisabled }">
@@ -103,10 +102,8 @@
                                         </span>
                                         <span class="input-label input-label__balance"
                                               :class="{ 'disabled-label__balance': checkDisabled }">
-                                            <formatting-price
-                                                    :value="wallet.balance"
-                                                    :balance="true"
-                                            />
+                                            <formatting-price :value="wallet.balance"
+                                                              :balance="true"/>
                                             &nbsp;ALE
                                         </span>
                                     </div>
@@ -132,7 +129,7 @@
 
                 <div class="modal-control border-none">
                     <div class="modal-wrap">
-                        <div class="row-flex" style="align-items: flex-start; margin-bottom: 0;">
+                        <div class="row-flex row-flex__top">
                             <div class="col-5 modal-blocks">
                                 <div class="modal-block">
                                     <div class="modal-line">
@@ -259,7 +256,6 @@
 
                 <div class="modal-footer">
                     <button class="buttons btn-default btn-large"
-                            style="margin-right: 12px;"
                             type="button"
                             @click="resetFilters"
                             :disabled="checkDisabled">
@@ -302,69 +298,6 @@
             Datepicker,
             Spinner,
             FormattingPrice
-        },
-        props: {
-            currentBalanceBeginPeriod: {
-                type: [Number, String],
-                required: true
-            },
-            currentBalanceEndPeriod: {
-                type: [Number, String],
-                required: true
-            },
-            currentReceivedBalance: {
-                type: [Number, String],
-                required: true
-            },
-            currentSentBalance: {
-                type: [Number, String],
-                required: true
-            }
-        },
-        watch: {
-            'filterOptions.selectedWallets': function (selectedWallets) {
-                // if (selectedWallets.length === 0) {
-                //
-                // }
-            },
-            'filterOptions.balance.from': function (val) {
-                console.log(val, 'filterOptions.balanceFrom');
-            },
-            'filterOptions.balance.to': function (val) {
-                console.log(val, 'filterOptions.balanceTo');
-            },
-            dateFrom: function (val) {
-                console.log(val, 'date from');
-            },
-            dateTo: function (val) {
-                console.log(val, 'date to');
-            },
-            changingDates: function (val) {
-                if (!this.dateFromPick && !this.dateToPick) {
-                    this.dateFromPick = this.makeMinDate(val).getTime();
-                } else if (this.dateFromPick && !this.dateToPick) {
-                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
-                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
-                        this.dateFromPick = this.makeMinDate(val).getTime();
-                    } else {
-                        this.dateToPick = this.makeMaxDate(val).getTime();
-                    }
-                }
-
-                if (val && this.dateFromPick && this.dateToPick) {
-                    this.setDateFilterInterval();
-                    if (val && this.filterOptions.selectedWallets.length !== 0) {
-                        this.filterTransactions();
-                    }
-                }
-
-                if (this.dateFromPick && this.dateToPick) {
-
-                    if (val && this.filterOptions.selectedWallets.length !== 0) {
-                        this.filterTransactions();
-                    }
-                }
-            },
         },
         data() {
             return {
@@ -465,6 +398,33 @@
                 currentTotal: 0,
             }
         },
+        watch: {
+            changingDates: function (val) {
+                if (!this.dateFromPick && !this.dateToPick) {
+                    this.dateFromPick = this.makeMinDate(val).getTime();
+                } else if (this.dateFromPick && !this.dateToPick) {
+                    if (this.makeMinDate(val).getTime() < this.dateFromPick) {
+                        this.dateToPick = this.makeMaxDate(new Date(this.dateFromPick)).getTime();
+                        this.dateFromPick = this.makeMinDate(val).getTime();
+                    } else {
+                        this.dateToPick = this.makeMaxDate(val).getTime();
+                    }
+                }
+
+                if (val && this.dateFromPick && this.dateToPick) {
+                    this.setDateFilterInterval();
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+                }
+
+                if (this.dateFromPick && this.dateToPick) {
+                    if (val && this.filterOptions.selectedWallets.length !== 0) {
+                        this.filterTransactions();
+                    }
+                }
+            },
+        },
         computed: {
             ...mapGetters([
                 'wallets',
@@ -502,17 +462,21 @@
                 'disableFieldsFilter'
             ]),
             checkDisabled: function () {
-                if (this.selectionTypeStatement !== 'optional')
-                    return true;
-                return false;
+                return (this.selectionTypeStatement !== 'optional');
             },
+            //replace
             checkDisabledByTransactions: function () {
-                if (this.selectionTypeStatement !== 'optional')
-                // if (this.selectionTypeStatement !== 'optional' || this.filterOptions.selectedWallets.length === 0)
-                    return true;
-                return false;
+                return (this.selectionTypeStatement !== 'optional');
             },
-
+            /*
+            * */
+            listWalletAddress: function () {
+                let list = [];
+                this.constantTransactions.forEach(item => {
+                    list.push(item.address);
+                });
+                return list;
+            },
         },
         methods: {
             /*
@@ -671,9 +635,7 @@
                 }
             },
             checkNotNull: function (val) {
-                if (val !== null)
-                    return true;
-                return false;
+                return (val !== null);
             },
             //записать обработку если дается таймштамп, а не дата
             makeMinDate: function (date) {
@@ -697,11 +659,7 @@
                 this.filterOptions.date.secondary.to = this.makeMaxDate(this.changingDates).getTime();
                 this.highlightDatepicker.from = this.filterOptions.date.secondary.from;
                 this.highlightDatepicker.to = this.filterOptions.date.secondary.to;
-
-                console.log(this.filterOptions.date.secondary.from, 'this.filterOptions.date.secondary.from');
-                console.log(this.filterOptions.date.secondary.to, 'this.filterOptions.date.secondary.to');
             },
-
             calcSerialDay: function (date) {
                 date.setHours(0);
                 date.setMinutes(0);
@@ -722,6 +680,11 @@
                 if (!this.filterOptions.selectedWallets.equals(this.prevSelectedWallets)) {
                     this.filterOptions.date.primary.from = this.dateFromFilterConstTransactions;
                     this.filterOptions.date.primary.to = this.dateToFilterConstTransactions;
+                }
+
+                if (this.isAllWallets && !this.listWalletAddress.equals(this.filterOptions.selectedWallets) &&
+                    this.listWalletAddress.equals(this.prevSelectedWallets)) {
+                    this.isAllWallets = false;
                 }
 
                 this.$store.dispatch('restoreAllTransactions',
@@ -749,6 +712,8 @@
                             this.filterOptions.date.primary.to = this.dateIntervalToFilterAllTransactions;
                         }
 
+                        //REFACTOR
+
                         let a = '';
 
                         this.transactionsByDay = this.filteredAllTransactions.transactions.map(item => {
@@ -764,9 +729,8 @@
                             return a.getTime();
                         });
 
-                        let days = [];
-
-                        let count = 1;
+                        let days = [],
+                            count = 1;
 
                         for (let i = 0; i < this.transactionsByDay.length; i++) {
                             if (i === 0) {
@@ -973,39 +937,24 @@
                 }
             },
 
-            //в computed
-            checkTypeTransaction: function (type) {
-                if (type === 'SEND')
-                    return true;
-                return false;
-            },
-            getTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
-                if (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0)
-                    return 'RECEIVED';
-                return 'SEND';
+            //rec - recognize
+            recTypeTransaction: function (i) { //переделать получение как в getTypeTransactionAll
+                return (this.transactions[i].balanceInfo.after - this.transactions[i].balanceInfo.before > 0);
             },
 
             //tmp solution
-            getTypeTransactionAll: function (item) {
-                if (item.after - item.before > 0)
-                    return 'RECEIVED';
-                return 'SEND';
+            recTypeTransactionAll: function (item) {
+                return (item.after - item.before > 0);
             },
 
             calcBalance: function (i, count) {
                 this.currentTotal = this.transactions[i].balanceInfo.after;
-                if (this.checkTypeTransaction(this.getTypeTransaction(i)))
-                    this.currentSent += count;
-                else
-                    this.currentReceived += count;
+                (this.recTypeTransaction(i)) ? this.currentReceived += count : this.currentSent += count;
             },
 
             calcBalanceAll: function (item, count) {
                 this.currentTotal = item.after;
-                if (this.checkTypeTransaction(this.getTypeTransactionAll(item)))
-                    this.currentSent += count;
-                else
-                    this.currentReceived += count;
+                (this.recTypeTransactionAll(item)) ? this.currentReceived += count : this.currentSent += count;
             },
 
             generateHeaderTransactionsStatement: function (doc, wallet, balanceStats) {
@@ -1085,8 +1034,8 @@
 
                 doc.setFontSize(this.normalFontSize);
 
-                (this.checkTypeTransaction(type)) ? doc.setTextColor(...this.red) : doc.setTextColor(...this.green);
-                doc.text(type, this.xPositionTransactionType, this.offset + 25 * j);
+                (type) ? doc.setTextColor(...this.green) : doc.setTextColor(...this.red);
+                doc.text((type) ? this.receivedText : this.sentText, this.xPositionTransactionType, this.offset + 25 * j);
 
                 doc.setTextColor(...this.black);
                 doc.text(summaryString, 40, this.offset + 25 * j);
@@ -1159,7 +1108,6 @@
                             this.offset = 25;
                         }
 
-
                         if (i !== 0 && date !== Moment(this.transactions[i - 1].timestamp).format("DD.MM.YYYY")) {
                             this.generateTransactionsDayStatement(doc, j, false);
                             this.generateDateTransactions(doc, date, j);
@@ -1169,10 +1117,10 @@
                         }
 
                         this.calcBalance(i, count);
-                        this.generateTransaction(doc, this.getTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
+                        this.generateTransaction(doc, this.recTypeTransaction(i), count, date, time, walletAddress, walletDestination, j);
 
                         if (i === this.transactions.length - 1) {
-                            this.calcBalance(i - 1, count);
+                            i === 0 || this.calcBalance(i - 1, count);
                             this.generateTransactionsDayStatement(doc, j, true);
                         }
                     }
@@ -1446,6 +1394,8 @@
 </script>
 
 <style lang="stylus">
+    .vdp-datepicker
+        user-select none
     .datepicker-for-export
         .vdp-datepicker__calendar
             box-shadow none
@@ -1466,9 +1416,14 @@
 </style>
 
 <style lang="stylus" scoped>
-    .btn-default:disabled
-        background-color rgba(13, 23, 23, 0.08)
-        opacity 0.4 !important
+    .row-flex.row-flex__top
+        align-items flex-start
+        margin-bottom 0
+
+    .btn-default
+        &:disabled
+            background-color rgba(13, 23, 23, 0.08)
+            opacity 0.4 !important
 
     .disabled-label__control
         cursor default
@@ -1562,6 +1517,10 @@
                 font-size 13px
                 color #34343e
 
+            .modal-control__wrap.wrap__wallets
+                max-height 130px
+                overflow-y scroll
+
             .modal-control__wrap
                 display flex
                 justify-content flex-start
@@ -1620,6 +1579,10 @@
                         font-size 13px
                         position absolute
 
+            .modal-line.modal-line__between
+                display flex
+                justify-content space-between
+
             .modal-line:not(:last-child), .modal-control__block:not(:last-child)
                 margin-bottom 10px
 
@@ -1664,7 +1627,8 @@
                 opacity 0.4
 
             .buttons
-
+                &:first-child
+                    margin-right 12px
                 .count-transactions
                     font-weight 700
 
@@ -1677,6 +1641,16 @@
                     & .modal-control
                         &.border-none
                             padding-top 0
+
+                        & .modal-line
+                            flex-direction column
+
+                            & .control-checkbox
+                                margin-top 8px
+                        
+                    & .modal-footer
+                        margin-right 42px
+                        margin-left 42px
 
         .row-flex
             flex-direction column
@@ -1726,21 +1700,28 @@
             padding-bottom 18px
 
         .modal-footer
-            & button
-                margin-right 22px
-                margin-left 22px
+            display flex
+            flex-direction column
 
-    @media (max-width: 375px)
-        .modal-footer
             & button
-                margin-right 5px
-                margin-left 5px
+                margin-right 0
+                margin-left 0
+                padding 0
 
     @media (max-width: 320px)
-        .body
-            .modal-control
-                .modal-line
-                    .wrap-double-input
-                        max-width 100%
+        .v--modal-overlay
+            & .v--modal-box
+                & .body
+                    .modal-control
+                        .modal-line
+                            .wrap-double-input
+                                max-width 100%
+
+                    & .modal-footer
+                        margin-right 20px
+                        margin-left 20px
+
+                        & button 
+                            margin-bottom 12px
 
 </style>

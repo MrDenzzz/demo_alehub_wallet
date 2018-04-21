@@ -175,6 +175,8 @@ body {
   background: #4a4e65 !important; }
   .dark .datepicker-for-export .vdp-datepicker__calendar .day.highlighted, .dark .datepicker-for-export .vdp-datepicker__calendar .day.selected {
     background-color: #28388e !important; }
+  .dark .datepicker-for-export .vdp-datepicker__calendar .cell.day.marked__min.highlighted {
+    background-color: #3e4ea7 !important; }
   .dark .logout-link {
     color: #b53939;
     background-color: #282730;
@@ -1025,6 +1027,9 @@ body {
 .v--modal {
   overflow-y: auto !important; }
 
+.v--modal-overlay {
+  overflow-y: auto !important; }
+
 .container {
   margin: 24px 24px; }
 
@@ -1402,7 +1407,8 @@ body {
     .menu {
       overflow-y: unset; } }
   .menu.is-opened {
-    overflow-y: auto; }
+    overflow-y: auto;
+    overflow-x: hidden; }
     @media (max-width: 425px) {
       .menu.is-opened .wallet-search {
         width: 100vh !important; } }
@@ -1970,7 +1976,11 @@ body {
   font-size: 16px;
   color: #34343e;
   margin-bottom: 12px;
-  font-family: MuseoSansCyrl500; }
+  font-family: MuseoSansCyrl500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .buttons .icon {
     position: relative;
     left: -5px; }
@@ -2574,6 +2584,12 @@ body {
           margin-bottom: 10px; }
       .activityListBlock .activity-list .details .purpose {
         display: none; } }
+
+@media (max-width: 560px) {
+  .activityListBlock .activity-list .details .info {
+    margin-bottom: 12px; }
+  .activityListBlock .activity-list .details .count {
+    bottom: 10px; } }
 
 .list-panel-heading {
   display: flex;
@@ -3326,13 +3342,30 @@ td, th {
   .bottom {
     flex-direction: column; }
     .bottom .date {
-      margin-right: 0; }
+      margin-right: 0;
+      margin-bottom: 16px;
+      width: 100%; }
+      .bottom .date .date-title {
+        text-align: center; }
       .bottom .date .datepicker-wrap {
-        flex-direction: row; }
+        flex-direction: row;
+        justify-content: center; }
     .bottom .docs {
-      flex-direction: row; }
-      .bottom .docs button {
-        margin-right: 15px; } }
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      padding-right: 16px;
+      padding-left: 16px; }
+      .bottom .docs .buttons {
+        width: 100%; }
+        .bottom .docs .buttons:first-child {
+          margin-right: 32px; }
+    .bottom .info {
+      width: 100%;
+      display: flex;
+      justify-content: space-between; }
+      .bottom .info .stats-col .title-opt-span {
+        margin: 0; } }
 
 @media (max-width: 425px) {
   .top .transactions-buttons {
@@ -3340,7 +3373,15 @@ td, th {
     display: flex;
     justify-content: space-between; }
     .top .transactions-buttons .buttons {
-      width: 175px; } }
+      width: 100%; }
+      .top .transactions-buttons .buttons:first-child {
+        margin-right: 16px; }
+  .bottom .docs {
+    width: 100%; }
+    .bottom .docs .buttons {
+      width: 100%; }
+      .bottom .docs .buttons:first-child {
+        margin-right: 16px; } }
 
 @media (max-width: 375px) {
   .top .transactions-buttons {
@@ -3359,9 +3400,7 @@ td, th {
       width: 100%; }
   .bottom .info {
     width: 100%;
-    justify-content: center; }
-    .bottom .info .stats-col .result-opt-span {
-      margin-right: 0; } }
+    justify-content: center; } }
 
 input#datepickerFrom, input#datepickerTo {
   font-family: MuseoSansCyrl500;
@@ -3415,8 +3454,12 @@ input#datepickerFrom, input#datepickerTo {
     margin-right: 0; } }
 
 @media (max-width: 560px) {
-  input#datepickerFrom, input#datepickerTo {
-    margin-right: 15px; } }
+  input#datepickerTo {
+    margin-left: 32px; } }
+
+@media (max-width: 425px) {
+  input#datepickerTo {
+    margin-left: 16px; } }
 
 .modal-backdrop {
   position: fixed;
@@ -3692,7 +3735,12 @@ input#datepickerFrom, input#datepickerTo {
 
 @media (max-width: 425px) {
   .qr-code {
-    margin-top: 24px; } }
+    margin-top: 24px; }
+  .modal-footer {
+    display: flex;
+    flex-direction: column; }
+    .modal-footer button {
+      margin: 0; } }
 
 label {
   font-family: MuseoSansCyrl700;

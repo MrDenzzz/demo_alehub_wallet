@@ -22,16 +22,14 @@ import RecoverConfirm from '@/components/RecoverConfirm';
 import Recover2fa from '@/components/Recover2fa';
 import LoginTwoAuth from '@/components/LoginTwoAuth';
 import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
+import NewOffers from '@/components/NewOffers'
 
 Vue.use(Router);
 Vue.use(VModal);
 
 const ifNotAuthenticated = (to, from, next) => {
-    // console.log(to, 'to');
-    // console.log(from, 'from');
     let token = localStorage.getItem(sha256('user-token'));
     if (token === null || token === 'undefined' || token === undefined) {
-        console.log('mistake');
         localStorage.removeItem(sha256('user-token'));
         next();
         return;
@@ -40,7 +38,6 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifNotFirstStepAuthenticated = (to, from, next) => {
-    console.log('mistake 1');
     let token = localStorage.getItem(sha256('user-token'));
     if (from.name !== 'Login' && (token === null || token === 'undefined' || token === undefined)) {
         localStorage.removeItem(sha256('user-token'));
@@ -54,8 +51,7 @@ const ifNotFirstStepAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
-    console.log('mistake 2');
-    //заплатка. переписать
+    //rewrite
     setTimeout(() => {
         if (store.state.Wallets.wallets.length === 0) {
             next('/');
@@ -157,6 +153,12 @@ const router = new Router({
             path: '/notifications',
             name: 'Notifications',
             component: Notifications,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/newoffers',
+            name: 'NewOffers',
+            component: NewOffers,
             beforeEnter: ifAuthenticated
         },
         // {

@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="is-center" v-if="processingSendRequest">
-                                <Spinner/>
+                                <spinner/>
                             </div>
 
                             <div v-if="!processingSendRequest && successSendRequest"
@@ -64,7 +64,7 @@
                                            v-model="passwordConfirm">
                                 </div>
 
-                                <div class="is-center" v-if="isLoader">
+                                <div class="is-center" v-if="dataProcessing">
                                     <Spinner/>
                                 </div>
 
@@ -111,11 +111,48 @@
                 passwordConfirm: '',
                 successSendRequest: false,
                 processingSendRequest: false,
-                isLoader: false,
+                dataProcessing: false,
                 isExistUser: false
             }
         },
         methods: {
+            /*
+            * */
+            formatVal: function (val) {
+                //put this to external module
+                let formatArr = val.split(''),
+                    flag = false;
+
+                if (formatArr[0] === ' ') {
+                    flag = true;
+                    formatArr = formatArr.filter(item => {
+                        if (flag && item !== ' ') {
+                            flag = false;
+                        }
+                        return !flag;
+                    });
+                }
+                if (formatArr[formatArr.length - 1] === ' ') {
+                    flag = true;
+                    formatArr.reverse();
+                    formatArr = formatArr.filter(item => {
+                        if (flag && item !== ' ') {
+                            flag = false;
+                        }
+                        return !flag;
+                    });
+                    formatArr.reverse();
+                }
+                return formatArr.join('');
+            },
+            /*
+            * */
+            validateVal: function (val) {
+                //добавить проверки на специальные символы
+                if (val.length === 0)
+                    return false;
+                return true;
+            },
             registerUser: function () {
                 this.isExistUser = false;
                 var e = this.errors.items;
@@ -128,8 +165,13 @@
                     });
                     return false;
                 }
+
+                this.fullName = this.formatVal(this.fullName);
+
+                //to another func in methods
                 if (!this.fullName || !this.email || !this.phoneNumber
                     || !this.password || !this.passwordConfirm) {
+
                     if (!this.fullName) {
                         this.focusInput('fullname');
                         this.$toasted.show(this.$t('pages.registration.enterFullName'), {
@@ -138,6 +180,7 @@
                         });
                         return false;
                     }
+
                     if (!this.email) {
                         this.focusInput('email');
                         this.$toasted.show(this.$t('pages.registration.enterEmail'), {
@@ -146,6 +189,7 @@
                         });
                         return false;
                     }
+
                     if (!this.password) {
                         this.focusInput('password');
                         this.$toasted.show(this.$t('pages.registration.enterPassword'), {
@@ -154,6 +198,7 @@
                         });
                         return false;
                     }
+
                     if (!this.passwordConfirm) {
                         this.focusInput('repeatpass');
                         this.$toasted.show(this.$t('pages.registration.enterRepeatPassword'), {
@@ -163,6 +208,7 @@
                         return false;
                     }
                 }
+
                 if (e.length !== 0) {
                     this.isErrorEmail = true;
                     this.focusInput('email');
@@ -174,6 +220,7 @@
                         return false;
                     }
                 }
+
                 if (this.password.length < 8) {
                     this.focusInput('password');
                     this.$toasted.show(this.$t('pages.registration.enterCorrectLengthPassword'), {
@@ -182,6 +229,7 @@
                     });
                     return false
                 }
+
                 if (this.password !== this.passwordConfirm) {
                     this.$toasted.show(this.$t('pages.registration.enterMatchPassword'), {
                         duration: 10000,
@@ -191,9 +239,9 @@
                     return false;
                 }
 
+                this.dataProcessing = true;
 
-                this.isLoader = true;
-
+                //rewrite to axios
                 this.$http.post(`${this.$host}/users/new`, {
                     name: this.fullName,
                     email: this.email,
@@ -205,24 +253,29 @@
                     }
                 }).then(response => {
                     if (response.body.message === 'User already exist!') {
-                        this.isLoader = false;
+                        this.dataProcessing = false;
                         return this.isExistUser = true;
                     }
                     this.successSendRequest = true;
                     this.processingSendRequest = true;
-                    console.log(response);
                     this.processingSendRequest = false;
+                    this.dataProcessing = false;
+                    // console.log(response);
                     // return this.$router.push('/registration/confirmationuser');
                 }, response => {
                     console.log('error', response);
+                    this.dataProcessing = false;
                 });
             },
             focusInput: function (id) {
-                document.getElementById(id).focus()
+                document.getElementById(id).focus();
             },
             resetError: function (type) {
-                if (type === 'login') this.isErrorEmail = false;
-                if (type === 'password') this.isErrorPassword = false;
+                if (type === 'login')
+                    this.isErrorEmail = false;
+
+                if (type === 'password')
+                    this.isErrorPassword = false;
             }
         }
     }

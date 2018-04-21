@@ -5,34 +5,30 @@
                 {{ $t('pages.summary.searchPanel.dateRange') }}
             </h3>
             <div class="datepicker-wrap">
-                <datepicker
-                        id="datepickerFrom"
-                        :language="$t('pages.summary.searchPanel.langDate')"
-                        v-model="dateFromDatepicker"
-                        :disabled="disabledDate"
-                        :placeholder="'Date from'"/>
+                <datepicker id="datepickerFrom"
+                            :language="$t('pages.summary.searchPanel.langDate')"
+                            v-model="dateFromDatepicker"
+                            :disabled="disabledDate"
+                            :placeholder="'Date from'"/>
 
-                <datepicker
-                        id="datepickerTo"
-                        v-model="dateToDatepicker"
-                        :language="$t('pages.summary.searchPanel.langDate')"
-                        :disabled="disabledDate"
-                        :placeholder="'Date to'"/>
+                <datepicker id="datepickerTo"
+                            v-model="dateToDatepicker"
+                            :language="$t('pages.summary.searchPanel.langDate')"
+                            :disabled="disabledDate"
+                            :placeholder="'Date to'"/>
             </div>
         </div>
         <div class="docs">
-            <button
-                    class="buttons btn-default"
+            <button class="buttons btn-default"
                     :class="{ 'disable-gray-button': currentTransactions.length === 0 }"
                     @click="openModal('download-pdf')"
                     :disabled="currentTransactions.length === 0">
                 {{ $t('pages.summary.searchPanel.buttons.download') }}
             </button>
-            <button
-                    class="buttons btn-default"
+            <button class="buttons btn-default"
                     :class="{ 'disable-gray-button': currentTransactions.length === 0 }"
                     @click="openModal('share-transactions')"
-                    :disabled="currentTransactions.length === 0">
+                    :disabled="currentTransactions.length === 0 || 'true'">
                 {{ $t('pages.summary.searchPanel.buttons.share') }}
             </button>
         </div>
@@ -88,11 +84,7 @@
         </div>
 
         <modal-share-transactions/>
-        <modal-download-p-d-f
-                :current-balance-begin-period="currentBalanceBeginPeriod"
-                :current-balance-end-period="currentBalanceEndPeriod"
-                :current-received-balance="currentReceivedBalance"
-                :current-sent-balance="currentSentBalance"/>
+        <modal-download-p-d-f/>
 
     </div>
 </template>
@@ -217,3 +209,9 @@
         },
     }
 </script>
+
+<style lang="stylus" scoped>
+    .btn-default:disabled
+        background-color rgba(13, 23, 23, 0.08)
+        opacity 0.4
+</style>

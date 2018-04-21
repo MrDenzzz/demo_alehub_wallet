@@ -144,7 +144,7 @@ if (token !== 'undefined' && token) {
 
     store.dispatch('userRequest').then((resp) => {
 
-        console.log(resp, 'this user');
+        // console.log(resp, 'this user');
 
         console.log('Successfully reload');
 

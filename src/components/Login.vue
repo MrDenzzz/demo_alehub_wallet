@@ -40,14 +40,14 @@
 
                                     <button type="submit"
                                             class="btn btn-black btn-block nomargin"
-                                            @click="isLoadingCheck">
+                                            @click="dataProcessingCheck">
                                         {{ $t('pages.login.login') }}
                                     </button>
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Login or password is incorrect</p>
                                     </div>
-                                    <div class="is-center" v-if="isLoading">
-                                        <Spinner/>
+                                    <div class="is-center" v-if="dataProcessing">
+                                        <spinner/>
                                     </div>
                                 </form>
 
@@ -92,7 +92,7 @@
                 isErrorEmail: false,
                 isErrorPassword: false,
                 isError2fa: false,
-                isLoading: false,
+                dataProcessing: false,
                 initialLoading: true
             }
         },
@@ -166,7 +166,7 @@
                     return false;
                 }
 
-                this.isLoading = true;
+                this.dataProcessing = true;
 
                 this.$store.dispatch('authRequest', {
                     email: this.email,
@@ -182,41 +182,41 @@
                                 }).catch(() => {
                                     //это не срабатывает???
                                     console.log('You do not have transactions');
-                                    this.isLoading = false;
+                                    this.dataProcessing = false;
                                     this.$router.push('/');
                                 });
                             }).catch(() => {
                                 console.log('You do not have wallets');
-                                this.isLoading = false;
+                                this.dataProcessing = false;
                                 this.$router.push('/');
                             });
                         }).catch(() => {
-                            this.isLoading = false;
+                            this.dataProcessing = false;
                             console.log('Wrong user');
                         });
                     } else {
-                        this.isLoading = false;
+                        this.dataProcessing = false;
                         this.$router.push('/login/twoauth');
                     }
                 }).catch(() => {
-                    this.isLoading = false;
+                    this.dataProcessing = false;
                     console.log('Wrong auth');
                 });
             },
-            isLoadingCheck: function () {
+            dataProcessingCheck: function () {
                 if (!this.email && !this.password) {
-                    this.isLoading = false;
+                    this.dataProcessing = false;
                     return;
                 }
 
-                (this.userStatus !== 'success') ? this.isLoading = false : this.isLoading = true;
+                (this.userStatus !== 'success') ? this.dataProcessing = false : this.dataProcessing = true;
 
                 if ((this.authStatus === 'success' && this.userStatus === 'success' && !this.userHaveWallets && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && !this.currentWalletHaveTransactions) ||
                     (this.authStatus === 'success' && this.userStatus === 'success' && this.userHaveWallets && this.walletStatus === 'success' && this.currentWalletHaveTransactions && this.transactionStatus === 'success' && this.initiateFilterDateStatus === 'success'))
-                    this.isLoading = false;
+                    this.dataProcessing = false;
                 else
-                    this.isLoading = true;
+                    this.dataProcessing = true;
             },
             focusInput: function (id) {
                 document.getElementById(id).focus();

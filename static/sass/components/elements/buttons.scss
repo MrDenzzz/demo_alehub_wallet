@@ -8,6 +8,10 @@
   color: #34343e;
   margin-bottom: 12px;
   font-family: MuseoSansCyrl500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   & .icon {
     position: relative;

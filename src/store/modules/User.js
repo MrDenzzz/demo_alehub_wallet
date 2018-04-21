@@ -7,6 +7,7 @@ const state = {
     name: '',
     email: '',
     password: '',
+    lastUpdatedPassword: '',
     token: localStorage.getItem(sha256('user-token')) || '',
     twoAuth: '',
     haveTransactions: null,
@@ -121,7 +122,7 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                console.log(resp.data);
+                console.log(resp.data, 'user data');
                 commit('SUCCESS_AUTH');
                 commit('SUCCESS_USER', resp.data);
                 dispatch('setChangeTwoAuthStatus', resp.data.isTwoAuth);
@@ -342,7 +343,7 @@ const actions = {
                 commit('SUCCESS_CHANGE_PASSWORD');
                 resolve(resp);
             }).catch(err => {
-                console.log(err);
+                // console.log(err);
                 commit('ERROR_CHANGE_PASSWORD', err);
                 reject(err);
             });
@@ -408,6 +409,7 @@ const mutations = {
         state.name = user.name;
         state.email = user.email;
         state.twoAuth = user.isTwoAuth;
+        state.lastUpdatedPassword = user.lastUpdatedPassword;
         state.haveTransactions = user.haveTransactions;
         user.walletsList.length === 0 ? state.haveWallets = false : state.haveWallets = true;
         state.userStatus = 'success';
@@ -519,6 +521,7 @@ const getters = {
     userTwoAuth: state => state.twoAuth,
     userHaveWallets: state => state.haveWallets,
     userHaveTransactions: state => state.haveTransactions,
+    userLastUpdatedPassword: state => state.lastUpdatedPassword,
     twoAuthStatus: state => state.twoAuthStatus,
     twoAuthGeneratedCode: state => state.twoAuthGeneratedCode,
     twoAuthSecret: state => state.twoAuthSecret,
