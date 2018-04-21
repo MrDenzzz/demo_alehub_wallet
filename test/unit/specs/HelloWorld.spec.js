@@ -8,7 +8,6 @@ describe('Summary', () => {
         // console.log(vm.$el, 'vm.$el');
         // expect(vm.$el.querySelector('.test-test').textContent)
         //     .to.equal('im testing')
-
         expect(2).equal(2)
     })
 });
