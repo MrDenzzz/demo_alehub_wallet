@@ -22,6 +22,7 @@ import RecoverConfirm from '@/components/RecoverConfirm';
 import Recover2fa from '@/components/Recover2fa';
 import LoginTwoAuth from '@/components/LoginTwoAuth';
 import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
+import NewOffers from '@/components/NewOffers'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -152,6 +153,12 @@ const router = new Router({
             path: '/notifications',
             name: 'Notifications',
             component: Notifications,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/newoffers',
+            name: 'NewOffers',
+            component: NewOffers,
             beforeEnter: ifAuthenticated
         },
         // {

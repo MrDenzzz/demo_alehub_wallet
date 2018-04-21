@@ -11,6 +11,7 @@
   }
   &.is-opened {
     overflow-y: auto;
+    overflow-x: hidden;
     .wallet-search {
       @media (max-width: 425px) {
         width: 100vh !important;

@@ -263,5 +263,21 @@
   }
 }
 
+@media (max-width: 560px) {
+  .activityListBlock {
+    & .activity-list {
+      & .details {
+        & .info {
+          margin-bottom: 12px;
+        }
+
+        & .count {
+          bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
 
 

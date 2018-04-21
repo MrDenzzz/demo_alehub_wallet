@@ -1,35 +1,63 @@
 <template>
-    <div class="notifications-panel" style="width: 100%;">
+    <div class="notifications-panel">
         <div class="action-buttons">
-            <button class="buttons btn-default" @click="showCheckbox">
-                Edit
-            </button>
-            <button class="buttons btn-default btn-delete" @click="removeCheckedNotif(checkedNotif)">
-                <img :src="getIcon('bin')" width="22" height="22" class="icon">
+            <div class="left-buttons">
+                <button class="buttons btn-default btn-check-all"
+                        v-if="isShown"
+                        @click="selectAll">
+                    <label class="control control-checkbox">
+                        <input class="notif-checkbox"
+                               type="checkbox"
+                               :checked="notifications.length === checkedNotif.length">
+                        <div class="control-indicator"></div>
+                    </label>
+                    {{$t('pages.notifications.selectAll')}}
+                </button>
+                <button class="buttons btn-default"
+                        @click="showCheckbox">
+                    Edit
+                </button>
+            </div>
+            <button class="buttons btn-default btn-delete"
+                    v-if="isShown"
+                    :disabled="checkedNotif.length === 0"
+                    @click="removeCheckedNotif(checkedNotif)">
+                <img width="22"
+                     height="22"
+                     class="icon"
+                     :src="getIcon('bin')">
             </button>
         </div>
-        <div v-for="(notification, notificationIndex) in notifications" :key="notificationIndex">
-            <panel-heading :title="parseDate(notification.date)" :isTop="true"
-                           v-if="check(notificationIndex)"/>
+        <div v-for="(notification, notificationIndex) in notifications"
+             :key="notificationIndex">
+            <panel-heading v-if="check(notificationIndex)"
+                           :title="parseDate(notification.date)"
+                           :isTop="true"/>
             <div class="notif-panel"
-                 :class="{checked: isChecked(notification._id)}">
-                <input type="checkbox"
-                       id="notification._id"
-                       class="notif-checkbox"
-                       :value="notification._id"
-                       v-show="isShown"
-                       v-model="checkedNotif">
+                 :class="{checked: isChecked(notification._id), pointer: isShown}"
+                 @click="clickCheckbox($event, notification._id)">
+                <label class="control control-checkbox"
+                       v-show="isShown">
+                    <input type="checkbox"
+                           class="notif-checkbox"
+                           :id="'checkbox'+notification._id"
+                           :value="notification._id"
+                           v-model="checkedNotif">
+                    <div class="control-indicator"></div>
+                </label>
                 <div class="panel-heading"
                      :class="{'shift-right': isShown}">
-                    <!-- <h3 class="title" v-html="parseMarkDown(notification.title)"></h3> -->
+                    <h3 class="title"
+                        v-html="parseMarkDown(notification.title)"></h3>
                     <h3 class="datetime">
-                        {{ parseDate(notification.timestamp) }} {{ $t('pages.notifications.in') }}
+                        {{ parseDate(notification.date) }} {{ $t('pages.notifications.in') }}
                         <span class="bold">
-                            {{ parseTime(notification.timestamp) }}
+                            {{ parseTime(notification.date) }}
                         </span>
                     </h3>
                 </div>
-                <h4 class="subtitle" v-if="notification.isSubtitle">
+                <h4 class="subtitle"
+                    v-if="notification.isSubtitle">
                     {{ notification.subTitle }}:
                 </h4>
                 <div class="changed-line"
@@ -72,25 +100,48 @@
             PanelHeading
         },
         computed: {
-            selectedTheme() {
+            selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             }
         },
         methods: {
-            parseMarkDown(text) {
+            parseMarkDown: function (text) {
                 return md(text);
             },
-            check(index) {
-                if (index === 0) return true;
+            selectAll: function (event) {
+                if (event.target.className === "control-indicator")
+                    return false;
+                if (this.checkedNotif.length < this.notifications.length) {
+                    this.checkedNotif = [];
+                    for (let i = 0; i < this.notifications.length; i++) {
+                        this.checkedNotif.push(this.notifications[i]._id);
+                    }
+                } else {
+                    this.checkedNotif = [];
+                }
+            },
+            clickCheckbox: function (event, id) {
+                if (event.target.className === "control-indicator")
+                    return false;
+                if (!this.isShown)
+                    return false;
+                document.querySelector(`#checkbox${id}`).click();
+            },
+            check: function (index) {
+                if (index === 0)
+                    return true;
+
                 if (index === this.notifications.length) {
-                    if (Moment(this.notifications[index].date).format('YYYY/MM/DD') === Moment(this.notifications[index + 1].date).format('YYYY/MM/DD')) return false;
+                    if (Moment(this.notifications[index].date).format('YYYY/MM/DD') === Moment(this.notifications[index + 1].date).format('YYYY/MM/DD'))
+                        return false;
                     return true;
                 } else {
-                    if (Moment(this.notifications[index].date).format('YYYY/MM/DD') === Moment(this.notifications[index - 1].date).format('YYYY/MM/DD')) return false;
+                    if (Moment(this.notifications[index].date).format('YYYY/MM/DD') === Moment(this.notifications[index - 1].date).format('YYYY/MM/DD'))
+                        return false;
                     return true;
                 }
             },
-            parseDate(date) {
+            parseDate: function (date) {
                 let currentDate = new Date();
                 let yesterdayDate = new Date();
                 yesterdayDate = yesterdayDate.setDate(yesterdayDate.getDate() - 1);
@@ -102,18 +153,18 @@
                 }
                 return Moment(date).format('MM/DD');
             },
-            parseTime(date) {
+            parseTime: function (date) {
                 return Moment(date).format('HH:mm');
             },
-            isChecked(id) {
-               return this.checkedNotif.indexOf(id) !== -1 ? true : false;
+            isChecked: function (id) {
+                return this.checkedNotif.indexOf(id) !== -1;
             },
-            showCheckbox() {
+            showCheckbox: function () {
                 this.isShown = !this.isShown;
                 this.checkedNotif = [];
             },
-            removeCheckedNotif(checkedNotif) {
-                console.log('from removeCheckedNotif method');
+            removeCheckedNotif: function (checkedNotif) {
+                this.$parent.$emit('removeCheckedNotif', checkedNotif);
             },
             getIcon: function (name) {
                 if (this.selectedTheme === 'dark')
@@ -128,13 +179,33 @@
 </script>
 
 <style lang="stylus" scoped>
+    .notifications-panel
+        width 100%
     .notif-checkbox
         position absolute
 
     .shift-right
-        padding-left 30px
+        padding-left 20px
 
     .checked
         background-color #f5e9c5
+
+    .control
+        margin-bottom 0px
+
+    .pointer
+        cursor pointer
+
+    .left-buttons
+        display flex
+
+    .btn-check-all
+        width auto
+        margin-right 10px
+        padding-left 36px
+        padding-right 15px
+        .control-indicator
+            top 2px
+            left -20px
 </style>
 

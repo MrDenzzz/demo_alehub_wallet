@@ -1640,6 +1640,16 @@
                         &.border-none
                             padding-top 0
 
+                        & .modal-line
+                            flex-direction column
+
+                            & .control-checkbox
+                                margin-top 8px
+                        
+                    & .modal-footer
+                        margin-right 42px
+                        margin-left 42px
+
         .row-flex
             flex-direction column
 
@@ -1688,21 +1698,28 @@
             padding-bottom 18px
 
         .modal-footer
-            & button
-                margin-right 22px
-                margin-left 22px
+            display flex
+            flex-direction column
 
-    @media (max-width: 375px)
-        .modal-footer
             & button
-                margin-right 5px
-                margin-left 5px
+                margin-right 0
+                margin-left 0
+                padding 0
 
     @media (max-width: 320px)
-        .body
-            .modal-control
-                .modal-line
-                    .wrap-double-input
-                        max-width 100%
+        .v--modal-overlay
+            & .v--modal-box
+                & .body
+                    .modal-control
+                        .modal-line
+                            .wrap-double-input
+                                max-width 100%
+
+                    & .modal-footer
+                        margin-right 20px
+                        margin-left 20px
+
+                        & button 
+                            margin-bottom 12px
 
 </style>

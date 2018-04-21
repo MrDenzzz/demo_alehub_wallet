@@ -45,14 +45,15 @@
         },
         computed: {
             ...mapGetters([
-                'notifications'
+                'notifications',
+                'currentWallet'
             ]),
         },
         methods: {
             getCurrentNotifications: function () {
                 this.dataProcessing = true;
 
-                this.$store.dispatch('getNotifications'
+                this.$store.dispatch('getNotifications', this.currentWallet.address
                 ).then(() => {
                     this.dataProcessing = false;
                     console.log('Success getting notifications');
@@ -68,14 +69,26 @@
                 }).catch(() => {
                     console.log('Error toggle notifications badge');
                 });
-            }
+            },
+            removeCheckedNotif(checkedNotif) {
+                this.isLoader = true;
+                this.$store.dispatch('deleteNotifications', checkedNotif
+                ).then(() => {
+                    this.isLoader = false;
+                    console.log('Success deleting notifications');
+                }).catch(() => {
+                    console.log('Error deleting notifications');
+                });
+            },
         },
         created() {
             this.changeToggleNotificationBadge(false);
             this.getCurrentNotifications();
         },
         mounted() {
-
+            this.$on('removeCheckedNotif', function (checkedNotif) {
+                this.removeCheckedNotif(checkedNotif);
+            });
         }
     };
 </script>

@@ -69,7 +69,13 @@
     }
 
     @media (max-width: 560px) {
-        input#datepickerFrom, input#datepickerTo {
-            margin-right: 15px;
+        input#datepickerTo {
+            margin-left: 32px;
+        }
+    }
+
+    @media (max-width: 425px) {
+        input#datepickerTo {
+            margin-left: 16px;
         }
     }
