@@ -102,7 +102,7 @@ export default {
 
             if (this.secretKey.length === 0) {
                 this.focusInput('userSecretKey');
-                this.$toasted.show('Enter your E-mail', {
+                this.$toasted.show(this.$t('modals.error.enterEmail'), {
                     duration: 10000,
                     type: 'error',
                 });

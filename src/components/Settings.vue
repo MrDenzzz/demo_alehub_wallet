@@ -191,7 +191,7 @@
                     this.$router.push('/login')
                 }).catch(() => {
                     this.dataProcessing = false;
-                    this.$toasted.show('An error occurred while logout', {
+                    this.$toasted.show(this.$t('modals.error.logout'), {
                         duration: 10000,
                         type: 'error',
                     });

@@ -164,7 +164,7 @@
                 return this.secret;
             },
             successCopySecret: function () {
-                this.$toasted.show('You have successfully copied the secret code', {
+                this.$toasted.show(this.$t('modals.success.copySecretCode'), {
                     duration: 5000,
                     type: 'success',
                 });
@@ -180,13 +180,13 @@
                     this.secret = '';
                     this.dataProcessing = false;
                     this.$modal.hide('change-two-auth');
-                    this.$toasted.show('You have successfully DISABLED dual authentication', {
+                    this.$toasted.show(this.$t('modals.success.disable2fa'), {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
                     this.dataProcessing = false;
-                    this.$toasted.show('You have failed DISABLE dual authentication', {
+                    this.$toasted.show(this.$t('modals.error.disable2fa'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -204,13 +204,13 @@
                     this.qrPath = '';
                     this.dataProcessing = false;
                     this.$modal.hide('change-two-auth');
-                    this.$toasted.show('You have successfully ENABLED dual authentication', {
+                    this.$toasted.show(this.$t('modals.success.enable2fa'), {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
                     this.dataProcessing = false;
-                    this.$toasted.show('You have failed ENABLE dual authentication', {
+                    this.$toasted.show(this.$t('modals.error.enable2fa'), {
                         duration: 10000,
                         type: 'error',
                     });

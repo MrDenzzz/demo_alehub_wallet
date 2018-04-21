@@ -156,7 +156,7 @@
                                 this.currentWalletAddress
                             ).then(() => {
 
-                                this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
+                                this.$toasted.show(this.$t('modals.success.newWallet.wallet')+' '+this.currentWallet.name+' '+this.$t('modals.success.newWallet.delete'), {
                                     duration: 5000,
                                     type: 'success',
                                 });
@@ -191,7 +191,7 @@
                         ).then(() => {
                             this.$store.dispatch('removeTransactions'
                             ).then(() => {
-                                this.$toasted.show(`Wallet '${this.currentWallet.name}' was successfully deleted`, {
+                                this.$toasted.show(this.$t('modals.success.newWallet.wallet')+' '+this.currentWallet.name+' '+this.$t('modals.success.newWallet.delete'), {
                                     duration: 5000,
                                     type: 'success',
                                 });
@@ -209,7 +209,7 @@
                     }
                 }).catch(() => {
                     this.dataProcessing = false;
-                    this.$toasted.show(`There was an error deleting the wallet '${this.currentWallet.name}'`, {
+                    this.$toasted.show(this.$t('modals.error.walletDelete')+' '+this.currentWallet.name, {
                         duration: 10000,
                         type: 'error',
                     });

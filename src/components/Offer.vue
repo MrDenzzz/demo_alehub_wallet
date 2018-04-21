@@ -467,7 +467,7 @@
             }),
             checkFillFileUpload: function () {
                 if (this.fileSolution === '') {
-                    this.$toasted.show("Upload your SOLUTION before SUBMIT", {
+                    this.$toasted.show(this.$t('modals.error.checkSolution'), {
                         duration: 10000,
                         type: 'error',
                     });
@@ -502,13 +502,13 @@
             saveOffer: function () {
                 this.isSave = !this.isSave;
                 if (this.isSave) {
-                    this.$toasted.show("Offer saved", {
+                    this.$toasted.show(this.$t('modals.success.saveOffer'), {
                         duration: 5000,
                         type: 'success',
                     });
                     this.setSavedElementInOffersList(this.getCurrentOffer.id);
                 } else {
-                    this.$toasted.show("Offer was removed from saved", {
+                    this.$toasted.show(this.$t('modals.success.removeOffer'), {
                         duration: 5000,
                         type: 'success',
                     });

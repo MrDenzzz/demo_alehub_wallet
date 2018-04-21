@@ -527,7 +527,7 @@
                     ).then((resp) => {
                         this.$store.dispatch('resetTransactionsUpdated'
                         ).then(() => {
-                            this.$toasted.show(`Wallet '${this.currentWallet.name}' successful created!`, {
+                            this.$toasted.show(this.$t('modals.success.newWallet.wallet')+' '+this.currentWallet.name+' '+this.$t('modals.success.newWallet.create'), {
                                 duration: 5000,
                                 type: 'success',
                             });
@@ -551,13 +551,13 @@
                 }).then((resp) => {
                     this.dataProcessing = false;
                     this.closeModal();
-                    this.$toasted.show(`Wallet '${resp.data.walletInfo.name}' successful created!`, {
+                    this.$toasted.show(this.$t('modals.success.newWallet.wallet')+' '+ resp.data.walletInfo.name+' '+this.$t('modals.success.newWallet.create'), {
                         duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
                     this.dataProcessing = false;
-                    this.$toasted.show('Wallet was failed redeem', {
+                    this.$toasted.show(this.$t('modals.success.walletRedeem'), {
                         duration: 10000,
                         type: 'error',
                     });

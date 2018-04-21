@@ -456,11 +456,46 @@ const messages = {
                 projectData:'You are submitting incorrect project data',
                 differentPass:'New password and confirmed password do not match',
                 lengthPass:'The password must be at least 8 characters in length',
+                changeAddr:'You have failed confirm the email address change',
+                cancelChangeAddr:'You have failed canceled the email address change',
+                logout:'An error occurred while logout',
+                changeNameWallet:'There was an error changing your wallet name',
+                checkOffer:"Fill out the OFFER NAME field",
+                checkPrice:"Fill out the PRICE field",
+                checkPriceZero:"You can not set the value of the PRICE field to zero",
+                checkDesc:"Fill out the DESCRIPTION field",
+                checkRequirements:"Fill out the REQUIREMENTS field",
+                checkDeadline:"Fill out the DEADLINE field",
+                checkUpload:"You should select the UPLOAD file",
+                checkUploadButton:"You should click the UPLOAD file button",
+                checkSolution:"Upload your SOLUTION before SUBMIT",
+                walletRedeem:'Wallet was failed redeem',
+                disable2fa:'You have failed DISABLE dual authentication',
+                enable2fa:'You have failed ENABLE dual authentication',
+                walletDelete:'There was an error deleting the wallet',
             },
             success:{
                 changeMail:'Confirmation of the change of email was sent to this address',
                 changePass:'You have successfully changed your password',
                 changeName:'Your name has been successfully changed',
+                newWallet:{
+                    wallet:"Wallet",
+                    create:"successful created!",
+                    delete:"successful deleted!"
+                },
+                copyWallet:'You have successfully copied the address of the wallet',
+                changeAddr:'You have successfully confirm the email address change',
+                cancelChangeAddr:'You have successfully canceled the email address change',
+                changeNameWallet:'The name of the wallet was successfully changed',
+                checkUpload:"Selected file was successfully uploaded",
+                saveOffer:"Offer saved",
+                removeOffer:"Offer was removed from saved",
+                copySecretCode:'You have successfully copied the secret code',
+                disable2fa:'You have successfully DISABLED dual authentication',
+                enable2fa:'You have successfully ENABLED dual authentication',
+            },
+            lang:{
+                submit:"Submit"
             }
         },
         navbar: {
@@ -919,32 +954,55 @@ const messages = {
                 lang:'ru'
             },
             error:{
-                // moreThanZero:'Transaction amount must be greater than 0'
                 moreThanZero:'Транзакция должна быть больше чем 0',
-                // moreThanHave:'You can not send more coins than there are in your account'
-                moreThanHave:'Не хватает золота',
-                // toYourself:'You can not send tokens to yourself'
-                toYourself:'Вы не можете отправлять токены самому себе',
-                // sendFail:'Sending failed'
+                moreThanHave:'Вы не можете отправить токенов больше, чем есть у вас в кошельке',
+                toYourself:'Вы не можете отправлять токены на кошелек с которого отправляете',
                 sendFail:'Отправка не удалась',
-                // wrongMail:'You are sent to me wrong email data',
                 wrongMail:'Вы ввели не верные данные',
-                // wrongMail:'The 2fa code length must be 6 digits',
                 lenght2faCheck:'Длина кода должна быть не меньше 6 символов',
-                // projectData:'You are submitting incorrect project data',
-                projectData:'Вы отправляете неверные данные проекта',
-                // differentPass:'New password and confirmed password do not match',
-                differentPass:'Новый и подтвержденный пароль не совпадают',
-                // lengthPass:'The password must be at least 8 characters in length',
+                projectData:'Вы отправляете неверные данные для смены пароля',
+                differentPass:'Пароли не совпадают',
                 lengthPass:'Длина пароля должна быть не менее 8 символов.',
+                changeAddr:'Вы не подтвердили изменение адреса электронной почты',
+                cancelChangeAddr:'Вы отказались от изменения адреса электронной почты',
+                logout:'Ошибка при выходе из системы',
+                changeNameWallet:'Не удалось изменить имя вашего кошелька',
+                checkOffer:'Заполните поле предложения работы',
+                checkPrice:'Заполните поле вознаграждения за работу',
+                checkPriceZero:'Поле вознаградения должно быть больше чем 0',
+                checkDesc:'Поле описания не должно быть пустым',
+                checkRequirements:'Поле требований не должно быть пустым',
+                checkDeadline:'Поле дедлайна не должно быть пустым',
+                checkUpload:'Файл для загрузки не был выбран',
+                checkUploadButton:'Кнопка загрузки файлов не была нажата',
+                checkRedeem:'Загрузите ваше решение прежде чем принять',
+                walletRedeem:'Не удалось создать кошелек',
+                disable2fa:'Двойная аутентификация не была отключена',
+                enable2fa:'Двойная аутентификация не была включена',
+                walletDelete:'Ошибка при удалении кошелька',
+            },
+            lang:{
+                submit:"Принять"
             },
             success:{
-                // changeMail:'Confirmation of the change of email was sent to this address',
                 changeMail:'Подтверждение на изменение почты было отправлено на этот адрес',
-                // changePass:'You have successfully changed your password',
                 changePass:'Пароль был успешно изменен',
-                // changeName:'Your name has been successfully changed',
                 changeName:'Ваше имя было успешно изменено',
+                newWallet:{
+                    wallet:"Кошелек",
+                    create:"успешно создан!",
+                    delete:"успешно удален!"
+                },
+                copyWallet:'Вы успешно скопировали адрес кошелька',
+                changeAddr:'Вы успешно подтвердили изменение адреса электронной почты',
+                cancelChangeAddr:'Вы успешно отменили изменение адреса электронной почты',
+                changeNameWallet:'Название кошелька было успешно изменено',
+                checkUpload:'Выбранный файл был успешно загружен',
+                saveOffer:'Предложение сохранено',
+                removeOffer:'Предложение было успешно удалено из сохраненных',
+                copySecretCode:'секретный код был успешно скопирован',
+                disable2fa:'Вы успешно отключили двойную аутентификацию',
+                enable2fa:'Вы успешно включили двойную аутентификацию',
             }
 
         },
@@ -954,7 +1012,7 @@ const messages = {
             resume: 'Резюме',
             notifications: 'Оповещения',
             settings: 'Настройки'
-        }
+        },
     }
 };
 
