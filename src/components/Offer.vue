@@ -1,13 +1,11 @@
 <template>
     <div class="offer">
 
-        <Navbar
-                :title="$t('pages.jobOffer.navbarTitle')"
+        <navbar :title="$t('pages.jobOffer.navbarTitle')"
                 :isNavigate="true"
                 :isBalance="false"
                 :rightMenu="rightMenu"
-                :isBack="true"
-        />
+                :isBack="true"/>
 
         <section class="main">
             <div class="content nomenu">
@@ -16,8 +14,12 @@
                         <div class="col-9">
                             <div class="offer-page">
                                 <div class="heading">
-                                    <h1 class="title">{{ getCurrentOffer.title }}</h1>
-                                    <div class="save" @click="saveOffer" :class="{'active': isSave }">
+                                    <h1 class="title">
+                                        {{ getCurrentOffer.title }}
+                                    </h1>
+                                    <div class="save"
+                                         :class="{'active': isSave }"
+                                         @click="saveOffer">
                                         <span>Save</span>
                                         <div class="icon"></div>
                                     </div>
@@ -26,20 +28,28 @@
                                     {{ getCurrentOffer.wallet }}
                                     <!--<span class="badge">{{ getCurrentOffer.rating }}</span>-->
                                 </p>
-                                <h3>{{ $t('pages.jobOffer.fields.description') }}:</h3>
+                                <h3>
+                                    {{ $t('pages.jobOffer.fields.description') }}:
+                                </h3>
                                 <p class="description">
                                     {{ getCurrentOffer.desc }}
                                 </p>
 
-                                <h3>{{ $t('pages.jobOffer.fields.requirements') }}:</h3>
+                                <h3>
+                                    {{ $t('pages.jobOffer.fields.requirements') }}:
+                                </h3>
                                 <div class="tags-list">
-                                    <div class="tag" v-for="req in this.getCurrentOffer.reqs">
+                                    <div class="tag"
+                                         v-for="req in this.getCurrentOffer.reqs">
                                         <span>{{ req }}</span>
                                     </div>
                                 </div>
 
                                 <h3>{{ $t('pages.jobOffer.fields.deadline.title') }}:</h3>
-                                {{ formattedDate }}<span class="muted"> (ends in <b>{{ endsIn }} days</b>)</span>
+                                {{ formattedDate }}
+                                <span class="muted">
+                                    (ends in <b>{{ endsIn }} days</b>)
+                                </span>
                             </div>
 
                             <div class="col-8 marginTop"
@@ -144,12 +154,11 @@
 
                                 <action-panel
                                         btnText="Submit"
-                                        isSubmit="true"
-                                />
-
+                                        isSubmit="true"/>
                             </div>
 
-                            <div class="col-12 marginTop" v-if="checkAcceptCompletePanel">
+                            <div class="col-12 marginTop"
+                                 v-if="checkAcceptCompletePanel">
                                 <div class="list-panel-heading">
                                     <h3>Solution</h3>
                                 </div>
@@ -225,7 +234,7 @@
 
                         <div class="col-3">
                             <action-panel
-                                    v-if="checkContractor || (getCurrentOffer.contractorId == 0 && !checkOwner)"
+                                    v-if="checkContractor"
                                     btnText="Apply"
                                     actionText="contact employer"
                                     isAction="true"
@@ -235,40 +244,38 @@
                                     text-muted='Please note that you will be charged this.formatingReservedBalance ALC as a refundable deposit.'
                                     :apply-offer="getCurrentOffer.apply"
                                     :mailto="getOwnerInfo.email"
-                                    :reserved-balance="formatingReservedBalance"
-                            />
-                            <employer-edit-panel
-                                    v-if="checkEditPanel"
-                                    :btnText="employerBtnText"
-                                    :price="formattingPrice"
-                                    :text="employerText"
-                                    :offerId="getCurrentOffer.id"
-                            />
-                            <employer-contact-panel
-                                    v-if="checkContactPanel"
-                                    :btnText="employerBtnText"
-                                    :text="employerText"
-                                    :offerId="getCurrentOffer.id"
-                                    :to="getOwnerInfo.email"
-                                    :contractorName="getCurrentOffer.contractorId !== 0 ? getContractorInfo.name : ''"
-                            />
-                            <employer-accept-panel
-                                    v-if="checkAcceptPanel"
-                                    :btnText="employerBtnText"
-                                    :text="employerText"
-                                    :offerId="getCurrentOffer.id"
-                                    :to="getOwnerInfo.email"
-                                    :contractorName="getCurrentOffer.contractorId !== 0 ? getContractorInfo.name : ''"
-                                    :actionText="'ask for fixes'"
-                            />
-                            <employer-complete-panel
-                                v-if="checkCompletePanel"
-                                :contractorName="getCurrentOffer.contractorId !== 0 ? getContractorInfo.name : ''"
-                            />
-                            <apply-offer
-                                    :price="getCurrentOffer.price"
-                                    :wallet="getCurrentOffer.wallet"
-                            />
+                                    :reserved-balance="formatingReservedBalance"/>
+                            <!--<employer-edit-panel-->
+                            <!--v-if="checkEditPanel"-->
+                            <!--:btnText="employerBtnText"-->
+                            <!--:price="formattingPrice"-->
+                            <!--:text="employerText"-->
+                            <!--:offerId="getCurrentOffer.id"-->
+                            <!--/>-->
+                            <!--<employer-contact-panel-->
+                            <!--v-if="checkContactPanel"-->
+                            <!--:btnText="employerBtnText"-->
+                            <!--:text="employerText"-->
+                            <!--:offerId="getCurrentOffer.id"-->
+                            <!--:to="getOwnerInfo.email"-->
+                            <!--:contractorName="getCurrentOffer.contractorId !== 0 ? getContractorInfo.name : ''"-->
+                            <!--/>-->
+                            <!--<employer-accept-panel-->
+                            <!--v-if="checkAcceptPanel"-->
+                            <!--:btnText="employerBtnText"-->
+                            <!--:text="employerText"-->
+                            <!--:offerId="getCurrentOffer.id"-->
+                            <!--:to="getOwnerInfo.email"-->
+                            <!--:contractorName="getCurrentOffer.contractorId !== 0 ? getContractorInfo.name : ''"-->
+                            <!--:actionText="'ask for fixes'"-->
+                            <!--/>-->
+                            <!--<employer-complete-panel-->
+                            <!--v-if="checkCompletePanel"-->
+                            <!--:contractorName="getCurrentOffer.contractorId !== 0 ? getContractorInfo.name : ''"-->
+                            <!--/>-->
+                            <!--<apply-offer-->
+                            <!--:price="getCurrentOffer.price"-->
+                            <!--:wallet="getCurrentOffer.wallet"/>-->
                         </div>
                     </div>
                 </div>
@@ -281,13 +288,13 @@
 <script>
     import Navbar from './layouts/Navbar';
     import ActionPanel from './layouts/ActionPanel';
-    import ApplyOffer from './modals/ApplyOffer';
-    import ContactContractor from './modals/ContactContractor';
+    // import ApplyOffer from './modals/ApplyOffer';
+    // import ContactContractor from './modals/ContactContractor';
     import moment from 'moment';
-    import EmployerEditPanel from './layouts/EmployerEditPanel'
-    import EmployerContactPanel from './layouts/EmployerContactPanel'
-    import EmployerAcceptPanel from './layouts/EmployerAcceptPanel'
-    import EmployerCompletePanel from './layouts/EmployerCompletePanel';
+    // import EmployerEditPanel from './layouts/EmployerEditPanel'
+    // import EmployerContactPanel from './layouts/EmployerContactPanel'
+    // import EmployerAcceptPanel from './layouts/EmployerAcceptPanel'
+    // import EmployerCompletePanel from './layouts/EmployerCompletePanel';
 
     import {mapMutations} from 'vuex';
     import {mapGetters} from 'vuex';
@@ -297,12 +304,12 @@
         components: {
             ActionPanel,
             Navbar,
-            ApplyOffer,
-            ContactContractor,
-            EmployerEditPanel,
-            EmployerContactPanel,
-            EmployerAcceptPanel,
-            EmployerCompletePanel
+            // ApplyOffer,
+            // ContactContractor,
+            // EmployerEditPanel,
+            // EmployerContactPanel,
+            // EmployerAcceptPanel,
+            // EmployerCompletePanel
         },
         data() {
             return {

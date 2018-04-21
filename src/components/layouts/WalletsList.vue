@@ -58,10 +58,9 @@
     import SelectControl from '../layouts/forms/Select';
     import NewWallet from '../modals/NewWallet';
 
-    import sha256 from 'sha256';
-    import {Draggable} from '@shopify/draggable';
+    // import { Draggable } from '@shopify/draggable';
 
-    import {mapGetters} from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         name: 'walletsList',
@@ -189,26 +188,26 @@
                 return require(`../../assets/img/${name}.svg`);
             },
             initDrag: function () {
-                const draggable = new Draggable(document.querySelectorAll('.dragParent'), {
-                    draggable: '.menu',
-                    delay: 0,
-                    handle: '.drag',
-                    mirror: {
-                        constrainDimensions: true,
-                        yAxis: false
-                    }
-                });
-
-                draggable.on('drag:move', (event) => {
-                    if (event.mirror.getBoundingClientRect().x * -0.4 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
-                        this.isToggle = true;
-                        document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
-                    } else if (event.mirror.getBoundingClientRect().x >= 0) {
-                        event.cancel();
-                        document.querySelector('.draggable-mirror').style.transform = 'translate3d(0px, 64px, 0)';
-                        document.querySelector('.draggable-mirror').style.left = 0
-                    }
-                });
+                // const draggable = new Draggable(document.querySelectorAll('.dragParent'), {
+                //     draggable: '.menu',
+                //     delay: 0,
+                //     handle: '.drag',
+                //     mirror: {
+                //         constrainDimensions: true,
+                //         yAxis: false
+                //     }
+                // });
+                //
+                // draggable.on('drag:move', (event) => {
+                //     if (event.mirror.getBoundingClientRect().x * -0.4 <= 90 && !(event.mirror.getBoundingClientRect().x >= 0)) {
+                //         this.isToggle = true;
+                //         document.querySelector('.draggable-mirror').style.left = `-${event.mirror.getBoundingClientRect().x * 0.66}px`
+                //     } else if (event.mirror.getBoundingClientRect().x >= 0) {
+                //         event.cancel();
+                //         document.querySelector('.draggable-mirror').style.transform = 'translate3d(0px, 64px, 0)';
+                //         document.querySelector('.draggable-mirror').style.left = 0
+                //     }
+                // });
             },
             closeMenu: function (event) {
                 if (event.target.localName !== 'input') {
