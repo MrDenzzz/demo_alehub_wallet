@@ -6,7 +6,7 @@
                 :rightMenu="rightMenu"/>
 
         <!--rename to normal name classes-->
-        <div class="my-row-flex" style="padding-top: 64px; display: flex; justify-content: space-between;">
+        <div class="my-row-flex" style="padding-top: 64px; display: flex; justify-content: space-between; font-family: MuseoSansCyrl500;">
             <div class="mycol"
                  style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px;"
                  v-for="contractor in contractors">
@@ -65,6 +65,10 @@
                 </div>
 
             </div>
+        </div>
+
+        <div class="asdasd" style="width: 100%; display: flex; justify-content: center; padding: 20px 50px;">
+            <canvas id="timeline">Update your browser</canvas>
         </div>
 
     </div>
@@ -392,13 +396,41 @@
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
                 return dateFormat.toDateString();
+            },
+            initTimeline: function () {
+                let timeline = document.getElementById('timeline'),
+                    //мб попробовать разобраться с 3d и сделать в 3d?
+                    ctx = timeline.getContext('2d');
+
+                timeline.width = 1000;
+                timeline.height = 350;
+
+                // ctx.fillStyle = '#dde3ea';
+                // ctx.fillRect(0, 0, timeline.width, 200);
+
+                ctx.beginPath();
+                ctx.moveTo(100, 0);
+                ctx.lineTo(0, 125);
+                ctx.lineTo(1000, 125);
+                ctx.lineTo(900, 0);
+                ctx.lineTo(100, 0);
+                ctx.fillStyle = '#dde3ea';
+                ctx.fill();
+                ctx.closePath();
+
+                for (let i = 0; i < 10; i++) {
+                    //писать сюда линии
+                }
+
+                ctx.fillStyle = '#ced5dd';
+                ctx.fillRect(0, 125, timeline.width, 50);
             }
         },
         created() {
 
         },
         mounted() {
-
+            this.initTimeline();
         }
 
     }
