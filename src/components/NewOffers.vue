@@ -10,19 +10,23 @@
              style="padding-top: 64px; display: flex; justify-content: space-between; font-family: MuseoSansCyrl500;">
             <div class="mycol"
                  style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px;"
-                 v-for="contractor in contractors">
+                 v-for="(contractor, i) in contractors">
 
-                <div class="project-progress">
-                    {{ contractor.ready }}
+                <div class="project-progress-block" style="height: 4px; width: 100%;">
+                    <div class="progress" style="height: 100%;"
+                    :style="{width: 100 * contractor.ready + '%' }"
+                    :class="initProgressBar(i)">
+                        <!--{{ initProgressBar(contractor.ready) }}-->
+                    </div>
                 </div>
 
-                <div class="contractor-info" style="display: flex; justify-content: space-between; width: 100%;">
-                    <h3>
+                <div class="contractor-info">
+                    <h3 style="font-weight: 500;">
                         {{ contractor.name }}
                     </h3>
 
-                    <h4>
-                        {{ contractor.balance }}
+                    <h4 style="font-weight: 500;">
+                        {{ '$' + contractor.balance }}
                     </h4>
                 </div>
 
@@ -46,6 +50,7 @@
 
                 <div class="att-list">
                     <div class="att-block"
+                         :class="initColColor(i)"
                          v-for="att in contractor.attachments">
 
                         <img :src="att.icon" alt="document type">
@@ -386,11 +391,37 @@
                             link: '/offers/new'
                         }
                     ]
-                }
+                },
+                colColors: [
+                    '#',
+                    '#',
+                    '#',
+                    '#'
+                ]
             }
         },
-        computed: {},
+        computed: {
+
+        },
         methods: {
+            initProgressBar: function (i) {
+                switch (i) {
+                    case 0: return 'first-progress-bar';
+                    case 1: return 'second-progress-bar';
+                    case 2: return 'third-progress-bar';
+                    case 3: return 'fourth-progress-bar';
+                    default: return '';
+                }
+            },
+            initColColor: function (i) {
+                switch (i) {
+                    case 0: return 'first-team__border';
+                    case 1: return 'second-team__border';
+                    case 2: return 'third-team__border';
+                    case 3: return 'fourth-team__border';
+                    default: return '';
+                }
+            },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
                 return dateFormat.toDateString();
@@ -476,6 +507,23 @@
 </script>
 
 <style lang="stylus">
+    .project-progress-block
+        background-color #bac4d0
+
+        .first-progress-bar
+            background-color #06dcd5
+        .second-progress-bar
+            background-color #ff3d31
+        .third-progress-bar
+            background-color #fab51d
+        .fourth-progress-bar
+            background-color #8b37ff
+
+    .contractor-info
+        display flex
+        justify-content space-between
+        width 100%
+
     .contractor-actions
         display flex
         justify-content flex-start
@@ -503,6 +551,18 @@
     .att-list
         width 100%
 
+        .first-team__border
+            border solid 1px #06dcd5
+
+        .second-team__border
+            border solid 1px #ff3d31
+
+        .third-team__border
+            border solid 1px #fab51d
+
+        .fourth-team__border
+            border solid 1px #8b37ff
+
         .att-block
             display flex
             justify-content space-between
@@ -510,8 +570,7 @@
             align-items center
             margin-bottom 16px
             background-color #fff
-            border-radius 2px
-            border solid 1px #06dcd5
+            border-radius 4px
 
     .timeline-block
         width 100%
