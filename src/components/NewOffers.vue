@@ -6,7 +6,8 @@
                 :rightMenu="rightMenu"/>
 
         <!--rename to normal name classes-->
-        <div class="my-row-flex" style="padding-top: 64px; display: flex; justify-content: space-between; font-family: MuseoSansCyrl500;">
+        <div class="my-row-flex"
+             style="padding-top: 64px; display: flex; justify-content: space-between; font-family: MuseoSansCyrl500;">
             <div class="mycol"
                  style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px;"
                  v-for="contractor in contractors">
@@ -25,16 +26,16 @@
                     </h4>
                 </div>
 
-                <div class="contractor-actions" style="display: flex; justify-content: flex-start; width: 100%; margin-bottom: 16px;">
-                    <div>
-                        Tasks
+                <div class="contractor-actions">
+                    <div class="action action__task">
+                        <img src="../../static/img/calendar-ic.svg">
                     </div>
-                    <div>
-                        Messages
+                    <div class="action action__chat">
+                        <img src="../../static/img/chat-ic.svg">
                     </div>
-                    <div>
-                        Attachments
-                    </div>
+                    <div class="action action__att">
+                    <img src="../../static/img/attachments-ic.svg">
+                </div>
                 </div>
 
                 <div class="task-list">
@@ -43,10 +44,8 @@
                     </div>
                 </div>
 
-                <div class="att-list" style="width: 100%;">
+                <div class="att-list">
                     <div class="att-block"
-                         style="display: flex; justify-content: space-between; padding: 8px 16px; align-items: center;
-                         margin-bottom: 16px; background-color: #fff; border-radius: 2px; border: solid 1px #06dcd5;"
                          v-for="att in contractor.attachments">
 
                         <img :src="att.icon" alt="document type">
@@ -60,14 +59,15 @@
                             </p>
                         </div>
 
-                        <img src="../../static/img/avatar@3x.png" alt="author avatar" style="width: 28px; height: 28px;">
+                        <img src="../../static/img/avatar@3x.png" alt="author avatar"
+                             style="width: 28px; height: 28px;">
                     </div>
                 </div>
 
             </div>
         </div>
 
-        <div class="asdasd" style="width: 100%; display: flex; justify-content: center; padding: 20px 50px;">
+        <div class="timeline-block">
             <canvas id="timeline">Update your browser</canvas>
         </div>
 
@@ -389,9 +389,7 @@
                 }
             }
         },
-        computed: {
-
-        },
+        computed: {},
         methods: {
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
@@ -402,7 +400,7 @@
                     //мб попробовать разобраться с 3d и сделать в 3d?
                     ctx = timeline.getContext('2d');
 
-                timeline.width = 1000;
+                timeline.width = 1200;
                 timeline.height = 350;
 
                 // ctx.fillStyle = '#dde3ea';
@@ -411,19 +409,60 @@
                 ctx.beginPath();
                 ctx.moveTo(100, 0);
                 ctx.lineTo(0, 125);
-                ctx.lineTo(1000, 125);
-                ctx.lineTo(900, 0);
+                ctx.lineTo(1200, 125);
+                ctx.lineTo(1100, 0);
                 ctx.lineTo(100, 0);
                 ctx.fillStyle = '#dde3ea';
                 ctx.fill();
                 ctx.closePath();
 
-                for (let i = 0; i < 10; i++) {
+
+                ctx.beginPath();
+
+                let countHorInt = 10;
+                let topInt = 1000;
+                let botInt = 1200;
+
+                let diffInt = 200 / countHorInt; //1000 - 800
+                let offset = topInt / countHorInt;
+
+
+                for (let i = 2; i < countHorInt + 1; i++) {
                     //писать сюда линии
+
+                    ctx.moveTo(i * offset, 0);
+                    ctx.lineTo(i * offset - offset + i * diffInt - diffInt, 125);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
                 }
+                ctx.closePath();
+
+                ctx.beginPath();
+                let countVertInt = 4;
+                let offsetVert = 125 / 4;
+
+                for (let i = 1; i < countVertInt; i++) {
+                    ctx.moveTo((-4 / 5) * (i * offsetVert) + 100, i * offsetVert);
+                    ctx.lineTo((4 / 5) * (i * offsetVert) + 1100, i * offsetVert);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                }
+
+                ctx.closePath();
 
                 ctx.fillStyle = '#ced5dd';
                 ctx.fillRect(0, 125, timeline.width, 50);
+
+                ctx.beginPath();
+
+                for (let i = 1; i < countHorInt; i++) {
+                    ctx.moveTo(i * offset + i * diffInt, 125);
+                    ctx.lineTo(i * offset + i * diffInt, 175);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                }
+
+                ctx.closePath();
             }
         },
         created() {
@@ -437,5 +476,47 @@
 </script>
 
 <style lang="stylus">
+    .contractor-actions
+        display flex
+        justify-content flex-start
+        width 100%
+        margin-bottom 16px
+
+        .action
+            border-radius 50%
+            width 25px
+            height 25px
+            display flex
+            justify-content center
+            align-self center
+            margin-right 10px
+
+        .action.action__task
+            background-color #ff196f
+
+        .action.action__chat
+            background-color #0079ff
+
+        .action.action__att
+            background-color #2500b2
+
+    .att-list
+        width 100%
+
+        .att-block
+            display flex
+            justify-content space-between
+            padding 8px 16px
+            align-items center
+            margin-bottom 16px
+            background-color #fff
+            border-radius 2px
+            border solid 1px #06dcd5
+
+    .timeline-block
+        width 100%
+        display flex
+        justify-content center
+        padding 20px 50px
 
 </style>
