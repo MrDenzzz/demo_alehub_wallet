@@ -89,4 +89,12 @@
         .upperCase
             text-transform uppercase
             font-weight bold
+
+    .modal-md
+        .v--modal
+            width 620px !important
+
+    .v--modal-overlay
+        .v--modal-background-click
+            padding-bottom 0 !important
 </style>
