@@ -174,8 +174,12 @@
                     return 'The last password change was today';
                 else if (diff === 1)
                     return 'Last password change was yesterday';
-                else if (diff > 1)
-                    return `Last password change was ${diff} day's ago`;
+                else if (diff < 4 && localStorage.getItem('systemLang') === 'rus')
+                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.second');
+                else if (localStorage.getItem('systemLang') === 'rus')
+                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.third');
+                else if (diff < 4)
+                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.second');
             }
         },
         methods: {
@@ -189,7 +193,7 @@
                 if (this.userTwoAuth)
                     this.openModal(name);
                 else
-                    this.$toasted.show(`You cannot change ${type} without enabling two factor authentication`, {
+                    this.$toasted.show(this.$t("modals.error.changePassword.first") +' '+type+' '+this.$t("modals.error.changePassword.second"), {
                         duration: 10000,
                         type: 'error',
                         action: {

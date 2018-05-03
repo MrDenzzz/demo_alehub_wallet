@@ -16,13 +16,17 @@
                 <qriously :value="currentWalletAddress" :size="widthCanvas"/>
                 <span class="muted upperCase">{{ $t('modals.request.qrShare') }}</span>
             </div>
-
+            <!--z-->
             <div class="modal-footer">
                 <button
                         id="btnCopyAddress"
-                        class="buttons btn-yellow"
+                        class="buttons btn-yellow copy"
                         v-clipboard:copy="currentWalletAddress"
                         v-clipboard:success="successCopyAddress">
+                    <img class="icon-copy icon"
+                         width="20"
+                         height="20"
+                         :src="getIcon('tmp_copy_icon')"/>
                     {{ $t('modals.request.button') }}
                 </button>
             </div>
@@ -47,6 +51,9 @@
                 if (this.getCurrentWallet !== null)
                     return this.getCurrentWallet.address;
                 return 0;
+            },
+            selectedTheme: function () {
+                return this.$store.state.Themes.theme;
             }
         },
         methods: {
@@ -68,6 +75,14 @@
                         document.getElementById('btnCopyAddress').click();
                     }
                 })
+            },
+            // z
+            getIcon: function (name) {
+                if (this.selectedTheme === "dark")
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === "white")
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else return require(`../../assets/img/${name}.svg`);
             }
         }
     };
@@ -75,6 +90,19 @@
 
 <style lang="stylus">
     @import "./modals.scss";
+    /*z*/
+    .copy
+        display: flex
+        justify-content center !important
+    .modal-footer
+        display: flex;
+        justify-content: center;
+    .icon-copy
+        justify-content: center;
+        align-items: center;
+
+
+    /*z*/
 
     .modal-control
         .address
