@@ -252,58 +252,58 @@
 </script>
 
 <style lang="stylus">
-    .warning-title
-        font-weight 700
+    // .warning-title
+    //     font-weight 700
 
-    .two-auth-secret
-        margin-top 12px
-        margin-bottom 18px
+    // .two-auth-secret
+    //     margin-top 12px
+    //     margin-bottom 18px
 
-    .two-auth
-        display flex
-        justify-content space-around
-        margin-right 24px
-        margin-left 24px
+    // .two-auth
+    //     display flex
+    //     justify-content space-around
+    //     margin-right 24px
+    //     margin-left 24px
 
-        .buttons
-            flex-grow 1
+    //     .buttons
+    //         flex-grow 1
 
-        .btn-default
-            display flex
-            align-content center
-            justify-content center
-            background-color rgba(13, 23, 23, 0.08)
-            margin-right 4px
+    //     .btn-default
+    //         display flex
+    //         align-content center
+    //         justify-content center
+    //         background-color rgba(13, 23, 23, 0.08)
+    //         margin-right 4px
 
-            .icon-copy
-                height 19px
-                margin-right 5px
+    //         .icon-copy
+    //             height 19px
+    //             margin-right 5px
 
-        .btn-yellow
-            margin-left 4px
+    //     .btn-yellow
+    //         margin-left 4px
 
-        .disabled
-            opacity 0.4
-            max-width 160px
+    //     .disabled
+    //         opacity 0.4
+    //         max-width 160px
 
-    .modal-xs
-        /*.v--modal-box*/
-        /*width 500px !important*/
+    // .modal-xs
+    //     /*.v--modal-box*/
+    //     /*width 500px !important*/
 
-        .body
-            .modal-btn
-                .btn-large
-                    padding 11px
+    //     .body
+    //         .modal-btn
+    //             .btn-large
+    //                 padding 11px
 
-    @media (max-width: 425px)
-        .two-auth
-            .btn-default
-                margin-right 0
+    // @media (max-width: 425px)
+    //     .two-auth
+    //         .btn-default
+    //             margin-right 0
 
-            .btn-yellow
-                margin-left 0
+    //         .btn-yellow
+    //             margin-left 0
 
-            .disabled
-                max-width unset
+    //         .disabled
+    //             max-width unset
 
 </style>

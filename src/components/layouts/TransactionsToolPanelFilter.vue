@@ -56,29 +56,37 @@
                 </div>
             </div>
             <div class="stats-col">
-                <div class="result-opt-span">
+                <div class="result-opt-line">
+                    <span class="result-opt-span">
                         <span class="count">
                             <formatting-price :value="currentReceivedBalance"/>
                         </span>
-                    ALE
+                        ALE
+                    </span>
                 </div>
-                <div class="result-opt-span sent">
+                <div class="result-opt-line sent">
+                    <span class="result-opt-span">
                         <span class="count">
                             <formatting-price :value="currentSentBalance"/>
                         </span>
-                    ALE
+                        ALE
+                    </span>
                 </div>
-                <div class="result-opt-span">
+                <div class="result-opt-line">
+                    <span class="result-opt-span">
                         <span class="count">
                             <formatting-price :value="currentBalanceBeginPeriod"/>
                         </span>
-                    ALE
+                        ALE
+                    </span>
                 </div>
-                <div class="result-opt-span">
+                <div class="result-opt-line">
+                    <span class="result-opt-span">
                         <span class="count">
                             <formatting-price :value="currentBalanceEndPeriod"/>
                         </span>
-                    ALE
+                        ALE
+                    </span>
                 </div>
             </div>
         </div>
@@ -209,9 +217,3 @@
         },
     }
 </script>
-
-<style lang="stylus" scoped>
-    .btn-default:disabled
-        background-color rgba(13, 23, 23, 0.08)
-        opacity 0.4
-</style>

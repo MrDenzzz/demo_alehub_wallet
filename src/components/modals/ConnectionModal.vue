@@ -60,37 +60,37 @@
 </script>
 
 <style lang="scss">
-    @import './modals.scss';
+    // @import './modals.scss';
 
-    .modal-input {
-        & input {
-            width: 100%;
-        }
-    }
+    // .modal-input {
+    //     & input {
+    //         width: 100%;
+    //     }
+    // }
 
-    .modal-md {
-        & .v--modal-box {
-            & .body {
-                & .modal-control {
-                    &.noLine {
-                        border-bottom: none;
-                        padding-bottom: 0;
-                    }
-                }
-            }
-            & .body-loader {
-                margin-bottom: 20px;
+    // .modal-md {
+    //     & .v--modal-box {
+    //         & .body {
+    //             & .modal-control {
+    //                 &.noLine {
+    //                     border-bottom: none;
+    //                     padding-bottom: 0;
+    //                 }
+    //             }
+    //         }
+    //         & .body-loader {
+    //             margin-bottom: 20px;
 
-                & .loader {
-                    margin-top: 10px;
-                }
-            }
-        }
-    }
+    //             & .loader {
+    //                 margin-top: 10px;
+    //             }
+    //         }
+    //     }
+    // }
 
-    .modal-btn {
-        & .btn-large {
-            padding: 11px 70px 11px 70px;
-        }
-    }
+    // .modal-btn {
+    //     & .btn-large {
+    //         padding: 11px 70px 11px 70px;
+    //     }
+    // }
 </style>

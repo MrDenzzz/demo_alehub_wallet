@@ -441,12 +441,12 @@
 </script>
 
 <style lang="stylus" scoped>
-    #fileUpload
-        display none
+    // #fileUpload
+    //     display none
 
-    .d-none
-        display none
+    // .d-none
+    //     display none
 
-    .btn-upload
-        line-height 1.17
+    // .btn-upload
+    //     line-height 1.17
 </style>

@@ -298,13 +298,13 @@
 </script>
 
 <style lang="stylus" scoped>
-    .pagination
-        .links
-            padding-left 0
-            li.active
-                cursor default
-            li.active:hover
-                background-color #ffd24f
-            li:hover
-                background-color #ffdd78
+    // .pagination
+    //     .links
+    //         padding-left 0
+    //         li.active
+    //             cursor default
+    //         li.active:hover
+    //             background-color #ffd24f
+    //         li:hover
+    //             background-color #ffdd78
 </style>

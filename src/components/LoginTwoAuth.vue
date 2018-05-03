@@ -173,30 +173,30 @@
 </style>
 
 <style lang="stylus" scoped>
-    .d-block
-        display block
+    // .d-block
+    //     display block
 
-    .is-center
-        display flex
-        justify-content center
+    // .is-center
+    //     display flex
+    //     justify-content center
 
-    .is-2fa-loader
-        margin-top -20px
-        margin-bottom 20px
+    // .is-2fa-loader
+    //     margin-top -20px
+    //     margin-bottom 20px
 
-    .error
-        text-decoration underline
-        text-decoration-color #d93f1f
+    // .error
+    //     text-decoration underline
+    //     text-decoration-color #d93f1f
 
-    .error-block
-        color red
-        font-family MuseoSansCyrl300
-        text-align center
+    // .error-block
+    //     color red
+    //     font-family MuseoSansCyrl300
+    //     text-align center
 
-    .login-form
-        .text
-            font-family MuseoSansCyrl300
+    // .login-form
+    //     .text
+    //         font-family MuseoSansCyrl300
 
-            a
-                font-family MuseoSansCyrl700
+    //         a
+    //             font-family MuseoSansCyrl700
 </style>

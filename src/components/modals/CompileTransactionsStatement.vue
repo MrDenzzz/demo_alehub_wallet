@@ -1394,334 +1394,334 @@
 </script>
 
 <style lang="stylus">
-    .vdp-datepicker
-        user-select none
-    .datepicker-for-export
-        .vdp-datepicker__calendar
-            box-shadow none
-            background-color #fafafa
+//     .vdp-datepicker
+//         user-select none
+//     .datepicker-for-export
+//         .vdp-datepicker__calendar
+//             box-shadow none
+//             background-color #fafafa
 
-            /*.day.selected, .day.highlighted*/
-            /*background-color #fce9b5 !important*/
-            & :hover
-                border none !important
+//             /*.day.selected, .day.highlighted*/
+//             /*background-color #fce9b5 !important*/
+//             & :hover
+//                 border none !important
 
-            .day-disable
-                color #ddd !important
+//             .day-disable
+//                 color #ddd !important
 
-    @media (max-width: 320px)
-        .datepicker-for-export
-            .vdp-datepicker__calendar
-                width auto
-</style>
+//     @media (max-width: 320px)
+//         .datepicker-for-export
+//             .vdp-datepicker__calendar
+//                 width auto
+// </style>
 
-<style lang="stylus" scoped>
-    .row-flex.row-flex__top
-        align-items flex-start
-        margin-bottom 0
+// <style lang="stylus" scoped>
+//     .row-flex.row-flex__top
+//         align-items flex-start
+//         margin-bottom 0
 
-    .btn-default
-        &:disabled
-            background-color rgba(13, 23, 23, 0.08)
-            opacity 0.4 !important
+//     .btn-default
+//         &:disabled
+//             background-color rgba(13, 23, 23, 0.08)
+//             opacity 0.4 !important
 
-    .disabled-label__control
-        cursor default
+//     .disabled-label__control
+//         cursor default
 
-    .control-indicator__disable
-        opacity 0.6
+//     .control-indicator__disable
+//         opacity 0.6
 
-    .control-radio
-        width auto
-        display flex
-        align-items center
+//     .control-radio
+//         width auto
+//         display flex
+//         align-items center
 
-        .input-label
-            font-size 13px
-            line-height 1.2
-            padding-left 10px
+//         .input-label
+//             font-size 13px
+//             line-height 1.2
+//             padding-left 10px
 
-        .control-indicator
-            position relative
-            height 18px
-            width 18px
-            top auto
+//         .control-indicator
+//             position relative
+//             height 18px
+//             width 18px
+//             top auto
 
-            &:after
-                top 5.5px
-                left 6px
-                width 6px
-                height 6px
+//             &:after
+//                 top 5.5px
+//                 left 6px
+//                 width 6px
+//                 height 6px
 
-    .control-checkbox
-        width auto
-        display flex
-        align-items center
+//     .control-checkbox
+//         width auto
+//         display flex
+//         align-items center
 
-        .wrap__input-label
-            padding-left 10px
-            display flex
-            flex-direction column
-            justify-content center
+//         .wrap__input-label
+//             padding-left 10px
+//             display flex
+//             flex-direction column
+//             justify-content center
 
-            .input-label
-                font-size 13px
+//             .input-label
+//                 font-size 13px
 
-            .input-label, .input-label__balance
-                line-height 1.2
+//             .input-label, .input-label__balance
+//                 line-height 1.2
 
-            .input-label__balance
-                font-size 10px
-                color #979797 !important
-                font-weight 700 !important
-        .control-indicator
-            position relative
-            height 18px
-            width 18px
-            top auto
+//             .input-label__balance
+//                 font-size 10px
+//                 color #979797 !important
+//                 font-weight 700 !important
+//         .control-indicator
+//             position relative
+//             height 18px
+//             width 18px
+//             top auto
 
-            &:after
-                top 2.5px
-                left 6px
-                width 4px
-                height 8px
+//             &:after
+//                 top 2.5px
+//                 left 6px
+//                 width 4px
+//                 height 8px
 
-        .control-indicator__mini
-            height 14px
-            width 14px
+//         .control-indicator__mini
+//             height 14px
+//             width 14px
 
-            &:after
-                top 2px
-                left 4px
-                width 2px
-                height 6px
+//             &:after
+//                 top 2px
+//                 left 4px
+//                 width 2px
+//                 height 6px
 
-    .m-b-20
-        margin-bottom 20px
+//     .m-b-20
+//         margin-bottom 20px
 
-    .border-none
-        border-bottom none !important
+//     .border-none
+//         border-bottom none !important
 
-    .body
-        .modal-control
-            .modal-wrap
-                margin 0 18px
+//     .body
+//         .modal-control
+//             .modal-wrap
+//                 margin 0 18px
 
-                .modal-blocks
-                    padding-top 20px
+//                 .modal-blocks
+//                     padding-top 20px
 
-            .modal-control__title
-                margin 0
-                font-family MuseoSansCyrl500
-                font-weight 700
-                font-size 13px
-                color #34343e
+//             .modal-control__title
+//                 margin 0
+//                 font-family MuseoSansCyrl500
+//                 font-weight 700
+//                 font-size 13px
+//                 color #34343e
 
-            .modal-control__wrap.wrap__wallets
-                max-height 130px
-                overflow-y scroll
+//             .modal-control__wrap.wrap__wallets
+//                 max-height 130px
+//                 overflow-y scroll
 
-            .modal-control__wrap
-                display flex
-                justify-content flex-start
-                flex-wrap wrap
+//             .modal-control__wrap
+//                 display flex
+//                 justify-content flex-start
+//                 flex-wrap wrap
 
-            .modal-control__block
-                width 33.3%
+//             .modal-control__block
+//                 width 33.3%
 
-            .modal-line
-                .wrap-double-input__disabled
-                    background-color #ececec
-                    cursor default
+//             .modal-line
+//                 .wrap-double-input__disabled
+//                     background-color #ececec
+//                     cursor default
 
-                    label.label-from,
-                    label.label-to,
-                    .label-сurrency,
-                    .input.input-from,
-                    .input.input-to
-                        color #979797 !important
-                        cursor default
+//                     label.label-from,
+//                     label.label-to,
+//                     .label-сurrency,
+//                     .input.input-from,
+//                     .input.input-to
+//                         color #979797 !important
+//                         cursor default
 
-                .wrap-double-input
-                    border solid 1px #979797
-                    border-radius 2px
-                    display flex
-                    align-items center
-                    padding-left 8px
+//                 .wrap-double-input
+//                     border solid 1px #979797
+//                     border-radius 2px
+//                     display flex
+//                     align-items center
+//                     padding-left 8px
 
-                    label.label-from,
-                    label.label-to
-                        font-family MuseoSansCyrl700
-                        font-size 13px
-                        font-weight bold
-                        line-height 1.08
-                        color #34343e
-                        margin-bottom 0
+//                     label.label-from,
+//                     label.label-to
+//                         font-family MuseoSansCyrl700
+//                         font-size 13px
+//                         font-weight bold
+//                         line-height 1.08
+//                         color #34343e
+//                         margin-bottom 0
 
-                    .input.input-from,
-                    .input.input-to
-                        flex-grow 1
-                        background-color transparent
-                        border none
-                        padding 6px 8px
-                        font-family MuseoSansCyrl700
-                        font-size 12px
-                        font-weight 500
-                        line-height 1.17
-                        color #979797
+//                     .input.input-from,
+//                     .input.input-to
+//                         flex-grow 1
+//                         background-color transparent
+//                         border none
+//                         padding 6px 8px
+//                         font-family MuseoSansCyrl700
+//                         font-size 12px
+//                         font-weight 500
+//                         line-height 1.17
+//                         color #979797
 
-                    .input.input-from:focus,
-                    .input.input-to:focus
-                        color #34343e
+//                     .input.input-from:focus,
+//                     .input.input-to:focus
+//                         color #34343e
 
-                    .label-сurrency
-                        font-family MuseoSansCyrl500
-                        font-size 13px
-                        position absolute
+//                     .label-сurrency
+//                         font-family MuseoSansCyrl500
+//                         font-size 13px
+//                         position absolute
 
-            .modal-line.modal-line__between
-                display flex
-                justify-content space-between
+//             .modal-line.modal-line__between
+//                 display flex
+//                 justify-content space-between
 
-            .modal-line:not(:last-child), .modal-control__block:not(:last-child)
-                margin-bottom 10px
+//             .modal-line:not(:last-child), .modal-control__block:not(:last-child)
+//                 margin-bottom 10px
 
-            .modal-input
-                .input-disabled
-                    cursor default
-                .title
-                    text-transform none !important
-                .input::-webkit-input-placeholder
-                    text-decoration none !important
-                    font-family MuseoSansCyrl500
-                .input::-moz-placeholder
-                    text-decoration none !important
-                    font-family MuseoSansCyrl500
-                .input:-ms-input-placeholder
-                    text-decoration none !important
-                    font-family MuseoSansCyrl500
-                .input:-moz-placeholder
-                    text-decoration none !important
-                    font-family MuseoSansCyrl500
+//             .modal-input
+//                 .input-disabled
+//                     cursor default
+//                 .title
+//                     text-transform none !important
+//                 .input::-webkit-input-placeholder
+//                     text-decoration none !important
+//                     font-family MuseoSansCyrl500
+//                 .input::-moz-placeholder
+//                     text-decoration none !important
+//                     font-family MuseoSansCyrl500
+//                 .input:-ms-input-placeholder
+//                     text-decoration none !important
+//                     font-family MuseoSansCyrl500
+//                 .input:-moz-placeholder
+//                     text-decoration none !important
+//                     font-family MuseoSansCyrl500
 
-            .disabled-label, .disabled-title
-                color #979797 !important
-                cursor default
+//             .disabled-label, .disabled-title
+//                 color #979797 !important
+//                 cursor default
 
-            .disabled-label__balance
-                color #b3b3b3 !important
-                cursor default
+//             .disabled-label__balance
+//                 color #b3b3b3 !important
+//                 cursor default
 
-            .input-label
-                font-family MuseoSansCyrl500
-                font-weight 500;
-                color #34343e
+//             .input-label
+//                 font-family MuseoSansCyrl500
+//                 font-weight 500;
+//                 color #34343e
 
-        .modal-footer
-            display flex
-            justify-content center
-            margin-top 0 !important
+//         .modal-footer
+//             display flex
+//             justify-content center
+//             margin-top 0 !important
 
-            .btn-yellow__disabled
-                cursor default
-                opacity 0.4
+//             .btn-yellow__disabled
+//                 cursor default
+//                 opacity 0.4
 
-            .buttons
-                &:first-child
-                    margin-right 12px
-                .count-transactions
-                    font-weight 700
+//             .buttons
+//                 &:first-child
+//                     margin-right 12px
+//                 .count-transactions
+//                     font-weight 700
 
-    // @media(max-width: 660px)
+//     // @media(max-width: 660px)
 
-    @media (max-width: 425px)
-        .v--modal-overlay
-            & .v--modal-box
-                & .body
-                    & .modal-control
-                        &.border-none
-                            padding-top 0
+//     @media (max-width: 425px)
+//         .v--modal-overlay
+//             & .v--modal-box
+//                 & .body
+//                     & .modal-control
+//                         &.border-none
+//                             padding-top 0
 
-                        & .modal-line
-                            flex-direction column
+//                         & .modal-line
+//                             flex-direction column
 
-                            & .control-checkbox
-                                margin-top 8px
+//                             & .control-checkbox
+//                                 margin-top 8px
                         
-                    & .modal-footer
-                        margin-right 42px
-                        margin-left 42px
+//                     & .modal-footer
+//                         margin-right 42px
+//                         margin-left 42px
 
-        .row-flex
-            flex-direction column
+//         .row-flex
+//             flex-direction column
 
-        .m-b-20
-            margin-bottom 0
+//         .m-b-20
+//             margin-bottom 0
 
-        .body
-            .modal-control
-                &.border-none
-                    padding-top 0
+//         .body
+//             .modal-control
+//                 &.border-none
+//                     padding-top 0
 
-                .modal-control__block
-                    margin-right 10px
-                    width auto
+//                 .modal-control__block
+//                     margin-right 10px
+//                     width auto
 
-                .modal-wrap
-                    margin-right 5px
-                    margin-left 5px
+//                 .modal-wrap
+//                     margin-right 5px
+//                     margin-left 5px
 
-                    .modal-blocks
-                        padding-top 0
+//                     .modal-blocks
+//                         padding-top 0
 
-                        .modal-block
-                            border-bottom 1px solid #d1d1d1
-                            padding-top 18px
-                            padding-bottom 18px
+//                         .modal-block
+//                             border-bottom 1px solid #d1d1d1
+//                             padding-top 18px
+//                             padding-bottom 18px
 
-                    .modal-block:last-child
-                        border-bottom none
+//                     .modal-block:last-child
+//                         border-bottom none
 
-                .modal-line
-                    width 100%
+//                 .modal-line
+//                     width 100%
 
-                    .wrap-double-input
-                        max-width 200px
+//                     .wrap-double-input
+//                         max-width 200px
 
-        .col-5, .col-6
-            width 100%
+//         .col-5, .col-6
+//             width 100%
 
-        .border-none
-            &.modal-control
-                padding-top 0
+//         .border-none
+//             &.modal-control
+//                 padding-top 0
 
-        .vdp-datepicker
-            padding-top 18px
-            padding-bottom 18px
+//         .vdp-datepicker
+//             padding-top 18px
+//             padding-bottom 18px
 
-        .modal-footer
-            display flex
-            flex-direction column
+//         .modal-footer
+//             display flex
+//             flex-direction column
 
-            & button
-                margin-right 0
-                margin-left 0
-                padding 0
+//             & button
+//                 margin-right 0
+//                 margin-left 0
+//                 padding 0
 
-    @media (max-width: 320px)
-        .v--modal-overlay
-            & .v--modal-box
-                & .body
-                    .modal-control
-                        .modal-line
-                            .wrap-double-input
-                                max-width 100%
+//     @media (max-width: 320px)
+//         .v--modal-overlay
+//             & .v--modal-box
+//                 & .body
+//                     .modal-control
+//                         .modal-line
+//                             .wrap-double-input
+//                                 max-width 100%
 
-                    & .modal-footer
-                        margin-right 20px
-                        margin-left 20px
+//                     & .modal-footer
+//                         margin-right 20px
+//                         margin-left 20px
 
-                        & button 
-                            margin-bottom 12px
+//                         & button 
+//                             margin-bottom 12px
 
 </style>

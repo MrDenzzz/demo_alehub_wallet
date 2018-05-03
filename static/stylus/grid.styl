@@ -1,0 +1,62 @@
+*
+    box-sizing border-box
+    margin 0
+    padding 0
+
+base-font-size = 16
+gutter = 32px
+columns = 12
+cellClassName = 's-grid-cell'
+gridClassName = 's-grid'
+
+rem-calc(value)
+    u = unit(value);
+    if (u is 'rem') {
+        return unit(value, u);
+    } else {
+        return unit(value / base-font-size, 'rem')
+    }
+
+grid(direction = 'row', cells-align = 'top', justify = '')
+    display flex
+    flex-wrap wrap
+    if cells-align is 'top'
+        align-items flex-start
+    if cells-align is 'bottom'
+        align-items flex-end
+    if cells-align is 'center'
+        align-items center
+    if cells-align is 'stretch'
+        align-items stretch
+    if direction is 'row'
+        flex-direction row
+    if direction is 'row-reverse'
+        flex-direction row-reverse
+    if direction is 'column'
+        flex-direction column
+    if direction is 'column-reverse'
+        flex-direction column-reverse
+    if justify is 'center'
+        justify-content center
+    if justify is 'start'
+        justify-content flex-start
+    if justify is 'end'
+        justify-content flex-end
+    if justify is 'space-between'
+        justify-content space-between
+
+cell(i = 1, cols = columns, align = '', g = gutter)
+    if g is not 0
+        flex-basis: s('calc(100% * %s - %s)', i / cols, rem-calc(g))
+    else
+        flex-basis: s('calc(100% * %s)', i / cols)
+    min-width 0 
+    if g is not 0
+        margin: rem-calc(g / 2)
+    if align is 'top'
+        align-self flex-start
+    if align is 'bottom'
+        align-self flex-end
+    if align is 'center'
+        align-self center
+

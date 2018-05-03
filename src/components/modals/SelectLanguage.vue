@@ -98,34 +98,34 @@
 </script>
 
 <style lang="stylus">
-    @import "./modals.scss"
-    .langModal
-        display flex
+    // @import "./modals.scss"
+    // .langModal
+    //     display flex
 
-    .langButtons
-        text-align center
-        margin 20px
+    // .langButtons
+    //     text-align center
+    //     margin 20px
 
-    .body
-        flex-wrap wrap
-        flex-direction row
+    // .body
+    //     flex-wrap wrap
+    //     flex-direction row
 
-    .buttons
-        justify-content space-between
-        flex-direction row
-        flex-wrap wrap
-        &:disabled
-            opacity 0.4
-            border-radius 2px
-            background-color rgba(13, 23, 23, 0.08) !important
+    // .buttons
+    //     justify-content space-between
+    //     flex-direction row
+    //     flex-wrap wrap
+    //     &:disabled
+    //         opacity 0.4
+    //         border-radius 2px
+    //         background-color rgba(13, 23, 23, 0.08) !important
 
 
 
-            &:hover
-                cursor default
+    //         &:hover
+    //             cursor default
 
-    .clicked
-        cursor pointer
+    // .clicked
+    //     cursor pointer
 
 
 

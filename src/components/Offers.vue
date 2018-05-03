@@ -374,113 +374,113 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.list-panel-count-offers, .list-panel-sort {
-    margin-top: 0;
-    margin-bottom: 0;
-}
+// .list-panel-count-offers, .list-panel-sort {
+//     margin-top: 0;
+//     margin-bottom: 0;
+// }
 
-.list-panel-offers {
-    margin: 0;
-}
+// .list-panel-offers {
+//     margin: 0;
+// }
 
-.list-panel-sort {
-    margin-left: 0;
-}
+// .list-panel-sort {
+//     margin-left: 0;
+// }
 
-.fixed-filters {
-    position: fixed;
-    right: 12px;
-    padding-right: 12px;
-    top: 50px;
-}
+// .fixed-filters {
+//     position: fixed;
+//     right: 12px;
+//     padding-right: 12px;
+//     top: 50px;
+// }
 
-.no-found-offers {
-    font-family: MuseoSansCyrl500;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.25;
-    text-align: center;
-    color: #34343e;
-}
+// .no-found-offers {
+//     font-family: MuseoSansCyrl500;
+//     font-size: 16px;
+//     font-weight: 500;
+//     line-height: 1.25;
+//     text-align: center;
+//     color: #34343e;
+// }
 
-.flex-row {
-    display: flex;
-}
+// .flex-row {
+//     display: flex;
+// }
 
-.flex-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+// .flex-col {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
 
-.wrap-not-found-offers-by-filter {
-    display: flex;
-    height: 85vh;
-    align-items: center;
-    justify-content: center;
-}
-.spinner {
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-}
+// .wrap-not-found-offers-by-filter {
+//     display: flex;
+//     height: 85vh;
+//     align-items: center;
+//     justify-content: center;
+// }
+// .spinner {
+//     display: flex; 
+//     justify-content: center; 
+//     align-items: center;
+// }
 
-@media (max-width: 1024px)
-    .main 
-        & .content 
-            padding-left 0
+// @media (max-width: 1024px)
+//     .main 
+//         & .content 
+//             padding-left 0
 
-@media (max-width: 768px) and (min-width: 426px)
-    .list-panel-offers
-        background-color #dedfdf
-        & p
-          display none
-    .list-panel-count-offers
-        background-color #dedfdf
-        & p
-          display none
-    .list-panel-sort
-        margin-left 16px
+// @media (max-width: 768px) and (min-width: 426px)
+//     .list-panel-offers
+//         background-color #dedfdf
+//         & p
+//           display none
+//     .list-panel-count-offers
+//         background-color #dedfdf
+//         & p
+//           display none
+//     .list-panel-sort
+//         margin-left 16px
 
-@media (max-width: 425px) and (min-width: 321px)
-    .col-3
-        display none
-    .col-9
-        width 100%
-    .list-panel-offers
-        background-color #dedfdf
-        margin-right 5px
-        width 170px
-        & p
-          display none
-    .list-panel-count-offers
-        background-color #dedfdf
-        margin-right 5px
-        margin-left 5px
-        & p
-          display none
-    .list-panel-sort
-        padding 9px
-        width 32px
-    .row-flex
-        justify-content space-between;
-@media (max-width: 320px)
-    .row-flex
-        flex-wrap wrap
-    .col
-        margin-bottom 5px
-    .col-3
-        display none
-    .col-9
-        width 100%
-    .list-panel-offers
-        background-color #dedfdf
-        margin-right 5px
-        width 170px
-    .list-panel-count-offers
-        background-color #dedfdf
-        margin-right 5px
-    .list-panel-sort
-        padding 9px
-        width 32px
+// @media (max-width: 425px) and (min-width: 321px)
+//     .col-3
+//         display none
+//     .col-9
+//         width 100%
+//     .list-panel-offers
+//         background-color #dedfdf
+//         margin-right 5px
+//         width 170px
+//         & p
+//           display none
+//     .list-panel-count-offers
+//         background-color #dedfdf
+//         margin-right 5px
+//         margin-left 5px
+//         & p
+//           display none
+//     .list-panel-sort
+//         padding 9px
+//         width 32px
+//     .row-flex
+//         justify-content space-between;
+// @media (max-width: 320px)
+//     .row-flex
+//         flex-wrap wrap
+//     .col
+//         margin-bottom 5px
+//     .col-3
+//         display none
+//     .col-9
+//         width 100%
+//     .list-panel-offers
+//         background-color #dedfdf
+//         margin-right 5px
+//         width 170px
+//     .list-panel-count-offers
+//         background-color #dedfdf
+//         margin-right 5px
+//     .list-panel-sort
+//         padding 9px
+//         width 32px
 </style>

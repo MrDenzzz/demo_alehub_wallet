@@ -138,57 +138,57 @@
 
 <style lang="stylus" scoped>
 
-    .offers-apply-panel
-        margin-bottom 24px
-        margin-top 32px
+    // .offers-apply-panel
+    //     margin-bottom 24px
+    //     margin-top 32px
 
-    .top-offers-apply-panel
-        margin-top 0
-        margin-bottom 0
+    // .top-offers-apply-panel
+    //     margin-top 0
+    //     margin-bottom 0
 
-    .title-btn-create-task-bottom
-        opacity 0.7
+    // .title-btn-create-task-bottom
+    //     opacity 0.7
 
-    .row-flex
-        display flex
-        justify-content space-between
-        margin-bottom 14px
-        align-items center
+    // .row-flex
+    //     display flex
+    //     justify-content space-between
+    //     margin-bottom 14px
+    //     align-items center
 
-        .is-350
-            width 350px !important
+    //     .is-350
+    //         width 350px !important
 
-        .col
-            display flex
-            justify-content center
-            width 100%
+    //     .col
+    //         display flex
+    //         justify-content center
+    //         width 100%
 
-            .btn-grey
-                background-color #dedfdf
+    //         .btn-grey
+    //             background-color #dedfdf
 
-    .row-flex-router
-        margin-bottom 0
-        justify-content center
+    // .row-flex-router
+    //     margin-bottom 0
+    //     justify-content center
 
-    a.btn
-        text-decoration none
-        color inherit
-        font-family MuseoSansCyrl500
+    // a.btn
+    //     text-decoration none
+    //     color inherit
+    //     font-family MuseoSansCyrl500
 
-    .apply-panel
-        -webkit-touch-callout text
-        -webkit-user-select text
-        -khtml-user-select text
-        -moz-user-select text
-        -ms-user-select text
-        user-select text
-        .btn-block
-            margin-bottom 0
+    // .apply-panel
+    //     -webkit-touch-callout text
+    //     -webkit-user-select text
+    //     -khtml-user-select text
+    //     -moz-user-select text
+    //     -ms-user-select text
+    //     user-select text
+    //     .btn-block
+    //         margin-bottom 0
 
-        .link
-            margin-top 16px
+    //     .link
+    //         margin-top 16px
 
-    @media (max-width: 768px)
-        .offers-apply-panel
-            margin-top 50px
+    // @media (max-width: 768px)
+    //     .offers-apply-panel
+    //         margin-top 50px
 </style>

@@ -234,30 +234,30 @@
 </script>
 
 <style lang="stylus" scoped>
-    .drag
-        cursor pointer
-    .hide-drag
-        width 60px
-        height 60px
-        cursor pointer
-        background-color #ffd24f
-        position absolute
-        left calc(100% - 40px)
-        top calc(50% - 60px)
-        border-top-left-radius 50%
-        border-bottom-left-radius 50%
-        z-index 1000000
+    // .drag
+    //     cursor pointer
+    // .hide-drag
+    //     width 60px
+    //     height 60px
+    //     cursor pointer
+    //     background-color #ffd24f
+    //     position absolute
+    //     left calc(100% - 40px)
+    //     top calc(50% - 60px)
+    //     border-top-left-radius 50%
+    //     border-bottom-left-radius 50%
+    //     z-index 1000000
 
-        &:after
-            content " "
-            text-align center
-            float left
-            position relative
-            left 12.5px
-            top 18px
-            background url(./../../../static/img/arrow-left-collapse.svg)
-            background-size cover
-            width 15px
-            height 24px
+    //     &:after
+    //         content " "
+    //         text-align center
+    //         float left
+    //         position relative
+    //         left 12.5px
+    //         top 18px
+    //         background url(./../../../static/img/arrow-left-collapse.svg)
+    //         background-size cover
+    //         width 15px
+    //         height 24px
 </style>
 

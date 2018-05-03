@@ -22,22 +22,22 @@
 </script>
 
 <style lang="stylus" scoped>
-    .index
-        background-color #f7f7f7
+    // .index
+    //     background-color #f7f7f7
 
-        .col-12
-            display flex
-            justify-content center
-            align-items center
-            flex-direction column
-            height calc(100vh - 48px)
+    //     .col-12
+    //         display flex
+    //         justify-content center
+    //         align-items center
+    //         flex-direction column
+    //         height calc(100vh - 48px)
 
-            .title
-                font-family MuseoSansCyrl500
+    //         .title
+    //             font-family MuseoSansCyrl500
 
-            a.buttons
-                display flex
-                justify-content center
-                align-items center
-                text-decoration none
+    //         a.buttons
+    //             display flex
+    //             justify-content center
+    //             align-items center
+    //             text-decoration none
 </style>

@@ -278,87 +278,87 @@
 
 <style lang="stylus" scoped>
 
-    input
-        font-family MuseoSansCyrl500
-        width 100%
-        background inherit
-        border none
-        outline none
-        margin-top 18px
-        font-size 14px
-        font-weight 500
-        line-height 1.29
-        text-align left
-        color #34343e
-        position relative
-        z-index 1
+    // input
+    //     font-family MuseoSansCyrl500
+    //     width 100%
+    //     background inherit
+    //     border none
+    //     outline none
+    //     margin-top 18px
+    //     font-size 14px
+    //     font-weight 500
+    //     line-height 1.29
+    //     text-align left
+    //     color #34343e
+    //     position relative
+    //     z-index 1
 
-    input:focus
-        color #34343e
-        opacity 1 !important
+    // input:focus
+    //     color #34343e
+    //     opacity 1 !important
 
-    input::-webkit-input-placeholder
-        opacity 1
-        line-height 1.29
-        font-size 14px
+    // input::-webkit-input-placeholder
+    //     opacity 1
+    //     line-height 1.29
+    //     font-size 14px
 
-    input.autocomplete-input
-        margin-top 0 !important
+    // input.autocomplete-input
+    //     margin-top 0 !important
 
-    .adding-item
-        white-space pre
-        margin-right 6px
+    // .adding-item
+    //     white-space pre
+    //     margin-right 6px
 
-    .qwe
-        color red !important
+    // .qwe
+    //     color red !important
 
-    .select-opt
-        background-color #f0f0f0 !important
+    // .select-opt
+    //     background-color #f0f0f0 !important
 
-    .row-flex-start
-        display flex
-        justify-content start
+    // .row-flex-start
+    //     display flex
+    //     justify-content start
 
-    .adding-opt
-        background-color rgba(13, 23, 23, 0.08)
-        padding 0 6px 0 6px
-        font-size 14px
-        line-height 1.29
-        display flex
-        margin-right 12px
-        justify-content center
-        align-items center
+    // .adding-opt
+    //     background-color rgba(13, 23, 23, 0.08)
+    //     padding 0 6px 0 6px
+    //     font-size 14px
+    //     line-height 1.29
+    //     display flex
+    //     margin-right 12px
+    //     justify-content center
+    //     align-items center
 
-    .close-adding
-        width 10px
-        height 10px
+    // .close-adding
+    //     width 10px
+    //     height 10px
 
-    .d-none
-        display none
+    // .d-none
+    //     display none
 
-    .d-block
-        d-block
+    // .d-block
+    //     d-block
 
-    .auto-select
-        width 280px
-        list-style none
-        box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
-        padding 0
-        border-radius 2px
-        background-color #f7f7f7
-        z-index 1000
-        max-height 188px
-        overflow auto
+    // .auto-select
+    //     width 280px
+    //     list-style none
+    //     box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
+    //     padding 0
+    //     border-radius 2px
+    //     background-color #f7f7f7
+    //     z-index 1000
+    //     max-height 188px
+    //     overflow auto
 
-        li
-            padding 9px 0 9px 18px
-            background-color transparent
-        li:hover
-            background-color #f0f0f0
+    //     li
+    //         padding 9px 0 9px 18px
+    //         background-color transparent
+    //     li:hover
+    //         background-color #f0f0f0
 
-    @media (max-width: 425px)
-        .form
-            & .control
-                & .wrap-input
-                    padding-left 0
+    // @media (max-width: 425px)
+    //     .form
+    //         & .control
+    //             & .wrap-input
+    //                 padding-left 0
 </style>

@@ -33,25 +33,25 @@
 </script>
 
 <style lang="scss" scoped>
-    .control-checkbox {
-        width: auto;
-    }
+    // .control-checkbox {
+    //     width: auto;
+    // }
 
-    .control {
-        font-size: 14px;
-        color: rgba(52, 52, 62, 0.7);
-        padding-left: 26px;
+    // .control {
+    //     font-size: 14px;
+    //     color: rgba(52, 52, 62, 0.7);
+    //     padding-left: 26px;
 
-        & .control-indicator {
-            height: 18px;
-            width: 18px;
+    //     & .control-indicator {
+    //         height: 18px;
+    //         width: 18px;
 
-            &::after {
-                top: 1.5px;
-                width: 5px;
-                height: 9px;
-                border-width: 0px 1.5px 1.5px 0;
-            }
-        }
-    }
+    //         &::after {
+    //             top: 1.5px;
+    //             width: 5px;
+    //             height: 9px;
+    //             border-width: 0px 1.5px 1.5px 0;
+    //         }
+    //     }
+    // }
 </style>

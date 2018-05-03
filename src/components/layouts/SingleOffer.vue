@@ -95,11 +95,11 @@
 </script>
 
 <style lang="stylus" scoped>
-    .title, .count, .description, .subtitle, .footer
-        -webkit-touch-callout text;
-        -webkit-user-select text;
-        -khtml-user-select text;
-        -moz-user-select text;
-        -ms-user-select text;
-        user-select text;
+    // .title, .count, .description, .subtitle, .footer
+    //     -webkit-touch-callout text;
+    //     -webkit-user-select text;
+    //     -khtml-user-select text;
+    //     -moz-user-select text;
+    //     -ms-user-select text;
+    //     user-select text;
 </style>

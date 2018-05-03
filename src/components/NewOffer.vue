@@ -373,43 +373,43 @@
 </script>
 
 <style lang="stylus" scoped>
-    #fileUpload
-        display none
+    // #fileUpload
+    //     display none
 
-    .d-none
-        display none
+    // .d-none
+    //     display none
 
-    .btn-upload
-        line-height 1.17
+    // .btn-upload
+    //     line-height 1.17
 
-    @media (max-width: 768px)
-        .col-8
-            width 100%
+    // @media (max-width: 768px)
+    //     .col-8
+    //         width 100%
 
-        .col-4
-            width 100%
-    @media (max-width: 425px)
-        .table
-            tbody
-                .uploadfile
-                    margin 5px 0 0
+    //     .col-4
+    //         width 100%
+    // @media (max-width: 425px)
+    //     .table
+    //         tbody
+    //             .uploadfile
+    //                 margin 5px 0 0
 
-                tr
-                    display flex
-                    flex-direction column
+    //             tr
+    //                 display flex
+    //                 flex-direction column
 
-                    td
-                        padding-top 0
+    //                 td
+    //                     padding-top 0
 
-                    th
-                        display flex
-                        flex-direction column
-                        align-items flex-start
-        .form
-            width 100%
+    //                 th
+    //                     display flex
+    //                     flex-direction column
+    //                     align-items flex-start
+    //     .form
+    //         width 100%
 
-            .control
-                .wrap-input
-                    padding-left 0
+    //         .control
+    //             .wrap-input
+    //                 padding-left 0
 
 </style>

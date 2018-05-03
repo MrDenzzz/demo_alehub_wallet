@@ -1,0 +1,1603 @@
+// Variables
+primary-text = #34343e
+secondary-text = #fcfcfc
+primary-bg = #f7f7f7
+secondary-bg = #474b4b
+dark-bg = #0d1717
+bright-bg = #ffd24f
+hover-bright-bg = #ffdd78
+active-bright-bg = #ffc926
+sent-text = #b10303
+accept-text = #4bad6d
+delete-text = #ad4b4b
+
+// General Styles
+body
+    background-color primary-bg
+.container
+    margin 24px
+
+.form
+	padding 16px
+	height auto
+	background-color #f0f0f0
+	border-radius 4px
+	grid('column', 'center', 'center')
+
+.control
+	display block
+	position relative
+	cursor pointer
+	font-size 12px
+	font-family MuseoSansCyrl500
+	line-height 1.7
+
+	& input 
+		position absolute
+		z-index -1
+		opacity 0
+		display none
+
+	& .bold 
+		font-family MuseoSansCyrl700
+		font-size 13px
+	
+a 
+    text-decoration none
+    color #fff
+
+.action-buttons
+    margin-bottom 12px
+    grid('row', 'center', 'space-between')
+
+.list-panel-heading
+    margin-left 16px
+    margin-bottom 12px
+
+    h3
+        font-family MuseoSansCyrl700
+        text-transform uppercase
+        line-height 18px
+        letter-spacing 0.5px
+        font-size 14px
+        opacity 0.5
+        color primary-text
+
+.pointer
+    cursor pointer
+
+label
+    font-family MuseoSansCyrl700
+    font-size 13px
+    font-weight bold
+    line-height 1.08
+    color primary-text
+
+:active, :hover, :focus
+    outline 0
+    outline-offset 0
+
+// Main
+.main 
+	padding-top 64px
+	height 100%
+
+	.content
+		width 100%
+		padding-left 360px
+
+	.nomenu
+		width 100%
+		padding-left 0
+
+// Buttons
+.buttons
+  width 173px
+  height 44px
+  border-radius 2px
+  background-color inherit
+  border none
+  font-size 16px
+  color primary-text
+  margin-bottom 12px
+  font-family MuseoSansCyrl500
+
+  .icon
+      position relative
+      left -5px
+
+.btn-yellow
+    background-color bright-bg
+
+    &:hover
+        background-color hover-bright-bg
+        cursor pointer
+
+    &:focus, :active
+        background-color active-bright-bg
+        cursor pointer
+
+    &:disabled
+        background-color bright-bg 
+        opacity 0.3
+
+.btn-default
+    background-color rgba(13, 23, 23, 0.08)
+
+    &:hover
+        background-color rgba(13, 23, 23, 0.04)
+        cursor pointer
+
+    &:focus, :active
+        background-color rgba(13, 23, 23, 0.16)
+        cursor pointer
+
+    &:disabled
+        background-color rgba(13, 23, 23, 0.08) 
+        opacity 0.4
+
+.btn-delete
+    width 50px
+
+    .icon
+        left unset
+
+.btn-check-all
+    width auto
+    margin-right 10px
+    padding-left 36px
+    padding-right 15px
+
+    .control-indicator
+        top 2px
+        left -20px
+
+.btn-large
+    width 240px
+
+.btn-copy
+    grid('row', 'center', 'center')
+    margin-right 12px
+
+    .icon-copy
+        height 19px
+        margin-right 5px
+
+// Logout
+.logout
+	grid('row', 'center', 'center')
+
+	.logout-link
+		font-family MuseoSansCyrl500
+		color #b10101
+		font-size 16px
+		font-weight 500
+		text-align center
+		line-height 1.25
+		padding 12px
+
+		&:hover
+			text-decoration underline
+
+//Custom Checkbox
+.control-indicator 
+  position absolute
+  top 2px
+  left 0
+  height 14px
+  width 14px
+  background primary-bg
+  border solid 0.5px #979797
+  border-radius 2px
+
+.control:hover input ~ .control-indicator,
+.control input:focus ~ .control-indicator 
+  background primary-bg
+
+.control input:checked ~ .control-indicator 
+  background bright-bg
+  border solid 0.5px primary-text
+
+.control:hover input:not([disabled]):checked ~ .control-indicator,
+.control input:checked:focus ~ .control-indicator 
+  background #fccd46
+
+.control input:disabled ~ .control-indicator 
+  background primary-bg
+  opacity 0.6
+  pointer-events none
+
+.control-indicator:after 
+  content ''
+  position absolute
+  display none
+
+.control input:checked ~ .control-indicator:after 
+  display block
+
+.control-checkbox
+  width calc(50% - 5px)
+
+  & .control-indicator:after
+    left 30%
+    top 1px
+    width 3px
+    height 7px
+    border solid primary-text
+    border-width 0 2px 2px 0
+    transform rotate(45deg)
+
+  & input:disabled ~ .control-indicator:after 
+    border-color #7b7b7b
+
+// Switch Element
+.switch-control
+	position absolute
+	right 0
+	bottom 18px
+	display inline-block
+	width 34px
+	height 18px
+
+	& .slider 
+		position absolute
+		cursor pointer
+		top -5px
+		left 0
+		right 0
+		bottom 5px
+		background-color #ccc
+		-webkit-transition .4s
+		transition .4s
+		border-radius 2px
+
+		&:before 
+			position absolute
+			content ""
+			height 14px
+			width 14px
+			left 2px
+			bottom 2px
+			background-color white
+			-webkit-transition .4s
+			transition .4s
+
+	& input
+    	display none !important
+
+		input:checked + .slider
+			background-color primary-text
+
+		input:focus + .slider 
+			box-shadow 0 0 1px #2196F3
+
+		input:checked + .slider:before 
+			-webkit-transform translateX(22px)
+			-ms-transform translateX(22px)
+			transform translateX(16px)
+
+// Select
+.select
+    position relative
+    outline none
+    margin-top 16px
+    margin-right 18px
+
+    .value
+        opacity 0.5
+        display block
+        position relative
+        font-family MuseoSansCyrl500
+        font-size 14px
+        color #1f202a
+        cursor pointer
+        overflow-x hidden
+        white-space nowrap
+
+        &::before 
+            content ""
+            position absolute
+            background: url('../img/arrow_down.svg')
+            background-size cover
+            width 11.5px
+            height 7px
+            top 8px
+            right 0px
+            z-index 1
+            color #bbbbbb
+            line-height 40px
+            font-size 14px
+
+    .list 
+        position absolute
+        top 0
+        width 100%
+        height auto
+        background #fff
+        opacity 1
+        outline none
+        box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
+        overflow hidden
+        transition opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1)
+        z-index 2
+
+        ul 
+            display block
+            background-color primary-bg
+
+            li 
+                display block
+                list-style none
+                font-family MuseoSansCyrl500
+                font-size 14px
+                color #1f202a
+                padding 9px 18px
+                cursor pointer
+                position relative
+                line-height 1.29
+
+                &:hover
+                    background-color #f0f0f0
+
+			li.selected
+				&::before 
+					content ""
+					position absolute
+					background url('../img/selected-ic.svg')
+					background-size cover
+					width 11.5px
+					height 7px
+					top 17px
+					right 18px
+					z-index 1
+					color #000
+					line-height 40px
+					font-size 14px
+
+// Navbar
+.navbar
+    width 100vw
+    height 64px
+    background-color dark-bg
+    position fixed
+    z-index 100
+    grid('row', 'center', 'space-between')
+
+    .navbar-nav
+        width auto
+        height 100%
+        grid('row', 'center', 'space-between')
+
+        .back-icon
+            padding 20px 32px
+            margin-right -32px
+
+            &:hover
+                cursor pointer
+                opacity 0.7
+
+        .logo
+            font-size 32px
+            color secondary-text
+            font-family Fairview
+            margin-left 32px
+
+        .actions
+            margin-left 32px
+            height 100%
+            width auto
+            grid('row', 'center')
+
+            .active
+                background-color secondary-bg
+
+            .item
+                width 64px
+                height 64px
+                grid('row', 'center', 'center')
+
+                &:not(.active)
+                    &:hover
+                        cursor pointer
+                        background-color rgba(247, 247, 247, 0.15) 
+                    
+                .badge
+                    width 6px
+                    height 6px
+                    border-radius 12.5px
+                    background-color bright-bg
+                    position absolute
+                    top 16px
+                    margin-left 12px
+
+                    &:hover
+                        cursor pointer
+                        background-color secondary-bg
+
+    .title
+        font-family Fairview
+        font-size 32px
+        color secondary-text
+        position absolute
+        left 50%
+        transform translateX(-50%)
+
+    .balance
+        width auto
+        height 100%
+        grid('row', 'center')
+
+        .count
+            font-family Fairview
+            color secondary-text
+            font-size 32px
+            margin-right 5px
+
+        .options
+            margin-left 10px
+            width 64px
+            height 100%
+            grid('row', 'center', 'center')
+
+            &:hover
+                background-color secondary-bg
+                cursor pointer
+
+            &:hover .dropdown-options
+                display block
+
+            .dropdown-options
+                display none
+                position absolute
+                background-color secondary-bg
+                width 194px
+                right 0
+                color #fff
+                height auto
+                top 64px
+                z-index 3
+
+                .item
+                    height 64px
+                    line-height 64px
+                    font-family MuseoSansCyrl500
+                    text-align center
+                    height auto
+                    
+                    a, span
+                        &:hover
+                            color primary-text
+
+                    &:hover
+                        background-color hover-bright-bg
+
+                    span
+                        display block
+
+            .horizontal-dropdown-options
+                width 256px
+
+                .item
+                    height 64px
+                    width 64px
+                    line-height 64px
+                    font-family MuseoSansCyrl500
+                    text-align center
+                    display inline-block
+                    
+                    a, span
+                        &:hover
+                            color primary-text
+
+                &:hover 
+                    background bright-bg
+
+                span
+                    display block
+        
+    .gridBalance
+        .count
+            margin-right 32px
+    
+    .textList
+        .item
+            span
+                text-align left
+                margin-left 24px
+
+
+// Hamburger
+.hamburger
+    display none
+    cursor pointer
+    padding 1em 0em
+
+//Menu 
+.menu 
+    z-index 4
+    width 360px
+    background-color secondary-bg
+    position fixed
+    top 64px
+    bottom 0
+    overflow-y auto
+
+    .is-opened
+        overflow-y auto
+        
+    .wallet-list
+        height 64px
+        width 100%
+        grid()
+
+        &.wrap-between
+            grid('row', 'center', 'space-between')
+
+            .new-wallet
+                opacity 0.4
+                line-height 1.25
+                font-size 16px
+                font-family MuseoSansCyrl500
+                color secondary-text
+
+            img 
+                margin-right 20px
+
+        &:not(.active)
+            &:not(.wallet-search)
+                &:hover
+                    background-color #616565
+
+                    .wrap-in-wallet
+                        p
+                            color secondary-text
+
+                        .wallet
+                            color secondary-text
+                            opacity 0.7
+
+        &.wallet-element
+            &:nth-child(2)
+                margin-top 69px
+
+        &.wallet-search
+            background-color secondary-bg
+            position fixed
+            width 360px
+            z-index 2
+
+        .wrap-in-wallet
+            align-self center
+            grid('row', 'center')
+            margin-left 20px
+
+            .separator
+                content ''
+                width 100%
+
+            .icon
+                margin-right 20px
+
+            input
+                width auto
+                margin-top 0
+                height 20px
+                background transparent
+                border-top none
+                border-left none
+                border-right none
+                border-bottom thin solid rgba(252, 252, 252, 0.2)
+                color rgba(252, 252, 252, 0.5)
+                font-size 16px
+                font-family MuseoSansCyrl300
+
+                &:focus
+                    font-size 16px 
+
+                // &::-webkit-input-placeholder
+                //     color rgba(252, 252, 252, 0.5)
+                //     text-shadow none
+                //     font-size 16px
+
+                &::-moz-placeholder
+                    color rgba(252, 252, 252, 0.5)
+                    font-size 16px
+
+                &:-ms-input-placeholder 
+                    color rgba(252, 252, 252, 0.5)
+                    font-size 16px
+
+                &:-moz-placeholder
+                    color rgba(252, 252, 252, 0.5)
+                    font-size 16px
+
+            .active
+                background-color primary-bg
+
+                p
+                    color primary-text
+
+            p
+                margin 0
+                color secondary-text
+                font-family MuseoSansCyrl700
+                font-size 16px
+                font-weight 500
+                line-height 1.25
+
+            .wallet
+                font-family MuseoSansCyrl300
+                font-size 14px
+                color rgba(252, 252, 252, 0.7)
+
+        &.active
+            background-color primary-bg
+
+            p
+                color primary-text
+
+            .wallet
+                color primary-text
+
+    &.scrollable
+        .wallet-list
+            &:nth-last-child(3)
+                margin-bottom 64px
+        
+        .wrap-between
+            position fixed
+            bottom 0
+            width 360px
+            background-color secondary-bg
+
+// Mobile-menu
+.mobile-menu
+    position fixed
+    height 100%
+    background-color dark-bg
+    width 100%
+    max-width 360px
+    right 0
+    bottom 200%
+    transition .3s
+    display none
+    padding 15px
+    padding-top calc(64px + 15px)
+    z-index 5
+
+    &.is-collapsed 
+        overflow-y scroll
+        bottom 0
+
+// Search Panel
+.searchPanel
+    width 100%
+    margin-bottom 24px
+
+    .top
+        grid('row', 'bottom', 'space-between')
+        padding-bottom 18px
+        border-bottom 1px solid #d1d1d1
+        margin-bottom 24px
+
+        .searchControl
+            grid()
+            width calc(100% - 370px)
+            cursor pointer
+            flex-wrap nowrap
+
+            input
+                background none
+                outline none
+                border none
+                border-bottom 1px solid #ccc
+                opacity 0.5
+                font-family MuseoSansCyrl300
+                font-size 14px
+                line-height 1.29
+                color primary-text
+                margin-left 18px
+                padding 0
+                margin-top 0
+
+                &:focus
+                    width 100%
+
+    .bottom
+        grid('row', 'center')
+        background-color #f0f0f0
+        padding 16px 0 16px 16px
+
+        .date
+           grid('column')
+           flex-grow 1
+
+           .date-title
+                font-family MuseoSansCyrl500
+                font-size 14px
+                color primary-text
+                text-transform uppercase
+                margin-top 0
+                margin-bottom 14px
+
+            .datepicker-wrap
+                grid()
+
+                .vdp-datepicker
+                    input#datepickerFrom, input#datepickerTo
+                        font-family MuseoSansCyrl500
+                        background inherit
+                        border none
+                        border-bottom 1px solid rgba(52, 52, 62, 0.2)
+                        width 84px
+                        margin-right 24px
+                        outline none
+                        font-size 14px
+                        font-weight 500
+                        line-height 1.29
+                        text-align left
+                        color primary-text
+                        position relative
+                        z-index 1
+
+                    #datepickerFrom, #datepickerTo
+                        cursor pointer
+
+                    #datepickerFrom::-webkit-input-placeholder, #datepickerTo::-webkit-input-placeholder 
+                        opacity 1
+                        line-height 1.29
+                        font-size 14px
+
+                    .vdp-datepicker__calendar
+                        background-color #fff
+                        box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
+                        border 0
+                        padding 7px
+                        font-family MuseoSansCyrl500
+                        z-index 100
+
+                        .day:hover, .month:hover, .year:hover
+                            background-color #f0f0f0
+                            border 1px solid #f0f0f0
+
+                        .selected
+                            background-color #f0f0f0
+
+        .docs
+            grid('column', 'center')
+            margin-right 17px
+
+            button:last-of-type
+                margin-bottom 0
+
+        .info
+            grid('row', 'center')
+
+            .stats-col
+                font-family MuseoSansCyrl500
+                color primary-text
+                font-size 14px
+
+                .title-opt-span
+                    padding 5px
+                    
+                    .title
+                        margin 0 10px
+                        padding 5px
+
+                .result-opt-line
+                    padding 5px
+                    white-space nowrap
+                    text-align right
+
+                    .result-opt-span
+                        margin 0 5px 0 10px
+                        padding 5px
+                        letter-spacing 0.5px
+                        line-height 1.29
+
+                        .count
+                            padding 5px
+                            letter-spacing 0.5px
+
+                .sent
+                    color sent-text
+
+// Activity List
+.activityListBlock
+    &:nth-child(odd)
+        .activity-list
+            background inherit
+
+    &:nth-child(even)
+        .activity-list
+            background #f0f0f0
+
+    &:nth-child(1)
+        .activity-list
+            background #f0f0f0
+
+    .activity-list
+        width 100%
+        height auto
+        background-color #ececec
+        font-family MuseoSansCyrl700
+        grid('row', 'center', 'space-between')
+        flex-wrap nowrap
+        margin-bottom 6px
+
+        .received
+            background-color rgba(255, 210, 79, 0.6)
+
+        .sent
+           background-color #f0f0f0 
+
+        &:nth-child(even)
+            background inherit
+
+        &:not(:last-child) 
+            margin-bottom 5px
+
+        .status
+            min-width 150px
+            height 56px
+            grid('row', 'center', 'center')
+
+            span
+                color primary-text
+                font-size 14px
+                font-family MuseoSansCyrl700
+                font-weight bold
+                letter-spacing 0.5px
+                text-transform uppercase
+
+        .details
+            grid('row', 'center', 'start')
+            flex-wrap nowrap
+            width 100%
+            height 56px
+            padding-right 16px
+
+            .info
+                word-break break-all
+                min-width 380px
+
+                p
+                    font-family MuseoSansCyrl500
+                    color primary-text
+                    font-size 12px
+                    line-height 1.6
+
+            .count
+                background-color transparent
+                padding-right 5px
+                font-family MuseoSansCyrl500
+                font-size 14px
+                letter-spacing 0.5px
+                line-height 1.29
+                color primary-text
+                min-width 100px
+                text-align right
+                padding-right 0
+
+                span
+                    font-family MuseoSansCyrl500
+                    color primary-text
+                    font-size 14px
+                    letter-spacing 0.5px
+                    line-height 1.29
+                    text-align right
+                    padding 5px
+                    padding-right 0
+
+            .purpose
+                width 100%
+                color primary-text
+                font-family MuseoSansCyrl500
+                margin-left 16px
+
+            .info, .count
+                -webkit-touch-callout text
+                -webkit-user-select text
+                -khtml-user-select text
+                -moz-user-select text
+                -ms-user-select text
+                user-select text
+
+
+    .result-day
+        grid('row', 'top', 'end')
+        margin 16px 0 0
+
+        .result-day-col
+            font-family MuseoSansCyrl500
+            color primary-text
+            font-size 14px
+
+            .result-day-status
+                padding 5px
+
+                .result-day-field
+                    margin 0 10px
+                    padding 5px
+
+            .result-day-line
+                text-align right
+                white-space nowrap
+                padding 5px
+
+                .result-day-span
+                    margin 0 5px 0 10px
+                    padding 5px
+                    letter-spacing 0.5px
+                    line-height 1.29
+
+                    .count
+                        letter-spacing 0.5px
+                        padding 5px
+
+            .sent
+                color sent-text
+    
+// Notif Panel
+.notif-panel
+    background-color #f0f0f0
+    padding 16px
+    margin-bottom 12px
+    -webkit-touch-callout text
+    -webkit-user-select text
+    -khtml-user-select text
+    -moz-user-select text
+    -ms-user-select text
+    user-select text
+
+    .panel-heading
+        grid('row', 'center', 'space-between')
+
+        .title
+            font-family MuseoSansCyrl300
+            font-size 16px
+            font-weight 300
+            line-height 1.12
+            color primary-text
+
+            p
+                strong 
+                    font-weight bold
+                    font-family MuseoSansCyrl700
+                    word-break break-all
+
+            .accepted
+                font-weight bold
+                font-family MuseoSansCyrl700
+                color accept-text
+
+            .deleted
+                font-weight bold
+                font-family MuseoSansCyrl700
+                color delete-text 
+
+        .datetime
+            opacity 0.6
+            font-family MuseoSansCyrl300
+            font-size 16px
+            font-weight 300
+            line-height 1.12
+            color primary-text
+            white-space nowrap
+
+            .bold
+                font-weight bold
+                font-family MuseoSansCyrl500
+
+        &.shift-right
+            padding-left 20px
+
+    &.checked
+        background-color #f5e9c5
+
+// Settings
+.settings-row
+	grid()
+
+	.settings-block
+		cell(1, 1, '', 0px)
+
+.form
+	margin-bottom 24px
+	grid('column', 'top', 'center')
+
+	.control
+		border-bottom 1px solid #d1d1d1
+		padding-bottom 18px
+		width 100%
+
+		&:last-child
+			border-bottom none
+			margin-bottom 0
+
+		.wrap-input
+			padding-left 18px
+
+			.wrap-container
+				grid('row', 'center', 'space-between')
+
+			&:first-child
+				margin-top 18px
+
+			label 
+				text-transform uppercase
+				font-size 14px
+				font-family MuseoSansCyrl500
+				font-weight bold
+				line-height 1.29
+				letter-spacing 0.5px
+				color primary-text
+
+			input
+				opacity 0.5
+				font-family MuseoSansCyrl500
+				width 100%
+				background inherit
+				border none
+				outline none
+				margin-top 18px
+				font-size 14px
+				font-weight 500
+				line-height 1.29
+				color primary-text
+				position relative
+				z-index 1
+				display block
+
+			.textbox
+				margin-top 18px
+
+			.text
+				font-size 14px
+				font-family MuseoSansCyrl500
+				opacity 0.5
+				line-height 1.29
+				color primary-text
+
+			.wrap-container
+				margin-top 18px
+
+.group-settings
+	grid('row', 'center')
+	margin-bottom 24px
+
+	.form
+		max-height 120px
+		width 32.5%
+		background transparent
+		cursor pointer
+		max-width 200px
+		margin 0 10px
+
+		img
+			width 168px
+			height 97px
+
+		&.select-main
+			background-color #474b4b
+
+		&.select-dark
+			background-color #27272f
+
+		&.select-white
+			background-color #aaaec1
+
+		&:first-child 
+			margin-left 0
+
+		&:last-child
+			margin-right 0
+
+// Offers
+.offers
+    .contractor-info 
+        h3, h4
+            margin 18px 0
+
+// Modals
+.modal-input
+    input
+        width 100%
+
+.v--modal
+    border-radius 10px !important
+    overflow-y auto !important
+
+.v--modal-overlay
+    overflow-y auto
+    background-color rgba(52, 52, 62, 0.4) !important
+    z-index 9999
+
+    .v--modal-background-click
+        min-height 100%
+        width 100%
+        padding-bottom 10px
+
+    .v--modal-top-right
+        display block
+        position absolute
+        right 0
+        top 0
+
+    .v--modal-box
+        top 0 !important
+        left 0 !important
+        margin 0 auto
+        margin-top 5%
+        background-color #fafafa
+        box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.25)
+        position relative
+        overflow hidden
+
+        .heading
+            .title
+                text-align center
+                font-family MuseoSansCyrl700
+                font-size 14px
+                font-weight bold
+                line-height 1.29
+                letter-spacing 0.5px
+                color primary-text
+                margin-top 24px
+                margin-bottom 24px
+                text-transform uppercase
+
+            .title-expand
+                grid('row', 'center', 'center')
+
+                .arrow
+                    background-image url('/static/img/expand-arrow.svg')
+                    width 11.5px
+                    height 7px
+                    background-size cover
+                    opacity 0.5
+                    margin -2px 0 0 8px
+
+            .close
+                position absolute
+                right 42px
+                top 27px
+                background-image url('/static/img/close-cross.svg')
+                width 11px
+                height 11px
+                background-size cover
+
+                &:hover
+                    cursor pointer
+
+            .back
+                position absolute
+                left 42px
+                top 27px
+                background-image url('/static/img/back-arrow-small.svg')
+                width 13px
+                height 11px
+                background-size cover
+
+                &:hover
+                    cursor pointer
+
+        .body
+            .modal-control
+                padding-top 18px
+                padding-bottom 18px
+                border-bottom 1px solid #d1d1d1
+                margin-left 24px
+                margin-right 24px
+
+                &.double
+                    &:nth-child(2n+1)
+                        border 0
+                        margin-bottom 0
+                        padding-bottom 0
+                        padding-top 18px
+
+                    &:nth-child(2n)
+                        margin-top 0
+                        padding-top 0
+
+                        .modal-input
+                            .title
+                                font-size 14px
+                                opacity 0.5
+                                font-family MuseoSansCyrl500
+                                text-transform lowercase
+
+                .address
+                    font-family MuseoSansCyrl500
+                    font-size 14px
+                    font-weight 500
+                    line-height 1.29
+                    color primary-text
+                    word-break break-all
+                    margin-top 14px
+                    margin-bottom 14px
+
+                &.last
+                    border none
+
+                .modal-input
+                    grid('row', 'center', 'space-between')
+                    flex-wrap nowrap
+                    margin 0 18px
+
+                    .title
+                        text-transform uppercase
+                        white-space nowrap
+                        margin-right 15px
+
+                    input[type='number']
+                        -moz-appearance textfield
+
+                    input
+                        text-align right
+                        border none 
+                        font-size 14px
+                        text-decoration underline
+                        background inherit 
+                        color primary-text
+                        opacity 1
+                        width 100%
+
+                        &:focus 
+                            opacity 1
+
+                            &::-webkit-input-placeholder 
+                                opacity 1
+                                text-decoration none
+
+                        &::-webkit-input-placeholder
+                            color rgba(52, 52, 62, 0.5)
+                            opacity 1
+                            text-decoration underline
+
+                        &.error 
+                            &::-webkit-input-placeholder 
+                                text-decoration-color #d93f1f
+                            
+                            &:focus 
+                                &::-webkit-input-placeholder 
+                                    text-decoration underline
+                                    text-decoration-color #d93f1f
+
+                    .count
+                        opacity 1
+                        font-family MuseoSansCyrl500
+                        font-size 20px
+                        display flex
+
+                        #amount
+                            margin-right 5px
+
+                        input
+                            text-align right
+                            border none 
+                            text-decoration none
+                            background inherit 
+                            color primary-text
+                            font-size 20px
+                            opacity 0.5
+                            font-family MuseoSansCyrl500
+
+                            &::-webkit-input-placeholder
+                                color rgba(52, 52, 62, 0.5)
+                                opacity 1
+                                text-decoration none
+
+                            &:focus
+                                opacity 1
+                                text-decoration none
+
+                    .total
+                        margin 0
+                        font-family MuseoSansCyrl700
+                        font-size 14px
+
+                    .small
+                        margin 0
+                        font-family MuseoSansCyrl300
+                        font-size 14px
+                        text-align left
+
+                        & span 
+                            font-family MuseoSansCyrl700
+
+            .modal-footer
+                margin-top 24px
+                margin-bottom 12px
+                text-align center
+
+                button
+                    width 240px
+
+            .qr-code
+                text-align center
+                margin-top 64px
+
+                .muted
+                    margin-bottom 48px
+                    color #000
+                    opacity 1
+                    font-size 14px
+
+                    &.upperCase
+                        text-transform uppercase
+                        font-weight bold
+
+                span
+                    display block
+                    font-family MuseoSansCyrl300
+                    margin-top 24px
+
+        .modal-btn
+            margin-top 40px
+            margin-bottom 24px
+            grid('row', 'center', 'center')
+
+            .buttons
+                margin-bottom 0
+
+.modal-md
+    .v--modal
+        width 620px !important
+
+.modal-warning
+    margin 0 42px
+
+    .agreed
+        font-family MuseoSansCyrl300
+        font-size 14px
+        font-weight 300
+        line-height 1.29
+        color primary-text
+        margin 14px 0
+
+    .control
+        &.control-checkbox
+            font-size 14px
+            color rgba(52, 52, 62, 0.7)
+            padding-left 26px
+            margin-top 12px
+            width 100%
+
+            span
+                margin-left 10px
+
+            .control-indicator
+                height 18px
+                width 18px
+
+                &:after
+                    top 1.5px
+                    left 5px
+                    width 5px
+                    height 9px
+                    border-width 0px 1.5px 1.5px 0
+
+.phrase
+    background-color rgba(13, 23, 23, 0.04)
+    border-radius 2px
+    padding 12px 12px
+    text-align center
+    margin 24px 42px 42px
+
+    span
+        font-family MuseoSansCyrl700
+        font-size 14px
+        font-weight bold
+        color primary-text
+
+.newwallet
+    .v--modal-box
+        &.v--modal
+            width 800px !important
+
+// Drop-down List
+.dropdown-list
+    position absolute
+    top 50px
+    min-width 200px
+    max-width 250px
+    width 100%
+    left 230px
+    height auto
+    background #fff
+    opacity 1
+    outline none
+    box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
+    overflow hidden
+    transition opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1)
+    z-index 2
+
+    ul
+        display block
+        background-color primary-bg
+
+        li
+            display block
+            list-style none
+            font-family MuseoSansCyrl500
+            font-size 14px
+            color #1f202a
+            padding 9px 18px
+            cursor pointer
+            position relative
+
+            &:hover
+                background-color #f0f0f0
+
+            &.selected 
+                &::before
+                    content ""
+                    position absolute
+                    background url('/static/img/expand-arrow.svg')
+                    background-size cover
+                    width 11.5px
+                    height 7px
+                    top 13px
+                    right 18px
+                    z-index 1
+                    color #000
+                    line-height 40px
+                    font-size 14px
+
+// Media Queries
+@media(max-width: 1024px)
+    // Hamburger
+    .hamburger
+        display block
+        padding-right 32px
+        padding-left 32px
+
+        .line
+            width 35px
+            height 3px
+            background-color secondary-text
+            display block
+            margin 4px auto
+            -webkit-transition all 0.3s ease-in-out
+            -o-transition all 0.3s ease-in-out
+            transition all 0.3s ease-in-out
+
+            &:last-child
+                margin-bottom 6px
+
+        &.is-active
+            .line
+                &:nth-child(1)
+                    -webkit-transform translateY(7px) rotate(45deg)
+                    -ms-transform translateY(7px) rotate(45deg)
+                    -o-transform translateY(7px) rotate(45deg)
+                    transform translateY(7px) rotate(45deg)
+                            
+                &:nth-child(2)
+                    opacity 0
+
+                &:nth-child(3)
+                    -webkit-transform translateY(-7px) rotate(-45deg)
+                    -ms-transform translateY(-7px) rotate(-45deg)
+                    -o-transform translateY(-7px) rotate(-45deg)
+                    transform translateY(-7px) rotate(-45deg)
+
+    //Menu
+    .menu 
+        width 260px
+
+        .wallet-list
+            &.wallet-search
+                width 260px
+
+        &.scrollable
+            .wrap-between
+                width 260px
+        
+    // Mobile-menu
+    .mobile-menu
+        display block
+
+        hr
+            border none 
+            color rgba(255, 255, 255, 0.4)
+            background-color rgba(255, 255, 255, 0.4)
+            height 2px
+            margin 8px 0
+
+        .item
+            height 55px
+            font-size 20px
+            font-family MuseoSansCyrl500
+            grid('row', 'center', 'center')
+
+            &:not(:last-child)
+                border-bottom 1px solid rgba(255, 255, 255, 0.35)
+
+            img 
+                display none
+
+            span 
+                color secondary-text
+
+    // Navbar
+    .navbar
+        .navbar-nav
+            .actions
+                display none
+
+        .balance
+            .options
+                display none
+
+@media(max-width: 920px)
+    //Menu
+    .menu 
+        width 360px
+        overflow-y unset
+
+        .wallet-list
+            &.wallet-search
+                width 360px
+
+        &.scrollable
+            .wrap-between
+                width 360px
+
+@media(max-width: 768px)
+    .searchPanel
+        .top
+            input
+                &:focus
+                    width auto
+
+@media(max-width: 720px)
+    // Navbar
+    .navbar
+        .title
+            display none
+
+@media(max-width: 600px)
+    .searchPanel
+        .top
+            grid('column')
+
+            .searchControl
+                margin-bottom 20px
+
+@media(max-width: 425px)
+    //Menu
+    .menu 
+        .wallet-list
+            &.wallet-search
+                width calc(100% - 100vh)
+
+        &.is-opened
+            width 100%
+            left 0
+
+            .wallet-search
+                width 100vh !important
+
+        &.scrollable
+            .wrap-between
+                width calc(100% - 100vh)
+                
+    // Mobile-menu
+    .mobile-menu
+        max-width 100%
+    
+    // Navbar
+    .navbar 
+        .title
+            position relative
+            left auto
+            transform none
+            padding-left 32px
+
+        .balance
+            .count
+                display none

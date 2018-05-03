@@ -651,41 +651,41 @@
 </script>
 
 <style lang="stylus" scoped>
-    #fileUpload
-        display none
+    // #fileUpload
+    //     display none
 
-    .table
-        tbody
-            .uploadfile
-                padding 4px 10px 4px 10px;
+    // .table
+    //     tbody
+    //         .uploadfile
+    //             padding 4px 10px 4px 10px;
 
-    .offer-page .heading .active .icon
-        background-image url('../assets/img/star-on.svg')
+    // .offer-page .heading .active .icon
+    //     background-image url('../assets/img/star-on.svg')
 
-    .play-icon
-        width 6px
-        height 8px
-        margin-right 6px
-        margin-bottom 2px
+    // .play-icon
+    //     width 6px
+    //     height 8px
+    //     margin-right 6px
+    //     margin-bottom 2px
 
-    .btn-play
-        display flex
-        align-items center
-        justify-content center
+    // .btn-play
+    //     display flex
+    //     align-items center
+    //     justify-content center
 
-    .offer-page
-        -webkit-touch-callout text
-        -webkit-user-select text
-        -khtml-user-select text
-        -moz-user-select text
-        -ms-user-select text
-        user-select text
+    // .offer-page
+    //     -webkit-touch-callout text
+    //     -webkit-user-select text
+    //     -khtml-user-select text
+    //     -moz-user-select text
+    //     -ms-user-select text
+    //     user-select text
 
-    .table
-        .inline
-            line-height 2
+    // .table
+    //     .inline
+    //         line-height 2
 
-            b
-                font-family MuseoSansCyrl700
-                margin-right 4px
+    //         b
+    //             font-family MuseoSansCyrl700
+    //             margin-right 4px
 </style>

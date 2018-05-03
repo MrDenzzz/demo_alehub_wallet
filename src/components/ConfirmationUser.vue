@@ -51,7 +51,7 @@
 </script>
 
 <style lang="stylus" scoped>
-    .d-block
-        display block
+    // .d-block
+    //     display block
 
 </style>

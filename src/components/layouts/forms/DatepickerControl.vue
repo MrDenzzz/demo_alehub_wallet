@@ -96,84 +96,84 @@
 </script>
 
 <style lang="stylus">
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button
-        -webkit-appearance none
-        -moz-appearance none
-        appearance none
-        margin 0
+    // input[type=number]::-webkit-inner-spin-button,
+    // input[type=number]::-webkit-outer-spin-button
+    //     -webkit-appearance none
+    //     -moz-appearance none
+    //     appearance none
+    //     margin 0
 
 
-    input
-        font-family MuseoSansCyrl500
-        width 100%
-        background inherit
-        border none
-        outline none
-        margin-top 18px
-        font-size 14px
-        font-weight 500
-        line-height 1.29
-        text-align left
-        color #34343e
-        position relative
-        z-index 1
+    // input
+    //     font-family MuseoSansCyrl500
+    //     width 100%
+    //     background inherit
+    //     border none
+    //     outline none
+    //     margin-top 18px
+    //     font-size 14px
+    //     font-weight 500
+    //     line-height 1.29
+    //     text-align left
+    //     color #34343e
+    //     position relative
+    //     z-index 1
 
-    input:focus
-        color #34343e
-        opacity 1 !important
+    // input:focus
+    //     color #34343e
+    //     opacity 1 !important
 
-    input::-webkit-input-placeholder
-        opacity 1
-        line-height 1.29
-        font-size 14px
+    // input::-webkit-input-placeholder
+    //     opacity 1
+    //     line-height 1.29
+    //     font-size 14px
 
 
-    .row-flex-start
-        display flex
-        justify-content start
+    // .row-flex-start
+    //     display flex
+    //     justify-content start
 
-    #datepicker
-        cursor pointer
+    // #datepicker
+    //     cursor pointer
 
-    #datepicker::-webkit-input-placeholder
-        opacity 1
-        line-height 1.29
-        font-size 14px
+    // #datepicker::-webkit-input-placeholder
+    //     opacity 1
+    //     line-height 1.29
+    //     font-size 14px
 
-    .vdp-datepicker__calendar
-        background-color #f7f7f7
-        box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
-        border 0 !important
-        padding 7px
+    // .vdp-datepicker__calendar
+    //     background-color #f7f7f7
+    //     box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)
+    //     border 0 !important
+    //     padding 7px
 
-        header
-            .next, .prev
-                display flex
-                justify-content center
-                align-items center
-                height 40px
+    //     header
+    //         .next, .prev
+    //             display flex
+    //             justify-content center
+    //             align-items center
+    //             height 40px
 
-                .arrow
-                    width 7.5px
+    //             .arrow
+    //                 width 7.5px
 
-            .next:after, .prev:after
-                content initial !important
+    //         .next:after, .prev:after
+    //             content initial !important
 
-        .day-header
-            font-family MuseoSansCyrl500 !important
-            color #0d1717 !important
-            font-size 12px !important
+    //     .day-header
+    //         font-family MuseoSansCyrl500 !important
+    //         color #0d1717 !important
+    //         font-size 12px !important
 
-        .day:hover, .month:hover, .year:hover
-            background-color #f0f0f0 !important
-            border 1px solid #f0f0f0 !important
+    //     .day:hover, .month:hover, .year:hover
+    //         background-color #f0f0f0 !important
+    //         border 1px solid #f0f0f0 !important
 
-        .selected
-            background-color #f0f0f0 !important
-    @media (max-width: 425px)
-        .form
-            & .control
-                & .wrap-input
-                    padding-left 0
+    //     .selected
+    //         background-color #f0f0f0 !important
+    // @media (max-width: 425px)
+    //     .form
+    //         & .control
+    //             & .wrap-input
+    //                 padding-left 0
 </style>

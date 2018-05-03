@@ -7,8 +7,8 @@
         <section class="main">
             <div class="content nomenu">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12">
+                    <div class="settings-row">
+                        <div class="settings-block">
                             <panel-heading :title="$t('pages.settings.panelHeadingGeneral')"
                                            :isTop="true"/>
                             <div class="form">
@@ -22,7 +22,7 @@
                                     <div class="wrap-input">
                                         <label>E-mail</label>
                                         <div class="textbox">
-                                            <p class="text full-line">
+                                            <p class="text">
                                                 {{ userEmail }}
                                             </p>
                                         </div>
@@ -34,14 +34,14 @@
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.password') }}</label>
                                         <div class="textbox">
-                                            <p class="text full-line">
+                                            <p class="text">
                                                 {{ textLastUpdatedPass }}
                                                 <!--{{ $t('pages.settings.passwordLabel') }}-->
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="control border-none"
+                                <div class="control"
                                      @click.stop="changeLanguage">
                                     <div class="wrap-input">
                                         <label>{{ $t('pages.settings.language') }}</label>
@@ -87,7 +87,7 @@
                                 <spinner/>
                             </div>
 
-                            <div class="text-center">
+                            <div class="logout">
                                 <a href="#"
                                    class="logout-link"
                                    @click="logout">
@@ -284,34 +284,14 @@
 </script>
 
 <style lang="stylus" scoped>
-    .form
-        margin-bottom 10px
-        .control
-            &:last-child
-                border-bottom none
-            .wrap-input
-                .full-line
-                    width 100%
+    // @media (max-width: 1024px)
+    //     .main
+    //         .content
+    //             padding-left 0
 
-    .form .deletelink
-        margin-top -8px
-        padding-top 0
-
-    .border-none
-        border none
-
-    .form .deletelink
-        margin-top -8px
-        padding-top 0px
-
-    @media (max-width: 1024px)
-        .main
-            .content
-                padding-left 0
-
-    @media (max-width: 425px)
-        .form
-            .control
-                .wrap-input
-                    padding-left 0
+    // @media (max-width: 425px)
+    //     .form
+    //         .control
+    //             .wrap-input
+    //                 padding-left 0
 </style>

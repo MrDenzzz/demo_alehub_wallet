@@ -291,34 +291,34 @@
 </style>
 
 <style lang="stylus" scoped>
-    .wrap-completion-reg
-        display flex
-        justify-content center
-        font-family MuseoSansCyrl500
+    // .wrap-completion-reg
+    //     display flex
+    //     justify-content center
+    //     font-family MuseoSansCyrl500
 
-        .alert-completion-reg
-            font-family MuseoSansCyrl700
+    //     .alert-completion-reg
+    //         font-family MuseoSansCyrl700
 
-    .is-center
-        display flex
-        justify-content center
-        margin-top -10px
-        margin-bottom 25px
+    // .is-center
+    //     display flex
+    //     justify-content center
+    //     margin-top -10px
+    //     margin-bottom 25px
 
-    .error-block
-        color red
-        font-family MuseoSansCyrl300
-        text-align center
-        margin-top -20px
+    // .error-block
+    //     color red
+    //     font-family MuseoSansCyrl300
+    //     text-align center
+    //     margin-top -20px
 
-    .d-block
-        display block
+    // .d-block
+    //     display block
 
-    .login-form
-        .text
-            font-family MuseoSansCyrl300
+    // .login-form
+    //     .text
+    //         font-family MuseoSansCyrl300
 
-            a
-                font-family MuseoSansCyrl700
+    //         a
+    //             font-family MuseoSansCyrl700
 
 </style>

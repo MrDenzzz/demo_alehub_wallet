@@ -366,6 +366,6 @@
 </script>
 
 <style lang="stylus" scoped>
-    .project-duration
-        width 100%
+    // .project-duration
+    //     width 100%
 </style>

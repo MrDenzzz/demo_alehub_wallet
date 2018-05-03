@@ -148,63 +148,63 @@ export default {
 
 <style lang="stylus" scoped>
 
-    .d-block
-        display block
+    // .d-block
+    //     display block
 
-    .qr-code
-        display flex
-        justify-content center
-        flex-direction column
-        text-align center
-        font-family MuseoSansCyrl300
-        margin-top 0
+    // .qr-code
+    //     display flex
+    //     justify-content center
+    //     flex-direction column
+    //     text-align center
+    //     font-family MuseoSansCyrl300
+    //     margin-top 0
 
-    .is-center
-        display flex
-        justify-content center
+    // .is-center
+    //     display flex
+    //     justify-content center
 
-    .is-2fa-loader
-        margin-top -20px
-        margin-bottom 20px
+    // .is-2fa-loader
+    //     margin-top -20px
+    //     margin-bottom 20px
 
-    .error
-        text-decoration underline
-        text-decoration-color #d93f1f
-    .error-block
-        color red
-        font-family MuseoSansCyrl300
-        text-align center
+    // .error
+    //     text-decoration underline
+    //     text-decoration-color #d93f1f
+    // .error-block
+    //     color red
+    //     font-family MuseoSansCyrl300
+    //     text-align center
 
-    .login-form
-        .text
-            font-family MuseoSansCyrl300
+    // .login-form
+    //     .text
+    //         font-family MuseoSansCyrl300
 
-            a
-                font-family MuseoSansCyrl700
+    //         a
+    //             font-family MuseoSansCyrl700
 
-    @media(max-width: 425px)
-        .login-form
-            .control
-                flex-direction column
-                align-items flex-start
+    // @media(max-width: 425px)
+    //     .login-form
+    //         .control
+    //             flex-direction column
+    //             align-items flex-start
 
-                label
-                    margin-left 0
-                    margin-bottom 10px
+    //             label
+    //                 margin-left 0
+    //                 margin-bottom 10px
 
-                input 
-                    text-align left
+    //             input 
+    //                 text-align left
 
-    @media(max-width: 320px) 
-        .login-form
-            .control
-                input
-                    font-size 12px
+    // @media(max-width: 320px) 
+    //     .login-form
+    //         .control
+    //             input
+    //                 font-size 12px
                 
-            .qr-code
-                p
-                    b
-                        word-break break-all
+    //         .qr-code
+    //             p
+    //                 b
+    //                     word-break break-all
 
 
 </style>

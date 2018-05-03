@@ -79,21 +79,21 @@ export default {
 </script>
 
 <style>
-    input:-webkit-autofill,
+    /* input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     input:-webkit-autofill:active {
         -webkit-box-shadow: 0 0 0px 1000px #f0f0f0 inset !important;
-    }
+    } */
 </style>
 
 <style lang="stylus" scoped>
 
-    .login-form
-        font-family MuseoSansCyrl300
-        text-align center
+    // .login-form
+    //     font-family MuseoSansCyrl300
+    //     text-align center
 
-    .is-center
-        display flex
-        justify-content center
+    // .is-center
+    //     display flex
+    //     justify-content center
 </style>

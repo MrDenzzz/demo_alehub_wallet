@@ -173,18 +173,18 @@
 </script>
 
 <style lang="stylus" scoped>
-    .deletelink:hover
-        cursor: pointer
+    // .deletelink:hover
+    //     cursor: pointer
 
-    .control
-        .wrap-input
-            input
-                &:focus
-                    color #1f202a
-                    opacity 1
+    // .control
+    //     .wrap-input
+    //         input
+    //             &:focus
+    //                 color #1f202a
+    //                 opacity 1
     
-    .deletelink
-        margin-top 30px
-        margin-bottom 30px
+    // .deletelink
+    //     margin-top 30px
+    //     margin-bottom 30px
         
 </style>

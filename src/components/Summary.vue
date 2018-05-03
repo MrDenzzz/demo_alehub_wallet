@@ -270,10 +270,10 @@
 </script>
 
 <style lang="stylus" scoped>
-    .wrap-spinner
-        margin-top 33vh
+    // .wrap-spinner
+    //     margin-top 33vh
 
-        img
-            margin-top 0
+    //     img
+    //         margin-top 0
 
 </style>

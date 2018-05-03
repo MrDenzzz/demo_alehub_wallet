@@ -382,31 +382,31 @@
 </script>
 
 <style lang="stylus">
-    @import "./modals.scss"
+    // @import "./modals.scss"
 
-    .wrap-spinner
-        display flex
-        justify-content center
-        padding 1em 0
+    // .wrap-spinner
+    //     display flex
+    //     justify-content center
+    //     padding 1em 0
 
-    .buttons
-        &:disabled
-            opacity 0.4
-            border-radius 2px
-            background-color #ffd24f
+    // .buttons
+    //     &:disabled
+    //         opacity 0.4
+    //         border-radius 2px
+    //         background-color #ffd24f
 
-            &:hover
-                cursor default
+    //         &:hover
+    //             cursor default
 
-    .clicked
-        cursor pointer
+    // .clicked
+    //     cursor pointer
 
-    .no-spinners
-        -moz-appearance textfield
+    // .no-spinners
+    //     -moz-appearance textfield
 
-    .no-spinners::-webkit-outer-spin-button,
-    .no-spinners::-webkit-inner-spin-button
-        -webkit-appearance none
-        margin 0
+    // .no-spinners::-webkit-outer-spin-button,
+    // .no-spinners::-webkit-inner-spin-button
+    //     -webkit-appearance none
+    //     margin 0
 
 </style>

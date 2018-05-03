@@ -35,7 +35,7 @@
 </script>
 
 <style lang="stylus" scoped>
-    .searchPanel
-        width 100%
-        margin-bottom 24px
+    // .searchPanel
+    //     width 100%
+    //     margin-bottom 24px
 </style>

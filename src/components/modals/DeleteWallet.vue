@@ -235,88 +235,88 @@
 </script>
 
 <style lang="stylus">
-    .wrap-spinner
-        display flex
-        justify-content center
-        padding 1em 0
+    // .wrap-spinner
+    //     display flex
+    //     justify-content center
+    //     padding 1em 0
 
-    .modal-input
-        input
-            width 100%
+    // .modal-input
+    //     input
+    //         width 100%
 
-    .modal-md
-        .v--modal
-            width 776px
+    // .modal-md
+    //     .v--modal
+    //         width 776px
 
-    .nobl
-        border-bottom none !important
+    // .nobl
+    //     border-bottom none !important
 
-    .modal-btn
-        .btn-yellow
-            .disabled
-                opacity 0.3
-                border-radius 2px
-                background-color #ffd24f
+    // .modal-btn
+    //     .btn-yellow
+    //         .disabled
+    //             opacity 0.3
+    //             border-radius 2px
+    //             background-color #ffd24f
 
-                &:hover
-                    cursor default
+    //             &:hover
+    //                 cursor default
 
-    .lc
-        text-transform capitalize !important
+    // .lc
+    //     text-transform capitalize !important
 
-    .modal-warning
-        margin-left 24px
-        margin-right 24px
-        margin-top 4px
+    // .modal-warning
+    //     margin-left 24px
+    //     margin-right 24px
+    //     margin-top 4px
 
-        & .agreed
-            font-family MuseoSansCyrl300
-            font-size 14px
-            line-height 1.29
-            color #34343e
+    //     & .agreed
+    //         font-family MuseoSansCyrl300
+    //         font-size 14px
+    //         line-height 1.29
+    //         color #34343e
 
-            b
-                font-family MuseoSansCyrl700
-                font-weight bold
+    //         b
+    //             font-family MuseoSansCyrl700
+    //             font-weight bold
 
-        .checkbox-contol
-            display flex
-            justify-content space-between
-            align-items center
+    //     .checkbox-contol
+    //         display flex
+    //         justify-content space-between
+    //         align-items center
 
-            input
-                width 18px
-                height 18px
-                border-radius 2px
-                background-color #f7f7f7
-                border solid 0.5px #979797
-                margin-right 18px
-                cursor pointer
+    //         input
+    //             width 18px
+    //             height 18px
+    //             border-radius 2px
+    //             background-color #f7f7f7
+    //             border solid 0.5px #979797
+    //             margin-right 18px
+    //             cursor pointer
 
-            span
-                font-family MuseoSansCyrl300
-                font-size 14px
-                line-height 1.29
-                color #34343e
-                cursor pointer
+    //         span
+    //             font-family MuseoSansCyrl300
+    //             font-size 14px
+    //             line-height 1.29
+    //             color #34343e
+    //             cursor pointer
 
-        .bl
-            border-bottom 1px solid #d1d1d1
-            padding-bottom 18px
+    //     .bl
+    //         border-bottom 1px solid #d1d1d1
+    //         padding-bottom 18px
 
-    .no-activate
-        border-bottom none !important
+    // .no-activate
+    //     border-bottom none !important
 
-        .modal-checkbox
-            margin-bottom 0 !important
+    //     .modal-checkbox
+    //         margin-bottom 0 !important
 
-    #wallet-name-label, #modal-wallet-name
-        cursor pointer
+    // #wallet-name-label, #modal-wallet-name
+    //     cursor pointer
 
-    @media (max-width: 425px)
-        .modal-warning
-            .checkbox-contol
-                input
-                    min-width 18px
+    // @media (max-width: 425px)
+    //     .modal-warning
+    //         .checkbox-contol
+    //             input
+    //                 min-width 18px
 
 </style>

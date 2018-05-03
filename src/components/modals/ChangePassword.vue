@@ -160,53 +160,53 @@
 </style>
 
 <style lang="stylus">
-    @import './modals.scss';
+    // @import './modals.scss';
 
-    .modal-input
-        input
-            width 100%
+    // .modal-input
+    //     input
+    //         width 100%
 
-    .modal-xs
-        .v--modal-box
-            width 426px
+    // .modal-xs
+    //     .v--modal-box
+    //         width 426px
 
-    .modal-btn
-        .btn-yellow
-            .disabled
-                opacity 0.3
-                border-radius 2px
-                background-color #ffd24f
+    // .modal-btn
+    //     .btn-yellow
+    //         .disabled
+    //             opacity 0.3
+    //             border-radius 2px
+    //             background-color #ffd24f
 
-                &:hover
-                    cursor default
+    //             &:hover
+    //                 cursor default
 
-    @media (max-width: 425px)
-        .v--modal-overlay
-            .v--modal-box
-                .body
-                    .modal-control
-                        .modal-input
-                            .title
-                                padding-right 0
-                                padding-bottom 0
+    // @media (max-width: 425px)
+    //     .v--modal-overlay
+    //         .v--modal-box
+    //             .body
+    //                 .modal-control
+    //                     .modal-input
+    //                         .title
+    //                             padding-right 0
+    //                             padding-bottom 0
 
-                            .input
-                                text-align right
+    //                         .input
+    //                             text-align right
 
-    @media (max-width: 320px)
-        .v--modal-overlay
-            .v--modal-box
-                .body
-                    .modal-control
-                        .modal-input
-                            display flex
-                            flex-direction column
-                            align-items flex-start
+    // @media (max-width: 320px)
+    //     .v--modal-overlay
+    //         .v--modal-box
+    //             .body
+    //                 .modal-control
+    //                     .modal-input
+    //                         display flex
+    //                         flex-direction column
+    //                         align-items flex-start
 
-                            .title
-                                padding-right 0
-                                padding-bottom 10px
+    //                         .title
+    //                             padding-right 0
+    //                             padding-bottom 10px
 
-                            .input
-                                text-align left
+    //                         .input
+    //                             text-align left
 </style>

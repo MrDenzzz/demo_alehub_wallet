@@ -94,20 +94,20 @@
 </script>
 
 <style lang="stylus" scoped>
-    .no-found
-        text-align center
-        color #34343e
-        font-size 14px
-        font-family MuseoSansCyrl500
-        line-height calc(100vh - 250px)
+    // .no-found
+    //     text-align center
+    //     color #34343e
+    //     font-size 14px
+    //     font-family MuseoSansCyrl500
+    //     line-height calc(100vh - 250px)
 
-    .main
-        .content
-            padding-left 0
+    // .main
+    //     .content
+    //         padding-left 0
 
-    .col-12
-        display flex
-        justify-content center
-        align-items center
+    // .col-12
+    //     display flex
+    //     justify-content center
+    //     align-items center
 
 </style>

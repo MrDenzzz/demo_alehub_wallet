@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style scoped>
-  .dropdown-menu {
+  /* .dropdown-menu {
     display: block;
-  }
+  } */
 </style>

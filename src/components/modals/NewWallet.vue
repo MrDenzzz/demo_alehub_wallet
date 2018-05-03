@@ -58,8 +58,8 @@
                     </div>
                 </div>
 
-                <div class="modal-btn text-center">
-                    <button class="btn btn-yellow btn-large"
+                <div class="modal-btn">
+                    <button class="buttons btn-yellow btn-large"
                             @click="changeStepCreate('next')"
                             :disabled="checkNewWalletFields"
                             :class="{ 'disabled': checkNewWalletFields }">
@@ -99,9 +99,9 @@
                     <spinner/>
                 </div>
 
-                <div class="modal-btn text-center">
+                <div class="modal-btn">
                     <button id="button-redemption-wallet"
-                            class="btn btn-yellow btn-large"
+                            class="buttons btn-yellow btn-large"
                             @click="redeemCreateWallet"
                             :disabled="!checkFilledRedemption"
                             :class="{ 'disabled': !checkFilledRedemption }">
@@ -131,9 +131,9 @@
                 <spinner/>
             </div>
 
-            <div class="modal-btn text-center">
+            <div class="modal-btn">
                 <button id="continue-to-recovery"
-                        class="btn btn-yellow btn-large btn-bottom btn-timer"
+                        class="buttons btn-yellow btn-large btn-bottom btn-timer"
                         :disabled="countTimer || !isAgreedRecovery || dataProcessing"
                         :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery || dataProcessing}"
                         @click="getRandomSeed()">
@@ -159,17 +159,17 @@
                 </span>
             </div>
 
-            <div class="modal-btn text-center">
+            <div class="modal-btn">
                 <button id="copy-mnemonic"
                         type="button"
-                        class="buttons button-copy btn-default"
+                        class="buttons btn-large btn-copy btn-default"
                         v-clipboard:copy="copyMnemonic()"
                         @click="successCopyMnemonic">
                     <img class="icon-copy"
                          :src="getIcon('tmp_copy_icon')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btnCopy') }}
                 </button>
-                <button class="btn btn-yellow btn-large btn-bottom"
+                <button class="buttons btn-yellow btn-large btn-bottom"
                         @click="changeRecoveryStep('next')">
                     {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
                 </button>
@@ -232,15 +232,15 @@
                 <spinner/>
             </div>
 
-            <div class="modal-btn text-center">
-                <button class="btn btn-default btn-large"
+            <div class="modal-btn">
+                <button class="buttons btn-default btn-large"
                         :class="{ 'disabled': mnemonicsRecovery.length === 0 || dataProcessing}"
                         @click="clearRecoveryPhrase"
                         :disabled="mnemonicsRecovery.length === 0 || dataProcessing">
                     {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
                 </button>
                 <button id="create-new-wallet"
-                        class="btn btn-yellow btn-large"
+                        class="buttons btn-yellow btn-large"
                         :class="{ 'disabled': isConfirmRecovery || dataProcessing}"
                         :disabled="isConfirmRecovery || dataProcessing"
                         @click="newCreateWallet">

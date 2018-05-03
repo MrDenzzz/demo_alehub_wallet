@@ -237,35 +237,35 @@
 </script>
 
 <style lang="stylus" scoped>
-    .count-currency
-        cursor pointer
-        display inline-block
-        width 70px
-        padding 0 10px 0 10px
-        margin-right 0 !important
+    // .count-currency
+    //     cursor pointer
+    //     display inline-block
+    //     width 70px
+    //     padding 0 10px 0 10px
+    //     margin-right 0 !important
 
-    .dropdown-currency
-        position absolute
-        background-color #0d1717
-        list-style none
-        padding 0
-        margin-top 0
-        top 11px
-        right 84px
+    // .dropdown-currency
+    //     position absolute
+    //     background-color #0d1717
+    //     list-style none
+    //     padding 0
+    //     margin-top 0
+    //     top 11px
+    //     right 84px
 
-        li.active-currency
-            background-color #ffd24f
-            color #34343e
+    //     li.active-currency
+    //         background-color #ffd24f
+    //         color #34343e
 
-        li
-            font-family Fairview
-            font-size 32px
-            color white
-            padding 5px 10px 5px 10px
-            cursor pointer
+    //     li
+    //         font-family Fairview
+    //         font-size 32px
+    //         color white
+    //         padding 5px 10px 5px 10px
+    //         cursor pointer
 
-            &:hover
-                background-color #ffd24f
-                color #34343e
+    //         &:hover
+    //             background-color #ffd24f
+    //             color #34343e
 
 </style>

@@ -74,27 +74,27 @@
 </script>
 
 <style lang="stylus">
-    @import "./modals.scss";
+    // @import "./modals.scss";
 
-    .modal-control
-        .address
-            font-family MuseoSansCyrl500
-            font-size 14px
-            font-weight 500
-            line-height 1.29
-            color #34343e
-            word-break break-all
+    // .modal-control
+    //     .address
+    //         font-family MuseoSansCyrl500
+    //         font-size 14px
+    //         font-weight 500
+    //         line-height 1.29
+    //         color #34343e
+    //         word-break break-all
 
-    .qr-code
-        .upperCase
-            text-transform uppercase
-            font-weight bold
+    // .qr-code
+    //     .upperCase
+    //         text-transform uppercase
+    //         font-weight bold
 
-    .modal-md
-        .v--modal
-            width 620px !important
+    // .modal-md
+    //     .v--modal
+    //         width 620px !important
 
-    .v--modal-overlay
-        .v--modal-background-click
-            padding-bottom 0 !important
+    // .v--modal-overlay
+    //     .v--modal-background-click
+    //         padding-bottom 0 !important
 </style>

@@ -179,33 +179,33 @@
 </script>
 
 <style lang="stylus" scoped>
-    .notifications-panel
-        width 100%
-    .notif-checkbox
-        position absolute
+    // .notifications-panel
+    //     width 100%
+    // .notif-checkbox
+    //     position absolute
 
-    .shift-right
-        padding-left 20px
+    // .shift-right
+    //     padding-left 20px
 
-    .checked
-        background-color #f5e9c5
+    // .checked
+    //     background-color #f5e9c5
 
-    .control
-        margin-bottom 0px
+    // .control
+    //     margin-bottom 0px
 
-    .pointer
-        cursor pointer
+    // .pointer
+    //     cursor pointer
 
-    .left-buttons
-        display flex
+    // .left-buttons
+    //     display flex
 
-    .btn-check-all
-        width auto
-        margin-right 10px
-        padding-left 36px
-        padding-right 15px
-        .control-indicator
-            top 2px
-            left -20px
+    // .btn-check-all
+    //     width auto
+    //     margin-right 10px
+    //     padding-left 36px
+    //     padding-right 15px
+    //     .control-indicator
+    //         top 2px
+    //         left -20px
 </style>
 

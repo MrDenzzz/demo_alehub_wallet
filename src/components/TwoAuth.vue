@@ -89,8 +89,8 @@
 </script>
 
 <style lang="scss" scoped>
-    .error {
-        text-decoration: underline;
-        text-decoration-color: #d93f1f;
-    }
+    // .error {
+    //     text-decoration: underline;
+    //     text-decoration-color: #d93f1f;
+    // }
 </style>

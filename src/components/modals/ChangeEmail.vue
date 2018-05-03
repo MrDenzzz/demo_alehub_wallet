@@ -122,16 +122,16 @@
 </script>
 
 <style lang="stylus" scoped>
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button
-        -webkit-appearance none
-        margin 0
+    // input[type=number]::-webkit-inner-spin-button,
+    // input[type=number]::-webkit-outer-spin-button
+    //     -webkit-appearance none
+    //     margin 0
 
-    .wrap-spinner
-        display flex
-        justify-content center
-        padding 1em 0
+    // .wrap-spinner
+    //     display flex
+    //     justify-content center
+    //     padding 1em 0
 
-    .disabled
-        opacity 0.4
+    // .disabled
+    //     opacity 0.4
 </style>
