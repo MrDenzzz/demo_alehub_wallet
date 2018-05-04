@@ -3252,7 +3252,7 @@ td, th {
       .dropdown-list ul li.selected::before {
         content: "";
         position: absolute;
-        background: url(../../assets/img/selected-ic.svg);
+        background: url("/static/img/selected-ic.svg");
         background-size: cover;
         width: 11.5px;
         height: 7px;
