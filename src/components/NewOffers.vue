@@ -405,5 +405,14 @@
 </script>
 
 <style lang="stylus">
+@media(max-width: 1024px)
+    .my-row-flex
+        flex-wrap wrap
+        .mycol
+            flex-basis 50%
 
+@media(max-width: 520px)
+    .my-row-flex
+        .mycol
+            flex-basis 100%
 </style>
