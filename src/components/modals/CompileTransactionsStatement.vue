@@ -76,7 +76,7 @@
                                        @change="setAllWallets"/>
                                 <div class="control-indicator control-indicator__mini"></div>
                                 <div class="wrap__input-label">
-                                    <span class="input-label"
+                                    <span class="input-label select-all"
                                           :class="{ 'disabled-label': checkDisabled }">
                                          {{ $t('modals.pdf.selectAll') }}
                                     </span>
@@ -816,19 +816,19 @@
                 this.balance.placeholder.to = this.maxCountAllTransactions;
 
                 setTimeout(() => {
-                    document.getElementById('label-currency-from').style.left = (95 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
-                    document.getElementById('label-currency-to').style.left = (80 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
+                    document.getElementById('label-currency-from').style.left = (55 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
+                    document.getElementById('label-currency-to').style.left = (40 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
                 }, 40);
             },
             changeValBalanceFrom: function () {
                 this.filterOptions.balance.from = this.balance.value.from;
                 this.filterTransactions();
-                document.getElementById('label-currency-from').style.left = (95 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
+                document.getElementById('label-currency-from').style.left = (55 + this.filterOptions.balance.from.toString().length * 8).toString() + 'px';
             },
             changeValBalanceTo: function () {
                 this.filterOptions.balance.to = this.balance.value.to;
                 this.filterTransactions();
-                document.getElementById('label-currency-to').style.left = (80 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
+                document.getElementById('label-currency-to').style.left = (40 + this.filterOptions.balance.to.toString().length * 8).toString() + 'px';
             },
             resetLocalData: function () {
                 this.dateFromDatepicker = '';
@@ -1409,7 +1409,7 @@
             .day-disable
                 color #ddd !important
 
-    @media (max-width: 320px)
+    @media (max-width: 375px)
         .datepicker-for-export
             .vdp-datepicker__calendar
                 width auto
@@ -1467,6 +1467,9 @@
             .input-label
                 font-size 13px
 
+                &.select-all
+                    white-space nowrap
+
             .input-label, .input-label__balance
                 line-height 1.2
 
@@ -1478,6 +1481,8 @@
             position relative
             height 18px
             width 18px
+            min-height 18px
+            min-width 18px
             top auto
 
             &:after
@@ -1509,6 +1514,11 @@
 
                 .modal-blocks
                     padding-top 20px
+
+                    @media(max-width: 650px)
+                        display flex 
+                        justify-content space-between
+                        width 100%
 
             .modal-control__title
                 margin 0
@@ -1548,6 +1558,7 @@
                     display flex
                     align-items center
                     padding-left 8px
+                    position relative
 
                     label.label-from,
                     label.label-to
@@ -1614,8 +1625,9 @@
 
             .input-label
                 font-family MuseoSansCyrl500
-                font-weight 500;
+                font-weight 500
                 color #34343e
+                margin-right 5px
 
         .modal-footer
             display flex
@@ -1632,7 +1644,35 @@
                 .count-transactions
                     font-weight 700
 
-    // @media(max-width: 660px)
+    @media(max-width: 650px)
+        .row-flex
+            flex-direction column
+
+        .body
+            .modal-control
+                .modal-line
+                    width 100%
+
+                    .wrap-double-input
+                        max-width 200px
+
+                        .label-currency
+                            left 60px !important
+
+            .modal-footer
+                margin 0 42px
+
+        .col-6
+            width 100%
+
+    @media(max-width: 500px)
+        .body
+            .modal-footer
+                flex-direction column
+                align-items center 
+
+                .buttons:first-child
+                    margin-right 0
 
     @media (max-width: 425px)
         .v--modal-overlay
@@ -1647,10 +1687,23 @@
 
                             & .control-checkbox
                                 margin-top 8px
+
+                        & .modal-wrap
+                            & .modal-blocks
+                                .modal-block
+                                    border-bottom 1px solid #d1d1d1
+                                    padding-top 18px
+                                    padding-bottom 18px
+
+                                .modal-block:last-child
+                                    border-bottom none
                         
                     & .modal-footer
                         margin-right 42px
                         margin-left 42px
+
+                        .buttons
+                            margin-bottom 12px
 
         .row-flex
             flex-direction column
@@ -1673,14 +1726,12 @@
 
                     .modal-blocks
                         padding-top 0
+                        flex-direction column
 
                         .modal-block
                             border-bottom 1px solid #d1d1d1
                             padding-top 18px
                             padding-bottom 18px
-
-                    .modal-block:last-child
-                        border-bottom none
 
                 .modal-line
                     width 100%
@@ -1698,6 +1749,9 @@
         .vdp-datepicker
             padding-top 18px
             padding-bottom 18px
+
+        .vdp-datepicker__calendar
+            margin 0 auto
 
         .modal-footer
             display flex
