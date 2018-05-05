@@ -186,6 +186,9 @@
                 .body
                     .modal-control
                         .modal-input
+                            display flex
+                            flex-direction row
+
                             .title
                                 padding-right 0
                                 padding-bottom 0
@@ -193,13 +196,12 @@
                             .input
                                 text-align right
 
-    @media (max-width: 320px)
+    @media (max-width: 375px)
         .v--modal-overlay
             .v--modal-box
                 .body
                     .modal-control
                         .modal-input
-                            display flex
                             flex-direction column
                             align-items flex-start
 

@@ -199,13 +199,33 @@
     .left-buttons
         display flex
 
+        @media(max-width: 425px)
+            .buttons
+                &:last-child
+                    width 120px
+
+        @media(max-width: 375px)
+            flex-direction column
+            order 2
+
+            .buttons
+                &:last-child
+                    width 100%
+
     .btn-check-all
         width auto
         margin-right 10px
         padding-left 36px
         padding-right 15px
+        white-space nowrap
+
+        @media(max-width: 375px)
+            margin-right 0
+            order 2
+
         .control-indicator
             top 2px
             left -20px
+
 </style>
 

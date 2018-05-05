@@ -264,10 +264,26 @@
     .lc
         text-transform capitalize !important
 
+    .v--modal-overlay
+        .v--modal-box
+            .body
+                .modal-btn
+                    margin 0 42px
+
+                    .btn-large
+                        padding 12px 0
+                        width 240px
+
+                        @media(max-width: 560px)
+                            width 200px
+
     .modal-warning
-        margin-left 24px
-        margin-right 24px
+        margin-left 42px
+        margin-right 42px
         margin-top 4px
+
+        @media(max-width: 375px)
+            margin 0 24px
 
         & .agreed
             font-family MuseoSansCyrl300
