@@ -1,23 +1,19 @@
 <template>
     <div class="login">
-        <Navbar
-                :title="'ALE'"
+        <navbar :title="'ALE'"
                 :isNavigate="false"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
-
                 <div class="container">
                     <div class="row">
-
                         <div class="col-12">
-
                             <div class="login-form">
                                 <form @submit.prevent="sendLink">
                                     <div class="qr-code" v-if="isSuccessSecret">
-                                        <qriously :value="qrCode" :size="200"/>
+                                        <qriously :value="qrCode"
+                                                  :size="200"/>
 
                                         <p>Your new secret key: <b style="color: red;">{{ newSecret }}</b></p>
                                         <p><b>Important</b>: Your secret code has been updated, scan the code and save the new secret code!</p>
@@ -40,7 +36,9 @@
                                             required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-black btn-block nomargin" v-if="!isSuccessSecret">
+                                    <button type="submit"
+                                            class="btn btn-black btn-block nomargin"
+                                            v-if="!isSuccessSecret">
                                         Recover
                                     </button>
                                     <div class="error-block" v-if="isNotification">
@@ -51,7 +49,8 @@
                                     </div>
                                 </form>
 
-                                <p class="text" v-if="!isSuccessSecret">Already have an account?
+                                <p class="text" v-if="!isSuccessSecret">
+                                    Already have an account?
                                     <router-link :to="{ path: '/login' }">
                                         Log in.
                                     </router-link>

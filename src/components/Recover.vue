@@ -1,25 +1,19 @@
 <template>
     <div class="login">
-        <Navbar
-                :title="'ALE'"
+        <navbar :title="'ALE'"
                 :isNavigate="false"
-                :isBalance="false"
-        />
+                :isBalance="false"/>
 
         <section class="main">
             <div class="content nomenu">
-
                 <div class="container">
                     <div class="row">
-
                         <div class="col-12">
-
                             <div class="login-form">
                                 <form @submit.prevent="sendLink">
                                     <div class="control" @click="focusInput('userEmail')">
                                         <label for="userEmail">Your E-mail</label>
-                                        <input
-                                            type="text"
+                                        <input type="text"
                                             id="userEmail"
                                             class="d-block"
                                             placeholder="Enter your E-mail"

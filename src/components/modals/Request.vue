@@ -1,25 +1,39 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
-    <modal name="request" height="auto" class="modal-md request" @opened="focusButton()">
+    <modal name="request"
+           height="auto"
+           class="modal-md request"
+           @opened="focusButton()">
+
         <div class="heading">
-            <p class="title">{{ $t('modals.request.title') }}</p>
-            <i class="close" @click="closeModal('request')"></i>
+            <p class="title">
+                {{ $t('modals.request.title') }}
+            </p>
+            <i class="close"
+               @click="closeModal('request')">
+            </i>
         </div>
         <div class="body">
             <div class="modal-control">
                 <div class="modal-input">
-                    <label class="title">{{ $t('modals.request.receiver') }}</label>
-                    <p class="address" id="accountAddress">{{ currentWalletAddress }}</p>
+                    <label class="title">
+                        {{ $t('modals.request.receiver') }}
+                    </label>
+                    <p class="address" id="accountAddress">
+                        {{ currentWalletAddress }}
+                    </p>
                 </div>
             </div>
 
             <div class="qr-code">
-                <qriously :value="currentWalletAddress" :size="widthCanvas"/>
-                <span class="muted upperCase">{{ $t('modals.request.qrShare') }}</span>
+                <qriously :value="currentWalletAddress"
+                          :size="widthCanvas"/>
+                <span class="muted upperCase">
+                    {{ $t('modals.request.qrShare') }}
+                </span>
             </div>
 
             <div class="modal-footer">
-                <button
-                        id="btnCopyAddress"
+                <button id="btnCopyAddress"
                         class="buttons btn-yellow"
                         v-clipboard:copy="currentWalletAddress"
                         v-clipboard:success="successCopyAddress">
@@ -32,7 +46,7 @@
 
 <script>
     export default {
-        name: "request",
+        name: 'request',
         computed: {
             getCurrentWallet: function () {
                 return this.$store.state.Wallets.currentWallet;

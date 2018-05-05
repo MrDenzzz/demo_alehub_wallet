@@ -5,10 +5,9 @@
         </div>
         <div v-else>
             <router-view/>
-            <div
-                    v-if="changedTransactions"
-                    class="alert-new-transactions"
-                    @click="refreshCurrentTransactions">
+            <div v-if="changedTransactions"
+                 class="alert-new-transactions"
+                 @click="refreshCurrentTransactions">
                 You have received new transactions. Click to refresh.
                 <img src="/static/img/reload-white.svg" class="alert-new-transactions__img" alt="">
             </div>
@@ -128,10 +127,10 @@
                                 this.$toasted.show('You got money for your wallet', {
                                     duration: 10000,
                                     type: 'success',
-                                    action : {
-                                        text : 'hide',
+                                    action: {
+                                        text: 'hide',
                                         class: 'toasted-action-hide',
-                                        onClick : (e, toastObject) => {
+                                        onClick: (e, toastObject) => {
                                             toastObject.goAway(0);
                                         }
                                     }
