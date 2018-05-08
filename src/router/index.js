@@ -23,6 +23,7 @@ import Recover2fa from '@/components/Recover2fa';
 import LoginTwoAuth from '@/components/LoginTwoAuth';
 import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
 import NewOffers from '@/components/NewOffers'
+import ContractList from '@/components/ContractList'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -183,6 +184,12 @@ const router = new Router({
             path: '*',
             name: 'NotFound',
             component: NotFound
+        },
+        {
+            path: '/contractlist',
+            name: 'ContractList',
+            component: ContractList,
+            beforeEnter: ifAuthenticated
         }
     ]
 });
