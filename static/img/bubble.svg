@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="24px" viewBox="0 0 32 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>bubble</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chat" transform="translate(-325.000000, -356.000000)" fill="#dcc4ff">
+            <g transform="translate(281.000000, 32.000000)" id="bubble">
+                <g transform="translate(44.000000, 289.000000)">
+                    <path d="M16.6496875,35 C9.80108658,35 4.25085576,39.82483 4.25085576,46.6470735 C4.25085576,46.8913687 4.27396916,52.2928956 4.27396916,52.2928956 C4.27396916,55.2574778 2.52338033,57.8075591 0,58.9939927 C3.29516691,58.9329189 6.36924913,57.9757624 8.99010772,56.3568061 C11.0994567,58.0098035 13.7574977,59 16.6496875,59 L19.6011682,59 C26.4487642,59 32,53.4693171 32,46.6470735 C32,39.82483 26.4487642,35 19.6011682,35 L16.6496875,35 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

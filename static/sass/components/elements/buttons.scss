@@ -113,6 +113,10 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+
+  @media(max-width: 375px) {
+    flex-direction: column;
+  }
 }
 
 .btn:not(:first-child) {
@@ -236,6 +240,11 @@
 
 .btn-delete {
   width: 50px;
+
+  @media(max-width: 375px) {
+    align-self: flex-end;
+    order: 3;
+  }
 
   & .icon {
     left: unset;

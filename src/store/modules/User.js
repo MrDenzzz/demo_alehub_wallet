@@ -128,6 +128,7 @@ const actions = {
                 dispatch('setChangeTwoAuthStatus', resp.data.isTwoAuth);
                 resolve(resp);
             }).catch(err => {
+                // console.log(err, 'errrrrrrr');
                 if (err.response.data.message === 'User is not found') {
                     localStorage.removeItem(sha256('user-token'));
                     router.push('/login');

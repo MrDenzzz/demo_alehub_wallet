@@ -6,35 +6,39 @@
                 :rightMenu="rightMenu"/>
 
         <!--rename to normal name classes-->
-        <div class="my-row-flex" style="padding-top: 64px; display: flex; justify-content: space-between;">
+        <div class="my-row-flex">
             <div class="mycol"
-                 style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px;"
-                 v-for="contractor in contractors">
+                 style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px; width: 25%;"
+                 v-for="(contractor, i) in contractors">
 
-                <div class="project-progress">
-                    {{ contractor.ready }}
+                <div class="project-progress-block" style="height: 4px; width: 100%;">
+                    <div class="progress" style="height: 100%;"
+                         :style="{width: 100 * contractor.ready + '%' }"
+                         :class="initProgressBar(i)">
+                        <!--{{ initProgressBar(contractor.ready) }}-->
+                    </div>
                 </div>
 
-                <div class="contractor-info" style="display: flex; justify-content: space-between; width: 100%;">
-                    <h3>
+                <div class="contractor-info">
+                    <h3 style="font-weight: 500;">
                         {{ contractor.name }}
                     </h3>
 
-                    <h4>
-                        {{ contractor.balance }}
+                    <h4 style="font-weight: 500;">
+                        {{ '$' + contractor.balance }}
                     </h4>
                 </div>
 
-                <div class="contractor-actions" style="display: flex; justify-content: flex-start; width: 100%; margin-bottom: 16px;">
-                    <div>
-                        Tasks
-                    </div>
-                    <div>
-                        Messages
-                    </div>
-                    <div>
-                        Attachments
-                    </div>
+                <div class="contractor-actions">
+                    <button type="button" class="action action__task">
+                        <img src="../../static/img/calendar-ic.svg">
+                    </button>
+                    <button type="button" class="action action__chat">
+                        <img src="../../static/img/chat-ic.svg">
+                    </button>
+                    <button type="button" class="action action__att">
+                        <img src="../../static/img/attachments-ic.svg">
+                    </button>
                 </div>
 
                 <div class="task-list">
@@ -43,16 +47,15 @@
                     </div>
                 </div>
 
-                <div class="att-list" style="width: 100%;">
+                <div class="att-list">
                     <div class="att-block"
-                         style="display: flex; justify-content: space-between; padding: 8px 16px; align-items: center;
-                         margin-bottom: 16px; background-color: #fff; border-radius: 2px; border: solid 1px #06dcd5;"
+                         :class="initColColor(i)"
                          v-for="att in contractor.attachments">
 
                         <img :src="att.icon" alt="document type">
 
                         <div class="att-info">
-                            <p style="margin: 0;">
+                            <p style="margin: 0; font-size: 10px; color: #34343e; opacity: 0.7;">
                                 {{ toFormatDate(att.date) }}
                             </p>
                             <p style="margin: 0;">
@@ -60,11 +63,16 @@
                             </p>
                         </div>
 
-                        <img src="../../static/img/avatar@3x.png" alt="author avatar" style="width: 28px; height: 28px;">
+                        <img src="../../static/img/avatar@3x.png" alt="author avatar"
+                             style="width: 28px; height: 28px;">
                     </div>
                 </div>
 
             </div>
+        </div>
+
+        <div class="timeline-block">
+            <canvas id="timeline">Update your browser</canvas>
         </div>
 
     </div>
@@ -157,6 +165,30 @@
                                 icon: '../../static/img/pdf-ic.svg',
                                 date: 1524318238518,
                                 title: 'wannacry.exe',
+                                author: 'user 1 4'
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions2.pptx',
+                                author: 'user 1 1'
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description2.doc',
+                                author: 'user 1 5'
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications2.doc',
+                                author: 'user 1 4'
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry2.exe',
                                 author: 'user 1 4'
                             },
                         ],
@@ -382,28 +414,307 @@
                             link: '/offers/new'
                         }
                     ]
-                }
+                },
+                colColors: [
+                    '#',
+                    '#',
+                    '#',
+                    '#'
+                ]
             }
         },
-        computed: {
-
-        },
+        computed: {},
         methods: {
+            initProgressBar: function (i) {
+                switch (i) {
+                    case 0:
+                        return 'first-progress-bar';
+                    case 1:
+                        return 'second-progress-bar';
+                    case 2:
+                        return 'third-progress-bar';
+                    case 3:
+                        return 'fourth-progress-bar';
+                    default:
+                        return '';
+                }
+            },
+            initColColor: function (i) {
+                switch (i) {
+                    case 0:
+                        return 'first-team__border';
+                    case 1:
+                        return 'second-team__border';
+                    case 2:
+                        return 'third-team__border';
+                    case 3:
+                        return 'fourth-team__border';
+                    default:
+                        return '';
+                }
+            },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
                 return dateFormat.toDateString();
+            },
+            initTimeline: function () {
+                let timeline = document.getElementById('timeline'),
+                    //мб попробовать разобраться с 3d и сделать в 3d?
+                    ctx = timeline.getContext('2d');
+
+                let countHorInt = 10;
+                let topX = 1000,
+                    botX = 1200;
+
+                let fromY = 0,
+                    toY = 125;
+
+                let diffInt = 200 / countHorInt; //1000 - 800
+                let offset = topX / countHorInt;
+
+                let countYInt = 4;
+                let offsetY = 125 / 4;
+
+                let cells = [];
+
+                for (let i = 1; i < 11; i++) {
+                    for (let j = 0; j < 4; j++) {
+                        cells.push(
+                            {
+                                lT: {
+                                    x: i * offset - (0.96 - 0.16 * i) * j * offsetY,
+                                    y: j * offsetY,
+                                },
+                                rB: {
+                                    x: (i + 1) * offset - (0.96 - 0.16 * (i + 1)) * (j + 1) * offsetY,
+                                    y: (j + 1) * offsetY,
+                                },
+                            }
+                        );
+                    }
+                }
+
+                // console.log(cells, 'cells');
+
+                timeline.width = 1200;
+                timeline.height = 350;
+
+                // ctx.fillStyle = '#dde3ea';
+                // ctx.fillRect(0, 0, timeline.width, 200);
+
+                ctx.beginPath();
+                ctx.moveTo(100, 0);
+                ctx.lineTo(0, 125);
+                ctx.lineTo(1200, 125);
+                ctx.lineTo(1100, 0);
+                ctx.lineTo(100, 0);
+                ctx.fillStyle = '#dde3ea';
+                ctx.fill();
+                ctx.closePath();
+
+
+                //заполняем полоску первого подрядчика
+                let start = 0,
+                    end = 400;
+
+                ctx.beginPath();
+                ctx.moveTo(100, 0);
+                ctx.lineTo(400, 0);
+                ctx.lineTo(400 - 0.32 * offsetY, offsetY);
+                ctx.lineTo((-4 / 5) * (offsetY) + 100, offsetY);
+                ctx.lineTo(100, 0);
+                ctx.fillStyle = '#06dcd5';
+                ctx.fill();
+                ctx.closePath();
+
+
+                ctx.beginPath();
+                ctx.moveTo(400 - 0.32 * offsetY, offsetY);
+                ctx.lineTo(800 + 0.32 * offsetY, offsetY);
+                ctx.lineTo(800 + 0.32 * 2 * offsetY, 2 * offsetY);
+                ctx.lineTo(400 - 0.32 * 2 * offsetY, 2 * offsetY);
+                ctx.lineTo(400 - 0.32 * offsetY, offsetY);
+                ctx.fillStyle = '#ff3d31';
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.moveTo(600, 2 * offsetY);
+                ctx.lineTo(900 + 0.48 * 2 * offsetY, 2 * offsetY);
+                ctx.lineTo(900 + 0.48 * 3 * offsetY, 3 * offsetY);
+                ctx.lineTo(600, 3 * offsetY);
+                ctx.lineTo(600, 2 * offsetY);
+                ctx.fillStyle = '#fab51d';
+                ctx.fill();
+                ctx.closePath();
+
+
+                ctx.beginPath();
+                ctx.moveTo(500 - 0.16 * 4 * offsetY, 3 * offsetY);
+                ctx.lineTo(600, 3 * offsetY);
+                ctx.lineTo(600, 4 * offsetY);
+                ctx.lineTo(500 - 0.16 * 4 * offsetY, 4 * offsetY);
+                ctx.lineTo(500 - 0.16 * 3 * offsetY, 3 * offsetY);
+                ctx.fillStyle = '#8b37ff';
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.moveTo(800 + 0.32 * 3 * offsetY, 3 * offsetY);
+                ctx.lineTo(1100 + 0.8 * 3 * offsetY, 3 * offsetY);
+                ctx.lineTo(1100 + 0.8 * 4 * offsetY, 4 * offsetY);
+                ctx.lineTo(800 + 0.32 * 4 * offsetY, 4 * offsetY);
+                ctx.lineTo(800 + 0.32 * 3 * offsetY, 3 * offsetY);
+                ctx.fillStyle = '#8b37ff';
+                ctx.fill();
+                ctx.closePath();
+
+
+                ctx.beginPath();
+                for (let i = 2; i < countHorInt + 1; i++) {
+                    ctx.moveTo(i * offset, 0);
+                    ctx.lineTo(i * offset - offset + i * diffInt - diffInt, 125);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                }
+                ctx.closePath();
+
+                ctx.beginPath();
+                for (let i = 1; i < countYInt; i++) {
+                    ctx.moveTo((-4 / 5) * (i * offsetY) + 100, i * offsetY);
+                    ctx.lineTo((4 / 5) * (i * offsetY) + 1100, i * offsetY);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                }
+                ctx.closePath();
+
+                ctx.fillStyle = '#ced5dd';
+                ctx.fillRect(0, 125, timeline.width, 50);
+
+                ctx.beginPath();
+                for (let i = 1; i < countHorInt; i++) {
+                    ctx.moveTo(i * offset + i * diffInt, 125);
+                    ctx.lineTo(i * offset + i * diffInt, 175);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                }
+                ctx.closePath();
             }
         },
         created() {
 
         },
         mounted() {
+            this.initTimeline();
 
+            document.getElementById('timeline').addEventListener('mouseover', function (e) {
+                // console.log(e.clientX, 'e.clientX');
+                // console.log(e.clientY, 'e.clientY');
+            });
+
+            document.getElementsByTagName('body')[0].addEventListener('mouseover', function (e) {
+                // console.log(e.clientX, 'e.clientX');
+                // console.log(e.clientY, 'e.clientY');
+            });
         }
 
     }
 </script>
 
 <style lang="stylus">
+    .my-row-flex
+        padding-top 64px
+        /*padding-left 360px*/
+        display flex
+        justify-content space-between
+        font-family MuseoSansCyrl500
 
+    /*@media (max-width 1450px)*/
+    /*padding-left 360px*/
+
+    .project-progress-block
+        background-color #bac4d0
+
+        .first-progress-bar
+            background-color #06dcd5
+        .second-progress-bar
+            background-color #ff3d31
+        .third-progress-bar
+            background-color #fab51d
+        .fourth-progress-bar
+            background-color #8b37ff
+
+    .contractor-info
+        display flex
+        justify-content space-between
+        width 100%
+
+    .contractor-actions
+        display flex
+        justify-content flex-start
+        width 100%
+        margin-bottom 16px
+
+        .action
+            cursor pointer
+            border none
+            border-radius 50%
+            width 25px
+            height 25px
+            display flex
+            justify-content center
+            align-self center
+            margin-right 10px
+
+        .action.action__task
+            background-color #ff196f
+
+        .action.action__chat
+            background-color #0079ff
+
+        .action.action__att
+            background-color #2500b2
+
+    .att-list
+        width 100%
+        max-height 400px
+        overflow-y auto
+
+        .first-team__border
+            border solid 1px #06dcd5
+
+        .second-team__border
+            border solid 1px #ff3d31
+
+        .third-team__border
+            border solid 1px #fab51d
+
+        .fourth-team__border
+            border solid 1px #8b37ff
+
+        .att-block
+            display flex
+            justify-content space-between
+            padding 8px 16px
+            align-items center
+            margin-bottom 16px
+            background-color #fff
+            border-radius 4px
+
+    .timeline-block
+        width 100%
+        display flex
+        justify-content center
+        padding 20px 50px
+
+@media(max-width: 1024px)
+    .my-row-flex
+        flex-wrap wrap
+        .mycol
+            flex-basis 50%
+
+@media(max-width: 520px)
+    .my-row-flex
+        .mycol
+            flex-basis 100%
 </style>

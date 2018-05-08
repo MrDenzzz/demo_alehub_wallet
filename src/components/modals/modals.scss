@@ -9,6 +9,26 @@
     &.v--modal {
       width: 800px !important;
     }
+
+    & .modal-btn {
+      margin: 0 42px;
+      & .button-copy {
+        justify-content: center;
+        width: 240px;
+      }
+      & .btn-large {
+        width: 240px;
+        padding: 11px 0;
+      }
+      @media(max-width: 450px) {
+        flex-direction: column;
+        align-items: center;
+
+        .btn:last-child {
+          margin-left: 0;
+        }
+      }
+    }
   }
 }
 
