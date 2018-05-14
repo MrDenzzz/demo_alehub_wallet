@@ -38,7 +38,7 @@
 								<label for="upload-file">
 									<div class="attach-file"></div>
 								</label>
-								<input type="file" id="upload-file">
+								<input type="file" id="upload-file" @change="sendFile($event)">
 							</div>
 							<input type="text" class="input-panel" placeholder="Write a message..." @keyup.enter="sendMessage" v-model="messageText" />
 						</div>
@@ -72,6 +72,9 @@ export default {
 		}
 	},
 	methods: {
+		sendFile (e) {
+			return this.$parent.$emit('newMessageToChat', `Uploaded file - ${e.target.files[0].name}`);
+		},
 		toggleChatPanel () {
 			if(!this.isOpenChatPanel) {
 				this.isNewMessage = false;

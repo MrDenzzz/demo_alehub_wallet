@@ -275,7 +275,7 @@
                     });
                 });
             }
-            this.$socket.on("chat message", (msg) => {
+            this.$socket.on("newMessaegFromChat", (msg) => {
                 this.messagesList.push({
                     isMyMessage: true,
                     date: '30 Mar',
@@ -288,7 +288,7 @@
             });
 
             this.$on('newMessageToChat', function (data) {
-                this.$socket.emit("chat message", data);
+                this.$socket.emit("newMessaegFromChat", data);
             });
         },
         socket: {
