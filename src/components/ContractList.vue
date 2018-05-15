@@ -33,6 +33,7 @@
 			<div class="sidebar">
 				<div class="vertical-progress">
 					<div class="circle circle-top">
+						<div class="triangle"></div>
 					</div>
 					<div class="whole-line">
 						<div class="marker-calendar marker-calendar-top">
@@ -43,7 +44,7 @@
 						</div>
 						<div class="selected-area"></div>
 						<div class="dividers-container">
-							<div class="divider horizontal" v-for="n in 8"></div>
+							<div class="divider horizontal" v-for="n in 8" :key="n"></div>
 						</div>
 						
 						<button class="circle circle-big circle-yellow">
@@ -63,7 +64,7 @@
 			</div>
 			<div class="search-result">
 				<div class="progress-list">
-					<div class="progress-item" v-for="project in projects" :class="project.status">
+					<div class="progress-item" v-for="project in projects" :key="project.id" :class="project.status">
 						<div class="row-top">
 							<div class="circle circle-big">
 								<img src="#" alt="">
@@ -73,23 +74,26 @@
 								<p class="subtitle">{{ project.company }}</p>
 							</div>
 							<div class="contractors-list">
-								<div class="contractors-item" v-for="contractor in project.contractors">
+								<div class="contractors-item" v-for="contractor in project.contractors" :key="contractor.id">
 									<div class="contractors-content">
-										<div class="circle">
+										<div class="circle" :class="checkContractorType(contractor.type)">
 											<span class="initials">{{ contractor.initials }}</span>
 										</div>
 										<div class="contractors-info">
 											<p class="title">{{ contractor.name }}</p>
 											<p class="subtitle">{{ contractor.type }}</p>
 										</div>
+										<div v-for="key in contractor.keys" class="key-icon"  :key="key.id">
+											<img :src="key" alt="">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="progress-row">
-							<img :src="getStatusIcon(project.status)" alt="" class="arrow" width="28px" height="16px">
+							<img :src="getStatusIcon(project.status)" alt="" class="arrow">
 							<div class="progress-bar" :class="project.status">
-								<div class="step" v-for="n in project.steps" :class="{'one-step': project.steps <= 1}"></div>
+								<div class="step" v-for="n in project.steps" :key="n" :class="{'one-step': project.steps <= 1}">Month</div>
 							</div>
 						</div>
 						<div class="row-bottom">
@@ -126,22 +130,36 @@ export default {
 						{
 							initials: 'VD',
 							name: 'Vova Dmitrov',
-							type: 'TS'
+							type: 'TS',
+							keys: [
+								'../../static/img/ts-key.svg'
+							]
 						},
 						{
 							initials: 'DV',
 							name: 'Deus Virus',
-							type: 'TS execution'
+							type: 'TS execution',
+							keys: [
+								'../../static/img/ts-exec-key.svg'
+							]
 						},
 						{
 							initials: 'NG',
 							name: 'Nicola Glumac',
-							type: 'Check'
+							type: 'Check',
+							keys: [
+								'../../static/img/check-key.svg',
+								'../../static/img/check-key.svg'
+							]
 						},
 						{
 							initials: 'RC',
 							name: 'Rift & Co',
-							type: 'Quality Assurance'
+							type: 'Quality Assurance',
+							keys: [
+								'../../static/img/qa-key.svg',
+								'../../static/img/qa-key.svg'
+							]
 						}
 					]
 				},
@@ -156,17 +174,26 @@ export default {
 						{
 							initials: 'QB',
 							name: 'Quality Boy',
-							type: 'TS'
+							type: 'TS',
+							keys: [
+								'../../static/img/ts-key.svg'
+							]
 						},
 						{
 							initials: 'GA',
 							name: 'Galvadon',
-							type: 'TS execution'
+							type: 'TS execution',
+							keys: [
+								'../../static/img/ts-exec-key.svg'
+							]
 						},
 						{
 							initials: 'RC',
 							name: 'Rift & Co',
-							type: 'Quality Assurance'
+							type: 'Quality Assurance',
+							keys: [
+								'../../static/img/qa-key.svg'
+							]
 						}
 					]
 				},
@@ -207,13 +234,28 @@ export default {
             let dateFormat = new Date(date);
             return dateFormat.toDateString();
         },
-		getStatusIcon(status) {
+		getStatusIcon: function (status) {
 			if (status === 'canceled') {
 				return this.statusIcons.canceled;
 			} else if (status === 'completed') {
 				return this.statusIcons.completed;
 			} else {
 				return this.statusIcons.ongoing;
+			}
+		},
+		checkContractorType: function (type) {
+			switch (type) {
+				case 'TS':
+					return 'ts';
+					break;
+				case 'TS execution':
+					return 'ts-exec';
+					break;
+				case 'Check':
+					return 'check';
+					break;
+				default:
+					return 'qa'
 			}
 		}
 	}
@@ -264,6 +306,12 @@ export default {
 						top -18px
 						position absolute
 
+						.triangle
+							border 6px solid transparent
+							border-top 6px solid #fcfcfc
+							position absolute 
+							top 17px
+
 					.circle-bottom
 						bottom -18px
 						position absolute
@@ -292,13 +340,13 @@ export default {
 							flex-direction column
 
 						.selected-area
-							background-image linear-gradient(to bottom, #ffe082, #ffd24f)
+							background-image linear-gradient(to bottom, #f0e5c2, #dfd1a2)
 							border solid 1px #ffd24f
-							opacity 0.3
 							height 312px
 							position absolute 
-							width 100%
+							width 36px
 							top 58px
+							left -1px
 
 			.search-result
 				padding-left 136px
@@ -314,21 +362,30 @@ export default {
 						justify-content center
 						position relative
 						height 192px
-						border 1px solid gray
+						border 2px solid gray
 						margin-bottom 24px
 						padding 40px
 
 						&.ongoing
 							background-image linear-gradient(to right, #f0f4f4, #f0f3f2)
-							border 2px solid #fed355
+							border-style solid 
+							border-width 2px
+							-webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
+							border-image linear-gradient(to right, #ffe082, #fed355) 1
 
 						&.completed
 							background-image linear-gradient(to right, #e8f4f5, #e7f3f2)
-							border 2px solid #2bd65c
+							border-style solid 
+							border-width 2px
+							-webkit-border-image linear-gradient(to right, #57de97, #2bd65c) 1
+							border-image linear-gradient(to right, #57de97, #2bd65c) 1
 
 						&.canceled
 							background-image linear-gradient(to right, #f1eef4, #f0ecf2)
-							border 2px solid #ff4f4f
+							border-style solid 
+							border-width 2px
+							-webkit-border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
+							border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
 
 						.progress-row
 							display flex
@@ -336,6 +393,10 @@ export default {
 
 							.arrow
 								object-fit contain
+								width 28px
+								height 16px
+								margin-left 10px
+								margin-right 12px
 
 							.progress-bar
 								height 36px
@@ -350,6 +411,13 @@ export default {
 									width 118px
 									height 32px
 									border-right 2px solid #fff
+									opacity 0.5
+									font-family MuseoSansCyrl500
+									font-size 16px
+									color #fff
+									display flex
+									justify-content center
+									align-items center
 
 									&:last-child
 										border-right none
@@ -387,16 +455,41 @@ export default {
 
 								.contractors-item
 									width 25%
+									min-width 236px
 
 								.contractors-content
 									display flex
+									position relative
+
+									.key-icon
+										z-index 3
+										position absolute
+										top 50px
+										left -10px
+
+										&:nth-child(4)
+											left -300px
 
 									.contractors-info
 										margin-left 8px
 
 									.circle
+										opacity 0.5
+
+										&.ts
+											background-image linear-gradient(to right, #c07b44, #b63c2c)
+
+										&.ts-exec
+											background-image linear-gradient(to right, #0db79a, #0391a6)
+
+										&.check
+											background-image linear-gradient(to right, #ddc41c, #e09a00)
+											
+										&.qa
+											background-image linear-gradient(to right, #b46dd0, #7e20c0)
+											opacity 1
+
 										.initials
-											opacity 0.5
 											font-family MuseoSansCyrl500
 											font-size 16px
 											color #fcfcfc
@@ -516,10 +609,6 @@ export default {
 
 			&:first-child, &:last-child
 				visibility hidden
-
-	.arrow
-		margin-left 10px
-		margin-right 12px
 
 </style>
 
