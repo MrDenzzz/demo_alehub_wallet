@@ -32,8 +32,8 @@
 		<div class="row-page">
 			<div class="sidebar">
 				<div class="vertical-progress">
-					<div class="circle circle-top">
-						<div class="triangle"></div>
+					<div class="circle circle-top circle-yellow">
+						<div class="triangle-icon"></div>
 					</div>
 					<div class="whole-line">
 						<div class="marker-calendar marker-calendar-top">
@@ -49,6 +49,23 @@
 						
 						<button class="circle circle-big circle-yellow">
 							<img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
+							<div class="triangle">
+								<div class="filters-block">
+									<div class="circle">
+										<span>TS</span>
+									</div>
+									<div class="circle">
+										<span>TS</span>
+										<span>EX</span>
+									</div>
+									<div class="circle">
+										<span>CH</span>
+									</div>
+									<div class="circle">
+										<span>QA</span>
+									</div>
+								</div>
+							</div>
 						</button>
 						<div class="marker-calendar marker-calendar-bottom">
 							<div class="block">
@@ -57,8 +74,24 @@
 							</div>
 						</div>
 					</div>
-					<div class="circle circle-bottom">
-						<img src="../../static/img/infinity.svg" alt="" width="12px" height="6px">
+					<div class="circle circle-bottom circle-green">
+						<img src="../../static/img/icons-for-circle/infinity.svg" alt="" width="12px" height="6px">
+						<div class="triangle">
+							<div class="filters-block">
+								<div class="circle circle-green">
+									<img src="../../static/img/icons-for-circle/infinity.svg" alt="">
+								</div>
+								<div class="circle circle-yellow">
+									<img src="../../static/img/icons-for-circle/check.svg" alt="">
+								</div>
+								<div class="circle circle-red">
+									<img src="../../static/img/icons-for-circle/hourglass.svg" alt="">
+								</div>
+								<div class="circle circle-black">
+									<img src="../../static/img/icons-for-circle/line.svg" alt="">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -66,12 +99,14 @@
 				<div class="progress-list">
 					<div class="progress-item" v-for="project in projects" :key="project.id" :class="project.status">
 						<div class="row-top">
-							<div class="circle circle-big">
-								<img src="#" alt="">
-							</div>
 							<div class="project-info">
-								<p class="title">{{ project.title }}</p>
-								<p class="subtitle">{{ project.company }}</p>
+								<div class="circle circle-big">
+									<img src="#" alt="">
+								</div>
+								<div class="info-text">
+									<p class="title">{{ project.title }}</p>
+									<p class="subtitle">{{ project.company }}</p>
+								</div>
 							</div>
 							<div class="contractors-list">
 								<div class="contractors-item" v-for="contractor in project.contractors" :key="contractor.id">
@@ -83,16 +118,19 @@
 											<p class="title">{{ contractor.name }}</p>
 											<p class="subtitle">{{ contractor.type }}</p>
 										</div>
-										<div v-for="key in contractor.keys" class="key-icon"  :key="key.id">
+										<!-- <div v-for="key in contractor.keys" class="key-icon"  :key="key.id">
 											<img :src="key" alt="">
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
+							<div class="circle circle-big" :class="'circle-' + project.status">
+								<img :src="getStatusIcon(project.status, 'circles')" alt="">
+							</div>
 						</div>
 						<div class="progress-row">
-							<img :src="getStatusIcon(project.status)" alt="" class="arrow">
 							<div class="progress-bar" :class="project.status">
+								<img :src="getStatusIcon(project.status, 'arrows')" alt="" class="arrow">
 								<div class="step" v-for="n in project.steps" :key="n" :class="{'one-step': project.steps <= 1}">Month</div>
 							</div>
 						</div>
@@ -123,7 +161,7 @@ export default {
 					company: 'Serokell',
 					startDate: 1517495409000,
 					finalDate: 1543588209000,
-					status: 'ongoing',
+					status: 'completed',
 					projectLogo: '../../static/img/ale-logo.svg',
 					steps: 10,
 					contractors: [
@@ -132,7 +170,7 @@ export default {
 							name: 'Vova Dmitrov',
 							type: 'TS',
 							keys: [
-								'../../static/img/ts-key.svg'
+								'../../static/img/keys/ts-key.svg'
 							]
 						},
 						{
@@ -140,7 +178,7 @@ export default {
 							name: 'Deus Virus',
 							type: 'TS execution',
 							keys: [
-								'../../static/img/ts-exec-key.svg'
+								'../../static/img/keys/ts-exec-key.svg'
 							]
 						},
 						{
@@ -148,8 +186,8 @@ export default {
 							name: 'Nicola Glumac',
 							type: 'Check',
 							keys: [
-								'../../static/img/check-key.svg',
-								'../../static/img/check-key.svg'
+								'../../static/img/keys/check-key.svg',
+								'../../static/img/keys/check-key.svg'
 							]
 						},
 						{
@@ -157,8 +195,8 @@ export default {
 							name: 'Rift & Co',
 							type: 'Quality Assurance',
 							keys: [
-								'../../static/img/qa-key.svg',
-								'../../static/img/qa-key.svg'
+								'../../static/img/keys/qa-key.svg',
+								'../../static/img/keys/qa-key.svg'
 							]
 						}
 					]
@@ -168,7 +206,7 @@ export default {
 					company: 'Effective Energy',
 					startDate: 1523370609000,
 					finalDate: 1543588209000,
-					status: 'completed',
+					status: 'ongoing',
 					steps: 8,
 					contractors: [
 						{
@@ -176,7 +214,7 @@ export default {
 							name: 'Quality Boy',
 							type: 'TS',
 							keys: [
-								'../../static/img/ts-key.svg'
+								'../../static/img/keys/ts-key.svg'
 							]
 						},
 						{
@@ -184,7 +222,7 @@ export default {
 							name: 'Galvadon',
 							type: 'TS execution',
 							keys: [
-								'../../static/img/ts-exec-key.svg'
+								'../../static/img/keys/ts-exec-key.svg'
 							]
 						},
 						{
@@ -192,7 +230,118 @@ export default {
 							name: 'Rift & Co',
 							type: 'Quality Assurance',
 							keys: [
-								'../../static/img/qa-key.svg'
+								'../../static/img/keys/qa-key.svg'
+							]
+						}
+					]
+				},
+				{
+					title: 'Virtual reality pluggin',
+					company: 'Nike',
+					startDate: 1525185009000,
+					finalDate: 1525703409000,
+					status: 'canceled',
+					projectLogo: '../../static/img/ale-logo.svg',
+					steps: 1,
+					contractors: [
+						{
+							initials: 'RC',
+							name: 'Rift & Co',
+							type: 'Quality Assurance'
+						}
+					]
+				},
+				{
+					title: 'Virtual reality pluggin',
+					company: 'Nike',
+					startDate: 1525185009000,
+					finalDate: 1525703409000,
+					status: 'timelag',
+					projectLogo: '../../static/img/ale-logo.svg',
+					steps: 1,
+					contractors: [
+						{
+							initials: 'RC',
+							name: 'Rift & Co',
+							type: 'Quality Assurance'
+						}
+					]
+				},
+				{
+					title: 'CryptoStore',
+					company: 'Serokell',
+					startDate: 1517495409000,
+					finalDate: 1543588209000,
+					status: 'completed',
+					projectLogo: '../../static/img/ale-logo.svg',
+					steps: 10,
+					contractors: [
+						{
+							initials: 'VD',
+							name: 'Vova Dmitrov',
+							type: 'TS',
+							keys: [
+								'../../static/img/keys/ts-key.svg'
+							]
+						},
+						{
+							initials: 'DV',
+							name: 'Deus Virus',
+							type: 'TS execution',
+							keys: [
+								'../../static/img/keys/ts-exec-key.svg'
+							]
+						},
+						{
+							initials: 'NG',
+							name: 'Nicola Glumac',
+							type: 'Check',
+							keys: [
+								'../../static/img/keys/check-key.svg',
+								'../../static/img/keys/check-key.svg'
+							]
+						},
+						{
+							initials: 'RC',
+							name: 'Rift & Co',
+							type: 'Quality Assurance',
+							keys: [
+								'../../static/img/keys/qa-key.svg',
+								'../../static/img/keys/qa-key.svg'
+							]
+						}
+					]
+				},
+				{
+					title: 'Alehub',
+					company: 'Effective Energy',
+					startDate: 1523370609000,
+					finalDate: 1543588209000,
+					status: 'ongoing',
+					steps: 8,
+					contractors: [
+						{
+							initials: 'QB',
+							name: 'Quality Boy',
+							type: 'TS',
+							keys: [
+								'../../static/img/keys/ts-key.svg'
+							]
+						},
+						{
+							initials: 'GA',
+							name: 'Galvadon',
+							type: 'TS execution',
+							keys: [
+								'../../static/img/keys/ts-exec-key.svg'
+							]
+						},
+						{
+							initials: 'RC',
+							name: 'Rift & Co',
+							type: 'Quality Assurance',
+							keys: [
+								'../../static/img/keys/qa-key.svg'
 							]
 						}
 					]
@@ -215,9 +364,18 @@ export default {
 				}
 			],
 			statusIcons: {
-				canceled: '../../static/img/arrow_canceled.svg',
-				completed: '../../static/img/arrow_completed.svg',
-				ongoing: '../../static/img/arrow_ongoing.svg'
+				arrows: {
+					canceled: '../../static/img/arrows/arrow-canceled.svg',
+					completed: '../../static/img/arrows/arrow-completed.svg',
+					ongoing: '../../static/img/arrows/arrow-ongoing.svg',
+					timelag: '../../static/img/arrows/arrow-timelag.svg'
+				},
+				circles: {
+					canceled: '../../static/img/icons-for-circle/canceled.svg',
+					completed: '../../static/img/icons-for-circle/completed.svg',
+					ongoing: '../../static/img/icons-for-circle/ongoing.svg',
+					timelag: '../../static/img/icons-for-circle/timelag.svg'
+				}
 			},
 			infoHeader: {
 				startDate: '23.02.2018',
@@ -234,13 +392,19 @@ export default {
             let dateFormat = new Date(date);
             return dateFormat.toDateString();
         },
-		getStatusIcon: function (status) {
-			if (status === 'canceled') {
-				return this.statusIcons.canceled;
-			} else if (status === 'completed') {
-				return this.statusIcons.completed;
-			} else {
-				return this.statusIcons.ongoing;
+		getStatusIcon: function (status, iconType) {
+			switch (status) {
+				case 'completed':
+					return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
+					break;	
+				case 'ongoing':
+					return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
+					break;	
+				case 'timelag':
+					return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
+					break;	
+				default:
+					return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
 			}
 		},
 		checkContractorType: function (type) {
@@ -287,15 +451,13 @@ export default {
 			padding-top 32px
 			padding-right 68px
 			padding-left 68px
-			position relative
+			display flex
 
 			.sidebar
 				display flex 
 				flex-direction column
 				align-items center
-				position absolute
-				left 68px
-				top 50px
+				padding-top 18px
 
 				.vertical-progress
 					display flex
@@ -306,9 +468,9 @@ export default {
 						top -18px
 						position absolute
 
-						.triangle
+						.triangle-icon
 							border 6px solid transparent
-							border-top 6px solid #fcfcfc
+							border-top 6px solid #34343e
 							position absolute 
 							top 17px
 
@@ -316,9 +478,24 @@ export default {
 						bottom -18px
 						position absolute
 
+						.triangle
+							border 6px solid transparent
+							border-left 6px solid #aab7c7 
+							position absolute 
+							left 60px
+						
+					.filters-block
+						position absolute
+						top -96px
+						left 8px
+						display flex
+						flex-direction column
+						height 192px
+						justify-content space-between
+
 					.whole-line
 						width 36px
-						height 508px
+						height 544px
 						background-image linear-gradient(to bottom, #e7eaee, #bcc5d1)
 						border 1px solid #d2dae2
 						position relative
@@ -332,9 +509,15 @@ export default {
 							bottom 120px
 
 						.circle-big
-							top 172px
+							top 190px
 							left -6px
 							position absolute
+
+							.triangle
+								border 6px solid transparent
+								border-left 6px solid #aab7c7 
+								position absolute 
+								left 60px
 
 						.dividers-container
 							flex-direction column
@@ -349,56 +532,57 @@ export default {
 							left -1px
 
 			.search-result
-				padding-left 136px
+				padding-left 100px
 
 				.progress-list
 					display flex
 					flex-direction column
 					align-items flex-start
+					max-width 1332px
 
 					.progress-item
 						display flex
 						flex-direction column
 						justify-content center
 						position relative
-						height 192px
+						height 132px
 						border 2px solid gray
 						margin-bottom 24px
-						padding 40px
+						padding 10px
 
-						&.ongoing
+						&.completed
 							background-image linear-gradient(to right, #f0f4f4, #f0f3f2)
 							border-style solid 
 							border-width 2px
 							-webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
 							border-image linear-gradient(to right, #ffe082, #fed355) 1
 
-						&.completed
+						&.ongoing
 							background-image linear-gradient(to right, #e8f4f5, #e7f3f2)
 							border-style solid 
 							border-width 2px
 							-webkit-border-image linear-gradient(to right, #57de97, #2bd65c) 1
 							border-image linear-gradient(to right, #57de97, #2bd65c) 1
 
-						&.canceled
+						&.timelag
 							background-image linear-gradient(to right, #f1eef4, #f0ecf2)
 							border-style solid 
 							border-width 2px
 							-webkit-border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
 							border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
 
-						.progress-row
-							display flex
-							align-items center
+						&.canceled
+							background-image linear-gradient(to right, #e4e7ed, #e6e8ee)
+							border-style solid 
+							border-width 2px
+							-webkit-border-image linear-gradient(to right, #331a1a, #331010) 1
+							border-image linear-gradient(to right, #331a1a, #331010) 1
 
-							.arrow
-								object-fit contain
-								width 28px
-								height 16px
-								margin-left 10px
-								margin-right 12px
+						.progress-row
+							padding 0 56px
 
 							.progress-bar
+								width 100%
 								height 36px
 								background-color #ffffff
 								position relative
@@ -408,7 +592,7 @@ export default {
 								align-items center
 
 								.step
-									width 118px
+									width 120px
 									height 32px
 									border-right 2px solid #fff
 									opacity 0.5
@@ -423,16 +607,25 @@ export default {
 										border-right none
 
 									&.one-step
-										min-width 480px
+										min-width 450px
+
+								.arrow
+									position absolute
+									top -20px
+									left -110px
 
 						.row-top
 							display flex
 
 							.project-info
 								display flex
-								flex-direction column
-								margin-left 8px
-								margin-right 140px
+								width 300px
+
+								.info-text
+									display flex
+									flex-direction column
+									margin-left 8px
+									margin-right 8px
 								
 								.title
 									margin 0
@@ -451,10 +644,8 @@ export default {
 
 							.contractors-list
 								display flex
-								width 100%
 
 								.contractors-item
-									width 25%
 									min-width 236px
 
 								.contractors-content
@@ -513,7 +704,7 @@ export default {
 						.row-bottom
 							display flex
 							justify-content space-between
-							padding-left 56px
+							padding 0 66px
 
 							.date
 								font-family MuseoSansCyrl500
@@ -526,7 +717,7 @@ export default {
 		width 36px
 		min-width 36px
 		height 36px
-		background-image linear-gradient(to right, #525252, #222222)
+		background-image linear-gradient(to right, #dde1e7, #cad2db)
 		border-radius 50%
 		display flex
 		justify-content center
@@ -540,17 +731,46 @@ export default {
 			min-width 48px
 			min-height 48px
 
+		&.circle-black
+			background-image linear-gradient(to right, #331a1a, #331010)
+			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2) 
+
+		&.circle-red
+			background-image linear-gradient(to right, #ff8282, #ff4f4f)
+			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2) 
+
+		&.circle-green
+			background-image linear-gradient(to right, #4dc484, #26bd51)
+			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2) 
 
 		&.circle-yellow
 			background-image linear-gradient(to right, #ffe082,
 			#ffd24f)
-			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
+			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
 
-		
-		&.circle-gray
-			background-image none
-			background-color #aab7c7
-			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
+		&.circle-completed
+			background-image unset
+			border-style solid 
+			border-width 2px
+			border-color #fed355
+
+		&.circle-ongoing
+			background-image unset
+			border-style solid 
+			border-width 2px
+			border-color #2bd65c
+
+		&.circle-canceled
+			background-image unset
+			border-style solid 
+			border-width 2px
+			border-color #331010
+
+		&.circle-timelag
+			background-image unset
+			border-style solid 
+			border-width 2px
+			border-color #ff4f4f
 
 		.title 
 			font-family MuseoSansCyrl500
