@@ -51,18 +51,18 @@
 							<img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
 							<div class="triangle">
 								<div class="filters-block">
-									<div class="circle">
-										<span>TS</span>
+									<div class="circle circle-gray">
+										<span class="title">TS</span>
 									</div>
-									<div class="circle">
-										<span>TS</span>
-										<span>EX</span>
+									<div class="circle circle-gray">
+										<span class="title">TS</span>
+										<span class="subtitle">EX</span>
 									</div>
-									<div class="circle">
-										<span>CH</span>
+									<div class="circle circle-gray">
+										<span class="title">CH</span>
 									</div>
-									<div class="circle">
-										<span>QA</span>
+									<div class="circle circle-gray" :class="{qa: qaIsActive}" @click="qaIsActive = !qaIsActive">
+										<span class="title">QA</span>
 									</div>
 								</div>
 							</div>
@@ -118,9 +118,9 @@
 											<p class="title">{{ contractor.name }}</p>
 											<p class="subtitle">{{ contractor.type }}</p>
 										</div>
-										<!-- <div v-for="key in contractor.keys" class="key-icon"  :key="key.id">
+										<div v-for="key in contractor.keys" class="key-icon"  :key="key.id">
 											<img :src="key" alt="">
-										</div> -->
+										</div>
 									</div>
 								</div>
 							</div>
@@ -155,6 +155,7 @@ export default {
 	},
 	data() {
 		return {
+			qaIsActive: true,
 			projects: [
 				{
 					title: 'CryptoStore',
@@ -493,6 +494,9 @@ export default {
 						height 192px
 						justify-content space-between
 
+						.circle
+							box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
+
 					.whole-line
 						width 36px
 						height 544px
@@ -667,19 +671,6 @@ export default {
 									.circle
 										opacity 0.5
 
-										&.ts
-											background-image linear-gradient(to right, #c07b44, #b63c2c)
-
-										&.ts-exec
-											background-image linear-gradient(to right, #0db79a, #0391a6)
-
-										&.check
-											background-image linear-gradient(to right, #ddc41c, #e09a00)
-											
-										&.qa
-											background-image linear-gradient(to right, #b46dd0, #7e20c0)
-											opacity 1
-
 										.initials
 											font-family MuseoSansCyrl500
 											font-size 16px
@@ -733,20 +724,35 @@ export default {
 
 		&.circle-black
 			background-image linear-gradient(to right, #331a1a, #331010)
-			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2) 
 
 		&.circle-red
-			background-image linear-gradient(to right, #ff8282, #ff4f4f)
-			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2) 
+			background-image linear-gradient(to right, #ff8282, #ff4f4f) 
 
 		&.circle-green
 			background-image linear-gradient(to right, #4dc484, #26bd51)
-			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2) 
 
 		&.circle-yellow
 			background-image linear-gradient(to right, #ffe082,
 			#ffd24f)
 			box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
+
+		&.circle-gray
+			background-color #aab7c7
+			background-image none
+
+		&.ts
+			background-image linear-gradient(to right, #c07b44, #b63c2c)
+
+		&.ts-exec
+			background-image linear-gradient(to right, #0db79a, #0391a6)
+
+		&.check
+			background-image linear-gradient(to right, #ddc41c, #e09a00)
+										
+		&.qa
+			background-image linear-gradient(to right, #b46dd0, #7e20c0)
+			opacity 1 !important
+
 
 		&.circle-completed
 			background-image unset
