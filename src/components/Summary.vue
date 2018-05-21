@@ -63,6 +63,8 @@
             </div>
         </section>
 
+        <Chat :data="messagesList" />
+
         <new-wallet/>
         <select-language/>
     </div>
@@ -79,6 +81,7 @@
     import TransactionsToolPanel from './layouts/TransactionsToolPanel';
     import FormattingPrice from './layouts/FormattingPrice';
     import Spinner from './layouts/Spinner';
+    import Chat from './layouts/Chat';
 
     import Moment from 'moment';
 
@@ -89,6 +92,7 @@
     export default {
         name: 'wallet',
         components: {
+            Chat,
             Navbar,
             WalletsList,
             ActivityList,
@@ -102,6 +106,12 @@
         },
         data() {
             return {
+                messagesList: [{
+                    isMyMessage: true,
+                    date: '30 Mar',
+                    time: '23:56',
+                    text: 'What does this mean: Unknown Exception?'
+                }],
                 isSuccessNotif: true,
                 newTransaction: false,
                 rightMenu: {
@@ -264,6 +274,28 @@
                         type: 'error',
                     });
                 });
+            }
+            this.$socket.on("newMessaegFromChat", (msg) => {
+                this.messagesList.push({
+                    isMyMessage: true,
+                    date: '30 Mar',
+                    time: '23:56',
+                    text: msg
+                });
+                if(document.getElementById('chat-panel') !== null) {
+                    document.getElementById('chat-panel').scrollTop = 999999;
+                }
+            });
+
+            this.$on('newMessageToChat', function (data) {
+                this.$socket.emit("newMessaegFromChat", data);
+            });
+        },
+        socket: {
+            events: {
+                connect () {
+                    console.log("Websocket connected to " + this.$socket.nsp);
+                }
             }
         }
     }

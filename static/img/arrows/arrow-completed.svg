@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="92px" height="80px" viewBox="0 0 92 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>494CBBCA-39CA-4B6A-BB3F-63CA3B5955C3</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-1.11022302e-14%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FFE082" offset="0%"></stop>
+            <stop stop-color="#FED355" offset="100%"></stop>
+        </linearGradient>
+        <path d="M23.7573593,8 L20.8786797,5.12132034 C19.7071068,3.94974747 19.7071068,2.05025253 20.8786797,0.878679656 C22.0502525,-0.292893219 23.9497475,-0.292893219 25.1213203,0.878679656 L33.1213203,8.87867966 C34.2928932,10.0502525 34.2928932,11.9497475 33.1213203,13.1213203 L25.1213203,21.1213203 C23.9497475,22.2928932 22.0502525,22.2928932 20.8786797,21.1213203 C19.7071068,19.9497475 19.7071068,18.0502525 20.8786797,16.8786797 L23.7573593,14 L3,14 C1.34314575,14 0,12.6568542 0,11 C0,9.34314575 1.34314575,8 3,8 L23.7573593,8 Z" id="path-2"></path>
+        <filter x="-188.2%" y="-272.7%" width="476.5%" height="681.8%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="16" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.12 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="8" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.24 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="contract-list-vertical" transform="translate(-162.000000, -156.000000)" fill-rule="nonzero">
+            <g id="Group" transform="translate(191.000000, 118.000000)">
+                <g id="contract" transform="translate(0.000000, 10.000000)">
+                    <g id="arrow" transform="translate(0.000000, 57.000000)">
+                        <g id="Combined-Shape">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                            <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

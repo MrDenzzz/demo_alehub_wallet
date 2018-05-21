@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="13px" viewBox="0 0 18 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>E50C0D3F-85EF-4F01-A172-B10B61B76C7F</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-1.11022302e-14%" y1="50%" x2="98.2523483%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#DDC41C" offset="0%"></stop>
+            <stop stop-color="#E09A00" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="contract-list-vertical" transform="translate(-1494.000000, -147.000000)" fill="url(#linearGradient-1)">
+            <g id="Group" transform="translate(191.000000, 118.000000)">
+                <g id="contract" transform="translate(0.000000, 10.000000)">
+                    <g id="finish" transform="translate(1287.000000, 0.000000)">
+                        <path d="M20.4761905,24.8888889 L32,24.8888889 L32,28 L20.4761905,28 L17.3333333,28 L17.3333333,18.6666667 L20.4761905,18.6666667 L20.4761905,24.8888889 Z" id="check" transform="translate(24.666667, 23.333333) rotate(-45.000000) translate(-24.666667, -23.333333) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

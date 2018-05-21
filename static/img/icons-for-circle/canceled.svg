@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="4px" viewBox="0 0 16 4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>EB0433D9-C407-42F2-A41D-03D7F2993ECB</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-1.11022302e-14%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#331A1A" offset="0%"></stop>
+            <stop stop-color="#331010" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="contract-list-vertical" transform="translate(-774.000000, -462.000000)" fill="url(#linearGradient-1)">
+            <g id="Group" transform="translate(191.000000, 118.000000)">
+                <g id="contract" transform="translate(0.000000, 322.000000)">
+                    <g id="finish" transform="translate(567.000000, 0.000000)">
+                        <g id="cross" transform="translate(15.666667, 17.666667)">
+                            <rect id="Rectangle-12" x="0.333333333" y="4.83333333" width="16" height="3" rx="1.5"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
