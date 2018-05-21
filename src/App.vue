@@ -45,28 +45,27 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'authStatus',
-                'userStatus',
-                'walletStatus',
-                'userHaveWallets',
-                'userHaveTransactions',
-                'transactionStatus',
-                'initiateFilterDateStatus',
-                'lengthWalletList',
-                'currentWalletAddress',
-                'changedTransactions',
-                'wallets',
-                'currentWallet',
-                'changedWallets',
-                'currentWalletHaveTransactions',
-
-                'allTransactions',
-
-                'walletsLoadedAddresses',
-
-                'diffWalletsAddresses'
-            ]),
+            ...mapGetters(
+                [
+                    'authStatus',
+                    'userStatus',
+                    'walletStatus',
+                    'userHaveWallets',
+                    'userHaveTransactions',
+                    'transactionStatus',
+                    'initiateFilterDateStatus',
+                    'lengthWalletList',
+                    'currentWalletAddress',
+                    'changedTransactions',
+                    'wallets',
+                    'currentWallet',
+                    'changedWallets',
+                    'currentWalletHaveTransactions',
+                    'allTransactions',
+                    'walletsLoadedAddresses',
+                    'diffWalletsAddresses'
+                ]
+            ),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
                 else return this.language;
