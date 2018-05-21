@@ -636,7 +636,8 @@ export default {
                         .triangle-icon
                             border 6px solid transparent
                             border-top 6px solid #34343e
-                            position absolute 
+                            position absolute
+                            top 17px 
 
                             @media(max-width 768px)
                                 border 6px solid transparent
@@ -700,8 +701,8 @@ export default {
                             background-image linear-gradient(to right, #3a3a4a, #272730)
 
                         .marker-calendar-top
-                            left -48px
-                            top 42px
+                            left -50px
+                            top -18px
 
                             @media(max-width 768px)
                                 left -16px
@@ -709,8 +710,8 @@ export default {
                                 top -50px
 
                         .marker-calendar-bottom
-                            left -48px
-                            bottom 120px
+                            left -50px
+                            bottom -18px
 
                             @media(max-width 768px)
                                 top -50px
