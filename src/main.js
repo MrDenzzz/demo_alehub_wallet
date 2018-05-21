@@ -21,7 +21,7 @@ Vue.prototype.$host = 'http://192.168.1.47:4000';
 // Vue.prototype.$host = 'localhost:4000';
 
 import VueWebsocket from "vue-websocket";
-Vue.use(VueWebsocket, "ws://localhost:4444", {
+Vue.use(VueWebsocket, "ws://ale-demo.eu-4.evennode.com", {
     reconnection: true
 });
 
