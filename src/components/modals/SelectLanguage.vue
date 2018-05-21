@@ -1,31 +1,41 @@
 <template>
     <div>
-        <modal name="selectLanguage" height="auto" class="modal-md" :adaptive="true">
+        <modal name="selectLanguage"
+               height="auto"
+               class="modal-md"
+               :adaptive="true">
             <div class="heading">
-                <i v-if="parseInt(step) === 2" class="back" @click="step = 1"></i>
-                <p class="title">{{ $t('modals.lang.title') }}</p>
+                <!--<i v-if="parseInt(step) === 2" class="back" @click="step = 1"></i>-->
+                <p class="title">
+                    {{ $t('modals.lang.title') }}
+                </p>
             </div>
             <div class="langModal">
                 <div class="body">
-                        <div class="langButtons">
-                            <button class="buttons btn-default"
-                                    @click="newSelect('Русский', 'language')"
-                                    :current="selectedLang"
-                                    :id="'language'"
-                                    value="rus">Русский</button>
+                    <div class="langButtons">
+                        <button class="buttons btn-default"
+                                @click="newSelect('Русский', 'language')"
+                                :current="selectedLang"
+                                :id="'language'"
+                                value="rus">Русский
+                        </button>
 
-                            <button class="buttons btn-default"
-                                    @click="newSelect('English', 'language')"
-                                    :current="selectedLang"
-                                    :id="'language'"
-                                    value="eng">English</button>
+                        <button class="buttons btn-default"
+                                @click="newSelect('English', 'language')"
+                                :current="selectedLang"
+                                :id="'language'"
+                                value="eng">English
+                        </button>
 
-                            <button class="buttons btn-default"  disabled>中國</button>
-                            <button class="buttons btn-default" disabled>Український</button>
-                            <button class="buttons btn-default" disabled>日本語</button>
-                            <button class="buttons btn-default" disabled>Deutsch</button>
-                        <button @click="openModal('newwallet');
-                                        hideModal('selectLanguage');" class="buttons btn-yellow openModal">{{ $t('modals.lang.submit') }}</button><!--modal-footer-->
+                        <button class="buttons btn-default" disabled>中國</button>
+                        <button class="buttons btn-default" disabled>Український</button>
+                        <button class="buttons btn-default" disabled>日本語</button>
+                        <button class="buttons btn-default" disabled>Deutsch</button>
+                        <button class="buttons btn-yellow openModal"
+                                @click="openModal('newwallet');
+                                        hideModal('selectLanguage');">
+                            {{ $t('modals.lang.submit') }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -66,7 +76,7 @@
                 }
             },
         },
-        mounted(){
+        mounted() {
             this.$on('onselect', function (id, value) {
                 this.newSelect(id, value)
             });
@@ -83,9 +93,9 @@
                     this.$parent.$emit('changeSystemLanguage');
                 }
             },
-                        changeLanguage: function () {
-                            document.getElementsByClassName('value')[0].click();
-                        },
+            changeLanguage: function () {
+                document.getElementsByClassName('value')[0].click();
+            },
             openModal: function (name) {
                 this.$modal.show(name);
             },
@@ -119,14 +129,11 @@
             border-radius 2px
             background-color rgba(13, 23, 23, 0.08) !important
 
-
-
             &:hover
                 cursor default
 
     .clicked
         cursor pointer
-
 
 
 </style>

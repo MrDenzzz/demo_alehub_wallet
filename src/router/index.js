@@ -52,15 +52,15 @@ const ifNotFirstStepAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
-    //rewrite
-    setTimeout(() => {
-        if (store.state.Wallets.wallets.length === 0) {
-            next('/');
-            return;
-        }
-    }, 1000);
     let token = localStorage.getItem(sha256('user-token'));
     if (token !== null && token !== 'undefined' && token !== undefined) {
+        setTimeout(() => {
+            if (store.state.Wallets.wallets.length === 0) {
+                console.log('zxc345');
+                next('/');
+                return;
+            }
+        }, 1000);
         next();
         return;
     }
@@ -127,12 +127,14 @@ const router = new Router({
         {
             path: '/recover',
             name: 'Recover',
-            component: Recover
+            component: Recover,
+            beforeEnter: ifNotAuthenticated
         },
         {
             path: '/recover-twofactor',
             name: 'Recover2fa',
-            component: Recover2fa
+            component: Recover2fa,
+            beforeEnter: ifNotAuthenticated
         },
         {
             path: '/wallet/settings',
@@ -195,8 +197,8 @@ const router = new Router({
 });
 
 
-router.beforeEach((to, from, next) => {
-    next();
-});
+// router.beforeEach((to, from, next) => {
+//     next();
+// });
 
 export default router;

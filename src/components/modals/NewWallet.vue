@@ -259,7 +259,7 @@
     import sha256 from 'sha256';
 
     export default {
-        name: 'newWallet',
+        name: 'NewWallet',
         components: {
             Spinner
         },

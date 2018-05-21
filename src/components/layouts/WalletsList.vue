@@ -63,7 +63,7 @@
     import { mapGetters } from 'vuex';
 
     export default {
-        name: 'walletsList',
+        name: 'WalletsList',
         components: {
             SelectControl,
             NewWallet,

@@ -27,7 +27,7 @@
     import {mapGetters} from 'vuex';
 
     export default {
-        name: 'alehub',
+        name: 'Alehub',
         components: {
             ConnectionModal,
             NewWallet,
@@ -88,6 +88,9 @@
                     this.downloadMissingTransactions();
 
                     console.log('Load app');
+
+                    console.log(this.$store.state.Wallets.wallets, 'this.$store.state.Wallets.wallets');
+
                     return false;
                 }
                 return true;

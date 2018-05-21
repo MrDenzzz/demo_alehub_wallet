@@ -65,11 +65,7 @@
                                 </div>
 
                                 <div class="is-center" v-if="dataProcessing">
-                                    <Spinner/>
-                                </div>
-
-                                <div class="error-block" v-if="isExistUser">
-                                    <p>Error login</p>
+                                    <spinner/>
                                 </div>
 
                                 <button class="btn btn-yellow btn-block nomargin"
@@ -77,7 +73,8 @@
                                     {{ $t('pages.registration.create') }}
                                 </button>
 
-                                <p class="text">{{ $t('pages.registration.haveAccount') }}
+                                <p class="text">
+                                    {{ $t('pages.registration.haveAccount') }}
                                     <router-link :to="{ path: '/login' }">
                                         {{ $t('pages.registration.login') }}
                                     </router-link>
@@ -254,6 +251,10 @@
                 }).then(response => {
                     if (response.body.message === 'User already exist!') {
                         this.dataProcessing = false;
+                        this.$toasted.show('User already exist!', {
+                            duration: 10000,
+                            type: 'error',
+                        });
                         return this.isExistUser = true;
                     }
                     this.successSendRequest = true;
@@ -286,7 +287,7 @@
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0px 1000px #f0f0f0 inset !important;
+        -webkit-box-shadow: 0 0 0 1000px #f0f0f0 inset !important;
     }
 </style>
 
