@@ -5,28 +5,33 @@
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
         <div class="info-header">
-            <div class="info">
-                <span class="title">Contract period</span>
-                <span class="bold-text">{{ infoHeader.startDate}} - {{ infoHeader.finalDate }}</span>
+            <div class="info-wrap">
+                <div class="info">
+                    <span class="title">Contract period</span>
+                    <span class="bold-text">{{ infoHeader.startDate}} - {{ infoHeader.finalDate }}</span>
+                </div>
+                <div class="info">
+                    <span class="title">Name</span>
+                    <span class="bold-text">{{ infoHeader.name }}</span> 
+                </div>
+                <div class="info">
+                    <span class="title">Rating</span>
+                    <span class="bold-text">{{ infoHeader.rating }}</span> 
+                </div>
+                <div class="info">
+                    <span class="title">Certification</span>
+                    <span class="bold-text">{{ infoHeader.certification }}</span>
+                </div>
+                <div class="info">
+                    <span class="title">Verified</span> 
+                    <span class="bold-text">{{ infoHeader.verified }}</span>
+                </div>
+                <div class="info">
+                    <span class="bold-text">Verified by me</span>
+                </div>
             </div>
-            <div class="info">
-                <span class="title">Name</span>
-                <span class="bold-text">{{ infoHeader.name }}</span> 
-            </div>
-            <div class="info">
-                <span class="title">Rating</span>
-                <span class="bold-text">{{ infoHeader.rating }}</span> 
-            </div>
-            <div class="info">
-                <span class="title">Certification</span>
-                <span class="bold-text">{{ infoHeader.certification }}</span>
-            </div>
-            <div class="info">
-                <span class="title">Verified</span> 
-                <span class="bold-text">{{ infoHeader.verified }}</span>
-            </div>
-            <div class="info">
-                <span class="bold-text">Verified by me</span>
+            <div>
+                <img src="../../static/img/menu.svg" alt="">
             </div>
         </div>
         <div class="row-page">
@@ -36,17 +41,23 @@
                         <div class="triangle-icon"></div>
                     </div>
                     <div class="whole-line">
-                        <div class="marker-calendar marker-calendar-top">
-                            <div class="block">
-                                <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
-                                <div class="triangle"></div>
+                        <div class="selected-area">
+                            <div class="marker-calendar marker-calendar-top">
+                                <div class="block">
+                                    <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="marker-calendar marker-calendar-bottom">
+                                <div class="block">
+                                    <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
+                                    <div class="triangle"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="selected-area"></div>
                         <div class="dividers-container">
                             <div class="divider horizontal" v-for="n in 8" :key="n"></div>
                         </div>
-                        
                         <button class="circle circle-big circle-yellow">
                             <img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
                             <div class="triangle">
@@ -170,12 +181,6 @@
                                 </div>
                             </div>
                         </button>
-                        <div class="marker-calendar marker-calendar-bottom">
-                            <div class="block">
-                                <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
-                                <div class="triangle"></div>
-                            </div>
-                        </div>
                     </div>
                     <div class="circle circle-bottom circle-green">
                         <img src="../../static/img/icons-for-circle/infinity.svg" alt="" width="12px" height="6px">
@@ -200,7 +205,7 @@
             </div>
             <div class="search-result">
                 <div class="progress-list">
-                    <div class="progress-item" v-for="project in projects" :key="project.id" :class="project.status">
+                    <div class="progress-item" v-for="project in projects" :key="project.id" :class="project.status" :style="{width: 10 * project.steps + '%'}">
                         <div class="row-top">
                             <div class="project-info">
                                 <div class="circle circle-big">
@@ -533,30 +538,55 @@ export default {
 <style lang="stylus">
     .contract-list
         background-color #f0f4fa
-        min-height 100vh
+        // min-height 100vh
 
         .info-header
-            display flex
-            padding 96px 110px 32px
+            padding 87px 32px 23px 110px
             background-color #eceef1
+            display flex
+            justify-content space-between
+            align-items center
 
-            .info
-                font-family MuseoSansCyrl500
-                font-size 12px
-                font-weight 500
-                color #34343e
-                margin-right 64px
+            @media(max-width 1200px)
+                padding-left 32px
+
+            .info-wrap
                 display flex
-                flex-direction column
+                align-items flex-end
 
-                &:last-child
-                    align-self flex-end
+                @media(max-width 990px)
+                    justify-content space-between
+                    width 100%
+                    margin-right 32px
 
-                .title
-                    opacity 0.5
+                .info
+                    font-family MuseoSansCyrl500
+                    font-size 12px
+                    font-weight 500
+                    color #34343e
+                    margin-right 64px
+                    display flex
+                    flex-direction column
 
-                .bold-text
-                    font-size 17px
+                    @media(max-width 990px)
+                        margin-right 0
+
+                    .title
+                        opacity 0.5
+                        white-space nowrap
+
+                    .bold-text
+                        font-size 17px
+                        white-space nowrap
+
+                        @media(max-width 1100px)
+                            font-size 15px
+
+                        @media(max-width 990px)
+                            font-size 13px
+
+                        @media(max-width 620px)
+                            font-size 11px
 
         .row-page
             padding-top 32px
@@ -564,37 +594,74 @@ export default {
             padding-left 68px
             display flex
 
+            @media(max-width 768px)
+                flex-direction column
+                padding-top 60px
+                padding-right 32px
+                padding-left 32px
+
             .sidebar
                 display flex 
                 flex-direction column
                 align-items center
                 padding-top 18px
 
+                @media(max-width 768px)
+                    align-items flex-start
+                    padding-left 18px
+
+                @media(max-width 620px)
+                    padding-right 18px
+
                 .vertical-progress
-                    display flex
-                    flex-direction column
                     position relative
+
+                    @media(max-width 768px)
+                        width 80%
+
+                    @media(max-width 620px)
+                        width 100%
 
                     .circle-top
                         z-index 2
                         top -18px
                         position absolute
+                        display flex
+                        justify-content center
+
+                        @media(max-width 768px)
+                            top 0
+                            left -18px
 
                         .triangle-icon
                             border 6px solid transparent
                             border-top 6px solid #34343e
                             position absolute 
-                            top 17px
+
+                            @media(max-width 768px)
+                                border 6px solid transparent
+                                border-left 6px solid #34343e
+                                left 15px
 
                     .circle-bottom
                         bottom -18px
                         position absolute
 
+                        @media(max-width 768px)
+                            bottom 0
+                            right -18px
+
                         .triangle
                             border 6px solid transparent
                             border-left 6px solid #aab7c7 
                             position absolute 
-                            left 60px
+                            left 56px
+
+                            @media(max-width 768px)
+                                border 6px solid transparent
+                                border-top 6px solid #aab7c7
+                                left 12px
+                                top 56px
                         
                     .filters-block
                         position absolute
@@ -604,6 +671,16 @@ export default {
                         flex-direction column
                         height 192px
                         justify-content space-between
+
+                        @media(max-width 768px)
+                            flex-direction row
+                            width 192px
+                            top 8px
+                            left -96px
+
+                        @media(max-width 620px)
+                            flex-direction column
+                            align-items center
 
                         .circle
                             box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
@@ -615,13 +692,41 @@ export default {
                         border 1px solid #d2dae2
                         position relative
 
+                        @media(max-width 768px)
+                            width 100%
+                            height 36px
+
+                        @media(max-width 620px)
+                            background-image linear-gradient(to right, #3a3a4a, #272730)
+
                         .marker-calendar-top
                             left -48px
                             top 42px
 
+                            @media(max-width 768px)
+                                left -16px
+                                bottom 0
+                                top -50px
+
                         .marker-calendar-bottom
                             left -48px
                             bottom 120px
+
+                            @media(max-width 768px)
+                                top -50px
+                                right -16px
+                                left unset
+
+                        .marker-calendar-bottom, .marker-calendar-top
+                            .block
+                                background-image linear-gradient(to bottom, #ffe082, #ffd24f)
+                                
+                                .triangle
+                                    @media(max-width 768px)
+                                        border 16px solid transparent
+                                        border-top 8px solid #ffd24f
+                                        top 32px
+                                        left 0
 
                         .circle-big
                             top 190px
@@ -629,14 +734,27 @@ export default {
                             position absolute
                             z-index 2
 
+                            @media(max-width 768px)
+                                top -6px
+                                left 190px
+
                             .triangle
                                 border 6px solid transparent
                                 border-left 6px solid #aab7c7 
                                 position absolute 
                                 left 60px
 
+                                @media(max-width 768px)
+                                    border 6px solid transparent
+                                    border-top 6px solid #aab7c7
+                                    top 60px
+                                    left 16px
+
                         .dividers-container
                             flex-direction column
+
+                            @media(max-width 620px)
+                                flex-direction row
 
                         .selected-area
                             background-image linear-gradient(to bottom, rgba(255, 224, 130, 0.3), rgba(255, 210, 79, 0.3))
@@ -648,24 +766,46 @@ export default {
                             left -1px
                             z-index 1
 
+                            @media(max-width 768px)
+                                width 60%
+                                height 36px
+                                top -1px
+                                left 58px
+
             .search-result
                 padding-left 100px
+                width 100%
+                max-width 1332px
+
+                @media(max-width 768px)
+                    padding-left 0
+                    padding-top 120px
+
+                @media(max-width 620px)
+                    padding-top 260px
 
                 .progress-list
                     display flex
                     flex-direction column
                     align-items flex-start
-                    max-width 1332px
+                    width 100%
 
                     .progress-item
                         display flex
                         flex-direction column
                         justify-content center
                         position relative
-                        height 132px
+                        min-height 132px
+                        min-width 612px
                         border 2px solid gray
                         margin-bottom 24px
                         padding 10px
+
+                        @media(max-width 1200px)
+                            min-width 512px
+
+                        @media(max-width 990px)
+                            min-width 412px
 
                         &.completed
                             background-image linear-gradient(to right, rgba(255, 224, 130, 0.1), rgba(254, 211, 85, 0.1))
@@ -698,6 +838,12 @@ export default {
                         .progress-row
                             padding 0 56px
 
+                            @media(max-width 990px)
+                                padding 0 32px
+
+                            @media(max-width 860px)
+                                padding 0 24px
+
                             .progress-bar
                                 width 100%
                                 height 36px
@@ -720,23 +866,50 @@ export default {
                                     justify-content center
                                     align-items center
 
+                                    @media(max-width 1100px)
+                                        font-size 14px
+
+                                    @media(max-width 990px)
+                                        font-size 12px
+
                                     &:last-child
                                         border-right none
 
                                     &.one-step
-                                        min-width 450px
+                                        display flex
+                                        justify-content center
+                                        width 100%
 
                                 .arrow
                                     position absolute
                                     top -20px
                                     left -110px
 
+                                    @media(max-width 990px)
+                                        left -86px
+
+                                    @media(max-width 860px)
+                                        left -78px
+
                         .row-top
                             display flex
+                            width 100%
+
+                            .circle-big
+                                @media(max-width 860px)
+                                    width 40px
+                                    height 40px
+                                    min-width 40px
+                                    min-height 40px
+
+                                &:last-child
+                                    margin-left 104px
+
+                                    @media(max-width 1200px)
+                                        margin-left 12px
 
                             .project-info
                                 display flex
-                                width 300px
 
                                 .info-text
                                     display flex
@@ -751,6 +924,9 @@ export default {
                                     color #34343e
                                     white-space nowrap
 
+                                    @media(max-width 1100px)
+                                        font-size 14px
+
                                 .subtitle
                                     margin 0
                                     opacity 0.5
@@ -759,11 +935,16 @@ export default {
                                     color #34343e
                                     white-space nowrap
 
+                                    @media(max-width 1100px)
+                                        font-size 10px
+
                             .contractors-list
                                 display flex
+                                justify-content space-between
+                                width 100%
 
-                                .contractors-item
-                                    min-width 236px
+                                @media(max-width 990px)
+                                    justify-content space-around
 
                                 .contractors-content
                                     display flex
@@ -772,14 +953,23 @@ export default {
                                     .key-icon
                                         z-index 3
                                         position absolute
-                                        top 50px
+                                        top 54px
                                         left -10px
+
+                                        @media(max-width 860px)
+                                            top 46px
+
+                                        @media(max-width 620px)
+                                            display none
 
                                         &:nth-child(4)
                                             left -300px
 
                                     .contractors-info
                                         margin-left 8px
+
+                                        @media(max-width 990px)
+                                            display none
 
                                     .circle
                                         opacity 0.5
@@ -797,6 +987,9 @@ export default {
                                         color #34343e
                                         white-space nowrap
 
+                                        @media(max-width 1100px)
+                                            font-size 14px
+
                                     .subtitle
                                         margin 0
                                         font-family MuseoSansCyrl500
@@ -805,16 +998,28 @@ export default {
                                         color #34343e
                                         white-space nowrap
 
+                                        @media(max-width 1100px)
+                                            font-size 10px
+
                         .row-bottom
                             display flex
                             justify-content space-between
                             padding 0 66px
 
+                            @media(max-width 990px)
+                                padding 0 32px
+
+                            @media(max-width 860px)
+                                padding 0 24px
+
                             .date
                                 font-family MuseoSansCyrl500
                                 font-size 12px
                                 color #34343e
-                                margin-top 14px		
+                                margin-top 14px
+
+                                @media(max-width 860px)
+                                    font-size 10px
 
     .circle
         width 36px
@@ -944,6 +1149,10 @@ export default {
                 width 32px
                 height 2px
 
+                @media(max-width 620px)
+                    width 2px
+                    height 32px
+
             &:first-child, &:last-child
                 visibility hidden
 
@@ -1035,8 +1244,6 @@ export default {
 
             .form-checkbox, .form-radio
                 width 100%
-                max-height 138px
-                overflow-y scroll
 
                 .control
                     input:checked ~ .control-indicator
