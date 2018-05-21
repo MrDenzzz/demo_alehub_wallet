@@ -6,27 +6,27 @@
                 :rightMenu="rightMenu"/>
         <div class="info-header">
             <div class="info">
-                Date range: 
+                <span class="title">Contract period</span>
                 <span class="bold-text">{{ infoHeader.startDate}} - {{ infoHeader.finalDate }}</span>
             </div>
             <div class="info">
-                Name:
+                <span class="title">Name</span>
                 <span class="bold-text">{{ infoHeader.name }}</span> 
             </div>
             <div class="info">
-                Rating:
+                <span class="title">Rating</span>
                 <span class="bold-text">{{ infoHeader.rating }}</span> 
             </div>
             <div class="info">
-                Certification: 
+                <span class="title">Certification</span>
                 <span class="bold-text">{{ infoHeader.certification }}</span>
             </div>
             <div class="info">
-                Verified: 
+                <span class="title">Verified</span> 
                 <span class="bold-text">{{ infoHeader.verified }}</span>
             </div>
-            <div class="bold-text">
-                Verified by me
+            <div class="info">
+                <span class="bold-text">Verified by me</span>
             </div>
         </div>
         <div class="row-page">
@@ -64,7 +64,7 @@
                                     <div class="circle circle-gray" :class="{qa: qaIsActive}" @click="qaIsActive = !qaIsActive">
                                         <span class="title">QA</span>
                                     </div>
-                                    <div class="dialog" v-if="qaIsActive">
+                                    <!-- <div class="dialog" v-if="qaIsActive">
                                         <form>
                                             <div class="form-group">
                                                 <label>Name</label>
@@ -166,7 +166,7 @@
                                             </div>
                                         </form>
                                         <button class="buttons btn btn-yellow">Clear</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </button>
@@ -533,7 +533,7 @@ export default {
 <style lang="stylus">
     .contract-list
         background-color #f0f4fa
-        height 100vh
+        min-height 100vh
 
         .info-header
             display flex
@@ -541,15 +541,22 @@ export default {
             background-color #eceef1
 
             .info
-                font-family MuseoSansCyrl300
-                font-size 16px
-                font-weight 300
+                font-family MuseoSansCyrl500
+                font-size 12px
+                font-weight 500
                 color #34343e
                 margin-right 64px
+                display flex
+                flex-direction column
 
-            .bold-text
-                font-family MuseoSansCyrl500
-                font-weight bold
+                &:last-child
+                    align-self flex-end
+
+                .title
+                    opacity 0.5
+
+                .bold-text
+                    font-size 17px
 
         .row-page
             padding-top 32px
@@ -620,6 +627,7 @@ export default {
                             top 190px
                             left -6px
                             position absolute
+                            z-index 2
 
                             .triangle
                                 border 6px solid transparent
@@ -631,13 +639,14 @@ export default {
                             flex-direction column
 
                         .selected-area
-                            background-image linear-gradient(to bottom, #f0e5c2, #dfd1a2)
+                            background-image linear-gradient(to bottom, rgba(255, 224, 130, 0.3), rgba(255, 210, 79, 0.3))
                             border solid 1px #ffd24f
                             height 312px
                             position absolute 
                             width 36px
                             top 58px
                             left -1px
+                            z-index 1
 
             .search-result
                 padding-left 100px
@@ -659,28 +668,28 @@ export default {
                         padding 10px
 
                         &.completed
-                            background-image linear-gradient(to right, #f0f4f4, #f0f3f2)
+                            background-image linear-gradient(to right, rgba(255, 224, 130, 0.1), rgba(254, 211, 85, 0.1))
                             border-style solid 
                             border-width 2px
                             -webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
                             border-image linear-gradient(to right, #ffe082, #fed355) 1
 
                         &.ongoing
-                            background-image linear-gradient(to right, #e8f4f5, #e7f3f2)
+                            background-image linear-gradient(to right, rgba(87, 222, 151, 0.1), rgba(43, 214, 92, 0.1))
                             border-style solid 
                             border-width 2px
                             -webkit-border-image linear-gradient(to right, #57de97, #2bd65c) 1
                             border-image linear-gradient(to right, #57de97, #2bd65c) 1
 
                         &.timelag
-                            background-image linear-gradient(to right, #f1eef4, #f0ecf2)
+                            background-image linear-gradient(to right, rgba(255, 130, 130, 0.1), rgba(255, 79, 79, 0.1))
                             border-style solid 
                             border-width 2px
                             -webkit-border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
                             border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
 
                         &.canceled
-                            background-image linear-gradient(to right, #e4e7ed, #e6e8ee)
+                            background-image linear-gradient(to right, rgba(51, 26, 26, 0.1), rgba(51, 16, 16, 0.1))
                             border-style solid 
                             border-width 2px
                             -webkit-border-image linear-gradient(to right, #331a1a, #331010) 1
@@ -1060,6 +1069,63 @@ export default {
                         span:first-letter
                             color #ab7713
 
+// Dark Theme
+
+    .dark
+        .contract-list
+            background-color #4a4e65
+
+            .info-header
+                background-color #3f435e
+
+                .info
+                    color #fcfcfc
+
+            .row-page
+                .search-result
+                    .progress-list
+                        .progress-item
+                            .row-top
+                                .project-info
+                                    .title, .subtitle
+                                        color #fcfcfc
+
+                                .contractors-list
+                                    .contractors-content
+                                        .title, .subtitle
+                                            color #fcfcfc
+
+                            .progress-row
+                                .progress-bar
+                                    background-image linear-gradient(to right, #3a3a4a, #272730)
+
+                                    .step
+                                        border-color #272730
+
+                            .row-bottom
+                                .date
+                                    color #fcfcfc
+
+                .sidebar
+                    .vertical-progress
+                        .whole-line
+                            background-image linear-gradient(to bottom, #3a3a4a, #272730)
+                            border-color #272730
+
+                            .selected-area
+                                border-color #8a7643
+
+            .dividers-container
+                .divider
+                    background-color #272730
+
+            .circle
+                .title, .subtitle
+                    color #34343e
+
+                &.qa, &.ts, &.ts-exec, &.check
+                    .title
+                        color #fcfcfc
 </style>
 
 
