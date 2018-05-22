@@ -106,12 +106,21 @@
         },
         data() {
             return {
-                messagesList: [{
-                    isMyMessage: true,
-                    date: '30 Mar',
-                    time: '23:56',
-                    text: 'What does this mean: Unknown Exception?'
-                }],
+                messagesList: [
+                    {
+                        isMyMessage: true,
+                        date: '30 Mar',
+                        time: '23:56',
+                        text: 'What does this mean: Unknown Exception?'
+                    },
+                    {
+                        isMyMessage: false,
+                        date: '30 Mar',
+                        time: '23:57',
+                        text: 'You are programmer here, I don’t know'
+                    },
+
+                ],
                 isSuccessNotif: true,
                 newTransaction: false,
                 rightMenu: {

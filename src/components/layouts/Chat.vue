@@ -2,15 +2,43 @@
     <div class="chat">
         <transition name="fade">
             <div class="chat-panel" v-if="isOpenChatPanel">
-                <div class="panel-heading">
-                    <div class="panel-info">
-                        <img src="../../../static/img/avatar.svg" alt="" class="panel-picture" />
-                        <div class="panel-title">
-                            <h3 class="title">Tim Colleg</h3>
-                            <span class="subtitle">Quality Assurance</span>
+                <div class="panel-heading" @click="toggleActionsPanel">
+                    <div class="panel-wrap">
+                        <div class="panel-info">
+                            <img src="../../../static/img/avatar.svg" alt="" class="panel-picture" />
+                            <div class="panel-title">
+                                <h3 class="title">Tim Colleg</h3>
+                                <span class="subtitle">Quality Assurance</span>
+                            </div>
+                        </div>
+                        <div class="close-panel" @click="toggleChatPanel"></div>
+                    </div>
+                    <div class="divider" v-if="showActionsPanel"></div>
+                    <div class="panel-actions" v-if="showActionsPanel" @click.stop.prevent>
+                        <div class="actions-btn" v-if="!showSearch">
+                            <div class="search-btn" @click="showSearch = !showSearch">
+                                <img src="../../../static/img/search.svg" alt="" width="15px" height="15px">
+                                <span>Search</span>
+                            </div>
+                            <div class="parameters-btn">
+                                <img src="../../../static/img/parameters.svg" alt="">
+                                <span>Parameters</span>
+                            </div>
+                        </div>
+                        <div class="chat-search" v-if="showSearch">
+                            <div class="search">
+                                <img src="../../../static/img/search.svg" alt="" width="15px" height="15px">
+                                <input type="text" placeholder="Search in chat...">
+                            </div>
+                            <div class="search-btn">
+                                <div class="cancel">
+                                    Cancel
+                                </div>
+                                <img src="../../../static/img/next.svg" alt="">
+                                <img src="../../../static/img/prev.svg" alt="">
+                            </div>
                         </div>
                     </div>
-                    <div class="close-panel" @click="toggleChatPanel"></div>
                 </div>
 
                 <div class="panel-body" id="chat-panel">
@@ -54,8 +82,11 @@
                         <div class="subtitle" v-if="chat.numberOfParticipants">{{ chat.numberOfParticipants }} participants</div>
                         <div class="subtitle" v-else>{{ chat.type }}</div>
                     </div>
-                    <div class="circle" :style="{'background-image': 'linear-gradient(' + chat.bg + ')'}">
+                    <div class="circle" v-if="chat.bg" :style="{'background-image': 'linear-gradient(' + chat.bg + ')'}">
                         <span>{{ chat.abbr }}</span>
+                    </div>
+                    <div class="circle" v-else>
+                        <img :src="chat.avatar" alt="" width="48px">
                     </div>
                 </div>
                 <div class="chats-item">
@@ -83,6 +114,8 @@ export default {
             messageText: '',
             isNewMessage: false,
             showChats: false,
+            showActionsPanel: false,
+            showSearch: false,
             chats: [
                 {
                     name: 'Masters of sync',
@@ -110,7 +143,8 @@ export default {
                 },
                 {
                     name: 'Tim Colleg',
-                    type: 'Quality Assurance'
+                    type: 'Quality Assurance',
+                    avatar: '../../../static/img/avatars/qa.svg'
                 },
                 {
                     name: 'Thorsten & Co',
@@ -140,6 +174,12 @@ export default {
             }
             this.isOpenChatPanel = !this.isOpenChatPanel;
             this.showChats = false;
+            this.showActionsPanel = false;
+            this.showSearch = false;
+        },
+        toggleActionsPanel: function() {
+            this.showActionsPanel = !this.showActionsPanel;
+            this.showSearch = false;
         },
         sendMessage () {
             if(this.messageText.length === 0) {
@@ -275,52 +315,117 @@ export default {
             height 530px
             margin-right 18px
             border-radius 8px
-            background-image linear-gradient(to right, #e9b2fe, #b54efd)
-            box-shadow 0 0 16px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.24)
+            background-image linear-gradient(to right, #6b6b6b, #222222)
+            box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
 
             .panel-heading
                 width 100%
                 height auto
                 padding 12px
                 display flex
-                justify-content space-between
+                flex-direction column
 
-                .close-panel
-                    width 15px
-                    height 15px
-                    background-image url('../../../static/img/close-ic.svg')
-                    background-size contain
-                    background-repeat no-repeat
+                .divider
+                    height 1px
+                    background-color #e5e9ed
+                    opacity 0.3
+                    margin 12px 0
 
-                .panel-info
-                    display flex
+                .panel-actions
+                    height 22px
 
-                    .panel-picture
-                        width 48px
-                        height 48px
-
-                    .panel-title
-                        margin-left 18px
-
-                        .title
-                            margin 0
+                    .actions-btn
+                        align-items center
+                        display flex
+                    
+                        .search-btn, .parameters-btn
+                            width 50%
+                            display flex
+                            justify-content center
+                            align-items center
                             font-family MuseoSansCyrl300
-                            font-size 21px
-                            font-weight bold
-                            line-height 1.29
+                            font-size 14px
+                            opacity 0.8
                             color #ffffff
 
-                        .subtitle
-                            opacity 0.8
-                            font-family: MuseoSansCyrl300
-                            font-size 15px
-                            font-weight 500
-                            color #ffffff
+                            img
+                                margin-right 6px
+                                
+                    .chat-search
+                        display flex
+                        align-items center
+                        justify-content space-between
+                        color #ffffff
+
+                        .cansel
+                            font-family MuseoSansCyrl500
+                            font-size 12px
+
+                        .search
+                            display flex
+                            align-items center
+
+                            input 
+                                opacity 0.5
+                                font-family MuseoSansCyrl300
+                                font-size 14px
+                                font-weight 300
+                                color #ffffff
+                                border none!important
+                                outline none
+                                margin-left 14px
+                                background transparent
+
+                                &::-webkit-input-placeholder
+                                    color #ffffff
+
+                        .search-btn
+                            display flex
+                            align-items center
+
+                            img
+                                margin-left 8px
+                    
+                .panel-wrap
+                    display flex
+                    justify-content space-between
+
+                    .close-panel
+                        width 15px
+                        height 15px
+                        background-image url('../../../static/img/close-ic.svg')
+                        background-size contain
+                        background-repeat no-repeat
+
+                    .panel-info
+                        display flex
+
+                        .panel-picture
+                            width 48px
+                            height 48px
+
+                        .panel-title
+                            margin-left 18px
+
+                            .title
+                                margin 0
+                                font-family MuseoSansCyrl300
+                                font-size 21px
+                                font-weight bold
+                                line-height 1.29
+                                color #ffffff
+
+                            .subtitle
+                                opacity 0.8
+                                font-family: MuseoSansCyrl300
+                                font-size 15px
+                                font-weight 500
+                                color #ffffff
 
             .panel-body
                 background-color #ffffff
                 width 100%
-                height calc(100% - 114px)
+                height calc(100% - 115px)
                 display flex
                 flex-direction column
                 overflow-x scroll
