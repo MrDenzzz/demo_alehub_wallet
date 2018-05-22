@@ -31,7 +31,7 @@
 
                 <div class="contractor-actions">
                     <button type="button" class="action action__task">
-                        <img src="../../static/img/calendar-ic.svg">
+                        <img src="../../static/img/calendar-ic-white.svg">
                     </button>
                     <button type="button" class="action action__chat">
                         <img src="../../static/img/chat-ic.svg">
