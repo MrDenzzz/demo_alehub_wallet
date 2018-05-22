@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="20px" viewBox="0 0 32 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>951AFB9A-84CA-49A9-83DD-58A692D6395C</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-1.11022302e-14%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FF8282" offset="0%"></stop>
+            <stop stop-color="#FF4F4F" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+        <g id="contract-list-vertical" transform="translate(-252.000000, -650.000000)" fill="url(#linearGradient-1)" stroke="url(#linearGradient-1)" stroke-width="4">
+            <g id="Group" transform="translate(204.000000, 120.000000)">
+                <g id="contract" transform="translate(40.000000, 472.000000)">
+                    <g id="arrow" transform="translate(10.000000, 60.000000)">
+                        <path d="M0,8 L28,8" id="Path-28"></path>
+                        <polyline id="Path-29" points="20 16 28 8 20 0"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
