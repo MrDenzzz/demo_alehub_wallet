@@ -30,7 +30,6 @@
 
                     </div>
                 </div>
-
                 <div class="panel-footer">
                     <div class="panel-form">
                         <div class="form-message">
@@ -47,16 +46,29 @@
                 </div>
             </div>
         </transition>
-        <div class="toggle-chat" @click="toggleChatPanel" :class="{ 'pulse-anime': isNewMessage === true}">
-            <div class="triangle-top"></div>
-            <div class="chats">
-                <div class="circle" v-for="chat in chats" :key="chat.id"></div>
-                <div class="circle">
-                    <div class="add-icon"></div>
+        <div class="buttons-group">
+            <div class="chats" v-if="showChats && !isOpenChatPanel">
+                <div class="chats-item" v-for="chat in chats" :key="chat.id">
+                    <div class="chats-info">
+                        <div class="title">{{ chat.name }}</div>
+                        <div class="subtitle" v-if="chat.numberOfParticipants">{{ chat.numberOfParticipants }} participants</div>
+                        <div class="subtitle" v-else>{{ chat.type }}</div>
+                    </div>
+                    <div class="circle" :style="{'background-image': 'linear-gradient(' + chat.bg + ')'}">
+                        <span>{{ chat.abbr }}</span>
+                    </div>
+                </div>
+                <div class="chats-item">
+                    <div class="circle">
+                        <div class="add-icon"></div>
+                    </div>
                 </div>
             </div>
-            <div class="chat-icon"></div>
-            <div class="triangle-bottom"></div>
+            <div class="triangle-top" v-if="!showChats && !isOpenChatPanel" @click="showChats = !showChats"></div>
+            <div class="toggle-chat" @click="toggleChatPanel" :class="{ 'pulse-anime': isNewMessage === true}">
+                <div class="chat-icon"></div>
+            </div>
+            <div class="triangle-bottom" v-if="showChats && !isOpenChatPanel" @click="showChats = !showChats"></div>
         </div>
     </div>
 </template>
@@ -70,22 +82,31 @@ export default {
             isOpenChatPanel: false,
             messageText: '',
             isNewMessage: false,
+            showChats: false,
             chats: [
                 {
                     name: 'Masters of sync',
-                    numberOfParticipants: 3
+                    numberOfParticipants: 3,
+                    bg: 'to right, #73d7ff, #2ba3f7',
+                    abbr: 'MS'
                 },
                 {
                     name: 'After party',
-                    numberOfParticipants: 5
+                    numberOfParticipants: 5,
+                    bg: 'to right, #a1df7e, #56d36a',
+                    abbr: 'AP'
                 },
                 {
                     name: 'Gathering requirements',
-                    numberOfParticipants: 17
+                    numberOfParticipants: 17,
+                    bg: 'to right, #c07b44, #b63c2c',
+                    abbr: 'GR'
                 },
                 {
                     name: 'Re-Calculations',
-                    numberOfParticipants: 3
+                    numberOfParticipants: 3,
+                    bg: 'to right, #b46dd0, #7e20c0',
+                    abbr: 'RC'
                 },
                 {
                     name: 'Tim Colleg',
@@ -118,6 +139,7 @@ export default {
                 this.isNewMessage = false;
             }
             this.isOpenChatPanel = !this.isOpenChatPanel;
+            this.showChats = false;
         },
         sendMessage () {
             if(this.messageText.length === 0) {
@@ -149,44 +171,66 @@ export default {
         bottom 24px
         display flex
         align-items flex-end
+        cursor pointer
 
-        .toggle-chat
-            width 48px
-            height 48px
-            background-color #aab7c7
-            box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24);
-            border-radius 50%
-            display flex
-            justify-content center
-            align-items center
-
-            &.pulse-anime
-                animation pulse 1s linear infinite
-
-            .chat-icon
-                width 24px
-                height 24px
-                background-image url('../../../static/img/chat-ic.svg')
-                background-size contain
-                background-repeat no-repeat
+        .buttons-group
+            position relative
 
             .triangle-top
                 border 6px solid transparent
                 border-bottom 6px solid #aab7c7 
                 position absolute
-                top -18px 
+                top -18px
+                left 18px 
 
             .triangle-bottom
                 border 6px solid transparent
                 border-top 6px solid #aab7c7 
                 position absolute
-                bottom -18px 
+                bottom -18px
+                left 18px 
 
             .chats
                 display flex
                 flex-direction column
                 position absolute 
                 bottom 58px
+                right 0
+
+                .chats-item
+                    display flex
+                    justify-content space-between
+                    align-items center
+                    margin-top 12px
+
+                    &:last-child
+                        justify-content flex-end
+
+                    .chats-info
+                        display flex
+                        flex-direction column
+                        align-items flex-end
+                        font-family MuseoSansCyrl500
+                        font-weight 500
+                        color #34343e
+                        width 140px
+                        margin-right 8px
+
+                        .title
+                            font-size 12px
+                            white-space nowrap
+
+                        .subtitle
+                            font-size 8px
+                            white-space nowrap
+
+                    .circle
+                        box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
+
+                        span 
+                            font-family MuseoSansCyrl500
+                            font-size 16px
+                            color #fcfcfc
 
                 .add-icon
                     width 20px
@@ -195,19 +239,36 @@ export default {
                     background-size contain
                     background-repeat no-repeat
 
-                .circle
-                    margin-top 12px
+            .toggle-chat
+                width 48px
+                height 48px
+                background-color #aab7c7
+                box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24);
+                border-radius 50%
+                display flex
+                justify-content center
+                align-items center
 
-            @keyframes pulse
-                0%
-                    transform: scale(1, 1)
-                50%
-                    transform: scale(1.1, 1.1)
-                100%
-                    transform: scale(1, 1)
+                &.pulse-anime
+                    animation pulse 1s linear infinite
 
-            &:hover
-                box-shadow 0 0 16px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.24)
+                .chat-icon
+                    width 24px
+                    height 24px
+                    background-image url('../../../static/img/chat-ic.svg')
+                    background-size contain
+                    background-repeat no-repeat
+
+                @keyframes pulse
+                    0%
+                        transform: scale(1, 1)
+                    50%
+                        transform: scale(1.1, 1.1)
+                    100%
+                        transform: scale(1, 1)
+
+                &:hover
+                    box-shadow 0 0 16px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.24)
 
         .chat-panel
             width 340px

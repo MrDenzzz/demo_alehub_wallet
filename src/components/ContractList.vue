@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div>
-                <img src="../../static/img/menu.svg" alt="">
+                <img :src="getIcon('menu')" alt="">
             </div>
         </div>
         <div class="row-page">
@@ -496,6 +496,11 @@ export default {
             }
         }
     },
+    computed: {
+        selectedTheme() {
+            return this.$store.state.Themes.theme;
+        }
+    },
     methods: {
         toFormatDate: function (date) {
             let dateFormat = new Date(date);
@@ -515,6 +520,9 @@ export default {
                 default:
                     return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
             }
+        },
+        getIcon: function (name) {
+            return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
         },
         checkContractorType: function (type) {
             switch (type) {
@@ -538,7 +546,9 @@ export default {
 <style lang="stylus">
     .contract-list
         background-color #f0f4fa
-        // min-height 100vh
+
+        @media(max-width 620px)
+            overflow-x hidden
 
         .info-header
             padding 87px 32px 23px 110px
@@ -643,6 +653,7 @@ export default {
                                 border 6px solid transparent
                                 border-left 6px solid #34343e
                                 left 15px
+                                top unset
 
                     .circle-bottom
                         bottom -18px
@@ -697,8 +708,8 @@ export default {
                             width 100%
                             height 36px
 
-                        @media(max-width 620px)
-                            background-image linear-gradient(to right, #3a3a4a, #272730)
+                        @media(max-width 768px)
+                            background-image linear-gradient(to right, #e7eaee, #bcc5d1)
 
                         .marker-calendar-top
                             left -50px
@@ -754,7 +765,7 @@ export default {
                         .dividers-container
                             flex-direction column
 
-                            @media(max-width 620px)
+                            @media(max-width 768px)
                                 flex-direction row
 
                         .selected-area
@@ -1150,7 +1161,7 @@ export default {
                 width 32px
                 height 2px
 
-                @media(max-width 620px)
+                @media(max-width 768px)
                     width 2px
                     height 32px
 
@@ -1319,6 +1330,9 @@ export default {
                         .whole-line
                             background-image linear-gradient(to bottom, #3a3a4a, #272730)
                             border-color #272730
+
+                            @media(max-width 768px)
+                                background-image linear-gradient(to right, #3a3a4a, #272730)
 
                             .selected-area
                                 border-color #8a7643
