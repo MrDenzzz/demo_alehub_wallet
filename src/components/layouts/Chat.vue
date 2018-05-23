@@ -5,39 +5,89 @@
                 <div class="panel-heading" @click="toggleActionsPanel">
                     <div class="panel-wrap">
                         <div class="panel-info">
-                            <img src="../../../static/img/avatar.svg" alt="" class="panel-picture" />
+                            <div class="circle panel-avatar">
+                                <span>MS</span>
+                            </div>
                             <div class="panel-title">
-                                <h3 class="title">Tim Colleg</h3>
-                                <span class="subtitle">Quality Assurance</span>
+                                <h3 class="title">{{ chats[0].name }}</h3>
+                                <span class="subtitle">{{ chats[0].numberOfParticipants }} participants</span>
                             </div>
                         </div>
                         <div class="close-panel" @click="toggleChatPanel"></div>
                     </div>
-                    <div class="divider" v-if="showActionsPanel"></div>
-                    <div class="panel-actions" v-if="showActionsPanel" @click.stop.prevent>
-                        <div class="actions-btn" v-if="!showSearch">
-                            <div class="search-btn" @click="showSearch = !showSearch">
+                    <div class="panel-actions" v-if="showActionsPanel" @click.stop.prevent :class="{'whole-height': isOpenCreateChat}">
+                        <div class="divider"></div>
+                        <div class="actions-btn" v-if="!showChatSearch && !showParameters">
+                            <div class="search-btn" @click="showChatSearch = !showChatSearch">
                                 <img src="../../../static/img/search.svg" alt="" width="15px" height="15px">
                                 <span>Search</span>
                             </div>
-                            <div class="parameters-btn">
+                            <div class="parameters-btn" @click="showParameters = !showParameters">
                                 <img src="../../../static/img/parameters.svg" alt="">
                                 <span>Parameters</span>
                             </div>
                         </div>
-                        <div class="chat-search" v-if="showSearch">
+                        <div class="chat-search" v-if="showChatSearch">
                             <div class="search">
                                 <img src="../../../static/img/search.svg" alt="" width="15px" height="15px">
-                                <input type="text" placeholder="Search in chat...">
+                                <input class="input" type="text" placeholder="Search in chat...">
                             </div>
                             <div class="search-btn">
-                                <div class="cancel">
+                                <div class="cancel" @click="showChatSearch = false">
                                     Cancel
                                 </div>
                                 <img src="../../../static/img/next.svg" alt="">
                                 <img src="../../../static/img/prev.svg" alt="">
                             </div>
                         </div>
+                        <div class="parameters" v-if="showParameters">
+                            <div class="one-line">
+                                <span>Chat name</span>
+                                <div class="chat-name">
+                                    <input class="input" type="text" :placeholder="chats[0].name">
+                                    <div class="divider"></div>
+                                </div>
+                            </div>
+                            <div class="participants">
+                                <div class="participants-number">{{ chats[0].numberOfParticipants }} participants</div>
+                                <div class="one-line" v-for="participant in chats[0].participants">
+                                    <div class="circle" :style="{'background-image': 'linear-gradient(' + participant.bg + ')'}">
+                                        <span>{{ participant.abbr }}</span>
+                                    </div>
+                                    <div class="participant-info">
+                                        <div class="title">{{ participant.name }}</div>
+                                        <div class="subtitle">{{ participant.type }}
+                                        </div>
+                                        <div class="divider"></div>
+                                    </div>
+                                </div>
+                                <div class="add-participant" v-if="!showParticipantSearch" @click="showParticipantSearch = !showParticipantSearch">
+                                    <img src="../../../static/img/add-participant.svg" alt="">
+                                    <span>Add participant</span>
+                                </div>
+                            </div>
+                            <div class="participant-search" v-if="showParticipantSearch">
+                                <div class="one-line">
+                                    <div class="search">
+                                        <img src="../../../static/img/search.svg" alt="">
+                                        <input class="input" type="text" placeholder="Search participant">
+                                    </div>
+                                    <div class="cancel" @click="showParticipantSearch = false">Cancel</div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="found-participants">
+                                    <div class="circle" style="">
+                                        <span>LA</span>
+                                    </div>
+                                    <div class="participant-info">
+                                        <div class="title">Last assurance</div>
+                                        <div class="subtitle">Final check
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="create-btn btn btn-yellow" v-if="isOpenCreateChat">Create</button>
                     </div>
                 </div>
 
@@ -90,7 +140,7 @@
                     </div>
                 </div>
                 <div class="chats-item">
-                    <div class="circle">
+                    <div class="circle" @click="toggleCreateChat">
                         <div class="add-icon"></div>
                     </div>
                 </div>
@@ -115,13 +165,36 @@ export default {
             isNewMessage: false,
             showChats: false,
             showActionsPanel: false,
-            showSearch: false,
+            showChatSearch: false,
+            showParameters: false,
+            showParticipantSearch: false,
+            isOpenCreateChat: false,
             chats: [
                 {
                     name: 'Masters of sync',
                     numberOfParticipants: 3,
                     bg: 'to right, #73d7ff, #2ba3f7',
-                    abbr: 'MS'
+                    abbr: 'MS',
+                    participants: [
+                        {
+                            name: 'Effective Energy',
+                            type: 'Owner',
+                            abbr: 'EE',
+                            bg: 'to right, #a1df7e, #56d36a'
+                        },
+                        {
+                            name: 'Thorsten & Co',
+                            type: 'Check',
+                            abbr: 'TH',
+                            bg: 'to right, #ddc41c, #e09a00'
+                        },
+                        {
+                            name: 'Tim Colleg',
+                            type: 'Quality Assurance',
+                            abbr: 'TC',
+                            bg: 'to right, #b46dd0, #7e20c0'
+                        }
+                    ]
                 },
                 {
                     name: 'After party',
@@ -175,11 +248,21 @@ export default {
             this.isOpenChatPanel = !this.isOpenChatPanel;
             this.showChats = false;
             this.showActionsPanel = false;
-            this.showSearch = false;
+            this.showChatSearch = false;
+            this.showParticipantSearch = false;
+            this.isOpenCreateChat = false;
         },
         toggleActionsPanel: function() {
             this.showActionsPanel = !this.showActionsPanel;
-            this.showSearch = false;
+            this.showChatSearch = false;
+            this.showParameters = false;
+            this.showParticipantSearch = false;
+        },
+        toggleCreateChat: function() {
+            this.isOpenCreateChat = true;
+            this.isOpenChatPanel = true;
+            this.showActionsPanel = true;
+            this.showParameters = true;
         },
         sendMessage () {
             if(this.messageText.length === 0) {
@@ -268,8 +351,7 @@ export default {
                         box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
 
                         span 
-                            font-family MuseoSansCyrl500
-                            font-size 16px
+                            font-size 22px
                             color #fcfcfc
 
                 .add-icon
@@ -316,7 +398,6 @@ export default {
             margin-right 18px
             border-radius 8px
             background-image linear-gradient(to right, #6b6b6b, #222222)
-            box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
 
             .panel-heading
                 width 100%
@@ -324,15 +405,28 @@ export default {
                 padding 12px
                 display flex
                 flex-direction column
+                max-width 340px
 
                 .divider
                     height 1px
                     background-color #e5e9ed
                     opacity 0.3
-                    margin 12px 0
+                    margin 0 0 12px
 
                 .panel-actions
-                    height 22px
+                    padding 0 12px 12px
+                    position fixed
+                    background-image linear-gradient(to right, #6b6b6b, #222)
+                    margin-top 60px
+                    right 90px
+                    width 100%
+                    max-width inherit
+                    z-index 3
+
+                    &.whole-height
+                        height 460px
+                        border-bottom-left-radius 8px
+                        border-bottom-right-radius 8px
 
                     .actions-btn
                         align-items center
@@ -348,6 +442,11 @@ export default {
                             opacity 0.8
                             color #ffffff
 
+                            .cancel
+                                font-family MuseoSansCyrl500
+                                font-size 12px
+                                font-weight 500
+
                             img
                                 margin-right 6px
                                 
@@ -357,27 +456,19 @@ export default {
                         justify-content space-between
                         color #ffffff
 
-                        .cansel
+                        .cancel
                             font-family MuseoSansCyrl500
-                            font-size 12px
+                            font-size 16px
 
                         .search
                             display flex
                             align-items center
 
-                            input 
-                                opacity 0.5
+                            .input 
                                 font-family MuseoSansCyrl300
                                 font-size 14px
                                 font-weight 300
-                                color #ffffff
-                                border none!important
-                                outline none
                                 margin-left 14px
-                                background transparent
-
-                                &::-webkit-input-placeholder
-                                    color #ffffff
 
                         .search-btn
                             display flex
@@ -385,7 +476,146 @@ export default {
 
                             img
                                 margin-left 8px
-                    
+
+                    .create-btn
+                        width 100%
+                        height 38px
+                        font-size 16px
+
+                    .parameters
+                        display flex
+                        flex-direction column
+
+                        .one-line
+                            display flex
+
+                            .chat-name
+                                width 100%
+
+                            span
+                                font-family MuseoSansCyrl500
+                                font-size 16px
+                                color #ffffff
+                                margin-right 12px
+                                white-space nowrap
+
+                            .input
+                                margin-bottom 4px
+                                width 100%
+
+                        .divider
+                            height 1px
+                            background-color #e5e9ed
+                            opacity 0.1
+
+                        .participants
+                            .participants-number
+                                font-family MuseoSansCyrl500
+                                opacity 0.5
+                                color #ffffff
+                                font-size 12px
+                                margin-bottom 10px
+
+                            .circle
+                                width 36px
+                                height 36px
+                                min-width 36px
+                                box-shadow none
+
+                                span
+                                    margin 0
+                                    font-size 14px
+
+                            .participant-info
+                                display flex
+                                flex-direction column
+                                justify-content center
+                                margin-left 8px
+                                width 100%
+
+                                .divider
+                                    margin-top 6px
+
+                                .title
+                                    font-family MuseoSansCyrl500
+                                    color #ffffff
+                                    font-size 14px
+
+                                .subtitle
+                                    font-family MuseoSansCyrl500
+                                    color #ffffff
+                                    font-size 12px
+                                    opacity 0.5
+
+                            .add-participant
+                                display flex
+                                align-items center
+
+                                span
+                                    font-family MuseoSansCyrl500
+                                    font-size 14px
+                                    color #ffffff
+
+                                img
+                                    width 16px
+                                    height 16px
+                                    margin 0 18px 0 10px
+
+                        .participant-search
+                            display flex
+                            flex-direction column
+
+                            .divider
+                                margin-left 42px
+
+                            .one-line
+                                justify-content space-between
+
+                            .cancel
+                                font-family MuseoSansCyrl500
+                                font-size 14px
+                                color #ffffff
+
+                            .search
+                                display flex
+                                align-items center
+
+                                img
+                                    width 16px
+                                    height 16px
+                                    margin 0 18px 10px 10px
+
+                                .input
+                                    font-size 14px
+                                    margin-bottom 10px
+
+                            .found-participants
+                                margin-left 44px
+                                display flex
+
+                                .circle
+                                    width 36px
+                                    height 36px
+                                    background-image linear-gradient(to right, #7edf96, #56d3b7)
+
+                                    span
+                                        margin 0
+                                        font-size 14px
+                                        color #ffffff
+                                
+                                .participant-info
+                                    margin-left 12px
+
+                                    .title
+                                        font-family MuseoSansCyrl500
+                                        color #ffffff
+                                        font-size 14px
+
+                                    .subtitle
+                                        font-family MuseoSansCyrl500
+                                        color #ffffff
+                                        font-size 12px
+                                        opacity 0.5
                 .panel-wrap
                     display flex
                     justify-content space-between
@@ -400,25 +630,30 @@ export default {
                     .panel-info
                         display flex
 
-                        .panel-picture
-                            width 48px
-                            height 48px
+                        .panel-avatar
+                            background-image linear-gradient(to right, #73d7ff, #2ba3f7)
+                            box-shadow none
+
+                            span 
+                                font-family MuseoSansCyrl500
+                                font-size 22px
+                                color #fcfcfc
 
                         .panel-title
                             margin-left 18px
 
                             .title
                                 margin 0
-                                font-family MuseoSansCyrl300
-                                font-size 21px
+                                font-family MuseoSansCyrl500
+                                font-size 20px
                                 font-weight bold
                                 line-height 1.29
                                 color #ffffff
 
                             .subtitle
                                 opacity 0.8
-                                font-family: MuseoSansCyrl300
-                                font-size 15px
+                                font-family: MuseoSansCyrl500
+                                font-size 14px
                                 font-weight 500
                                 color #ffffff
 
@@ -544,9 +779,32 @@ export default {
         height 48px
         background-image none 
         background-color #aab7c7
-        box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
         display flex
-        justify-content center
         align-items center
+        justify-content center
+        box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
+
+            span
+                font-size 20px
+                font-family MuseoSansCyrl500
+                color #ffffff
+
+    .input
+        font-family MuseoSansCyrl500
+        font-size 16px
+        color #ffffff
+        border none!important
+        outline none
+        background transparent
+        opacity 0.5
+
+        &::-webkit-input-placeholder
+            color #ffffff
+
+        &::-moz-input-placeholder
+            color #ffffff
+
+        &::-ms-input-placeholder
+            color #ffffff
     
 </style>
