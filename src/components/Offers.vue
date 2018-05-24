@@ -307,6 +307,8 @@
     import Navbar from './layouts/Navbar';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
 
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'Offers',
         components: {
@@ -315,7 +317,7 @@
         },
         data() {
             return {
-                //мб во вьюкс
+                // currentContractorId: null,
                 openedContractorDialog: false,
                 clickCoordinates: {
                     top: false,
@@ -334,6 +336,7 @@
                         steps: 10,
                         contractors: [
                             {
+                                id: 1,
                                 initials: 'VD',
                                 name: 'Vova Dmitrov',
                                 src: '../../static/img/logo/telegram.png',
@@ -350,6 +353,7 @@
                                 ]
                             },
                             {
+                                id: 2,
                                 initials: 'DV',
                                 name: 'Deus Virus',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -366,6 +370,7 @@
                                 ]
                             },
                             {
+                                id: 3,
                                 initials: 'NG',
                                 name: 'Nicola Glumac',
                                 src: false,
@@ -376,6 +381,7 @@
                                 ]
                             },
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -397,6 +403,7 @@
                         steps: 8,
                         contractors: [
                             {
+                                id: 5,
                                 initials: 'QB',
                                 name: 'Quality Boy',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -406,6 +413,7 @@
                                 ]
                             },
                             {
+                                id: 6,
                                 initials: 'GA',
                                 name: 'Galvadon',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -415,6 +423,7 @@
                                 ]
                             },
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -436,6 +445,7 @@
                         steps: 1,
                         contractors: [
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -454,6 +464,7 @@
                         steps: 1,
                         contractors: [
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -472,6 +483,7 @@
                         steps: 10,
                         contractors: [
                             {
+                                id: 1,
                                 initials: 'VD',
                                 name: 'Vova Dmitrov',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -481,6 +493,7 @@
                                 ]
                             },
                             {
+                                id: 2,
                                 initials: 'DV',
                                 name: 'Deus Virus',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -490,6 +503,7 @@
                                 ]
                             },
                             {
+                                id: 3,
                                 initials: 'NG',
                                 name: 'Nicola Glumac',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -500,6 +514,7 @@
                                 ]
                             },
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -521,6 +536,7 @@
                         steps: 8,
                         contractors: [
                             {
+                                id: 5,
                                 initials: 'QB',
                                 name: 'Quality Boy',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -530,6 +546,7 @@
                                 ]
                             },
                             {
+                                id: 6,
                                 initials: 'GA',
                                 name: 'Galvadon',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -539,6 +556,7 @@
                                 ]
                             },
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -560,6 +578,7 @@
                         steps: 1,
                         contractors: [
                             {
+                                id: 4,
                                 initials: 'RC',
                                 name: 'Rift & Co',
                                 src: '../../static/img/logo/ubuntu.png',
@@ -595,20 +614,25 @@
                     horizontal: false,
                     list: [
                         {
-                            type: "link",
+                            type: 'link',
                             name: this.$t('pages.summary.rightMenu.summary'),
-                            link: "/"
+                            link: '/'
                         },
                         {
-                            type: "link",
+                            type: 'link',
                             name: this.$t('pages.summary.rightMenu.walletSettings'),
-                            link: "/wallet/settings"
+                            link: '/wallet/settings'
                         }
                     ]
                 },
             }
         },
         computed: {
+            ...mapGetters(
+                [
+                    'selectedContractor'
+                ]
+            ),
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
@@ -618,27 +642,40 @@
         },
         methods: {
             toggleContractorDialog: function (e, contractor) {
-                this.openedContractorDialog = !this.openedContractorDialog;
+                // this.openedContractorDialog = !this.openedContractorDialog;
 
-                if (this.openedContractorDialog) {
+                // this.currentContractorId = contractor.id;
+
+                if (!this.openedContractorDialog) {
+                    console.log(1);
+                    this.clickCoordinates.top = e.pageY;
+                    this.clickCoordinates.left = e.pageX;
+                    this.$store.dispatch('selectContractor',
+                        contractor
+                    ).then((resp) => {
+                        this.openedContractorDialog = true;
+                        //почитать ещё про промисы, then и catch
+                    }).catch(() => {
+                        console.log('reject 1')
+                    });
+
+                    return true;
+                } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
+                    console.log(2);
                     this.clickCoordinates.top = e.pageY;
                     this.clickCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
                         contractor
                     ).then(() => {
 
+                    }).catch(() => {
+                        console.log('reject 2')
                     });
-                } else {
-                    this.clickCoordinates = {
-                        top: false,
-                        left: false
-                    };
-                    this.$store.dispatch('selectContractor',
-                        contractor
-                    ).then(() => {
-
-                    });
+                    return true;
                 }
+                console.log(3);
+                this.openedContractorDialog = false;
+                return false;
             },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
@@ -1110,6 +1147,7 @@
                                             left -300px
 
                                     .contractors-info
+                                        cursor pointer
                                         margin-left 8px
 
                                         @media (max-width 990px)

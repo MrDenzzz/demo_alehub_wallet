@@ -24,7 +24,7 @@ const actions = {
     selectContractor: ({commit}, contractor) => {
         return new Promise((resolve) => {
             commit('SUCCESS_SELECT_CONTRACTOR', contractor);
-            resolve(resolve);
+            resolve('success select contractor');
         });
     },
 };

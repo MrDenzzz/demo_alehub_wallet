@@ -45,8 +45,8 @@
             <div class="dropdown-list" v-if="showMenu">
                 <div class="dropdown-item">Add document</div>
                 <div class="dropdown-item">Add contractor</div>
-                <div class="dropdown-item delete">Edit contract</div>
-                <div class="dropdown-item delete">Make a copy</div>
+                 <div class="dropdown-item delete">Edit contract</div>
+                 <div class="dropdown-item delete">Make a copy</div>
             </div>
         </div>
 
@@ -91,9 +91,9 @@
                             <div class="dropdown-item delete">Delete</div>
                         </div>
 
-                        <div class="circle small-circle" :class="'circle-' + att.status">
-                            <img :src="getStatusIcon(att.status)" alt="">
-                        </div>
+                         <div class="circle small-circle" :class="'circle-' + att.status">
+                             <img :src="getStatusIcon(att.status)" alt="">
+                         </div>
 
                         <img :src="att.icon" alt="document type">
 
@@ -154,7 +154,7 @@
                     status: 'On track'
                 },
                 contractors: [
-                    {
+                    {   
                         name: 'Thorsten & Co',
                         balance: 12335,
                         ready: 1,  //1 = 100% готовности
@@ -975,7 +975,7 @@
             &.start
                 top 215px
                 left 340px
-
+            
             &.final
                 top 215px
                 right 940px
@@ -1090,7 +1090,7 @@
                 top -24px
                 left 0
 
-    // Dark Theme
+// Dark Theme
     .dark
         .my-row-flex
             &::-webkit-scrollbar-thumb
@@ -1151,19 +1151,19 @@
 
             .dropdown-item
                 color #fcfcfc
-
+                
                 &:hover
                     background-color #3f435e
 
-    @media(max-width: 1024px)
-        .my-row-flex
-            flex-wrap wrap
-            .mycol
-                flex-basis 50%
+@media(max-width: 1024px)
+    .my-row-flex
+        flex-wrap wrap
+        .mycol
+            flex-basis 50%
 
-    @media(max-width: 520px)
-        .my-row-flex
-            .mycol
-                flex-basis 100%
+@media(max-width: 520px)
+    .my-row-flex
+        .mycol
+            flex-basis 100%
 
 </style>

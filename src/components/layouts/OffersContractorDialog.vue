@@ -8,16 +8,16 @@
             <img src="../../../static/img/star-off.svg" alt="save contractor">
         </div>
         <div class="header">
-            <div class="logo" v-if="contractor.src">
-                <img :src="contractor.src"
+            <div class="logo__wrap">
+                <img class="logo" :src="contractor.src"  v-if="contractor.src"
                      alt="">
-            </div>
 
-            <div class="placeholder" v-else
-                 :class="checkContractorType(contractor.type)">
-                <span class="initials">
-                    {{ contractor.initials }}
-                </span>
+                <div class="placeholder" v-else
+                     :class="checkContractorType(contractor.type)">
+                    <span class="initials">
+                        {{ contractor.initials }}
+                    </span>
+                </div>
             </div>
 
             <div class="info">
@@ -206,20 +206,24 @@
             display flex
             flex-direction row
 
-            .logo
-                flex-basis 40%
+            .logo__wrap
+                position relative
+                width 40%
 
-                img //поставить фиксированные размеры
-                    height 67px
+                .logo
+                    height 100%
+                    width auto
                     -webkit-clip-path circle(50% at center)
                     clip-path circle(50% at center)
 
-            .placeholder
-                -webkit-clip-path circle(50% at center)
-                clip-path circle(50% at center)
+                .placeholder
+                    height 67px
+                    width 67px
+                    -webkit-clip-path circle(50% at center)
+                    clip-path circle(50% at center)
 
-                .initials
-                    color #fcfcfc
+                    .initials
+                        color #fcfcfc
 
             .placeholder.ts
                 background-color #b63c2c
