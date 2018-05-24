@@ -14,7 +14,7 @@ import Notifications from '@/components/Notifications';
 import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
 import NotFound from '@/components/NotFound';
-import Offers from '@/components/Offers';
+// import Offers from '@/components/Offers';
 import Resume from '@/components/Resume';
 import NewOffer from '@/components/NewOffer';
 import Recover from '@/components/Recover';
@@ -22,8 +22,8 @@ import RecoverConfirm from '@/components/RecoverConfirm';
 import Recover2fa from '@/components/Recover2fa';
 import LoginTwoAuth from '@/components/LoginTwoAuth';
 import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
-import NewOffers from '@/components/NewOffers'
-import ContractList from '@/components/ContractList'
+import Offer from '@/components/Offer'
+import Offers from '@/components/Offers'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -68,133 +68,135 @@ const ifAuthenticated = (to, from, next) => {
     next('/login');
 };
 
-const router = new Router({
-    // mode: 'history',
-    routes: [
-        {
-            path: '/',
-            name: 'Summary',
-            component: Summary,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/registration',
-            name: 'Registration',
-            component: Registration,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/registration/confirmationuser/:token',  //set kebab case url
-            name: 'ConfirmationUser',
-            component: ConfirmationUser,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/confirmation-change-email/:token',
-            name: 'ConfirmationChangeEmail',
-            component: ConfirmationChangeEmail,
-            beforeEnter: ifAuthenticated
-        },
-        // {
-        //     path: '/registration/confirmationuser',
-        //     name: 'ConfirmationUser',
-        //     component: ConfirmationUser
-        // },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/login/twoauth',
-            name: 'LoginTwoAuth',
-            component: LoginTwoAuth,
-            beforeEnter: ifNotFirstStepAuthenticated
-        },
-        {
-            path: '/login/twoauth',
-            name: 'TwoAuth',
-            component: TwoAuth,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/recover-confirm/:token',
-            name: 'RecoverConfirm',
-            component: RecoverConfirm,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/recover',
-            name: 'Recover',
-            component: Recover,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/recover-twofactor',
-            name: 'Recover2fa',
-            component: Recover2fa,
-            beforeEnter: ifNotAuthenticated
-        },
-        {
-            path: '/wallet/settings',
-            name: 'WalletSettings',
-            component: WalletSettings,
-            beforeEnter: ifAuthenticated
-        },
-        // {
-        //     path: '/wallet',
-        //     redirect: '/',
-        // },
-        {
-            path: '/settings',
-            name: 'Settings',
-            component: Settings,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/notifications',
-            name: 'Notifications',
-            component: Notifications,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/newoffers',
-            name: 'NewOffers',
-            component: NewOffers,
-            beforeEnter: ifAuthenticated
-        },
-        // {
-        //     path: '/offers',
-        //     name: 'Offers',
-        //     component: Offers,
-        //     beforeEnter: ifAuthenticated
-        // },
-        // {
-        //     path: '/offers/new',
-        //     name: 'NewOffer',
-        //     component: NewOffer,
-        //     beforeEnter: ifAuthenticated
-        // },
-        // {
-        //     path: '/resume',
-        //     name: 'Resume',
-        //     component: Resume,
-        //     beforeEnter: ifAuthenticated
-        // },
-        {
-            path: '/contractlist',
-            name: 'ContractList',
-            component: ContractList,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '*',
-            name: 'NotFound',
-            component: NotFound
-        }
-    ]
-});
+const router = new Router(
+    {
+        // mode: 'history',
+        routes: [
+            {
+                path: '/',
+                name: 'Summary',
+                component: Summary,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/registration',
+                name: 'Registration',
+                component: Registration,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/registration/confirmationuser/:token',  //set kebab case url
+                name: 'ConfirmationUser',
+                component: ConfirmationUser,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/confirmation-change-email/:token',
+                name: 'ConfirmationChangeEmail',
+                component: ConfirmationChangeEmail,
+                beforeEnter: ifAuthenticated
+            },
+            // {
+            //     path: '/registration/confirmationuser',
+            //     name: 'ConfirmationUser',
+            //     component: ConfirmationUser
+            // },
+            {
+                path: '/login',
+                name: 'Login',
+                component: Login,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/login/twoauth',
+                name: 'LoginTwoAuth',
+                component: LoginTwoAuth,
+                beforeEnter: ifNotFirstStepAuthenticated
+            },
+            {
+                path: '/login/twoauth',
+                name: 'TwoAuth',
+                component: TwoAuth,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/recover-confirm/:token',
+                name: 'RecoverConfirm',
+                component: RecoverConfirm,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/recover',
+                name: 'Recover',
+                component: Recover,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/recover-twofactor',
+                name: 'Recover2fa',
+                component: Recover2fa,
+                beforeEnter: ifNotAuthenticated
+            },
+            {
+                path: '/wallet/settings',
+                name: 'WalletSettings',
+                component: WalletSettings,
+                beforeEnter: ifAuthenticated
+            },
+            // {
+            //     path: '/wallet',
+            //     redirect: '/',
+            // },
+            {
+                path: '/settings',
+                name: 'Settings',
+                component: Settings,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/notifications',
+                name: 'Notifications',
+                component: Notifications,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/offer',
+                name: 'Offer',
+                component: Offer,
+                beforeEnter: ifAuthenticated
+            },
+            // {
+            //     path: '/offers',
+            //     name: 'Offers',
+            //     component: Offers,
+            //     beforeEnter: ifAuthenticated
+            // },
+            // {
+            //     path: '/offers/new',
+            //     name: 'NewOffer',
+            //     component: NewOffer,
+            //     beforeEnter: ifAuthenticated
+            // },
+            // {
+            //     path: '/resume',
+            //     name: 'Resume',
+            //     component: Resume,
+            //     beforeEnter: ifAuthenticated
+            // },
+            {
+                path: '/offers',
+                name: 'offers',
+                component: Offers,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '*',
+                name: 'NotFound',
+                component: NotFound
+            }
+        ]
+    }
+);
 
 
 // router.beforeEach((to, from, next) => {

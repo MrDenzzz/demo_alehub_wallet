@@ -6,7 +6,7 @@ const state = {
         iconHeight: '20.5',
         name: 'wallet'
     }, {
-        path: '/newoffers',
+        path: '/offers',
         iconName: 'jobs-ic',
         iconWidth: '24.5',
         iconHeight: '20.5',

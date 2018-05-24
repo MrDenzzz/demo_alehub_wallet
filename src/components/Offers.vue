@@ -1,486 +1,1426 @@
 <template>
-    <div class="offers">
-        <Navbar
-                :title="$t('pages.jobOffers.navbarTitle')"
+    <div class="contract-list">
+        <navbar title="Contract List"
                 :isNavigate="true"
                 :isBalance="true"
-                :rightMenu="rightMenu"
-        />
-
-        <section class="main">
-            <div class="content nomenu">
-                <div class="container" v-if="offersStatus !== 'success'">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="spinner">
-                                <Spinner/>
-                            </div>
-                        </div>
-                    </div>
+                :rightMenu="rightMenu"/>
+        <div class="info-header">
+            <div class="info-wrap">
+                <div class="info">
+                    <span class="title">Contract period</span>
+                    <span class="bold-text">{{ infoHeader.startDate}} - {{ infoHeader.finalDate }}</span>
                 </div>
+                <div class="info">
+                    <span class="title">Name</span>
+                    <span class="bold-text">{{ infoHeader.name }}</span>
+                </div>
+                <div class="info">
+                    <span class="title">Rating</span>
+                    <span class="bold-text">{{ infoHeader.rating }}</span>
+                </div>
+                <div class="info">
+                    <span class="title">Certification</span>
+                    <span class="bold-text">{{ infoHeader.certification }}</span>
+                </div>
+                <div class="info">
+                    <span class="title">Verified</span>
+                    <span class="bold-text">{{ infoHeader.verified }}</span>
+                </div>
+                <div class="info">
+                    <span class="bold-text">Verified by me</span>
+                </div>
+            </div>
+            <div>
+                <img :src="getIcon('menu')" alt="">
+            </div>
+        </div>
 
-                <div class="container" v-else>
-                    <div class="row" v-if="notFoundOffers">
-                        <div class="col-12">
-                            <action-panel
-                                :btn-router-text="$t('pages.jobOffers.newOfferBlock.subTitle')"
-                                :action-router-text="$t('pages.jobOffers.newOfferBlock.title')"
-                                to="/offers/new"
-                                is-top-offers-action="true"
-                                top-offers-apply-panel="true"
-                            />
-                        </div>
+        <div class="row-page">
+            <div class="sidebar">
+                <div class="vertical-progress">
+                    <div class="circle circle-top circle-yellow">
+                        <div class="triangle-icon"></div>
                     </div>
-                    <div class="row" :class="{'flex-row': notFoundOffers}">
 
-                        <div class="col-9" :class="{'flex-col': notFoundOffers}">
-                            <div class="row-flex" v-if="!notFoundOffers">
-                                <div class="col">
-                                    <div class="list-panel-heading list-panel-heading-offers">
-                                        <h3>{{ currentNumOffers }} {{ $t('pages.jobOffers.amountOffers') }}</h3>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="list-panel-heading list-panel-count-offers">
-                                        <p>{{ $t('pages.jobOffers.filters.onPage') }}: </p>
-                                        <Select
-                                                :current="10"
-                                                :all-options="optionsOffersOnPage"
-                                                type-select="offer"
-                                                count-offers="true"
-                                                :id="'offersonpage'"
-                                                @onselect="newSelect"
-                                        />
-                                    </div>
-                                    <div class="list-panel-heading list-panel-offers">
-                                        <p>{{ $t('pages.jobOffers.filters.sortBy.title') }}: </p>
-                                        <Select
-                                                current="CONTRACTOR RATING"
-                                                :all-options="optionsSortBy"
-                                                type-select="offer"
-                                                sort-by="true"
-                                                :id="'sortby'"
-                                                @onselect="newSelect"
-                                        />
-                                    </div>
-                                    <div class="list-panel-heading list-panel-sort">
-                                        <div class="control-arrow-container">
-                                            <a
-                                                    v-if="getSortPriority === 'decrease'"
-                                                    type="button"
-                                                    class="control-arrow"
-                                                    @click="doIncreasePriority"
-                                            >
-                                                <img class="arrow down" :src="getIcon('change-arrow-ic')" alt=""/>
-                                            </a>
-                                            <a
-                                                    v-if="getSortPriority === 'increase'"
-                                                    type="button"
-                                                    class="control-arrow"
-                                                    @click="doDecreasePriority"
-                                            >
-                                                <img class="arrow up" :src="getIcon('change-arrow-ic')" alt="">
-                                            </a>
-                                        </div>
-                                    </div>
+                    <div class="whole-line">
+                        <div class="selected-area">
+                            <div class="marker-calendar marker-calendar-top">
+                                <div class="block">
+                                    <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
+                                    <div class="triangle"></div>
                                 </div>
                             </div>
-
-                            <offers-list
-                                    v-if="!notFoundOffers && !notFoundOffersByFilter"
-                                    :current-list-offers="offersList"
-                            />
-                            <pagination
-                                    v-if="!notFoundOffers && !notFoundOffersByFilter"
-                                    :num-offers="currentNumOffers"
-                            />
-                            <div :class="{'wrap-not-found-offers-by-filter': notFoundOffersByFilter}">
-                                <div style="width: 100%;">
-                                    <h3
-                                            v-if="notFoundOffersByFilter"
-                                            class="no-found-offers"
-                                    >
-                                        {{ $t('pages.jobOffers.notFoundOffersByFilter') }}
-                                    </h3>
-                                    <action-panel
-                                            v-if="!notFoundOffers && getCountOfferPerPage === 50 || notFoundOffersByFilter"
-                                            :btnRouterText="$t('pages.jobOffers.newOfferBlock.subTitle')"
-                                            :actionRouterText="$t('pages.jobOffers.newOfferBlock.title')"
-                                            to="/offers/new"
-                                            isBottomOffersAction="true"
-                                    />
+                            <div class="marker-calendar marker-calendar-bottom">
+                                <div class="block">
+                                    <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
+                                    <div class="triangle"></div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-3" id="filters_block">
-                            <action-panel
-                                    v-if="!notFoundOffers"
-                                    :btn-router-text="$t('pages.jobOffers.newOfferBlock.subTitle')"
-                                    :action-router-text="$t('pages.jobOffers.newOfferBlock.title')"
-                                    to="/offers/new"
-                                    is-top-offers-action="true"
-                            />
-                            <!-- filters убрать в компонент фильтра -->
-
-                            <div v-if="offersList.length > 0" class="list-panel-heading mr-t0">
-                                <h3>{{ $t('pages.jobOffers.filtersBlock.title') }}</h3>
+                        <div class="dividers-container">
+                            <div class="divider horizontal" v-for="n in 8" :key="n"></div>
+                        </div>
+                        <button class="circle circle-big circle-yellow">
+                            <img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
+                            <div class="triangle">
+                                <div class="filters-block">
+                                    <div class="circle circle-gray">
+                                        <span class="title">TS</span>
+                                    </div>
+                                    <div class="circle circle-gray">
+                                        <span class="title">TS</span>
+                                        <span class="subtitle">EX</span>
+                                    </div>
+                                    <div class="circle circle-gray">
+                                        <span class="title">CH</span>
+                                    </div>
+                                    <div class="circle circle-gray"
+                                         :class="{qa: qaIsActive}"
+                                         @click="qaIsActive = !qaIsActive">
+                                        <span class="title">QA</span>
+                                    </div>
+                                    <div class="dialog" v-if="qaIsActive">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Contractor rating</label>
+                                                <div class="double-input-block">
+                                                    <div class="double-input">
+                                                        <label>from</label>
+                                                        <input type="text">
+                                                    </div>
+                                                    <div class="double-input">
+                                                        <label>to</label>
+                                                        <input type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="one-line">
+                                                    <label>Country</label>
+                                                    <button>Select all</button>
+                                                </div>
+                                                <input type="text">
+                                                <div class="form-checkbox country">
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>Afhganistan</span>
+                                                    </label>
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>Åland Islands</span>
+                                                    </label>
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>Albania</span>
+                                                    </label>
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>Algeria</span>
+                                                    </label>
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>American Samoa</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Certification</label>
+                                                <div class="form-checkbox">
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>ГОСТ</span>
+                                                    </label>
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span>DIN</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Verified</label>
+                                                <div class="form-radio">
+                                                    <label class="control control-radio">
+                                                        <input type="radio"
+                                                               name="verified">
+                                                        <div class="control-indicator"></div>
+                                                        <span>Yes</span>
+                                                    </label>
+                                                    <label class="control control-radio">
+                                                        <input type="radio"
+                                                               name="verified">
+                                                        <div class="control-indicator"></div>
+                                                        <span>No</span>
+                                                    </label>
+                                                    <label class="control control-radio">
+                                                        <input type="radio"
+                                                               name="verified">
+                                                        <div class="control-indicator"></div>
+                                                        <span>Doesn't matter</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-checkbox">
+                                                    <label class="control control-checkbox">
+                                                        <input type="checkbox">
+                                                        <div class="control-indicator"></div>
+                                                        <span class="bold-text">Verified by me</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <button class="buttons btn btn-yellow">Clear</button>
+                                    </div>
+                                </div>
                             </div>
+                        </button>
+                    </div>
 
-                            <Filters v-if="offersList.length > 0" />
+                    <div class="circle circle-bottom circle-green">
+                        <img src="../../static/img/icons-for-circle/infinity.svg" alt="" width="12px" height="6px">
+                        <div class="triangle">
+                            <div class="filters-block">
+                                <div class="circle circle-green">
+                                    <img src="../../static/img/icons-for-circle/infinity.svg" alt="">
+                                </div>
+                                <div class="circle circle-yellow">
+                                    <img src="../../static/img/icons-for-circle/check.svg" alt="">
+                                </div>
+                                <div class="circle circle-red">
+                                    <img src="../../static/img/icons-for-circle/hourglass.svg" alt="">
+                                </div>
+                                <div class="circle circle-black">
+                                    <img src="../../static/img/icons-for-circle/line.svg" alt="">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="search-result">
+                <div class="progress-list">
+                    <div class="progress-item"
+                         v-for="project in projects"
+                         :key="project.id"
+                         :class="project.status"
+                         :style="{width: 10 * project.steps + '%'}">
+                        <div class="row-top">
+                            <div class="project-info">
+                                <div class="circle circle-big">
+                                    <img src="#" alt="">
+                                </div>
+                                <router-link class="info-text"
+                                             tag="div"
+                                             style="cursor: pointer;"
+                                             :to="project.to">
+                                    <p class="title">
+                                        {{ project.title }}
+                                    </p>
+                                    <p class="subtitle">
+                                        {{ project.company }}
+                                    </p>
+                                </router-link>
+                            </div>
+                            <div class="contractors-list">
+                                <div class="contractors-item"
+                                     v-for="contractor in project.contractors"
+                                     :key="contractor.id">
+                                    <div class="contractors-content">
+                                        <div class="circle"
+                                             :class="checkContractorType(contractor.type)">
+                                            <span class="initials">{{ contractor.initials }}</span>
+                                        </div>
+                                        <div class="contractors-info">
+                                            <p class="title">
+                                                {{ contractor.name }}
+                                            </p>
+                                            <p class="subtitle">
+                                                {{ contractor.type }}
+                                            </p>
+                                        </div>
+                                        <div v-for="key in contractor.keys"
+                                             :key="key.id"
+                                             class="key-icon">
+                                            <img :src="key" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="circle circle-big"
+                                 :class="'circle-' + project.status">
+                                <img :src="getStatusIcon(project.status, 'circles')" alt="">
+                            </div>
+                        </div>
+                        <div class="progress-row">
+                            <div class="progress-bar" :class="project.status">
+                                <img :src="getStatusIcon(project.status, 'arrows')"
+                                     alt=""
+                                     class="arrow">
+                                <div class="step"
+                                     v-for="n in project.steps"
+                                     :key="n"
+                                     :class="{ 'one-step': project.steps <= 1 }">
+                                    Month
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-bottom">
+                            <div class="date">
+                                {{ toFormatDate(project.startDate) }}
+                            </div>
+                            <div class="date">
+                                {{ toFormatDate(project.finalDate) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <offers-contractor-dialog/>
+
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import Navbar from "./layouts/Navbar";
-import OffersList from "./layouts/OffersList";
-import Filters from "./layouts/Filters";
-import Select from "./layouts/forms/Select";
-import Pagination from "./layouts/Pagination";
-import ActionPanel from "./layouts/ActionPanel";
-import Spinner from "./layouts/Spinner";
+    import Navbar from './layouts/Navbar';
+    import OffersContractorDialog from './layouts/OffersContractorDialog';
 
-import { mapMutations } from "vuex";
-import { mapGetters } from "vuex";
+    export default {
+        name: 'Offers',
+        components: {
+            Navbar,
+            OffersContractorDialog
+        },
+        data() {
+            return {
+                qaIsActive: true,
+                projects: [
+                    {
+                        title: 'CryptoStore',
+                        company: 'Serokell',
+                        to: '/offer',
+                        startDate: 1517495409000,
+                        finalDate: 1543588209000,
+                        status: 'completed',
+                        projectLogo: '../../static/img/ale-logo.svg',
+                        steps: 10,
+                        contractors: [
+                            {
+                                initials: 'VD',
+                                name: 'Vova Dmitrov',
+                                type: 'TS',
+                                keys: [
+                                    '../../static/img/keys/ts-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'DV',
+                                name: 'Deus Virus',
+                                type: 'TS execution',
+                                keys: [
+                                    '../../static/img/keys/ts-exec-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'NG',
+                                name: 'Nicola Glumac',
+                                type: 'Check',
+                                keys: [
+                                    '../../static/img/keys/check-key.svg',
+                                    '../../static/img/keys/check-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance',
+                                keys: [
+                                    '../../static/img/keys/qa-key.svg',
+                                    '../../static/img/keys/qa-key.svg'
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Alehub',
+                        company: 'Effective Energy',
+                        to: '/offer',
+                        startDate: 1523370609000,
+                        finalDate: 1543588209000,
+                        status: 'ongoing',
+                        steps: 8,
+                        contractors: [
+                            {
+                                initials: 'QB',
+                                name: 'Quality Boy',
+                                type: 'TS',
+                                keys: [
+                                    '../../static/img/keys/ts-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'GA',
+                                name: 'Galvadon',
+                                type: 'TS execution',
+                                keys: [
+                                    '../../static/img/keys/ts-exec-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance',
+                                keys: [
+                                    '../../static/img/keys/qa-key.svg'
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Virtual reality pluggin',
+                        company: 'Nike',
+                        to: '/offer',
+                        startDate: 1525185009000,
+                        finalDate: 1525703409000,
+                        status: 'canceled',
+                        projectLogo: '../../static/img/ale-logo.svg',
+                        steps: 1,
+                        contractors: [
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance'
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Virtual reality pluggin',
+                        company: 'Nike',
+                        to: '/offer',
+                        startDate: 1525185009000,
+                        finalDate: 1525703409000,
+                        status: 'timelag',
+                        projectLogo: '../../static/img/ale-logo.svg',
+                        steps: 1,
+                        contractors: [
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance'
+                            }
+                        ]
+                    },
+                    {
+                        title: 'CryptoStore',
+                        company: 'Serokell',
+                        to: '/offer',
+                        startDate: 1517495409000,
+                        finalDate: 1543588209000,
+                        status: 'completed',
+                        projectLogo: '../../static/img/ale-logo.svg',
+                        steps: 10,
+                        contractors: [
+                            {
+                                initials: 'VD',
+                                name: 'Vova Dmitrov',
+                                type: 'TS',
+                                keys: [
+                                    '../../static/img/keys/ts-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'DV',
+                                name: 'Deus Virus',
+                                type: 'TS execution',
+                                keys: [
+                                    '../../static/img/keys/ts-exec-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'NG',
+                                name: 'Nicola Glumac',
+                                type: 'Check',
+                                keys: [
+                                    '../../static/img/keys/check-key.svg',
+                                    '../../static/img/keys/check-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance',
+                                keys: [
+                                    '../../static/img/keys/qa-key.svg',
+                                    '../../static/img/keys/qa-key.svg'
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Alehub',
+                        company: 'Effective Energy',
+                        to: '/offer',
+                        startDate: 1523370609000,
+                        finalDate: 1543588209000,
+                        status: 'ongoing',
+                        steps: 8,
+                        contractors: [
+                            {
+                                initials: 'QB',
+                                name: 'Quality Boy',
+                                type: 'TS',
+                                keys: [
+                                    '../../static/img/keys/ts-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'GA',
+                                name: 'Galvadon',
+                                type: 'TS execution',
+                                keys: [
+                                    '../../static/img/keys/ts-exec-key.svg'
+                                ]
+                            },
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance',
+                                keys: [
+                                    '../../static/img/keys/qa-key.svg'
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Virtual reality pluggin',
+                        company: 'Nike',
+                        to: '/offer',
+                        startDate: 1525185009000,
+                        finalDate: 1525703409000,
+                        status: 'canceled',
+                        projectLogo: '../../static/img/ale-logo.svg',
+                        steps: 1,
+                        contractors: [
+                            {
+                                initials: 'RC',
+                                name: 'Rift & Co',
+                                type: 'Quality Assurance'
+                            }
+                        ]
+                    }
+                ],
+                statusIcons: {
+                    arrows: {
+                        canceled: '../../static/img/arrows/arrow-canceled.svg',
+                        completed: '../../static/img/arrows/arrow-completed.svg',
+                        ongoing: '../../static/img/arrows/arrow-ongoing.svg',
+                        timelag: '../../static/img/arrows/arrow-timelag.svg'
+                    },
+                    circles: {
+                        canceled: '../../static/img/icons-for-circle/canceled.svg',
+                        completed: '../../static/img/icons-for-circle/completed.svg',
+                        ongoing: '../../static/img/icons-for-circle/ongoing.svg',
+                        timelag: '../../static/img/icons-for-circle/timelag.svg'
+                    }
+                },
+                infoHeader: {
+                    startDate: '23.02.2018',
+                    finalDate: '01.05.2018',
+                    name: 'Rift',
+                    rating: '2.5-9.8',
+                    certification: 'DIN',
+                    verified: "Doesn't matter"
+                },
 
-export default {
-  name: "offers",
-  components: {
-    Navbar,
-    OffersList,
-    Filters,
-    Select,
-    Pagination,
-    ActionPanel,
-    Spinner
-  },
-  data() {
-    return {
-      isLoader: false,
-      notFoundOffers: false,
-      notFoundOffersByFilter: false,
-      //вынести во vuex?
-      optionsOffersOnPage: [10, 20, 50],
-      optionsSortBy: ["CONTRACTOR RATING", "PRICE", "END DATE"],
-      numOffers: 0,
-      rightMenu: {
-        horizontal: false,
-        list: [
-          {
-            type: "link",
-            name: this.$t("pages.jobOffers.rightMenu.savedOffers"),
-            link: "/offers/saved"
-          },
-          {
-            type: "link",
-            name: this.$t("pages.jobOffers.rightMenu.createOffer"),
-            link: "/offers/new"
-          }
-        ]
-      },
-      selectedOffersOnPage: 10,
-      selectedSortBy: "CONTRACTOR RATING",
-      offersListOpen: []
-    };
-  },
-  computed: {
-    ...mapGetters([
-        "doSortByRatingIncrease",
-        "doSortByRatingDecrease",
-        "doSortByPriceIncrease",
-        "doSortByPriceDecrease",
-        "doSortByEndDateIncrease",
-        "doSortByEndDateDecrease",
-
-        "getComputedOfferList",
-        "offersStatus",
-        "getPartOffersList"
-    ]),
-    offersList: function() {
-      return this.$store.state.Offers.offersList;
-    },
-    selectedTheme() {
-      return this.$store.state.Themes.theme;
-    },
-    countOfferPerPage: function() {
-      return this.$store.state.Offers.countOfferPerPage;
-    },
-    currentNumOffers: function() {
-      return this.getComputedOfferList.length;
-    },
-    currentSortBy: function() {
-      return this.$store.state.Offers.currentSortBy;
-    },
-    //передавать данные из офферса в офферслист ибо проблемы с отсутствующими-присутствующими офферами
-    getOffersList: function() {
-      return this.$store.state.Offers.offersList;
-    },
-    getSortPriority: function() {
-      return this.$store.state.Offers.sortPriority;
-    },
-    getCountOfferPerPage: function() {
-      return this.$store.state.Offers.countOfferPerPage;
+                rightMenu: {
+                    horizontal: false,
+                    list: [
+                        {
+                            type: "link",
+                            name: this.$t('pages.summary.rightMenu.summary'),
+                            link: "/"
+                        },
+                        {
+                            type: "link",
+                            name: this.$t('pages.summary.rightMenu.walletSettings'),
+                            link: "/wallet/settings"
+                        }
+                    ]
+                },
+            }
+        },
+        computed: {
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
+            }
+        },
+        methods: {
+            toFormatDate: function (date) {
+                let dateFormat = new Date(date);
+                return dateFormat.toDateString();
+            },
+            getStatusIcon: function (status, iconType) {
+                switch (status) {
+                    case 'completed':
+                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
+                        break;
+                    case 'ongoing':
+                        return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
+                        break;
+                    case 'timelag':
+                        return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
+                        break;
+                    default:
+                        return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
+                }
+            },
+            getIcon: function (name) {
+                return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
+            },
+            checkContractorType: function (type) {
+                switch (type) {
+                    case 'TS':
+                        return 'ts';
+                        break;
+                    case 'TS execution':
+                        return 'ts-exec';
+                        break;
+                    case 'Check':
+                        return 'check';
+                        break;
+                    default:
+                        return 'qa'
+                }
+            }
+        }
     }
-    // currentOfferList: function () {
-    //     if (!this.isSaved) {
-    //         // this.$parent.$emit('numOffers', this.getOffersResultList.length);
-    //         return this.getPartOffersList;
-    //     }
-    //     else {
-    //         // this.$parent.$emit('numOffers', this.getOfferSavedList.length);
-    //         console.log(this.currentListOffers);
-    //         return this.getPartOfferSavedList;
-    //     }
-    // }
-  },
-  methods: {
-    ...mapMutations({
-      setNewSelect: "SET_NEW_SELECT",
-      setCurrentPage: "SET_CURRENT_PAGE",
-      setCurrentPriority: "SET_CURRENT_PRIORITY",
-      setSortPriority: "SET_SORT_PRIORITY",
-      setCountOffersPerPage: "SET_COUNT_OFFERS_PER_PAGE"
-    }),
-
-    doIncreasePriority: function() {
-      this.setSortPriority("increase");
-
-      if (this.currentSortBy === "CONTRACTOR RATING")
-        return this.doSortByRatingIncrease;
-
-      if (this.currentSortBy === "PRICE") {
-        return this.doSortByPriceIncrease;
-      }
-
-      if (this.currentSortBy === "END DATE")
-        return this.doSortByEndDateIncrease;
-    },
-    doDecreasePriority: function() {
-      this.setSortPriority("decrease");
-
-      if (this.currentSortBy === "CONTRACTOR RATING")
-        return this.doSortByRatingDecrease;
-
-      if (this.currentSortBy === "PRICE") {
-        return this.doSortByPriceDecrease;
-      }
-
-      if (this.currentSortBy === "END DATE")
-        return this.doSortByEndDateDecrease;
-    },
-    newSelect(value, id) {
-      if (id === "offersonpage") {
-        this.selectedOffersOnPage = value;
-      }
-      if (id === "sortby") {
-        this.selectedSortBy = value;
-      }
-    },
-    imitationLoadPage() {
-      this.isLoader = true;
-      setTimeout(() => {
-        this.isLoader = false;
-      }, 750);
-    },
-    initiateStateOffers: function() {
-      this.doSortByRatingDecrease;
-      this.setCountOffersPerPage(10);
-      this.setCurrentPage(1);
-
-      if (this.offersList.length === 0) {
-        this.notFoundOffers = true;
-      }
-    },
-    getOpenOffers() {
-      // this.$http.get(`http://localhost:8080/http://127.0.0.1:12348/node/state/offers/list/open`, {
-      //     headers : {
-      //         'Content-Type' : 'application/json; charset=UTF-8',
-      //         'Accept' : 'application/json'
-      //     }
-      // }).then(response => {
-      //     this.offersListOpen = response.body;
-      //     console.log('S', response);
-      // }, response => {
-      //     console.log('E', response);
-      // })
-    },
-    getIcon(name) {
-      if (this.selectedTheme === "dark")
-        return require(`../assets/img/${name}_dark.svg`);
-      else if (this.selectedTheme === "white")
-        return require(`../assets/img/${name}.svg`);
-      else return require(`../assets/img/${name}.svg`);
-    }
-  },
-  mounted() {
-    let currentPage = this.$router;
-    // window.addEventListener("scroll", function(e) {
-    //   if (currentPage.currentRoute.name !== "Offers") return false;
-    //   let filters = document.getElementById("filters_block");
-    //   if (window.scrollY >= 40) {
-    //     // пофиксить
-    //     filters.classList.add("fixed-filters");
-    //   } else {
-    //     filters.classList.remove("fixed-filters");
-    //   }
-    // });
-
-    this.imitationLoadPage();
-
-    this.$on("onselect", function(item, id) {
-      this.setNewSelect(item);
-
-      if (this.currentSortBy === "CONTRACTOR RATING") {
-        if (this.getSortPriority === "increase")
-          return this.doSortByRatingIncrease;
-        else return this.doSortByRatingDecrease;
-      }
-
-      if (this.currentSortBy === "PRICE") {
-        if (this.getSortPriority === "increase")
-          return this.doSortByPriceIncrease;
-        else return this.doSortByPriceDecrease;
-      }
-
-      if (this.currentSortBy === "END DATE") {
-        if (this.getSortPriority === "increase")
-          return this.doSortByEndDateIncrease;
-        else return this.doSortByEndDateDecrease;
-      }
-
-      if (id === "offersonpage") this.setCurrentPage(1);
-    });
-
-    this.$on("changeCurrentPage", function(item) {
-      this.setCurrentPage(item);
-    });
-
-    this.$on("notFoundOffersByFilter", function(result) {
-      this.notFoundOffersByFilter = result;
-    });
-
-    this.initiateStateOffers();
-  },
-  created() {
-    this.$store.dispatch('getOffers').then(() => {  });
-    this.getOpenOffers();
-  }
-};
 </script>
 
-<style lang="stylus" scoped>
-.list-panel-count-offers, .list-panel-sort {
-    margin-top: 0;
-    margin-bottom: 0;
-}
+<style lang="stylus">
+    .contract-list
+        background-color #f0f4fa
 
-.list-panel-offers {
-    margin: 0;
-}
+        @media (max-width 620px)
+            overflow-x hidden
 
-.list-panel-sort {
-    margin-left: 0;
-}
+        .info-header
+            padding 87px 32px 23px 110px
+            background-color #eceef1
+            display flex
+            justify-content space-between
+            align-items center
 
-.fixed-filters {
-    position: fixed;
-    right: 12px;
-    padding-right: 12px;
-    top: 50px;
-}
+            @media (max-width 1200px)
+                padding-left 32px
 
-.no-found-offers {
-    font-family: MuseoSansCyrl500;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.25;
-    text-align: center;
-    color: #34343e;
-}
+            .info-wrap
+                display flex
+                align-items flex-end
 
-.flex-row {
-    display: flex;
-}
+                @media (max-width 990px)
+                    justify-content space-between
+                    width 100%
+                    margin-right 32px
 
-.flex-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+                .info
+                    font-family MuseoSansCyrl500
+                    font-size 12px
+                    font-weight 500
+                    color #34343e
+                    margin-right 64px
+                    display flex
+                    flex-direction column
 
-.wrap-not-found-offers-by-filter {
-    display: flex;
-    height: 85vh;
-    align-items: center;
-    justify-content: center;
-}
-.spinner {
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-}
+                    @media (max-width 990px)
+                        margin-right 0
 
-@media (max-width: 1024px)
-    .main 
-        & .content 
-            padding-left 0
+                    .title
+                        opacity 0.5
+                        white-space nowrap
 
-@media (max-width: 768px) and (min-width: 426px)
-    .list-panel-offers
-        background-color #dedfdf
-        & p
-          display none
-    .list-panel-count-offers
-        background-color #dedfdf
-        & p
-          display none
-    .list-panel-sort
-        margin-left 16px
+                    .bold-text
+                        font-size 17px
+                        white-space nowrap
 
-@media (max-width: 425px) and (min-width: 321px)
-    .col-3
-        display none
-    .col-9
+                        @media (max-width 1100px)
+                            font-size 15px
+
+                        @media (max-width 990px)
+                            font-size 13px
+
+                        @media (max-width 620px)
+                            font-size 11px
+
+        .row-page
+            padding-top 32px
+            padding-right 68px
+            padding-left 68px
+            display flex
+
+            @media (max-width 768px)
+                flex-direction column
+                padding-top 60px
+                padding-right 32px
+                padding-left 32px
+
+            .sidebar
+                display flex
+                flex-direction column
+                align-items center
+                padding-top 18px
+
+                @media (max-width 768px)
+                    align-items flex-start
+                    padding-left 18px
+
+                @media (max-width 620px)
+                    padding-right 18px
+
+                .vertical-progress
+                    position relative
+
+                    @media (max-width 768px)
+                        width 80%
+
+                    @media (max-width 620px)
+                        width 100%
+
+                    .circle-top
+                        z-index 2
+                        top -18px
+                        position absolute
+                        display flex
+                        justify-content center
+
+                        @media (max-width 768px)
+                            top 0
+                            left
+                        -18px
+
+                        .triangle-icon
+                            border 6px solid transparent
+                            border-top 6px solid #34343e
+                            position absolute
+                            top 17px
+
+                            @media (max-width 768px)
+                                border 6px solid transparent
+                                border-left 6px solid #34343e
+                                left 15px
+                                top unset
+
+                    .circle-bottom
+                        bottom -18px
+                        position absolute
+
+                        @media (max-width 768px)
+                            bottom 0
+                            right
+                        -18px
+
+                        .triangle
+                            border 6px solid transparent
+                            border-left 6px solid #aab7c7
+                            position absolute
+                            left 56px
+
+                            @media (max-width 768px)
+                                border 6px solid transparent
+                                border-top 6px solid #aab7c7
+                                left 12px
+                                top 56px
+
+                    .filters-block
+                        position absolute
+                        top -96px
+                        left 8px
+                        display flex
+                        flex-direction column
+                        height 192px
+                        justify-content space-between
+
+                        @media (max-width 768px)
+                            flex-direction row
+                            width 192px
+                            top 8px
+                            left
+                        -96px
+
+                        @media (max-width 620px)
+                            flex-direction column
+                            align-items center
+
+                        .circle
+                            box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
+
+                    .whole-line
+                        width 36px
+                        height 544px
+                        background-image linear-gradient(to bottom, #e7eaee, #bcc5d1)
+                        border 1px solid #d2dae2
+                        position relative
+
+                        @media (max-width 768px)
+                            width 100%
+                            height 36px
+
+                        @media (max-width 768px)
+                            background-image linear-gradient(to right, #e7eaee, #bcc5d1)
+
+                        .marker-calendar-top
+                            left -50px
+                            top -18px
+
+                            @media (max-width 768px)
+                                left
+                            -16px
+                            bottom 0
+                            top -50px
+
+                        .marker-calendar-bottom
+                            left -50px
+                            bottom -18px
+
+                            @media (max-width 768px)
+                                top
+                            -50px
+                            right -16px
+                            left unset
+
+                        .marker-calendar-bottom, .marker-calendar-top
+                            .block
+                                background-image linear-gradient(to bottom, #ffe082, #ffd24f)
+
+                                .triangle
+                                    @media (max-width 768px)
+                                        border 16px solid transparent
+                                        border-top 8px solid #ffd24f
+                                        top 32px
+                                        left 0
+
+                        .circle-big
+                            top 190px
+                            left -6px
+                            position absolute
+                            z-index 2
+
+                            @media (max-width 768px)
+                                top
+                            -6px
+                            left 190px
+
+                            .triangle
+                                border 6px solid transparent
+                                border-left 6px solid #aab7c7
+                                position absolute
+                                left 60px
+
+                                @media (max-width 768px)
+                                    border 6px solid transparent
+                                    border-top 6px solid #aab7c7
+                                    top 60px
+                                    left 16px
+
+                        .dividers-container
+                            flex-direction column
+
+                            @media (max-width 768px)
+                                flex-direction row
+
+                        .selected-area
+                            background-image linear-gradient(to bottom, rgba(255, 224, 130, 0.3), rgba(255, 210, 79, 0.3))
+                            border solid 1px #ffd24f
+                            height 312px
+                            position absolute
+                            width 36px
+                            top 58px
+                            left -1px
+                            z-index 1
+
+                            @media (max-width 768px)
+                                width 60%
+                                height 36px
+                                top
+                            -1px
+                            left 58px
+
+            .search-result
+                padding-left 100px
+                width 100%
+                max-width 1332px
+
+                @media (max-width 768px)
+                    padding-left 0
+                    padding-top 120px
+
+                @media (max-width 620px)
+                    padding-top 260px
+
+                .progress-list
+                    display flex
+                    flex-direction column
+                    align-items flex-start
+                    width 100%
+
+                    .progress-item
+                        display flex
+                        flex-direction column
+                        justify-content center
+                        position relative
+                        min-height 132px
+                        min-width 612px
+                        border 2px solid gray
+                        margin-bottom 24px
+                        padding 10px
+
+                        @media (max-width 1200px)
+                            min-width 512px
+
+                        @media (max-width 990px)
+                            min-width 412px
+
+                        &.completed
+                            background-image linear-gradient(to right, rgba(255, 224, 130, 0.1), rgba(254, 211, 85, 0.1))
+                            border-style solid
+                            border-width 2px
+                            -webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
+                            border-image linear-gradient(to right, #ffe082, #fed355) 1
+
+                        &.ongoing
+                            background-image linear-gradient(to right, rgba(87, 222, 151, 0.1), rgba(43, 214, 92, 0.1))
+                            border-style solid
+                            border-width 2px
+                            -webkit-border-image linear-gradient(to right, #57de97, #2bd65c) 1
+                            border-image linear-gradient(to right, #57de97, #2bd65c) 1
+
+                        &.timelag
+                            background-image linear-gradient(to right, rgba(255, 130, 130, 0.1), rgba(255, 79, 79, 0.1))
+                            border-style solid
+                            border-width 2px
+                            -webkit-border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
+                            border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
+
+                        &.canceled
+                            background-image linear-gradient(to right, rgba(51, 26, 26, 0.1), rgba(51, 16, 16, 0.1))
+                            border-style solid
+                            border-width 2px
+                            -webkit-border-image linear-gradient(to right, #331a1a, #331010) 1
+                            border-image linear-gradient(to right, #331a1a, #331010) 1
+
+                        .progress-row
+                            padding 0 56px
+
+                            @media (max-width 990px)
+                                padding 0 32px
+
+                            @media (max-width 860px)
+                                padding 0 24px
+
+                            .progress-bar
+                                width 100%
+                                height 36px
+                                background-color #ffffff
+                                position relative
+                                background-image linear-gradient(to right, #eceef1, #bac4d0)
+                                border-radius 18px
+                                display flex
+                                align-items center
+
+                                .step
+                                    width 120px
+                                    height 32px
+                                    border-right 2px solid #fff
+                                    opacity 0.5
+                                    font-family MuseoSansCyrl500
+                                    font-size 16px
+                                    color #fff
+                                    display flex
+                                    justify-content center
+                                    align-items center
+
+                                    @media (max-width 1100px)
+                                        font-size 14px
+
+                                    @media (max-width 990px)
+                                        font-size 12px
+
+                                    &:last-child
+                                        border-right none
+
+                                    &.one-step
+                                        display flex
+                                        justify-content center
+                                        width 100%
+
+                                .arrow
+                                    position absolute
+                                    top -20px
+                                    left -110px
+
+                                    @media (max-width 990px)
+                                        left
+                                    -86px
+
+                                    @media (max-width 860px)
+                                        left
+                                    -78px
+
+                        .row-top
+                            display flex
+                            width 100%
+
+                            .circle-big
+                                @media (max-width 860px)
+                                    width 40px
+                                    height 40px
+                                    min-width 40px
+                                    min-height 40px
+
+                                &:last-child
+                                    margin-left 104px
+
+                                    @media (max-width 1200px)
+                                        margin-left 12px
+
+                            .project-info
+                                display flex
+
+                                .info-text
+                                    display flex
+                                    flex-direction column
+                                    margin-left 8px
+                                    margin-right 8px
+
+                                .title
+                                    margin 0
+                                    font-family MuseoSansCyrl500
+                                    font-size 16px
+                                    color #34343e
+                                    white-space nowrap
+
+                                    @media (max-width 1100px)
+                                        font-size 14px
+
+                                .subtitle
+                                    margin 0
+                                    opacity 0.5
+                                    font-family MuseoSansCyrl500
+                                    font-size 12px
+                                    color #34343e
+                                    white-space nowrap
+
+                                    @media (max-width 1100px)
+                                        font-size 10px
+
+                            .contractors-list
+                                display flex
+                                justify-content space-between
+                                width 100%
+
+                                @media (max-width 990px)
+                                    justify-content space-around
+
+                                .contractors-content
+                                    display flex
+                                    position relative
+
+                                    .key-icon
+                                        z-index 3
+                                        position absolute
+                                        top 54px
+                                        left -10px
+
+                                        @media (max-width 860px)
+                                            top 46px
+
+                                        @media (max-width 620px)
+                                            display none
+
+                                        &:nth-child(4)
+                                            left -300px
+
+                                    .contractors-info
+                                        margin-left 8px
+
+                                        @media (max-width 990px)
+                                            display none
+
+                                    .circle
+                                        opacity 0.5
+
+                                        .initials
+                                            font-family MuseoSansCyrl500
+                                            font-size 16px
+                                            color #fcfcfc
+
+                                    .title
+                                        margin 0
+                                        font-family MuseoSansCyrl500
+                                        opacity 0.5
+                                        font-size 16px
+                                        color #34343e
+                                        white-space nowrap
+
+                                        @media (max-width 1100px)
+                                            font-size 14px
+
+                                    .subtitle
+                                        margin 0
+                                        font-family MuseoSansCyrl500
+                                        opacity 0.25
+                                        font-size 12px
+                                        color #34343e
+                                        white-space nowrap
+
+                                        @media (max-width 1100px)
+                                            font-size 10px
+
+                        .row-bottom
+                            display flex
+                            justify-content space-between
+                            padding 0 66px
+
+                            @media (max-width 990px)
+                                padding 0 32px
+
+                            @media (max-width 860px)
+                                padding 0 24px
+
+                            .date
+                                font-family MuseoSansCyrl500
+                                font-size 12px
+                                color #34343e
+                                margin-top 14px
+
+                                @media (max-width 860px)
+                                    font-size 10px
+
+    .circle
+        width 36px
+        min-width 36px
+        height 36px
+        background-image linear-gradient(to right, #dde1e7, #cad2db)
+        border-radius 50%
+        display flex
+        justify-content center
+        align-items center
+        flex-direction column
+        border none
+
+        &.circle-big
+            width 48px
+            height 48px
+            min-width 48px
+            min-height 48px
+
+        &.circle-black
+            background-image linear-gradient(to right, #331a1a, #331010)
+
+        &.circle-red
+            background-image linear-gradient(to right, #ff8282, #ff4f4f)
+
+        &.circle-green
+            background-image linear-gradient(to right, #4dc484, #26bd51)
+
+        &.circle-yellow
+            background-image linear-gradient(to right, #ffe082,
+            #ffd24f)
+            box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
+
+        &.circle-gray
+            background-color #aab7c7
+            background-image none
+
+        &.ts
+            background-image linear-gradient(to right, #c07b44, #b63c2c)
+
+        &.ts-exec
+            background-image linear-gradient(to right, #0db79a, #0391a6)
+
+        &.check
+            background-image linear-gradient(to right, #ddc41c, #e09a00)
+
+        &.qa
+            background-image linear-gradient(to right, #b46dd0, #7e20c0)
+
+        &.circle-completed
+            background-image unset
+            border-style solid
+            border-width 2px
+            border-color #fed355
+
+        &.circle-ongoing
+            background-image unset
+            border-style solid
+            border-width 2px
+            border-color #2bd65c
+
+        &.circle-canceled
+            background-image unset
+            border-style solid
+            border-width 2px
+            border-color #331010
+
+        &.circle-timelag
+            background-image unset
+            border-style solid
+            border-width 2px
+            border-color #ff4f4f
+
+        .title
+            font-family MuseoSansCyrl500
+            color #fcfcfc
+            font-size 16px
+            text-transform uppercase
+            line-height 1
+            letter-spacing 1px
+            color #fcfcfc
+            text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
+
+        .subtitle
+            font-family MuseoSansCyrl500
+            color #fcfcfc
+            font-size 9px
+            text-transform uppercase
+            text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
+
+    .marker-calendar
+        position absolute
+
+        .block
+            width 32px
+            height 32px
+            background-image linear-gradient(to right, #ffe082, #ffd24f)
+            position relative
+            display flex
+            justify-content space-around
+            align-items center
+
+            .triangle
+                border 16px solid transparent
+                border-left 8px solid #ffd24f
+                position absolute
+                top 0
+                left 32px
+
+    .dividers-container
+        display flex
+        justify-content space-between
+        align-items center
+        height 100%
         width 100%
-    .list-panel-offers
-        background-color #dedfdf
-        margin-right 5px
-        width 170px
-        & p
-          display none
-    .list-panel-count-offers
-        background-color #dedfdf
-        margin-right 5px
-        margin-left 5px
-        & p
-          display none
-    .list-panel-sort
-        padding 9px
-        width 32px
-    .row-flex
-        justify-content space-between;
-@media (max-width: 320px)
-    .row-flex
-        flex-wrap wrap
-    .col
-        margin-bottom 5px
-    .col-3
-        display none
-    .col-9
-        width 100%
-    .list-panel-offers
-        background-color #dedfdf
-        margin-right 5px
-        width 170px
-    .list-panel-count-offers
-        background-color #dedfdf
-        margin-right 5px
-    .list-panel-sort
-        padding 9px
-        width 32px
+        position absolute
+        top 0
+
+        .divider
+            width 2px
+            height 32px
+            opacity 0.6
+            background-color #fff
+
+            &.horizontal
+                width 32px
+                height 2px
+
+                @media (max-width 768px)
+                    width 2px
+                    height 32px
+
+            &:first-child, &:last-child
+                visibility hidden
+
+    .dialog
+        width 208px
+        border-radius 4px
+        background-color #fafafa
+        position absolute
+        z-index 5
+        box-shadow 0 4px 16px 0 rgba(0, 0, 0, 0.24)
+        left 54px
+        top 158px
+        padding 16px
+
+        .btn
+            margin-left 0
+            width 100%
+            height 26px
+            padding 0
+            font-size 12px
+            color #34343e
+
+        .form-group
+            display flex
+            flex-direction column
+            align-items flex-start
+            margin-bottom 24px
+
+            label
+                margin-bottom 12px
+                font-family MuseoSansCyrl500
+                font-size 13px
+                font-weight bold
+                color #34343e
+
+            input
+                border-radius 2px
+                background-color #f7f7f7
+                border solid 1px #979797
+                width 100%
+                padding 6px 8px
+                font-family MuseoSansCyrl500
+                font-size 12px
+                color #34343e
+
+            .one-line
+                width 100%
+                display flex
+                justify-content space-between
+                align-items flex-start
+
+                button
+                    padding 0
+                    border none
+                    background-color transparent
+                    font-family MuseoSansCyrl500
+                    font-size 12px
+                    color #34343e
+                    opacity 0.5
+
+            .double-input-block
+                display flex
+
+                .double-input
+                    position relative
+                    display flex
+                    align-items center
+                    border 1px solid #979797
+                    border-radius 2px
+                    padding-left 8px
+
+                    label
+                        margin-bottom 0
+                        font-family MuseoSansCyrl500
+                        font-size 12px
+                        line-height 1.17
+                        color #34343e
+
+                    input
+                        border none
+                        flex-grow 1
+                        background-color transparent
+                        font-family MuseoSansCyrl700
+                        color #979797
+                        font-size 12px
+
+                    &:first-child
+                        margin-right 12px
+
+            .form-checkbox, .form-radio
+                width 100%
+
+                .control
+                    input:checked ~ .control-indicator
+                        border solid 0.6px #979797
+
+                .control-checkbox, .control-radio
+                    display flex
+                    align-items center
+                    justify-content flex-start
+                    width 100%
+
+                    &:last-child
+                        margin-bottom 0
+
+                    span
+                        padding-left 22px
+                        font-family MuseoSansCyrl500
+                        font-size 12px
+                        color #34343e
+                        font-weight 500
+
+                        &.bold-text
+                            font-size 13px
+                            font-weight bold
+
+                &.country
+                    margin-top 12px
+
+                    label
+                        span:first-letter
+                            color #ab7713
+
+    // Dark Theme
+
+    .dark
+        .contract-list
+            background-color #4a4e65
+
+            .info-header
+                background-color #3f435e
+
+                .info
+                    color #fcfcfc
+
+            .row-page
+                .search-result
+                    .progress-list
+                        .progress-item
+                            .row-top
+                                .project-info
+                                    .title, .subtitle
+                                        color #fcfcfc
+
+                                .contractors-list
+                                    .contractors-content
+                                        .title, .subtitle
+                                            color #fcfcfc
+
+                            .progress-row
+                                .progress-bar
+                                    background-image linear-gradient(to right, #3a3a4a, #272730)
+
+                                    .step
+                                        border-color #272730
+
+                            .row-bottom
+                                .date
+                                    color #fcfcfc
+
+                .sidebar
+                    .vertical-progress
+                        .whole-line
+                            background-image linear-gradient(to bottom, #3a3a4a, #272730)
+                            border-color #272730
+
+                            @media (max-width 768px)
+                                background-image linear-gradient(to right, #3a3a4a, #272730)
+
+                            .selected-area
+                                border-color #8a7643
+
+            .dividers-container
+                .divider
+                    background-color #272730
+
+            .circle
+                .title, .subtitle
+                    color #34343e
+
+                &.qa, &.ts, &.ts-exec, &.check
+                    .title
+                        color #fcfcfc
 </style>
+
+

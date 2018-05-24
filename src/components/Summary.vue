@@ -63,7 +63,7 @@
             </div>
         </section>
 
-        <Chat :data="messagesList"/>
+        <chat :data="messagesList"/>
 
         <new-wallet/>
         <select-language/>
