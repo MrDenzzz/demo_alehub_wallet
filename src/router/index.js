@@ -183,15 +183,15 @@ const router = new Router({
         //     beforeEnter: ifAuthenticated
         // },
         {
-            path: '*',
-            name: 'NotFound',
-            component: NotFound
-        },
-        {
             path: '/contractlist',
             name: 'ContractList',
             component: ContractList,
             beforeEnter: ifAuthenticated
+        },
+        {
+            path: '*',
+            name: 'NotFound',
+            component: NotFound
         }
     ]
 });

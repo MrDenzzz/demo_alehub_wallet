@@ -112,6 +112,12 @@
                         date: '30 Mar',
                         time: '23:56',
                         text: 'What does this mean: Unknown Exception?'
+                    },
+                    {
+                        isMyMessage: false,
+                        date: '30 Mar',
+                        time: '23:57',
+                        text: 'You are programmer here, I don’t know'
                     }
                 ],
                 isSuccessNotif: true,
@@ -138,22 +144,24 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'wallets',
-                'transactions',
-                'dateTransactions',
-                'lengthWalletList',
-                'walletStatus',
-                'currentWallet',
-                'transactionStatus',
-                'transactionsLazyStatus',
-                'currentWalletHaveTransactions',
-                'dateFrom',
-                'dateTo',
-                'searchText',
-                'confirmationChangeEmailStatus',
-                'cancellationChangeEmailStatus'
-            ]),
+            ...mapGetters(
+                [
+                    'wallets',
+                    'transactions',
+                    'dateTransactions',
+                    'lengthWalletList',
+                    'walletStatus',
+                    'currentWallet',
+                    'transactionStatus',
+                    'transactionsLazyStatus',
+                    'currentWalletHaveTransactions',
+                    'dateFrom',
+                    'dateTo',
+                    'searchText',
+                    'confirmationChangeEmailStatus',
+                    'cancellationChangeEmailStatus'
+                ]
+            ),
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>22E9C08E-95D4-4C13-A694-72466FFB305F</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="chat" transform="translate(-1445.000000, -270.000000)" stroke="#FFFFFF">
+            <g transform="translate(1427.000000, 32.000000)" id="chat-header">
+                <g>
+                    <g id="participants" transform="translate(12.000000, 121.000000)">
+                        <g id="date-copy-5" transform="translate(7.000000, 118.000000)">
+                            <g id="add-participant">
+                                <path d="M0,5 L10,5" id="Path-2"></path>
+                                <path d="M5,0 L5,10" id="Path-3"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
