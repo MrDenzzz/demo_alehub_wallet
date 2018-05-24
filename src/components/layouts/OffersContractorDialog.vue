@@ -1,25 +1,34 @@
 <template>
-    <div class="dialog">
+    <div class="dialog"
+         :style="{ 'top': offsetY, 'left': offsetX }">
         <div class="rating">
-            <span>9.2</span>
+            <span>{{ rating }}</span>
         </div>
         <div class="save">
             <img src="../../../static/img/star-off.svg" alt="save contractor">
         </div>
         <div class="header">
-            <div class="logo">
-                <img src="../../../static/img/dell.png"
+            <div class="logo" v-if="contractor.src">
+                <img :src="contractor.src"
                      alt="">
             </div>
+
+            <div class="placeholder" v-else
+                 :class="checkContractorType(contractor.type)">
+                <span class="initials">
+                    {{ contractor.initials }}
+                </span>
+            </div>
+
             <div class="info">
                 <h4 class="name">
-                    Dell
+                    {{ contractor.name }}
                 </h4>
                 <h5 class="position">
-                    Executor
+                    {{ position }}
                 </h5>
                 <p class="date">
-                    In system since 27 October, 2017
+                    {{ sinceDate }}
                 </p>
             </div>
         </div>
@@ -66,16 +75,68 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'OffersContractorDialog',
         props: {
-            contractor: {
-
+            coordinates: {
+                type: Object,
+                required: true
             }
         },
         data() {
-            return {
+            return {}
+        },
+        computed: {
+            ...mapGetters(
+                [
+                    'selectedContractor'
+                ]
+            ),
+            offsetY: function () {
+                return this.coordinates.top + 'px';
+            },
+            offsetX: function () {
+                return this.coordinates.left + 'px';
+            },
+            contractor: function () {
+                return this.selectedContractor;
+            },
+            position: function () {
+                return (this.contractor.position) ? this.contractor.position : 'position not established';
+            },
+            rating: function () {
+                return (this.contractor.rating || this.contractor.rating === 0) ? this.contractor.rating : '?';
+            },
+            sinceDate: function () {
+                let date = new Date(this.contractor.sinceDate);
 
+                if (Object.prototype.toString.call(date) === '[object Date]') {
+                    if (isNaN(date.getTime())) {  // d.valueOf() could also work
+                        return 'date not defined';
+                    } else {
+                        return date;
+                    }
+                } else {
+                    return 'date not defined';
+                }
+            }
+        },
+        methods: {
+            checkContractorType: function (type) {
+                switch (type) {
+                    case 'TS':
+                        return 'ts';
+                    case 'TS execution':
+                        return 'ts-exec';
+                    case 'Check':
+                        return 'ch';
+                    case 'QA':
+                        return 'qa';
+                    default:
+                        return 'undefined';
+                }
             }
         }
 
@@ -90,18 +151,17 @@
         position absolute
         display flex
         flex-direction column
-        top 50%
-        left 50%
         width 220px
         height 300px
         padding 16px
-        border-radius 2px
+        border-radius 4px
         background-color #fafafa
         -webkit-box-shadow 0 2px 8px 0 rgba(0, 0, 0, .24)
         -moz-box-shadow 0 2px 8px 0 rgba(0, 0, 0, .24)
         box-shadow 0 2px 8px 0 rgba(0, 0, 0, .24)
 
         .rating
+            z-index 2
             position absolute
             left 0
             top 20px
@@ -128,7 +188,6 @@
                 margin 1px 0 0 0
                 font-size 10px
 
-
         .save
             cursor pointer
             position absolute
@@ -142,6 +201,7 @@
                 height 100%
 
         .header
+            z-index 1
             flex-basis 25%
             display flex
             flex-direction row
@@ -149,8 +209,32 @@
             .logo
                 flex-basis 40%
 
-                img
-                    height 100%
+                img //поставить фиксированные размеры
+                    height 67px
+                    -webkit-clip-path circle(50% at center)
+                    clip-path circle(50% at center)
+
+            .placeholder
+                -webkit-clip-path circle(50% at center)
+                clip-path circle(50% at center)
+
+                .initials
+                    color #fcfcfc
+
+            .placeholder.ts
+                background-color #b63c2c
+
+            .placeholder.ts-exec
+                background-color #0391a6
+
+            .placeholder.ch
+                background-color #e09a00
+
+            .placeholder.qa
+                background-color #7e20c0
+
+            .placeholder.undefined
+                background-color #aab7c7
 
             .info
                 flex-basis 60%

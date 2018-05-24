@@ -237,11 +237,20 @@
                                      v-for="contractor in project.contractors"
                                      :key="contractor.id">
                                     <div class="contractors-content">
+                                        <!--<div class="circle"-->
+                                             <!--:class="checkContractorType(contractor.type)">-->
                                         <div class="circle"
-                                             :class="checkContractorType(contractor.type)">
-                                            <span class="initials">{{ contractor.initials }}</span>
+                                             :class="checkContractorType(contractor.type)"
+                                             @click="toggleContractorDialog($event, contractor)">
+                                            <img v-if="contractor.src"
+                                                 :src="contractor.src"
+                                                 :alt="contractor.title">
+                                            <span v-else class="initials">
+                                                {{ contractor.initials }}
+                                            </span>
                                         </div>
-                                        <div class="contractors-info">
+                                        <div class="contractors-info"
+                                             @click="toggleContractorDialog($event, contractor)">
                                             <p class="title">
                                                 {{ contractor.name }}
                                             </p>
@@ -285,7 +294,8 @@
                         </div>
                     </div>
 
-                    <offers-contractor-dialog/>
+                    <offers-contractor-dialog v-if="isOpenedContractorDialog"
+                                              :coordinates="clickCoordinates"/>
 
                 </div>
             </div>
@@ -305,6 +315,12 @@
         },
         data() {
             return {
+                //мб во вьюкс
+                openedContractorDialog: false,
+                clickCoordinates: {
+                    top: false,
+                    left: false
+                },
                 qaIsActive: true,
                 projects: [
                     {
@@ -314,13 +330,21 @@
                         startDate: 1517495409000,
                         finalDate: 1543588209000,
                         status: 'completed',
-                        projectLogo: '../../static/img/ale-logo.svg',
+                        projectLogo: '../../static/img/react.svg',
                         steps: 10,
                         contractors: [
                             {
                                 initials: 'VD',
                                 name: 'Vova Dmitrov',
-                                type: 'TS',
+                                src: '../../static/img/logo/telegram.png',
+                                position: 'TS execution',
+                                rating: 8.1,
+                                sinceDate: 1487967146000,
+                                webAddress: '',
+                                githubAddress: '',
+                                countOfProject: 1328,
+                                avgCostPerProject: 7500,
+                                type: 'TS execution',
                                 keys: [
                                     '../../static/img/keys/ts-key.svg'
                                 ]
@@ -328,6 +352,14 @@
                             {
                                 initials: 'DV',
                                 name: 'Deus Virus',
+                                src: '../../static/img/logo/ubuntu.png',
+                                position: 'Executor',
+                                rating: 9.2,
+                                sinceDate: 1487927146000,
+                                webAddress: '',
+                                githubAddress: '',
+                                countOfProject: 5748,
+                                avgCostPerProject: 4000,
                                 type: 'TS execution',
                                 keys: [
                                     '../../static/img/keys/ts-exec-key.svg'
@@ -336,6 +368,7 @@
                             {
                                 initials: 'NG',
                                 name: 'Nicola Glumac',
+                                src: false,
                                 type: 'Check',
                                 keys: [
                                     '../../static/img/keys/check-key.svg',
@@ -345,6 +378,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance',
                                 keys: [
                                     '../../static/img/keys/qa-key.svg',
@@ -365,6 +399,7 @@
                             {
                                 initials: 'QB',
                                 name: 'Quality Boy',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'TS',
                                 keys: [
                                     '../../static/img/keys/ts-key.svg'
@@ -373,6 +408,7 @@
                             {
                                 initials: 'GA',
                                 name: 'Galvadon',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'TS execution',
                                 keys: [
                                     '../../static/img/keys/ts-exec-key.svg'
@@ -381,6 +417,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance',
                                 keys: [
                                     '../../static/img/keys/qa-key.svg'
@@ -401,6 +438,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance'
                             }
                         ]
@@ -418,6 +456,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance'
                             }
                         ]
@@ -435,6 +474,7 @@
                             {
                                 initials: 'VD',
                                 name: 'Vova Dmitrov',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'TS',
                                 keys: [
                                     '../../static/img/keys/ts-key.svg'
@@ -443,6 +483,7 @@
                             {
                                 initials: 'DV',
                                 name: 'Deus Virus',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'TS execution',
                                 keys: [
                                     '../../static/img/keys/ts-exec-key.svg'
@@ -451,6 +492,7 @@
                             {
                                 initials: 'NG',
                                 name: 'Nicola Glumac',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Check',
                                 keys: [
                                     '../../static/img/keys/check-key.svg',
@@ -460,6 +502,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance',
                                 keys: [
                                     '../../static/img/keys/qa-key.svg',
@@ -480,6 +523,7 @@
                             {
                                 initials: 'QB',
                                 name: 'Quality Boy',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'TS',
                                 keys: [
                                     '../../static/img/keys/ts-key.svg'
@@ -488,6 +532,7 @@
                             {
                                 initials: 'GA',
                                 name: 'Galvadon',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'TS execution',
                                 keys: [
                                     '../../static/img/keys/ts-exec-key.svg'
@@ -496,6 +541,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance',
                                 keys: [
                                     '../../static/img/keys/qa-key.svg'
@@ -516,6 +562,7 @@
                             {
                                 initials: 'RC',
                                 name: 'Rift & Co',
+                                src: '../../static/img/logo/ubuntu.png',
                                 type: 'Quality Assurance'
                             }
                         ]
@@ -562,11 +609,37 @@
             }
         },
         computed: {
-            selectedTheme() {
+            selectedTheme: function () {
                 return this.$store.state.Themes.theme;
+            },
+            isOpenedContractorDialog: function () {
+                return this.openedContractorDialog;
             }
         },
         methods: {
+            toggleContractorDialog: function (e, contractor) {
+                this.openedContractorDialog = !this.openedContractorDialog;
+
+                if (this.openedContractorDialog) {
+                    this.clickCoordinates.top = e.pageY;
+                    this.clickCoordinates.left = e.pageX;
+                    this.$store.dispatch('selectContractor',
+                        contractor
+                    ).then(() => {
+
+                    });
+                } else {
+                    this.clickCoordinates = {
+                        top: false,
+                        left: false
+                    };
+                    this.$store.dispatch('selectContractor',
+                        contractor
+                    ).then(() => {
+
+                    });
+                }
+            },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
                 return dateFormat.toDateString();
@@ -575,13 +648,10 @@
                 switch (status) {
                     case 'completed':
                         return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
-                        break;
                     case 'ongoing':
                         return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
-                        break;
                     case 'timelag':
                         return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
-                        break;
                     default:
                         return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
                 }
@@ -593,13 +663,10 @@
                 switch (type) {
                     case 'TS':
                         return 'ts';
-                        break;
                     case 'TS execution':
                         return 'ts-exec';
-                        break;
                     case 'Check':
-                        return 'check';
-                        break;
+                        return 'ch';
                     default:
                         return 'qa'
                 }
@@ -706,8 +773,7 @@
 
                         @media (max-width 768px)
                             top 0
-                            left
-                        -18px
+                            left -18px
 
                         .triangle-icon
                             border 6px solid transparent
@@ -727,8 +793,7 @@
 
                         @media (max-width 768px)
                             bottom 0
-                            right
-                        -18px
+                            right -18px
 
                         .triangle
                             border 6px solid transparent
@@ -755,8 +820,7 @@
                             flex-direction row
                             width 192px
                             top 8px
-                            left
-                        -96px
+                            left -96px
 
                         @media (max-width 620px)
                             flex-direction column
@@ -784,20 +848,18 @@
                             top -18px
 
                             @media (max-width 768px)
-                                left
-                            -16px
-                            bottom 0
-                            top -50px
+                                left -16px
+                                bottom 0
+                                top -50px
 
                         .marker-calendar-bottom
                             left -50px
                             bottom -18px
 
                             @media (max-width 768px)
-                                top
-                            -50px
-                            right -16px
-                            left unset
+                                top -50px
+                                right -16px
+                                left unset
 
                         .marker-calendar-bottom, .marker-calendar-top
                             .block
@@ -817,9 +879,8 @@
                             z-index 2
 
                             @media (max-width 768px)
-                                top
-                            -6px
-                            left 190px
+                                top -6px
+                                left 190px
 
                             .triangle
                                 border 6px solid transparent
@@ -852,9 +913,8 @@
                             @media (max-width 768px)
                                 width 60%
                                 height 36px
-                                top
-                            -1px
-                            left 58px
+                                top -1px
+                                left 58px
 
             .search-result
                 padding-left 100px
@@ -970,12 +1030,10 @@
                                     left -110px
 
                                     @media (max-width 990px)
-                                        left
-                                    -86px
+                                        left -86px
 
                                     @media (max-width 860px)
-                                        left
-                                    -78px
+                                        left -78px
 
                         .row-top
                             display flex
@@ -1058,12 +1116,42 @@
                                             display none
 
                                     .circle
-                                        opacity 0.5
+                                        cursor pointer
+
+                                        img
+                                            width 80%
+                                            height 80%
+                                            -webkit-clip-path circle(50% at center)
+                                            clip-path circle(50% at center)
+
+                                        .circle__overlay
+                                            z-index 2
+                                            position absolute
 
                                         .initials
+                                            position absolute
                                             font-family MuseoSansCyrl500
                                             font-size 16px
                                             color #fcfcfc
+
+
+                                    .circle.qa
+                                        background-color #7e20c0
+                                        background-image unset
+
+                                    .circle.ch
+                                        background-color #e09a00
+                                        background-image unset
+
+                                    .circle.ts-exec
+                                        background-color #0391a6
+                                        background-image unset
+
+                                    .circle.ts
+                                        background-color #b63c2c
+                                        background-image unset
+
+
 
                                     .title
                                         margin 0
