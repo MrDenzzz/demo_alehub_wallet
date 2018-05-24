@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="options" @click="showMenu = !showMenu">
-                <img src="../../static/img/menu.svg" alt="">
+                <img :src="getIcon('menu')" alt="">
             </div>
             <div class="dropdown-list" v-if="showMenu">
                 <div class="dropdown-item">Add document</div>
@@ -98,7 +98,7 @@
                         <img :src="att.icon" alt="document type">
 
                         <div class="att-info">
-                            <p style="margin: 0; font-size: 10px; color: #34343e; opacity: 0.7;">
+                            <p style="margin: 0; font-size: 10px;" class="date">
                                 {{ toFormatDate(att.date) }}
                             </p>
                             <p style="margin: 0;">
@@ -610,7 +610,11 @@
                 ]
             }
         },
-        computed: {},
+        computed: {
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
+            }
+        },
         methods: {
             initProgressBar: function (i) {
                 switch (i) {
@@ -643,6 +647,9 @@
                     default:
                         return '';
                 }
+            },
+            getIcon: function (name) {
+                return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
             },
             getStatusIcon: function (status) {
                 switch (status) {
@@ -915,6 +922,12 @@
             position relative
             cursor pointer
 
+            .att-info
+                color #34343e
+
+                .date
+                    opacity 0.7
+
             .dropdown-list
                 height 68px
                 width 81px
@@ -932,9 +945,6 @@
 
                     &.delete
                         color #d14524
-
-                    &:hover
-                        background-color #ededed
 
             .small-circle
                 position absolute
@@ -1026,9 +1036,6 @@
                 color #34343e
                 padding 7px 24px
 
-                &:hover
-                    background-color #ededed
-
         .project
             display flex
             align-items center
@@ -1060,6 +1067,10 @@
         flex-direction column
         justify-content space-between
 
+        .dropdown-item
+            &:hover
+                background-color #ededed
+
     .marker-calendar
         position absolute
 
@@ -1078,6 +1089,71 @@
                 position absolute
                 top -24px
                 left 0
+
+// Dark Theme
+    .dark
+        .my-row-flex
+            &::-webkit-scrollbar-thumb
+                background-color #272730
+
+        .info-header
+            background-color #3f435e
+
+            .info-wrap
+                .title
+                    color #fcfcfc
+
+                .subtitle
+                    color #fcfcfc
+
+        .att-list
+            &::-webkit-scrollbar-thumb
+                background-color #272730
+
+            .att-block
+                background-color #3a3a4b
+
+                .dropdown-list
+                    .dropdown-item
+                        color #fcfcfc
+
+                        &.delete
+                            color #d14524
+
+                .att-info
+                    color #ffffff
+
+                    .date
+                        opacity 0.5
+
+        .project-progress-block
+            background-color #30303d
+
+            .first-progress-bar
+                background-color #05a8a3
+            .second-progress-bar
+                background-color #cc2f27
+            .third-progress-bar
+                background-color #c7a020
+            .fourth-progress-bar
+                background-color #6f2dcc
+            .fifth-progress-bar
+                background-color #2ba3f7
+
+        .contractor-info
+            color #fcfcfc
+
+            h4
+                opacity 0.7
+
+        .dropdown-list
+            background-color #4a4e65
+
+            .dropdown-item
+                color #fcfcfc
+                
+                &:hover
+                    background-color #3f435e
 
 @media(max-width: 1024px)
     .my-row-flex
