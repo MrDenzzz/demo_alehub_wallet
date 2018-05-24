@@ -37,24 +37,26 @@
                 <span class="left">
                     Web
                 </span>
-                <a class="right" href="#" target="_blank">
-                    dell.com
+                <a class="right" :href="webAddress" target="_blank" v-if="isWebAddress">
+                    {{ webAddress }}
                 </a>
+                <span v-else>{{ webAddress }}</span>
             </div>
             <div class="line">
                 <span class="left">
                     GitHub
                 </span>
-                <a class="right" href="#" target="_blank">
-                    /dell
+                <a class="right" :href="githubAddress" target="_blank" v-if="isGithubAddress">
+                    {{ githubAddress }}
                 </a>
+                <span v-else>{{ githubAddress }}</span>
             </div>
             <div class="line">
                 <span class="left">
                     Projects
                 </span>
                 <span class="right">
-                    9,428
+                    {{ countOfProject }}
                 </span>
             </div>
             <div class="line">
@@ -62,7 +64,7 @@
                     Avg. cost per week
                 </span>
                 <span class="right">
-                    4,000$
+                    {{ avgCostPerProject }}
                 </span>
             </div>
         </div>
@@ -121,7 +123,25 @@
                 } else {
                     return 'date not defined';
                 }
-            }
+            },
+            isWebAddress: function () {
+                return this.contractor.webAddress;
+            },
+            webAddress: function () {
+                return (this.contractor.webAddress) ? this.contractor.webAddress: 'not found';
+            },
+            isGithubAddress: function () {
+                return this.contractor.githubAddress;
+            },
+            githubAddress: function () {
+                return (this.contractor.githubAddress) ? this.contractor.githubAddress : 'not found';
+            },
+            countOfProject: function () {
+                return (this.contractor.countOfProject) ? this.contractor.countOfProject : 'not found';
+            },
+            avgCostPerProject: function () {
+                return (this.contractor.avgCostPerProject) ? this.contractor.avgCostPerProject : 'not found';
+            },
         },
         methods: {
             checkContractorType: function (type) {
@@ -221,8 +241,12 @@
                     width 67px
                     -webkit-clip-path circle(50% at center)
                     clip-path circle(50% at center)
+                    display flex
+                    justify-content center
+                    align-items center
 
                     .initials
+                        font-size 30px
                         color #fcfcfc
 
             .placeholder.ts
