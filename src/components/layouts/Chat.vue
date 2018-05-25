@@ -40,7 +40,7 @@
                                 <img src="../../../static/img/prev.svg" alt="">
                             </div>
                         </div>
-                        <div class="parameters" v-if="showParameters">
+                        <div class="parameters" v-if="showParameters" :class="{'whole-height': isOpenCreateChat}">
                             <div class="one-line">
                                 <span>Chat name</span>
                                 <div class="chat-name">
@@ -50,7 +50,8 @@
                             </div>
                             <div class="participants">
                                 <div class="participants-number">{{ chats[0].numberOfParticipants }} participants</div>
-                                <div class="one-line" v-for="participant in chats[0].participants">
+                                <div class="one-line" v-for="(participant, index) in chats[0].participants" @contextmenu="openRightMenu($event, index)"
+                                @click="closeRightMenu(index)">
                                     <div class="circle" :style="{'background-image': 'linear-gradient(' + participant.bg + ')'}">
                                         <span>{{ participant.abbr }}</span>
                                     </div>
@@ -59,6 +60,11 @@
                                         <div class="subtitle">{{ participant.type }}
                                         </div>
                                         <div class="divider"></div>
+                                    </div>
+                                    <div class="right-click-menu" v-if="participant.isRightMenuActive">
+                                        <div class="right-click-item">
+                                            Remove from chat
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="add-participant" v-if="!showParticipantSearch" @click="showParticipantSearch = !showParticipantSearch">
@@ -169,6 +175,7 @@ export default {
             showParameters: false,
             showParticipantSearch: false,
             isOpenCreateChat: false,
+            showRightMenu: false,
             chats: [
                 {
                     name: 'Masters of sync',
@@ -180,19 +187,22 @@ export default {
                             name: 'Effective Energy',
                             type: 'Owner',
                             abbr: 'EE',
-                            bg: 'to right, #a1df7e, #56d36a'
+                            bg: 'to right, #a1df7e, #56d36a',
+                            isRightMenuActive: false
                         },
                         {
                             name: 'Thorsten & Co',
                             type: 'Check',
                             abbr: 'TH',
-                            bg: 'to right, #ddc41c, #e09a00'
+                            bg: 'to right, #ddc41c, #e09a00',
+                            isRightMenuActive: false
                         },
                         {
                             name: 'Tim Colleg',
                             type: 'Quality Assurance',
                             abbr: 'TC',
-                            bg: 'to right, #b46dd0, #7e20c0'
+                            bg: 'to right, #b46dd0, #7e20c0',
+                            isRightMenuActive: false
                         }
                     ]
                 },
@@ -271,6 +281,13 @@ export default {
                 this.$parent.$emit('newMessageToChat', this.messageText);
                 return this.messageText = '';
             }
+        },
+        closeRightMenu: function (index) {
+            this.chats[0].participants[index].isRightMenuActive = false;
+        },
+        openRightMenu: function (e, index) {
+            this.chats[0].participants[index].isRightMenuActive = !this.chats[0].participants[index].isRightMenuActive;
+            e.preventDefault();
         }
     }
 }
@@ -481,10 +498,18 @@ export default {
                         width 100%
                         height 38px
                         font-size 16px
+                        margin-top 12px
+                        color #34343e
+
+                        &.btn:not(:first-child)
+                            margin-left 0
 
                     .parameters
                         display flex
                         flex-direction column
+
+                        &.whole-height
+                            min-height 380px
 
                         .one-line
                             display flex
@@ -515,6 +540,27 @@ export default {
                                 color #ffffff
                                 font-size 12px
                                 margin-bottom 10px
+
+                            .one-line
+                                position relative
+
+                                .right-click-menu
+                                    position absolute
+                                    top 23px
+                                    right 10px
+                                    width 150px
+                                    height 25px
+                                    border-radius 2px
+                                    background-color #ffffff
+                                    box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.24)
+                                    display flex
+                                    align-items center
+                                    justify-content center
+
+                                    .right-click-item
+                                        font-family MuseoSansCyrl500
+                                        font-size 14px
+                                        color #34343e
 
                             .circle
                                 width 36px
