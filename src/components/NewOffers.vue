@@ -53,25 +53,15 @@
         <!--rename to normal name classes-->
         <div class="my-row-flex">
             <div class="mycol"
-                 style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px; width: 20%; min-width: 20%;"
+                 style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding-right: 12px; width: 20%; min-width: 20%;"
                  v-for="(contractor, i) in contractors">
 
-                <div class="project-progress-block" style="height: 4px; width: 100%;">
+                <div class="project-progress-block" style="height: 4px; width: 90%; margin-bottom: 24px;">
                     <div class="progress" style="height: 100%;"
                          :style="{width: 100 * contractor.ready + '%' }"
                          :class="initProgressBar(i)">
                         <!--{{ initProgressBar(contractor.ready) }}-->
                     </div>
-                </div>
-
-                <div class="contractor-info">
-                    <h3 style="font-weight: 500;">
-                        {{ contractor.name }}
-                    </h3>
-
-                    <h4 style="font-weight: 500;">
-                        {{ '$' + contractor.balance }}
-                    </h4>
                 </div>
 
                 <div class="task-list">
@@ -80,37 +70,52 @@
                     </div>
                 </div>
 
-                <div class="att-list">
-                    <div class="att-block"
-                         :class="initColColor(i)"
-                         v-for="(att, index) in contractor.attachments" @click="toggleAttMenu(index, contractor)">
+                <div style="display: flex; width: 100%; margin-bottom: 24px;">
+                    <div class="divider"></div>
+                    <div style="width: 100%;">
+                        <div class="contractor-info">
+                            <h3 style="font-weight: 500;">
+                                {{ contractor.name }}
+                            </h3>
 
-                        <div class="dropdown-list" v-if="att.isActive">
-                            <div class="dropdown-item">Download file</div>
-                            <div class="dropdown-item">Make a copy</div>
-                            <div class="dropdown-item delete">Delete</div>
+                            <h4 style="font-weight: 500;">
+                                {{ '$' + contractor.balance }}
+                            </h4>
                         </div>
+                        <div class="att-list">
+                            <div class="att-block"
+                                :class="initColColor(i)"
+                                v-for="(att, index) in contractor.attachments" @click="toggleAttMenu(index, contractor)">
 
-                         <div class="circle small-circle" :class="'circle-' + att.status">
-                             <img :src="getStatusIcon(att.status)" alt="">
-                         </div>
+                                <div class="dropdown-list" v-if="att.isActive">
+                                    <div class="dropdown-item">Download file</div>
+                                    <div class="dropdown-item">Make a copy</div>
+                                    <div class="dropdown-item delete">Delete</div>
+                                </div>
 
-                        <img :src="att.icon" alt="document type">
+                                <div class="circle small-circle" :class="'circle-' + att.status">
+                                    <img :src="getStatusIcon(att.status)" alt="">
+                                </div>
 
-                        <div class="att-info">
-                            <p style="margin: 0; font-size: 10px;" class="date">
-                                {{ toFormatDate(att.date) }}
-                            </p>
-                            <p style="margin: 0;">
-                                {{ att.title }}
-                            </p>
+                                <img :src="att.icon" alt="document type">
+
+                                <div class="att-info">
+                                    <p style="margin: 0; font-size: 10px;" class="date">
+                                        {{ toFormatDate(att.date) }}
+                                    </p>
+                                    <p style="margin: 0;">
+                                        {{ att.title }}
+                                    </p>
+                                </div>
+
+                                <img src="../../static/img/avatar@3x.png" alt="author avatar"
+                                    style="width: 28px; height: 28px;">
+
+                            </div>
                         </div>
-
-                        <img src="../../static/img/avatar@3x.png" alt="author avatar"
-                             style="width: 28px; height: 28px;">
-
                     </div>
                 </div>
+
 
             </div>
         </div>
@@ -842,6 +847,13 @@
         font-family MuseoSansCyrl500
         overflow-x auto
 
+        &::-webkit-scrollbar
+            height 8px
+
+        &::-webkit-scrollbar-thumb
+            background-color #bdbdbd
+            border-radius 4px
+
     /*@media (max-width 1450px)*/
     /*padding-left 360px*/
 
@@ -863,6 +875,10 @@
         display flex
         justify-content space-between
         width 100%
+        margin-bottom 12px
+
+        h3, h4
+            margin 0
 
     .contractor-actions
         display flex
@@ -892,9 +908,13 @@
 
     .att-list
         width 100%
-        height 400px
+        height 500px
         overflow-y auto
         padding-right 6px
+
+        &::-webkit-scrollbar-thumb
+            background-color #bdbdbd !important
+            border-radius 4px !important
 
         .first-team__border
             border solid 2px #06dcd5
@@ -987,6 +1007,7 @@
         border-radius 50%
 
         &.small-circle
+            min-width unset
             width 12px
             height 12px
 
@@ -1089,6 +1110,12 @@
                 position absolute
                 top -24px
                 left 0
+
+    .divider
+        margin-right 16px
+        min-width 2px
+        border-radius 1px
+        background-image linear-gradient(to top, #f0f4fa, #b6bec9)
 
 // Dark Theme
     .dark
