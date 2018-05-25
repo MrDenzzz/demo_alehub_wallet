@@ -71,14 +71,14 @@
                 </div>
 
                 <div style="display: flex; width: 100%; margin-bottom: 24px;">
-                    <div class="divider"></div>
+                    <div class="divider" style="margin-right: 16px;"></div>
                     <div style="width: 100%;">
                         <div class="contractor-info">
                             <h3 style="font-weight: 500;">
                                 {{ contractor.name }}
                             </h3>
 
-                            <h4 style="font-weight: 500;">
+                            <h4 style="font-weight: 500; margin-right: 12px;">
                                 {{ '$' + contractor.balance }}
                             </h4>
                         </div>
@@ -1112,13 +1112,15 @@
                 left 0
 
     .divider
-        margin-right 16px
         min-width 2px
         border-radius 1px
         background-image linear-gradient(to top, #f0f4fa, #b6bec9)
 
 // Dark Theme
     .dark
+        .divider
+            background-image linear-gradient(to top, #4a4e65, #3a3a4b)
+
         .my-row-flex
             &::-webkit-scrollbar-thumb
                 background-color #272730
@@ -1135,7 +1137,7 @@
 
         .att-list
             &::-webkit-scrollbar-thumb
-                background-color #272730
+                background-color #272730 !important
 
             .att-block
                 background-color #3a3a4b
