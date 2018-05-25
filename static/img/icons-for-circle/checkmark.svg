@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="5px" viewBox="0 0 8 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>1E440499-4DEE-41EF-B0B0-14219E03B3C2</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="contract" transform="translate(-109.000000, -459.000000)" stroke="#FFFFFF">
+            <g id="columns" transform="translate(84.000000, 174.000000)">
+                <g id="column" transform="translate(17.000000, 0.000000)">
+                    <g id="item" transform="translate(0.000000, 275.000000)">
+                        <g id="accepted-label" transform="translate(6.000000, 6.000000)">
+                            <polyline id="checkmark" transform="translate(5.998425, 5.500000) rotate(-45.000000) translate(-5.998425, -5.500000) " points="3.49842529 4 3.49842529 7 8.49842529 7"></polyline>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

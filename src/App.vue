@@ -27,7 +27,7 @@
     import {mapGetters} from 'vuex';
 
     export default {
-        name: 'alehub',
+        name: 'Alehub',
         components: {
             ConnectionModal,
             NewWallet,
@@ -45,28 +45,27 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'authStatus',
-                'userStatus',
-                'walletStatus',
-                'userHaveWallets',
-                'userHaveTransactions',
-                'transactionStatus',
-                'initiateFilterDateStatus',
-                'lengthWalletList',
-                'currentWalletAddress',
-                'changedTransactions',
-                'wallets',
-                'currentWallet',
-                'changedWallets',
-                'currentWalletHaveTransactions',
-
-                'allTransactions',
-
-                'walletsLoadedAddresses',
-
-                'diffWalletsAddresses'
-            ]),
+            ...mapGetters(
+                [
+                    'authStatus',
+                    'userStatus',
+                    'walletStatus',
+                    'userHaveWallets',
+                    'userHaveTransactions',
+                    'transactionStatus',
+                    'initiateFilterDateStatus',
+                    'lengthWalletList',
+                    'currentWalletAddress',
+                    'changedTransactions',
+                    'wallets',
+                    'currentWallet',
+                    'changedWallets',
+                    'currentWalletHaveTransactions',
+                    'allTransactions',
+                    'walletsLoadedAddresses',
+                    'diffWalletsAddresses'
+                ]
+            ),
             systemLanguage: function () {
                 if (this.language === null) return 'eng';
                 else return this.language;
@@ -89,6 +88,9 @@
                     this.downloadMissingTransactions();
 
                     console.log('Load app');
+
+                    console.log(this.$store.state.Wallets.wallets, 'this.$store.state.Wallets.wallets');
+
                     return false;
                 }
                 return true;

@@ -18,8 +18,8 @@
     }
 
     &:checked + .slider:before {
-      -webkit-transform: translateX(22px);
-      -ms-transform: translateX(22px);
+      -webkit-transform: translateX(16px);
+      -ms-transform: translateX(16px);
       transform: translateX(16px);
     }
   }

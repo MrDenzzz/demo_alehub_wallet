@@ -118,8 +118,7 @@
     import ChangeEmailModal from './modals/ChangeEmail';
     import ChangeTwoAuthModal from './modals/ChangeTwoAuth';
     import Spinner from './layouts/Spinner';
-    import sha256 from 'sha256';
-    import {mapActions} from 'vuex';
+
     import {mapGetters} from 'vuex';
     import {mapMutations} from 'vuex';
 

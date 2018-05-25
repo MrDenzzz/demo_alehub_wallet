@@ -1,10 +1,7 @@
 <template>
     <label class="switch-control">
-        <!--{{ flag }}-->
-        <!--@click="changeChecker()"-->
-        <input
-                type="checkbox"
-                :checked="changeTwoAuthStatus">
+        <input type="checkbox"
+               :checked="changeTwoAuthStatus">
         <span class="slider"></span>
     </label>
 </template>

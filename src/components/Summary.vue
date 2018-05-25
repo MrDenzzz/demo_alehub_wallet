@@ -63,7 +63,7 @@
             </div>
         </section>
 
-        <Chat :data="messagesList" />
+        <chat :data="messagesList"/>
 
         <new-wallet/>
         <select-language/>
@@ -90,7 +90,7 @@
     import {mapGetters} from "vuex";
 
     export default {
-        name: 'wallet',
+        name: 'Summary',
         components: {
             Chat,
             Navbar,
@@ -106,25 +106,36 @@
         },
         data() {
             return {
-                messagesList: [{
-                    isMyMessage: true,
-                    date: '30 Mar',
-                    time: '23:56',
-                    text: 'What does this mean: Unknown Exception?'
-                }],
+                messagesList: [
+                    {
+                        isMyMessage: true,
+                        date: '30 Mar',
+                        time: '23:56',
+                        text: 'What does this mean: Unknown Exception?'
+                    },
+                    {
+                        isMyMessage: false,
+                        date: '30 Mar',
+                        time: '23:57',
+                        text: 'You are programmer here, I don’t know'
+                    }
+                ],
                 isSuccessNotif: true,
                 newTransaction: false,
                 rightMenu: {
                     horizontal: false,
-                    list: [{
-                        type: "link",
-                        name: this.$t('pages.summary.rightMenu.summary'),
-                        link: "/"
-                    }, {
-                        type: "link",
-                        name: this.$t('pages.summary.rightMenu.walletSettings'),
-                        link: "/wallet/settings"
-                    }]
+                    list: [
+                        {
+                            type: "link",
+                            name: this.$t('pages.summary.rightMenu.summary'),
+                            link: "/"
+                        },
+                        {
+                            type: "link",
+                            name: this.$t('pages.summary.rightMenu.walletSettings'),
+                            link: "/wallet/settings"
+                        }
+                    ]
                 },
                 changeWalletResult: false,
                 totalTransactions: 0,
@@ -133,32 +144,31 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'wallets',
-                'transactions',
-                'dateTransactions',
-                'lengthWalletList',
-                'walletStatus',
-                'currentWallet',
-                'transactionStatus',
-                'transactionsLazyStatus',
-                'currentWalletHaveTransactions',
-                'dateFrom',
-                'dateTo',
-                'searchText',
-                'confirmationChangeEmailStatus',
-                'cancellationChangeEmailStatus'
-            ]),
+            ...mapGetters(
+                [
+                    'wallets',
+                    'transactions',
+                    'dateTransactions',
+                    'lengthWalletList',
+                    'walletStatus',
+                    'currentWallet',
+                    'transactionStatus',
+                    'transactionsLazyStatus',
+                    'currentWalletHaveTransactions',
+                    'dateFrom',
+                    'dateTo',
+                    'searchText',
+                    'confirmationChangeEmailStatus',
+                    'cancellationChangeEmailStatus'
+                ]
+            ),
 
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
             checkLoadingSpinner: function () {
-                if (this.transactionsLazyStatus !== 'success' && (this.transactions.length !== 0 ||
-                    this.transactionsLazyStatus === 'success'))
-                    return true;
-
-                return false;
+                return this.transactionsLazyStatus !== 'success' && (this.transactions.length !== 0 ||
+                    this.transactionsLazyStatus === 'success');
             },
 
             currentDateTransactions: function () {
@@ -282,7 +292,7 @@
                     time: '23:56',
                     text: msg
                 });
-                if(document.getElementById('chat-panel') !== null) {
+                if (document.getElementById('chat-panel') !== null) {
                     document.getElementById('chat-panel').scrollTop = 999999;
                 }
             });
@@ -293,7 +303,7 @@
         },
         socket: {
             events: {
-                connect () {
+                connect() {
                     console.log("Websocket connected to " + this.$socket.nsp);
                 }
             }

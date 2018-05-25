@@ -1,5 +1,8 @@
 <template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
-    <modal name="change-two-auth" height="auto" class="modal-xs" @opened="getQr()"
+    <modal name="change-two-auth"
+           height="auto"
+           class="modal-xs"
+           @opened="getQr()"
            @before-close="resetChangeTwoAuthStatus">
         <div class="heading">
             <p class="title" v-if="!userTwoAuth">
@@ -12,18 +15,16 @@
         </div>
         <div class="body">
             <div class="qr-code" v-if="!userTwoAuth">
-                <Spinner v-if="twoAuthStatus !== 'success'"/>
-                <qriously
-                        v-else
-                        :value="qrPath"
-                        :size="qrcodeWidth"/>
+                <spinner v-if="twoAuthStatus !== 'success'"/>
+                <qriously v-else
+                          :value="qrPath"
+                          :size="qrcodeWidth"/>
                 <span class="warning-title">
                     {{ $t('modals.changeTwoAuth.warning') }}
                 </span>
-                <span
-                        v-if="secret"
-                        id="secret-key"
-                        class="two-auth-secret upperCase">
+                <span v-if="secret"
+                      id="secret-key"
+                      class="two-auth-secret upperCase">
                     {{secret}}
                 </span>
             </div>
@@ -31,32 +32,30 @@
             <div class="modal-control" v-if="userTwoAuth">
                 <div class="modal-input">
                     <label class="title">{{ $t('modals.changeTwoAuth.fields.secret.label') }}</label>
-                    <input
-                            type="text"
-                            class="input"
-                            :placeholder="$t('modals.changeTwoAuth.fields.secret.placeholder')"
-                            v-model="secret">
+                    <input type="text"
+                           class="input"
+                           :placeholder="$t('modals.changeTwoAuth.fields.secret.placeholder')"
+                           v-model="secret">
                 </div>
             </div>
 
             <div class="modal-control" :class="{'two-auth-enable': !userTwoAuth }">
                 <div class="modal-input">
                     <label class="title">{{ $t('modals.changeTwoAuth.fields._2fa.label') }}</label>
-                    <input
-                            type="text"
-                            class="input"
-                            :placeholder="$t('modals.changeTwoAuth.fields._2fa.placeholder')"
-                            v-model="token">
+                    <input type="text"
+                           class="input"
+                           :placeholder="$t('modals.changeTwoAuth.fields._2fa.placeholder')"
+                           v-model="token">
                 </div>
             </div>
 
-            <div v-if="dataProcessing" class="wrap-spinner">
+            <div class="wrap-spinner"
+                 v-if="dataProcessing">
                 <spinner/>
             </div>
 
             <div class="modal-btn two-auth">
-                <button
-                        v-if="!userTwoAuth"
+                <button v-if="!userTwoAuth"
                         id="copy-secret"
                         type="button"
                         class="buttons btn-default"
@@ -65,8 +64,8 @@
                     <img class="icon-copy" :src="getIcon('tmp_copy_icon')" alt="">
                     {{ $t('modals.changeTwoAuth.buttons.copy') }}
                 </button>
-                <button
-                        v-if="!userTwoAuth"
+
+                <button v-if="!userTwoAuth"
                         type="button"
                         id="enable-two-auth"
                         class="buttons btn-yellow"
@@ -75,8 +74,8 @@
                         @click="makeEnableTwoAuth()">
                     {{ $t('modals.changeTwoAuth.buttons.enable') }}
                 </button>
-                <button
-                        v-if="userTwoAuth"
+
+                <button v-if="userTwoAuth"
                         type="button"
                         id="disable-two-auth"
                         class="buttons btn-default"
@@ -110,12 +109,14 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'twoAuthStatus',
-                'twoAuthGeneratedCode',
-                'twoAuthSecret',
-                'userTwoAuth'
-            ]),
+            ...mapGetters(
+                [
+                    'twoAuthStatus',
+                    'twoAuthGeneratedCode',
+                    'twoAuthSecret',
+                    'userTwoAuth'
+                ]
+            ),
             qrcodeWidth: function () {
                 if (this.windowWidth <= 425)
                     return 220;
