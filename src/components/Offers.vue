@@ -44,12 +44,20 @@
 
                     <div class="whole-line">
                         <div class="selected-area">
-                            <div class="marker-calendar marker-calendar-top">
+                            <div class="marker-calendar marker-calendar-top" @click="openedTopDatepicker = !openedTopDatepicker">
                                 <div class="block">
                                     <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
                                     <div class="triangle"></div>
                                 </div>
                             </div>
+
+                            <datepicker id="1"
+                                        class="2"
+                                        v-if="openedTopDatepicker"
+                                        v-model="testTopDatepicker"
+                                        :language="$t('modals.pdf.lang')"
+                                        :inline="true"/>
+
                             <div class="marker-calendar marker-calendar-bottom">
                                 <div class="block">
                                     <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
@@ -305,6 +313,7 @@
 
 <script>
     import Navbar from './layouts/Navbar';
+    import Datepicker from 'vuejs-datepicker';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
 
     import {mapGetters} from 'vuex';
@@ -313,11 +322,13 @@
         name: 'Offers',
         components: {
             Navbar,
-            OffersContractorDialog
+            OffersContractorDialog,
+            Datepicker
         },
         data() {
             return {
-                // currentContractorId: null,
+                openedTopDatepicker: false,
+                testTopDatepicker: 0,
                 openedContractorDialog: false,
                 clickCoordinates: {
                     top: false,
@@ -711,6 +722,12 @@
         }
     }
 </script>
+
+<style lang="stylus" scoped>
+    #1
+        position absolute
+        z-index 100000
+</style>
 
 <style lang="stylus">
     .contract-list
