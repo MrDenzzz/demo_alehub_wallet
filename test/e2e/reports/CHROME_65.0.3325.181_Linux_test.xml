@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites errors="1"
-            failures="0"
-            tests="1">
+<testsuites errors="2"
+            failures="2"
+            tests="2">
 
   <testsuite name="test"
-    errors="1" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="1" time="28.51" timestamp="Tue, 22 May 2018 14:17:51 GMT">
+    errors="2" failures="2" hostname="" id="" package="test" skipped="0"
+    tests="2" time="34.83" timestamp="Mon, 28 May 2018 09:43:38 GMT">
   
-    <testcase name="default autharisation test" classname="test" time="28.51" assertions="1">
+    <testcase name="default autharisation test" classname="test" time="29.81" assertions="7">
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.error.toasted&gt; contains text: &#34;Enter your valid password&#34;.">    at Object.default autharisation test (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:29:19)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+    
+
+      <failure message="Testing if element &lt;.error.toasted&gt; contains text: &#34;The password must be at least 8 characters in length&#34;.">    at Object.default autharisation test (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:38:19)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+    
+    </testcase>
+  
+    <testcase name="wallets" classname="test" time="5.021" assertions="9">
+
+      <failure message="Testing if element &lt;.toasted&gt; contains text: &#34;Autharizathion access&#34;.">    at Object.wallets (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:49:21)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
     </testcase>
@@ -15,9 +51,19 @@
 
   
     <system-err>
-      Error while running setValue command: Provided locating strategy is not supported: input[name=&#34;password&#34;]. It must be one of the following:
-class name, css selector, id, name, link text, partial link text, tag name, xpath
-    at Object.default autharisation test (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:11:14)
+      ERROR: Unable to locate element: &#34;div[id=&#34;w8LgnPbbwow26XUYg65zucnGVRxJCf6antc6HbSHnOLDUgZ]&#34;&#34; using: css selector
+    at Object.wallets (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:64:14)
+    at Module.call (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at process._tickCallback (internal/process/next_tick.js:112:11)
+Error while running setValue command: elementIdValue method expects 3 or 4 arguments - 2 given.
+    at Object.wallets (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:69:14)
     at Module.call (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/lib/runner/module.js:62:34)
     at /home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/lib/runner/testcase.js:70:29
     at _fulfilled (/home/evg/WebstormProjects/demo_alehub_wallet/node_modules/nightwatch/node_modules/q/q.js:834:54)
