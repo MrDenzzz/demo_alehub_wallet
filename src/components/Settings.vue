@@ -51,6 +51,7 @@
                                             </div>
                                         </label>
                                         <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="showAvatar" @click="onClickInputFile">
+                                        <button class="btn btn-yellow" v-if="showButton" @click="sendUserAvatar">Save</button>
                                     </div>
                                 </div>
 
@@ -156,7 +157,8 @@
                 selectedLanguage: 'English',
                 newName: '',
                 dataProcessing: false,
-                curAvatar: '../../static/img/avatar.svg'
+                curAvatar: '../../static/img/avatar.svg',
+                showButton: false
             }
         },
         watch: {},
@@ -286,6 +288,7 @@
             showAvatar: function () {
                 const avatar = document.getElementById('upload-avatar');
                 this.curAvatar = window.URL.createObjectURL(avatar.files[0]);
+                this.showButton = true;
             }
         },
         mounted() {
@@ -316,6 +319,10 @@
             .wrap-input
                 .full-line
                     width 100%
+                
+                button
+                    margin-left 0
+                    width 67px
 
                 .circle
                     border-radius 50%
