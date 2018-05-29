@@ -41,6 +41,19 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="control">
+                                    <div class="wrap-input">
+                                        <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
+                                            <p>Add photo</p>
+                                            <div class="circle">
+                                                <img :src="curAvatar" alt="" width="67" height="67">
+                                            </div>
+                                        </label>
+                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="showAvatar" @click="onClickInputFile">
+                                    </div>
+                                </div>
+
                                 <div class="control border-none"
                                      @click.stop="changeLanguage">
                                     <div class="wrap-input">
@@ -142,7 +155,8 @@
                 switchValueAuth: true,
                 selectedLanguage: 'English',
                 newName: '',
-                dataProcessing: false
+                dataProcessing: false,
+                curAvatar: '../../static/img/avatar.svg'
             }
         },
         watch: {},
@@ -261,6 +275,13 @@
                         body.classList.add("white");
                         break;
                 }
+            },
+            onClickInputFile: function () {
+                this.$refs.uploadAvatar.click();
+            },
+            showAvatar: function () {
+                const avatar = document.getElementById('upload-avatar');
+                this.curAvatar = window.URL.createObjectURL(avatar.files[0]);
             }
         },
         mounted() {
@@ -291,6 +312,23 @@
             .wrap-input
                 .full-line
                     width 100%
+
+                .circle
+                    border-radius 50%
+                    width 67px
+                    height 67px
+                    background-color #d3d9e1
+                    margin-bottom 12px
+
+                    img
+                        border-radius 50%
+
+                p
+                    margin-top 0
+                
+                #upload-avatar
+                    opacity 0
+                    position absolute
 
     .form .deletelink
         margin-top -8px
