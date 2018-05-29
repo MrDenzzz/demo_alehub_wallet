@@ -26,44 +26,9 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="one-line">
-                    <label>
-                        {{ $t('offersFilter.country') }}
-                    </label>
-                    <button>
-                        {{ $t('offersFilter.selectAll') }}
-                    </button>
-                </div>
-                <input type="text">
-                <div class="form-checkbox country">
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>Afhganistan</span>
-                    </label>
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>Åland Islands</span>
-                    </label>
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>Albania</span>
-                    </label>
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>Algeria</span>
-                    </label>
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>American Samoa</span>
-                    </label>
-                </div>
-            </div>
+
+            <input-prompt-checkbox-list/>
+
             <div class="form-group">
                 <label>Certification</label>
                 <div class="form-checkbox">
@@ -117,8 +82,13 @@
 </template>
 
 <script>
+    import InputPromptCheckboxList from './forms/InputPromptCheckboxList';
+
     export default {
         name: 'OffersFilter',
+        components: {
+            InputPromptCheckboxList
+        },
         data() {
             return {
                 qaIsActive: true
@@ -213,6 +183,10 @@
 
                     &:first-child
                         margin-right 12px
+
+            .form-checkbox.country
+                overflow-y scroll
+                max-height 140px
 
             .form-checkbox, .form-radio
                 width 100%
