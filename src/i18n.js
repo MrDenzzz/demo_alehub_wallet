@@ -512,6 +512,15 @@ const messages = {
             notifications: 'Notifications',
             settings: 'Settings'
         },
+        stateBar: {
+            timeInterval: 'Contract period',
+            name: 'Name',
+            rating: 'Rating',
+            price: 'Price',
+            certification: 'Certification',
+            verified: 'Verified'
+        }
+
     },
     rus: {
         pages: {
@@ -756,7 +765,7 @@ const messages = {
                     upload: 'Загрузить',
                     publish: 'Опубликовать предложение'
                 }
-            }
+            },
         },
         modals: {
             newWallet: {
@@ -1026,6 +1035,14 @@ const messages = {
             notifications: 'Оповещения',
             settings: 'Настройки'
         },
+        stateBar: {
+            timeInterval: 'Контрактный период',
+            name: 'Название',
+            rating: 'Рейтинг',
+            price: 'Цена',
+            certification: 'Сертификация',
+            verified: 'Верификация'
+        }
     }
 };
 

@@ -4,46 +4,8 @@
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
-        <div class="info-header">
-            <div class="info-wrap">
-                <div class="info">
-                    <span class="title">Contract period</span>
-                    <span class="bold-text">
-                        {{ infoHeader.startDate}} - {{ infoHeader.finalDate }}
-                    </span>
-                </div>
-                <div class="info">
-                    <span class="title">Name</span>
-                    <span class="bold-text">
-                        {{ infoHeader.name }}
-                    </span>
-                </div>
-                <div class="info">
-                    <span class="title">Rating</span>
-                    <span class="bold-text">
-                        {{ infoHeader.rating }}
-                    </span>
-                </div>
-                <div class="info">
-                    <span class="title">Certification</span>
-                    <span class="bold-text">
-                        {{ infoHeader.certification }}
-                    </span>
-                </div>
-                <div class="info">
-                    <span class="title">Verified</span>
-                    <span class="bold-text">
-                        {{ infoHeader.verified }}
-                    </span>
-                </div>
-                <div class="info">
-                    <span class="bold-text">Verified by me</span>
-                </div>
-            </div>
-            <div>
-                <img :src="getIcon('menu')" alt="">
-            </div>
-        </div>
+
+        <state-bar/>
 
         <div class="row-page">
             <div class="sidebar">
@@ -241,10 +203,10 @@
             <div class="search-result">
                 <div class="progress-list">
                     <div class="progress-item"
-                         v-for="project in projects"
-                         :key="project.id"
-                         :class="project.status"
-                         :style="{width: 10 * project.steps + '%'}">
+                         v-for="offer in offers"
+                         :key="offer.id"
+                         :class="offer.status"
+                         :style="{width: 10 * offer.steps + '%'}">
                         <div class="row-top">
                             <div class="project-info">
                                 <div class="circle circle-big">
@@ -253,18 +215,18 @@
                                 <router-link class="info-text"
                                              tag="div"
                                              style="cursor: pointer;"
-                                             :to="project.to">
+                                             :to="offer.to">
                                     <p class="title">
-                                        {{ project.title }}
+                                        {{ offer.title }}
                                     </p>
                                     <p class="subtitle">
-                                        {{ project.company }}
+                                        {{ offer.company }}
                                     </p>
                                 </router-link>
                             </div>
                             <div class="contractors-list">
                                 <div class="contractors-item"
-                                     v-for="contractor in project.contractors"
+                                     v-for="contractor in offer.contractors"
                                      :key="contractor.id">
                                     <div class="contractors-content">
                                         <!--<div class="circle"-->
@@ -297,29 +259,29 @@
                                 </div>
                             </div>
                             <div class="circle circle-big"
-                                 :class="'circle-' + project.status">
-                                <img :src="getStatusIcon(project.status, 'circles')" alt="">
+                                 :class="'circle-' + offer.status">
+                                <img :src="getStatusIcon(offer.status, 'circles')" alt="">
                             </div>
                         </div>
                         <div class="progress-row">
-                            <div class="progress-bar" :class="project.status">
-                                <img :src="getStatusIcon(project.status, 'arrows')"
+                            <div class="progress-bar" :class="offer.status">
+                                <img :src="getStatusIcon(offer.status, 'arrows')"
                                      alt=""
                                      class="arrow">
                                 <div class="step"
-                                     v-for="n in project.steps"
+                                     v-for="n in offer.steps"
                                      :key="n"
-                                     :class="{ 'one-step': project.steps <= 1 }">
+                                     :class="{ 'one-step': offer.steps <= 1 }">
                                     Month
                                 </div>
                             </div>
                         </div>
                         <div class="row-bottom">
                             <div class="date">
-                                {{ toFormatDate(project.startDate) }}
+                                {{ toFormatDate(offer.startDate) }}
                             </div>
                             <div class="date">
-                                {{ toFormatDate(project.finalDate) }}
+                                {{ toFormatDate(offer.finalDate) }}
                             </div>
                         </div>
                     </div>
@@ -335,6 +297,7 @@
 
 <script>
     import Navbar from './layouts/Navbar';
+    import StateBar from './layouts/StateBar';
     import Datepicker from 'vuejs-datepicker';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
 
@@ -344,6 +307,7 @@
         name: 'Offers',
         components: {
             Navbar,
+            StateBar,
             OffersContractorDialog,
             Datepicker
         },
@@ -367,269 +331,7 @@
                     left: false
                 },
                 qaIsActive: true,
-                projects: [
-                    {
-                        title: 'CryptoStore',
-                        company: 'Serokell',
-                        to: '/offer',
-                        startDate: 1517495409000,
-                        finalDate: 1543588209000,
-                        status: 'completed',
-                        projectLogo: '../../static/img/react.svg',
-                        steps: 10,
-                        contractors: [
-                            {
-                                id: 1,
-                                initials: 'VD',
-                                name: 'Vova Dmitrov',
-                                src: '../../static/img/logo/telegram.png',
-                                position: 'TS execution',
-                                rating: 8.1,
-                                sinceDate: 1487967146000,
-                                webAddress: '',
-                                githubAddress: '',
-                                countOfProject: 1328,
-                                avgCostPerProject: 7500,
-                                type: 'TS execution',
-                                keys: [
-                                    '../../static/img/keys/ts-key.svg'
-                                ]
-                            },
-                            {
-                                id: 2,
-                                initials: 'DV',
-                                name: 'Deus Virus',
-                                src: '../../static/img/logo/ubuntu.png',
-                                position: 'Executor',
-                                rating: 9.2,
-                                sinceDate: 1487927146000,
-                                webAddress: '',
-                                githubAddress: '',
-                                countOfProject: 5748,
-                                avgCostPerProject: 4000,
-                                type: 'TS execution',
-                                keys: [
-                                    '../../static/img/keys/ts-exec-key.svg'
-                                ]
-                            },
-                            {
-                                id: 3,
-                                initials: 'NG',
-                                name: 'Nicola Glumac',
-                                src: false,
-                                type: 'Check',
-                                keys: [
-                                    '../../static/img/keys/check-key.svg',
-                                    '../../static/img/keys/check-key.svg'
-                                ]
-                            },
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance',
-                                keys: [
-                                    '../../static/img/keys/qa-key.svg',
-                                    '../../static/img/keys/qa-key.svg'
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        title: 'Alehub',
-                        company: 'Effective Energy',
-                        to: '/offer',
-                        startDate: 1523370609000,
-                        finalDate: 1543588209000,
-                        status: 'ongoing',
-                        steps: 8,
-                        contractors: [
-                            {
-                                id: 5,
-                                initials: 'QB',
-                                name: 'Quality Boy',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'TS',
-                                keys: [
-                                    '../../static/img/keys/ts-key.svg'
-                                ]
-                            },
-                            {
-                                id: 6,
-                                initials: 'GA',
-                                name: 'Galvadon',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'TS execution',
-                                keys: [
-                                    '../../static/img/keys/ts-exec-key.svg'
-                                ]
-                            },
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance',
-                                keys: [
-                                    '../../static/img/keys/qa-key.svg'
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        title: 'Virtual reality pluggin',
-                        company: 'Nike',
-                        to: '/offer',
-                        startDate: 1525185009000,
-                        finalDate: 1525703409000,
-                        status: 'canceled',
-                        projectLogo: '../../static/img/ale-logo.svg',
-                        steps: 1,
-                        contractors: [
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance'
-                            }
-                        ]
-                    },
-                    {
-                        title: 'Virtual reality pluggin',
-                        company: 'Nike',
-                        to: '/offer',
-                        startDate: 1525185009000,
-                        finalDate: 1525703409000,
-                        status: 'timelag',
-                        projectLogo: '../../static/img/ale-logo.svg',
-                        steps: 1,
-                        contractors: [
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance'
-                            }
-                        ]
-                    },
-                    {
-                        title: 'CryptoStore',
-                        company: 'Serokell',
-                        to: '/offer',
-                        startDate: 1517495409000,
-                        finalDate: 1543588209000,
-                        status: 'completed',
-                        projectLogo: '../../static/img/ale-logo.svg',
-                        steps: 10,
-                        contractors: [
-                            {
-                                id: 1,
-                                initials: 'VD',
-                                name: 'Vova Dmitrov',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'TS',
-                                keys: [
-                                    '../../static/img/keys/ts-key.svg'
-                                ]
-                            },
-                            {
-                                id: 2,
-                                initials: 'DV',
-                                name: 'Deus Virus',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'TS execution',
-                                keys: [
-                                    '../../static/img/keys/ts-exec-key.svg'
-                                ]
-                            },
-                            {
-                                id: 3,
-                                initials: 'NG',
-                                name: 'Nicola Glumac',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Check',
-                                keys: [
-                                    '../../static/img/keys/check-key.svg',
-                                    '../../static/img/keys/check-key.svg'
-                                ]
-                            },
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance',
-                                keys: [
-                                    '../../static/img/keys/qa-key.svg',
-                                    '../../static/img/keys/qa-key.svg'
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        title: 'Alehub',
-                        company: 'Effective Energy',
-                        to: '/offer',
-                        startDate: 1523370609000,
-                        finalDate: 1543588209000,
-                        status: 'ongoing',
-                        steps: 8,
-                        contractors: [
-                            {
-                                id: 5,
-                                initials: 'QB',
-                                name: 'Quality Boy',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'TS',
-                                keys: [
-                                    '../../static/img/keys/ts-key.svg'
-                                ]
-                            },
-                            {
-                                id: 6,
-                                initials: 'GA',
-                                name: 'Galvadon',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'TS execution',
-                                keys: [
-                                    '../../static/img/keys/ts-exec-key.svg'
-                                ]
-                            },
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance',
-                                keys: [
-                                    '../../static/img/keys/qa-key.svg'
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        title: 'Virtual reality pluggin',
-                        company: 'Nike',
-                        to: '/offer',
-                        startDate: 1525185009000,
-                        finalDate: 1525703409000,
-                        status: 'canceled',
-                        projectLogo: '../../static/img/ale-logo.svg',
-                        steps: 1,
-                        contractors: [
-                            {
-                                id: 4,
-                                initials: 'RC',
-                                name: 'Rift & Co',
-                                src: '../../static/img/logo/ubuntu.png',
-                                type: 'Quality Assurance'
-                            }
-                        ]
-                    }
-                ],
+
                 statusIcons: {
                     arrows: {
                         canceled: '../../static/img/arrows/arrow-canceled.svg',
@@ -673,6 +375,7 @@
         computed: {
             ...mapGetters(
                 [
+                    'offers',
                     'selectedContractor'
                 ]
             ),
@@ -767,54 +470,6 @@
 
         @media (max-width 620px)
             overflow-x hidden
-
-        .info-header
-            padding 87px 32px 23px 110px
-            background-color #eceef1
-            display flex
-            justify-content space-between
-            align-items center
-
-            @media (max-width 1200px)
-                padding-left 32px
-
-            .info-wrap
-                display flex
-                align-items flex-end
-
-                @media (max-width 990px)
-                    justify-content space-between
-                    width 100%
-                    margin-right 32px
-
-                .info
-                    font-family MuseoSansCyrl500
-                    font-size 12px
-                    font-weight 500
-                    color #34343e
-                    margin-right 64px
-                    display flex
-                    flex-direction column
-
-                    @media (max-width 990px)
-                        margin-right 0
-
-                    .title
-                        opacity 0.5
-                        white-space nowrap
-
-                    .bold-text
-                        font-size 17px
-                        white-space nowrap
-
-                        @media (max-width 1100px)
-                            font-size 15px
-
-                        @media (max-width 990px)
-                            font-size 13px
-
-                        @media (max-width 620px)
-                            font-size 11px
 
         .row-page
             padding-top 32px

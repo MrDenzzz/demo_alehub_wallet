@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const state = {
-    projects: [
+    offers: [
         {
             title: 'CryptoStore',
             company: 'Serokell',
@@ -296,7 +296,8 @@ const mutations = {
 };
 
 const getters = {
-    selectedContractor: state => state.selectedContractor
+    selectedContractor: state => state.selectedContractor,
+    offers: state => state.offers
 };
 
 export default {
