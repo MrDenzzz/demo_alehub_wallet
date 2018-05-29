@@ -77,7 +77,6 @@
                 document.getElementsByTagName('html')[0].addEventListener('keyup', function (e) {
                     if (!document.getElementById('btnCopyAddress'))
                         return false;
-
                     if (e.key === 'Enter') {
                         document.getElementById('btnCopyAddress').click();
                     }
@@ -89,7 +88,6 @@
 
 <style lang="stylus">
     @import "./modals.scss";
-
     .modal-control
         .address
             font-family MuseoSansCyrl500
@@ -98,16 +96,13 @@
             line-height 1.29
             color #34343e
             word-break break-all
-
     .qr-code
         .upperCase
             text-transform uppercase
             font-weight bold
-
     .modal-md
         .v--modal
             width 620px !important
-
     .v--modal-overlay
         .v--modal-background-click
             padding-bottom 0 !important
