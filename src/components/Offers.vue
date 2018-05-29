@@ -8,23 +8,33 @@
             <div class="info-wrap">
                 <div class="info">
                     <span class="title">Contract period</span>
-                    <span class="bold-text">{{ infoHeader.startDate}} - {{ infoHeader.finalDate }}</span>
+                    <span class="bold-text">
+                        {{ infoHeader.startDate}} - {{ infoHeader.finalDate }}
+                    </span>
                 </div>
                 <div class="info">
                     <span class="title">Name</span>
-                    <span class="bold-text">{{ infoHeader.name }}</span>
+                    <span class="bold-text">
+                        {{ infoHeader.name }}
+                    </span>
                 </div>
                 <div class="info">
                     <span class="title">Rating</span>
-                    <span class="bold-text">{{ infoHeader.rating }}</span>
+                    <span class="bold-text">
+                        {{ infoHeader.rating }}
+                    </span>
                 </div>
                 <div class="info">
                     <span class="title">Certification</span>
-                    <span class="bold-text">{{ infoHeader.certification }}</span>
+                    <span class="bold-text">
+                        {{ infoHeader.certification }}
+                    </span>
                 </div>
                 <div class="info">
                     <span class="title">Verified</span>
-                    <span class="bold-text">{{ infoHeader.verified }}</span>
+                    <span class="bold-text">
+                        {{ infoHeader.verified }}
+                    </span>
                 </div>
                 <div class="info">
                     <span class="bold-text">Verified by me</span>
@@ -44,26 +54,38 @@
 
                     <div class="whole-line">
                         <div class="selected-area">
-                            <div class="marker-calendar marker-calendar-top" @click="openedTopDatepicker = !openedTopDatepicker">
+                            <div class="marker-calendar marker-calendar-top"
+                                 @click="openedFromDatepicker = !openedFromDatepicker">
                                 <div class="block">
-                                    <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
+                                    <img src="../../static/img/calendar-ic_black.svg"
+                                         alt="date from" width="16px" height="16px">
                                     <div class="triangle"></div>
                                 </div>
                             </div>
 
-                            <datepicker id="1"
-                                        class="2"
-                                        v-if="openedTopDatepicker"
-                                        v-model="testTopDatepicker"
+                            <datepicker id="dateOffersFrom"
+                                        class="dateOffersFrom"
+                                        v-if="openedFromDatepicker"
+                                        v-model="offersDateFrom"
                                         :language="$t('modals.pdf.lang')"
                                         :inline="true"/>
 
-                            <div class="marker-calendar marker-calendar-bottom">
+                            <div class="marker-calendar marker-calendar-bottom"
+                                 @click="openedToDatepicker = !openedToDatepicker">
                                 <div class="block">
-                                    <img src="../../static/img/calendar-ic_black.svg" alt="" width="16px" height="16px">
+                                    <img src="../../static/img/calendar-ic_black.svg"
+                                         alt="date to" width="16px" height="16px">
                                     <div class="triangle"></div>
                                 </div>
                             </div>
+
+                            <datepicker id="dateOffersTo"
+                                        class="dateOffersTo"
+                                        :style="{ 'top': getSelectedAreaHeight }"
+                                        v-if="openedToDatepicker"
+                                        v-model="offersDateTo"
+                                        :language="$t('modals.pdf.lang')"
+                                        :inline="true"/>
                         </div>
                         <div class="dividers-container">
                             <div class="divider horizontal" v-for="n in 8" :key="n"></div>
@@ -325,10 +347,20 @@
             OffersContractorDialog,
             Datepicker
         },
+        watch: {
+            offersDateFrom: function (val) {
+                console.log(val, 'offersDateFrom');
+            },
+            offersDateTo: function (val) {
+                console.log(val, 'offersDateTo');
+            }
+        },
         data() {
             return {
-                openedTopDatepicker: false,
-                testTopDatepicker: 0,
+                openedFromDatepicker: false,
+                openedToDatepicker: false,
+                offersDateFrom: 0,
+                offersDateTo: 0,
                 openedContractorDialog: false,
                 clickCoordinates: {
                     top: false,
@@ -649,6 +681,9 @@
             },
             isOpenedContractorDialog: function () {
                 return this.openedContractorDialog;
+            },
+            getSelectedAreaHeight: function () {
+                return getComputedStyle(document.querySelector('.selected-area')).height;
             }
         },
         methods: {
@@ -724,9 +759,6 @@
 </script>
 
 <style lang="stylus" scoped>
-    #1
-        position absolute
-        z-index 100000
 </style>
 
 <style lang="stylus">
@@ -927,10 +959,10 @@
                                         left 0
 
                         .circle-big
+                            /*z-index 2*/
                             top 190px
                             left -6px
                             position absolute
-                            z-index 2
 
                             @media (max-width 768px)
                                 top -6px
@@ -963,6 +995,9 @@
                             top 58px
                             left -1px
                             z-index 1
+
+                            .dateOffersFrom, .dateOffersTo
+                                z-index 3
 
                             @media (max-width 768px)
                                 width 60%
@@ -1180,7 +1215,7 @@
                                             clip-path circle(50% at center)
 
                                         .circle__overlay
-                                            z-index 2
+                                            /*z-index 2*/
                                             position absolute
 
                                         .initials
@@ -1340,6 +1375,7 @@
             text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
 
     .marker-calendar
+        cursor pointer
         position absolute
 
         .block

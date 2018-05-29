@@ -38,7 +38,7 @@ const actions = {
     authRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_AUTH');
-            let host = 'http://192.168.1.47:4000/users/login';
+            let host = 'https://ale-demo-4550.nodechef.com/users/login';
             axios({
                 url: host,
                 data: user,
@@ -64,7 +64,7 @@ const actions = {
     authTwoFaRequest: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_AUTH');
-            let host = 'http://192.168.1.47:4000/users/login/2fa';
+            let host = 'https://ale-demo-4550.nodechef.com/users/login/2fa';
             axios({
                 url: host,
                 data: user,
@@ -86,7 +86,7 @@ const actions = {
     authLogout: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LOGOUT');
-            let host = 'http://192.168.1.47:4000/users/logout';
+            let host = 'https://ale-demo-4550.nodechef.com/users/logout';
             axios({
                 url: host,
                 headers: {
@@ -112,7 +112,7 @@ const actions = {
     userRequest: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_USER');
-            let host = 'http://192.168.1.47:4000/users/get-user-data';
+            let host = 'https://ale-demo-4550.nodechef.com/users/get-user-data';
             axios({
                 url: host,
                 headers: {
@@ -142,7 +142,7 @@ const actions = {
     confirmationRegistration: ({commit}, token) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CONFIRMATION_REGISTRATION');
-            let host = 'http://192.168.1.47:4000/users/confirm-reg';
+            let host = 'https://ale-demo-4550.nodechef.com/users/confirm-reg';
             axios({
                 url: host,
                 headers: {
@@ -163,7 +163,7 @@ const actions = {
     twoAuthRequest: ({commit}) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_TWOAUTH');
-            let host = 'http://192.168.1.47:4000/users/generate-qr';
+            let host = 'https://ale-demo-4550.nodechef.com/users/generate-qr';
             axios({
                 url: host,
                 headers: {
@@ -193,7 +193,7 @@ const actions = {
     enableTwoAuth: ({commit, dispatch}, authData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ENABLE_TWOAUTH');
-            let host = 'http://192.168.1.47:4000/users/enable-two-auth';
+            let host = 'https://ale-demo-4550.nodechef.com/users/enable-two-auth';
             axios({
                 url: host,
                 headers: {
@@ -216,7 +216,7 @@ const actions = {
     disableTwoAuth: ({commit, dispatch}, confirmDisableData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_DISABLE_TWOAUTH');
-            let host = 'http://192.168.1.47:4000/users/disable-two-auth';
+            let host = 'https://ale-demo-4550.nodechef.com/users/disable-two-auth';
             axios({
                 url: host,
                 data: confirmDisableData,
@@ -240,7 +240,7 @@ const actions = {
     },
     changeUserName: ({commit, dispatch}, name) => {
         return new Promise((resolve, reject) => {
-            let host = 'http://192.168.1.47:4000/users/change-name';
+            let host = 'https://ale-demo-4550.nodechef.com/users/change-name';
             axios({
                 url: host,
                 data: name,
@@ -263,7 +263,7 @@ const actions = {
     changeEmail: ({commit, dispatch}, emailData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_EMAIL');
-            let host = 'http://192.168.1.47:4000/users/change-email';
+            let host = 'https://ale-demo-4550.nodechef.com/users/change-email';
             axios({
                 url: host,
                 data: emailData,
@@ -286,7 +286,7 @@ const actions = {
     confirmationChangeEmail: ({commit}, token) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CONFIRMATION_CHANGE_EMAIL');
-            let host = 'http://192.168.1.47:4000/users/confirm-change-email';
+            let host = 'https://ale-demo-4550.nodechef.com/users/confirm-change-email';
             axios({
                 url: host,
                 data: token,
@@ -329,7 +329,7 @@ const actions = {
     changePassword: ({commit, dispatch}, passData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CHANGE_PASSWORD');
-            let host = 'http://192.168.1.47:4000/users/change-password';
+            let host = 'https://ale-demo-4550.nodechef.com/users/change-password';
             axios({
                 url: host,
                 data: passData,

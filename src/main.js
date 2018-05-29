@@ -16,12 +16,12 @@ import axios from 'axios';
 import sha256 from 'sha256';
 
 Vue.config.productionTip = false;
-Vue.prototype.$host = 'http://192.168.1.47:4000';
-// Vue.prototype.$host = 'http://192.168.1.47:4000';
+Vue.prototype.$host = 'https://ale-demo-4550.nodechef.com';
+// Vue.prototype.$host = 'https://ale-demo-4550.nodechef.com';
 // Vue.prototype.$host = 'localhost:4000';
 
-import VueWebsocket from "vue-websocket";
-Vue.use(VueWebsocket, "ws://ale-demo.eu-4.evennode.com", {
+import VueWebsocket from 'vue-websocket';
+Vue.use(VueWebsocket, 'https://ale-demo-4550.nodechef.com', {
     reconnection: true
 });
 

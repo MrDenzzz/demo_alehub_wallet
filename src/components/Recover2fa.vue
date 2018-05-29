@@ -110,7 +110,7 @@ export default {
 
             this.isLoader = true;
 
-            this.$http.post(`http://192.168.1.47:4000/users/restore-secret`, {
+            this.$http.post(`https://ale-demo-4550.nodechef.com/users/restore-secret`, {
                 secret: this.secretKey
             }, {
                 headers: {

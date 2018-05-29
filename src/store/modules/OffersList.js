@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const state = {
-    contractors: [
+    projects: [
         {
             title: 'CryptoStore',
             company: 'Serokell',

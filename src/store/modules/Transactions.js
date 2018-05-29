@@ -50,7 +50,7 @@ const actions = {
     allTransactionsRequest: ({commit, dispatch}, walletsAddressList) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ALL_TRANSACTIONS');
-            let host = 'http://192.168.1.47:4000/transactions/list';
+            let host = 'https://ale-demo-4550.nodechef.com/transactions/list';
             axios({
                 url: host,
                 headers: {
@@ -118,7 +118,7 @@ const actions = {
     additionTransactionRequest: ({commit}, walletAddressArray) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ADDITION_TRANSACTION');
-            let host = 'http://192.168.1.47:4000/transactions/list';
+            let host = 'https://ale-demo-4550.nodechef.com/transactions/list';
             axios({
                 url: host,
                 headers: {
@@ -151,7 +151,7 @@ const actions = {
     addMissingTransactionsRequest: ({commit, dispatch}, addresses) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_ADD_MISSING_TRANSACTIONS');
-            let host = 'http://192.168.1.47:4000/transactions/list';
+            let host = 'https://ale-demo-4550.nodechef.com/transactions/list';
             axios({
                 url: host,
                 headers: {
@@ -185,7 +185,7 @@ const actions = {
     transactionsRequest: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_TRANSACTIONS');
-            let host = `http://192.168.1.47:4000/transactions/${address}`;
+            let host = `https://ale-demo-4550.nodechef.com/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -212,7 +212,7 @@ const actions = {
     transactionsRequestLazy: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_LAZY_TRANSACTIONS');
-            let host = `http://192.168.1.47:4000/transactions/${address}`;
+            let host = `https://ale-demo-4550.nodechef.com/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -236,7 +236,7 @@ const actions = {
     transactionsRequestPing: ({commit, dispatch}, address) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_PING_TRANSACTIONS');
-            let host = `http://192.168.1.47:4000/transactions/${address}`;
+            let host = `https://ale-demo-4550.nodechef.com/transactions/${address}`;
             axios({
                 url: host,
                 headers: {
@@ -277,7 +277,7 @@ const actions = {
     sendCoins: ({commit, dispatch}, walletDetails) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_SEND_COINS');
-            let host = `http://192.168.1.47:4000/transactions/send`;
+            let host = `https://ale-demo-4550.nodechef.com/transactions/send`;
             axios({
                 url: host,
                 data: walletDetails,

@@ -12,7 +12,7 @@ const actions = {
 
             commit('REQUEST_GET_NOTIFICATIONS');
 
-            let host = `http://192.168.1.47:4000/notifications`;
+            let host = `https://ale-demo-4550.nodechef.com/notifications`;
             axios({
                 url: host,
                 headers: {
@@ -39,7 +39,7 @@ const actions = {
     deleteNotifications: ({commit, dispatch}, notifArray) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_GET_NOTIFICATIONS');
-            let host = `http://192.168.1.47:4000/notifications/list`;
+            let host = `https://ale-demo-4550.nodechef.com/notifications/list`;
             axios({
                 url: host,
                 data: {list: notifArray},
