@@ -11,7 +11,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <spinner v-if="dataProcessing"/>
+                          <spinner v-if="dataProcessing"/>
                             <notif-panel v-else-if="!dataProcessing && notifications.length !== 0"
                                     :notifications="notifications"/>
 

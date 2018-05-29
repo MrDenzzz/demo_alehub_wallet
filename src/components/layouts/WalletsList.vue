@@ -19,6 +19,7 @@
                  :key="wallet.address"
                  :id="wallet.address"
                  :class="{ active: checkActive(wallet.address) }"
+                 :type="wallet.address"
                  @click="selectNewWallet(wallet.address)">
 
                 <div class="wrap-in-wallet">

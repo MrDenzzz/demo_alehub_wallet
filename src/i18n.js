@@ -45,7 +45,10 @@ const messages = {
                 panelHeadingGeneral: 'General',
                 fullName: 'Full name',
                 password: 'Password',
-                passwordLabel: 'Last updated 15 days ago',
+                passwordLabel:{
+                    first: "Last password change was",
+                    second: "day's ago"
+                },
                 language: 'Language',
                 logout: 'Log out',
                 security: 'Security',
@@ -478,6 +481,10 @@ const messages = {
                 disable2fa:'You have failed DISABLE dual authentication',
                 enable2fa:'You have failed ENABLE dual authentication',
                 walletDelete:'There was an error deleting the wallet',
+                changePassword:{
+                    first:"You cannot change",
+                    second:"without enabling two factor authentication"
+                }
             },
             success:{
                 changeMail:'Confirmation of the change of email was sent to this address',
@@ -551,7 +558,7 @@ const messages = {
                 enterMatchPassword: 'Пароли не совпадают'
             },
             notifications: {
-                edit:'Выбрать',
+                edit:'Редактировать',
                 navbarTitle: 'Уведомления',
                 notFound: 'Уведомления не найдены',
                 today: 'сегодня',
@@ -568,7 +575,11 @@ const messages = {
                 panelHeadingGeneral: 'Общие',
                 fullName: 'Полное имя',
                 password: 'Пароль',
-                passwordLabel: 'Пароль обновлялся 15 дней назад',
+                passwordLabel:{
+                    first: "Последнее изменение пароля было",
+                    second: "дня назад",
+                    third: "дней назад"
+                },
                 language: 'Язык',
                 logout: 'Выход',
                 security: 'Безопасность',
@@ -1001,6 +1012,10 @@ const messages = {
                 disable2fa:'Двойная аутентификация не была отключена',
                 enable2fa:'Двойная аутентификация не была включена',
                 walletDelete:'Ошибка при удалении кошелька',
+                changePassword:{
+                    first:"Вы не можете изменить",
+                    second:"без активации двойной аутентификации"
+                }
             },
             lang:{
                 submit:"Принять",

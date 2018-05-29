@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="2"
+            tests="5">
+
+  <testsuite name="test"
+    errors="0" failures="2" hostname="" id="" package="test" skipped="3"
+    tests="5" time="17.11" timestamp="Tue, 29 May 2018 02:05:33 GMT">
+  
+    <testcase name="default autharisation test" classname="test" time="11.06" assertions="7">
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.error.toasted&gt; contains text: &#34;Enter your valid password&#34;.">    at Object.default autharisation test (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:31:19)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+    
+
+      <failure message="Testing if element &lt;.error.toasted&gt; contains text: &#34;The password must be at least 8 characters in length&#34;.">    at Object.default autharisation test (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:40:19)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+    
+    </testcase>
+  
+    <testcase name="wallets" classname="test" time="6.056" assertions="4">
+
+    
+
+      <failure message="Testing if element &lt;.toasted&gt; contains text: &#34;Autharizathion access!&#34;.">    at Object.wallets (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:53:17)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+      <failure message="Timed out while waiting for element &lt;div[type=&#34;7LR41yw1OapLoYmxjYhXYpAdwyB9nMHbxpSScQOkYdL14KR&#34;]&gt; to be present for 5000 milliseconds.">    at Object.wallets (/home/evg/WebstormProjects/demo_alehub_wallet/test/e2e/specs/test.js:56:10)
+    at process._tickCallback (internal/process/next_tick.js:112:11)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+  
+    
+    <testcase
+      name="here we check wallet logic" classname="test">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="here we check sending coins from one my wallet to another my wallet" classname="test">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="here we sent from my wallet to wallet on another account" classname="test">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

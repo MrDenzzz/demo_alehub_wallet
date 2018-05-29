@@ -41,6 +41,20 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="control">
+                                    <div class="wrap-input">
+                                        <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
+                                            <p>Add photo</p>
+                                            <div class="circle">
+                                                <img :src="curAvatar" alt="" width="67" height="67">
+                                            </div>
+                                        </label>
+                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="showAvatar" @click="onClickInputFile">
+                                        <button class="btn btn-yellow" v-if="showButton" @click="sendUserAvatar">Save</button>
+                                    </div>
+                                </div>
+
                                 <div class="control border-none"
                                      @click.stop="changeLanguage">
                                     <div class="wrap-input">
@@ -142,7 +156,9 @@
                 switchValueAuth: true,
                 selectedLanguage: 'English',
                 newName: '',
-                dataProcessing: false
+                dataProcessing: false,
+                curAvatar: '../../static/img/avatar.svg',
+                showButton: false
             }
         },
         watch: {},
@@ -173,8 +189,12 @@
                     return 'The last password change was today';
                 else if (diff === 1)
                     return 'Last password change was yesterday';
-                else if (diff > 1)
-                    return `Last password change was ${diff} day's ago`;
+                else if (diff < 4 && localStorage.getItem('systemLang') === 'rus')
+                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.second');
+                else if (localStorage.getItem('systemLang') === 'rus')
+                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.third');
+                else if (diff < 4)
+                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.second');
             }
         },
         methods: {
@@ -188,7 +208,7 @@
                 if (this.userTwoAuth)
                     this.openModal(name);
                 else
-                    this.$toasted.show(`You cannot change ${type} without enabling two factor authentication`, {
+                    this.$toasted.show(this.$t("modals.error.changePassword.first") +' '+type+' '+this.$t("modals.error.changePassword.second"), {
                         duration: 10000,
                         type: 'error',
                         action: {
@@ -261,6 +281,14 @@
                         body.classList.add("white");
                         break;
                 }
+            },
+            onClickInputFile: function () {
+                this.$refs.uploadAvatar.click();
+            },
+            showAvatar: function () {
+                const avatar = document.getElementById('upload-avatar');
+                this.curAvatar = window.URL.createObjectURL(avatar.files[0]);
+                this.showButton = true;
             }
         },
         mounted() {
@@ -291,6 +319,27 @@
             .wrap-input
                 .full-line
                     width 100%
+                
+                button
+                    margin-left 0
+                    width 67px
+
+                .circle
+                    border-radius 50%
+                    width 67px
+                    height 67px
+                    background-color #d3d9e1
+                    margin-bottom 12px
+
+                    img
+                        border-radius 50%
+
+                p
+                    margin-top 0
+                
+                #upload-avatar
+                    opacity 0
+                    position absolute
 
     .form .deletelink
         margin-top -8px

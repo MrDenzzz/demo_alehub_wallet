@@ -15,6 +15,7 @@
                                     <div class="control" @click="focusInput('email')">
                                         <label for="email">e-mail</label>
                                         <input v-validate="'required|email'"
+                                               name="login"
                                                class="d-block"
                                                :class="{error: isErrorEmail}"
                                                @input="resetError('login')"
@@ -29,6 +30,7 @@
                                     <div class="control" @click="focusInput('password')">
                                         <label for="password">{{ $t('pages.login.password') }}</label>
                                         <input class="d-block"
+                                               name="password"
                                                :class="{error: isErrorPassword}"
                                                @input="resetError('password')"
                                                type="password"
@@ -39,6 +41,7 @@
                                     </div>
 
                                     <button type="submit"
+                                            name="submit"
                                             class="btn btn-black btn-block nomargin"
                                             @click="dataProcessingCheck">
                                         {{ $t('pages.login.login') }}

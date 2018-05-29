@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
     <div class="notifications-panel">
         <div class="action-buttons">
             <div class="left-buttons">
@@ -18,15 +18,27 @@
                     {{ $t('pages.notifications.edit') }}
                 </button>
             </div>
-            <button class="buttons btn-default btn-delete"
-                    v-if="isShown"
-                    :disabled="checkedNotif.length === 0"
-                    @click="removeCheckedNotif(checkedNotif)">
-                <img width="22"
-                     height="22"
-                     class="icon"
-                     :src="getIcon('bin')">
-            </button>
+            <!--была кнопка удаления с v-if="isShown" я сделал слой с двумя кнопками-->
+            <div v-if="isShown">
+                <button class="buttons btn-default btn-delete"
+                        :disabled="checkedNotif.length === 0"
+                        @click="removeCheckedNotif(checkedNotif)">
+                    <img width="22"
+                         height="22"
+                         class="icon"
+                         :src="getIcon('bin')">
+                </button>
+                <!--z-->
+                <button class="buttons btn-default btn-delete"
+                        :disabled="checkedNotif.length === 0"
+                        v-clipboard:copy="copyNotification()">
+                    <img class="icon-copy"
+                         width="22"
+                         height="22"
+                         :src="getIcon('tmp_copy_icon')"/>
+                </button>
+                <!--z-->
+            </div>
         </div>
         <div v-for="(notification, notificationIndex) in notifications"
              :key="notificationIndex">
@@ -46,7 +58,8 @@
                     <div class="control-indicator"></div>
                 </label>
                 <div class="panel-heading"
-                     :class="{'shift-right': isShown}">
+                     :class="{'shift-right': isShown}"
+                        :id="'content'+notification._id">
                     <h3 class="title"
                         v-html="parseMarkDown(notification.title)"></h3>
                     <h3 class="datetime">
@@ -173,7 +186,16 @@
                     return require(`../../assets/img/${name}_dark.svg`);
 
                 return require(`../../assets/img/${name}.svg`);
+            },
+            // z
+            copyNotification() {
+                this.checkedNotif.forEach(function (item, i, arr) {
+                    // var a = a + document.guerySelector('#content'+item).textContent;
+                    console.log(a);
+                    // return  item;
+                });
             }
+            // z
         }
     }
 </script>

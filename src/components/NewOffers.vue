@@ -14,7 +14,7 @@
                         <div class="subtitle">{{ project.company }}</div>
                     </div>
                 </div>
-                <div>
+                <div class="info">
                     <div class="title">
                         Global limit
                     </div>
@@ -22,7 +22,7 @@
                         ${{ project.limit }}
                     </div>
                 </div>
-                <div>
+                <div class="info">
                     <div class="title">
                         Contract period
                     </div>
@@ -30,7 +30,7 @@
                         {{ project.startDate }} - {{ project.finalDate }}
                     </div>
                 </div>
-                <div>
+                <div class="info">
                     <div class="title">
                         Status
                     </div>
@@ -53,25 +53,14 @@
         <!--rename to normal name classes-->
         <div class="my-row-flex">
             <div class="mycol"
-                 style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; padding: 16px; width: 20%; min-width: 20%;"
                  v-for="(contractor, i) in contractors">
 
-                <div class="project-progress-block" style="height: 4px; width: 100%;">
+                <div class="project-progress-block" style="height: 4px; width: 90%; margin-bottom: 24px;">
                     <div class="progress" style="height: 100%;"
                          :style="{width: 100 * contractor.ready + '%' }"
                          :class="initProgressBar(i)">
                         <!--{{ initProgressBar(contractor.ready) }}-->
                     </div>
-                </div>
-
-                <div class="contractor-info">
-                    <h3 style="font-weight: 500;">
-                        {{ contractor.name }}
-                    </h3>
-
-                    <h4 style="font-weight: 500;">
-                        {{ '$' + contractor.balance }}
-                    </h4>
                 </div>
 
                 <div class="task-list">
@@ -80,37 +69,52 @@
                     </div>
                 </div>
 
-                <div class="att-list">
-                    <div class="att-block"
-                         :class="initColColor(i)"
-                         v-for="(att, index) in contractor.attachments" @click="toggleAttMenu(index, contractor)">
+                <div style="display: flex; width: 100%; margin-bottom: 24px;">
+                    <div class="divider" style="margin-right: 15px; margin-left: 6px;"></div>
+                    <div style="width: 100%;">
+                        <div class="contractor-info">
+                            <h3 style="font-weight: 500;">
+                                {{ contractor.name }}
+                            </h3>
 
-                        <div class="dropdown-list" v-if="att.isActive">
-                            <div class="dropdown-item">Download file</div>
-                            <div class="dropdown-item">Make a copy</div>
-                            <div class="dropdown-item delete">Delete</div>
+                            <h4 style="font-weight: 500; margin-right: 12px;">
+                                {{ '$' + contractor.balance }}
+                            </h4>
                         </div>
+                        <div class="att-list">
+                            <div class="att-block"
+                                :class="initColColor(i)"
+                                v-for="(att, index) in contractor.attachments" @click="toggleAttMenu(index, contractor)">
 
-                         <div class="circle small-circle" :class="'circle-' + att.status">
-                             <img :src="getStatusIcon(att.status)" alt="">
-                         </div>
+                                <div class="dropdown-list" v-if="att.isActive">
+                                    <div class="dropdown-item">Download file</div>
+                                    <div class="dropdown-item">Make a copy</div>
+                                    <div class="dropdown-item delete">Delete</div>
+                                </div>
 
-                        <img :src="att.icon" alt="document type">
+                                <div class="circle small-circle" :class="'circle-' + att.status">
+                                    <img :src="getStatusIcon(att.status)" alt="">
+                                </div>
 
-                        <div class="att-info">
-                            <p style="margin: 0; font-size: 10px;" class="date">
-                                {{ toFormatDate(att.date) }}
-                            </p>
-                            <p style="margin: 0;">
-                                {{ att.title }}
-                            </p>
+                                <img :src="att.icon" alt="document type">
+
+                                <div class="att-info">
+                                    <p style="margin: 0; font-size: 10px;" class="date">
+                                        {{ toFormatDate(att.date) }}
+                                    </p>
+                                    <p style="margin: 0;">
+                                        {{ att.title }}
+                                    </p>
+                                </div>
+
+                                <img src="../../static/img/avatar@3x.png" alt="author avatar"
+                                    style="width: 28px; height: 28px;">
+
+                            </div>
                         </div>
-
-                        <img src="../../static/img/avatar@3x.png" alt="author avatar"
-                             style="width: 28px; height: 28px;">
-
                     </div>
                 </div>
+
 
             </div>
         </div>
@@ -385,7 +389,87 @@
                                 author: 'user 2 3',
                                 status: 'ok',
                                 isActive: false
-                            }
+                            },
+                                                        {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'demands.doc',
+                                author: 'user 1 3',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/excel-ic.svg',
+                                date: 1524318238518,
+                                title: 'price.xls',
+                                author: 'user 1 2',
+                                status: 'error',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions2.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description2.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications2.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry2.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
                         ],
                         messages: [
                             {
@@ -441,7 +525,87 @@
                                 author: 'user 3 2',
                                 status: 'ok',
                                 isActive: false
-                            }
+                            },
+                                                        {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'demands.doc',
+                                author: 'user 1 3',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/excel-ic.svg',
+                                date: 1524318238518,
+                                title: 'price.xls',
+                                author: 'user 1 2',
+                                status: 'error',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions2.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description2.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications2.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry2.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
                         ],
                         messages: [
                             {
@@ -495,7 +659,87 @@
                                 author: 'user 4 2',
                                 status: 'ok',
                                 isActive: false
-                            }
+                            },
+                                                        {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'demands.doc',
+                                author: 'user 1 3',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/excel-ic.svg',
+                                date: 1524318238518,
+                                title: 'price.xls',
+                                author: 'user 1 2',
+                                status: 'error',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions2.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description2.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications2.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry2.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
                         ],
                         messages: [
                             {
@@ -543,10 +787,130 @@
                                 author: 'user 4 2',
                                 status: 'ok',
                                 isActive: false
-                            }
+                            },
+                                                        {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'demands.doc',
+                                author: 'user 1 3',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/excel-ic.svg',
+                                date: 1524318238518,
+                                title: 'price.xls',
+                                author: 'user 1 2',
+                                status: 'error',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'conditions2.pptx',
+                                author: 'user 1 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'description2.doc',
+                                author: 'user 1 5',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/word-ic.svg',
+                                date: 1524318238518,
+                                title: 'specifications2.doc',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/pdf-ic.svg',
+                                date: 1524318238518,
+                                title: 'wannacry2.exe',
+                                author: 'user 1 4',
+                                status: 'ok',
+                                isActive: false
+                            },
                         ]
                     },
                     {
+                        name: 'Last Assurance',
+                        isActive: false,
+                        balance: 200,
+                        ready: 0.2,  //1 = 100% готовности
+                        tasks: [
+                            {
+                                title: 'Title 4 1',
+                                description: '',
+                                priority: 0.4,
+                                attachments: '',
+                                author: 'user 4 1'
+                            },
+                            {
+                                title: 'Title 4 2',
+                                description: '',
+                                priority: 0.6,
+                                attachments: '',
+                                author: 'user 4 2'
+                            },
+                        ],
+                        attachments: [
+                            {
+                                icon: '../../static/img/powerpoint-ic.svg',
+                                date: 1524318238518,
+                                title: 'about.pptx',
+                                author: 'user 4 1',
+                                status: 'ok',
+                                isActive: false
+                            },
+                            {
+                                icon: '../../static/img/excel-ic.svg',
+                                date: 1524318238518,
+                                title: 'price.xls',
+                                author: 'user 4 2',
+                                status: 'ok',
+                                isActive: false
+                            }
+                        ]
+                    },
+                                        {
                         name: 'Last Assurance',
                         isActive: false,
                         balance: 200,
@@ -842,6 +1206,30 @@
         font-family MuseoSansCyrl500
         overflow-x auto
 
+        &::-webkit-scrollbar
+            height 8px
+
+        &::-webkit-scrollbar-thumb
+            background-color #bdbdbd
+            border-radius 4px
+
+        @media(max-width 660px)
+            margin-left 42px
+
+        @media(max-width 660px)
+            margin-left 22px
+
+        .mycol
+            display flex 
+            flex-direction column
+            align-items center
+            flex-grow 1
+            width 20%
+            min-width 20%
+
+            @media(max-width 1440px)
+                min-width 270px
+
     /*@media (max-width 1450px)*/
     /*padding-left 360px*/
 
@@ -863,6 +1251,10 @@
         display flex
         justify-content space-between
         width 100%
+        margin-bottom 12px
+
+        h3, h4
+            margin 0
 
     .contractor-actions
         display flex
@@ -894,7 +1286,16 @@
         width 100%
         height 400px
         overflow-y auto
-        padding-right 6px
+
+        @media(max-width 375px)
+            height 380px
+
+        @media(max-width 320px)
+            height 350px
+
+        &::-webkit-scrollbar-thumb
+            background-color #bdbdbd !important
+            border-radius 4px !important
 
         .first-team__border
             border solid 2px #06dcd5
@@ -917,6 +1318,7 @@
             padding 8px 16px
             align-items center
             margin-bottom 16px
+            margin-right 5px
             background-color #fff
             border-radius 4px
             position relative
@@ -987,6 +1389,7 @@
         border-radius 50%
 
         &.small-circle
+            min-width unset
             width 12px
             height 12px
 
@@ -998,9 +1401,15 @@
         align-items center
         position relative
 
+        @media(max-width 520px)
+            padding 75px 32px 12px
+
         .options
             padding 4px 12px
             cursor pointer
+
+            @media(max-width 1024px)
+                display unset !important
 
         .info-wrap
             display flex
@@ -1008,18 +1417,45 @@
             justify-content space-between
             width 50%
 
+            @media(max-width 1440px)
+                width 60%
+
+            @media(max-width 1100px)
+                width 70%
+
+            @media(max-width 960px)
+                width 80%
+
+            @media(max-width 768px)
+                width 90%
+
+            .info
+                @media(max-width 520px)
+                    display none
+
             .title
                 font-family MuseoSansCyrl500
                 opacity 0.5
                 font-size 12px
                 line-height 1.5
                 color #34343e
+                white-space nowrap
+
+                @media(max-width 660px)
+                    font-size 10px
 
             .subtitle
                 font-family MuseoSansCyrl500
                 font-size 19px
                 line-height 1.29
                 color #34343e
+                white-space nowrap
+
+                @media(max-width 960px)
+                    font-size 16px
+
+                @media(max-width 660px)
+                    font-size 12px
 
         .dropdown-list
             width 148px
@@ -1043,6 +1479,10 @@
             .circle
                 margin-right 12px
 
+                @media(max-width 660px)
+                    width 36px
+                    height 36px
+
             .project-info
                 .title
                     font-family MuseoSansCyrl500
@@ -1050,6 +1490,10 @@
                     line-height 1.29
                     color #34343e
                     opacity 1
+                    white-space nowrap
+
+                    @media(max-width 660px)
+                        font-size 12px
 
                 .subtitle
                     font-family MuseoSansCyrl500
@@ -1057,6 +1501,10 @@
                     line-height 1.5
                     color #34343e
                     opacity 0.5
+                    white-space nowrap
+
+                    @media(max-width 660px)
+                        font-size 10px
 
     .dropdown-list
         border-radius 2px
@@ -1090,9 +1538,20 @@
                 top -24px
                 left 0
 
+    .divider
+        min-width 2px
+        border-radius 1px
+        background-image linear-gradient(to top, #f0f4fa, #b6bec9)
+
 // Dark Theme
     .dark
+        .divider
+            background-image linear-gradient(to top, #4a4e65, #3a3a4b)
+
         .my-row-flex
+            &::-webkit-scrollbar
+                background-color #3a3a4b
+
             &::-webkit-scrollbar-thumb
                 background-color #272730
 
@@ -1108,7 +1567,8 @@
 
         .att-list
             &::-webkit-scrollbar-thumb
-                background-color #272730
+                background-color #272730 !important
+                width 4px
 
             .att-block
                 background-color #3a3a4b
@@ -1154,16 +1614,5 @@
                 
                 &:hover
                     background-color #3f435e
-
-@media(max-width: 1024px)
-    .my-row-flex
-        flex-wrap wrap
-        .mycol
-            flex-basis 50%
-
-@media(max-width: 520px)
-    .my-row-flex
-        .mycol
-            flex-basis 100%
 
 </style>
