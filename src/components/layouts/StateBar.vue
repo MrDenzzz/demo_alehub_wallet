@@ -60,17 +60,17 @@
 <script>
     export default {
         name: 'StateBar',
-        date() {
+        data() {
             return {
-                dateFrom: 1,
-                dateTo: 2,
-                name: 'q',
-                ratingFrom: 3,
-                ratingTo: 4,
-                priceFrom: 5,
-                priceTo: 6,
-                certification: 'a',
-                verified: 's'
+                dateFrom: 0,
+                dateTo: 0,
+                name: '',
+                ratingFrom: 0,
+                ratingTo: 0,
+                priceFrom: 0,
+                priceTo: 0,
+                certification: '',
+                verified: ''
             }
         },
         computed: {

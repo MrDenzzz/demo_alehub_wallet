@@ -160,12 +160,12 @@ const router = new Router(
                 component: Notifications,
                 beforeEnter: ifAuthenticated
             },
-            // {
-            //     path: '/offer',
-            //     name: 'Offer',
-            //     component: Offer,
-            //     beforeEnter: ifAuthenticated
-            // },
+            {
+                path: '/offer',
+                name: 'Offer',
+                component: Offer,
+                beforeEnter: ifAuthenticated
+            },
             // {
             //     path: '/offers',
             //     name: 'Offers',
@@ -184,18 +184,18 @@ const router = new Router(
             //     component: Resume,
             //     beforeEnter: ifAuthenticated
             // },
-            // {
-            //     path: '/offers',
-            //     name: 'offers',
-            //     component: Offers,
-            //     beforeEnter: ifAuthenticated
-            // },
-            // {
-            //     path: '/contractoverview',
-            //     name: 'ContractOverview',
-            //     component: NewOffers,
-            //     beforeEnter: ifAuthenticated
-            // },
+            {
+                path: '/offers',
+                name: 'offers',
+                component: Offers,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/contractoverview',
+                name: 'ContractOverview',
+                component: NewOffers,
+                beforeEnter: ifAuthenticated
+            },
             {
                 path: '*',
                 name: 'NotFound',

@@ -7,13 +7,13 @@ const state = {
             iconHeight: '20.5',
             name: 'wallet'
         },
-        // {
-        //     path: '/offers',
-        //     iconName: 'jobs-ic',
-        //     iconWidth: '24.5',
-        //     iconHeight: '20.5',
-        //     name: 'offers'
-        // },
+        {
+            path: '/offers',
+            iconName: 'jobs-ic',
+            iconWidth: '24.5',
+            iconHeight: '20.5',
+            name: 'offers'
+        },
         //     {
         //     path: '/offers',
         //     iconName: 'jobs-ic',
