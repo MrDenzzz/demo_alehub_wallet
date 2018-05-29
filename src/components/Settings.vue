@@ -42,18 +42,27 @@
                                     </div>
                                 </div>
 
-                                <div class="control">
-                                    <div class="wrap-input">
-                                        <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
-                                            <p>Add photo</p>
-                                            <div class="circle">
-                                                <img :src="curAvatar" alt="" width="67" height="67">
-                                            </div>
-                                        </label>
-                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="showAvatar" @click="onClickInputFile">
-                                        <button class="btn btn-yellow" v-if="showButton" @click="sendUserAvatar">Save</button>
-                                    </div>
-                                </div>
+                                <!--<div class="control">-->
+                                    <!--<div class="wrap-input">-->
+                                        <!--<label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">-->
+                                            <!--<p>Add photo</p>-->
+                                            <!--<div class="circle">-->
+                                                <!--<img :src="curAvatar" alt="" width="67" height="67">-->
+                                            <!--</div>-->
+                                        <!--</label>-->
+                                        <!--<input type="file" -->
+                                               <!--id="upload-avatar"-->
+                                               <!--name="upload-avatar" -->
+                                               <!--ref="uploadAvatar" -->
+                                               <!--@change="showAvatar"-->
+                                               <!--@click="onClickInputFile">-->
+                                        <!--<button class="btn btn-yellow" -->
+                                                <!--v-if="showButton" -->
+                                                <!--@click="sendUserAvatar">-->
+                                            <!--Save-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <div class="control border-none"
                                      @click.stop="changeLanguage">
