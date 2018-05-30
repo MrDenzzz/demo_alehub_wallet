@@ -352,6 +352,27 @@ const actions = {
             });
         });
     },
+    setAvatar: ({commit, dispatch}, avatarData) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_SET_AVATAR');
+            let host = 'https://ale-demo-4550.nodechef.com/users/set_avatar';
+            axios({
+                url: host,
+                data: avatarData,
+                headers: {
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            }).then(resp => {
+                console.log(resp, 'change avatar')
+                commit('SUCCESS_SET_AVATAR');
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_SET_AVATAR');
+                reject(err);
+            })
+        })
+    },
     resetAuthStep: ({commit}) => {
         return new Promise((resolve) => {
             commit('SUCCESS_RESET_AUTH_STEP');

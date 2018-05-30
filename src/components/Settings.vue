@@ -292,17 +292,14 @@
                 let avatar = new FormData();
                 avatar.append('avatar', document.getElementById('upload-avatar').files[0]);
 
-                this.$http.post(`${this.$host}/users/set_avatar`, avatar, {
-                    headers: {
-                    'Authorization': localStorage.getItem(sha256('user-token'))
-                    }
-                }).then(response => {
-                    this.newAvatar = response.body.avatar_path;
-                }, response => {
-                    console.log('error avatar');
+                this.$store.dispatch('setAvatar', avatar).then((resp) => {
+                    console.log('avatar success');
+                    this.newAvatar = resp.data.avatar_path;
+                }).catch(() => {
+                    console.log('avatar error');
                     this.isError = true;
-                }
-            )}
+                })
+            }
         },
         mounted() {
             this.$on('onselect', function (id, value) {
