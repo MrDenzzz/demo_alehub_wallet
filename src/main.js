@@ -20,8 +20,8 @@ Vue.prototype.$host = 'https://ale-demo-4550.nodechef.com';
 // Vue.prototype.$host = 'https://ale-demo-4550.nodechef.com';
 // Vue.prototype.$host = 'localhost:4000';
 
-import VueWebsocket from "vue-websocket";
-Vue.use(VueWebsocket, "ws://ale-demo-4550.nodechef.com", {
+import VueWebsocket from 'vue-websocket';
+Vue.use(VueWebsocket, 'https://ale-demo-4550.nodechef.com', {
     reconnection: true
 });
 

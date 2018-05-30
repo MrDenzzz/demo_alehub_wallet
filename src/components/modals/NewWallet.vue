@@ -205,7 +205,7 @@
                            @keyup.enter="addMnemonicRecovery"
                            @keyup.delete="removeMnemonicRecovery"
                            @keyup.space="addMnemonicRecovery"
-                           @blur="recoveryBlur"/>
+                           @blur="addMnemonicRecovery"/>
                 </div>
             </div>
 

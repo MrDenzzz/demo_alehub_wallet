@@ -19,7 +19,7 @@
                                                class="d-block"
                                                :class="{error: isErrorEmail}"
                                                @input="resetError('login')"
-                                               type="text"
+                                               type="email"
                                                placeholder="e-mail"
                                                id="email"
                                                v-model="email"

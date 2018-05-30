@@ -9,7 +9,8 @@
                  class="alert-new-transactions"
                  @click="refreshCurrentTransactions">
                 You have received new transactions. Click to refresh.
-                <img src="/static/img/reload-white.svg" class="alert-new-transactions__img" alt="">
+                <img src="/static/img/reload-white.svg"
+                     class="alert-new-transactions__img" alt="">
             </div>
             <Connection-modal/>
         </div>

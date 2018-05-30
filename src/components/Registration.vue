@@ -35,7 +35,7 @@
 
                                 <div class="control" @click="focusInput('email')">
                                     <label for="email">{{ $t('pages.registration.email') }}</label>
-                                    <input type="text"
+                                    <input type="email"
                                            id="email"
                                            class="d-block"
                                            placeholder="e-mail"
