@@ -7,25 +7,11 @@
                 </label>
                 <input type="text" id="name">
             </div>
-            <div class="form-group">
-                <label>
-                    {{ $t('offersFilter.rating.title') }}
-                </label>
-                <div class="double-input-block">
-                    <div class="double-input">
-                        <label for="from">
-                            {{ $t('offersFilter.rating.from') }}
-                        </label>
-                        <input type="text" id="from">
-                    </div>
-                    <div class="double-input">
-                        <label for="to">
-                            {{ $t('offersFilter.rating.to') }}
-                        </label>
-                        <input type="text" id="to">
-                    </div>
-                </div>
-            </div>
+
+
+            <input-double-rating/>
+
+            <input-double-price/>
 
             <input-prompt-checkbox-list/>
 
@@ -83,11 +69,15 @@
 
 <script>
     import InputPromptCheckboxList from './forms/InputPromptCheckboxList';
+    import InputDoubleRating from './forms/InputDoubleRating';
+    import InputDoublePrice from './forms/InputDoublePrice';
 
     export default {
         name: 'OffersFilter',
         components: {
-            InputPromptCheckboxList
+            InputPromptCheckboxList,
+            InputDoubleRating,
+            InputDoublePrice
         },
         data() {
             return {

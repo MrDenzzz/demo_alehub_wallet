@@ -123,7 +123,7 @@ const messages = {
                 filtersBlock: {
                     title: 'Filters',
                     price: {
-                        title: 'Price',
+                        title: 'Contractor price',
                         from: 'from',
                         to: 'to'
                     },
@@ -535,7 +535,7 @@ const messages = {
                 to: 'to'
             },
             price: {
-                title: 'Price',
+                title: 'Contractor price',
                 from: 'from',
                 to: 'to'
             },
