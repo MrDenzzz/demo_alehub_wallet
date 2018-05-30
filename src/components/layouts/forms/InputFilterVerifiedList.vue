@@ -1,25 +1,16 @@
 <template>
     <div>
         <div class="form-group">
-            <label>Verified</label>
+            <label>
+                {{ title }}
+            </label>
             <div class="form-radio">
-                <label class="control control-radio">
+                <label class="control control-radio"
+                       v-for="item in options">
                     <input type="radio"
                            name="verified">
                     <div class="control-indicator"></div>
-                    <span>Yes</span>
-                </label>
-                <label class="control control-radio">
-                    <input type="radio"
-                           name="verified">
-                    <div class="control-indicator"></div>
-                    <span>No</span>
-                </label>
-                <label class="control control-radio">
-                    <input type="radio"
-                           name="verified">
-                    <div class="control-indicator"></div>
-                    <span>Doesn't matter</span>
+                    <span>{{ item.title }}</span>
                 </label>
             </div>
         </div>
@@ -39,7 +30,17 @@
 
 <script>
     export default {
-        name: 'InputVerifiedList'
+        name: 'InputVerifiedList',
+        props: {
+            title: {
+                type: String,
+                required: true
+            },
+            options: {
+                type: Array,
+                required: true
+            }
+        }
     }
 </script>
 

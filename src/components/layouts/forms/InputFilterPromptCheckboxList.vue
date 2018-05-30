@@ -2,16 +2,16 @@
     <div class="form-group">
         <div class="one-line">
             <label for="country">
-                {{ $t('offersFilter.country') }}
+                {{ title }}
             </label>
             <button>
-                {{ $t('offersFilter.selectAll') }}
+                {{ selectAll }}
             </button>
         </div>
         <input type="text" id="country">
         <div class="form-checkbox country">
             <label class="control control-checkbox"
-                   v-for="item in $t('countries')">
+                   v-for="item in list">
                 <input type="checkbox">
                 <div class="control-indicator"></div>
                 <span>{{ item.name }}</span>
@@ -22,7 +22,20 @@
 
 <script>
     export default {
-        name: 'InputPromptCheckboxList'
+        name: 'InputPromptCheckboxList',
+        props: {
+            title: {
+                type: String,
+                required: true,
+            },
+            selectAll: {
+                type: String
+            },
+            list: {
+                type: Array,
+                required: true
+            }
+        }
     }
 </script>
 

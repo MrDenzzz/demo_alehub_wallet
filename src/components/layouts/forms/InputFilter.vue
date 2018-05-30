@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <label for="name">
-            {{ $t('offersFilter.name') }}
+            {{ title }}
         </label>
         <input type="text" id="name">
     </div>
@@ -9,7 +9,13 @@
 
 <script>
     export default {
-        name: 'InputFilter'
+        name: 'InputFilter',
+        props: {
+            title: {
+                type: String,
+                required: true
+            }
+        }
     }
 </script>
 

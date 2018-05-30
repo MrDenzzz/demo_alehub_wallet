@@ -528,7 +528,9 @@ const messages = {
             verified: 'Verified'
         },
         offersFilter: {
-            name: 'Name',
+            name: {
+                title: 'Name'
+            },
             rating: {
                 title: 'Contractor rating',
                 from: 'from',
@@ -539,20 +541,38 @@ const messages = {
                 from: 'from',
                 to: 'to'
             },
-            country: 'Country',
-            certification:
-                'Certification',
+            country: {
+                title: 'Country',
+                selectAll: 'Select all'
+            },
+            certification: {
+                title: 'Certification',
+                options: [
+                    {
+                        title: 'ГОСТ'
+                    },
+                    {
+                        title: 'DIN'
+                    }
+                ]
+            },
             verified: {
                 title: 'Verified',
-                options:
-                    [
-                        'Yes',
-                        'No',
-                        'Doesn\'t matter',
-                        'Verified by me'
-                    ]
-            },
-            selectAll: 'selectAll'
+                options: [
+                    {
+                        title: 'Yes'
+                    },
+                    {
+                        title: 'No'
+                    },
+                    {
+                        title: 'Doesn\'t matter'
+                    },
+                    {
+                        title: 'Verified by me'
+                    }
+                ]
+            }
         },
         countries: [
             {name: 'Afghanistan', code: 'AF'},
@@ -1451,54 +1471,34 @@ const messages = {
                     'Двойная аутентификация не была включена',
                 walletDelete:
                     'Ошибка при удалении кошелька',
-                changePassword:
-                    {
-                        first: "Вы не можете изменить",
-                        second:
-                            "без активации двойной аутентификации"
-                    }
-            }
-            ,
+                changePassword: {
+                    first: "Вы не можете изменить",
+                    second: "без активации двойной аутентификации"
+                }
+            },
             lang: {
                 submit: "Принять",
-                title:
-                    "Выберите язык"
-            }
-            ,
+                title: "Выберите язык"
+            },
             success: {
                 changeMail: 'Подтверждение на изменение почты было отправлено на этот адрес',
-                changePass:
-                    'Пароль был успешно изменен',
-                changeName:
-                    'Ваше имя было успешно изменено',
-                newWallet:
-                    {
-                        wallet: "Кошелек",
-                        create:
-                            "успешно создан!",
-                        delete:
-                            "успешно удален!"
-                    }
-                ,
+                changePass: 'Пароль был успешно изменен',
+                changeName: 'Ваше имя было успешно изменено',
+                newWallet: {
+                    wallet: "Кошелек",
+                    create: "успешно создан!",
+                    delete: "успешно удален!"
+                },
                 copyWallet: 'Вы успешно скопировали адрес кошелька',
-                changeAddr:
-                    'Вы успешно подтвердили изменение адреса электронной почты',
-                cancelChangeAddr:
-                    'Вы успешно отменили изменение адреса электронной почты',
-                changeNameWallet:
-                    'Название кошелька было успешно изменено',
-                checkUpload:
-                    'Выбранный файл был успешно загружен',
-                saveOffer:
-                    'Предложение сохранено',
-                removeOffer:
-                    'Предложение было успешно удалено из сохраненных',
-                copySecretCode:
-                    'секретный код был успешно скопирован',
-                disable2fa:
-                    'Вы успешно отключили двойную аутентификацию',
-                enable2fa:
-                    'Вы успешно включили двойную аутентификацию',
+                changeAddr: 'Вы успешно подтвердили изменение адреса электронной почты',
+                cancelChangeAddr: 'Вы успешно отменили изменение адреса электронной почты',
+                changeNameWallet: 'Название кошелька было успешно изменено',
+                checkUpload: 'Выбранный файл был успешно загружен',
+                saveOffer: 'Предложение сохранено',
+                removeOffer: 'Предложение было успешно удалено из сохраненных',
+                copySecretCode: 'секретный код был успешно скопирован',
+                disable2fa: 'Вы успешно отключили двойную аутентификацию',
+                enable2fa: 'Вы успешно включили двойную аутентификацию',
             }
 
         },
@@ -1519,11 +1519,36 @@ const messages = {
         },
         offersFilter: {
             name: 'Название',
-            rating: 'Рейтинг',
-            price: 'Цена',
-            country: 'Страна',
-            certification: 'Сертификация',
-            verified: 'Верификация'
+            rating: {
+                title: 'Рейтинг',
+                from: 'от',
+                to: 'до'
+            },
+            price: {
+                title: 'Стоимость',
+                from: 'от',
+                to: 'до'
+            },
+            country: {
+                title: 'Страна',
+                selectAll: 'Выбрать всё'
+            },
+            certification: {
+                title: 'Сертификация',
+                options: {
+                    gost: 'ГОСТ',
+                    din: 'DIN'
+                }
+            },
+            verified: {
+                title: 'Верификация',
+                options: {
+                    yes: 'Да',
+                    no: 'Нет',
+                    doesntMatter: 'Без разницы',
+                    verifiedMe: 'Проверено мной'
+                }
+            },
         },
         countries: [
             {name: 'Афганистан', code: 'AF'},

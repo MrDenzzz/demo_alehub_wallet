@@ -2,17 +2,25 @@
     <div class="dialog" v-if="qaIsActive">
         <form>
 
-            <input-name/>
+            <input-name :title="$t('offersFilter.name.title')"/>
 
-            <input-double-rating/>
+            <input-double-rating :title="$t('offersFilter.rating.title')"
+                                 :from="$t('offersFilter.rating.from')"
+                                 :to="$t('offersFilter.rating.to')"/>
 
-            <input-double-price/>
+            <input-double-price :title="$t('offersFilter.price.title')"
+                                :from="$t('offersFilter.price.from')"
+                                :to="$t('offersFilter.price.to')"/>
 
-            <input-prompt-checkbox-list/>
+            <input-prompt-checkbox-list :title="$t('offersFilter.country.title')"
+                                        :list="$t('countries')"
+                                        :select-all="$t('offersFilter.country.selectAll')"/>
 
-            <input-certification-list/>
+            <input-certification-list :title="$t('offersFilter.certification.title')"
+                                      :options="$t('offersFilter.certification.options')"/>
 
-            <input-verified-list/>
+            <input-verified-list :title="$t('offersFilter.verified.title')"
+                                 :options="$t('offersFilter.verified.options')"/>
 
             <button type="button"
                     class="buttons btn btn-yellow"

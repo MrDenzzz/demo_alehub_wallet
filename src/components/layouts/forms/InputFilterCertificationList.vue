@@ -1,16 +1,16 @@
 <template>
     <div class="form-group">
-        <label>Certification</label>
+        <label>
+            {{ title }}
+        </label>
         <div class="form-checkbox">
-            <label class="control control-checkbox">
+            <label class="control control-checkbox"
+                   v-for="item in options">
                 <input type="checkbox">
                 <div class="control-indicator"></div>
-                <span>ГОСТ</span>
-            </label>
-            <label class="control control-checkbox">
-                <input type="checkbox">
-                <div class="control-indicator"></div>
-                <span>DIN</span>
+                <span>
+                    {{ item.title }}
+                </span>
             </label>
         </div>
     </div>
@@ -18,7 +18,17 @@
 
 <script>
     export default {
-        name: 'InputCertificationList'
+        name: 'InputCertificationList',
+        props: {
+            title: {
+                type: String,
+                required: true
+            },
+            options: {
+                type: Array,
+                required: true
+            }
+        }
     }
 </script>
 
