@@ -55,26 +55,46 @@
                         <button class="circle circle-big circle-yellow">
                             <img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
                             <div class="triangle">
-                                <div class="filters-block">
-                                    <div class="circle circle-gray">
+                                <div class="filters-block" id="filter-block">
+
+                                    <!--добавить computed-функции для :class-->
+
+                                    <button type="button" id="ts"
+                                            class="circle circle-gray circle-filter"
+                                            :class="{'ts__active' : tsActive === 1, 'ts__active-fold' : tsActive === 2, 'ts': !tsActive }"
+                                            @click="toggleStateFilterContractor('ts')">
                                         <span class="title">TS</span>
-                                    </div>
-                                    <div class="circle circle-gray">
+                                    </button>
+                                    <button type="button" id="ts-ex"
+                                            class="circle circle-gray circle-filter"
+                                            :class="{'ts-ex__active' : tsExActive === 1, 'ts-ex__active-fold' : tsExActive === 2, 'ts-ex': !tsExActive }"
+                                            @click="toggleStateFilterContractor('ts-ex')">
                                         <span class="title">TS</span>
                                         <span class="subtitle">EX</span>
-                                    </div>
-                                    <div class="circle circle-gray">
+                                    </button>
+                                    <button type="button" id="ch"
+                                            class="circle circle-gray circle-filter"
+                                            :class="{'ch__active' : chActive === 1, 'ch__active-fold' : chActive === 2, 'ch': !chActive }"
+                                            @click="toggleStateFilterContractor('ch')">
                                         <span class="title">CH</span>
-                                    </div>
-                                    <div class="circle circle-gray"
-                                         :class="{qa: qaIsActive}"
-                                         @click="qaIsActive = !qaIsActive">
+                                    </button>
+                                    <button type="button" id="qa"
+                                            class="circle circle-gray circle-filter"
+                                            :class="{'qa__active' : qaActive === 1, 'qa__active-fold' : qaActive === 2, 'qa': !qaActive }"
+                                            @click="toggleStateFilterContractor('qa')">
                                         <span class="title">QA</span>
-                                    </div>
-
-                                    <offers-filter/>
-
+                                    </button>
                                 </div>
+
+                                <offers-filter v-if="!isFoldFilter"
+                                               :filter-type="activeOption"
+                                               :offset-top="filterOffsetTop"/>
+
+                                <offers-filter-folded v-if="isFoldFilterTs" :offset-bottom="'200px'"/>
+                                <offers-filter-folded v-if="isFoldFilterTsEx" :offset-bottom="'150px'"/>
+                                <!--<offers-filter-folded v-if="isFoldFilter"/>-->
+                                <offers-filter-folded v-if="isFoldFilter"/>
+
                             </div>
                         </button>
                     </div>
@@ -201,6 +221,7 @@
     import OffersFilter from './layouts/OffersFilter';
     import Datepicker from 'vuejs-datepicker';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
+    import OffersFilterFolded from './layouts/OffersFilterFolded';
 
     import {mapGetters} from 'vuex';
 
@@ -211,6 +232,7 @@
             StateBar,
             OffersFilter,
             OffersContractorDialog,
+            OffersFilterFolded,
             Datepicker
         },
         watch: {
@@ -223,6 +245,15 @@
         },
         data() {
             return {
+                isFoldFilter: false,
+                filterOffsetTop: '0px',
+
+                tsActive: 0,
+                tsExActive: 0,
+                chActive: 0,
+                qaActive: 0,
+
+                activeOption: false,
                 openedFromDatepicker: false,
                 openedToDatepicker: false,
                 offersDateFrom: 0,
@@ -292,6 +323,90 @@
             }
         },
         methods: {
+            getCoords: function (elem) {
+                if (!elem)
+                    return false;
+                let box = elem.getBoundingClientRect();
+
+                return {
+                    top: box.top + pageYOffset,
+                    left: box.left + pageXOffset
+                };
+            },
+            setFilterOffsetTop: function (elem) {
+                (elem) ? this.filterOffsetTop = this.getCoords(document.getElementById(elem)).top -
+                    this.getCoords(document.getElementById('filter-block')).top + 'px' : this.filterOffsetTop = '0px';
+            },
+            toggleStateFilterContractor: function (opt) {
+                switch (opt) {
+                    case 'ts':
+                        if (!this.tsActive) {
+                            this.activeOption = true;
+                            this.setFilterOffsetTop(opt);
+                            this.tsActive = 1;
+                        } else if (this.tsActive === 1) {
+                            this.isFoldFilter = true;
+                            this.isFoldFilterTs = true;
+                            this.tsActive = 2;
+                        } else {
+                            this.activeOption = false;
+                            this.isFoldFilter = false;
+                            this.isFoldFilterTs = false;
+                            this.setFilterOffsetTop(false);
+                            this.tsActive = 0;
+                        }
+
+                        break;
+                    case 'ts-ex':
+                        if (!this.tsExActive) {
+                            this.activeOption = true;
+                            this.setFilterOffsetTop(opt);
+                            this.tsExActive = 1;
+                        } else if (this.tsExActive === 1) {
+                            this.isFoldFilter = true;
+                            this.isFoldFilterTsEx = true;
+                            this.tsExActive = 2;
+                        } else {
+                            this.activeOption = false;
+                            this.isFoldFilter = false;
+                            this.isFoldFilterTsEx = false;
+                            this.setFilterOffsetTop(false);
+                            this.tsExActive = 0;
+                        }
+                        break;
+                    case 'ch':
+                        if (!this.chActive) {
+                            this.activeOption = true;
+                            this.setFilterOffsetTop(opt);
+                            this.chActive = 1;
+                        } else if (this.chActive === 1) {
+                            this.isFoldFilter = true;
+                            this.chActive = 2;
+                        } else {
+                            this.activeOption = false;
+                            this.isFoldFilter = false;
+                            this.setFilterOffsetTop(false);
+                            this.chActive = 0;
+                        }
+                        break;
+                    case 'qa':
+                        if (!this.qaActive) {
+                            this.activeOption = true;
+                            this.setFilterOffsetTop(opt);
+                            this.qaActive = 1;
+                        } else if (this.qaActive === 1) {
+                            this.isFoldFilter = true;
+                            this.qaActive = 2;
+                        } else {
+                            this.activeOption = false;
+                            this.isFoldFilter = false;
+                            this.setFilterOffsetTop(false);
+                            this.qaActive = 0;
+                        }
+                        break;
+                    default : break;
+                }
+            },
             toggleContractorDialog: function (e, contractor) {
                 // this.openedContractorDialog = !this.openedContractorDialog;
 
@@ -359,6 +474,11 @@
                         return 'qa'
                 }
             }
+        },
+        mounted() {
+            this.$on('onFold', (val) => {
+                this.isFoldFilter = val;
+            });
         }
     }
 </script>
@@ -420,7 +540,6 @@
 
                         .triangle-icon
                             border 6px solid transparent
-                            border-top 6px solid #34343e
                             position absolute
                             top 17px
 
@@ -440,7 +559,6 @@
 
                         .triangle
                             border 6px solid transparent
-                            border-left 6px solid #aab7c7
                             position absolute
                             left 56px
 
@@ -451,13 +569,23 @@
                                 top 56px
 
                     .filters-block
-                        position absolute
-                        top -96px
-                        left 8px
+                        position relative
                         display flex
                         flex-direction column
                         height 192px
                         justify-content space-between
+
+                        &:before
+                            content ""
+                            position absolute
+                            left -7px
+                            top calc(50% - 6px)
+                            bottom 0
+                            width 0
+                            height 0
+                            border-left 6px solid #a6aaae
+                            border-top 6px solid transparent
+                            border-bottom 6px solid transparent
 
                         @media (max-width 768px)
                             flex-direction row
@@ -468,9 +596,6 @@
                         @media (max-width 620px)
                             flex-direction column
                             align-items center
-
-                        .circle
-                            box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
 
                     .whole-line
                         width 36px
@@ -527,7 +652,6 @@
 
                             .triangle
                                 border 6px solid transparent
-                                border-left 6px solid #aab7c7
                                 position absolute
                                 left 60px
 
@@ -842,17 +966,29 @@
                                 @media (max-width 860px)
                                     font-size 10px
 
+    .circle-filter
+        cursor pointer
+
+        &:active
+            -webkit-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
+            -moz-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
+            box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
+            transform scale(0.95)
+
     .circle
         width 36px
         min-width 36px
         height 36px
-        background-image linear-gradient(to right, #dde1e7, #cad2db)
         border-radius 50%
         display flex
         justify-content center
         align-items center
         flex-direction column
         border none
+        -webkit-transition all .3s ease
+        -moz-transition all .3s ease
+        -o-transition all .3s ease
+        transition all .3s ease
 
         &.circle-big
             width 48px
@@ -870,25 +1006,108 @@
             background-image linear-gradient(to right, #4dc484, #26bd51)
 
         &.circle-yellow
-            background-image linear-gradient(to right, #ffe082,
-            #ffd24f)
+            background-image linear-gradient(to right, #ffe082, #ffd24f)
             box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
 
-        &.circle-gray
-            background-color #aab7c7
-            background-image none
+        .ts, .ts-ex, .ch, .qa
+            background-color #a6aaae
+            -webkit-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
+            -moz-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
+            box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
 
         &.ts
-            background-image linear-gradient(to right, #c07b44, #b63c2c)
+            &:hover
+                background-color rgba(182, 60, 44, .4)
 
-        &.ts-exec
-            background-image linear-gradient(to right, #0db79a, #0391a6)
+        &.ts-ex
+            &:hover
+                background-color rgba(3, 145, 166, .4)
 
-        &.check
-            background-image linear-gradient(to right, #ddc41c, #e09a00)
+        &.ch
+            &:hover
+                background-color rgba(224, 154, 0, .4)
 
         &.qa
-            background-image linear-gradient(to right, #b46dd0, #7e20c0)
+            &:hover
+                background-color rgba(126, 32, 192, .4)
+
+        .ts__active, .ts-ex__active, .ch__active, .qa__active,
+        .ts__active-fold, .ts-ex__active-fold, .ch__active-fold, .qa__active-fold
+            -webkit-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
+            -moz-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
+            box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
+
+        .ts__active-fold
+            background linear-gradient(
+                    to bottom,
+                    #b63c2c,
+                    #b63c2c 50%,
+                    #fff 50%,
+                    #b63c2c 100%,
+                    #fff 100%,
+                    #fff
+            )
+            background-size 100% 3px
+
+        .ts__active-fold
+            background linear-gradient(
+                    to bottom,
+                    #b63c2c,
+                    #b63c2c 50%,
+                    #fff 50%,
+                    #b63c2c 100%,
+                    #fff 100%,
+                    #fff
+            )
+            background-size 100% 3px
+
+        .ts-ex__active-fold
+            background linear-gradient(
+                    to bottom,
+                    #0391a6,
+                    #0391a6 50%,
+                    #fff 50%,
+                    #0391a6 100%,
+                    #fff 100%,
+                    #fff
+            )
+            background-size 100% 3px
+
+        .ch__active-fold
+            background linear-gradient(
+                    to bottom,
+                    #e09a00,
+                    #e09a00 50%,
+                    #fff 50%,
+                    #e09a00 100%,
+                    #fff 100%,
+                    #fff
+            )
+            background-size 100% 3px
+
+        .qa__active-fold
+            background linear-gradient(
+                    to bottom,
+                    #7e20c0,
+                    #7e20c0 50%,
+                    #fff 50%,
+                    #7e20c0 100%,
+                    #fff 100%,
+                    #fff
+            )
+            background-size 100% 3px
+
+        &.ts__active
+            background-color #b63c2c
+
+        &.ts-ex__active
+            background-color #0391a6
+
+        &.ch__active
+            background-color #e09a00
+
+        &.qa__active
+            background-color #7e20c0
 
         &.circle-completed
             background-image unset

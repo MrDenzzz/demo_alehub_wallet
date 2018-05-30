@@ -567,11 +567,11 @@ const messages = {
                     },
                     {
                         title: 'Doesn\'t matter'
-                    },
-                    {
-                        title: 'Verified by me'
                     }
-                ]
+                ],
+                special: {
+                    title: 'Verified by me'
+                }
             }
         },
         countries: [
@@ -1518,7 +1518,9 @@ const messages = {
             verified: 'Верификация'
         },
         offersFilter: {
-            name: 'Название',
+            name: {
+                title: 'Название'
+            },
             rating: {
                 title: 'Рейтинг',
                 from: 'от',
@@ -1535,18 +1537,30 @@ const messages = {
             },
             certification: {
                 title: 'Сертификация',
-                options: {
-                    gost: 'ГОСТ',
-                    din: 'DIN'
-                }
+                options: [
+                    {
+                        title: 'ГОСТ'
+                    },
+                    {
+                        title: 'DIN'
+                    }
+                ]
             },
             verified: {
                 title: 'Верификация',
-                options: {
-                    yes: 'Да',
-                    no: 'Нет',
-                    doesntMatter: 'Без разницы',
-                    verifiedMe: 'Проверено мной'
+                options: [
+                    {
+                        title: 'Да'
+                    },
+                    {
+                        title: 'Нет'
+                    },
+                    {
+                        title: 'Без разницы'
+                    }
+                ],
+                special: {
+                    title: 'Проверено мной'
                 }
             },
         },

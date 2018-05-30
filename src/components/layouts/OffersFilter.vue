@@ -1,5 +1,12 @@
 <template>
-    <div class="dialog" v-if="qaIsActive">
+    <div class="dialog"
+         v-if="filterType"
+         :style="{ 'top': offsetTop }">
+
+        <button type="button" class="fold" @click="toFold">
+            <img src="../../../static/img/arrow-down-dark.svg" alt="to fold">
+        </button>
+
         <form>
 
             <input-name :title="$t('offersFilter.name.title')"/>
@@ -20,7 +27,8 @@
                                       :options="$t('offersFilter.certification.options')"/>
 
             <input-verified-list :title="$t('offersFilter.verified.title')"
-                                 :options="$t('offersFilter.verified.options')"/>
+                                 :options="$t('offersFilter.verified.options')"
+                                 :special="$t('offersFilter.verified.special')"/>
 
             <button type="button"
                     class="buttons btn btn-yellow"
@@ -50,12 +58,30 @@
             InputVerifiedList,
             InputCertificationList
         },
+        props: {
+            filterType: {
+                type: [Boolean, String],
+                required: true
+            },
+            offsetTop: {
+                type: [Boolean, String],
+                required: true
+            }
+        },
+        watch: {
+            offsetTop: function (val) {
+                console.log(val, 'offsetTop val');
+            }
+        },
         data() {
             return {
                 qaIsActive: true
             }
         },
         methods: {
+            toFold: function () {
+                this.$parent.$emit('onFold', true);
+            },
             clear: function () {
 
             }
@@ -72,8 +98,22 @@
         z-index 5
         box-shadow 0 4px 16px 0 rgba(0, 0, 0, 0.24)
         left 54px
-        top 158px
         padding 16px
+
+        .fold
+            cursor pointer
+            position absolute
+            right 10px
+            top 10px
+            background-color transparent
+            border none
+            width 25px
+
+            &:focus
+                outline none
+
+            img
+                width 100%
 
         .btn
             margin-left 0

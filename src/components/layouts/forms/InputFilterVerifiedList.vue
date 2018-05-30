@@ -14,13 +14,13 @@
                 </label>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if="special">
             <div class="form-checkbox">
                 <label class="control control-checkbox">
                     <input type="checkbox">
                     <div class="control-indicator"></div>
                     <span class="bold-text">
-                        Verified by me
+                        {{ special.title }}
                     </span>
                 </label>
             </div>
@@ -39,6 +39,9 @@
             options: {
                 type: Array,
                 required: true
+            },
+            special: {
+                type: Object
             }
         }
     }

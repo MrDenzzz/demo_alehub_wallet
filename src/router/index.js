@@ -61,7 +61,7 @@ const ifAuthenticated = (to, from, next) => {
                 next('/');
                 return;
             }
-        }, 1000);
+        }, 2000);
         next();
         return;
     }
