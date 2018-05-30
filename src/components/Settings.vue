@@ -292,7 +292,7 @@
                 let avatar = new FormData();
                 avatar.append('avatar', document.getElementById('upload-avatar').files[0]);
 
-                this.$http.post(`${this.$host}/users/set_avata`, avatar, {
+                this.$http.post(`${this.$host}/users/set_avatar`, avatar, {
                     headers: {
                     'Authorization': localStorage.getItem(sha256('user-token'))
                     }
