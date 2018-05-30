@@ -47,11 +47,12 @@
                                         <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
                                             <p>Add photo</p>
                                             <div class="circle">
-                                                <img :src="curAvatar" alt="" width="67" height="67">
+                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar" alt="" width="67" height="67" v-if="!newAvatar">
+                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ newAvatar" alt="" width="67" height="67" v-else>
                                             </div>
+                                            <span class="error" v-if="isError">Photo not uploaded </span>
                                         </label>
-                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="showAvatar" @click="onClickInputFile">
-                                        <button class="btn btn-yellow" v-if="showButton" @click="sendUserAvatar">Save</button>
+                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="setUserAvatar" @click="onClickInputFile">
                                     </div>
                                 </div>
 
@@ -132,6 +133,7 @@
     import ChangeEmailModal from './modals/ChangeEmail';
     import ChangeTwoAuthModal from './modals/ChangeTwoAuth';
     import Spinner from './layouts/Spinner';
+    import sha256 from 'sha256';
 
     import {mapGetters} from 'vuex';
     import {mapMutations} from 'vuex';
@@ -157,8 +159,8 @@
                 selectedLanguage: 'English',
                 newName: '',
                 dataProcessing: false,
-                curAvatar: '../../static/img/avatar.svg',
-                showButton: false
+                newAvatar: '',
+                isError: false
             }
         },
         watch: {},
@@ -168,6 +170,7 @@
                 'userStatus',
                 'userName',
                 'userEmail',
+                'userAvatar',
                 'userTwoAuth',
                 'userLastUpdatedPassword',
                 'twoAuthStatus'
@@ -285,11 +288,21 @@
             onClickInputFile: function () {
                 this.$refs.uploadAvatar.click();
             },
-            showAvatar: function () {
-                const avatar = document.getElementById('upload-avatar');
-                this.curAvatar = window.URL.createObjectURL(avatar.files[0]);
-                this.showButton = true;
-            }
+            setUserAvatar: function () {
+                let avatar = new FormData();
+                avatar.append('avatar', document.getElementById('upload-avatar').files[0]);
+
+                this.$http.post(`${this.$host}/users/set_avata`, avatar, {
+                    headers: {
+                    'Authorization': localStorage.getItem(sha256('user-token'))
+                    }
+                }).then(response => {
+                    this.newAvatar = response.body.avatar_path;
+                }, response => {
+                    console.log('error avatar');
+                    this.isError = true;
+                }
+            )}
         },
         mounted() {
             this.$on('onselect', function (id, value) {
@@ -340,6 +353,11 @@
                 #upload-avatar
                     opacity 0
                     position absolute
+
+                .error
+                    color #b10303
+                    text-transform none 
+                    font-weight 500
 
     .form .deletelink
         margin-top -8px
