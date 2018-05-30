@@ -1,13 +1,8 @@
 <template>
     <div class="dialog" v-if="qaIsActive">
         <form>
-            <div class="form-group">
-                <label for="name">
-                    {{ $t('offersFilter.name') }}
-                </label>
-                <input type="text" id="name">
-            </div>
 
+            <input-name/>
 
             <input-double-rating/>
 
@@ -15,73 +10,46 @@
 
             <input-prompt-checkbox-list/>
 
-            <div class="form-group">
-                <label>Certification</label>
-                <div class="form-checkbox">
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>ГОСТ</span>
-                    </label>
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span>DIN</span>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Verified</label>
-                <div class="form-radio">
-                    <label class="control control-radio">
-                        <input type="radio"
-                               name="verified">
-                        <div class="control-indicator"></div>
-                        <span>Yes</span>
-                    </label>
-                    <label class="control control-radio">
-                        <input type="radio"
-                               name="verified">
-                        <div class="control-indicator"></div>
-                        <span>No</span>
-                    </label>
-                    <label class="control control-radio">
-                        <input type="radio"
-                               name="verified">
-                        <div class="control-indicator"></div>
-                        <span>Doesn't matter</span>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-checkbox">
-                    <label class="control control-checkbox">
-                        <input type="checkbox">
-                        <div class="control-indicator"></div>
-                        <span class="bold-text">Verified by me</span>
-                    </label>
-                </div>
-            </div>
+            <input-certification-list/>
+
+            <input-verified-list/>
+
+            <button type="button"
+                    class="buttons btn btn-yellow"
+                    @click="clear">
+                Clear
+            </button>
+
         </form>
-        <button class="buttons btn btn-yellow">Clear</button>
     </div>
 </template>
 
 <script>
-    import InputPromptCheckboxList from './forms/InputPromptCheckboxList';
-    import InputDoubleRating from './forms/InputDoubleRating';
-    import InputDoublePrice from './forms/InputDoublePrice';
+    import InputName from './forms/InputFilter';
+    import InputDoubleRating from './forms/InputFilterDoubleRating';
+    import InputDoublePrice from './forms/InputFilterDoublePrice';
+    import InputPromptCheckboxList from './forms/InputFilterPromptCheckboxList';
+    import InputCertificationList from './forms/InputFilterCertificationList';
+    import InputVerifiedList from './forms/InputFilterVerifiedList';
 
     export default {
         name: 'OffersFilter',
         components: {
-            InputPromptCheckboxList,
+            InputName,
             InputDoubleRating,
-            InputDoublePrice
+            InputDoublePrice,
+            InputPromptCheckboxList,
+            InputVerifiedList,
+            InputCertificationList
         },
         data() {
             return {
                 qaIsActive: true
+            }
+        },
+        methods: {
+            clear: function () {
+
             }
         }
     }
