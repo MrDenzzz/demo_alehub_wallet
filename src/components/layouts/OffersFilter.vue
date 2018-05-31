@@ -1,6 +1,6 @@
 <template>
+    <!--v-if="filterType"-->
     <div class="dialog"
-         v-if="filterType"
          :style="{ 'top': offsetTop }">
 
         <button type="button" class="fold" @click="toFold">
@@ -59,10 +59,10 @@
             InputCertificationList
         },
         props: {
-            filterType: {
-                type: [Boolean, String],
-                required: true
-            },
+            // filterType: {
+            //     type: [Boolean, String],
+            //     required: true
+            // },
             offsetTop: {
                 type: [Boolean, String],
                 required: true

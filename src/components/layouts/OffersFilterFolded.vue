@@ -1,10 +1,13 @@
 <template>
-    <div class="folded-filter" :style="{ 'bottom': offsetBottom }">
+    <!--:style="{ 'left': (queue - 1) * 153 + 'px' }"-->
+    <div class="folded-filter"
+         :style="{ 'bottom': queue * 30 + 'px' }">
         <div class="title">
-            Title
+            {{ title }}
         </div>
-        <button type="button" class="unfold" @click="toUnfold">
-            <img src="../../../static/img/arrow-down-light.svg" alt="">
+        <button type="button" class="unfold"
+                @click="toUnfold">
+            <img src="../../../static/img/arrow-down-light.svg" alt="to fold">
         </button>
     </div>
 </template>
@@ -16,13 +19,17 @@
             return {}
         },
         props: {
-            offsetBottom: {
+            title: {
                 type: String,
-                required: false
+                required: true
             },
             foldOption: {
                 type: String,
                 required: false
+            },
+            queue: {
+                type: Number,
+                required: true
             }
         },
         methods: {
@@ -52,6 +59,7 @@
 
 <style lang="stylus" scoped>
     .folded-filter
+        z-index 3
         position fixed
         left 20px
         width 150px

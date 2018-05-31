@@ -57,53 +57,42 @@
                             <div class="triangle">
                                 <div class="filters-block" id="filter-block">
 
-                                    <!--добавить computed-функции для :class-->
+                                    <button type="button"
+                                            class="circle circle-gray circle-filter"
+                                            v-for="item in filters"
+                                            :id="item.id"
+                                            :class="calcClass(item.id, item.step)"
+                                            @click="changeStateButtonFilter(item.id)">
+                                        <span class="title">
+                                            {{ item.title }}
+                                        </span>
+                                    </button>
 
-                                    <button type="button" id="ts"
-                                            class="circle circle-gray circle-filter"
-                                            :class="{'ts__active' : tsActive === 1, 'ts__active-fold' : tsActive === 2, 'ts': !tsActive }"
-                                            @click="toggleStateFilterContractor('ts')">
-                                        <span class="title">TS</span>
-                                    </button>
-                                    <button type="button" id="ts-ex"
-                                            class="circle circle-gray circle-filter"
-                                            :class="{'ts-ex__active' : tsExActive === 1, 'ts-ex__active-fold' : tsExActive === 2, 'ts-ex': !tsExActive }"
-                                            @click="toggleStateFilterContractor('ts-ex')">
-                                        <span class="title">TS</span>
-                                        <span class="subtitle">EX</span>
-                                    </button>
-                                    <button type="button" id="ch"
-                                            class="circle circle-gray circle-filter"
-                                            :class="{'ch__active' : chActive === 1, 'ch__active-fold' : chActive === 2, 'ch': !chActive }"
-                                            @click="toggleStateFilterContractor('ch')">
-                                        <span class="title">CH</span>
-                                    </button>
-                                    <button type="button" id="qa"
-                                            class="circle circle-gray circle-filter"
-                                            :class="{'qa__active' : qaActive === 1, 'qa__active-fold' : qaActive === 2, 'qa': !qaActive }"
-                                            @click="toggleStateFilterContractor('qa')">
-                                        <span class="title">QA</span>
-                                    </button>
                                 </div>
 
-                                <offers-filter v-if="!isFoldFilter"
-                                               :filter-type="activeOption"
-                                               :offset-top="filterOffsetTop"/>
+                                <offers-filter v-for="item in filters"
+                                               v-if="item.opened"
+                                               :offset-top="filterOffsetTop(item.id)"/>
+
 
                                 <!--в цикл-->
 
-                                <offers-filter-folded v-if="isFoldFilterTs"
-                                                      :fold-option="'ts'"
-                                                      :queue="isFoldQueue[0].queue"/>
-                                <offers-filter-folded v-if="isFoldFilterTsEx"
-                                                      :fold-option="'ts-ex'"
-                                                      :queue="isFoldQueue[1].queue"/>
-                                <offers-filter-folded v-if="isFoldFilterCh"
-                                                      :fold-option="'ch'"
-                                                      :queue="isFoldQueue[2].queue"/>
-                                <offers-filter-folded v-if="isFoldFilterQa"
-                                                      :fold-option="'qa'"
-                                                      :queue="isFoldQueue[3].queue"/>
+                                <!--<offers-filter-folded v-if="isFoldFilterTs"-->
+                                                      <!--:title="'TS'"-->
+                                                      <!--:fold-option="'ts'"-->
+                                                      <!--:queue="isFoldQueue[0].queue"/>-->
+                                <!--<offers-filter-folded v-if="isFoldFilterTsEx"-->
+                                                      <!--:title="'TS EX'"-->
+                                                      <!--:fold-option="'ts-ex'"-->
+                                                      <!--:queue="isFoldQueue[1].queue"/>-->
+                                <!--<offers-filter-folded v-if="isFoldFilterCh"-->
+                                                      <!--:title="'CH'"-->
+                                                      <!--:fold-option="'ch'"-->
+                                                      <!--:queue="isFoldQueue[2].queue"/>-->
+                                <!--<offers-filter-folded v-if="isFoldFilterQa"-->
+                                                      <!--:title="'QA'"-->
+                                                      <!--:fold-option="'qa'"-->
+                                                      <!--:queue="isFoldQueue[3].queue"/>-->
 
                             </div>
                         </button>
@@ -251,10 +240,60 @@
             },
             offersDateTo: function (val) {
                 console.log(val, 'offersDateTo');
-            }
+            },
+
+
+            isFoldFilterTs: function (val) {
+                console.log(val, 'isFoldFilterTs');
+            },
+            isFoldFilterTsEx: function (val) {
+                console.log(val, 'isFoldFilterTsEx');
+            },
+            isFoldFilterCh: function (val) {
+                console.log(val, 'isFoldFilterCh');
+            },
+            isFoldFilterQa: function (val) {
+                console.log(val, 'isFoldFilterQa');
+            },
         },
         data() {
             return {
+
+                filters: [
+                    {
+                        id: 'ts',
+                        title: 'TS',
+                        step: 0,
+                        opened: false,
+                        folded: false,
+                        queue: 0
+                    },
+                    {
+                        id: 'ts-ex',
+                        title: 'TS EX',
+                        step: 0,
+                        opened: false,
+                        folded: false,
+                        queue: 0
+                    },
+                    {
+                        id: 'ch',
+                        title: 'CH',
+                        step: 0,
+                        opened: false,
+                        folded: false,
+                        queue: 0
+                    },
+                    {
+                        id: 'qa',
+                        title: 'QA',
+                        step: 0,
+                        opened: false,
+                        folded: false,
+                        queue: 0
+                    }
+                ],
+
 
                 isFoldQueue: [
                     {
@@ -290,8 +329,6 @@
                     false,
                     false
                 ],
-
-                filterOffsetTop: '0px',
 
                 tsActive: 0,
                 tsExActive: 0,
@@ -357,6 +394,10 @@
                     'selectedContractor'
                 ]
             ),
+
+
+
+
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
@@ -368,27 +409,107 @@
             }
         },
         methods: {
+
+
+            calcClass: function (id, activeStep) {
+                switch(activeStep) {
+                    case 0:
+                        return id;
+                    case 1:
+                        return id + '__active';
+                    case 2:
+                        return id + '__active-fold';
+                    default:
+                        console.error('Occurred unexpected calc class error');
+                        return 'error';
+                        //ATTENTION
+                }
+            },
+
+            currentFilter: function (id) {
+                return this.filters.find(item => item.id === id);
+            },
+
+            setCorrectStateOtherButtonFilter: function (id, opened, folded) {
+                let others = this.filters.filter(item => item.id !== id);
+
+                others.forEach(item => {
+                     if (opened && !folded) {
+                         if (item.opened) {
+                             item.opened = false;
+                             item.folded = true;
+                         }
+                     }
+                });
+            },
+
+            changeStateButtonFilter: function (id) {
+                let current = this.currentFilter(id);
+
+                if (!current.opened && !current.folded) {
+                    current.opened = true;
+                    this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
+                } else if (current.opened && !current.folded) {
+                    current.opened = false;
+                    current.folded = true;
+                }  else if (!current.opened && current.folded) {
+                    current.folded = false;
+                }
+            },
+
+            // calcClassButtonFilter: function (id) {
+            //     switch(id) {
+            //         case 'ts':
+            //             this.calcClass(id, this.tsActive);
+            //             break;
+            //         case 'ts-ex':
+            //             this.calcClass(id, this.tsExActive);
+            //             break;
+            //         case 'ch':
+            //             this.calcClass(id, this.chActive);
+            //             break;
+            //         case 'qa':
+            //             this.calcClass(id, this.qaActive);
+            //             break;
+            //         default:
+            //             console.error('Occurred unexpected calc class button filter error');
+            //             break;
+            //     }
+            // },
+
             getCoords: function (elem) {
                 if (!elem)
                     return false;
-                let box = elem.getBoundingClientRect();
 
                 return {
-                    top: box.top + pageYOffset,
-                    left: box.left + pageXOffset
+                    top: elem.getBoundingClientRect().top + pageYOffset,
+                    left: elem.getBoundingClientRect().left + pageXOffset
                 };
             },
-            setFilterOffsetTop: function (elem) {
-                (elem) ? this.filterOffsetTop = this.getCoords(document.getElementById(elem)).top -
-                    this.getCoords(document.getElementById('filter-block')).top + 'px' : this.filterOffsetTop = '0px';
+            filterOffsetTop: function (id) {
+                if (!id) {
+                    console.error('Wrong argument value');
+                    return '0px';
+                }
+
+                return this.getCoords(document.getElementById(id)).top -
+                       this.getCoords(document.getElementById('filter-block')).top + 'px';
             },
 
-            setFoldQueue: function (id) {
-                let opt = this.isFoldQueue.find(item => item.id === id);
-
-                let max = Math.max.apply(Math, this.isFoldQueue.map(item => item.queue));
-
-                opt.queue = max + 1;
+            setFoldQueue: function (id, isFold) {
+                let current = this.isFoldQueue.find(item => item.id === id);
+                if (isFold) {
+                    let max = Math.max.apply(Math, this.isFoldQueue.map(item => item.queue));
+                    current.queue = max + 1;
+                } else {
+                    this.isFoldQueue.forEach(item => {
+                        if (item.queue > current.queue) {
+                            item.queue -= 1;
+                        }
+                    });
+                    current.queue = 0;
+                    console.log(this.isFoldQueue, 'this.isFoldQueue');
+                }
 
                 //условие, когда фильтр раскрывается и все пересчитывается
 
@@ -411,9 +532,11 @@
                 //         break;
                 // }
 
-                console.log(opt.queue, 'opt.queue');
+                console.log(current.queue, 'current.queue');
                 console.log(this.isFoldQueue, 'this.isFoldQueue');
             },
+
+            //JS DOC !!!!!!!
 
             toggleStateFilterContractor: function (opt) {
                 switch (opt) {
@@ -427,26 +550,27 @@
                             if (this.tsExActive === 1) {
                                 this.isFoldFilterTsEx = true;
                                 this.tsExActive = 2;
-                                this.setFoldQueue('ts-ex');
+                                this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
                             } else if (this.chActive === 1) {
                                 this.isFoldFilterCh = true;
                                 this.chActive = 2;
-                                this.setFoldQueue('ch');
+                                this.setFoldQueue('ch', this.isFoldFilterCh);
                             } else if (this.qaActive === 1) {
                                 this.isFoldFilterQa = true;
                                 this.qaActive = 2;
-                                this.setFoldQueue('qa');
+                                this.setFoldQueue('qa', this.isFoldFilterQa);
                             }
 
                         } else if (this.tsActive === 1) {
                             this.isFoldFilter = true;
                             this.isFoldFilterTs = true;
-                            this.setFoldQueue('ts');
+                            this.setFoldQueue('ts', this.isFoldFilterTs);
                             this.tsActive = 2;
                         } else {
                             this.activeOption = false;
                             this.isFoldFilter = false;
                             this.isFoldFilterTs = false;
+                            this.setFoldQueue('ts', this.isFoldFilterTs);
                             this.setFilterOffsetTop(false);
                             this.tsActive = 0;
                         }
@@ -462,26 +586,27 @@
                             if (this.tsActive === 1) {
                                 this.isFoldFilterTs = true;
                                 this.tsActive = 2;
-                                this.setFoldQueue('ts');
+                                this.setFoldQueue('ts', this.isFoldFilterTs);
                             } else if (this.chActive === 1) {
                                 this.isFoldFilterCh = true;
                                 this.chActive = 2;
-                                this.setFoldQueue('ch');
+                                this.setFoldQueue('ch', this.isFoldFilterCh);
                             } else if (this.qaActive === 1) {
                                 this.isFoldFilterQa = true;
                                 this.qaActive = 2;
-                                this.setFoldQueue('qa');
+                                this.setFoldQueue('qa', this.isFoldFilterQa);
                             }
 
                         } else if (this.tsExActive === 1) {
                             this.isFoldFilter = true;
                             this.isFoldFilterTsEx = true;
-                            this.setFoldQueue('ts-ex');
+                            this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
                             this.tsExActive = 2;
                         } else {
                             this.activeOption = false;
                             this.isFoldFilter = false;
                             this.isFoldFilterTsEx = false;
+                            this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
                             this.setFilterOffsetTop(false);
                             this.tsExActive = 0;
                         }
@@ -496,26 +621,27 @@
                             if (this.tsActive === 1) {
                                 this.isFoldFilterTs = true;
                                 this.tsActive = 2;
-                                this.setFoldQueue('ts');
+                                this.setFoldQueue('ts', this.isFoldFilterTs);
                             } else if (this.tsExActive === 1) {
                                 this.isFoldFilterTsEx = true;
                                 this.tsExActive = 2;
-                                this.setFoldQueue('ts-ex');
+                                this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
                             } else if (this.qaActive === 1) {
                                 this.isFoldFilterQa = true;
                                 this.qaActive = 2;
-                                this.setFoldQueue('qa');
+                                this.setFoldQueue('qa', this.isFoldFilterQa);
                             }
 
                         } else if (this.chActive === 1) {
                             this.isFoldFilter = true;
                             this.isFoldFilterCh = true;
-                            this.setFoldQueue('ch');
+                            this.setFoldQueue('ch', this.isFoldFilterCh);
                             this.chActive = 2;
                         } else {
                             this.activeOption = false;
                             this.isFoldFilter = false;
                             this.isFoldFilterCh = false;
+                            this.setFoldQueue('ch', this.isFoldFilterCh);
                             this.setFilterOffsetTop(false);
                             this.chActive = 0;
                         }
@@ -530,26 +656,27 @@
                             if (this.tsActive === 1) {
                                 this.isFoldFilterTs = true;
                                 this.tsActive = 2;
-                                this.setFoldQueue('ts');
+                                this.setFoldQueue('ts', this.isFoldFilterTs);
                             } else if (this.tsExActive === 1) {
                                 this.isFoldFilterTsEx = true;
                                 this.tsExActive = 2;
-                                this.setFoldQueue('ts-ex');
+                                this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
                             } else if (this.chActive === 1) {
                                 this.isFoldFilterCh = true;
                                 this.chActive = 2;
-                                this.setFoldQueue('ch');
+                                this.setFoldQueue('ch', this.isFoldFilterCh);
                             }
 
                         } else if (this.qaActive === 1) {
                             this.isFoldFilter = true;
                             this.isFoldFilterQa = true;
-                            this.setFoldQueue('qa');
+                            this.setFoldQueue('qa', this.isFoldFilterQa);
                             this.qaActive = 2;
                         } else {
                             this.activeOption = false;
                             this.isFoldFilter = false;
                             this.isFoldFilterQa = false;
+                            this.setFoldQueue('qa', this.isFoldFilterQa);
                             this.setFilterOffsetTop(false);
                             this.qaActive = 0;
                         }
