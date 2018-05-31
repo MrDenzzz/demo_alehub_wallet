@@ -1,5 +1,5 @@
 <template>
-    <div class="folded-filter">
+    <div class="folded-filter" :style="{ 'bottom': offsetBottom }">
         <div class="title">
             Title
         </div>
@@ -13,13 +13,38 @@
     export default {
         name: 'OffersFilterFolded',
         data() {
-            return {
-
+            return {}
+        },
+        props: {
+            offsetBottom: {
+                type: String,
+                required: false
+            },
+            foldOption: {
+                type: String,
+                required: false
             }
         },
         methods: {
             toUnfold: function () {
                 this.$parent.$emit('onFold', false);
+
+                switch (this.foldOption) {
+                    case 'ts' :
+                        this.$parent.$emit('onFoldTs', false);
+                        break;
+                    case 'ts-ex' :
+                        this.$parent.$emit('onFoldTsEx', false);
+                        break;
+                    case 'ch' :
+                        this.$parent.$emit('onFoldCh', false);
+                        break;
+                    case 'qa' :
+                        this.$parent.$emit('onFoldQa', false);
+                        break;
+                    default :
+                        break;
+                }
             }
         }
     }
@@ -28,7 +53,6 @@
 <style lang="stylus" scoped>
     .folded-filter
         position fixed
-        bottom 20px
         left 20px
         width 150px
         padding 5px 10px

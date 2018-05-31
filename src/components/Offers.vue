@@ -90,10 +90,18 @@
                                                :filter-type="activeOption"
                                                :offset-top="filterOffsetTop"/>
 
-                                <offers-filter-folded v-if="isFoldFilterTs" :offset-bottom="'200px'"/>
-                                <offers-filter-folded v-if="isFoldFilterTsEx" :offset-bottom="'150px'"/>
-                                <!--<offers-filter-folded v-if="isFoldFilter"/>-->
-                                <offers-filter-folded v-if="isFoldFilter"/>
+                                <offers-filter-folded v-if="isFoldFilterTs"
+                                                      :fold-option="'ts'"
+                                                      :offset-bottom="'130px'"/>
+                                <offers-filter-folded v-if="isFoldFilterTsEx"
+                                                      :fold-option="'ts-ex'"
+                                                      :offset-bottom="'90px'"/>
+                                <offers-filter-folded v-if="isFoldFilterCh"
+                                                      :fold-option="'ch'"
+                                                      :offset-bottom="'60px'"/>
+                                <offers-filter-folded v-if="isFoldFilterQa"
+                                                      :fold-option="'qa'"
+                                                      :offset-bottom="'20px'"/>
 
                             </div>
                         </button>
@@ -246,6 +254,21 @@
         data() {
             return {
                 isFoldFilter: false,
+
+                isFoldFilterTs: false,
+                isFoldFilterTsEx: false,
+                isFoldFilterCh: false,
+                isFoldFilterQa: false,
+
+                //для удобного перебора в функции тогла диалога
+                //остальные сделать также
+                isFoldOpt: [
+                    false,
+                    false,
+                    false,
+                    false
+                ],
+
                 filterOffsetTop: '0px',
 
                 tsActive: 0,
@@ -343,7 +366,20 @@
                         if (!this.tsActive) {
                             this.activeOption = true;
                             this.setFilterOffsetTop(opt);
+                            this.isFoldFilter = false;
                             this.tsActive = 1;
+
+                            if (this.tsExActive === 1) {
+                                this.isFoldFilterTsEx = true;
+                                this.tsExActive = 2;
+                            } else if (this.chActive === 1) {
+                                this.isFoldFilterCh = true;
+                                this.chActive = 2;
+                            } else if (this.qaActive === 1) {
+                                this.isFoldFilterQa = true;
+                                this.qaActive = 2;
+                            }
+
                         } else if (this.tsActive === 1) {
                             this.isFoldFilter = true;
                             this.isFoldFilterTs = true;
@@ -361,7 +397,20 @@
                         if (!this.tsExActive) {
                             this.activeOption = true;
                             this.setFilterOffsetTop(opt);
+                            this.isFoldFilter = false;
                             this.tsExActive = 1;
+
+                            if (this.tsActive === 1) {
+                                this.isFoldFilterTs = true;
+                                this.tsActive = 2;
+                            } else if (this.chActive === 1) {
+                                this.isFoldFilterCh = true;
+                                this.chActive = 2;
+                            } else if (this.qaActive === 1) {
+                                this.isFoldFilterQa = true;
+                                this.qaActive = 2;
+                            }
+
                         } else if (this.tsExActive === 1) {
                             this.isFoldFilter = true;
                             this.isFoldFilterTsEx = true;
@@ -378,13 +427,28 @@
                         if (!this.chActive) {
                             this.activeOption = true;
                             this.setFilterOffsetTop(opt);
+                            this.isFoldFilter = false;
                             this.chActive = 1;
+
+                            if (this.tsActive === 1) {
+                                this.isFoldFilterTs = true;
+                                this.tsActive = 2;
+                            } else if (this.tsExActive === 1) {
+                                this.isFoldFilterTsEx = true;
+                                this.tsExActive = 2;
+                            } else if (this.qaActive === 1) {
+                                this.isFoldFilterQa = true;
+                                this.qaActive = 2;
+                            }
+
                         } else if (this.chActive === 1) {
                             this.isFoldFilter = true;
+                            this.isFoldFilterCh = true;
                             this.chActive = 2;
                         } else {
                             this.activeOption = false;
                             this.isFoldFilter = false;
+                            this.isFoldFilterCh = false;
                             this.setFilterOffsetTop(false);
                             this.chActive = 0;
                         }
@@ -393,13 +457,28 @@
                         if (!this.qaActive) {
                             this.activeOption = true;
                             this.setFilterOffsetTop(opt);
+                            this.isFoldFilter = false;
                             this.qaActive = 1;
+
+                            if (this.tsActive === 1) {
+                                this.isFoldFilterTs = true;
+                                this.tsActive = 2;
+                            } else if (this.tsExActive === 1) {
+                                this.isFoldFilterTsEx = true;
+                                this.tsExActive = 2;
+                            } else if (this.chActive === 1) {
+                                this.isFoldFilterCh = true;
+                                this.chActive = 2;
+                            }
+
                         } else if (this.qaActive === 1) {
                             this.isFoldFilter = true;
+                            this.isFoldFilterQa = true;
                             this.qaActive = 2;
                         } else {
                             this.activeOption = false;
                             this.isFoldFilter = false;
+                            this.isFoldFilterQa = false;
                             this.setFilterOffsetTop(false);
                             this.qaActive = 0;
                         }
@@ -413,7 +492,6 @@
                 // this.currentContractorId = contractor.id;
 
                 if (!this.openedContractorDialog) {
-                    console.log(1);
                     this.clickCoordinates.top = e.pageY;
                     this.clickCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
@@ -427,7 +505,6 @@
 
                     return true;
                 } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
-                    console.log(2);
                     this.clickCoordinates.top = e.pageY;
                     this.clickCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
@@ -478,6 +555,86 @@
         mounted() {
             this.$on('onFold', (val) => {
                 this.isFoldFilter = val;
+            });
+
+            this.$on('onFoldTs', (val) => {
+                this.isFoldFilterTs = val;
+
+                this.activeOption = true;
+                this.setFilterOffsetTop('ts');
+                this.isFoldFilter = false;
+                this.tsActive = 1;
+
+                if (this.tsExActive === 1) {
+                    this.isFoldFilterTsEx = true;
+                    this.tsExActive = 2;
+                } else if (this.chActive === 1) {
+                    this.isFoldFilterCh = true;
+                    this.chActive = 2;
+                } else if (this.qaActive === 1) {
+                    this.isFoldFilterQa = true;
+                    this.qaActive = 2;
+                }
+            });
+
+            this.$on('onFoldTsEx', (val) => {
+                this.isFoldFilterTsEx = val;
+
+                this.activeOption = true;
+                this.setFilterOffsetTop('ts-ex');
+                this.isFoldFilter = false;
+                this.tsExActive = 1;
+
+                if (this.tsActive === 1) {
+                    this.isFoldFilterTs = true;
+                    this.tsActive = 2;
+                } else if (this.chActive === 1) {
+                    this.isFoldFilterCh = true;
+                    this.chActive = 2;
+                } else if (this.qaActive === 1) {
+                    this.isFoldFilterQa = true;
+                    this.qaActive = 2;
+                }
+            });
+
+            this.$on('onFoldCh', (val) => {
+                this.isFoldFilterCh = val;
+
+                this.activeOption = true;
+                this.setFilterOffsetTop('ch');
+                this.isFoldFilter = false;
+                this.chActive = 1;
+
+                if (this.tsActive === 1) {
+                    this.isFoldFilterTs = true;
+                    this.tsActive = 2;
+                } else if (this.tsExActive === 1) {
+                    this.isFoldFilterTsEx = true;
+                    this.tsExActive = 2;
+                } else if (this.qaActive === 1) {
+                    this.isFoldFilterQa = true;
+                    this.qaActive = 2;
+                }
+            });
+
+            this.$on('onFoldQa', (val) => {
+                this.isFoldFilterQa = val;
+
+                this.activeOption = true;
+                this.setFilterOffsetTop('qa');
+                this.isFoldFilter = false;
+                this.qaActive = 1;
+
+                if (this.tsActive === 1) {
+                    this.isFoldFilterTs = true;
+                    this.tsActive = 2;
+                } else if (this.tsExActive === 1) {
+                    this.isFoldFilterTsEx = true;
+                    this.tsExActive = 2;
+                } else if (this.chActive === 1) {
+                    this.isFoldFilterCh = true;
+                    this.chActive = 2;
+                }
             });
         }
     }
