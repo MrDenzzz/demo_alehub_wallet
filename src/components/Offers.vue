@@ -61,7 +61,7 @@
                                             class="circle circle-gray circle-filter"
                                             v-for="item in filters"
                                             :id="item.id"
-                                            :class="calcClass(item.id, item.step)"
+                                            :class="calcClass(item.id, item.opened, item.folded)"
                                             @click="changeStateButtonFilter(item.id)">
                                         <span class="title">
                                             {{ item.title }}
@@ -263,7 +263,6 @@
                     {
                         id: 'ts',
                         title: 'TS',
-                        step: 0,
                         opened: false,
                         folded: false,
                         queue: 0
@@ -271,7 +270,6 @@
                     {
                         id: 'ts-ex',
                         title: 'TS EX',
-                        step: 0,
                         opened: false,
                         folded: false,
                         queue: 0
@@ -279,7 +277,6 @@
                     {
                         id: 'ch',
                         title: 'CH',
-                        step: 0,
                         opened: false,
                         folded: false,
                         queue: 0
@@ -287,7 +284,6 @@
                     {
                         id: 'qa',
                         title: 'QA',
-                        step: 0,
                         opened: false,
                         folded: false,
                         queue: 0
@@ -411,19 +407,22 @@
         methods: {
 
 
-            calcClass: function (id, activeStep) {
-                switch(activeStep) {
-                    case 0:
-                        return id;
-                    case 1:
-                        return id + '__active';
-                    case 2:
-                        return id + '__active-fold';
-                    default:
-                        console.error('Occurred unexpected calc class error');
-                        return 'error';
-                        //ATTENTION
+            calcClass: function (id, opened, folded) {
+                if (!this.filters.find(item => item.id === id) &&
+                    typeof opened === 'boolean' && typeof folded === 'boolean') {
+                    console.error('Wrong arguments value');
+                    return false;
                 }
+
+                if (!opened && !folded)
+                    return id;
+                else if (opened && !folded)
+                    return id + '__active';
+                else if (!opened && folded)
+                    return id + '__active-fold';
+
+                console.error('Missing IF statement in calcClass');
+                return false;
             },
 
             currentFilter: function (id) {
