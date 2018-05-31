@@ -75,24 +75,11 @@
                                                :offset-top="filterOffsetTop(item.id)"/>
 
 
-                                <!--в цикл-->
-
-                                <!--<offers-filter-folded v-if="isFoldFilterTs"-->
-                                                      <!--:title="'TS'"-->
-                                                      <!--:fold-option="'ts'"-->
-                                                      <!--:queue="isFoldQueue[0].queue"/>-->
-                                <!--<offers-filter-folded v-if="isFoldFilterTsEx"-->
-                                                      <!--:title="'TS EX'"-->
-                                                      <!--:fold-option="'ts-ex'"-->
-                                                      <!--:queue="isFoldQueue[1].queue"/>-->
-                                <!--<offers-filter-folded v-if="isFoldFilterCh"-->
-                                                      <!--:title="'CH'"-->
-                                                      <!--:fold-option="'ch'"-->
-                                                      <!--:queue="isFoldQueue[2].queue"/>-->
-                                <!--<offers-filter-folded v-if="isFoldFilterQa"-->
-                                                      <!--:title="'QA'"-->
-                                                      <!--:fold-option="'qa'"-->
-                                                      <!--:queue="isFoldQueue[3].queue"/>-->
+                                <offers-filter-folded v-for="item in filters"
+                                                      v-if="item.folded"
+                                                      :title="item.title"
+                                                      :fold-option="item.id"
+                                                      :queue="item.queue"/>
 
                             </div>
                         </button>
@@ -437,6 +424,7 @@
                          if (item.opened) {
                              item.opened = false;
                              item.folded = true;
+                             this.changeFoldQueue(item.id);
                          }
                      }
                 });
@@ -451,30 +439,27 @@
                 } else if (current.opened && !current.folded) {
                     current.opened = false;
                     current.folded = true;
+                    this.changeFoldQueue(id);
                 }  else if (!current.opened && current.folded) {
                     current.folded = false;
+                    this.changeFoldQueue(id);
                 }
             },
 
-            // calcClassButtonFilter: function (id) {
-            //     switch(id) {
-            //         case 'ts':
-            //             this.calcClass(id, this.tsActive);
-            //             break;
-            //         case 'ts-ex':
-            //             this.calcClass(id, this.tsExActive);
-            //             break;
-            //         case 'ch':
-            //             this.calcClass(id, this.chActive);
-            //             break;
-            //         case 'qa':
-            //             this.calcClass(id, this.qaActive);
-            //             break;
-            //         default:
-            //             console.error('Occurred unexpected calc class button filter error');
-            //             break;
-            //     }
-            // },
+            changeFoldQueue: function (id) {
+                let current = this.currentFilter(id);
+
+                if (current.folded) {
+                    let max = Math.max.apply(Math, this.filters.map(item => item.queue));
+                    current.queue = max + 1;
+                } else {
+                    this.filters.forEach(item => {
+                        if (item.queue > current.queue)
+                            item.queue -= 1;
+                    });
+                    current.queue = 0;
+                }
+            },
 
             getCoords: function (elem) {
                 if (!elem)
@@ -493,46 +478,6 @@
 
                 return this.getCoords(document.getElementById(id)).top -
                        this.getCoords(document.getElementById('filter-block')).top + 'px';
-            },
-
-            setFoldQueue: function (id, isFold) {
-                let current = this.isFoldQueue.find(item => item.id === id);
-                if (isFold) {
-                    let max = Math.max.apply(Math, this.isFoldQueue.map(item => item.queue));
-                    current.queue = max + 1;
-                } else {
-                    this.isFoldQueue.forEach(item => {
-                        if (item.queue > current.queue) {
-                            item.queue -= 1;
-                        }
-                    });
-                    current.queue = 0;
-                    console.log(this.isFoldQueue, 'this.isFoldQueue');
-                }
-
-                //условие, когда фильтр раскрывается и все пересчитывается
-
-                // switch (opt.queue) {
-                //     case 0:
-                //         if (this.isFoldQueue.find(item => item.queue === 1))
-                //             opt.queue = 1;
-                //         break;
-                //     case 1:
-                //         opt.queue = 2;
-                //         break;
-                //     case 2:
-                //         opt.queue = 3;
-                //         break;
-                //     case 3:
-                //         opt.queue = 4;
-                //         break;
-                //     default :
-                //         console.error('unexpected value isFoldQueue');
-                //         break;
-                // }
-
-                console.log(current.queue, 'current.queue');
-                console.log(this.isFoldQueue, 'this.isFoldQueue');
             },
 
             //JS DOC !!!!!!!
