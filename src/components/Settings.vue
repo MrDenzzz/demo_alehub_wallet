@@ -50,7 +50,6 @@
                                                 <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar" alt="" width="67" height="67" v-if="!newAvatar">
                                                 <img :src="'https://ale-demo-4550.nodechef.com/'+ newAvatar" alt="" width="67" height="67" v-else>
                                             </div>
-                                            <span class="error" v-if="isError">Photo not uploaded </span>
                                         </label>
                                         <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="setUserAvatar" @click="onClickInputFile">
                                     </div>
@@ -81,7 +80,7 @@
                                 </div>  -->
                                 <div class="form">
                                     <div class="theme-list">
-                                        <div class="theme-item active" v-for="theme in themes" :key="theme._id" @click="selectTheme(theme.name)" :class="'theme-' + theme.name">
+                                        <div class="theme-item active" v-for="theme in themes" :key="theme" @click="selectTheme(theme)" :class="'theme-' + theme">
                                             <div class="theme-header">
                                                 <span class="theme-logo">ALEHUB</span>
                                             </div>
@@ -181,20 +180,10 @@
                 newName: '',
                 dataProcessing: false,
                 newAvatar: '',
-                isError: false,
                 themes: [
-                    {
-                       name: 'main',
-                       isActive: false
-                    },
-                    {
-                       name: 'dark',
-                       isActive: false
-                    },
-                    {
-                       name: 'white',
-                       isActive: false
-                    }
+                       'main',
+                       'dark',
+                       'white'
                 ],
             }
         },
@@ -330,9 +319,16 @@
                 this.$store.dispatch('setAvatar', avatar).then((resp) => {
                     console.log('avatar success');
                     this.newAvatar = resp.data.avatar_path;
+                    this.$toasted.show(this.$t('modals.success.setAvatar'), {
+                        duration: 10000,
+                        type: 'success',
+                    });
                 }).catch(() => {
                     console.log('avatar error');
-                    this.isError = true;
+                    this.$toasted.show(this.$t('modals.error.setAvatar'), {
+                        duration: 10000,
+                        type: 'error'
+                    });
                 })
             }
         },

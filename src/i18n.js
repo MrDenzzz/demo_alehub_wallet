@@ -468,6 +468,7 @@ const messages = {
                 cancelChangeAddr: 'You have failed canceled the email address change',
                 logout: 'An error occurred while logout',
                 changeNameWallet: 'There was an error changing your wallet name',
+                setAvatar: 'Photo not uploaded',
                 checkOffer: "Fill out the OFFER NAME field",
                 checkPrice: "Fill out the PRICE field",
                 checkPriceZero: "You can not set the value of the PRICE field to zero",
@@ -490,6 +491,7 @@ const messages = {
                 changeMail: 'Confirmation of the change of email was sent to this address',
                 changePass: 'You have successfully changed your password',
                 changeName: 'Your name has been successfully changed',
+                setAvatar: 'Photo successfully uploaded',
                 newWallet: {
                     wallet: "Wallet",
                     create: "successful created!",
@@ -1400,6 +1402,7 @@ const messages = {
             }
             ,
             error: {
+                setAvatar: 'Не удалось загрузить фотографию',
                 moreThanZero: 'Транзакция должна быть больше чем 0',
                 moreThanHave:
                     'Вы не можете отправить токенов больше, чем есть у вас в кошельке',
@@ -1471,6 +1474,7 @@ const messages = {
                     'Пароль был успешно изменен',
                 changeName:
                     'Ваше имя было успешно изменено',
+                setAvatar: 'Фотография успешно загружена',
                 newWallet:
                     {
                         wallet: "Кошелек",
