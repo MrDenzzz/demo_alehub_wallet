@@ -2,17 +2,16 @@
     <div class="control" @click="makeFocus">
         <div class="wrap-input">
             <label :for="textareaId">{{ labelValue }}</label>
-            <textarea
-                    :id="textareaId"
-                    :placeholder="placeholder"
-                    @input="autosize()"
-                    @blur="endOfInput()"
-                    @focus="removePlaceholder()"
-                    class="textarea"
-                    ref="textarea"
-                    v-model="value"
-                    name=""
-                    rows="1">
+            <textarea :id="textareaId"
+                      :placeholder="placeholder"
+                      @input="autosize()"
+                      @blur="endOfInput()"
+                      @focus="removePlaceholder()"
+                      class="textarea"
+                      ref="textarea"
+                      v-model="value"
+                      name=""
+                      rows="1">
             </textarea>
         </div>
     </div>
@@ -37,7 +36,7 @@
                 document.getElementById(this.textareaId).focus();
             },
             removePlaceholder: function () {
-                document.getElementById(this.textareaId).placeholder = "";
+                document.getElementById(this.textareaId).placeholder = '';
             },
             addPlaceholder: function () {
                 document.getElementById(this.textareaId).placeholder = this.placeholder;
@@ -92,12 +91,13 @@
                 color #34343e
                 opacity 1
 
-            textarea::-webkit-input-placeholder
+            textarea:
+            :-webkit-input-placeholder
                 opacity 1
                 line-height 1.29
                 font-size 14px
 
-         @media (max-width: 425px)
+        @media (max-width: 425px)
             & .wrap-input
                 & textarea
                     height 60px
