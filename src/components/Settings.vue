@@ -47,8 +47,7 @@
                                         <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
                                             <p>Add photo</p>
                                             <div class="circle">
-                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar" alt="" width="67" height="67" v-if="!newAvatar">
-                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ newAvatar" alt="" width="67" height="67" v-else>
+                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar" alt="" width="67" height="67">
                                             </div>
                                         </label>
                                         <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="setUserAvatar" @click="onClickInputFile">
@@ -179,7 +178,6 @@
                 selectedLanguage: 'English',
                 newName: '',
                 dataProcessing: false,
-                newAvatar: '',
                 themes: [
                        'main',
                        'dark',
@@ -318,7 +316,6 @@
 
                 this.$store.dispatch('setAvatar', avatar).then((resp) => {
                     console.log('avatar success');
-                    this.newAvatar = resp.data.avatar_path;
                     this.$toasted.show(this.$t('modals.success.setAvatar'), {
                         duration: 10000,
                         type: 'success',

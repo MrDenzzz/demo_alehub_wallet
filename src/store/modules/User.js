@@ -365,7 +365,7 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 console.log(resp, 'change avatar')
-                commit('SUCCESS_SET_AVATAR');
+                commit('SUCCESS_SET_AVATAR', resp.data.avatar_path);
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_SET_AVATAR');
@@ -530,8 +530,9 @@ const mutations = {
     REQUEST_SET_AVATAR: (state) => {
         state.setAvatarStatus = 'loading';
     },
-    SUCCESS_SET_AVATAR: (state) => {
+    SUCCESS_SET_AVATAR: (state, avatar_path) => {
         state.setAvatarStatus = 'success';
+        state.avatar = avatar_path;
     },
     ERROR_SET_AVATAR: (state) => {
         state.setAvatarStatus = 'error';
