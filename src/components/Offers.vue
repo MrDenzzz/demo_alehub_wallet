@@ -377,10 +377,6 @@
                     'selectedContractor'
                 ]
             ),
-
-
-
-
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },
@@ -392,8 +388,6 @@
             }
         },
         methods: {
-
-
             calcClass: function (id, opened, folded) {
                 if (!this.filters.find(item => item.id === id) &&
                     typeof opened === 'boolean' && typeof folded === 'boolean') {
@@ -480,154 +474,8 @@
                        this.getCoords(document.getElementById('filter-block')).top + 'px';
             },
 
-            //JS DOC !!!!!!!
 
-            toggleStateFilterContractor: function (opt) {
-                switch (opt) {
-                    case 'ts':
-                        if (!this.tsActive) {
-                            this.activeOption = true;
-                            this.setFilterOffsetTop(opt);
-                            this.isFoldFilter = false;
-                            this.tsActive = 1;
 
-                            if (this.tsExActive === 1) {
-                                this.isFoldFilterTsEx = true;
-                                this.tsExActive = 2;
-                                this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
-                            } else if (this.chActive === 1) {
-                                this.isFoldFilterCh = true;
-                                this.chActive = 2;
-                                this.setFoldQueue('ch', this.isFoldFilterCh);
-                            } else if (this.qaActive === 1) {
-                                this.isFoldFilterQa = true;
-                                this.qaActive = 2;
-                                this.setFoldQueue('qa', this.isFoldFilterQa);
-                            }
-
-                        } else if (this.tsActive === 1) {
-                            this.isFoldFilter = true;
-                            this.isFoldFilterTs = true;
-                            this.setFoldQueue('ts', this.isFoldFilterTs);
-                            this.tsActive = 2;
-                        } else {
-                            this.activeOption = false;
-                            this.isFoldFilter = false;
-                            this.isFoldFilterTs = false;
-                            this.setFoldQueue('ts', this.isFoldFilterTs);
-                            this.setFilterOffsetTop(false);
-                            this.tsActive = 0;
-                        }
-
-                        break;
-                    case 'ts-ex':
-                        if (!this.tsExActive) {
-                            this.activeOption = true;
-                            this.setFilterOffsetTop(opt);
-                            this.isFoldFilter = false;
-                            this.tsExActive = 1;
-
-                            if (this.tsActive === 1) {
-                                this.isFoldFilterTs = true;
-                                this.tsActive = 2;
-                                this.setFoldQueue('ts', this.isFoldFilterTs);
-                            } else if (this.chActive === 1) {
-                                this.isFoldFilterCh = true;
-                                this.chActive = 2;
-                                this.setFoldQueue('ch', this.isFoldFilterCh);
-                            } else if (this.qaActive === 1) {
-                                this.isFoldFilterQa = true;
-                                this.qaActive = 2;
-                                this.setFoldQueue('qa', this.isFoldFilterQa);
-                            }
-
-                        } else if (this.tsExActive === 1) {
-                            this.isFoldFilter = true;
-                            this.isFoldFilterTsEx = true;
-                            this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
-                            this.tsExActive = 2;
-                        } else {
-                            this.activeOption = false;
-                            this.isFoldFilter = false;
-                            this.isFoldFilterTsEx = false;
-                            this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
-                            this.setFilterOffsetTop(false);
-                            this.tsExActive = 0;
-                        }
-                        break;
-                    case 'ch':
-                        if (!this.chActive) {
-                            this.activeOption = true;
-                            this.setFilterOffsetTop(opt);
-                            this.isFoldFilter = false;
-                            this.chActive = 1;
-
-                            if (this.tsActive === 1) {
-                                this.isFoldFilterTs = true;
-                                this.tsActive = 2;
-                                this.setFoldQueue('ts', this.isFoldFilterTs);
-                            } else if (this.tsExActive === 1) {
-                                this.isFoldFilterTsEx = true;
-                                this.tsExActive = 2;
-                                this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
-                            } else if (this.qaActive === 1) {
-                                this.isFoldFilterQa = true;
-                                this.qaActive = 2;
-                                this.setFoldQueue('qa', this.isFoldFilterQa);
-                            }
-
-                        } else if (this.chActive === 1) {
-                            this.isFoldFilter = true;
-                            this.isFoldFilterCh = true;
-                            this.setFoldQueue('ch', this.isFoldFilterCh);
-                            this.chActive = 2;
-                        } else {
-                            this.activeOption = false;
-                            this.isFoldFilter = false;
-                            this.isFoldFilterCh = false;
-                            this.setFoldQueue('ch', this.isFoldFilterCh);
-                            this.setFilterOffsetTop(false);
-                            this.chActive = 0;
-                        }
-                        break;
-                    case 'qa':
-                        if (!this.qaActive) {
-                            this.activeOption = true;
-                            this.setFilterOffsetTop(opt);
-                            this.isFoldFilter = false;
-                            this.qaActive = 1;
-
-                            if (this.tsActive === 1) {
-                                this.isFoldFilterTs = true;
-                                this.tsActive = 2;
-                                this.setFoldQueue('ts', this.isFoldFilterTs);
-                            } else if (this.tsExActive === 1) {
-                                this.isFoldFilterTsEx = true;
-                                this.tsExActive = 2;
-                                this.setFoldQueue('ts-ex', this.isFoldFilterTsEx);
-                            } else if (this.chActive === 1) {
-                                this.isFoldFilterCh = true;
-                                this.chActive = 2;
-                                this.setFoldQueue('ch', this.isFoldFilterCh);
-                            }
-
-                        } else if (this.qaActive === 1) {
-                            this.isFoldFilter = true;
-                            this.isFoldFilterQa = true;
-                            this.setFoldQueue('qa', this.isFoldFilterQa);
-                            this.qaActive = 2;
-                        } else {
-                            this.activeOption = false;
-                            this.isFoldFilter = false;
-                            this.isFoldFilterQa = false;
-                            this.setFoldQueue('qa', this.isFoldFilterQa);
-                            this.setFilterOffsetTop(false);
-                            this.qaActive = 0;
-                        }
-                        break;
-                    default : break;
-                }
-            },
             toggleContractorDialog: function (e, contractor) {
                 // this.openedContractorDialog = !this.openedContractorDialog;
 
@@ -700,86 +548,6 @@
                 this.changeStateButtonFilter(obj.id);
                 current.opened = obj.opened;
                 current.folded = obj.folded;
-            });
-
-            this.$on('onFoldTs', (val) => {
-                this.isFoldFilterTs = val;
-
-                this.activeOption = true;
-                this.setFilterOffsetTop('ts');
-                this.isFoldFilter = false;
-                this.tsActive = 1;
-
-                if (this.tsExActive === 1) {
-                    this.isFoldFilterTsEx = true;
-                    this.tsExActive = 2;
-                } else if (this.chActive === 1) {
-                    this.isFoldFilterCh = true;
-                    this.chActive = 2;
-                } else if (this.qaActive === 1) {
-                    this.isFoldFilterQa = true;
-                    this.qaActive = 2;
-                }
-            });
-
-            this.$on('onFoldTsEx', (val) => {
-                this.isFoldFilterTsEx = val;
-
-                this.activeOption = true;
-                this.setFilterOffsetTop('ts-ex');
-                this.isFoldFilter = false;
-                this.tsExActive = 1;
-
-                if (this.tsActive === 1) {
-                    this.isFoldFilterTs = true;
-                    this.tsActive = 2;
-                } else if (this.chActive === 1) {
-                    this.isFoldFilterCh = true;
-                    this.chActive = 2;
-                } else if (this.qaActive === 1) {
-                    this.isFoldFilterQa = true;
-                    this.qaActive = 2;
-                }
-            });
-
-            this.$on('onFoldCh', (val) => {
-                this.isFoldFilterCh = val;
-
-                this.activeOption = true;
-                this.setFilterOffsetTop('ch');
-                this.isFoldFilter = false;
-                this.chActive = 1;
-
-                if (this.tsActive === 1) {
-                    this.isFoldFilterTs = true;
-                    this.tsActive = 2;
-                } else if (this.tsExActive === 1) {
-                    this.isFoldFilterTsEx = true;
-                    this.tsExActive = 2;
-                } else if (this.qaActive === 1) {
-                    this.isFoldFilterQa = true;
-                    this.qaActive = 2;
-                }
-            });
-
-            this.$on('onFoldQa', (val) => {
-                this.isFoldFilterQa = val;
-
-                this.activeOption = true;
-                this.setFilterOffsetTop('qa');
-                this.isFoldFilter = false;
-                this.qaActive = 1;
-
-                if (this.tsActive === 1) {
-                    this.isFoldFilterTs = true;
-                    this.tsActive = 2;
-                } else if (this.tsExActive === 1) {
-                    this.isFoldFilterTsEx = true;
-                    this.tsExActive = 2;
-                } else if (this.chActive === 1) {
-                    this.isFoldFilterCh = true;
-                    this.chActive = 2;
-                }
             });
         }
     }
