@@ -7,6 +7,7 @@ const state = {
     name: '',
     email: '',
     password: '',
+    avatar: '',
     lastUpdatedPassword: '',
     token: localStorage.getItem(sha256('user-token')) || '',
     twoAuth: '',
@@ -25,6 +26,7 @@ const state = {
 
     changeEmailStatus: '',
     changePasswordStatus: '',
+    setAvatarStatus: '',
 
     changeTwoAuthStatus: '',
 
@@ -350,6 +352,27 @@ const actions = {
             });
         });
     },
+    setAvatar: ({commit, dispatch}, avatarData) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_SET_AVATAR');
+            let host = 'https://ale-demo-4550.nodechef.com/users/set_avatar';
+            axios({
+                url: host,
+                data: avatarData,
+                headers: {
+                    'Authorization': axios.defaults.headers.common['Authorization']
+                },
+                method: 'POST'
+            }).then(resp => {
+                console.log(resp, 'change avatar')
+                commit('SUCCESS_SET_AVATAR', resp.data.avatar_path);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_SET_AVATAR');
+                reject(err);
+            })
+        })
+    },
     resetAuthStep: ({commit}) => {
         return new Promise((resolve) => {
             commit('SUCCESS_RESET_AUTH_STEP');
@@ -409,6 +432,7 @@ const mutations = {
     SUCCESS_USER: (state, user) => {
         state.name = user.name;
         state.email = user.email;
+        state.avatar = user.avatar;
         state.twoAuth = user.isTwoAuth;
         state.lastUpdatedPassword = user.lastUpdatedPassword;
         state.haveTransactions = user.haveTransactions;
@@ -503,6 +527,16 @@ const mutations = {
     ERROR_CHANGE_PASSWORD: (state) => {
         state.changePasswordStatus = 'error';
     },
+    REQUEST_SET_AVATAR: (state) => {
+        state.setAvatarStatus = 'loading';
+    },
+    SUCCESS_SET_AVATAR: (state, avatar_path) => {
+        state.setAvatarStatus = 'success';
+        state.avatar = avatar_path;
+    },
+    ERROR_SET_AVATAR: (state) => {
+        state.setAvatarStatus = 'error';
+    },
     SUCCESS_RESET_AUTH_STEP: (state) => {
         state.authStep = 0;
     },
@@ -518,6 +552,7 @@ const getters = {
     userName: state => state.name,
     userEmail: state => state.email,
     userPassword: state => state.password,
+    userAvatar: state => state.avatar,
     userStatus: state => state.userStatus,
     userTwoAuth: state => state.twoAuth,
     userHaveWallets: state => state.haveWallets,

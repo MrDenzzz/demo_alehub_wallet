@@ -42,27 +42,17 @@
                                     </div>
                                 </div>
 
-                                <!--<div class="control">-->
-                                    <!--<div class="wrap-input">-->
-                                        <!--<label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">-->
-                                            <!--<p>Add photo</p>-->
-                                            <!--<div class="circle">-->
-                                                <!--<img :src="curAvatar" alt="" width="67" height="67">-->
-                                            <!--</div>-->
-                                        <!--</label>-->
-                                        <!--<input type="file" -->
-                                               <!--id="upload-avatar"-->
-                                               <!--name="upload-avatar" -->
-                                               <!--ref="uploadAvatar" -->
-                                               <!--@change="showAvatar"-->
-                                               <!--@click="onClickInputFile">-->
-                                        <!--<button class="btn btn-yellow" -->
-                                                <!--v-if="showButton" -->
-                                                <!--@click="sendUserAvatar">-->
-                                            <!--Save-->
-                                        <!--</button>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                                <div class="control">
+                                    <div class="wrap-input">
+                                        <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
+                                            <p>Add photo</p>
+                                            <div class="circle">
+                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar" alt="" width="67" height="67">
+                                            </div>
+                                        </label>
+                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="setUserAvatar" @click="onClickInputFile">
+                                    </div>
+                                </div>
 
                                 <div class="control border-none"
                                      @click.stop="changeLanguage">
@@ -77,7 +67,7 @@
 
                             <panel-heading :title="$t('pages.settings.theme')"
                                            :isTop="false"/>
-                            <div class="group-settings">
+                            <!-- <div class="group-settings">
                                 <div class="form select-main" @click="selectTheme('main')">
                                     <img src="../../static/img/logo_main.svg" alt="">
                                 </div>
@@ -86,8 +76,30 @@
                                 </div>
                                 <div class="form select-white" @click="selectTheme('white')">
                                     <img src="../../static/img/logo_white.svg" alt="">
+                                </div>  -->
+                                <div class="form">
+                                    <div class="theme-list">
+                                        <div class="theme-item active" v-for="theme in themes" :key="theme" @click="selectTheme(theme)" :class="'theme-' + theme">
+                                            <div class="theme-header">
+                                                <span class="theme-logo">ALEHUB</span>
+                                            </div>
+                                            <div style="display: flex; height: 100%;">
+                                                <div class="theme-menu">
+                                                    <div class="menu-item"></div>
+                                                </div>
+                                                <div class="theme-main">
+                                                    <div class="theme-btn">
+                                                        <div class="button button-first"></div>
+                                                        <div class="button button-second"></div>
+                                                    </div>
+                                                    <div class="theme-block"></div>
+                                                    <div class="theme-line recieved"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            <!-- </div> -->
 
                             <panel-heading :title="$t('pages.settings.security')"/>
                             <div class="form">
@@ -166,8 +178,11 @@
                 selectedLanguage: 'English',
                 newName: '',
                 dataProcessing: false,
-                curAvatar: '../../static/img/avatar.svg',
-                showButton: false
+                themes: [
+                       'main',
+                       'dark',
+                       'white'
+                ],
             }
         },
         watch: {},
@@ -177,6 +192,7 @@
                 'userStatus',
                 'userName',
                 'userEmail',
+                'userAvatar',
                 'userTwoAuth',
                 'userLastUpdatedPassword',
                 'twoAuthStatus'
@@ -294,10 +310,23 @@
             onClickInputFile: function () {
                 this.$refs.uploadAvatar.click();
             },
-            showAvatar: function () {
-                const avatar = document.getElementById('upload-avatar');
-                this.curAvatar = window.URL.createObjectURL(avatar.files[0]);
-                this.showButton = true;
+            setUserAvatar: function () {
+                let avatar = new FormData();
+                avatar.append('avatar', document.getElementById('upload-avatar').files[0]);
+
+                this.$store.dispatch('setAvatar', avatar).then((resp) => {
+                    console.log('avatar success');
+                    this.$toasted.show(this.$t('modals.success.setAvatar'), {
+                        duration: 10000,
+                        type: 'success',
+                    });
+                }).catch(() => {
+                    console.log('avatar error');
+                    this.$toasted.show(this.$t('modals.error.setAvatar'), {
+                        duration: 10000,
+                        type: 'error'
+                    });
+                })
             }
         },
         mounted() {
@@ -350,6 +379,11 @@
                     opacity 0
                     position absolute
 
+                .error
+                    color #b10303
+                    text-transform none 
+                    font-weight 500
+
     .form .deletelink
         margin-top -8px
         padding-top 0
@@ -360,6 +394,154 @@
     .form .deletelink
         margin-top -8px
         padding-top 0px
+
+    .theme-list
+        margin-left 16px 
+        margin-right 16px 
+        margin-top 22px 
+        margin-bottom 22px 
+        display flex
+
+        @media(max-width 790px)
+            flex-wrap wrap
+
+        .theme-item
+            background-color #f7f7f7
+            width 200px 
+            height 120px 
+            margin-right 40px 
+            border 1px solid #d1d1d1 
+            display flex 
+            flex-direction column
+            opacity 1
+
+            @media(max-width 790px)
+                margin-bottom 24px
+        
+            &:last-child
+                margin-right 0
+
+            &:nth-child(2)
+                @media(max-width 600px)
+                    margin-right 0
+
+                @media(max-width 550px)
+                    margin-right 40px
+
+            &.theme-main
+                .theme-menu
+                    background-color #474b4b
+
+                .theme-btn
+                    .button-first
+                        background-color #ffd24f
+
+                    .button-second
+                        background-color #e6e7e7
+
+                .theme-line
+                    &.recieved
+                        background-color #f9e095
+
+            &.theme-dark
+                &.theme-item
+                    background-color #4a4e65
+
+                .theme-menu
+                    background-color #404455
+
+                    .menu-item
+                        background-color #4a4e65
+
+                .theme-btn
+                    .button-first
+                        background-color #28388e
+
+                    .button-second
+                        background-color #20232a
+
+                .theme-line, .theme-block
+                    background-color #393a4a
+
+                    &.recieved
+                        background-color #5b5f73
+
+            &.theme-white
+                .theme-menu
+                    background-color #aaaec1
+
+                .theme-header
+                    background-color #eff0f3
+
+                .theme-logo
+                    color #43414a
+
+                .theme-btn
+                    .button-first
+                        background-color #3c4af0
+
+                    .button-second
+                        background-color #adb1c3
+
+                .theme-line, .theme-block
+                    background-color #eff0f3
+
+                    &.recieved
+                        background-color #fff
+                        
+            .theme-header
+                height 20px
+                width 100% 
+                background-color #0d1717 
+                display flex 
+                justify-content center 
+                align-items center
+
+            .theme-logo
+                font-family Fairview
+                color #fcfcfc 
+                font-size 14px
+
+            .theme-menu
+                height 100% 
+                width 50px
+                position relative
+
+                .menu-item
+                    position absolute
+                    background-color #f7f7f7
+                    height 15px 
+                    width 48px
+                    top 15px
+
+            .theme-main
+                margin 5px
+
+            .theme-btn
+                display flex
+                justify-content flex-end
+                margin-bottom 5px
+                margin-top 3px
+
+                .button
+                    width 30px
+                    height 10px
+                    background-color #e6e7e7
+
+                    &:first-child
+                        margin-right 5px
+
+            .theme-block
+                width 140px
+                height 20px
+                background-color #f0f0f0
+                margin-bottom 10px
+
+            .theme-line
+                width 140px
+                height 10px
+                background-color #f0f0f0
+                margin-bottom 12px
 
     @media (max-width: 1024px)
         .main
