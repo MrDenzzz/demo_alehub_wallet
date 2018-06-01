@@ -572,6 +572,9 @@ const messages = {
                 special: {
                     title: 'Verified by me'
                 }
+            },
+            buttons: {
+                clear: 'Clear'
             }
         },
         countries: [
@@ -1563,6 +1566,9 @@ const messages = {
                     title: 'Проверено мной'
                 }
             },
+            buttons: {
+                clear: 'Очистить'
+            }
         },
         countries: [
             {name: 'Афганистан', code: 'AF'},

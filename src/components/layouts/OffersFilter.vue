@@ -1,9 +1,9 @@
 <template>
-    <!--v-if="filterType"-->
     <div class="dialog"
          :style="{ 'top': offsetTop }">
 
-        <button type="button" class="fold" @click="toFold">
+        <button type="button" class="fold"
+                @click="toFold">
             <img src="../../../static/img/arrow-down-dark.svg" alt="to fold">
         </button>
 
@@ -33,7 +33,7 @@
             <button type="button"
                     class="buttons btn btn-yellow"
                     @click="clear">
-                Clear
+                {{ $t('offersFilter.buttons.clear') }}
             </button>
 
         </form>
@@ -59,28 +59,26 @@
             InputCertificationList
         },
         props: {
-            // filterType: {
-            //     type: [Boolean, String],
-            //     required: true
-            // },
+            id: {
+                type: String,
+                required: true
+            },
             offsetTop: {
                 type: [Boolean, String],
                 required: true
             }
         },
         watch: {
-            offsetTop: function (val) {
-                console.log(val, 'offsetTop val');
-            }
+
         },
         data() {
             return {
-                qaIsActive: true
+
             }
         },
         methods: {
             toFold: function () {
-                this.$parent.$emit('onFold', true);
+                this.$parent.$emit('onFold', {id: this.id, folded: true, opened: false});
             },
             clear: function () {
 

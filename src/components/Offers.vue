@@ -72,8 +72,8 @@
 
                                 <offers-filter v-for="item in filters"
                                                v-if="item.opened"
+                                               :id="item.id"
                                                :offset-top="filterOffsetTop(item.id)"/>
-
 
                                 <offers-filter-folded v-for="item in filters"
                                                       v-if="item.folded"
@@ -695,8 +695,11 @@
             }
         },
         mounted() {
-            this.$on('onFold', (val) => {
-                this.isFoldFilter = val;
+            this.$on('onFold', (obj) => {
+                let current = this.currentFilter(obj.id);
+                current.folded = obj.folded;
+                current.opened = obj.opened;
+                this.changeFoldQueue(obj.id);
             });
 
             this.$on('onFoldTs', (val) => {
