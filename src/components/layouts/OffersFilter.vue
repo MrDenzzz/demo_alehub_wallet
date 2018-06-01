@@ -87,10 +87,10 @@
 
 <style lang="stylus" scoped>
     .fade-bottom-enter-active
-        transition all .3s ease-out
+        transition all .2s ease-out
 
     .fade-bottom-leave-active
-        transition all .3s ease-in
+        transition all .2s ease-in
 
     .fade-bottom-enter, .fade-bottom-leave-to
         transform translateY(30px)

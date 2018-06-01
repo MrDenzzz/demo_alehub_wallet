@@ -1,8 +1,89 @@
 import axios from 'axios';
 
 const state = {
+    contractors: [
+        {
+            id: 1,
+            initials: 'VD',
+            name: 'Vova Dmitrov',
+            src: '../../static/img/logo/telegram.png',
+            position: 'TS execution',
+            rating: 8.1,
+            sinceDate: 1487967146000,
+            webAddress: '',
+            githubAddress: '',
+            countOfProject: 1328,
+            avgCostPerProject: 7500,
+            type: 'TS', //rename to ts
+            keys: [
+                '../../static/img/keys/ts-key.svg'
+            ]
+        },
+        {
+            id: 2,
+            initials: 'DV',
+            name: 'Deus Virus',
+            src: '../../static/img/logo/ubuntu.png',
+            position: 'Executor',
+            rating: 9.2,
+            sinceDate: 1487927146000,
+            webAddress: '',
+            githubAddress: '',
+            countOfProject: 5748,
+            avgCostPerProject: 4000,
+            type: 'TS execution', //rename to ts-ex
+            keys: [
+                '../../static/img/keys/ts-exec-key.svg'
+            ]
+        },
+        {
+            id: 3,
+            initials: 'NG',
+            name: 'Nicola Glumac',
+            src: false,
+            type: 'Check', //rename to ch
+            keys: [
+                '../../static/img/keys/check-key.svg',
+                '../../static/img/keys/check-key.svg'
+            ]
+        },
+        {
+            id: 4,
+            initials: 'RC',
+            name: 'Rift & Co',
+            src: '../../static/img/logo/ubuntu.png',
+            type: 'Quality Assurance', //rename to qa
+            keys: [
+                '../../static/img/keys/qa-key.svg',
+                '../../static/img/keys/qa-key.svg'
+            ]
+        },
+        {
+            id: 5,
+            initials: 'QB',
+            name: 'Quality Boy',
+            src: '../../static/img/logo/ubuntu.png',
+            type: 'TS',
+            keys: [
+                '../../static/img/keys/ts-key.svg'
+            ]
+        },
+        {
+            id: 6,
+            initials: 'GA',
+            name: 'Galvadon',
+            src: '../../static/img/logo/ubuntu.png',
+            type: 'TS execution',
+            keys: [
+                '../../static/img/keys/ts-exec-key.svg'
+            ]
+        },
+    ],
+
     offers: [
         {
+            id: 1,
+            contractorsId: [1, 2, 3, 4],
             title: 'CryptoStore',
             company: 'Serokell',
             to: '/offer',
@@ -24,7 +105,7 @@ const state = {
                     githubAddress: '',
                     countOfProject: 1328,
                     avgCostPerProject: 7500,
-                    type: 'TS execution',
+                    type: 'TS',
                     keys: [
                         '../../static/img/keys/ts-key.svg'
                     ]
@@ -71,6 +152,8 @@ const state = {
             ]
         },
         {
+            id: 2,
+            contractorsId: [5, 6, 4],
             title: 'Alehub',
             company: 'Effective Energy',
             to: '/offer',
@@ -112,6 +195,8 @@ const state = {
             ]
         },
         {
+            id: 3,
+            contractorsId: [4],
             title: 'Virtual reality pluggin',
             company: 'Nike',
             to: '/offer',
@@ -131,6 +216,8 @@ const state = {
             ]
         },
         {
+            id: 4,
+            contractorsId: [4],
             title: 'Virtual reality pluggin',
             company: 'Nike',
             to: '/offer',
@@ -150,6 +237,8 @@ const state = {
             ]
         },
         {
+            id: 5,
+            contractorsId: [1, 2, 3, 4],
             title: 'CryptoStore',
             company: 'Serokell',
             to: '/offer',
@@ -204,6 +293,8 @@ const state = {
             ]
         },
         {
+            id: 6,
+            contractorsId: [5, 6, 4],
             title: 'Alehub',
             company: 'Effective Energy',
             to: '/offer',
@@ -245,6 +336,8 @@ const state = {
             ]
         },
         {
+            id: 7,
+            contractorsId: [4],
             title: 'Virtual reality pluggin',
             company: 'Nike',
             to: '/offer',
@@ -264,6 +357,38 @@ const state = {
             ]
         }
     ],
+
+    filtersCondition: [
+        {
+            id: 'ts',
+            title: 'TS',
+            opened: false,
+            folded: false,
+            queue: 0
+        },
+        {
+            id: 'ts-ex',
+            title: 'EX',
+            opened: false,
+            folded: false,
+            queue: 0
+        },
+        {
+            id: 'ch',
+            title: 'CH',
+            opened: false,
+            folded: false,
+            queue: 0
+        },
+        {
+            id: 'qa',
+            title: 'QA',
+            opened: false,
+            folded: false,
+            queue: 0
+        }
+    ],
+
     selectedContractor: {
         initials: 'JD',
         name: 'John Doe',
@@ -287,17 +412,28 @@ const actions = {
             resolve('success select contractor');
         });
     },
+    changeFiltersCondition: ({commit}, filters) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
+            resolve('success change filters condition');
+        });
+    },
 };
 
 const mutations = {
     SUCCESS_SELECT_CONTRACTOR: (state, contractor) => {
         state.selectedContractor = contractor;
-    }
+    },
+    SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
+        state.filtersCondition = filters;
+    },
 };
 
 const getters = {
     selectedContractor: state => state.selectedContractor,
-    offers: state => state.offers
+    offers: state => state.offers,
+    contractors: state => state.contractors,
+    filtersCondition: state => state.filtersCondition
 };
 
 export default {

@@ -50,23 +50,17 @@
                                         :inline="true"/>
                         </div>
                         <div class="dividers-container">
-                            <div class="divider horizontal" v-for="n in 8" :key="n"></div>
+                            <div class="divider horizontal"
+                                 v-for="n in 8" :key="n">
+                            </div>
                         </div>
                         <div class="circle circle-big circle-yellow">
-                            <img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
+                            <img src="../../static/img/ale-logo.svg"
+                                 alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
                                 <div class="filters-block" id="filter-block">
 
-                                    <button type="button"
-                                            class="circle circle-gray circle-filter"
-                                            v-for="item in filters"
-                                            :id="item.id"
-                                            :class="calcClass(item.id, item.opened, item.folded)"
-                                            @click="changeStateButtonFilter(item.id)">
-                                        <span class="title">
-                                            {{ item.title }}
-                                        </span>
-                                    </button>
+                                    <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
                                 </div>
 
@@ -75,14 +69,12 @@
                                                :id="item.id"
                                                :offset-top="filterOffsetTop(item.id)"/>
 
-
                                 <offers-filter-folded v-for="item in filters"
                                                       v-if="item.folded"
                                                       :key="item.id"
                                                       :id="item.id"
                                                       :title="item.title"
                                                       :queue="item.queue"/>
-
                             </div>
                         </div>
                     </div>
@@ -142,10 +134,7 @@
                                         <div class="circle"
                                              :class="checkContractorType(contractor.type)"
                                              @click="toggleContractorDialog($event, contractor)">
-                                            <img v-if="contractor.src"
-                                                 :src="contractor.src"
-                                                 :alt="contractor.title">
-                                            <span v-else class="initials">
+                                            <span class="initials">
                                                 {{ contractor.initials }}
                                             </span>
                                         </div>
@@ -209,6 +198,7 @@
     import OffersFilter from './layouts/OffersFilter';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     import OffersFilterFolded from './layouts/OffersFilterFolded';
+    import GroupFilterButtons from './layouts/GroupFilterButtons';
 
     import Datepicker from 'vuejs-datepicker';
 
@@ -222,6 +212,7 @@
             OffersFilter,
             OffersContractorDialog,
             OffersFilterFolded,
+            GroupFilterButtons,
             Datepicker
         },
         watch: {
@@ -249,47 +240,22 @@
         data() {
             return {
 
-                filters: [
-                    {
-                        id: 'ts',
-                        title: 'TS',
-                        opened: false,
-                        folded: false,
-                        queue: 0
-                    },
-                    {
-                        id: 'ts-ex',
-                        title: 'EX',
-                        opened: false,
-                        folded: false,
-                        queue: 0
-                    },
-                    {
-                        id: 'ch',
-                        title: 'CH',
-                        opened: false,
-                        folded: false,
-                        queue: 0
-                    },
-                    {
-                        id: 'qa',
-                        title: 'QA',
-                        opened: false,
-                        folded: false,
-                        queue: 0
-                    }
-                ],
+                changedFilterElementOptions: {},
+
+
+                filters: [],
 
                 openedFromDatepicker: false,
                 openedToDatepicker: false,
                 offersDateFrom: 0,
                 offersDateTo: 0,
+
                 openedContractorDialog: false,
+
                 clickCoordinates: {
                     top: false,
                     left: false
                 },
-                qaIsActive: true,
 
                 statusIcons: {
                     arrows: {
@@ -304,14 +270,6 @@
                         ongoing: '../../static/img/icons-for-circle/ongoing.svg',
                         timelag: '../../static/img/icons-for-circle/timelag.svg'
                     }
-                },
-                infoHeader: {
-                    startDate: '23.02.2018',
-                    finalDate: '01.05.2018',
-                    name: 'Rift',
-                    rating: '2.5-9.8',
-                    certification: 'DIN',
-                    verified: "Doesn't matter"
                 },
 
                 rightMenu: {
@@ -335,7 +293,9 @@
             ...mapGetters(
                 [
                     'offers',
-                    'selectedContractor'
+                    'selectedContractor',
+                    'contractors',
+                    'filtersCondition'
                 ]
             ),
             selectedTheme: function () {
@@ -401,7 +361,7 @@
                 }
             },
 
-            foldAnotherButtonFilter: function () {
+            foldAnotherFilter: function () {
                 this.filters.forEach(item => {
                     if (item.opened) {
                         item.opened = false;
@@ -513,16 +473,20 @@
                 }
             }
         },
+        created() {
+            this.filters = this.filtersCondition;
+        },
         mounted() {
             this.$on('onFold', (obj) => {
-
-                console.log('click working');
-
                 let current = this.currentFilter(obj.id);
                 this.changeStateButtonFilter(obj.id);
-                this.foldAnotherButtonFilter();
+                this.foldAnotherFilter();
                 current.opened = obj.opened;
                 current.folded = obj.folded;
+
+
+                this.changedFilterElementOptions = obj;
+
             });
         }
     }
@@ -617,8 +581,9 @@
                         position relative
                         display flex
                         flex-direction column
-                        height 192px
                         justify-content space-between
+                        align-items center
+                        height 192px
 
                         &:before
                             content ""
@@ -1011,15 +976,6 @@
                                 @media (max-width 860px)
                                     font-size 10px
 
-    .circle-filter
-        cursor pointer
-
-        &:active
-            -webkit-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
-            -moz-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
-            box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
-            transform scale(0.95)
-
     .circle
         width 36px
         min-width 36px
@@ -1053,106 +1009,6 @@
         &.circle-yellow
             background-image linear-gradient(to right, #ffe082, #ffd24f)
             box-shadow 0 0 32px 0 rgba(0, 0, 0, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.2)
-
-        .ts, .ts-ex, .ch, .qa
-            background-color #a6aaae
-            -webkit-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
-            -moz-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
-            box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
-
-        &.ts
-            &:hover
-                background-color rgba(182, 60, 44, .4)
-
-        &.ts-ex
-            &:hover
-                background-color rgba(3, 145, 166, .4)
-
-        &.ch
-            &:hover
-                background-color rgba(224, 154, 0, .4)
-
-        &.qa
-            &:hover
-                background-color rgba(126, 32, 192, .4)
-
-        .ts__active, .ts-ex__active, .ch__active, .qa__active,
-        .ts__active-fold, .ts-ex__active-fold, .ch__active-fold, .qa__active-fold
-            -webkit-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
-            -moz-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
-            box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
-
-        .ts__active-fold
-            background linear-gradient(
-                    to bottom,
-                    #b63c2c,
-                    #b63c2c 50%,
-                    #fff 50%,
-                    #b63c2c 100%,
-                    #fff 100%,
-                    #fff
-            )
-            background-size 100% 3px
-
-        .ts__active-fold
-            background linear-gradient(
-                    to bottom,
-                    #b63c2c,
-                    #b63c2c 50%,
-                    #fff 50%,
-                    #b63c2c 100%,
-                    #fff 100%,
-                    #fff
-            )
-            background-size 100% 3px
-
-        .ts-ex__active-fold
-            background linear-gradient(
-                    to bottom,
-                    #0391a6,
-                    #0391a6 50%,
-                    #fff 50%,
-                    #0391a6 100%,
-                    #fff 100%,
-                    #fff
-            )
-            background-size 100% 3px
-
-        .ch__active-fold
-            background linear-gradient(
-                    to bottom,
-                    #e09a00,
-                    #e09a00 50%,
-                    #fff 50%,
-                    #e09a00 100%,
-                    #fff 100%,
-                    #fff
-            )
-            background-size 100% 3px
-
-        .qa__active-fold
-            background linear-gradient(
-                    to bottom,
-                    #7e20c0,
-                    #7e20c0 50%,
-                    #fff 50%,
-                    #7e20c0 100%,
-                    #fff 100%,
-                    #fff
-            )
-            background-size 100% 3px
-
-        &.ts__active
-            background-color #b63c2c
-
-        &.ts-ex__active
-            background-color #0391a6
-
-        &.ch__active
-            background-color #e09a00
-
-        &.qa__active
-            background-color #7e20c0
 
         &.circle-completed
             background-image unset
