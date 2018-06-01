@@ -448,24 +448,27 @@
                 &.theme-item
                     background-color #4a4e65
 
+                .theme-header
+                    background-color #3a3a4b
+
                 .theme-menu
-                    background-color #404455
+                    background-color #464657
 
                     .menu-item
                         background-color #4a4e65
 
                 .theme-btn
                     .button-first
-                        background-color #28388e
+                        background-color rgba(222, 223, 223, 0.2)
 
                     .button-second
-                        background-color #20232a
+                        background-color #2c2c42
 
                 .theme-line, .theme-block
-                    background-color #393a4a
+                    background-color #3f435d
 
                     &.recieved
-                        background-color #5b5f73
+                        background-color rgba(222, 223, 223, 0.1)
 
             &.theme-white
                 .theme-menu
