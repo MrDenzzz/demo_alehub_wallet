@@ -58,11 +58,8 @@
                             <img src="../../static/img/ale-logo.svg"
                                  alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
-                                <div class="filters-block" id="filter-block">
 
-                                    <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
-
-                                </div>
+                                <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
                                 <offers-filter v-for="item in filters"
                                                v-if="item.opened"
@@ -223,19 +220,12 @@
                 console.log(val, 'offersDateTo');
             },
 
-
-            isFoldFilterTs: function (val) {
-                console.log(val, 'isFoldFilterTs');
-            },
-            isFoldFilterTsEx: function (val) {
-                console.log(val, 'isFoldFilterTsEx');
-            },
-            isFoldFilterCh: function (val) {
-                console.log(val, 'isFoldFilterCh');
-            },
-            isFoldFilterQa: function (val) {
-                console.log(val, 'isFoldFilterQa');
-            },
+            filters: {
+                handler: function (filter) {
+                    // console.log(filter, 'filters');
+                },
+                deep: true
+            }
         },
         data() {
             return {
@@ -309,83 +299,6 @@
             }
         },
         methods: {
-            calcClass: function (id, opened, folded) {
-                if (!this.filters.find(item => item.id === id) &&
-                    typeof opened === 'boolean' && typeof folded === 'boolean') {
-                    console.error('Wrong arguments value');
-                    return false;
-                }
-
-                if (!opened && !folded)
-                    return id;
-                else if (opened && !folded)
-                    return id + '__active';
-                else if (!opened && folded)
-                    return id + '__active-fold';
-
-                console.error('Missing IF statement in calcClass');
-                return false;
-            },
-
-            currentFilter: function (id) {
-                return this.filters.find(item => item.id === id);
-            },
-
-            setCorrectStateOtherButtonFilter: function (id, opened, folded) {
-                let others = this.filters.filter(item => item.id !== id);
-
-                others.forEach(item => {
-                     if (opened && !folded) {
-                         if (item.opened) {
-                             item.opened = false;
-                             item.folded = true;
-                             this.changeFoldQueue(item.id);
-                         }
-                     }
-                });
-            },
-
-            changeStateButtonFilter: function (id) {
-                let current = this.currentFilter(id);
-
-                if (!current.opened && !current.folded) {
-                    current.opened = true;
-                    this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
-                } else if (current.opened && !current.folded) {
-                    current.opened = false;
-                    current.folded = true;
-                    this.changeFoldQueue(id);
-                }  else if (!current.opened && current.folded) {
-                    current.folded = false;
-                    this.changeFoldQueue(id);
-                }
-            },
-
-            foldAnotherFilter: function () {
-                this.filters.forEach(item => {
-                    if (item.opened) {
-                        item.opened = false;
-                        item.folded = true;
-                        this.changeFoldQueue(item.id);
-                    }
-                });
-            },
-
-            changeFoldQueue: function (id) {
-                let current = this.currentFilter(id);
-
-                if (current.folded) {
-                    let max = Math.max.apply(Math, this.filters.map(item => item.queue));
-                    current.queue = max + 1;
-                } else {
-                    this.filters.forEach(item => {
-                        if (item.queue > current.queue)
-                            item.queue -= 1;
-                    });
-                    current.queue = 0;
-                }
-            },
-
             getCoords: function (elem) {
                 if (!elem)
                     return false;
@@ -402,10 +315,8 @@
                 }
 
                 return this.getCoords(document.getElementById(id)).top -
-                       this.getCoords(document.getElementById('filter-block')).top + 'px';
+                       this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
             },
-
-
 
             toggleContractorDialog: function (e, contractor) {
                 // this.openedContractorDialog = !this.openedContractorDialog;
@@ -478,13 +389,6 @@
         },
         mounted() {
             this.$on('onFold', (obj) => {
-                let current = this.currentFilter(obj.id);
-                this.changeStateButtonFilter(obj.id);
-                this.foldAnotherFilter();
-                current.opened = obj.opened;
-                current.folded = obj.folded;
-
-
                 this.changedFilterElementOptions = obj;
 
             });

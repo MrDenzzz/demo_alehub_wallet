@@ -1,5 +1,5 @@
 <template>
-    <div class="group-filter-buttons">
+    <div class="group-filter-buttons" id="group-filter-buttons">
         <button type="button"
                 class="circle circle-gray circle-filter"
                 v-for="item in filters"
@@ -27,6 +27,16 @@
         data() {
             return {
                 filters: [],
+            }
+        },
+        watch: {
+            filterElementOptions: function (opt) {
+                this.changeStateButtonFilter(opt.id);
+                this.foldAnotherFilter();
+                let current = this.currentFilter(opt.id);
+                current.opened = opt.opened;
+                current.folded = opt.folded;
+                this.dispatchChangeFilter();
             }
         },
         computed: {
@@ -93,26 +103,31 @@
                     }
                 });
             },
+            dispatchChangeFilter: function () {
+                this.$store.dispatch('changeFiltersCondition',
+                    this.filters
+                ).then((resp) => {
+                    // console.log(resp);
+                }).catch(() => {
+                    console.log('error change filters condition');
+                });
+            },
             changeStateButtonFilter: function (id) {
                 let current = this.currentFilter(id);
 
                 if (!current.opened && !current.folded) {
                     current.opened = true;
                     this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
-                    this.$store.dispatch('changeFiltersCondition',
-                        this.filters
-                    ).then((resp) => {
-                        console.log(resp);
-                    }).catch(() => {
-                        console.log('error change filters condition');
-                    });
+                    this.dispatchChangeFilter();
                 } else if (current.opened && !current.folded) {
                     current.opened = false;
                     current.folded = true;
                     this.changeFoldQueue(id);
+                    this.dispatchChangeFilter();
                 }  else if (!current.opened && current.folded) {
                     current.folded = false;
                     this.changeFoldQueue(id);
+                    this.dispatchChangeFilter();
                 }
             },
         },
@@ -124,7 +139,7 @@
 
 <style lang="stylus" scoped>
     .group-filter-buttons
-        height 100%
+        height 192px
         display flex
         flex-direction column
         align-items center

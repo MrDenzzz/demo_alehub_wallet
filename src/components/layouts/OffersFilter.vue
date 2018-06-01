@@ -5,7 +5,8 @@
 
             <button type="button" class="fold"
                     @click="toFold">
-                <img src="../../../static/img/arrow-down-dark.svg" alt="to fold">
+                <img src="../../../static/img/arrow-down-dark.svg"
+                     alt="to fold">
             </button>
 
             <form>
