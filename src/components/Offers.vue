@@ -440,6 +440,16 @@
                 }
             },
 
+            foldAnotherButtonFilter: function () {
+                this.filters.forEach(item => {
+                    if (item.opened) {
+                        item.opened = false;
+                        item.folded = true;
+                        this.changeFoldQueue(item.id);
+                    }
+                });
+            },
+
             changeFoldQueue: function (id) {
                 let current = this.currentFilter(id);
 
@@ -546,6 +556,7 @@
             this.$on('onFold', (obj) => {
                 let current = this.currentFilter(obj.id);
                 this.changeStateButtonFilter(obj.id);
+                this.foldAnotherButtonFilter();
                 current.opened = obj.opened;
                 current.folded = obj.folded;
             });
