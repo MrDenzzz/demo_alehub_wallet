@@ -1,7 +1,7 @@
 <template>
     <div class="top">
         <div class="searchControl" @click="makeFocusSearch()">
-            <img src="../../assets/img/search-ic.svg" width="16" height="16">
+            <img :src="getIcon('search')" width="16" height="16">
             <input
                     type="text"
                     id="search-transactions"
@@ -43,6 +43,11 @@
                 searchCurrentText: ''
             }
         },
+        computed: {
+            selectedTheme() {
+                return this.$store.state.Themes.theme;
+            }
+        },
         methods: {
             makeFocusSearch: function () {
                 document.getElementById('search-transactions').focus();
@@ -58,6 +63,14 @@
                 });
 
             },
+            getIcon: function (name) {
+                if (this.selectedTheme === 'dark')
+                    return require(`../../assets/img/${name}_dark.svg`);
+                else if (this.selectedTheme === 'white')
+                    return require(`../../assets/img/${name}_white.svg`);
+
+                return require(`../../assets/img/${name}.svg`);
+            }
         }
     }
 </script>

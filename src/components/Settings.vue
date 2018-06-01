@@ -414,6 +414,7 @@
             display flex 
             flex-direction column
             opacity 1
+            cursor pointer
 
             @media(max-width 790px)
                 margin-bottom 24px
