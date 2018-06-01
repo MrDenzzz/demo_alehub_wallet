@@ -52,7 +52,7 @@
                         <div class="dividers-container">
                             <div class="divider horizontal" v-for="n in 8" :key="n"></div>
                         </div>
-                        <button class="circle circle-big circle-yellow">
+                        <div class="circle circle-big circle-yellow">
                             <img src="../../static/img/ale-logo.svg" alt="" width="21px" height="25px">
                             <div class="triangle">
                                 <div class="filters-block" id="filter-block">
@@ -84,7 +84,7 @@
                                                       :queue="item.queue"/>
 
                             </div>
-                        </button>
+                        </div>
                     </div>
 
                     <div class="circle circle-bottom circle-green">
@@ -207,9 +207,10 @@
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
     import OffersFilter from './layouts/OffersFilter';
-    import Datepicker from 'vuejs-datepicker';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     import OffersFilterFolded from './layouts/OffersFilterFolded';
+
+    import Datepicker from 'vuejs-datepicker';
 
     import {mapGetters} from 'vuex';
 
@@ -279,48 +280,6 @@
                     }
                 ],
 
-
-                isFoldQueue: [
-                    {
-                        id: 'ts',
-                        queue: 0
-                    },
-                    {
-                        id: 'ts-ex',
-                        queue: 0
-                    },
-                    {
-                        id: 'ch',
-                        queue: 0
-                    },
-                    {
-                        id: 'qa',
-                        queue: 0
-                    }
-                ],
-
-                isFoldFilter: false,
-
-                isFoldFilterTs: false,
-                isFoldFilterTsEx: false,
-                isFoldFilterCh: false,
-                isFoldFilterQa: false,
-
-                //для удобного перебора в функции тогла диалога
-                //остальные сделать также
-                isFoldOpt: [
-                    false,
-                    false,
-                    false,
-                    false
-                ],
-
-                tsActive: 0,
-                tsExActive: 0,
-                chActive: 0,
-                qaActive: 0,
-
-                activeOption: false,
                 openedFromDatepicker: false,
                 openedToDatepicker: false,
                 offersDateFrom: 0,

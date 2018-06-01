@@ -1,43 +1,45 @@
 <template>
-    <div class="dialog"
-         :style="{ 'top': offsetTop }">
+    <transition name="fade-bottom">
+        <div class="dialog"
+             :style="{ 'top': offsetTop }">
 
-        <button type="button" class="fold"
-                @click="toFold">
-            <img src="../../../static/img/arrow-down-dark.svg" alt="to fold">
-        </button>
-
-        <form>
-
-            <input-name :title="$t('offersFilter.name.title')"/>
-
-            <input-double-rating :title="$t('offersFilter.rating.title')"
-                                 :from="$t('offersFilter.rating.from')"
-                                 :to="$t('offersFilter.rating.to')"/>
-
-            <input-double-price :title="$t('offersFilter.price.title')"
-                                :from="$t('offersFilter.price.from')"
-                                :to="$t('offersFilter.price.to')"/>
-
-            <input-prompt-checkbox-list :title="$t('offersFilter.country.title')"
-                                        :list="$t('countries')"
-                                        :select-all="$t('offersFilter.country.selectAll')"/>
-
-            <input-certification-list :title="$t('offersFilter.certification.title')"
-                                      :options="$t('offersFilter.certification.options')"/>
-
-            <input-verified-list :title="$t('offersFilter.verified.title')"
-                                 :options="$t('offersFilter.verified.options')"
-                                 :special="$t('offersFilter.verified.special')"/>
-
-            <button type="button"
-                    class="buttons btn btn-yellow"
-                    @click="clear">
-                {{ $t('offersFilter.buttons.clear') }}
+            <button type="button" class="fold"
+                    @click="toFold">
+                <img src="../../../static/img/arrow-down-dark.svg" alt="to fold">
             </button>
 
-        </form>
-    </div>
+            <form>
+
+                <input-name :title="$t('offersFilter.name.title')"/>
+
+                <input-double-rating :title="$t('offersFilter.rating.title')"
+                                     :from="$t('offersFilter.rating.from')"
+                                     :to="$t('offersFilter.rating.to')"/>
+
+                <input-double-price :title="$t('offersFilter.price.title')"
+                                    :from="$t('offersFilter.price.from')"
+                                    :to="$t('offersFilter.price.to')"/>
+
+                <input-prompt-checkbox-list :title="$t('offersFilter.country.title')"
+                                            :list="$t('countries')"
+                                            :select-all="$t('offersFilter.country.selectAll')"/>
+
+                <input-certification-list :title="$t('offersFilter.certification.title')"
+                                          :options="$t('offersFilter.certification.options')"/>
+
+                <input-verified-list :title="$t('offersFilter.verified.title')"
+                                     :options="$t('offersFilter.verified.options')"
+                                     :special="$t('offersFilter.verified.special')"/>
+
+                <button type="button"
+                        class="buttons btn btn-yellow"
+                        @click="clear">
+                    {{ $t('offersFilter.buttons.clear') }}
+                </button>
+
+            </form>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -68,13 +70,9 @@
                 required: true
             }
         },
-        watch: {
-
-        },
+        watch: {},
         data() {
-            return {
-
-            }
+            return {}
         },
         methods: {
             toFold: function () {
@@ -88,6 +86,16 @@
 </script>
 
 <style lang="stylus" scoped>
+    .fade-bottom-enter-active
+        transition all .3s ease-out
+
+    .fade-bottom-leave-active
+        transition all .3s ease-in
+
+    .fade-bottom-enter, .fade-bottom-leave-to
+        transform translateY(30px)
+        opacity 0
+
     .dialog
         width 208px
         border-radius 4px
