@@ -75,8 +75,10 @@
                                                :id="item.id"
                                                :offset-top="filterOffsetTop(item.id)"/>
 
+
                                 <offers-filter-folded v-for="item in filters"
                                                       v-if="item.folded"
+                                                      :key="item.id"
                                                       :id="item.id"
                                                       :title="item.title"
                                                       :queue="item.queue"/>
@@ -554,6 +556,9 @@
         },
         mounted() {
             this.$on('onFold', (obj) => {
+
+                console.log('click working');
+
                 let current = this.currentFilter(obj.id);
                 this.changeStateButtonFilter(obj.id);
                 this.foldAnotherButtonFilter();

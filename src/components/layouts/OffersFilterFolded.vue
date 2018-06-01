@@ -1,15 +1,17 @@
 <template>
     <!--:style="{ 'left': (queue - 1) * 153 + 'px' }"-->
-    <div class="folded-filter"
-         :style="{ 'bottom': queue * 30 + 'px' }">
-        <div class="title">
-            {{ title }}
+    <transition name="fade-bottom">
+        <div class="folded-filter"
+             :style="{ 'bottom': queue * 30 + 'px' }">
+            <div class="title">
+                {{ title }}
+            </div>
+            <button type="button" class="unfold"
+                    @click="toUnfold">
+                <img src="../../../static/img/arrow-down-light.svg" alt="to fold">
+            </button>
         </div>
-        <button type="button" class="unfold"
-                @click="toUnfold">
-            <img src="../../../static/img/arrow-down-light.svg" alt="to fold">
-        </button>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -41,6 +43,17 @@
 </script>
 
 <style lang="stylus" scoped>
+    .fade-bottom-enter-active
+        transition all .3s ease-out
+
+    .fade-bottom-leave-active
+        transition all .3s ease-in
+
+    .fade-bottom-enter, .fade-bottom-leave-to
+        transform translateY(100px)
+        opacity 0
+
+
     .folded-filter
         z-index 3
         position fixed
@@ -51,6 +64,7 @@
         justify-content space-between
         align-items center
         background-color #34343e
+        transition all .3s ease-in
 
         .title
             text-transform unset
