@@ -19,13 +19,13 @@
             return {}
         },
         props: {
-            title: {
+            id: {
                 type: String,
                 required: true
             },
-            foldOption: {
+            title: {
                 type: String,
-                required: false
+                required: true
             },
             queue: {
                 type: Number,
@@ -34,24 +34,7 @@
         },
         methods: {
             toUnfold: function () {
-                this.$parent.$emit('onFold', false);
-
-                switch (this.foldOption) {
-                    case 'ts' :
-                        this.$parent.$emit('onFoldTs', false);
-                        break;
-                    case 'ts-ex' :
-                        this.$parent.$emit('onFoldTsEx', false);
-                        break;
-                    case 'ch' :
-                        this.$parent.$emit('onFoldCh', false);
-                        break;
-                    case 'qa' :
-                        this.$parent.$emit('onFoldQa', false);
-                        break;
-                    default :
-                        break;
-                }
+                this.$parent.$emit('onFold', {id: this.id, opened: true, folded: false});
             }
         }
     }

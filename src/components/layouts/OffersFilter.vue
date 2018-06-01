@@ -78,7 +78,7 @@
         },
         methods: {
             toFold: function () {
-                this.$parent.$emit('onFold', {id: this.id, folded: true, opened: false});
+                this.$parent.$emit('onFold', {id: this.id, opened: false, folded: true});
             },
             clear: function () {
 

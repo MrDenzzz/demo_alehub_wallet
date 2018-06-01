@@ -77,8 +77,8 @@
 
                                 <offers-filter-folded v-for="item in filters"
                                                       v-if="item.folded"
+                                                      :id="item.id"
                                                       :title="item.title"
-                                                      :fold-option="item.id"
                                                       :queue="item.queue"/>
 
                             </div>
@@ -256,7 +256,7 @@
                     },
                     {
                         id: 'ts-ex',
-                        title: 'TS EX',
+                        title: 'EX',
                         opened: false,
                         folded: false,
                         queue: 0
@@ -697,9 +697,9 @@
         mounted() {
             this.$on('onFold', (obj) => {
                 let current = this.currentFilter(obj.id);
-                current.folded = obj.folded;
+                this.changeStateButtonFilter(obj.id);
                 current.opened = obj.opened;
-                this.changeFoldQueue(obj.id);
+                current.folded = obj.folded;
             });
 
             this.$on('onFoldTs', (val) => {
