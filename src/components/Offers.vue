@@ -98,92 +98,9 @@
                 </div>
             </div>
             <div class="search-result">
-                <div class="progress-list">
-                    <div class="progress-item"
-                         v-for="offer in offers"
-                         :key="offer.id"
-                         :class="offer.status"
-                         :style="{width: 10 * offer.steps + '%'}">
-                        <div class="row-top">
-                            <div class="project-info">
-                                <div class="circle circle-big">
-                                    <img src="#" alt="">
-                                </div>
-                                <router-link class="info-text"
-                                             tag="div"
-                                             style="cursor: pointer;"
-                                             :to="offer.to">
-                                    <p class="title">
-                                        {{ offer.title }}
-                                    </p>
-                                    <p class="subtitle">
-                                        {{ offer.company }}
-                                    </p>
-                                </router-link>
-                            </div>
-                            <div class="contractors-list">
-                                <div class="contractors-item"
-                                     v-for="contractor in offer.contractors"
-                                     :key="contractor.id">
-                                    <div class="contractors-content">
-                                        <!--<div class="circle"-->
-                                             <!--:class="checkContractorType(contractor.type)">-->
-                                        <div class="circle"
-                                             :class="checkContractorType(contractor.type)"
-                                             @click="toggleContractorDialog($event, contractor)">
-                                            <span class="initials">
-                                                {{ contractor.initials }}
-                                            </span>
-                                        </div>
-                                        <div class="contractors-info"
-                                             @click="toggleContractorDialog($event, contractor)">
-                                            <p class="title">
-                                                {{ contractor.name }}
-                                            </p>
-                                            <p class="subtitle">
-                                                {{ contractor.type }}
-                                            </p>
-                                        </div>
-                                        <div v-for="key in contractor.keys"
-                                             :key="key.id"
-                                             class="key-icon">
-                                            <img :src="key" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="circle circle-big"
-                                 :class="'circle-' + offer.status">
-                                <img :src="getStatusIcon(offer.status, 'circles')" alt="">
-                            </div>
-                        </div>
-                        <div class="progress-row">
-                            <div class="progress-bar" :class="offer.status">
-                                <img :src="getStatusIcon(offer.status, 'arrows')"
-                                     alt=""
-                                     class="arrow">
-                                <div class="step"
-                                     v-for="n in offer.steps"
-                                     :key="n"
-                                     :class="{ 'one-step': offer.steps <= 1 }">
-                                    Month
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row-bottom">
-                            <div class="date">
-                                {{ toFormatDate(offer.startDate) }}
-                            </div>
-                            <div class="date">
-                                {{ toFormatDate(offer.finalDate) }}
-                            </div>
-                        </div>
-                    </div>
 
-                    <offers-contractor-dialog v-if="isOpenedContractorDialog"
-                                              :coordinates="clickCoordinates"/>
+                    <offers-list/>
 
-                </div>
             </div>
         </div>
     </div>
@@ -192,6 +109,7 @@
 <script>
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
+    import OffersList from './layouts/OffersList';
     import OffersFilter from './layouts/OffersFilter';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     import OffersFilterFolded from './layouts/OffersFilterFolded';
@@ -206,6 +124,7 @@
         components: {
             Navbar,
             StateBar,
+            OffersList,
             OffersFilter,
             OffersContractorDialog,
             OffersFilterFolded,
@@ -395,9 +314,6 @@
         }
     }
 </script>
-
-<style lang="stylus" scoped>
-</style>
 
 <style lang="stylus">
     .contract-list

@@ -138,7 +138,7 @@
 
 <script>
 import Navbar from "./layouts/Navbar";
-import OffersList from "./layouts/OffersList";
+import OffersList from "./layouts/OffersList1";
 import Filters from "./layouts/Filters";
 import Select from "./layouts/forms/Select";
 import Pagination from "./layouts/Pagination";
