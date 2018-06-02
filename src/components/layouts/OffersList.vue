@@ -22,13 +22,14 @@
                 </div>
                 <div class="contractors-list">
                     <div class="contractors-item"
-                         v-for="contractor in offer.contractors"
+                         v-for="contractor in offerContractors(offer)"
                          :key="contractor.id">
-                        <div class="contractors-content"
-                             @click="toggleContractorDialog($event, contractor)">
+                        <div class="contractors-content">
                             <div class="circle"
-                                 :class="checkContractorType(contractor.type)">
-                             <span class="initials">
+                                 :class="checkContractorType(contractor.type)"
+                                 @click="toggleContractorDialog($event, contractor)">
+                             <span class="initials"
+                                   @click="toggleContractorDialog($event, contractor)">
                                  {{ contractor.initials }}
                              </span>
                             </div>
@@ -43,7 +44,7 @@
                             <div v-for="key in contractor.keys"
                                  :key="key.id"
                                  class="key-icon">
-                                <img :src="key" alt="">
+                                <img :src="key" alt="key">
                             </div>
                         </div>
                     </div>
@@ -56,7 +57,7 @@
             <div class="progress-row">
                 <div class="progress-bar" :class="offer.status">
                     <img :src="getStatusIcon(offer.status, 'arrows')"
-                         alt=""
+                         :alt="offer.status"
                          class="arrow">
                     <div class="step"
                          v-for="n in offer.steps"
@@ -127,11 +128,14 @@
             ),
         },
         methods: {
+            offerContractors: function (offer) {
+                return this.contractors.filter(contractor => {
+                    return offer.contractorsId.find(contractorId => {
+                        return  contractorId === contractor.id;
+                    });
+                });
+            },
             toggleContractorDialog: function (e, contractor) {
-                // this.openedContractorDialog = !this.openedContractorDialog;
-
-                // this.currentContractorId = contractor.id;
-
                 if (!this.openedContractorDialog) {
                     this.contractorDialogCoordinates.top = e.pageY;
                     this.contractorDialogCoordinates.left = e.pageX;
@@ -190,7 +194,10 @@
                     default:
                         return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
                 }
-            },
+            }
+        },
+        mounted() {
+
         }
     }
 </script>
@@ -310,7 +317,6 @@
                         justify-content space-around
 
                     .contractors-content
-                        cursor pointer
                         display flex
                         position relative
 
@@ -338,6 +344,18 @@
 
                         .circle
                             cursor pointer
+                            min-width 36px
+                            height 36px
+                            border-radius 50%
+                            display flex
+                            justify-content center
+                            align-items center
+                            flex-direction column
+                            border none
+                            -webkit-transition all .3s ease
+                            -moz-transition all .3s ease
+                            -o-transition all .3s ease
+                            transition all .3s ease
 
                             img
                                 width 80%

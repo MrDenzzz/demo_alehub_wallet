@@ -307,7 +307,7 @@
     }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
     .contract-list
         background-color #f0f4fa
 

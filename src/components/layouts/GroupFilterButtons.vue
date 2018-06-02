@@ -6,9 +6,9 @@
                 :id="item.id"
                 :class="calcClass(item.id, item.opened, item.folded)"
                 @click="changeStateButtonFilter(item.id)">
-        <span class="title">
-            {{ item.title }}
-        </span>
+            <span class="title">
+                {{ item.title }}
+            </span>
         </button>
     </div>
 </template>
@@ -153,6 +153,9 @@
                 -moz-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
                 box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
                 transform scale(0.95)
+
+            .title
+                color #fcfcfc
 
         .circle
             width 36px

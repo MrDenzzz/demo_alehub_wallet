@@ -832,7 +832,7 @@
     }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
     .my-row-flex
         padding-top 24px
         margin-left 84px
