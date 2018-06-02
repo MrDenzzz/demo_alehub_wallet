@@ -47,11 +47,6 @@
                                 <img :src="key" alt="">
                             </div>
                         </div>
-
-                        <!--переместить offers-contractor-dialog в блок, где он вызывается-->
-
-                        <!--<offers-contractor-dialog v-if="isOpenedContractorDialog"-->
-                        <!--:coordinates="clickCoordinates"/>-->
                     </div>
                 </div>
                 <div class="circle circle-big"
@@ -81,16 +76,32 @@
                 </div>
             </div>
         </div>
+
+        <offers-contractor-dialog v-if="openedContractorDialog"
+                                  :coordinates="contractorDialogCoordinates"/>
+
     </div>
 </template>
 
 <script>
+    import OffersContractorDialog from './OffersContractorDialog';
+    
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'OffersOffer',
+        components: {
+            OffersContractorDialog  
+        },
         data() {
             return {
+                openedContractorDialog: false,
+
+                contractorDialogCoordinates: {
+                    top: false,
+                    left: false
+                },
+                
                 statusIcons: {
                     arrows: {
                         canceled: '../../static/img/arrows/arrow-canceled.svg',
@@ -111,7 +122,8 @@
             ...mapGetters(
                 [
                     'offers',
-                    'contractors'
+                    'contractors',
+                    'selectedContractor'
                 ]
             ),
         },
@@ -122,8 +134,8 @@
                 // this.currentContractorId = contractor.id;
 
                 if (!this.openedContractorDialog) {
-                    this.clickCoordinates.top = e.pageY;
-                    this.clickCoordinates.left = e.pageX;
+                    this.contractorDialogCoordinates.top = e.pageY;
+                    this.contractorDialogCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
                         contractor
                     ).then((resp) => {
@@ -135,8 +147,8 @@
 
                     return true;
                 } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
-                    this.clickCoordinates.top = e.pageY;
-                    this.clickCoordinates.left = e.pageX;
+                    this.contractorDialogCoordinates.top = e.pageY;
+                    this.contractorDialogCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
                         contractor
                     ).then(() => {
@@ -293,6 +305,7 @@
                         justify-content space-around
 
                     .contractors-content
+                        cursor pointer
                         display flex
                         position relative
 

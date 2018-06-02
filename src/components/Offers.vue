@@ -98,9 +98,7 @@
                 </div>
             </div>
             <div class="search-result">
-
                     <offers-list/>
-
             </div>
         </div>
     </div>
@@ -111,7 +109,6 @@
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
     import OffersFilter from './layouts/OffersFilter';
-    import OffersContractorDialog from './layouts/OffersContractorDialog';
     import OffersFilterFolded from './layouts/OffersFilterFolded';
     import GroupFilterButtons from './layouts/GroupFilterButtons';
 
@@ -126,7 +123,6 @@
             StateBar,
             OffersList,
             OffersFilter,
-            OffersContractorDialog,
             OffersFilterFolded,
             GroupFilterButtons,
             Datepicker
@@ -202,16 +198,12 @@
             ...mapGetters(
                 [
                     'offers',
-                    'selectedContractor',
                     'contractors',
                     'filtersCondition'
                 ]
             ),
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
-            },
-            isOpenedContractorDialog: function () {
-                return this.openedContractorDialog;
             },
             getSelectedAreaHeight: function () {
                 return getComputedStyle(document.querySelector('.selected-area')).height;
@@ -527,274 +519,6 @@
 
                 @media (max-width 620px)
                     padding-top 260px
-
-                .progress-list
-                    display flex
-                    flex-direction column
-                    align-items flex-start
-                    width 100%
-
-                    .progress-item
-                        display flex
-                        flex-direction column
-                        justify-content center
-                        position relative
-                        min-height 132px
-                        min-width 612px
-                        border 2px solid gray
-                        margin-bottom 24px
-                        padding 10px
-
-                        @media (max-width 1200px)
-                            min-width 512px
-
-                        @media (max-width 990px)
-                            min-width 412px
-
-                        &.completed
-                            background-image linear-gradient(to right, rgba(255, 224, 130, 0.1), rgba(254, 211, 85, 0.1))
-                            border-style solid
-                            border-width 2px
-                            -webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
-                            border-image linear-gradient(to right, #ffe082, #fed355) 1
-
-                        &.ongoing
-                            background-image linear-gradient(to right, rgba(87, 222, 151, 0.1), rgba(43, 214, 92, 0.1))
-                            border-style solid
-                            border-width 2px
-                            -webkit-border-image linear-gradient(to right, #57de97, #2bd65c) 1
-                            border-image linear-gradient(to right, #57de97, #2bd65c) 1
-
-                        &.timelag
-                            background-image linear-gradient(to right, rgba(255, 130, 130, 0.1), rgba(255, 79, 79, 0.1))
-                            border-style solid
-                            border-width 2px
-                            -webkit-border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
-                            border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
-
-                        &.canceled
-                            background-image linear-gradient(to right, rgba(51, 26, 26, 0.1), rgba(51, 16, 16, 0.1))
-                            border-style solid
-                            border-width 2px
-                            -webkit-border-image linear-gradient(to right, #331a1a, #331010) 1
-                            border-image linear-gradient(to right, #331a1a, #331010) 1
-
-                        .progress-row
-                            padding 0 56px
-
-                            @media (max-width 990px)
-                                padding 0 32px
-
-                            @media (max-width 860px)
-                                padding 0 24px
-
-                            .progress-bar
-                                width 100%
-                                height 36px
-                                background-color #ffffff
-                                position relative
-                                background-image linear-gradient(to right, #eceef1, #bac4d0)
-                                border-radius 18px
-                                display flex
-                                align-items center
-
-                                .step
-                                    width 120px
-                                    height 32px
-                                    border-right 2px solid #fff
-                                    opacity 0.5
-                                    font-family MuseoSansCyrl500
-                                    font-size 16px
-                                    color #fff
-                                    display flex
-                                    justify-content center
-                                    align-items center
-
-                                    @media (max-width 1100px)
-                                        font-size 14px
-
-                                    @media (max-width 990px)
-                                        font-size 12px
-
-                                    &:last-child
-                                        border-right none
-
-                                    &.one-step
-                                        display flex
-                                        justify-content center
-                                        width 100%
-
-                                .arrow
-                                    position absolute
-                                    top -20px
-                                    left -110px
-
-                                    @media (max-width 990px)
-                                        left -86px
-
-                                    @media (max-width 860px)
-                                        left -78px
-
-                        .row-top
-                            display flex
-                            width 100%
-
-                            .circle-big
-                                @media (max-width 860px)
-                                    width 40px
-                                    height 40px
-                                    min-width 40px
-                                    min-height 40px
-
-                                &:last-child
-                                    margin-left 104px
-
-                                    @media (max-width 1200px)
-                                        margin-left 12px
-
-                            .project-info
-                                display flex
-
-                                .info-text
-                                    display flex
-                                    flex-direction column
-                                    margin-left 8px
-                                    margin-right 8px
-
-                                .title
-                                    margin 0
-                                    font-family MuseoSansCyrl500
-                                    font-size 16px
-                                    color #34343e
-                                    white-space nowrap
-
-                                    @media (max-width 1100px)
-                                        font-size 14px
-
-                                .subtitle
-                                    margin 0
-                                    opacity 0.5
-                                    font-family MuseoSansCyrl500
-                                    font-size 12px
-                                    color #34343e
-                                    white-space nowrap
-
-                                    @media (max-width 1100px)
-                                        font-size 10px
-
-                            .contractors-list
-                                display flex
-                                justify-content space-between
-                                width 100%
-
-                                @media (max-width 990px)
-                                    justify-content space-around
-
-                                .contractors-content
-                                    display flex
-                                    position relative
-
-                                    .key-icon
-                                        z-index 3
-                                        position absolute
-                                        top 54px
-                                        left -10px
-
-                                        @media (max-width 860px)
-                                            top 46px
-
-                                        @media (max-width 620px)
-                                            display none
-
-                                        &:nth-child(4)
-                                            left -300px
-
-                                    .contractors-info
-                                        cursor pointer
-                                        margin-left 8px
-
-                                        @media (max-width 990px)
-                                            display none
-
-                                    .circle
-                                        cursor pointer
-
-                                        img
-                                            width 80%
-                                            height 80%
-                                            -webkit-clip-path circle(50% at center)
-                                            clip-path circle(50% at center)
-
-                                        .circle__overlay
-                                            /*z-index 2*/
-                                            position absolute
-
-                                        .initials
-                                            position absolute
-                                            font-family MuseoSansCyrl500
-                                            font-size 16px
-                                            color #fcfcfc
-
-
-                                    .circle.qa
-                                        background-color #7e20c0
-                                        background-image unset
-
-                                    .circle.ch
-                                        background-color #e09a00
-                                        background-image unset
-
-                                    .circle.ts-exec
-                                        background-color #0391a6
-                                        background-image unset
-
-                                    .circle.ts
-                                        background-color #b63c2c
-                                        background-image unset
-
-
-
-                                    .title
-                                        margin 0
-                                        font-family MuseoSansCyrl500
-                                        opacity 0.5
-                                        font-size 16px
-                                        color #34343e
-                                        white-space nowrap
-
-                                        @media (max-width 1100px)
-                                            font-size 14px
-
-                                    .subtitle
-                                        margin 0
-                                        font-family MuseoSansCyrl500
-                                        opacity 0.25
-                                        font-size 12px
-                                        color #34343e
-                                        white-space nowrap
-
-                                        @media (max-width 1100px)
-                                            font-size 10px
-
-                        .row-bottom
-                            display flex
-                            justify-content space-between
-                            padding 0 66px
-
-                            @media (max-width 990px)
-                                padding 0 32px
-
-                            @media (max-width 860px)
-                                padding 0 24px
-
-                            .date
-                                font-family MuseoSansCyrl500
-                                font-size 12px
-                                color #34343e
-                                margin-top 14px
-
-                                @media (max-width 860px)
-                                    font-size 10px
 
     .circle
         width 36px
