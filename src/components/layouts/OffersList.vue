@@ -7,9 +7,8 @@
              :style="{width: 10 * offer.steps + '%'}">
             <div class="row-top">
                 <div class="offer-info">
-                    <div class="circle circle-big">
-                        <img src="#" alt="">
-                    </div>
+                    <img class="offer-logo"
+                         :src="offer.logoSrc" :alt="offer.company">
                     <router-link class="info-text"
                                  tag="div"
                                  :to="offer.to">
@@ -85,13 +84,13 @@
 
 <script>
     import OffersContractorDialog from './OffersContractorDialog';
-    
+
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'OffersOffer',
         components: {
-            OffersContractorDialog  
+            OffersContractorDialog
         },
         data() {
             return {
@@ -101,7 +100,7 @@
                     top: false,
                     left: false
                 },
-                
+
                 statusIcons: {
                     arrows: {
                         canceled: '../../static/img/arrows/arrow-canceled.svg',
@@ -267,6 +266,12 @@
 
                 .offer-info
                     display flex
+
+                    .offer-logo
+                        max-width 48px
+                        max-height 48px
+                        -webkit-clip-path circle(50% at center)
+                        clip-path circle(50% at center)
 
                     .info-text
                         cursor pointer

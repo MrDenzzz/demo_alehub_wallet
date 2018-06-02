@@ -86,11 +86,11 @@ const state = {
             contractorsId: [1, 2, 3, 4],
             title: 'CryptoStore',
             company: 'Serokell',
+            logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
-            projectLogo: '../../static/img/react.svg',
             steps: 10,
             contractors: [
                 {
@@ -156,6 +156,7 @@ const state = {
             contractorsId: [5, 6, 4],
             title: 'Alehub',
             company: 'Effective Energy',
+            logoSrc: '../../static/img/logo/angular.png',
             to: '/offer',
             startDate: 1523370609000,
             finalDate: 1543588209000,
@@ -199,11 +200,11 @@ const state = {
             contractorsId: [4],
             title: 'Virtual reality pluggin',
             company: 'Nike',
+            logoSrc: '../../static/img/logo/telegram.png',
             to: '/offer',
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'canceled',
-            projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
             contractors: [
                 {
@@ -220,11 +221,11 @@ const state = {
             contractorsId: [4],
             title: 'Virtual reality pluggin',
             company: 'Nike',
+            logoSrc: '../../static/img/logo/angular.png',
             to: '/offer',
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'timelag',
-            projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
             contractors: [
                 {
@@ -241,11 +242,11 @@ const state = {
             contractorsId: [1, 2, 3, 4],
             title: 'CryptoStore',
             company: 'Serokell',
+            logoSrc: '../../static/img/logo/twitter.jpg',
             to: '/offer',
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
-            projectLogo: '../../static/img/ale-logo.svg',
             steps: 10,
             contractors: [
                 {
@@ -297,6 +298,7 @@ const state = {
             contractorsId: [5, 6, 4],
             title: 'Alehub',
             company: 'Effective Energy',
+            logoSrc: '../../static/img/logo/ubuntu.png',
             to: '/offer',
             startDate: 1523370609000,
             finalDate: 1543588209000,
@@ -340,6 +342,7 @@ const state = {
             contractorsId: [4],
             title: 'Virtual reality pluggin',
             company: 'Nike',
+            logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
             startDate: 1525185009000,
             finalDate: 1525703409000,
