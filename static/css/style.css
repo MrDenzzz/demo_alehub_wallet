@@ -173,6 +173,8 @@ body {
 
 .dark {
   background: #4a4e65 !important; }
+  .dark .navbar {
+    background-color: #3a3a4b; }
   .dark .datepicker-for-export .vdp-datepicker__calendar .day.highlighted, .dark .datepicker-for-export .vdp-datepicker__calendar .day.selected {
     background-color: #28388e !important; }
   .dark .datepicker-for-export .vdp-datepicker__calendar .cell.day.marked__min.highlighted {
@@ -184,7 +186,7 @@ body {
     .dark .logout-link:hover {
       text-decoration: none; }
   .dark .searchPanel .top {
-    border-bottom: 1px solid #676767 !important; }
+    border-bottom: 1px solid #9093a1 !important; }
     .dark .searchPanel .top .searchControl input {
       color: #dedfdf;
       border-bottom: 1px solid rgba(222, 223, 223, 0.5);
@@ -198,22 +200,22 @@ body {
       .dark .searchPanel .top .searchControl input:-moz-placeholder {
         color: #dedfdf; }
   .dark .searchPanel .bottom {
-    background-color: rgba(40, 39, 48, 0.5); }
+    background-color: #3f435e; }
     .dark .searchPanel .bottom .date .date-title {
-      color: #dedfdf; }
+      color: #fcfcfc; }
     .dark .searchPanel .bottom .date input {
       background-color: #3c3e4a;
       border: solid 0.5px #484848;
-      border-bottom: 1px solid rgba(222, 223, 223, 0.4) !important;
-      color: rgba(222, 223, 223, 0.8) !important; }
+      border-bottom: 2px solid rgba(222, 223, 223, 0.2) !important;
+      color: #fcfcfc !important; }
       .dark .searchPanel .bottom .date input::-webkit-input-placeholder {
-        color: rgba(222, 223, 223, 0.8) !important; }
+        color: #fcfcfc !important; }
       .dark .searchPanel .bottom .date input::-moz-placeholder {
-        color: rgba(222, 223, 223, 0.8) !important; }
+        color: #fcfcfc !important; }
       .dark .searchPanel .bottom .date input:-ms-input-placeholder {
-        color: rgba(222, 223, 223, 0.8) !important; }
+        color: #fcfcfc !important; }
       .dark .searchPanel .bottom .date input:-moz-placeholder {
-        color: rgba(222, 223, 223, 0.8) !important; }
+        color: #fcfcfc !important; }
   .dark .vdp-datepicker__calendar {
     background-color: #282730 !important; }
     .dark .vdp-datepicker__calendar .day-header {
@@ -230,12 +232,14 @@ body {
     color: #aaaec1 !important; }
   .dark .cell.day {
     color: #dedfdf !important; }
-  .dark .title-opt-span,
+  .dark .title-opt-span {
+    color: #fcfcfc !important; }
+    .dark .title-opt-span.sent {
+      color: #fcfcfc !important; }
   .dark .result-opt-span {
-    color: #f4f3fc !important; }
-    .dark .title-opt-span.sent,
+    color: #fcfcfc !important; }
     .dark .result-opt-span.sent {
-      color: #455bd6 !important; }
+      color: #ff6c6c !important; }
   .dark .switch-control .slider {
     background-color: #aaaec1 !important; }
     .dark .switch-control .slider:before {
@@ -263,48 +267,16 @@ body {
   .dark .drag {
     background-color: #404455; }
   .dark .menu {
-    background-color: #404455 !important; }
+    background-color: #464657 !important; }
     .dark .menu.scrollable .wrap-between {
       border-bottom-left-radius: 0 !important;
       border-bottom-right-radius: 0 !important; }
     .dark .menu .wallet-list.wallet-search {
-      background-color: #404455; }
-    .dark .menu .wallet-list:not(:first-child) {
-      margin: 5px 35px;
-      width: calc(100% - 70px);
-      border-radius: 4px; }
-      .dark .menu .wallet-list:not(:first-child) .wrap-in-wallet {
-        margin-left: 15px; }
+      background-color: #464657; }
     .dark .menu .wallet-list:not(.active):not(.wallet-search):hover {
-      background-color: #494d64 !important; }
-    .dark .menu .wallet-list.wrap-between {
-      margin: 0 35px;
-      background-color: #404455 !important;
-      width: calc(360px - 70px) !important; }
-      @media (max-width: 1024px) {
-        .dark .menu .wallet-list.wrap-between {
-          width: calc(260px - 70px) !important; } }
-      @media (max-width: 920px) {
-        .dark .menu .wallet-list.wrap-between {
-          width: calc(360px - 70px) !important; } }
-      @media (max-width: 425px) {
-        .dark .menu .wallet-list.wrap-between {
-          width: calc(100% - 100vh) !important; } }
+      background-color: #555567 !important; }
     .dark .menu .wallet-list.active {
-      margin: 5px 35px;
-      width: calc(100% - 70px);
-      border: solid 2px #3e4ea7;
-      border-radius: 4px;
-      background: #272730; }
-      .dark .menu .wallet-list.active:after {
-        content: "";
-        position: relative;
-        right: 0px;
-        top: 20px;
-        background: url("./../../../static/img/wallet_dark_active.svg");
-        background-size: cover;
-        width: 23px;
-        height: 20.5px; }
+      background-color: #4a4e65; }
       .dark .menu .wallet-list.active .wrap-in-wallet {
         margin-left: 15px;
         width: calc(100% - 55px); }
@@ -314,25 +286,23 @@ body {
         color: #f4f3fc;
         font-family: MuseoSansCyrl500; }
     .dark .menu .wallet-list:hover:not(:first-of-type) {
-      background: #272730; }
+      background: #4a4e65; }
       .dark .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet p {
         color: #fcfcfc; }
       .dark .menu .wallet-list:hover:not(:first-of-type) .wrap-in-wallet .wallet {
         color: #f4f3fc;
         font-family: MuseoSansCyrl500; }
-    .dark .menu .wallet-list .wrap-in-wallet {
-      margin-left: 55px; }
-      .dark .menu .wallet-list .wrap-in-wallet input {
-        width: auto; }
-      .dark .menu .wallet-list .wrap-in-wallet .wallet {
-        font-family: MuseoSansCyrl500; }
+    .dark .menu .wallet-list .wrap-in-wallet input {
+      width: auto; }
+    .dark .menu .wallet-list .wrap-in-wallet .wallet {
+      font-family: MuseoSansCyrl500; }
   .dark .absence-transactions {
     color: #f4f3fc !important; }
   .dark .btn-yellow {
-    background: #28388e;
+    background: rgba(222, 223, 223, 0.2);
     color: #f4f3fc !important; }
     .dark .btn-yellow:hover {
-      background: #3e4ea7; }
+      background: #6d718a; }
     .dark .btn-yellow:focus, .dark .btn-yellow:active {
       background: #3419b1; }
     .dark .btn-yellow:disabled {
@@ -340,74 +310,44 @@ body {
     .dark .btn-yellow.disabled {
       background-color: #4f30d4 !important; }
   .dark .btn-default {
-    background: #20232a;
-    color: #f4f3fc; }
+    background: #2c2c42;
+    color: #fcfcfc; }
     .dark .btn-default:hover {
-      background: #17171d; }
+      background: #27272f; }
     .dark .btn-default:focus, .dark .btn-default:active {
-      background: #000; }
+      background: #17171d; }
     .dark .btn-default:disabled {
       background-color: #7c7b82; }
   .dark .list-panel-heading h3 {
-    color: #dedfdf;
-    opacity: 1; }
+    color: #fcfcfc; }
   .dark .list-panel-heading p {
     color: #dedfdf; }
   .dark .activityList {
-    padding: 15px 30px 20px 30px;
-    background: #27272f;
     border-radius: 4px; }
-    .dark .activityList .activityListBlock .list-panel-heading {
-      margin-left: 15px; }
     .dark .activityList .activityListBlock .activity-list {
-      margin: 3px 0;
-      border-top: 2px solid rgba(40, 56, 142, 0.5);
-      background: transparent !important; }
+      background: rgba(222, 223, 223, 0.1); }
       .dark .activityList .activityListBlock .activity-list .sent {
-        background-color: transparent !important; }
-      .dark .activityList .activityListBlock .activity-list .status {
-        justify-content: left;
-        padding-left: 15px; }
-        .dark .activityList .activityListBlock .activity-list .status span {
-          padding-top: 2px;
-          color: #f4f3fc; }
-        .dark .activityList .activityListBlock .activity-list .status.sent span {
-          color: #5e7cd3 !important; }
+        background-color: #3f435e !important; }
+      .dark .activityList .activityListBlock .activity-list .status span {
+        color: #fcfcfc; }
       .dark .activityList .activityListBlock .activity-list .details {
         padding-right: 15px; }
         .dark .activityList .activityListBlock .activity-list .details .info p {
-          color: #f4f3fc; }
+          color: #fcfcfc; }
         .dark .activityList .activityListBlock .activity-list .details .purpose {
-          color: #f4f3fc;
-          justify-content: center; }
-        .dark .activityList .activityListBlock .activity-list .details .count {
-          min-width: 70px; }
-          .dark .activityList .activityListBlock .activity-list .details .count span {
-            padding-right: 0;
-            margin-right: 0;
-            padding-bottom: 3px; }
-          .dark .activityList .activityListBlock .activity-list .details .count.active span {
-            color: #f4f3fc !important; }
+          color: #fcfcfc; }
+        .dark .activityList .activityListBlock .activity-list .details .count.active span {
+          color: #f4f3fc !important; }
         .dark .activityList .activityListBlock .activity-list .details.sent .count span {
-          color: #5e7cd3 !important; }
-        .dark .activityList .activityListBlock .activity-list .details.sent .purpose {
-          color: #5e7cd3 !important; }
-        .dark .activityList .activityListBlock .activity-list .details.sent .info p {
-          color: #5e7cd3 !important; }
+          color: #ff6c6c !important; }
       .dark .activityList .activityListBlock .activity-list .received {
         background-color: transparent !important; }
-    .dark .activityList .activityListBlock .result-day {
-      margin-right: 15px; }
-      .dark .activityList .activityListBlock .result-day .result-day-col {
-        color: #f4f3fc; }
-        .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line {
-          color: #f4f3fc;
-          padding-right: 0; }
-          .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line .sent {
-            color: #455bd6; }
-          .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line .result-day-span {
-            margin-right: 0;
-            padding-right: 0; }
+    .dark .activityList .activityListBlock .result-day .result-day-col {
+      color: #fcfcfc; }
+      .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line {
+        color: #fcfcfc; }
+        .dark .activityList .activityListBlock .result-day .result-day-col .result-day-line .sent {
+          color: #ff6c6c; }
   .dark .wallet .main .content .container .row .col-12 {
     margin-top: 0px !important; }
     .dark .wallet .main .content .container .row .col-12 .stats-balance .stats-col .buttons.btn-yellow {
@@ -418,21 +358,21 @@ body {
   .dark .navbar .title {
     color: #dedfdf; }
   .dark .navbar .navbar-nav .actions .item.active {
-    background-color: #4a4e65; }
+    background-color: rgba(223, 223, 223, 0.07); }
   .dark .navbar .navbar-nav .actions .item:hover {
     background-color: #4a4e65; }
   .dark .navbar .navbar-nav .actions .item:not(.active):hover {
     background-color: rgba(64, 68, 85, 0.75); }
   .dark .navbar .navbar-nav .actions .item:first-child.active {
-    background-color: #404455; }
+    background-color: rgba(223, 223, 223, 0.07); }
   .dark .navbar .navbar-nav .actions .item:first-child:hover {
-    background-color: #404455; }
+    background-color: rgba(223, 223, 223, 0.07); }
   .dark .navbar .balance .options:hover {
-    background: #404455; }
+    background: #454657; }
   .dark .navbar .balance .options .dropdown-options {
-    background-color: #404455; }
+    background-color: #454657; }
     .dark .navbar .balance .options .dropdown-options .item:hover {
-      background: #3e4ea6; }
+      background: #6d718a; }
     .dark .navbar .balance .options .dropdown-options .item span:hover {
       color: #fff; }
   .dark .v--modal-overlay .v--modal-box {
@@ -2442,6 +2382,7 @@ body {
   .activityListBlock .result-day .result-day-col {
     font-family: MuseoSansCyrl500;
     color: #34343e;
+    font-weight: 500;
     display: flex;
     flex-direction: column;
     align-self: flex-end; }
@@ -2541,6 +2482,7 @@ body {
         color: #34343e;
         font-family: MuseoSansCyrl500; }
     .activityListBlock .activity-list .details .purpose {
+      margin-left: 15px;
       width: 100%;
       display: flex;
       color: #34343e;
@@ -3280,7 +3222,8 @@ td, th {
       font-size: 14px;
       color: #34343e;
       text-transform: uppercase;
-      margin-top: 0; }
+      margin-top: 0;
+      font-weight: bold; }
     .bottom .date .datepicker-wrap {
       display: flex; }
   .bottom .docs {
@@ -3299,7 +3242,8 @@ td, th {
       .bottom .info .stats-col .title-opt-span, .bottom .info .stats-col .result-opt-span {
         font-family: MuseoSansCyrl500;
         font-size: 14px;
-        color: #34343e; }
+        color: #34343e;
+        font-weight: 500; }
       .bottom .info .stats-col .title-opt-span {
         padding: 5px;
         align-self: flex-start;

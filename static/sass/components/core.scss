@@ -233,6 +233,10 @@ body {
 .dark {
   background: #4a4e65 !important;
 
+  .navbar {
+    background-color: #3a3a4b;
+  }
+
   .datepicker-for-export {
     .vdp-datepicker__calendar {
       .day {
@@ -263,7 +267,7 @@ body {
   }
   .searchPanel {
     .top {
-      border-bottom: 1px solid #676767 !important;
+      border-bottom: 1px solid #9093a1 !important;
       .searchControl {
         input {
           color: #dedfdf;
@@ -285,27 +289,27 @@ body {
       }
     }
     .bottom {
-      background-color: rgba(40, 39, 48, 0.5);
+      background-color: #3f435e;
       .date {
         .date-title {
-          color: #dedfdf;
+          color: #fcfcfc;
         }
         input {
           background-color: #3c3e4a;
           border: solid 0.5px #484848;
-          border-bottom: 1px solid rgba(222, 223, 223, .4) !important;
-          color: rgba(222, 223, 223, .8) !important;
+          border-bottom: 2px solid rgba(222, 223, 223, .2) !important;
+          color: #fcfcfc !important;
           &::-webkit-input-placeholder {
-            color: rgba(222, 223, 223, .8) !important;
+            color: #fcfcfc !important;
           }
           &::-moz-placeholder {
-            color: rgba(222, 223, 223, .8) !important;
+            color: #fcfcfc !important;
           }
           &:-ms-input-placeholder {
-            color: rgba(222, 223, 223, .8) !important;
+            color: #fcfcfc !important;
           }
           &:-moz-placeholder {
-            color: rgba(222, 223, 223, .8) !important;
+            color: #fcfcfc !important;
           }
         }
       }
@@ -343,11 +347,16 @@ body {
   .cell.day {
     color: #dedfdf !important;
   }
-  .title-opt-span,
-  .result-opt-span {
-    color: #f4f3fc !important;
+  .title-opt-span {
+    color: #fcfcfc !important;
     &.sent {
-      color: #455bd6 !important;
+      color: #fcfcfc !important;
+    }
+  }
+  .result-opt-span {
+          color: #fcfcfc !important;
+    &.sent {
+      color: #ff6c6c !important;
     }
   }
   .switch-control {
@@ -397,7 +406,7 @@ body {
     background-color: #404455;
   }
   .menu {
-    background-color: #404455 !important;
+    background-color: #464657 !important;
     &.scrollable {
       .wrap-between {
         border-bottom-left-radius: 0 !important;
@@ -406,53 +415,17 @@ body {
     }
     .wallet-list {
       &.wallet-search {
-        background-color: #404455;
-      }
-      &:not(:first-child) {
-        margin: 5px 35px;
-        width: calc(100% - 70px);
-        border-radius: 4px;
-        .wrap-in-wallet {
-          margin-left: 15px;
-        }
+        background-color: #464657;
       }
       &:not(.active) {
         &:not(.wallet-search) {
           &:hover {
-            background-color: #494d64 !important;
+            background-color: #555567 !important;
           }
         }
       }
-      &.wrap-between {
-        margin: 0 35px;
-        background-color: #404455 !important;
-        width: calc(360px - 70px) !important;
-        @media (max-width: 1024px) {
-          width: calc(260px - 70px) !important;
-        }
-        @media (max-width: 920px) {
-          width: calc(360px - 70px) !important;
-        }
-        @media (max-width: 425px) {
-          width: calc(100% - 100vh) !important;
-        }
-      }
       &.active {
-        margin: 5px 35px;
-        width: calc(100% - 70px);
-        border: solid 2px #3e4ea7;
-        border-radius: 4px;
-        background: #272730;
-        &:after {
-          content: "";
-          position: relative;
-          right: 0px;
-          top: 20px;
-          background: url("./../../../static/img/wallet_dark_active.svg");
-          background-size: cover;
-          width: 23px;
-          height: 20.5px;
-        }
+          background-color: #4a4e65;
         .wrap-in-wallet {
           margin-left: 15px;
           width: calc(100% - 55px);
@@ -467,7 +440,7 @@ body {
       }
       &:hover {
         &:not(:first-of-type) {
-          background: #272730;
+          background: #4a4e65;
           .wrap-in-wallet {
             p {
               color: #fcfcfc;
@@ -480,7 +453,6 @@ body {
         }
       }
       .wrap-in-wallet {
-        margin-left: 55px;
         input {
           width: auto;
         }
@@ -494,10 +466,10 @@ body {
     color: #f4f3fc !important;
   }
   .btn-yellow {
-    background: #28388e;
+    background: rgba(222, 223, 223, 0.2);
     color: #f4f3fc !important;
     &:hover {
-      background: #3e4ea7;
+      background: #6d718a;
     }
     &:focus,
     &:active {
@@ -511,14 +483,14 @@ body {
     }
   }
   .btn-default {
-    background: #20232a;
-    color: #f4f3fc;
+    background: #2c2c42;
+    color: #fcfcfc;
     &:hover {
-      background: #17171d;
+      background: #27272f;
     }
     &:focus,
     &:active {
-      background: #000;
+      background: #17171d;
     }
     &:disabled {
       background-color: #7c7b82;
@@ -526,59 +498,36 @@ body {
   }
   .list-panel-heading {
     h3 {
-      color: #dedfdf;
-      opacity: 1;
+      color: #fcfcfc;
     }
     p {
       color: #dedfdf;
     }
   }
   .activityList {
-    padding: 15px 30px 20px 30px;
-    background: #27272f;
     border-radius: 4px;
     .activityListBlock {
-      .list-panel-heading {
-        margin-left: 15px;
-      }
       .activity-list {
-        margin: 3px 0;
-        border-top: 2px solid rgba(40, 56, 142, .5);
-        background: transparent !important;
+        background: rgba(222, 223, 223, 0.1);
         .sent {
-          background-color: transparent !important;
+          background-color: #3f435e !important;
         }
         .status {
-          justify-content: left;
-          padding-left: 15px;
           span {
-            padding-top: 2px;
-            color: #f4f3fc;
-          }
-          &.sent {
-            span {
-              color: #5e7cd3 !important;
-            }
+            color: #fcfcfc;
           }
         }
         .details {
           padding-right: 15px;
           .info {
             p {
-              color: #f4f3fc;
+              color: #fcfcfc;
             }
           }
           .purpose {
-            color: #f4f3fc;
-            justify-content: center;
+            color: #fcfcfc;
           }
           .count {
-            min-width: 70px;
-            span {
-              padding-right: 0;
-              margin-right: 0;
-              padding-bottom: 3px;
-            }
             &.active {
               span {
                 color: #f4f3fc !important;
@@ -588,15 +537,7 @@ body {
           &.sent {
             .count {
               span {
-                color: #5e7cd3 !important;
-              }
-            }
-            .purpose {
-              color: #5e7cd3 !important;
-            }
-            .info {
-              p {
-                color: #5e7cd3 !important;
+                color: #ff6c6c !important;
               }
             }
           }
@@ -606,18 +547,12 @@ body {
         }
       }
       .result-day {
-        margin-right: 15px;
         .result-day-col {
-          color: #f4f3fc;
+          color: #fcfcfc;
           .result-day-line {
-            color: #f4f3fc;
-            padding-right: 0;
+            color: #fcfcfc;
             .sent {
-              color: #455bd6;
-            }
-            .result-day-span {
-              margin-right: 0;
-              padding-right: 0;
+              color: #ff6c6c;
             }
           }
         }
@@ -658,7 +593,7 @@ body {
       .actions {
         .item {
           &.active {
-            background-color: #4a4e65;
+            background-color: rgba(223, 223, 223, 0.07);
           }
           &:hover {
             background-color: #4a4e65;
@@ -670,10 +605,10 @@ body {
           }
           &:first-child {
             &.active {
-              background-color: #404455;
+              background-color: rgba(223, 223, 223, 0.07);
             }
             &:hover {
-              background-color: #404455;
+              background-color: rgba(223, 223, 223, 0.07)
             }
           }
         }
@@ -682,13 +617,13 @@ body {
     .balance {
       .options {
         &:hover {
-          background: #404455;
+          background: #454657;
         }
         .dropdown-options {
-          background-color: #404455;
+          background-color: #454657;
           .item {
             &:hover {
-              background: #3e4ea6;
+              background: #6d718a;
             }
             span {
               &:hover {
