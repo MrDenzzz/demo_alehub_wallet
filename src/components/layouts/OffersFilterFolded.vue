@@ -67,7 +67,9 @@
         transition all .3s ease-in
 
         .title
+            font-family MuseoSansCyrl500
             text-transform unset
+            color #fcfcfc
 
         .unfold
             cursor pointer

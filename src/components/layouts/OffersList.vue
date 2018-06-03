@@ -1,7 +1,7 @@
 <template>
     <div class="offers-list">
         <div class="offers-offer"
-             v-for="offer in offers"
+             v-for="(offer, i) in offers"
              :key="offer.id"
              :class="offer.status"
              :style="{width: 10 * offer.steps + '%'}">
@@ -22,23 +22,23 @@
                 </div>
                 <div class="contractors-list">
                     <div class="contractors-item"
-                         v-for="contractor in offerContractors(offer)"
+                         v-for="contractor in offerContractors[i]"
                          :key="contractor.id">
                         <div class="contractors-content">
                             <div class="circle"
-                                 :class="checkContractorType(contractor.type)"
+                                 :class="contractorTypeType(contractor.typeId)"
                                  @click="toggleContractorDialog($event, contractor)">
-                             <span class="initials"
-                                   @click="toggleContractorDialog($event, contractor)">
-                                 {{ contractor.initials }}
-                             </span>
+                                <span class="initials">
+                                {{ contractor.initials }}
+                                </span>
                             </div>
-                            <div class="contractors-info">
+                            <div class="contractors-info"
+                                 @click="toggleContractorDialog($event, contractor)">
                                 <p class="title">
                                     {{ contractor.name }}
                                 </p>
                                 <p class="subtitle">
-                                    {{ contractor.type }}
+                                    {{ contractorTypeName(contractor.typeId) }}
                                 </p>
                             </div>
                             <div v-for="key in contractor.keys"
@@ -121,20 +121,70 @@
         computed: {
             ...mapGetters(
                 [
+                    'types',
                     'offers',
                     'contractors',
+                    'offerContractors',
                     'selectedContractor'
                 ]
             ),
         },
         methods: {
-            offerContractors: function (offer) {
-                return this.contractors.filter(contractor => {
-                    return offer.contractorsId.find(contractorId => {
-                        return  contractorId === contractor.id;
-                    });
-                });
+            contractorType: function (contractorTypeId) {
+                return this.types.find(type => type.id === contractorTypeId);
             },
+            contractorTypeName: function (contractorTypeId) {
+                return this.contractorType(contractorTypeId).name;
+            },
+            contractorTypeType: function (contractorTypeId) {
+                return this.contractorType(contractorTypeId).type;
+            },
+            // /**
+            //  * dispatch action sortOffer to Offers.js, return sorted offer.contractorsId by contractor type priority
+            //  *
+            //  * @param offer
+            //  */
+            // sortOffer: function (offer) {
+            //     // this.$store.dispatch('sortOffer',
+            //     //     offer
+            //     // ).then(() => {
+            //     //
+            //     // }).catch(() => {
+            //     //     console.error('error with')
+            //     // });
+            //     return offer.contractorsId.sort((a, b) => {
+            //         let first = this.contractors.find(item => item.id === a),
+            //             sec = this.contractors.find(item => item.id === b);
+            //
+            //         let firstType = this.types.find(type => {
+            //                 return type.id === first.typeId;
+            //             }),
+            //             secType = this.types.find(type => {
+            //                 return type.id === sec.typeId;
+            //             });
+            //
+            //         if (firstType.priority > secType.priority)
+            //             return 1;
+            //         if (firstType.priority < secType.priority)
+            //             return -1;
+            //     });
+            // },
+            // /**
+            //  * get offer contractors
+            //  *
+            //  * @param offer
+            //  */
+            // offerContractors: function (offer) {
+            //     //делать через action
+            //     let contractorsId = this.sortOffer(offer),
+            //         contractors = [];
+            //
+            //     contractorsId.forEach(contractorId => {
+            //         contractors.push(this.contractors.find(contractor => contractor.id === contractorId));
+            //     });
+            //
+            //     return contractors;
+            // },
             toggleContractorDialog: function (e, contractor) {
                 if (!this.openedContractorDialog) {
                     this.contractorDialogCoordinates.top = e.pageY;
@@ -168,16 +218,7 @@
                 return this.selectedTheme === 'dark' ? require(`../../../static/img/${name}_dark.svg`) : require(`../../../static/img/${name}.svg`);
             },
             checkContractorType: function (type) {
-                switch (type) {
-                    case 'TS':
-                        return 'ts';
-                    case 'TS execution':
-                        return 'ts-exec';
-                    case 'Check':
-                        return 'ch';
-                    default:
-                        return 'qa'
-                }
+                return type;
             },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
@@ -381,7 +422,7 @@
                             background-color #e09a00
                             background-image unset
 
-                        .circle.ts-exec
+                        .circle.ts-ex
                             background-color #0391a6
                             background-image unset
 

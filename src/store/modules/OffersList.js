@@ -1,9 +1,38 @@
 import axios from 'axios';
 
 const state = {
+
+    types: [
+        {
+            id: 1,
+            name: 'TS',
+            type: 'ts',
+            priority: 1
+        },
+        {
+            id: 2,
+            name: 'TS execution',
+            type: 'ts-ex',
+            priority: 2
+        },
+        {
+            id: 3,
+            name: 'Check',
+            type: 'ch',
+            priority: 3
+        },
+        {
+            id: 4,
+            name: 'Quality Assurance',
+            type: 'qa',
+            priority: 4
+        }
+    ],
+
     contractors: [
         {
             id: 1,
+            typeId: 1,
             initials: 'VD',
             name: 'Vova Dmitrov',
             src: '../../static/img/logo/telegram.png',
@@ -14,13 +43,13 @@ const state = {
             githubAddress: '',
             countOfProject: 1328,
             avgCostPerProject: 7500,
-            type: 'TS', //rename to ts
             keys: [
                 '../../static/img/keys/ts-key.svg'
             ]
         },
         {
             id: 2,
+            typeId: 2,
             initials: 'DV',
             name: 'Deus Virus',
             src: '../../static/img/logo/ubuntu.png',
@@ -31,17 +60,16 @@ const state = {
             githubAddress: '',
             countOfProject: 5748,
             avgCostPerProject: 4000,
-            type: 'TS execution', //rename to ts-ex
             keys: [
                 '../../static/img/keys/ts-exec-key.svg'
             ]
         },
         {
             id: 3,
+            typeId: 3,
             initials: 'NG',
             name: 'Nicola Glumac',
             src: false,
-            type: 'Check', //rename to ch
             keys: [
                 '../../static/img/keys/check-key.svg',
                 '../../static/img/keys/check-key.svg'
@@ -49,10 +77,10 @@ const state = {
         },
         {
             id: 4,
+            typeId: 4,
             initials: 'RC',
             name: 'Rift & Co',
             src: '../../static/img/logo/ubuntu.png',
-            type: 'Quality Assurance', //rename to qa
             keys: [
                 '../../static/img/keys/qa-key.svg',
                 '../../static/img/keys/qa-key.svg'
@@ -60,20 +88,20 @@ const state = {
         },
         {
             id: 5,
+            typeId: 1,
             initials: 'QB',
             name: 'Quality Boy',
             src: '../../static/img/logo/ubuntu.png',
-            type: 'TS',
             keys: [
                 '../../static/img/keys/ts-key.svg'
             ]
         },
         {
             id: 6,
+            typeId: 2,
             initials: 'GA',
             name: 'Galvadon',
             src: '../../static/img/logo/ubuntu.png',
-            type: 'TS execution',
             keys: [
                 '../../static/img/keys/ts-exec-key.svg'
             ]
@@ -91,65 +119,7 @@ const state = {
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
-            steps: 10,
-            contractors: [
-                {
-                    id: 1,
-                    initials: 'VD',
-                    name: 'Vova Dmitrov',
-                    src: '../../static/img/logo/telegram.png',
-                    position: 'TS execution',
-                    rating: 8.1,
-                    sinceDate: 1487967146000,
-                    webAddress: '',
-                    githubAddress: '',
-                    countOfProject: 1328,
-                    avgCostPerProject: 7500,
-                    type: 'TS',
-                    keys: [
-                        '../../static/img/keys/ts-key.svg'
-                    ]
-                },
-                {
-                    id: 2,
-                    initials: 'DV',
-                    name: 'Deus Virus',
-                    src: '../../static/img/logo/ubuntu.png',
-                    position: 'Executor',
-                    rating: 9.2,
-                    sinceDate: 1487927146000,
-                    webAddress: '',
-                    githubAddress: '',
-                    countOfProject: 5748,
-                    avgCostPerProject: 4000,
-                    type: 'TS execution',
-                    keys: [
-                        '../../static/img/keys/ts-exec-key.svg'
-                    ]
-                },
-                {
-                    id: 3,
-                    initials: 'NG',
-                    name: 'Nicola Glumac',
-                    src: false,
-                    type: 'Check',
-                    keys: [
-                        '../../static/img/keys/check-key.svg',
-                        '../../static/img/keys/check-key.svg'
-                    ]
-                },
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance',
-                    keys: [
-                        '../../static/img/keys/qa-key.svg',
-                        '../../static/img/keys/qa-key.svg'
-                    ]
-                }
-            ]
+            steps: 10
         },
         {
             id: 2,
@@ -161,39 +131,7 @@ const state = {
             startDate: 1523370609000,
             finalDate: 1543588209000,
             status: 'ongoing',
-            steps: 8,
-            contractors: [
-                {
-                    id: 5,
-                    initials: 'QB',
-                    name: 'Quality Boy',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'TS',
-                    keys: [
-                        '../../static/img/keys/ts-key.svg'
-                    ]
-                },
-                {
-                    id: 6,
-                    initials: 'GA',
-                    name: 'Galvadon',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'TS execution',
-                    keys: [
-                        '../../static/img/keys/ts-exec-key.svg'
-                    ]
-                },
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance',
-                    keys: [
-                        '../../static/img/keys/qa-key.svg'
-                    ]
-                }
-            ]
+            steps: 8
         },
         {
             id: 3,
@@ -205,16 +143,7 @@ const state = {
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'canceled',
-            steps: 1,
-            contractors: [
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance'
-                }
-            ]
+            steps: 1
         },
         {
             id: 4,
@@ -226,16 +155,7 @@ const state = {
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'timelag',
-            steps: 1,
-            contractors: [
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance'
-                }
-            ]
+            steps: 1
         },
         {
             id: 5,
@@ -247,51 +167,7 @@ const state = {
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
-            steps: 10,
-            contractors: [
-                {
-                    id: 1,
-                    initials: 'VD',
-                    name: 'Vova Dmitrov',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'TS',
-                    keys: [
-                        '../../static/img/keys/ts-key.svg'
-                    ]
-                },
-                {
-                    id: 2,
-                    initials: 'DV',
-                    name: 'Deus Virus',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'TS execution',
-                    keys: [
-                        '../../static/img/keys/ts-exec-key.svg'
-                    ]
-                },
-                {
-                    id: 3,
-                    initials: 'NG',
-                    name: 'Nicola Glumac',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Check',
-                    keys: [
-                        '../../static/img/keys/check-key.svg',
-                        '../../static/img/keys/check-key.svg'
-                    ]
-                },
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance',
-                    keys: [
-                        '../../static/img/keys/qa-key.svg',
-                        '../../static/img/keys/qa-key.svg'
-                    ]
-                }
-            ]
+            steps: 10
         },
         {
             id: 6,
@@ -303,39 +179,7 @@ const state = {
             startDate: 1523370609000,
             finalDate: 1543588209000,
             status: 'ongoing',
-            steps: 8,
-            contractors: [
-                {
-                    id: 5,
-                    initials: 'QB',
-                    name: 'Quality Boy',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'TS',
-                    keys: [
-                        '../../static/img/keys/ts-key.svg'
-                    ]
-                },
-                {
-                    id: 6,
-                    initials: 'GA',
-                    name: 'Galvadon',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'TS execution',
-                    keys: [
-                        '../../static/img/keys/ts-exec-key.svg'
-                    ]
-                },
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance',
-                    keys: [
-                        '../../static/img/keys/qa-key.svg'
-                    ]
-                }
-            ]
+            steps: 8
         },
         {
             id: 7,
@@ -349,15 +193,6 @@ const state = {
             status: 'canceled',
             projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
-            contractors: [
-                {
-                    id: 4,
-                    initials: 'RC',
-                    name: 'Rift & Co',
-                    src: '../../static/img/logo/ubuntu.png',
-                    type: 'Quality Assurance'
-                }
-            ]
         }
     ],
 
@@ -421,6 +256,12 @@ const actions = {
             resolve('success change filters condition');
         });
     },
+    sortOffer: ({commit}, offer) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_SORT_OFFER', offer);
+            resolve('success sort offer');
+        });
+    },
 };
 
 const mutations = {
@@ -430,12 +271,53 @@ const mutations = {
     SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
         state.filtersCondition = filters;
     },
+    SUCCESS_SORT_OFFER: (state, offer) => {
+
+    }
 };
 
 const getters = {
+    types: state => state.types,
     selectedContractor: state => state.selectedContractor,
     offers: state => state.offers,
     contractors: state => state.contractors,
+    /**
+     *
+     * @param state
+     * @returns {*[]}
+     */
+    offerContractors: state => {
+        let contractors = [];
+
+        state.offers.forEach((offer, i) => {
+            contractors.push([]);
+
+            offer.contractorsId.sort((a, b) => {
+                let first = state.contractors.find(item => item.id === a),
+                    sec = state.contractors.find(item => item.id === b);
+
+                let firstType = state.types.find(type => {
+                        return type.id === first.typeId;
+                    }),
+                    secType = state.types.find(type => {
+                        return type.id === sec.typeId;
+                    });
+
+                if (firstType.priority > secType.priority)
+                    return 1;
+                if (firstType.priority < secType.priority)
+                    return -1;
+            });
+
+            offer.contractorsId.forEach(contractorId => {
+                contractors[i].push(state.contractors.find(contractor => contractor.id === contractorId));
+            });
+        });
+
+        console.log(contractors, 'contractors');
+
+        return contractors;
+    },
     filtersCondition: state => state.filtersCondition
 };
 
