@@ -220,28 +220,32 @@ const state = {
 
     filtersCondition: [
         {
-            id: 'ts',
+            id: 1,
+            typeId: 1,
             title: 'TS',
             opened: false,
             folded: false,
             queue: 0
         },
         {
-            id: 'ts-ex',
+            id: 2,
+            typeId: 2,
             title: 'EX',
             opened: false,
             folded: false,
             queue: 0
         },
         {
-            id: 'ch',
+            id: 3,
+            typeId: 3,
             title: 'CH',
             opened: false,
             folded: false,
             queue: 0
         },
         {
-            id: 'qa',
+            id: 4,
+            typeId: 4,
             title: 'QA',
             opened: false,
             folded: false,
@@ -278,10 +282,20 @@ const actions = {
             resolve('success change filters condition');
         });
     },
-    sortOffer: ({commit}, offer) => {
+    makeFilterOfContractorType: ({commit}, id) => {
         return new Promise((resolve) => {
-            commit('SUCCESS_SORT_OFFER', offer);
-            resolve('success sort offer');
+            console.log(id, 'id do filter of');
+            commit('SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE');
+            // commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
+            // resolve('success change filters condition');
+        });
+    },
+    cancelFilterOfContractorType: ({commit}, id) => {
+        return new Promise((resolve) => {
+            console.log(id, 'id cancel filter of');
+            commit('SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE');
+            // commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
+            // resolve('success change filters condition');
         });
     },
 };
@@ -293,9 +307,12 @@ const mutations = {
     SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
         state.filtersCondition = filters;
     },
-    SUCCESS_SORT_OFFER: (state, offer) => {
+    SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE: (state) => {
 
-    }
+    },
+    SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE: (state) => {
+
+    },
 };
 
 const getters = {

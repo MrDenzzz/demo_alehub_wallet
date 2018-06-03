@@ -3,8 +3,8 @@
         <button type="button"
                 class="circle circle-gray circle-filter"
                 v-for="item in filters"
-                :id="item.id"
-                :class="calcClass(item.id, item.opened, item.folded)"
+                :id="contractorTypeType(item.id)"
+                :class="calcClass(contractorTypeType(item.id), item.opened, item.folded)"
                 @click="changeStateButtonFilter(item.id)">
             <span class="title">
                 {{ item.title }}
@@ -30,26 +30,56 @@
             }
         },
         watch: {
+            /**
+             * when the property filterElementOption changes, the filter state changes accordingly
+             *
+             * @param opt changed option
+             */
             filterElementOptions: function (opt) {
                 this.changeStateButtonFilter(opt.id);
                 this.foldAnotherFilter();
-                let current = this.currentFilter(opt.id);
-                current.opened = opt.opened;
-                current.folded = opt.folded;
+                this.currentFilter(opt.id).opened = opt.opened;
+                this.currentFilter(opt.id).folded = opt.folded;
                 this.dispatchChangeFilter();
             }
         },
         computed: {
             ...mapGetters(
                 [
+                    'types',
                     'filtersCondition'
                 ]
             )
         },
         methods: {
+            /**
+             * return data of type contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorType: function (contractorTypeId) {
+                return this.types.find(type => type.id === contractorTypeId);
+            },
+            /**
+             * return type of contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorTypeType: function (contractorTypeId) {
+                return this.contractorType(contractorTypeId).type;
+            },
+            /**
+             *
+             * @param id
+             * @param opened
+             * @param folded
+             * @returns {*}
+             */
             calcClass: function (id, opened, folded) {
                 if (!this.filters.find(item => item.id === id) &&
-                    typeof opened === 'boolean' && typeof folded === 'boolean') {
+                    typeof opened !== 'boolean' && typeof folded !== 'boolean') {
                     console.error('Wrong arguments value');
                     return false;
                 }
@@ -64,6 +94,11 @@
                 console.error('Missing IF statement in calcClass');
                 return false;
             },
+            /**
+             *
+             * @param id
+             * @returns {*}
+             */
             currentFilter: function (id) {
                 return this.filters.find(item => item.id === id);
             },
@@ -76,6 +111,10 @@
                     }
                 });
             },
+            /**
+             *
+             * @param id
+             */
             changeFoldQueue: function (id) {
                 let current = this.currentFilter(id);
 
@@ -90,6 +129,12 @@
                     current.queue = 0;
                 }
             },
+            /**
+             *
+             * @param id
+             * @param opened
+             * @param folded
+             */
             setCorrectStateOtherButtonFilter: function (id, opened, folded) {
                 let others = this.filters.filter(item => item.id !== id);
 
@@ -103,6 +148,9 @@
                     }
                 });
             },
+            /**
+             *
+             */
             dispatchChangeFilter: function () {
                 this.$store.dispatch('changeFiltersCondition',
                     this.filters
@@ -112,6 +160,34 @@
                     console.log('error change filters condition');
                 });
             },
+            /**
+             *
+             */
+            dispatchMakeFilterOfContractorType: function (id) {
+                this.$store.dispatch('makeFilterOfContractorType',
+                id
+                ).then(() => {
+
+                }).catch(() => {
+
+                });
+            },
+            /**
+             *
+             */
+            dispatchCancelFilterOfContractorType: function (id) {
+                this.$store.dispatch('cancelFilterOfContractorType',
+                    id
+                ).then(() => {
+
+                }).catch(() => {
+
+                });
+            },
+            /**
+             *
+             * @param id
+             */
             changeStateButtonFilter: function (id) {
                 let current = this.currentFilter(id);
 
@@ -119,6 +195,7 @@
                     current.opened = true;
                     this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
                     this.dispatchChangeFilter();
+                    this.dispatchMakeFilterOfContractorType(id);
                 } else if (current.opened && !current.folded) {
                     current.opened = false;
                     current.folded = true;
@@ -128,6 +205,7 @@
                     current.folded = false;
                     this.changeFoldQueue(id);
                     this.dispatchChangeFilter();
+                    this.dispatchCancelFilterOfContractorType(id);
                 }
             },
         },

@@ -1,5 +1,4 @@
 <template>
-    <!--:style="{ 'left': (queue - 1) * 153 + 'px' }"-->
     <transition name="fade-bottom">
         <div class="folded-filter"
              :style="{ 'bottom': queue * 30 + 'px' }">
@@ -22,7 +21,7 @@
         },
         props: {
             id: {
-                type: String,
+                type: Number,
                 required: true
             },
             title: {

@@ -385,21 +385,37 @@
                                 font-size 16px
                                 color #fcfcfc
 
-                        .circle.qa
-                            background-color #7e20c0
-                            background-image unset
+                            &.ts
+                                background-color #b63c2c
+                                background-image unset
 
-                        .circle.ch
-                            background-color #e09a00
-                            background-image unset
+                            &.ts-ex
+                                background-color #0391a6
+                                background-image unset
 
-                        .circle.ts-ex
-                            background-color #0391a6
-                            background-image unset
+                            &.ch
+                                background-color #e09a00
+                                background-image unset
 
-                        .circle.ts
-                            background-color #b63c2c
-                            background-image unset
+                            &.qa
+                                background-color #7e20c0
+                                background-image unset
+
+                            &.ts__unset
+                                background-color #d29792
+                                background-image unset
+
+                            &.ts-ex__unset
+                                background-color #78c2cf
+                                background-image unset
+
+                            &.ch__unset
+                                background-color #e7c67c
+                                background-image unset
+
+                            &.qa__unset
+                                background-color #b689dc
+                                background-image unset
 
                         .title
                             margin 0

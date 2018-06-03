@@ -63,6 +63,7 @@
 
                                 <offers-filter v-for="item in filters"
                                                v-if="item.opened"
+                                               :key="item.id"
                                                :id="item.id"
                                                :offset-top="filterOffsetTop(item.id)"/>
 
@@ -197,6 +198,7 @@
         computed: {
             ...mapGetters(
                 [
+                    'types',
                     'offers',
                     'contractors',
                     'filtersCondition'
@@ -210,6 +212,24 @@
             }
         },
         methods: {
+            /**
+             * return data of type contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorType: function (contractorTypeId) {
+                return this.types.find(type => type.id === contractorTypeId);
+            },
+            /**
+             * return type of contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorTypeType: function (contractorTypeId) {
+                return this.contractorType(contractorTypeId).type;
+            },
             getCoords: function (elem) {
                 if (!elem)
                     return false;
@@ -225,7 +245,7 @@
                     return '0px';
                 }
 
-                return this.getCoords(document.getElementById(id)).top -
+                return this.getCoords(document.getElementById(this.contractorTypeType(id))).top -
                        this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
             },
 
