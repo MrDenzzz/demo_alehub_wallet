@@ -161,27 +161,31 @@
                 });
             },
             /**
+             * dispatch action makeFilterOfContractorType
              *
+             * @param typeId
              */
-            dispatchMakeFilterOfContractorType: function (contractorId) {
+            dispatchMakeFilterOfContractorType: function (typeId) {
                 this.$store.dispatch('makeFilterOfContractorType',
-                    contractorId
-                ).then(() => {
-
-                }).catch(() => {
-
+                    typeId
+                ).then((resp) => {
+                    // console.log(resp);
+                }).catch((resp) => {
+                    console.error(resp);
                 });
             },
             /**
+             * dispatch action cancelFilterOfContractorType
              *
+             * @param typeId
              */
-            dispatchCancelFilterOfContractorType: function (contractorId) {
+            dispatchCancelFilterOfContractorType: function (typeId) {
                 this.$store.dispatch('cancelFilterOfContractorType',
-                    contractorId
-                ).then(() => {
-
-                }).catch(() => {
-
+                    typeId
+                ).then((resp) => {
+                    // console.log(resp);
+                }).catch((resp) => {
+                    console.error(resp);
                 });
             },
             /**

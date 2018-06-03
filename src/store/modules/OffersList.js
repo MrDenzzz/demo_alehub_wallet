@@ -370,20 +370,16 @@ const actions = {
             resolve('success change filters condition');
         });
     },
-    makeFilterOfContractorType: ({commit}, contractorId) => {
+    makeFilterOfContractorType: ({commit}, typeId) => {
         return new Promise((resolve) => {
-            console.log(contractorId, 'id do filter of');
-            commit('SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE', contractorId);
-            // commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
-            // resolve('success change filters condition');
+            commit('SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE', typeId);
+            resolve('success make filter of contractor type');
         });
     },
-    cancelFilterOfContractorType: ({commit}, contractorId) => {
+    cancelFilterOfContractorType: ({commit}, typeId) => {
         return new Promise((resolve) => {
-            console.log(contractorId, 'id cancel filter of');
-            commit('SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE', contractorId);
-            // commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
-            // resolve('success change filters condition');
+            commit('SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE', typeId);
+            resolve('success cancel filter of contractor type');
         });
     },
 };
@@ -395,11 +391,11 @@ const mutations = {
     SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
         state.filtersCondition = filters;
     },
-    SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE: (state, contractorId) => {
-        let selectedContractors = state.contractors.filter(contractor => contractor.typeId === contractorId);
+    SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE: (state, typeId) => {
+        let selectedContractors = state.contractors.filter(contractor => contractor.typeId === typeId);
 
-        if (!state.filteredContractorsTypes.find(type => type === contractorId))
-            state.filteredContractorsTypes.push(contractorId);
+        if (!state.filteredContractorsTypes.find(type => type === typeId))
+            state.filteredContractorsTypes.push(typeId);
 
         state.filteredOffers = state.filteredOffers.filter((offer, i, arr) => {
             return offer.contractorsId.find(id => {
@@ -408,11 +404,32 @@ const mutations = {
                 });
             });
         });
-
-        console.log(state.filteredOffers, 'state.filteredOffers');
-        console.log(selectedContractors, 'selectedContractors');
     },
-    SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE: (state, contractorId) => {
+    SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE: (state, typeId) => {
+        let selectedTypeIndex = state.filteredContractorsTypes.findIndex(type => type === typeId),
+            selectedContractors = 0;
+
+        if (selectedTypeIndex || selectedTypeIndex === 0)
+            state.filteredContractorsTypes.splice(selectedTypeIndex, 1);
+
+        if (state.filteredContractorsTypes.length === 0) {
+            state.filteredOffers = state.offers;
+        } else {
+            selectedContractors = state.contractors.filter(contractor => {
+                return state.filteredContractorsTypes.find(filteredContractorType => {
+                    return filteredContractorType === contractor.typeId;
+                });
+            });
+
+            state.filteredOffers = state.offers.filter((offer, i, arr) => {
+                return offer.contractorsId.find(id => {
+                    return selectedContractors.find(selectedContractor => {
+                        return selectedContractor.id === id;
+                    });
+                });
+            });
+        }
+
 
     },
 };
@@ -426,7 +443,7 @@ const getters = {
      * return sort array of contractors
      *
      * @param state
-     * @returns {Array}
+     * @returns {Array} array sorted contractors
      */
     offerContractors: state => {
         let contractors = [];
@@ -463,7 +480,7 @@ const getters = {
      * return sort array of contractors from filtered offers list
      *
      * @param state
-     * @returns {Array}
+     * @returns {Array} array sorted contractors
      */
     filteredOfferContractors: state => {
         let contractors = [];
