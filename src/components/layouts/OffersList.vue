@@ -41,21 +41,24 @@
                                     {{ contractorTypeName(contractor.typeId) }}
                                 </p>
                             </div>
-                            <div v-for="key in contractor.keys"
-                                 :key="key.id"
-                                 class="key-icon">
-                                <img :src="key" alt="key">
-                            </div>
+                            <!--<div class="key-icon"-->
+                                 <!--v-for="key in contractor.keys"-->
+                                 <!--:key="key.id">-->
+                                <!--<img :src="key" alt="key">-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
                 <div class="circle circle-big"
                      :class="'circle-' + offer.status">
-                    <img :src="getStatusIcon(offer.status, 'circles')" alt="">
+                    <img :src="getStatusIcon(offer.status, 'circles')"
+                         :alt="offers.status">
                 </div>
             </div>
             <div class="progress-row">
-                <div class="progress-bar" :class="offer.status">
+                <div class="progress-bar"
+                     :id="progressBarId(offer.id)"
+                     :class="offer.status">
                     <img :src="getStatusIcon(offer.status, 'arrows')"
                          :alt="offer.status"
                          class="arrow">
@@ -64,6 +67,13 @@
                          :key="n"
                          :class="{ 'one-step': offer.steps <= 1 }">
                         Month
+                    </div>
+                    <div class="key-block"
+                         :id="'key' + offer.id + key.id"
+                         v-for="key in offer.keys"
+                         @click="test($event)"
+                         :key="offer.id.toString() + key.id.toString()">
+                        <img :src="key.src" alt="key">
                     </div>
                 </div>
             </div>
@@ -85,6 +95,8 @@
 
 <script>
     import OffersContractorDialog from './OffersContractorDialog';
+
+    import moment from 'moment';
 
     import {mapGetters} from 'vuex';
 
@@ -132,10 +144,58 @@
             ),
         },
         methods: {
+            test: function (event) {
+                console.log(event.currentTarget);
+            },
+            /**
+             *
+             * @param {Number} offerId
+             */
+            progressBarId: function (offerId) {
+                return 'progress-bar-' + offerId;
+            },
+            /**
+             *
+             *
+             * @param {Object} key
+             * @param {number} offerStart
+             * @param {number} offerEnd
+             */
+            calcKeyCoordinates: function (key, offerStart, offerEnd, offerId) {
+                let diff = offerEnd - offerStart,
+                    diffKeyStart = offerEnd - key.start,
+                    currentProgressBar = '';
+
+                    console.log(document.getElementById(offerId), '123123');
+                // let promise = new Promise((resolve, reject) => {
+                //
+                //     a = document.getElementById(offerId);
+                //
+                //     if (a)
+                //         resolve(true);
+                //     else
+                //         reject(true);
+                // });
+
+                // promise.then(() => {
+                //     console.log('resolve');
+                // }, () => {
+                //     console.log('reject');
+                // });
+
+                // setTimeout(() => {
+
+                    // currentProgressBar = document.getElementById(offerId.toString());
+                    // console.log(currentProgressBar.offsetWidth, 'currentProgressBar');
+                    // let offsetRightKey = currentProgressBar.offsetWidth * (diffKeyStart / diff);
+                    // console.log(offsetRightKey, 'offsetRightKey');
+                    // return offsetRightKey + 'px';
+                // }, 0);
+            },
             /**
              * return data of type contractor
              *
-             * @param contractorTypeId
+             * @param {number} contractorTypeId
              * @returns {*}
              */
             contractorType: function (contractorTypeId) {
@@ -144,7 +204,7 @@
             /**
              * return name of type contractor
              *
-             * @param contractorTypeId
+             * @param {number} contractorTypeId
              * @returns {*}
              */
             contractorTypeName: function (contractorTypeId) {
@@ -153,12 +213,19 @@
             /**
              * return type of contractor
              *
-             * @param contractorTypeId
+             * @param {number} contractorTypeId
              * @returns {*}
              */
             contractorTypeType: function (contractorTypeId) {
                 return this.contractorType(contractorTypeId).type;
             },
+            /**
+             *
+             *
+             * @param {Object} e
+             * @param {Object} contractor
+             * @returns {boolean}
+             */
             toggleContractorDialog: function (e, contractor) {
                 this.contractorDialogCoordinates.top = e.pageY;
                 this.contractorDialogCoordinates.left = e.pageX;
@@ -194,8 +261,7 @@
                 return type;
             },
             toFormatDate: function (date) {
-                let dateFormat = new Date(date);
-                return dateFormat.toDateString();
+                return moment(date).format('DD MMMM, YYYY');
             },
             getStatusIcon: function (status, iconType) {
                 switch (status) {
@@ -211,6 +277,20 @@
             }
         },
         mounted() {
+            console.log(document.getElementById('key11'), '123123');
+
+            for (let i = 0; i < this.offers.length; i++) {
+
+                let currentProgressBar = document.getElementById(this.progressBarId(this.offers[i].id));
+
+                for (let j = 0; j < this.offers[i].keys.length; j++) {
+
+                    let diff = this.offers[i].finalDate - this.offers[i].startDate,
+                        diffKeyStart = this.offers[i].finalDate - this.offers[i].keys[j].start;
+
+                    document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) +'px';
+                }
+            }
 
         }
     }
@@ -271,6 +351,51 @@
             .row-top
                 display flex
                 width 100%
+
+                .circle
+                    width 36px
+                    min-width 36px
+                    height 36px
+                    border-radius 50%
+                    display flex
+                    justify-content center
+                    align-items center
+                    flex-direction column
+                    border none
+                    -webkit-transition all .3s ease
+                    -moz-transition all .3s ease
+                    -o-transition all .3s ease
+                    transition all .3s ease
+
+                    &.circle-big
+                        width 48px
+                        height 48px
+                        min-width 48px
+                        min-height 48px
+
+                    &.circle-completed
+                        background-image unset
+                        border-style solid
+                        border-width 2px
+                        border-color #fed355
+
+                    &.circle-ongoing
+                        background-image unset
+                        border-style solid
+                        border-width 2px
+                        border-color #2bd65c
+
+                    &.circle-canceled
+                        background-image unset
+                        border-style solid
+                        border-width 2px
+                        border-color #331010
+
+                    &.circle-timelag
+                        background-image unset
+                        border-style solid
+                        border-width 2px
+                        border-color #ff4f4f
 
                 .circle-big
                     @media (max-width 860px)
@@ -338,7 +463,6 @@
                             z-index 3
                             position absolute
                             top 54px
-                            left -10px
 
                             @media (max-width 860px)
                                 top 46px
@@ -346,8 +470,8 @@
                             @media (max-width 620px)
                                 display none
 
-                            &:nth-child(4)
-                                left -300px
+                            //&:nth-child(4)
+                            //    left -300px
 
                         .contractors-info
                             cursor pointer
@@ -498,6 +622,9 @@
                         @media (max-width 860px)
                             left
                         -78px
+
+                    .key-block
+                        position absolute
 
             .row-bottom
                 display flex

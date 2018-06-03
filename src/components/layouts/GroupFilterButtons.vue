@@ -175,12 +175,12 @@
                 });
             },
             /**
-             * dispatch action cancelFilterOfContractorType
+             * dispatch action resetFilterOfContractorType
              *
              * @param typeId
              */
-            dispatchCancelFilterOfContractorType: function (typeId) {
-                this.$store.dispatch('cancelFilterOfContractorType',
+            dispatchResetFilterOfContractorType: function (typeId) {
+                this.$store.dispatch('cancelResetOfContractorType',
                     typeId
                 ).then((resp) => {
                     // console.log(resp);
@@ -209,7 +209,7 @@
                     current.folded = false;
                     this.changeFoldQueue(id);
                     this.dispatchChangeFilter();
-                    this.dispatchCancelFilterOfContractorType(id);
+                    this.dispatchResetFilterOfContractorType(id);
                 }
             },
         },

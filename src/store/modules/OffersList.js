@@ -61,7 +61,7 @@ const state = {
             countOfProject: 321,
             avgCostPerProject: 1000,
             keys: [
-                '../../static/img/keys/ts-exec-key.svg'
+                '../../static/img/keys/ts-ex-key.svg'
             ]
         },
         {
@@ -77,8 +77,8 @@ const state = {
             countOfProject: 3,
             avgCostPerProject: 350,
             keys: [
-                '../../static/img/keys/check-key.svg',
-                '../../static/img/keys/check-key.svg'
+                '../../static/img/keys/ch-key.svg',
+                '../../static/img/keys/ch-key.svg'
             ]
         },
         {
@@ -127,7 +127,7 @@ const state = {
             countOfProject: 130204,
             avgCostPerProject: 1300,
             keys: [
-                '../../static/img/keys/ts-exec-key.svg'
+                '../../static/img/keys/ts-ex-key.svg'
             ]
         },
     ],
@@ -139,6 +139,32 @@ const state = {
             company: 'Serokell',
             logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1525046400000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529884800000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531180800000,
+                    end: 1536537600000,
+                    src: '../../static/img/keys/ch-key.svg'
+                },
+                {
+                    id: 4,
+                    start: 1535587200000,
+                    end: 1538697600000,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
@@ -151,6 +177,26 @@ const state = {
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/angular.png',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1526774400,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529280000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531958400,
+                    end: 0,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
             status: 'ongoing',
@@ -163,6 +209,7 @@ const state = {
             company: 'Nike',
             logoSrc: '../../static/img/logo/telegram.png',
             to: '/offer',
+            keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'canceled',
@@ -175,6 +222,7 @@ const state = {
             company: 'Nike',
             logoSrc: '../../static/img/logo/angular.png',
             to: '/offer',
+            keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'timelag',
@@ -187,6 +235,32 @@ const state = {
             company: 'Serokell',
             logoSrc: '../../static/img/logo/twitter.jpg',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1525046400000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529884800000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531180800000,
+                    end: 1536537600000,
+                    src: '../../static/img/keys/ch-key.svg'
+                },
+                {
+                    id: 4,
+                    start: 1535587200000,
+                    end: 1538697600000,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
@@ -199,6 +273,26 @@ const state = {
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/ubuntu.png',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1526774400,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529280000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531958400,
+                    end: 0,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
             status: 'ongoing',
@@ -211,6 +305,7 @@ const state = {
             company: 'Nike',
             logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
+            keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'canceled',
@@ -226,6 +321,32 @@ const state = {
             company: 'Serokell',
             logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1525046400000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529884800000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531180800000,
+                    end: 1536537600000,
+                    src: '../../static/img/keys/ch-key.svg'
+                },
+                {
+                    id: 4,
+                    start: 1535587200000,
+                    end: 1538697600000,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
@@ -238,6 +359,26 @@ const state = {
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/angular.png',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1526774400000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529280000000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531958400000,
+                    end: 0,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
             status: 'ongoing',
@@ -250,6 +391,7 @@ const state = {
             company: 'Nike',
             logoSrc: '../../static/img/logo/telegram.png',
             to: '/offer',
+            keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'canceled',
@@ -262,6 +404,7 @@ const state = {
             company: 'Nike',
             logoSrc: '../../static/img/logo/angular.png',
             to: '/offer',
+            keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'timelag',
@@ -274,6 +417,32 @@ const state = {
             company: 'Serokell',
             logoSrc: '../../static/img/logo/twitter.jpg',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1525046400000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529884800000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531180800000,
+                    end: 1536537600000,
+                    src: '../../static/img/keys/ch-key.svg'
+                },
+                {
+                    id: 4,
+                    start: 1535587200000,
+                    end: 1538697600000,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
             status: 'completed',
@@ -286,6 +455,26 @@ const state = {
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/ubuntu.png',
             to: '/offer',
+            keys: [
+                {
+                    id: 1,
+                    start: 1526774400000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-key.svg'
+                },
+                {
+                    id: 2,
+                    start: 1529280000000,
+                    end: 0,
+                    src: '../../static/img/keys/ts-ex-key.svg'
+                },
+                {
+                    id: 3,
+                    start: 1531958400000,
+                    end: 0,
+                    src: '../../static/img/keys/qa-key.svg'
+                }
+            ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
             status: 'ongoing',
@@ -298,6 +487,7 @@ const state = {
             company: 'Nike',
             logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
+            keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
             status: 'canceled',
@@ -376,9 +566,9 @@ const actions = {
             resolve('success make filter of contractor type');
         });
     },
-    cancelFilterOfContractorType: ({commit}, typeId) => {
+    cancelResetOfContractorType: ({commit}, typeId) => {
         return new Promise((resolve) => {
-            commit('SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE', typeId);
+            commit('SUCCESS_RESET_FILTER_OF_CONTRACTOR_TYPE', typeId);
             resolve('success cancel filter of contractor type');
         });
     },
@@ -405,7 +595,7 @@ const mutations = {
             });
         });
     },
-    SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE: (state, typeId) => {
+    SUCCESS_RESET_FILTER_OF_CONTRACTOR_TYPE: (state, typeId) => {
         let selectedTypeIndex = state.filteredContractorsTypes.findIndex(type => type === typeId),
             selectedContractors = 0;
 
