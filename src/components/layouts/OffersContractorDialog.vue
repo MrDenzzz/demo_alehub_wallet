@@ -2,18 +2,22 @@
     <div class="dialog"
          :style="{ 'top': offsetY, 'left': offsetX }">
         <div class="rating">
-            <span>{{ rating }}</span>
+            <span>
+                {{ rating }}
+            </span>
         </div>
         <div class="save">
             <img src="../../../static/img/star-off.svg" alt="save contractor">
         </div>
         <div class="header">
             <div class="logo__wrap">
-                <img class="logo" :src="contractor.src"  v-if="contractor.src"
-                     alt="">
-
-                <div class="placeholder" v-else
-                     :class="checkContractorType(contractor.type)">
+                <img class="logo"
+                     v-if="contractor.src"
+                     :src="contractor.src"
+                     :alt="contractor.name">
+                <div class="placeholder"
+                     :class="contractorTypeType(contractor.typeId)"
+                     v-else>
                     <span class="initials">
                         {{ contractor.initials }}
                     </span>
@@ -25,7 +29,7 @@
                     {{ contractor.name }}
                 </h4>
                 <h5 class="position">
-                    {{ position }}
+                    {{ contractorTypeName(contractor.typeId) }}
                 </h5>
                 <p class="date">
                     {{ sinceDate }}
@@ -37,19 +41,25 @@
                 <span class="left">
                     Web
                 </span>
-                <a class="right" :href="webAddress" target="_blank" v-if="isWebAddress">
-                    {{ webAddress }}
+                <a class="right" target="_blank"
+                   v-if="isWebAddress" :href="webAddress">
+                    {{ webAddressShort }}
                 </a>
-                <span v-else>{{ webAddress }}</span>
+                <span v-else>
+                    {{ webAddress }}
+                </span>
             </div>
             <div class="line">
                 <span class="left">
                     GitHub
                 </span>
-                <a class="right" :href="githubAddress" target="_blank" v-if="isGithubAddress">
+                <a class="right" target="_blank"
+                   v-if="isGithubAddress" :href="githubAddress">
                     {{ githubAddress }}
                 </a>
-                <span v-else>{{ githubAddress }}</span>
+                <span v-else>
+                    {{ githubAddress }}
+                </span>
             </div>
             <div class="line">
                 <span class="left">
@@ -64,7 +74,10 @@
                     Avg. cost per week
                 </span>
                 <span class="right">
-                    {{ avgCostPerProject }}
+                    <formatting-price :value="avgCostPerProject"/>
+                    <span class="currency">
+                        {{ currency }}
+                    </span>
                 </span>
             </div>
         </div>
@@ -77,10 +90,17 @@
 </template>
 
 <script>
+    import FormattingPrice from './FormattingPrice';
+
+    import moment from 'moment';
+
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'OffersContractorDialog',
+        components: {
+            FormattingPrice
+        },
         props: {
             coordinates: {
                 type: Object,
@@ -93,6 +113,7 @@
         computed: {
             ...mapGetters(
                 [
+                    'types',
                     'selectedContractor'
                 ]
             ),
@@ -115,10 +136,10 @@
                 let date = new Date(this.contractor.sinceDate);
 
                 if (Object.prototype.toString.call(date) === '[object Date]') {
-                    if (isNaN(date.getTime())) {  // d.valueOf() could also work
+                    if (isNaN(date.getTime())) {
                         return 'date not defined';
                     } else {
-                        return date;
+                        return moment(this.contractor.sinceDate).format('DD MMMM, YYYY');
                     }
                 } else {
                     return 'date not defined';
@@ -129,6 +150,9 @@
             },
             webAddress: function () {
                 return (this.contractor.webAddress) ? this.contractor.webAddress: 'not found';
+            },
+            webAddressShort: function () {
+                return this.contractor.webAddress.replace(/(^\w+:|^)\/\//, '');
             },
             isGithubAddress: function () {
                 return this.contractor.githubAddress;
@@ -142,8 +166,38 @@
             avgCostPerProject: function () {
                 return (this.contractor.avgCostPerProject) ? this.contractor.avgCostPerProject : 'not found';
             },
+            currency: function () {
+                return '$';
+            }
         },
         methods: {
+            /**
+             * return data of type contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorType: function (contractorTypeId) {
+                return this.types.find(type => type.id === contractorTypeId);
+            },
+            /**
+             * return name of type contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorTypeName: function (contractorTypeId) {
+                return this.contractorType(contractorTypeId).name;
+            },
+            /**
+             * return type of contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
+            contractorTypeType: function (contractorTypeId) {
+                return this.contractorType(contractorTypeId).type;
+            },
             checkContractorType: function (type) {
                 switch (type) {
                     case 'TS':
@@ -286,6 +340,7 @@
 
         .body
             flex-basis 65%
+            padding 10px 0
             display flex
             flex-direction column
             justify-content space-around

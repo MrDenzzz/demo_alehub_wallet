@@ -20,9 +20,6 @@
             value: {
                 type: [String, Number],
                 required: true
-            },
-            balance: {
-                type: Boolean,
             }
         },
         methods: {

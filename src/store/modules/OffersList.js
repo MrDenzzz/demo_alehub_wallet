@@ -36,11 +36,10 @@ const state = {
             initials: 'VD',
             name: 'Vova Dmitrov',
             src: '../../static/img/logo/telegram.png',
-            position: 'TS execution',
             rating: 8.1,
             sinceDate: 1487967146000,
-            webAddress: '',
-            githubAddress: '',
+            webAddress: 'https://vova-dmitrov.ru',
+            githubAddress: '/vova-dmitrov',
             countOfProject: 1328,
             avgCostPerProject: 7500,
             keys: [
@@ -53,13 +52,12 @@ const state = {
             initials: 'DV',
             name: 'Deus Virus',
             src: '../../static/img/logo/ubuntu.png',
-            position: 'Executor',
             rating: 9.2,
             sinceDate: 1487927146000,
-            webAddress: '',
-            githubAddress: '',
-            countOfProject: 5748,
-            avgCostPerProject: 4000,
+            webAddress: 'https://deus-virus.com',
+            githubAddress: '/deus-virus',
+            countOfProject: 321,
+            avgCostPerProject: 1000,
             keys: [
                 '../../static/img/keys/ts-exec-key.svg'
             ]
@@ -70,6 +68,12 @@ const state = {
             initials: 'NG',
             name: 'Nicola Glumac',
             src: false,
+            rating: 9.9,
+            sinceDate: 1487927146000,
+            webAddress: '',
+            githubAddress: '/glumac',
+            countOfProject: 3,
+            avgCostPerProject: 350,
             keys: [
                 '../../static/img/keys/check-key.svg',
                 '../../static/img/keys/check-key.svg'
@@ -81,6 +85,12 @@ const state = {
             initials: 'RC',
             name: 'Rift & Co',
             src: '../../static/img/logo/ubuntu.png',
+            rating: 7.5,
+            sinceDate: 1487927146000,
+            webAddress: 'https://rift.io',
+            githubAddress: '/rift',
+            countOfProject: 230,
+            avgCostPerProject: 1010,
             keys: [
                 '../../static/img/keys/qa-key.svg',
                 '../../static/img/keys/qa-key.svg'
@@ -92,6 +102,12 @@ const state = {
             initials: 'QB',
             name: 'Quality Boy',
             src: '../../static/img/logo/ubuntu.png',
+            rating: 6,
+            sinceDate: 1487927146000,
+            webAddress: '',
+            githubAddress: '',
+            countOfProject: 203,
+            avgCostPerProject: 506,
             keys: [
                 '../../static/img/keys/ts-key.svg'
             ]
@@ -102,6 +118,12 @@ const state = {
             initials: 'GA',
             name: 'Galvadon',
             src: '../../static/img/logo/ubuntu.png',
+            rating: 6.2,
+            sinceDate: 1487927146000,
+            webAddress: 'https://galvadon.su',
+            githubAddress: '/galvadon',
+            countOfProject: 130204,
+            avgCostPerProject: 1300,
             keys: [
                 '../../static/img/keys/ts-exec-key.svg'
             ]
@@ -281,10 +303,12 @@ const getters = {
     selectedContractor: state => state.selectedContractor,
     offers: state => state.offers,
     contractors: state => state.contractors,
+
     /**
+     * return sort array of contractors
      *
      * @param state
-     * @returns {*[]}
+     * @returns {Array}
      */
     offerContractors: state => {
         let contractors = [];
@@ -313,8 +337,6 @@ const getters = {
                 contractors[i].push(state.contractors.find(contractor => contractor.id === contractorId));
             });
         });
-
-        console.log(contractors, 'contractors');
 
         return contractors;
     },

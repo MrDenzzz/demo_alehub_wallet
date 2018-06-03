@@ -130,85 +130,56 @@
             ),
         },
         methods: {
+            /**
+             * return data of type contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
             contractorType: function (contractorTypeId) {
                 return this.types.find(type => type.id === contractorTypeId);
             },
+            /**
+             * return name of type contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
             contractorTypeName: function (contractorTypeId) {
                 return this.contractorType(contractorTypeId).name;
             },
+            /**
+             * return type of contractor
+             *
+             * @param contractorTypeId
+             * @returns {*}
+             */
             contractorTypeType: function (contractorTypeId) {
                 return this.contractorType(contractorTypeId).type;
             },
-            // /**
-            //  * dispatch action sortOffer to Offers.js, return sorted offer.contractorsId by contractor type priority
-            //  *
-            //  * @param offer
-            //  */
-            // sortOffer: function (offer) {
-            //     // this.$store.dispatch('sortOffer',
-            //     //     offer
-            //     // ).then(() => {
-            //     //
-            //     // }).catch(() => {
-            //     //     console.error('error with')
-            //     // });
-            //     return offer.contractorsId.sort((a, b) => {
-            //         let first = this.contractors.find(item => item.id === a),
-            //             sec = this.contractors.find(item => item.id === b);
-            //
-            //         let firstType = this.types.find(type => {
-            //                 return type.id === first.typeId;
-            //             }),
-            //             secType = this.types.find(type => {
-            //                 return type.id === sec.typeId;
-            //             });
-            //
-            //         if (firstType.priority > secType.priority)
-            //             return 1;
-            //         if (firstType.priority < secType.priority)
-            //             return -1;
-            //     });
-            // },
-            // /**
-            //  * get offer contractors
-            //  *
-            //  * @param offer
-            //  */
-            // offerContractors: function (offer) {
-            //     //делать через action
-            //     let contractorsId = this.sortOffer(offer),
-            //         contractors = [];
-            //
-            //     contractorsId.forEach(contractorId => {
-            //         contractors.push(this.contractors.find(contractor => contractor.id === contractorId));
-            //     });
-            //
-            //     return contractors;
-            // },
             toggleContractorDialog: function (e, contractor) {
+                this.contractorDialogCoordinates.top = e.pageY;
+                this.contractorDialogCoordinates.left = e.pageX;
+
                 if (!this.openedContractorDialog) {
-                    this.contractorDialogCoordinates.top = e.pageY;
-                    this.contractorDialogCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
                         contractor
                     ).then((resp) => {
                         this.openedContractorDialog = true;
-                        //почитать ещё про промисы, then и catch
                     }).catch(() => {
-                        console.log('reject 1')
+                        console.error('error toggle contractor dialog');
                     });
 
                     return true;
                 } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
-                    this.contractorDialogCoordinates.top = e.pageY;
-                    this.contractorDialogCoordinates.left = e.pageX;
                     this.$store.dispatch('selectContractor',
                         contractor
                     ).then(() => {
 
                     }).catch(() => {
-                        console.log('reject 2')
+                        console.error('error toggle SAME contractor dialog');
                     });
+
                     return true;
                 }
                 this.openedContractorDialog = false;
