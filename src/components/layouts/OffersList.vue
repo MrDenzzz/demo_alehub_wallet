@@ -1,7 +1,7 @@
 <template>
     <div class="offers-list">
         <div class="offers-offer"
-             v-for="(offer, i) in offers"
+             v-for="(offer, i) in filteredOffers"
              :key="offer.id"
              :class="offer.status"
              :style="{width: 10 * offer.steps + '%'}">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="contractors-list">
                     <div class="contractors-item"
-                         v-for="contractor in offerContractors[i]"
+                         v-for="contractor in filteredOfferContractors[i]"
                          :key="contractor.id">
                         <div class="contractors-content">
                             <div class="circle"
@@ -123,8 +123,10 @@
                 [
                     'types',
                     'offers',
+                    'filteredOffers',
                     'contractors',
                     'offerContractors',
+                    'filteredOfferContractors',
                     'selectedContractor'
                 ]
             ),

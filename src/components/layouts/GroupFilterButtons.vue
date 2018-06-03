@@ -163,9 +163,9 @@
             /**
              *
              */
-            dispatchMakeFilterOfContractorType: function (id) {
+            dispatchMakeFilterOfContractorType: function (contractorId) {
                 this.$store.dispatch('makeFilterOfContractorType',
-                id
+                    contractorId
                 ).then(() => {
 
                 }).catch(() => {
@@ -175,9 +175,9 @@
             /**
              *
              */
-            dispatchCancelFilterOfContractorType: function (id) {
+            dispatchCancelFilterOfContractorType: function (contractorId) {
                 this.$store.dispatch('cancelFilterOfContractorType',
-                    id
+                    contractorId
                 ).then(() => {
 
                 }).catch(() => {
@@ -201,7 +201,7 @@
                     current.folded = true;
                     this.changeFoldQueue(id);
                     this.dispatchChangeFilter();
-                }  else if (!current.opened && current.folded) {
+                } else if (!current.opened && current.folded) {
                     current.folded = false;
                     this.changeFoldQueue(id);
                     this.dispatchChangeFilter();

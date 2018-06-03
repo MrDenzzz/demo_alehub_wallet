@@ -29,6 +29,8 @@ const state = {
         }
     ],
 
+    filteredContractorsTypes: [],
+
     contractors: [
         {
             id: 1,
@@ -129,7 +131,93 @@ const state = {
             ]
         },
     ],
-
+    filteredOffers: [
+        {
+            id: 1,
+            contractorsId: [1, 2, 3, 4],
+            title: 'CryptoStore',
+            company: 'Serokell',
+            logoSrc: '../../static/img/logo/react.png',
+            to: '/offer',
+            startDate: 1517495409000,
+            finalDate: 1543588209000,
+            status: 'completed',
+            steps: 10
+        },
+        {
+            id: 2,
+            contractorsId: [5, 6, 4],
+            title: 'Alehub',
+            company: 'Effective Energy',
+            logoSrc: '../../static/img/logo/angular.png',
+            to: '/offer',
+            startDate: 1523370609000,
+            finalDate: 1543588209000,
+            status: 'ongoing',
+            steps: 8
+        },
+        {
+            id: 3,
+            contractorsId: [4],
+            title: 'Virtual reality pluggin',
+            company: 'Nike',
+            logoSrc: '../../static/img/logo/telegram.png',
+            to: '/offer',
+            startDate: 1525185009000,
+            finalDate: 1525703409000,
+            status: 'canceled',
+            steps: 1
+        },
+        {
+            id: 4,
+            contractorsId: [4],
+            title: 'Virtual reality pluggin',
+            company: 'Nike',
+            logoSrc: '../../static/img/logo/angular.png',
+            to: '/offer',
+            startDate: 1525185009000,
+            finalDate: 1525703409000,
+            status: 'timelag',
+            steps: 1
+        },
+        {
+            id: 5,
+            contractorsId: [1, 2, 3, 4],
+            title: 'CryptoStore',
+            company: 'Serokell',
+            logoSrc: '../../static/img/logo/twitter.jpg',
+            to: '/offer',
+            startDate: 1517495409000,
+            finalDate: 1543588209000,
+            status: 'completed',
+            steps: 10
+        },
+        {
+            id: 6,
+            contractorsId: [5, 6, 4],
+            title: 'Alehub',
+            company: 'Effective Energy',
+            logoSrc: '../../static/img/logo/ubuntu.png',
+            to: '/offer',
+            startDate: 1523370609000,
+            finalDate: 1543588209000,
+            status: 'ongoing',
+            steps: 8
+        },
+        {
+            id: 7,
+            contractorsId: [4],
+            title: 'Virtual reality pluggin',
+            company: 'Nike',
+            logoSrc: '../../static/img/logo/react.png',
+            to: '/offer',
+            startDate: 1525185009000,
+            finalDate: 1525703409000,
+            status: 'canceled',
+            projectLogo: '../../static/img/ale-logo.svg',
+            steps: 1,
+        }
+    ],
     offers: [
         {
             id: 1,
@@ -282,18 +370,18 @@ const actions = {
             resolve('success change filters condition');
         });
     },
-    makeFilterOfContractorType: ({commit}, id) => {
+    makeFilterOfContractorType: ({commit}, contractorId) => {
         return new Promise((resolve) => {
-            console.log(id, 'id do filter of');
-            commit('SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE');
+            console.log(contractorId, 'id do filter of');
+            commit('SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE', contractorId);
             // commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
             // resolve('success change filters condition');
         });
     },
-    cancelFilterOfContractorType: ({commit}, id) => {
+    cancelFilterOfContractorType: ({commit}, contractorId) => {
         return new Promise((resolve) => {
-            console.log(id, 'id cancel filter of');
-            commit('SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE');
+            console.log(contractorId, 'id cancel filter of');
+            commit('SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE', contractorId);
             // commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
             // resolve('success change filters condition');
         });
@@ -307,10 +395,24 @@ const mutations = {
     SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
         state.filtersCondition = filters;
     },
-    SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE: (state) => {
+    SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE: (state, contractorId) => {
+        let selectedContractors = state.contractors.filter(contractor => contractor.typeId === contractorId);
 
+        if (!state.filteredContractorsTypes.find(type => type === contractorId))
+            state.filteredContractorsTypes.push(contractorId);
+
+        state.filteredOffers = state.filteredOffers.filter((offer, i, arr) => {
+            return offer.contractorsId.find(id => {
+                return selectedContractors.find(selectedContractor => {
+                    return selectedContractor.id === id;
+                });
+            });
+        });
+
+        console.log(state.filteredOffers, 'state.filteredOffers');
+        console.log(selectedContractors, 'selectedContractors');
     },
-    SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE: (state) => {
+    SUCCESS_CANCEL_FILTER_OF_CONTRACTOR_TYPE: (state, contractorId) => {
 
     },
 };
@@ -320,7 +422,6 @@ const getters = {
     selectedContractor: state => state.selectedContractor,
     offers: state => state.offers,
     contractors: state => state.contractors,
-
     /**
      * return sort array of contractors
      *
@@ -357,7 +458,45 @@ const getters = {
 
         return contractors;
     },
-    filtersCondition: state => state.filtersCondition
+    filteredOffers: state => state.filteredOffers,
+    /**
+     * return sort array of contractors from filtered offers list
+     *
+     * @param state
+     * @returns {Array}
+     */
+    filteredOfferContractors: state => {
+        let contractors = [];
+
+        state.filteredOffers.forEach((offer, i) => {
+            contractors.push([]);
+
+            offer.contractorsId.sort((a, b) => {
+                let first = state.contractors.find(item => item.id === a),
+                    sec = state.contractors.find(item => item.id === b);
+
+                let firstType = state.types.find(type => {
+                        return type.id === first.typeId;
+                    }),
+                    secType = state.types.find(type => {
+                        return type.id === sec.typeId;
+                    });
+
+                if (firstType.priority > secType.priority)
+                    return 1;
+                if (firstType.priority < secType.priority)
+                    return -1;
+            });
+
+            offer.contractorsId.forEach(contractorId => {
+                contractors[i].push(state.contractors.find(contractor => contractor.id === contractorId));
+            });
+        });
+
+        return contractors;
+    },
+    filtersCondition: state => state.filtersCondition,
+    filteredContractorsTypes: state => state.filteredContractorsTypes
 };
 
 export default {
