@@ -75,6 +75,14 @@
                          :key="offer.id.toString() + key.id.toString()">
                         <img :src="key.src" alt="key">
                     </div>
+
+                    <div class="key-block"
+                         :id="'key-end' + offer.id + key.id"
+                         v-for="key in offer.keys"
+                         v-if="key.end"
+                         :key="offer.id.toString() + key.id.toString() + '1'">
+                        <img :src="key.src" alt="key">
+                    </div>
                 </div>
             </div>
             <div class="row-bottom">
@@ -166,7 +174,6 @@
                     diffKeyStart = offerEnd - key.start,
                     currentProgressBar = '';
 
-                    console.log(document.getElementById(offerId), '123123');
                 // let promise = new Promise((resolve, reject) => {
                 //
                 //     a = document.getElementById(offerId);
@@ -277,8 +284,6 @@
             }
         },
         mounted() {
-            console.log(document.getElementById('key11'), '123123');
-
             for (let i = 0; i < this.offers.length; i++) {
 
                 let currentProgressBar = document.getElementById(this.progressBarId(this.offers[i].id));
@@ -289,6 +294,11 @@
                         diffKeyStart = this.offers[i].finalDate - this.offers[i].keys[j].start;
 
                     document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) +'px';
+
+                    if (this.offers[i].keys[j].end) {
+                        let diffKeyEnd = this.offers[i].finalDate - this.offers[i].keys[j].end;
+                        document.getElementById('key-end' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyEnd / diff) +'px';
+                    }
                 }
             }
 
