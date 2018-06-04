@@ -1,3 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
-    <path fill="#aaaec1" fill-rule="evenodd" d="M13.967 11L22 19.033 19.033 22 11 13.967 2.967 22 0 19.033 8.033 11 0 2.967 2.967 0 11 8.033 19.033 0 22 2.967z"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>DE647FB5-7DB4-41E9-A6F2-E8B31A711522</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="import-wallet-dark" transform="translate(-1590.000000, -104.000000)" fill="#FCFCFC">
+            <g id="dialog" transform="translate(144.000000, 50.000000)">
+                <polygon id="close-cross" points="1459.96711 65 1468 73.0328947 1465.03289 76 1457 67.9671053 1448.96711 76 1446 73.0328947 1454.03289 65 1446 56.9671053 1448.96711 54 1457 62.0328947 1465.03289 54 1468 56.9671053"></polygon>
+            </g>
+        </g>
+    </g>
 </svg>
