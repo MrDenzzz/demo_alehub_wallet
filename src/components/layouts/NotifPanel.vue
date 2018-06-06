@@ -191,7 +191,7 @@
             copyNotification() {
                 this.checkedNotif.forEach(function (item, i, arr) {
                     // var a = a + document.guerySelector('#content'+item).textContent;
-                    console.log(a);
+                    // console.log(a);
                     // return  item;
                 });
             }

@@ -123,7 +123,6 @@ body {
   background: #fccd46; }
 
 .control input:disabled ~ .control-indicator {
-  background: #3c3e4b;
   opacity: 0.6;
   pointer-events: none; }
 
@@ -409,6 +408,12 @@ body {
         background-color: #414454 !important; }
       .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input {
         border: solid 1px #3c3e4b !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input label.label-from {
+          color: #dedfdf !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input label.label-to {
+          color: #dedfdf !important; }
+        .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .label-currency {
+          color: #fcfcfc !important; }
         .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-from::-webkit-input-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-to::-webkit-input-placeholder {
           color: #dedfdf !important; }
         .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-from::-moz-placeholder, .dark .v--modal-overlay .v--modal-box .body .modal-control .modal-line .wrap-double-input .input.input-to::-moz-placeholder {
@@ -585,6 +590,8 @@ body {
   .dark .control input:checked ~ .control-indicator {
     background: #3c3e4b;
     border: solid 0.5px #2c2c42; }
+  .dark .control input:disabled ~ .control-indicator {
+    background: #3c3e4b; }
   .dark .control:hover input:not([disabled]):checked ~ .control-indicator,
   .dark .control input:checked:focus ~ .control-indicator {
     background: #3c3e4b; }

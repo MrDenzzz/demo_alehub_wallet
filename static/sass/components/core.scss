@@ -161,7 +161,6 @@ body {
 }
 
 .control input:disabled ~ .control-indicator {
-  background: #3c3e4b;
   opacity: 0.6;
   pointer-events: none;
 }
@@ -695,6 +694,19 @@ body {
             .wrap-double-input {
               border: solid 1px #3c3e4b !important;
 
+              label {
+                &.label-from {
+                  color: #dedfdf !important;
+                }
+                &.label-to {
+                  color: #dedfdf !important;
+                }
+              }
+
+              .label-currency {
+                color: #fcfcfc !important;
+              }
+
               .input {
                 &.input-from,
                 &.input-to {
@@ -1003,6 +1015,9 @@ body {
   .control input:checked ~ .control-indicator {
     background: #3c3e4b;
     border: solid 0.5px #2c2c42;
+  }
+  .control input:disabled ~ .control-indicator {
+    background: #3c3e4b;
   }
   .control:hover input:not([disabled]):checked ~ .control-indicator,
   .control input:checked:focus ~ .control-indicator {
