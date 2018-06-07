@@ -3,12 +3,13 @@
         <div class="offers-offer"
              v-for="(offer, i) in filteredOffers"
              :key="offer.id"
-             :class="offer.status"
+             :class="getOfferStatusClass(offer.statusId)"
              :style="{width: 10 * offer.steps + '%'}">
             <div class="row-top">
                 <div class="offer-info">
                     <img class="offer-logo"
-                         :src="offer.logoSrc" :alt="offer.company">
+                         :src="offer.logoSrc"
+                         :alt="offer.company">
                     <router-link class="info-text"
                                  tag="div"
                                  :to="offer.to">
@@ -41,25 +42,20 @@
                                     {{ contractorTypeName(contractor.typeId) }}
                                 </p>
                             </div>
-                            <!--<div class="key-icon"-->
-                                 <!--v-for="key in contractor.keys"-->
-                                 <!--:key="key.id">-->
-                                <!--<img :src="key" alt="key">-->
-                            <!--</div>-->
                         </div>
                     </div>
                 </div>
                 <div class="circle circle-big"
-                     :class="'circle-' + offer.status">
-                    <img :src="getStatusIcon(offer.status, 'circles')"
-                         :alt="offers.status">
+                     :class="getOfferCircleClass(offer.statusId)">
+                    <img :src="getStatusIcon(offer.statusId, 'circles')"
+                         :alt="offer.statusId">
                 </div>
             </div>
             <div class="progress-row">
                 <div class="progress-bar"
                      :id="progressBarId(offer.id)"
                      :class="offer.status">
-                    <img :src="getStatusIcon(offer.status, 'arrows')"
+                    <img :src="getStatusIcon(offer.statusId, 'arrows')"
                          :alt="offer.status"
                          class="arrow">
                     <div class="step"
@@ -143,6 +139,7 @@
                 [
                     'types',
                     'offers',
+                    'status',
                     'filteredOffers',
                     'contractors',
                     'offerContractors',
@@ -152,8 +149,21 @@
             ),
         },
         methods: {
-            test: function (event) {
-                console.log(event.currentTarget);
+            /**
+             *
+             *
+             * @param statusId
+             */
+            getOfferCircleClass: function (statusId) {
+                return 'circle-' + this.status.find(item => item.id === statusId).class;
+            },
+            /**
+             *
+             *
+             * @param statusId
+             */
+            getOfferStatusClass: function (statusId) {
+                return this.status.find(item => item.id === statusId).class;
             },
             /**
              *
@@ -161,43 +171,6 @@
              */
             progressBarId: function (offerId) {
                 return 'progress-bar-' + offerId;
-            },
-            /**
-             *
-             *
-             * @param {Object} key
-             * @param {number} offerStart
-             * @param {number} offerEnd
-             */
-            calcKeyCoordinates: function (key, offerStart, offerEnd, offerId) {
-                let diff = offerEnd - offerStart,
-                    diffKeyStart = offerEnd - key.start,
-                    currentProgressBar = '';
-
-                // let promise = new Promise((resolve, reject) => {
-                //
-                //     a = document.getElementById(offerId);
-                //
-                //     if (a)
-                //         resolve(true);
-                //     else
-                //         reject(true);
-                // });
-
-                // promise.then(() => {
-                //     console.log('resolve');
-                // }, () => {
-                //     console.log('reject');
-                // });
-
-                // setTimeout(() => {
-
-                    // currentProgressBar = document.getElementById(offerId.toString());
-                    // console.log(currentProgressBar.offsetWidth, 'currentProgressBar');
-                    // let offsetRightKey = currentProgressBar.offsetWidth * (diffKeyStart / diff);
-                    // console.log(offsetRightKey, 'offsetRightKey');
-                    // return offsetRightKey + 'px';
-                // }, 0);
             },
             /**
              * return data of type contractor
@@ -270,15 +243,17 @@
             toFormatDate: function (date) {
                 return moment(date).format('DD MMMM, YYYY');
             },
-            getStatusIcon: function (status, iconType) {
+            getStatusIcon: function (id, iconType) {
+                let status = this.status.find(item => item.id === id).class;
+
                 switch (status) {
-                    case 'completed':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
-                    case 'ongoing':
+                    case 'continues':
                         return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
-                    case 'timelag':
+                    case 'check':
+                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
+                    case 'stop':
                         return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
-                    default:
+                    case 'cancel':
                         return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
                 }
             }
@@ -330,28 +305,28 @@
             @media (max-width 990px)
                 min-width 412px
 
-            &.completed
-                background-image linear-gradient(to right, rgba(255, 224, 130, 0.1), rgba(254, 211, 85, 0.1))
-                border-style solid
-                border-width 2px
-                -webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
-                border-image linear-gradient(to right, #ffe082, #fed355) 1
-
-            &.ongoing
+            &.continues
                 background-image linear-gradient(to right, rgba(87, 222, 151, 0.1), rgba(43, 214, 92, 0.1))
                 border-style solid
                 border-width 2px
                 -webkit-border-image linear-gradient(to right, #57de97, #2bd65c) 1
                 border-image linear-gradient(to right, #57de97, #2bd65c) 1
 
-            &.timelag
+            &.check
+                background-image linear-gradient(to right, rgba(255, 224, 130, 0.1), rgba(254, 211, 85, 0.1))
+                border-style solid
+                border-width 2px
+                -webkit-border-image linear-gradient(to right, #ffe082, #fed355) 1
+                border-image linear-gradient(to right, #ffe082, #fed355) 1
+
+            &.stop
                 background-image linear-gradient(to right, rgba(255, 130, 130, 0.1), rgba(255, 79, 79, 0.1))
                 border-style solid
                 border-width 2px
                 -webkit-border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
                 border-image linear-gradient(to right, #ff8282, #ff4f4f) 1
 
-            &.canceled
+            &.cancel
                 background-image linear-gradient(to right, rgba(51, 26, 26, 0.1), rgba(51, 16, 16, 0.1))
                 border-style solid
                 border-width 2px
@@ -383,29 +358,29 @@
                         min-width 48px
                         min-height 48px
 
-                    &.circle-completed
-                        background-image unset
-                        border-style solid
-                        border-width 2px
-                        border-color #fed355
-
-                    &.circle-ongoing
+                    &.circle-continues
                         background-image unset
                         border-style solid
                         border-width 2px
                         border-color #2bd65c
 
-                    &.circle-canceled
+                    &.circle-check
                         background-image unset
                         border-style solid
                         border-width 2px
-                        border-color #331010
+                        border-color #fed355
 
-                    &.circle-timelag
+                    &.circle-stop
                         background-image unset
                         border-style solid
                         border-width 2px
                         border-color #ff4f4f
+
+                    &.circle-cancel
+                        background-image unset
+                        border-style solid
+                        border-width 2px
+                        border-color #331010
 
                 .circle-big
                     @media (max-width 860px)

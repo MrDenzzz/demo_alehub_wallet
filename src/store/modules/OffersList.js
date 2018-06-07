@@ -31,27 +31,31 @@ const state = {
 
     status: [
         {
+            id: 1,
+            class: 'continues',
             title: 'infinity',
             src: '../../../static/img/icons-for-circle/infinity.svg',
-            class: 'continues',
             active: false,
         },
         {
+            id: 2,
+            class: 'check',
             title: 'check',
             src: '../../../static/img/icons-for-circle/check-light.svg',
-            class: 'check',
             active: false,
         },
         {
+            id: 3,
+            class: 'stop',
             title: 'hourglass',
             src: '../../../static/img/icons-for-circle/hourglass.svg',
-            class: 'stop',
             active: false,
         },
         {
+            id: 4,
+            class: 'cancel',
             title: 'line',
             src: '../../../static/img/icons-for-circle/line.svg',
-            class: 'cancel',
             active: false,
         }
     ],
@@ -162,6 +166,7 @@ const state = {
         {
             id: 1,
             contractorsId: [1, 2, 3, 4],
+            statusId: 2,
             title: 'CryptoStore',
             company: 'Serokell',
             logoSrc: '../../static/img/logo/react.png',
@@ -194,12 +199,12 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            status: 'completed',
             steps: 10
         },
         {
             id: 2,
             contractorsId: [5, 6, 4],
+            statusId: 1,
             title: 'Alehub',
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/angular.png',
@@ -226,12 +231,12 @@ const state = {
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            status: 'ongoing',
             steps: 8
         },
         {
             id: 3,
             contractorsId: [4],
+            statusId: 4,
             title: 'Virtual reality pluggin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/telegram.png',
@@ -239,12 +244,12 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            status: 'canceled',
             steps: 1
         },
         {
             id: 4,
             contractorsId: [4],
+            statusId: 3,
             title: 'Virtual reality pluggin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/angular.png',
@@ -252,12 +257,12 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            status: 'timelag',
             steps: 1
         },
         {
             id: 5,
             contractorsId: [1, 2, 3, 4],
+            statusId: 2,
             title: 'CryptoStore',
             company: 'Serokell',
             logoSrc: '../../static/img/logo/twitter.jpg',
@@ -290,12 +295,12 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            status: 'completed',
             steps: 10
         },
         {
             id: 6,
             contractorsId: [5, 6, 4],
+            statusId: 1,
             title: 'Alehub',
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/ubuntu.png',
@@ -322,12 +327,12 @@ const state = {
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            status: 'ongoing',
             steps: 8
         },
         {
             id: 7,
             contractorsId: [4],
+            statusId: 4,
             title: 'Virtual reality pluggin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/react.png',
@@ -335,7 +340,6 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            status: 'canceled',
             projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
         }
@@ -344,6 +348,7 @@ const state = {
         {
             id: 1,
             contractorsId: [1, 2, 3, 4],
+            statusId: 2,
             title: 'CryptoStore',
             company: 'Serokell',
             logoSrc: '../../static/img/logo/react.png',
@@ -376,12 +381,12 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            status: 'completed',
             steps: 10
         },
         {
             id: 2,
             contractorsId: [5, 6, 4],
+            statusId: 1,
             title: 'Alehub',
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/angular.png',
@@ -389,31 +394,31 @@ const state = {
             keys: [
                 {
                     id: 1,
-                    start: 1526774400000,
+                    start: 1526774400,
                     end: 0,
                     src: '../../static/img/keys/ts-key.svg'
                 },
                 {
                     id: 2,
-                    start: 1529280000000,
+                    start: 1529280000,
                     end: 0,
                     src: '../../static/img/keys/ts-ex-key.svg'
                 },
                 {
                     id: 3,
-                    start: 1531958400000,
+                    start: 1531958400,
                     end: 0,
                     src: '../../static/img/keys/qa-key.svg'
                 }
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            status: 'ongoing',
             steps: 8
         },
         {
             id: 3,
             contractorsId: [4],
+            statusId: 4,
             title: 'Virtual reality pluggin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/telegram.png',
@@ -421,12 +426,12 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            status: 'canceled',
             steps: 1
         },
         {
             id: 4,
             contractorsId: [4],
+            statusId: 3,
             title: 'Virtual reality pluggin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/angular.png',
@@ -434,12 +439,12 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            status: 'timelag',
             steps: 1
         },
         {
             id: 5,
             contractorsId: [1, 2, 3, 4],
+            statusId: 2,
             title: 'CryptoStore',
             company: 'Serokell',
             logoSrc: '../../static/img/logo/twitter.jpg',
@@ -472,12 +477,12 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            status: 'completed',
             steps: 10
         },
         {
             id: 6,
             contractorsId: [5, 6, 4],
+            statusId: 1,
             title: 'Alehub',
             company: 'Effective Energy',
             logoSrc: '../../static/img/logo/ubuntu.png',
@@ -485,31 +490,31 @@ const state = {
             keys: [
                 {
                     id: 1,
-                    start: 1526774400000,
+                    start: 1526774400,
                     end: 0,
                     src: '../../static/img/keys/ts-key.svg'
                 },
                 {
                     id: 2,
-                    start: 1529280000000,
+                    start: 1529280000,
                     end: 0,
                     src: '../../static/img/keys/ts-ex-key.svg'
                 },
                 {
                     id: 3,
-                    start: 1531958400000,
+                    start: 1531958400,
                     end: 0,
                     src: '../../static/img/keys/qa-key.svg'
                 }
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            status: 'ongoing',
             steps: 8
         },
         {
             id: 7,
             contractorsId: [4],
+            statusId: 4,
             title: 'Virtual reality pluggin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/react.png',
@@ -517,7 +522,6 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            status: 'canceled',
             projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
         }
@@ -686,7 +690,7 @@ const mutations = {
      * @constructor
      */
     SUCCESS_MAKE_FILTER_OF_STATUS_OFFER: (state, id) => {
-        state.status.find(item => item.class === id).active = !state.status.find(item => item.class === id).active;
+        state.status.find(item => item.id === id).active = !state.status.find(item => item.id === id).active;
     }
 };
 

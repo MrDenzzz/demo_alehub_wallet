@@ -4,9 +4,9 @@
             <button type="button"
                     class="circle"
                     v-for="item in status"
-                    :id="item.class"
+                    :id="item.id"
                     :class="calcStatusClass(item)"
-                    @click="changeButtonStatus(item.class)">
+                    @click="changeButtonStatus(item.id)">
                 <img :src="item.src" :alt="item.title">
             </button>
         </div>
