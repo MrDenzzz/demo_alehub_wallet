@@ -29,6 +29,33 @@ const state = {
         }
     ],
 
+    status: [
+        {
+            title: 'infinity',
+            src: '../../../static/img/icons-for-circle/infinity.svg',
+            class: 'continues',
+            active: false,
+        },
+        {
+            title: 'check',
+            src: '../../../static/img/icons-for-circle/check-light.svg',
+            class: 'check',
+            active: false,
+        },
+        {
+            title: 'hourglass',
+            src: '../../../static/img/icons-for-circle/hourglass.svg',
+            class: 'stop',
+            active: false,
+        },
+        {
+            title: 'line',
+            src: '../../../static/img/icons-for-circle/line.svg',
+            class: 'cancel',
+            active: false,
+        }
+    ],
+
     filteredContractorsTypes: [],
 
     contractors: [
@@ -572,15 +599,41 @@ const actions = {
             resolve('success cancel filter of contractor type');
         });
     },
+    makeFilterOfStatusOffer: ({commit}, id) => {
+        return new Promise((resolve) => {
+            commit('SUCCESS_MAKE_FILTER_OF_STATUS_OFFER', id);
+            resolve('success make filter of status offer');
+        });
+    },
 };
 
 const mutations = {
+    /**
+     *
+     *
+     * @param state
+     * @param contractor
+     * @constructor
+     */
     SUCCESS_SELECT_CONTRACTOR: (state, contractor) => {
         state.selectedContractor = contractor;
     },
+    /**
+     *
+     *
+     * @param state
+     * @param filters
+     * @constructor
+     */
     SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
         state.filtersCondition = filters;
     },
+    /**
+     *
+     * @param state
+     * @param typeId
+     * @constructor
+     */
     SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE: (state, typeId) => {
         let selectedContractors = state.contractors.filter(contractor => contractor.typeId === typeId);
 
@@ -595,6 +648,12 @@ const mutations = {
             });
         });
     },
+    /**
+     *
+     * @param state
+     * @param typeId
+     * @constructor
+     */
     SUCCESS_RESET_FILTER_OF_CONTRACTOR_TYPE: (state, typeId) => {
         let selectedTypeIndex = state.filteredContractorsTypes.findIndex(type => type === typeId),
             selectedContractors = 0;
@@ -619,13 +678,21 @@ const mutations = {
                 });
             });
         }
-
-
     },
+    /**
+     *
+     * @param stat
+     * @param id
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_OF_STATUS_OFFER: (stat, id) => {
+
+    }
 };
 
 const getters = {
     types: state => state.types,
+    status: state => state.status,
     selectedContractor: state => state.selectedContractor,
     offers: state => state.offers,
     contractors: state => state.contractors,

@@ -71,6 +71,7 @@
                 return this.contractorType(contractorTypeId).type;
             },
             /**
+             * calc active class for filter buttons
              *
              * @param id
              * @param opened
@@ -96,12 +97,16 @@
             },
             /**
              *
+             *
              * @param id
              * @returns {*}
              */
             currentFilter: function (id) {
                 return this.filters.find(item => item.id === id);
             },
+            /**
+             * fold other filter when unfold current filter
+             */
             foldAnotherFilter: function () {
                 this.filters.forEach(item => {
                     if (item.opened) {

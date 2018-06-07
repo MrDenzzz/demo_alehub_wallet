@@ -3,8 +3,9 @@
         <div class="filters-block">
             <button type="button"
                     class="circle"
+                    v-for="item in status"
                     :class="item.class"
-                    v-for="item in filters">
+                    @click="changeButtonStatus">
                 <img :src="item.src" :alt="item.title">
             </button>
         </div>
@@ -19,38 +20,32 @@
         props: {},
         data() {
             return {
-                filters: [
-                    {
-                        title: 'infinity',
-                        src: '../../../static/img/icons-for-circle/infinity.svg',
-                        class: 'c-g'
-                    },
-                    {
-                        title: 'check',
-                        src: '../../../static/img/icons-for-circle/check-light.svg',
-                        class: 'c-y'
-                    },
-                    {
-                        title: 'hourglass',
-                        src: '../../../static/img/icons-for-circle/hourglass.svg',
-                        class: 'c-r'
-                    },
-                    {
-                        title: 'line',
-                        src: '../../../static/img/icons-for-circle/line.svg',
-                        class: 'c-b'
-                    }
-                ]
+
             }
         },
         computed: {
             ...mapGetters(
                 [
-                    ''
+                    'status'
                 ]
             ),
         },
-        methods: {}
+        methods: {
+            /**
+             *
+             *
+             * @param id status button
+             */
+            changeButtonStatus: function (id) {
+               this.$store.dispatch('makeFilterOfStatusOffer',
+                   id
+               ).then((resp) => {
+                   console.log(resp);
+               }).catch(() => {
+
+               });
+            }
+        }
     }
 </script>
 
@@ -79,8 +74,7 @@
             flex-direction row
             width 192px
             top 8px
-            left
-        -96px
+            left -96px
 
         @media (max-width 620px)
             flex-direction column
@@ -102,27 +96,38 @@
             -o-transition all .3s ease
             transition all .3s ease
 
-            &.c-b, &.c-r, &.c-g, &.c-y
+            &:active
+                -webkit-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
+                -moz-box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
+                box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
+                transform scale(0.95)
+
+            &.cancel, &.stop, &.continues, &.check
                 background-color #a6aaae
                 -webkit-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
                 -moz-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
                 box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
 
-            &.c-b
+            &.cancel
                 &:hover
                     background-color rgba(51, 26, 26, .4)
 
-            &.c-r
+            &.stop
                 &:hover
                     background-color rgba(255, 79, 79, .4)
 
-            &.c-g
+            &.continues
                 &:hover
                     background-color rgba(38, 189, 81, .4)
 
-            &.c-y
+            &.check
                 &:hover
                     background-color rgba(255, 210, 79, .4)
+
+            &.cancel__active, &.stop__active, &.continues__active, &.check__active
+                -webkit-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
+                -moz-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
+                box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
 
 
 </style>
