@@ -253,7 +253,7 @@ const actions = {
                 },
                 method: 'POST'
             }).then(resp => {
-                commit('SUCCESS_CHANGE_USERNAME', resp);
+                commit('SUCCESS_CHANGE_USERNAME', resp.data.newName);
                 resolve(resp);
             }).catch(err => {
                 console.log(err);
