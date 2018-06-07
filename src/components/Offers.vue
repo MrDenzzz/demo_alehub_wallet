@@ -80,20 +80,7 @@
                     <div class="circle circle-bottom circle-green">
                         <img src="../../static/img/icons-for-circle/infinity.svg" alt="" width="12px" height="6px">
                         <div class="triangle">
-                            <div class="filters-block">
-                                <div class="circle circle-green">
-                                    <img src="../../static/img/icons-for-circle/infinity.svg" alt="">
-                                </div>
-                                <div class="circle circle-yellow">
-                                    <img src="../../static/img/icons-for-circle/check.svg" alt="">
-                                </div>
-                                <div class="circle circle-red">
-                                    <img src="../../static/img/icons-for-circle/hourglass.svg" alt="">
-                                </div>
-                                <div class="circle circle-black">
-                                    <img src="../../static/img/icons-for-circle/line.svg" alt="">
-                                </div>
-                            </div>
+                            <group-status-buttons/>
                         </div>
                     </div>
                 </div>
@@ -112,6 +99,7 @@
     import OffersFilter from './layouts/OffersFilter';
     import OffersFilterFolded from './layouts/OffersFilterFolded';
     import GroupFilterButtons from './layouts/GroupFilterButtons';
+    import GroupStatusButtons from './layouts/GroupStatusButtons';
 
     import Datepicker from 'vuejs-datepicker';
 
@@ -126,6 +114,7 @@
             OffersFilter,
             OffersFilterFolded,
             GroupFilterButtons,
+            GroupStatusButtons,
             Datepicker
         },
         watch: {
