@@ -681,12 +681,12 @@ const mutations = {
     },
     /**
      *
-     * @param stat
+     * @param state
      * @param id
      * @constructor
      */
-    SUCCESS_MAKE_FILTER_OF_STATUS_OFFER: (stat, id) => {
-
+    SUCCESS_MAKE_FILTER_OF_STATUS_OFFER: (state, id) => {
+        state.status.find(item => item.class === id).active = !state.status.find(item => item.class === id).active;
     }
 };
 

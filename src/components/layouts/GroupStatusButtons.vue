@@ -4,8 +4,9 @@
             <button type="button"
                     class="circle"
                     v-for="item in status"
-                    :class="item.class"
-                    @click="changeButtonStatus">
+                    :id="item.class"
+                    :class="calcStatusClass(item)"
+                    @click="changeButtonStatus(item.class)">
                 <img :src="item.src" :alt="item.title">
             </button>
         </div>
@@ -31,6 +32,16 @@
             ),
         },
         methods: {
+            /**
+             *
+             * @param item of array status buttons
+             */
+            calcStatusClass: function (item) {
+                if (item.active)
+                    return item.class + ' ' + item.class + '__active';
+                else
+                    return item.class;
+            },
             /**
              *
              *
@@ -102,19 +113,14 @@
                 box-shadow 0 0 3px 0 rgba(0, 0, 0, .5)
                 transform scale(0.95)
 
-            &.cancel, &.stop, &.continues, &.check
+            &.continues,
+            &.check,
+            &.stop,
+            &.cancel
                 background-color #a6aaae
                 -webkit-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
                 -moz-box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
                 box-shadow 0 0 6px 0 rgba(0, 0, 0, .3)
-
-            &.cancel
-                &:hover
-                    background-color rgba(51, 26, 26, .4)
-
-            &.stop
-                &:hover
-                    background-color rgba(255, 79, 79, .4)
 
             &.continues
                 &:hover
@@ -124,10 +130,44 @@
                 &:hover
                     background-color rgba(255, 210, 79, .4)
 
-            &.cancel__active, &.stop__active, &.continues__active, &.check__active
+            &.stop
+                &:hover
+                    background-color rgba(255, 79, 79, .4)
+
+            &.cancel
+                &:hover
+                    background-color rgba(51, 26, 26, .4)
+
+            &.continues__active,
+            &.check__active,
+            &.stop__active,
+            &.cancel__active
                 -webkit-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
                 -moz-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
                 box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
 
+            &.continues__active
+                background-color rgba(38, 189, 81, 1)
+
+                &:hover
+                    background-color rgba(38, 189, 81, 1)
+
+            &.check__active
+                background-color rgba(255, 210, 79, 1)
+
+                &:hover
+                    background-color rgba(255, 210, 79, 1)
+
+            &.stop__active
+                background-color rgba(255, 79, 79, 1)
+
+                &:hover
+                    background-color rgba(255, 79, 79, 1)
+
+            &.cancel__active
+                background-color rgba(51, 26, 26, 1)
+
+                &:hover
+                    background-color rgba(51, 26, 26, 1)
 
 </style>
