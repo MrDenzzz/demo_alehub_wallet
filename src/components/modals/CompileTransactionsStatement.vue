@@ -1496,10 +1496,10 @@
             width 14px
 
             &:after
-                top 2px
-                left 4px
-                width 2px
-                height 6px
+                top 2.5px
+                left 6px
+                width 4px
+                height 8px
 
     .m-b-20
         margin-bottom 20px

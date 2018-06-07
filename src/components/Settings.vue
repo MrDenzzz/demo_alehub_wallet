@@ -317,13 +317,13 @@
                 this.$store.dispatch('setAvatar', avatar).then((resp) => {
                     console.log('avatar success');
                     this.$toasted.show(this.$t('modals.success.setAvatar'), {
-                        duration: 10000,
+                        duration: 5000,
                         type: 'success',
                     });
                 }).catch(() => {
                     console.log('avatar error');
                     this.$toasted.show(this.$t('modals.error.setAvatar'), {
-                        duration: 10000,
+                        duration: 5000,
                         type: 'error'
                     });
                 })

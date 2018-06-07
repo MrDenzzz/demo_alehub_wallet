@@ -161,7 +161,6 @@ body {
 }
 
 .control input:disabled ~ .control-indicator {
-  background: #f7f7f7;
   opacity: 0.6;
   pointer-events: none;
 }
@@ -232,6 +231,26 @@ body {
 
 .dark {
   background: #4a4e65 !important;
+
+  .control-radio {
+    .control-indicator:after {
+        background: #fcfcfc;
+    }
+  }
+
+  .dropdown-list {
+    box-shadow: 0 5px 20px 0 #4a4d5f;
+
+    ul {
+      background-color: #5b5f73;
+      li {
+        color: #fcfcfc;
+        &:hover {
+          background-color: #6b6f86;
+        }
+      }
+    }
+  }
 
   .navbar {
     background-color: #3a3a4b;
@@ -473,13 +492,13 @@ body {
     }
     &:focus,
     &:active {
-      background: #3419b1;
+      background: rgba(222, 223, 223, 0.2);
     }
     &:disabled {
       background-color: #4f30d4;
     }
     &.disabled {
-      background-color: #4f30d4 !important;
+      background-color: #4f30d4;
     }
   }
   .btn-default {
@@ -637,14 +656,36 @@ body {
   }
   .v--modal-overlay {
     .v--modal-box {
-      background-color: #27272f;
+      background-color: #5b5f73;
+      .btn-yellow {
+        background: #2c2c42;
+
+        &:hover {
+          background: #27272f;
+        }
+      }
+      .button-copy {
+          background: rgba(222, 223, 223, 0.2);
+
+          &:hover {
+              background: #6d718a;
+          }
+      }
+      .btn-default {
+          background: rgba(222, 223, 223, 0.2);
+
+          &:hover {
+              background: #6d718a;
+          }
+      }
+
       .body {
         .modal-control {
           .input-label {
-            color: #959595 !important;
+            color: #dedfdf !important;
           }
           .modal-control__title {
-            color: #dedfdf !important;
+            color: #fcfcfc !important;
           }
           .modal-line {
             .wrap-double-input__disabled {
@@ -652,6 +693,19 @@ body {
             }
             .wrap-double-input {
               border: solid 1px #3c3e4b !important;
+
+              label {
+                &.label-from {
+                  color: #dedfdf !important;
+                }
+                &.label-to {
+                  color: #dedfdf !important;
+                }
+              }
+
+              .label-currency {
+                color: #fcfcfc !important;
+              }
 
               .input {
                 &.input-from,
@@ -674,14 +728,14 @@ body {
           }
           .badge-control {
             .badge {
-              background-color: rgba(13, 23, 23, 0.7) !important;
+              background-color: rgba(252, 252, 252, 0.08) !important;
               color: #dedfdf !important;
             }
           }
           .address {
             color: #dedfdf;
           }
-          border-bottom: 1px solid #565656;
+          border-bottom: 1px solid rgba(209, 209, 209, 0.4);;
           &.double {
             &:nth-child(2n) {
               .modal-input {
@@ -694,6 +748,9 @@ body {
           .modal-input {
             .small {
               color: #dedfdf;
+            }
+            .title {
+              color: #fcfcfc;
             }
             .input, .textarea{
               color: #fff;
@@ -741,7 +798,7 @@ body {
         display: flex;
         justify-content: center;
         .title {
-          color: #dedfdf;
+          color: #fcfcfc;
           max-width: 200px;
           text-align: center;
         }
@@ -750,6 +807,11 @@ body {
         }
         .back {
           background-image: url('/static/img/back-arrow-small_dark.svg');
+        }
+        .title-expand {
+            .arrow {
+                background-image: url('/static/img/arrow-down-light.svg');
+            }
         }
       }
     }
@@ -924,16 +986,16 @@ body {
   }
   .modal-warning {
     .agreed {
-      color: #dedfdf !important;
+      color: #fcfcfc !important;
     }
     &.agreed-border {
       .agreed {
-        border-bottom: 1px solid #565656 !important;
+        border-bottom: 1px solid rgba(209, 209, 209, 0.4) !important;
       }
     }
   }
   .control-checkbox {
-    color: rgba(222, 223, 223, 0.7) !important;
+    color: #fcfcfc !important;
     .control-indicator {
       &:after {
         left: 34%;
@@ -948,15 +1010,18 @@ body {
   }
   .control:hover input ~ .control-indicator,
   .control input:focus ~ .control-indicator {
-    background: #29388e;
+    background: #3c3e4b;
   }
   .control input:checked ~ .control-indicator {
-    background: #3e4ea7;
-    border: solid 0.5px #080880;
+    background: #3c3e4b;
+    border: solid 0.5px #2c2c42;
+  }
+  .control input:disabled ~ .control-indicator {
+    background: #3c3e4b;
   }
   .control:hover input:not([disabled]):checked ~ .control-indicator,
   .control input:checked:focus ~ .control-indicator {
-    background: #29388e;
+    background: #3c3e4b;
   }
   .phrase {
     background-color: rgba(13, 23, 23, 0.25) !important;
@@ -1115,7 +1180,7 @@ body {
       background: #303cc4 !important;
     }
     &:disabled {
-      background-color: #3c4af0 !important;
+      background-color: #3c4af0;
     }
   }
   .btn-default {
