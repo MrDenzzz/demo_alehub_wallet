@@ -277,8 +277,7 @@ body {
   }
 
   .logout-link {
-    color: #b53939;
-    background-color: #282730;
+    color: #ff6c6c;
     border-radius: 4px;
     &:hover {
       text-decoration: none;
@@ -818,7 +817,7 @@ body {
   }
   .select {
     .value {
-      color: #aaa !important;
+      color: rgba(252, 252, 252, 0.7) !important;
       opacity: 1 !important;
     }
     .list {
@@ -920,12 +919,12 @@ body {
     }
   }
   .form {
-    background-color: #27272f;
+    background-color: #3f435e;
     .control {
-      border-bottom: 1px solid #676767;
+      border-bottom: 1px solid #9093a1;
       .wrap-input {
         input {
-          color: #aaa;
+          color: rgba(252, 252, 252, 0.7);
           &:focus {
             color: #fff;
           }
@@ -944,12 +943,12 @@ body {
           }
         }
         .text {
-          color: #aaa;
+          color: rgba(252, 252, 252, 0.7);
           opacity: 1;
         }
         .wrap-container {
           .text {
-            color: #aaa;
+            color: rgba(252, 252, 252, 0.7);
             opacity: 1;
           }
         }
@@ -964,7 +963,7 @@ body {
     }
   }
   label {
-    color: #dedfdf;
+    color: #fcfcfc;
   }
   .qr-code {
     .muted {
