@@ -581,14 +581,14 @@
                         justify-content center
                         align-items center
 
+                        &:last-child
+                            border-right none
+
                         @media (max-width 1100px)
                             font-size 14px
 
                         @media (max-width 990px)
                             font-size 12px
-
-                        &:last-child
-                            border-right none
 
                         &.one-step
                             display flex
@@ -630,4 +630,30 @@
 
                     @media (max-width 860px)
                         font-size 10px
+
+    .dark
+        .offers-list
+            .offers-offer
+                .row-top
+                    .offer-info
+                        .title
+                            color #fcfcfc
+                        .subtitle
+                            color #fcfcfc
+
+                    .contractors-list
+                        .contractors-content
+                            .title
+                                color #fcfcfc
+                            .subtitle
+                                color #fcfcfc
+
+                .progress-row
+                    .progress-bar
+                        background-image linear-gradient(to right, #3a3a4b, #272730)
+
+                .row-bottom
+                    .date
+                        color #fcfcfc
+
 </style>

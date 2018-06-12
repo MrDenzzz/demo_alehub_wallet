@@ -379,9 +379,9 @@ body {
   }
   .switch-control {
     .slider {
-      background-color: #aaaec1 !important;
+      background-color: #9093a1 !important;
       &:before {
-        background-color: #282730 !important;
+        background-color: #3a3a4b !important;
       }
     }
     input {
@@ -822,14 +822,14 @@ body {
     }
     .list {
       ul {
-        background: #0d1717 !important;
+        background: #464657 !important;
         li {
           color: #dedfdf !important;
           &:hover {
-            background: #404455;
+            background: #555567;
           }
           &.selected {
-            background-color: #404455 !important;
+            background-color: #464657 !important;
             &:before {
               background: url('../img/selected-ic_dark.svg');
               background-size: cover;

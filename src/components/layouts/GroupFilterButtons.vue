@@ -359,4 +359,10 @@
             &.qa__active
                 background-color #7e20c0
 
+    .dark
+        .group-filter-buttons
+            .circle-filter
+                .title
+                    color #34343e
+
 </style>

@@ -56,3 +56,19 @@ $t-b-padding: 9px;
         }
     }
 }
+
+.dark {
+    .dropdown-list {
+        ul {
+            li {
+                &.selected {
+                    &::before {
+                        content: '';
+                        background: url('/static/img/selected-ic_dark.svg');
+                        background-size: cover;
+                    }
+                }
+            }
+        }
+    }
+}

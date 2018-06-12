@@ -249,9 +249,9 @@ body {
     .dark .result-opt-span.sent {
       color: #ff6c6c !important; }
   .dark .switch-control .slider {
-    background-color: #aaaec1 !important; }
+    background-color: #9093a1 !important; }
     .dark .switch-control .slider:before {
-      background-color: #282730 !important; }
+      background-color: #3a3a4b !important; }
   .dark .switch-control input:checked .slider {
     background-color: #494d64 !important; }
   .dark .filter-panel {
@@ -475,13 +475,13 @@ body {
     color: rgba(252, 252, 252, 0.7) !important;
     opacity: 1 !important; }
   .dark .select .list ul {
-    background: #0d1717 !important; }
+    background: #464657 !important; }
     .dark .select .list ul li {
       color: #dedfdf !important; }
       .dark .select .list ul li:hover {
-        background: #404455; }
+        background: #555567; }
       .dark .select .list ul li.selected {
-        background-color: #404455 !important; }
+        background-color: #464657 !important; }
         .dark .select .list ul li.selected:before {
           background: url("../img/selected-ic_dark.svg");
           background-size: cover; }
@@ -3236,6 +3236,11 @@ td, th {
         color: #000;
         line-height: 40px;
         font-size: 14px; }
+
+.dark .dropdown-list ul li.selected::before {
+  content: '';
+  background: url("/static/img/selected-ic_dark.svg");
+  background-size: cover; }
 
 .bottom {
   background-color: #f0f0f0;

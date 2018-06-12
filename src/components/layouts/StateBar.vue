@@ -143,4 +143,12 @@
 
                     @media (max-width 620px)
                         font-size 11px
+
+    .dark
+        .state-bar
+            background-color #3f435e
+
+            .state-wrap
+                .state
+                    color #fcfcfc
 </style>
