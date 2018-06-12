@@ -325,7 +325,7 @@ body {
     .dark .btn-default:focus, .dark .btn-default:active {
       background: #17171d; }
     .dark .btn-default:disabled {
-      background-color: #7c7b82; }
+      background-color: rgba(13, 23, 23, 0.1); }
   .dark .list-panel-heading h3 {
     color: #fcfcfc; }
   .dark .list-panel-heading p {
@@ -520,9 +520,9 @@ body {
   .dark .pagination .links .active {
     background-color: #28388e; }
   .dark .notif-panel {
-    background-color: #27272f; }
+    background-color: #3f435e; }
     .dark .notif-panel.checked {
-      background-color: #28388e; }
+      background-color: rgba(222, 223, 223, 0.1); }
     .dark .notif-panel .title {
       color: #fcfcfc; }
     .dark .notif-panel .panel-heading .datetime {
