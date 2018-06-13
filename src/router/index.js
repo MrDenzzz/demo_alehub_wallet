@@ -24,7 +24,6 @@ import LoginTwoAuth from '@/components/LoginTwoAuth';
 import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
 import Offer from '@/components/Offer'
 import Offers from '@/components/Offers'
-import NewOffers from '@/components/NewOffers'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -188,12 +187,6 @@ const router = new Router(
                 path: '/offers',
                 name: 'offers',
                 component: Offers,
-                beforeEnter: ifAuthenticated
-            },
-            {
-                path: '/contractoverview',
-                name: 'ContractOverview',
-                component: NewOffers,
                 beforeEnter: ifAuthenticated
             },
             {
