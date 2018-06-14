@@ -40,9 +40,7 @@ const state = {
             countries: [],
             certification: [],
             verified: [],
-            condition: {
-
-            }
+            condition: {}
         },
         {
             id: 2,
@@ -55,9 +53,7 @@ const state = {
             countries: [],
             certification: [],
             verified: [],
-            condition: {
-
-            }
+            condition: {}
         },
         {
             id: 3,
@@ -70,9 +66,7 @@ const state = {
             countries: [],
             certification: [],
             verified: [],
-            condition: {
-
-            }
+            condition: {}
         },
         {
             id: 4,
@@ -85,9 +79,7 @@ const state = {
             countries: [],
             certification: [],
             verified: [],
-            condition: {
-
-            }
+            condition: {}
         },
     ],
 
@@ -676,6 +668,30 @@ const actions = {
             commit('SUCCESS_MAKE_FILTER_BY_NAME', option);
             resolve('success make filter by name');
         });
+    },
+    makeFilterByRatingFrom: ({commit, dispatch}, options) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_RATING_FROM', options);
+            resolve('success make filter by rating from');
+        });
+    },
+    makeFilterByRatingTo: ({commit, dispatch}, options) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_RATING_TO', options);
+            resolve('success make filter by rating to');
+        });
+    },
+    makeFilterByPriceFrom: ({commit, dispatch}, options) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_PRICE_FROM', options);
+            resolve('success make filter by price from');
+        });
+    },
+    makeFilterByPriceTo: ({commit, dispatch}, options) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_PRICE_TO', options);
+            resolve('success make filter by price to');
+        });
     }
 };
 
@@ -761,15 +777,19 @@ const mutations = {
         state.status.find(item => item.id === id).active = !state.status.find(item => item.id === id).active;
     },
     /**
+     * change prop name in state filters by id
      *
-     *
-     * @param state
-     * @param options
+     * @param state vuex state
+     * @param options id + name
      * @constructor
      */
     SUCCESS_MAKE_FILTER_BY_NAME: (state, options) => {
-       console.log(options.id, 'options id');
+        console.log(options.id, 'options id');
         console.log(options.name, 'options name');
+
+        state.filters.find(filter => {
+            return filter.id === options.id;
+        }).name = options.name;
     }
 };
 

@@ -73,7 +73,13 @@
         watch: {},
         data() {
             return {
-                name: ''
+                filter: {
+                    name: '',
+                    ratingFrom: '',
+                    ratingTo: '',
+                    priceFrom: '',
+                    priceTo: ''
+                }
             }
         },
         methods: {
@@ -103,8 +109,19 @@
 
                 });
             });
-            this.$on('changeRatingFrom', from => {
-                console.log(from, 'rating from');
+            this.$on('changeRatingFrom', ratingFrom => {
+                console.log(ratingFrom, 'rating from');
+
+                this.$store.dispatch('makeFilterByRatingFrom',
+                    {
+                        id: this.id,
+                        ratingFrom: ratingFrom
+                    }
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             });
             this.$on('changeRatingTo', to => {
                 console.log(to, 'rating to');
