@@ -6,7 +6,11 @@
         <div class="form-checkbox">
             <label class="control control-checkbox"
                    v-for="item in options">
-                <input type="checkbox">
+                <input type="checkbox"
+                       name="items"
+                       :value="item"
+                       v-model="items"
+                       @change="emitChangeCertification(items)">
                 <div class="control-indicator"></div>
                 <span>
                     {{ item.title }}
@@ -27,6 +31,16 @@
             options: {
                 type: Array,
                 required: true
+            }
+        },
+        data() {
+            return {
+                items: []
+            }
+        },
+        methods: {
+            emitChangeCertification: function (items) {
+                this.$parent.$emit('changeCertification', items);
             }
         }
     }

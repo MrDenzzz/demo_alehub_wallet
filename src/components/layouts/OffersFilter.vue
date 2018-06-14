@@ -101,6 +101,9 @@
             this.$on('changePriceTo', to => {
                 console.log(to, 'price to');
             });
+            this.$on('changeCertification', items => {
+               console.log(items, 'items');
+            });
         }
     }
 </script>
