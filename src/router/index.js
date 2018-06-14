@@ -17,6 +17,7 @@ import NotFound from '@/components/NotFound';
 // import Offers from '@/components/Offers';
 import Resume from '@/components/Resume';
 import NewOffer from '@/components/NewOffer';
+import CreateOffer from '@/components/CreateOffer';
 import Recover from '@/components/Recover';
 import RecoverConfirm from '@/components/RecoverConfirm';
 import Recover2fa from '@/components/Recover2fa';
@@ -187,6 +188,12 @@ const router = new Router(
                 path: '/offers',
                 name: 'offers',
                 component: Offers,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/offers/createoffer',
+                name: 'CreateOffer',
+                component: CreateOffer,
                 beforeEnter: ifAuthenticated
             },
             {
