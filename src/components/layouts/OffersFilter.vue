@@ -73,7 +73,9 @@
         },
         watch: {},
         data() {
-            return {}
+            return {
+                name: ''
+            }
         },
         methods: {
             toFold: function () {
@@ -82,6 +84,17 @@
             clear: function () {
 
             }
+        },
+        mounted() {
+            this.$on('changeName', (name) => {
+                console.log(name, 'name');
+            });
+            this.$on('changeRatingFrom', (from) => {
+                console.log(from, 'from');
+            });
+            this.$on('changeRatingTo', (to) => {
+                console.log(to, 'to');
+            })
         }
     }
 </script>

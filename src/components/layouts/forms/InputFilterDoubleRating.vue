@@ -8,13 +8,17 @@
                 <label for="from">
                     {{ $t('offersFilter.rating.from') }}
                 </label>
-                <input type="text" id="from">
+                <input type="text" id="from"
+                       v-model="from"
+                       @blur="emitChangeRatingFrom(from)">
             </div>
             <div class="double-input">
                 <label for="to">
                     {{ $t('offersFilter.rating.to') }}
                 </label>
-                <input type="text" id="to">
+                <input type="text" id="to"
+                       v-model="to"
+                       @blur="emitChangeRatingTo(to)">
             </div>
         </div>
     </div>
@@ -22,7 +26,21 @@
 
 <script>
     export default {
-        name: 'InputDoubleRating'
+        name: 'InputDoubleRating',
+        data() {
+            return {
+                from: '',
+                to: ''
+            }
+        },
+        methods: {
+            emitChangeRatingFrom: function (from) {
+                this.$parent.$emit('changeRatingFrom', from);
+            },
+            emitChangeRatingTo: function (to) {
+                this.$parent.$emit('changeRatingTo', to);
+            }
+        }
     }
 </script>
 

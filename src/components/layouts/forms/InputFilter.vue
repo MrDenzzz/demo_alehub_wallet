@@ -3,7 +3,9 @@
         <label for="name">
             {{ title }}
         </label>
-        <input type="text" id="name">
+        <input type="text" id="name"
+               v-model="value"
+               @blur="emitChangeValue(value)">
     </div>
 </template>
 
@@ -14,6 +16,16 @@
             title: {
                 type: String,
                 required: true
+            }
+        },
+        data() {
+            return {
+                value: ''
+            }
+        },
+        methods: {
+            emitChangeValue: function (value) {
+                this.$parent.$emit('changeName', value);
             }
         }
     }
