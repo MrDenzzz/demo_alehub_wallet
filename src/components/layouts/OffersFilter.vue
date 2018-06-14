@@ -86,15 +86,21 @@
             }
         },
         mounted() {
-            this.$on('changeName', (name) => {
+            this.$on('changeName', name => {
                 console.log(name, 'name');
             });
-            this.$on('changeRatingFrom', (from) => {
-                console.log(from, 'from');
+            this.$on('changeRatingFrom', from => {
+                console.log(from, 'rating from');
             });
-            this.$on('changeRatingTo', (to) => {
-                console.log(to, 'to');
-            })
+            this.$on('changeRatingTo', to => {
+                console.log(to, 'rating to');
+            });
+            this.$on('changePriceFrom', from => {
+                console.log(from, 'price from');
+            });
+            this.$on('changePriceTo', to => {
+                console.log(to, 'price to');
+            });
         }
     }
 </script>

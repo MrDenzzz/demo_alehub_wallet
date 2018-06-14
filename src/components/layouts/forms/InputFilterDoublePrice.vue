@@ -8,13 +8,17 @@
                 <label for="from">
                     {{ $t('offersFilter.price.from') }}
                 </label>
-                <input type="text" id="from">
+                <input type="text" id="from"
+                       v-model="from"
+                       @blur="emitChangePriceFrom(from)">
             </div>
             <div class="single-input">
                 <label for="to">
                     {{ $t('offersFilter.price.to') }}
                 </label>
-                <input type="text" id="to">
+                <input type="text" id="to"
+                       v-model="to"
+                       @blur="emitChangePriceTo(to)">
             </div>
         </div>
     </div>
@@ -22,7 +26,21 @@
 
 <script>
     export default {
-        name: 'InputDoublePrice'
+        name: 'InputDoublePrice',
+        data() {
+            return {
+                from: '',
+                to: ''
+            }
+        },
+        methods: {
+            emitChangePriceFrom: function (from) {
+                this.$parent.$emit('changePriceFrom', from);
+            },
+            emitChangePriceTo: function (to) {
+                this.$parent.$emit('changePriceTo', to);
+            }
+        }
     }
 </script>
 
