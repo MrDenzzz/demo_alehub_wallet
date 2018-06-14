@@ -77,9 +77,15 @@
             }
         },
         methods: {
+            /**
+             * fold this offers filter
+             */
             toFold: function () {
                 this.$parent.$emit('onFold', {id: this.id, opened: false, folded: true});
             },
+            /**
+             * clear all fields of this offers filter
+             */
             clear: function () {
 
             }
@@ -87,6 +93,15 @@
         mounted() {
             this.$on('changeName', name => {
                 console.log(name, 'name');
+                this.$store.dispatch('makeFilterByName', {
+                        id: this.id,
+                        name: name
+                    }
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             });
             this.$on('changeRatingFrom', from => {
                 console.log(from, 'rating from');
@@ -101,7 +116,7 @@
                 console.log(to, 'price to');
             });
             this.$on('changeCertification', items => {
-               console.log(items, 'items');
+                console.log(items, 'items');
             });
             this.$on('changeVerified', verified => {
                 console.log(verified, 'verified');

@@ -28,6 +28,103 @@ const state = {
             priority: 4
         }
     ],
+    filters: [
+        {
+            id: 1,
+            typeId: 1,
+            name: '',
+            ratingFrom: '',
+            ratingTo: '',
+            priceFrom: '',
+            priceTo: '',
+            countries: [],
+            certification: [],
+            verified: [],
+            condition: {
+
+            }
+        },
+        {
+            id: 2,
+            typeId: 2,
+            name: '',
+            ratingFrom: '',
+            ratingTo: '',
+            priceFrom: '',
+            priceTo: '',
+            countries: [],
+            certification: [],
+            verified: [],
+            condition: {
+
+            }
+        },
+        {
+            id: 3,
+            typeId: 3,
+            name: '',
+            ratingFrom: '',
+            ratingTo: '',
+            priceFrom: '',
+            priceTo: '',
+            countries: [],
+            certification: [],
+            verified: [],
+            condition: {
+
+            }
+        },
+        {
+            id: 4,
+            typeId: 4,
+            name: '',
+            ratingFrom: '',
+            ratingTo: '',
+            priceFrom: '',
+            priceTo: '',
+            countries: [],
+            certification: [],
+            verified: [],
+            condition: {
+
+            }
+        },
+    ],
+
+    filtersCondition: [
+        {
+            id: 1,
+            typeId: 1,
+            title: 'TS',
+            opened: false,
+            folded: false,
+            queue: 0
+        },
+        {
+            id: 2,
+            typeId: 2,
+            title: 'EX',
+            opened: false,
+            folded: false,
+            queue: 0
+        },
+        {
+            id: 3,
+            typeId: 3,
+            title: 'CH',
+            opened: false,
+            folded: false,
+            queue: 0
+        },
+        {
+            id: 4,
+            typeId: 4,
+            title: 'QA',
+            opened: false,
+            folded: false,
+            queue: 0
+        }
+    ],
 
     status: [
         {
@@ -527,41 +624,6 @@ const state = {
         }
     ],
 
-    filtersCondition: [
-        {
-            id: 1,
-            typeId: 1,
-            title: 'TS',
-            opened: false,
-            folded: false,
-            queue: 0
-        },
-        {
-            id: 2,
-            typeId: 2,
-            title: 'EX',
-            opened: false,
-            folded: false,
-            queue: 0
-        },
-        {
-            id: 3,
-            typeId: 3,
-            title: 'CH',
-            opened: false,
-            folded: false,
-            queue: 0
-        },
-        {
-            id: 4,
-            typeId: 4,
-            title: 'QA',
-            opened: false,
-            folded: false,
-            queue: 0
-        }
-    ],
-
     selectedContractor: {
         initials: 'JD',
         name: 'John Doe',
@@ -580,35 +642,41 @@ const state = {
 
 const actions = {
     selectContractor: ({commit}, contractor) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             commit('SUCCESS_SELECT_CONTRACTOR', contractor);
             resolve('success select contractor');
         });
     },
     changeFiltersCondition: ({commit}, filters) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
             resolve('success change filters condition');
         });
     },
     makeFilterOfContractorType: ({commit}, typeId) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             commit('SUCCESS_MAKE_FILTER_OF_CONTRACTOR_TYPE', typeId);
             resolve('success make filter of contractor type');
         });
     },
     cancelResetOfContractorType: ({commit}, typeId) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             commit('SUCCESS_RESET_FILTER_OF_CONTRACTOR_TYPE', typeId);
             resolve('success cancel filter of contractor type');
         });
     },
     makeFilterOfStatusOffer: ({commit}, id) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             commit('SUCCESS_MAKE_FILTER_OF_STATUS_OFFER', id);
             resolve('success make filter of status offer');
         });
     },
+    makeFilterByName: ({commit, dispatch}, option) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_NAME', option);
+            resolve('success make filter by name');
+        });
+    }
 };
 
 const mutations = {
@@ -691,6 +759,17 @@ const mutations = {
      */
     SUCCESS_MAKE_FILTER_OF_STATUS_OFFER: (state, id) => {
         state.status.find(item => item.id === id).active = !state.status.find(item => item.id === id).active;
+    },
+    /**
+     *
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_NAME: (state, options) => {
+       console.log(options.id, 'options id');
+        console.log(options.name, 'options name');
     }
 };
 
@@ -773,6 +852,7 @@ const getters = {
 
         return contractors;
     },
+    filters: state => state.filters,
     filtersCondition: state => state.filtersCondition,
     filteredContractorsTypes: state => state.filteredContractorsTypes
 };
