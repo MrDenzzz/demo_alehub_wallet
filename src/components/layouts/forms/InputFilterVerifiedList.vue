@@ -8,20 +8,12 @@
                 <label class="control control-radio"
                        v-for="item in options">
                     <input type="radio"
-                           name="verified">
+                           name="verified"
+                           :value="item"
+                           v-model="verified"
+                           @change="emitChangeVerified(verified)">
                     <div class="control-indicator"></div>
                     <span>{{ item.title }}</span>
-                </label>
-            </div>
-        </div>
-        <div class="form-group" v-if="special">
-            <div class="form-checkbox">
-                <label class="control control-checkbox">
-                    <input type="checkbox">
-                    <div class="control-indicator"></div>
-                    <span class="bold-text">
-                        {{ special.title }}
-                    </span>
                 </label>
             </div>
         </div>
@@ -39,9 +31,16 @@
             options: {
                 type: Array,
                 required: true
-            },
-            special: {
-                type: Object
+            }
+        },
+        data() {
+            return {
+                verified: []
+            }
+        },
+        methods: {
+            emitChangeVerified: function (verified) {
+                this.$parent.$emit('changeVerified', verified);
             }
         }
     }

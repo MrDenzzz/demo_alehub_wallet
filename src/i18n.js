@@ -568,12 +568,12 @@ const messages = {
                         title: 'No'
                     },
                     {
+                        title: 'Verified by me'
+                    },
+                    {
                         title: 'Doesn\'t matter'
                     }
-                ],
-                special: {
-                    title: 'Verified by me'
-                }
+                ]
             },
             buttons: {
                 clear: 'Clear'
@@ -1563,12 +1563,12 @@ const messages = {
                         title: 'Нет'
                     },
                     {
+                        title: 'Проверено мной'
+                    },
+                    {
                         title: 'Без разницы'
                     }
-                ],
-                special: {
-                    title: 'Проверено мной'
-                }
+                ]
             },
             buttons: {
                 clear: 'Очистить'

@@ -29,8 +29,7 @@
                                           :options="$t('offersFilter.certification.options')"/>
 
                 <input-verified-list :title="$t('offersFilter.verified.title')"
-                                     :options="$t('offersFilter.verified.options')"
-                                     :special="$t('offersFilter.verified.special')"/>
+                                     :options="$t('offersFilter.verified.options')"/>
 
                 <button type="button"
                         class="buttons btn btn-yellow"
@@ -103,6 +102,9 @@
             });
             this.$on('changeCertification', items => {
                console.log(items, 'items');
+            });
+            this.$on('changeVerified', verified => {
+                console.log(verified, 'verified');
             });
         }
     }
