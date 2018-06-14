@@ -779,7 +779,7 @@ const mutations = {
     /**
      * change prop name in state filters by id
      *
-     * @param state vuex state
+     * @param state
      * @param options id + name
      * @constructor
      */
@@ -790,7 +790,56 @@ const mutations = {
         state.filters.find(filter => {
             return filter.id === options.id;
         }).name = options.name;
-    }
+    },
+    /**
+     * change prop ratingFrom in state filters by id
+     *
+     * @param state
+     * @param options id + ratingFrom
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_RATING_FROM: (state, options) => {
+        state.filters.find(filter => {
+            return filter.id === options.id;
+        }).ratingFrom = parseFloat(options.ratingFrom);
+        console.log(state.filters, 'filters rating from');
+    },
+    /**
+     * change prop ratingTo in state filters by id
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_RATING_TO: (state, options) => {
+        state.filters.find(filter => {
+            return filter.id === options.id;
+        }).ratingTo = parseFloat(options.ratingTo);
+    },
+    /**
+     * change prop priceFrom in state filters by id
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_PRICE_TO: (state, options) => {
+        state.filters.find(filter => {
+            return filter.id === options.id;
+        }).priceFrom = parseFloat(options.priceFrom);
+    },
+    /**
+     * change prop priceTo in state filters by id
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_PRICE_FROM: (state, options) => {
+        state.filters.find(filter => {
+            return filter.id === options.id;
+        }).priceTo = parseFloat(options.priceTo);
+    },
 };
 
 const getters = {
