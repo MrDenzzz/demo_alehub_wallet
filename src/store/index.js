@@ -13,7 +13,7 @@ import WalletsModule from './modules/Wallets';
 import OffersModule from './modules/Offers';
 import OffersListModule from './modules/OffersList';
 import ThemesModule from './modules/Themes';
-
+import OfferModule from './modules/Offer';
 
 
 export const store = new Vuex.Store({
@@ -27,7 +27,8 @@ export const store = new Vuex.Store({
         Wallets: WalletsModule,
         Offers: OffersModule,
         OffersList: OffersListModule,
-        Themes: ThemesModule
+        Themes: ThemesModule,
+        Offer: OfferModule
     },
     strict: false
 });
