@@ -51,6 +51,11 @@
             </div>
         </div>
         <div>
+            <router-link tag="button" to="/offers/createoffer"
+                         class="buttons btn-yellow">
+                <img src="../../../static/img/add-dark-ic.svg" alt="create">
+                <span>Create offer</span>
+            </router-link>
             <!--<img :src="getIcon('menu')"-->
             <!--alt="icon">-->
         </div>
@@ -96,6 +101,16 @@
 </script>
 
 <style lang="stylus" scoped>
+    .buttons
+        margin-bottom 0
+        display flex
+        align-items center
+        justify-content center
+
+        img
+            margin-right 10px
+
+
     .state-bar
         padding 87px 32px 23px 110px
         background-color #eceef1
