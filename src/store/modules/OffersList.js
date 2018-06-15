@@ -28,6 +28,7 @@ const state = {
             priority: 4
         }
     ],
+    currentFilter: {},
     filters: [
         {
             id: 1,
@@ -663,49 +664,12 @@ const actions = {
             resolve('success make filter of status offer');
         });
     },
-    makeFilterByName: ({commit, dispatch}, option) => {
+    makeFilterByFields: ({commit, dispatch}, options) => {
         return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_NAME', option);
-            resolve('success make filter by name');
+            commit('SUCCESS_MAKE_FILTER_BY_FIELDS', options);
+            resolve('success make filter by fields');
         });
-    },
-    makeFilterByRatingFrom: ({commit, dispatch}, options) => {
-        return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_RATING_FROM', options);
-            resolve('success make filter by rating from');
-        });
-    },
-    makeFilterByRatingTo: ({commit, dispatch}, options) => {
-        return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_RATING_TO', options);
-            commit('SUCCESS_MAKE_FILTER', options);
-            resolve('success make filter by rating to');
-        });
-    },
-    makeFilterByPriceFrom: ({commit, dispatch}, options) => {
-        return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_PRICE_FROM', options);
-            resolve('success make filter by price from');
-        });
-    },
-    makeFilterByPriceTo: ({commit, dispatch}, options) => {
-        return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_PRICE_TO', options);
-            resolve('success make filter by price to');
-        });
-    },
-    makeFilterByCertification: ({commit, dispatch}, options) => {
-        return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_CERTIFICATION', options);
-            resolve('success make filter by certification');
-        });
-    },
-    makeFilterByVerified: ({commit, dispatch}, options) => {
-        return new Promise(resolve => {
-            commit('SUCCESS_MAKE_FILTER_BY_VERIFIED', options);
-            resolve('success make filter by verified');
-        });
-    },
+    }
 };
 
 const mutations = {
@@ -812,10 +776,12 @@ const mutations = {
      * @param options
      * @constructor
      */
-    SUCCESS_MAKE_FILTER: (state, options) => {
+    SUCCESS_MAKE_FILTER_BY_FIELDS: (state, options) => {
         let currentFilter = state.filters.find(filter => {
             return filter.id === options.id;
         });
+
+        console.log(options, 'options');
 
         currentFilter.name = options.name;
         currentFilter.ratingFrom = options.ratingFrom;
@@ -826,7 +792,7 @@ const mutations = {
 
         console.log(currentFilter, 'currentFilter');
 
-
+        state.currentFilter = currentFilter;
     },
 
 
@@ -1008,7 +974,8 @@ const getters = {
     },
     filters: state => state.filters,
     filtersCondition: state => state.filtersCondition,
-    filteredContractorsTypes: state => state.filteredContractorsTypes
+    filteredContractorsTypes: state => state.filteredContractorsTypes,
+    currentFilter: state => state.currentFilter
 };
 
 export default {

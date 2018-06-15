@@ -75,10 +75,10 @@
             return {
                 filter: {
                     name: '',
-                    ratingFrom: '',
-                    ratingTo: '',
-                    priceFrom: '',
-                    priceTo: '',
+                    ratingFrom: 0,
+                    ratingTo: 0,
+                    priceFrom: 0,
+                    priceTo: 0,
                     certification: [],
                     verified: []
                 }
@@ -130,20 +130,18 @@
                 });
             });
             this.$on('changeRatingTo', ratingTo => {
-                console.log(ratingTo, 'rating to');
+                this.filter.ratingTo = ratingTo;
 
-                this.ratingTo = ratingTo;
-
-                this.$store.dispatch('makeFilterByRatingTo',
+                this.$store.dispatch('makeFilterByFields',
                     {
                         id: this.id,
-                        name: this.name,
-                        ratingFrom: this.ratingFrom,
-                        ratingTo: this.ratingTo,
-                        priceFrom: this.priceFrom,
-                        priceTo: this.priceTo,
-                        certification: this.certification,
-                        verified: this.verified
+                        name: this.filter.name,
+                        ratingFrom: this.filter.ratingFrom,
+                        ratingTo: this.filter.ratingTo,
+                        priceFrom: this.filter.priceFrom,
+                        priceTo: this.filter.priceTo,
+                        certification: this.filter.certification,
+                        verified: this.filter.verified
                     }
                 ).then(resp => {
 
@@ -154,6 +152,23 @@
             this.$on('changePriceFrom', priceFrom => {
 
                 this.priceFrom = priceFrom;
+
+                this.$store.dispatch('makeFilterByFields',
+                    {
+                        id: this.id,
+                        name: this.filter.name,
+                        ratingFrom: this.filter.ratingFrom,
+                        ratingTo: this.filter.ratingTo,
+                        priceFrom: this.filter.priceFrom,
+                        priceTo: this.filter.priceTo,
+                        certification: this.filter.certification,
+                        verified: this.filter.verified
+                    }
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
 
                 console.log(priceFrom, 'price from');
             });

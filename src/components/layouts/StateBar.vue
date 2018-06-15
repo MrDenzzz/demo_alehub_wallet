@@ -22,7 +22,7 @@
                     {{ $t('stateBar.timeInterval') }}
                 </span>
                 <span class="bold-text">
-                    {{ name }}
+                    {{ currentFilter.name }}
                 </span>
             </div>
             <div class="state">
@@ -30,7 +30,7 @@
                     {{ $t('stateBar.rating') }}
                 </span>
                 <span class="bold-text">
-                    {{ ratingFrom }} - {{ ratingTo }}
+                    {{ ratingFrom }} - {{ currentFilter.ratingTo }}
                 </span>
             </div>
             <div class="state">
@@ -71,6 +71,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'StateBar',
         data() {
@@ -88,6 +90,11 @@
             }
         },
         computed: {
+            ...mapGetters(
+                [
+                    'currentFilter'
+                ]
+            ),
             isDateFrom: function () {
                 return this.dateFrom;
             },
@@ -104,6 +111,7 @@
             }
         },
         mounted() {
+            console.log(this.currentFilter, 'current filter');
             console.log(this.dateFrom, 'date from');
         }
     }
@@ -118,7 +126,6 @@
 
         img
             margin-right 10px
-
 
     .state-bar
         padding 87px 32px 23px 110px
