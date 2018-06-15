@@ -758,7 +758,7 @@ const mutations = {
                 });
             });
 
-            state.filteredOffers = state.offers.filter((offer, i, arr) => {
+            state.filteredOffers = state.offers.filter(offer => {
                 return offer.contractorsId.find(id => {
                     return selectedContractors.find(selectedContractor => {
                         return selectedContractor.id === id;
@@ -775,6 +775,22 @@ const mutations = {
      */
     SUCCESS_MAKE_FILTER_OF_STATUS_OFFER: (state, id) => {
         state.status.find(item => item.id === id).active = !state.status.find(item => item.id === id).active;
+
+        let activeStatuses = state.status.filter(status => {
+            return status.active;
+        });
+
+        if (activeStatuses.length === 0) {
+            state.filteredOffers = state.offers;
+        } else {
+            state.filteredOffers = state.offers.filter(offer => {
+                return activeStatuses.find(status => {
+                    return status.id === offer.statusId;
+                });
+            });
+        }
+
+        console.log(state.filteredOffers, 'state.filteredOffers');
     },
     /**
      * change prop name in state filters by id
