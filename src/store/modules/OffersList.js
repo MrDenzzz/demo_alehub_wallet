@@ -678,6 +678,7 @@ const actions = {
     makeFilterByRatingTo: ({commit, dispatch}, options) => {
         return new Promise(resolve => {
             commit('SUCCESS_MAKE_FILTER_BY_RATING_TO', options);
+            commit('SUCCESS_MAKE_FILTER', options);
             resolve('success make filter by rating to');
         });
     },
@@ -692,7 +693,19 @@ const actions = {
             commit('SUCCESS_MAKE_FILTER_BY_PRICE_TO', options);
             resolve('success make filter by price to');
         });
-    }
+    },
+    makeFilterByCertification: ({commit, dispatch}, options) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_CERTIFICATION', options);
+            resolve('success make filter by certification');
+        });
+    },
+    makeFilterByVerified: ({commit, dispatch}, options) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_BY_VERIFIED', options);
+            resolve('success make filter by verified');
+        });
+    },
 };
 
 const mutations = {
@@ -792,6 +805,31 @@ const mutations = {
 
         console.log(state.filteredOffers, 'state.filteredOffers');
     },
+
+    /**
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER: (state, options) => {
+        let currentFilter = state.filters.find(filter => {
+            return filter.id === options.id;
+        });
+
+        currentFilter.name = options.name;
+        currentFilter.ratingFrom = options.ratingFrom;
+        currentFilter.ratingTo = options.ratingTo;
+        currentFilter.priceFrom = options.priceFrom;
+        currentFilter.priceTo = options.priceTo;
+        currentFilter.certification = options.certification;
+
+        console.log(currentFilter, 'currentFilter');
+
+
+    },
+
+
     /**
      * change prop name in state filters by id
      *
@@ -831,6 +869,12 @@ const mutations = {
         state.filters.find(filter => {
             return filter.id === options.id;
         }).ratingTo = parseFloat(options.ratingTo);
+
+        state.contractors.filter(contractor => {
+            return contractor.rating < options.ratingTo;
+        });
+
+        console.log(state.contractors, 'state.contractors');
     },
     /**
      * change prop priceFrom in state filters by id
@@ -855,6 +899,31 @@ const mutations = {
         state.filters.find(filter => {
             return filter.id === options.id;
         }).priceTo = parseFloat(options.priceTo);
+    },
+    /**
+     * change prop certification in state filters by id
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_CERTIFICATION: (state, options) => {
+        console.log(options, 'certification');
+        // state.filters.find(filter => {
+        //     return filter.id === options.id;
+        // }).priceTo = parseFloat(options.priceTo);
+    },
+    /**
+     * change prop verified in state filters by id
+     *
+     * @param state
+     * @param options
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_BY_VERIFIED: (state, options) => {
+        // state.filters.find(filter => {
+        //     return filter.id === options.id;
+        // }).priceTo = parseFloat(options.priceTo);
     },
 };
 

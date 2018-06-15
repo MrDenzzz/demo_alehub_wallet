@@ -3,6 +3,14 @@
         <div class="state-wrap">
             <div class="state">
                 <span class="title">
+                    {{ 'Contractor' }}
+                </span>
+                <span class="bold-text">
+                    {{ contractor }}
+                </span>
+            </div>
+            <div class="state">
+                <span class="title">
                     {{ $t('stateBar.timeInterval') }}
                 </span>
                 <span class="bold-text">
@@ -69,6 +77,7 @@
             return {
                 dateFrom: 0,
                 dateTo: 0,
+                contractor: '',
                 name: '',
                 ratingFrom: 0,
                 ratingTo: 0,

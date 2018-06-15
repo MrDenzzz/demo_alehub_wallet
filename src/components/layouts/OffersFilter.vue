@@ -78,7 +78,9 @@
                     ratingFrom: '',
                     ratingTo: '',
                     priceFrom: '',
-                    priceTo: ''
+                    priceTo: '',
+                    certification: [],
+                    verified: []
                 }
             }
         },
@@ -99,6 +101,8 @@
         mounted() {
             this.$on('changeName', name => {
                 console.log(name, 'name');
+                this.name = name;
+
                 this.$store.dispatch('makeFilterByName', {
                         id: this.id,
                         name: name
@@ -112,6 +116,8 @@
             this.$on('changeRatingFrom', ratingFrom => {
                 console.log(ratingFrom, 'rating from');
 
+                this.ratingFrom = ratingFrom;
+
                 this.$store.dispatch('makeFilterByRatingFrom',
                     {
                         id: this.id,
@@ -123,17 +129,49 @@
 
                 });
             });
-            this.$on('changeRatingTo', to => {
-                console.log(to, 'rating to');
+            this.$on('changeRatingTo', ratingTo => {
+                console.log(ratingTo, 'rating to');
+
+                this.ratingTo = ratingTo;
+
+                this.$store.dispatch('makeFilterByRatingTo',
+                    {
+                        id: this.id,
+                        name: this.name,
+                        ratingFrom: this.ratingFrom,
+                        ratingTo: this.ratingTo,
+                        priceFrom: this.priceFrom,
+                        priceTo: this.priceTo,
+                        certification: this.certification,
+                        verified: this.verified
+                    }
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             });
-            this.$on('changePriceFrom', from => {
-                console.log(from, 'price from');
+            this.$on('changePriceFrom', priceFrom => {
+
+                this.priceFrom = priceFrom;
+
+                console.log(priceFrom, 'price from');
             });
-            this.$on('changePriceTo', to => {
-                console.log(to, 'price to');
+            this.$on('changePriceTo', priceTo => {
+                console.log(priceTo, 'price to');
             });
-            this.$on('changeCertification', items => {
-                console.log(items, 'items');
+            this.$on('changeCertification', certification => {
+                this.certification = certification;
+                this.$store.dispatch('makeFilterByCertification',
+                    {
+                        id: this.id,
+                        certification: certification
+                    }
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             });
             this.$on('changeVerified', verified => {
                 console.log(verified, 'verified');
