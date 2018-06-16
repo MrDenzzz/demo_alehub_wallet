@@ -30,7 +30,7 @@
                     {{ $t('stateBar.rating') }}
                 </span>
                 <span class="bold-text">
-                    {{ ratingFrom }} - {{ currentFilter.ratingTo }}
+                    {{ currentFilter.ratingFrom }} - {{ currentFilter.ratingTo }}
                 </span>
             </div>
             <div class="state">
@@ -38,7 +38,7 @@
                     {{ $t('stateBar.price') }}
                 </span>
                 <span class="bold-text">
-                    {{ priceFrom }} - {{ priceTo }}
+                    {{ currentFilterPriceFrom }} - {{ currentFilter.priceTo }}
                 </span>
             </div>
             <div class="state">
@@ -46,7 +46,7 @@
                     {{ $t('stateBar.certification') }}
                 </span>
                 <span class="bold-text">
-                    {{ certification }}
+                    {{ currentFilterCertification }}
                 </span>
             </div>
             <div class="state">
@@ -54,7 +54,7 @@
                     {{ $t('stateBar.verified') }}
                 </span>
                 <span class="bold-text">
-                    {{ verified }}
+                    {{ currentFilterVerified }}
                 </span>
             </div>
         </div>
@@ -103,6 +103,45 @@
             },
             isName: function () {
                 return this.name;
+            },
+            currentFilterPriceFrom: function () {
+                console.log(typeof this.currentFilter.priceFrom, 'typeof this.currentFilter.priceFrom');
+
+                if (typeof this.currentFilter.priceFrom !== 'number')
+                    return 'not a number';
+
+                if (this.currentFilter.priceFrom)
+                    return this.currentFilter.priceFrom;
+
+                return 'not set';
+            },
+            currentFilterCertification: function () {
+                if (!(this.currentFilter.certification instanceof Array))
+                    return 'not set';
+
+                let certification = '';
+
+                if (this.currentFilter.certification.length !== 0) {
+                    this.currentFilter.certification.forEach(certificate => {
+                        certification += certificate.title + ' ';
+                    });
+                }
+
+                return certification;
+            },
+            currentFilterVerified: function () {
+                if (!(this.currentFilter.verified instanceof Array))
+                    return 'not set';
+
+                let verified = '';
+
+                if (this.currentFilter.verified.length !== 0) {
+                    this.currentFilter.verified.forEach(filter => {
+                        verified += filter + ' ';
+                    });
+                }
+
+                return verified;
             }
         },
         methods: {

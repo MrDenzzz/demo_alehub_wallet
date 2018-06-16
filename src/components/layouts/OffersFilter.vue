@@ -96,100 +96,57 @@
              */
             clear: function () {
 
+            },
+            dispatchMakeFilter: function () {
+
+                //write validator data by type and val
+
+                this.$store.dispatch('makeFilterByFields',
+                    {
+                        id: this.id,
+                        name: this.filter.name,
+                        ratingFrom: this.filter.ratingFrom,
+                        ratingTo: this.filter.ratingTo,
+                        priceFrom: this.filter.priceFrom,
+                        priceTo: this.filter.priceTo,
+                        certification: this.filter.certification,
+                        verified: this.filter.verified
+                    }
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             }
         },
         mounted() {
             this.$on('changeName', name => {
-                console.log(name, 'name');
-                this.name = name;
-
-                this.$store.dispatch('makeFilterByName', {
-                        id: this.id,
-                        name: name
-                    }
-                ).then(resp => {
-
-                }).catch(err => {
-
-                });
+                this.filter.name = name;
+                this.dispatchMakeFilter();
             });
             this.$on('changeRatingFrom', ratingFrom => {
-                console.log(ratingFrom, 'rating from');
-
-                this.ratingFrom = ratingFrom;
-
-                this.$store.dispatch('makeFilterByRatingFrom',
-                    {
-                        id: this.id,
-                        ratingFrom: ratingFrom
-                    }
-                ).then(resp => {
-
-                }).catch(err => {
-
-                });
+                this.filter.ratingFrom = ratingFrom;
+                this.dispatchMakeFilter();
             });
             this.$on('changeRatingTo', ratingTo => {
                 this.filter.ratingTo = ratingTo;
-
-                this.$store.dispatch('makeFilterByFields',
-                    {
-                        id: this.id,
-                        name: this.filter.name,
-                        ratingFrom: this.filter.ratingFrom,
-                        ratingTo: this.filter.ratingTo,
-                        priceFrom: this.filter.priceFrom,
-                        priceTo: this.filter.priceTo,
-                        certification: this.filter.certification,
-                        verified: this.filter.verified
-                    }
-                ).then(resp => {
-
-                }).catch(err => {
-
-                });
+                this.dispatchMakeFilter();
             });
             this.$on('changePriceFrom', priceFrom => {
-
-                this.priceFrom = priceFrom;
-
-                this.$store.dispatch('makeFilterByFields',
-                    {
-                        id: this.id,
-                        name: this.filter.name,
-                        ratingFrom: this.filter.ratingFrom,
-                        ratingTo: this.filter.ratingTo,
-                        priceFrom: this.filter.priceFrom,
-                        priceTo: this.filter.priceTo,
-                        certification: this.filter.certification,
-                        verified: this.filter.verified
-                    }
-                ).then(resp => {
-
-                }).catch(err => {
-
-                });
-
-                console.log(priceFrom, 'price from');
+                this.filter.priceFrom = priceFrom;
+                this.dispatchMakeFilter();
             });
             this.$on('changePriceTo', priceTo => {
-                console.log(priceTo, 'price to');
+                this.filter.priceTo = priceTo;
+                this.dispatchMakeFilter();
             });
             this.$on('changeCertification', certification => {
-                this.certification = certification;
-                this.$store.dispatch('makeFilterByCertification',
-                    {
-                        id: this.id,
-                        certification: certification
-                    }
-                ).then(resp => {
-
-                }).catch(err => {
-
-                });
+                this.filter.certification = certification;
+                this.dispatchMakeFilter();
             });
             this.$on('changeVerified', verified => {
-                console.log(verified, 'verified');
+                this.filter.verified = verified;
+                this.dispatchMakeFilter();
             });
         }
     }

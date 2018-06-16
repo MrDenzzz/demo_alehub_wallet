@@ -781,8 +781,6 @@ const mutations = {
             return filter.id === options.id;
         });
 
-        console.log(options, 'options');
-
         currentFilter.name = options.name;
         currentFilter.ratingFrom = options.ratingFrom;
         currentFilter.ratingTo = options.ratingTo;
