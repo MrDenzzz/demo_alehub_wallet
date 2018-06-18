@@ -352,7 +352,7 @@ const actions = {
             });
         });
     },
-    setAvatar: ({commit, dispatch}, avatarData) => {
+    setAvatar: ({commit}, avatarData) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_SET_AVATAR');
             let host = 'https://ale-demo-4550.nodechef.com/users/set_avatar';

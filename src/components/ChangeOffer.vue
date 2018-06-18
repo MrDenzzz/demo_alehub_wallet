@@ -1,7 +1,7 @@
-<template>    
-    <div class="create-offer">
+<template>
+        <div class="change-offer">
         <Navbar
-                :title="$t('pages.newOffer.navbarTitle')"
+                title="Edit Offer"
                 :isNavigate="true"
                 :isBalance="false"
         />
@@ -14,38 +14,43 @@
                             <div class="form">
                                 <div class="control">
                                     <label>Offer Name</label>
-                                    <input type="text" v-model="newOffer.name">
+                                    <input type="text" :value="offerName" @input="changeOfferName($event)">
                                 </div>
                                 <div class="control">
                                     <label>Offer Description</label>
-                                    <textarea name="" id="" cols="30" rows="10" v-model="newOffer.description"></textarea>
+                                    <textarea name="" id="" cols="30" rows="10" :value="description" @input="changeDescription($event)"></textarea>
                                 </div>
                                 <div class="control">
                                     <div style="display: flex;">
                                         <div style="display: flex; flex-direction: column;">
                                             <label>Start Date</label>
-                                            <input type="date" v-model="newOffer.startDate">
+                                            <input type="date" :value="startDate" @input="changeStartDate($event)">
                                         </div>
                                         <div style="display: flex; flex-direction: column;">
                                             <label>Final Date</label>
-                                            <input type="date" v-model="newOffer.finalDate">
+                                            <input type="date" :value="finalDate" @input="changeFinalDate($event)">
                                         </div>
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: column;" class="control">
                                     <label>Project Name</label>
-                                    <input type="text" v-model="newOffer.projectName">
+                                    <input type="text" :value="projectName" @input="changeProjectName($event)">
                                 </div>
                                 <div style="display: flex; flex-direction: column;" class="control">
                                     <label>Requirements and Skills</label>
-                                    <input type="text" v-model="newOffer.skills">
+                                    <input type="text" :value="skills" @input="changeSkills($event)">
                                 </div>
                                 <div style="display: flex; flex-direction: column;" class="control">
                                     <label>Offer Price</label>
-                                    <input type="text" v-model="newOffer.price">
+                                    <input type="text" :value="price" @input="changePrice($event)">
                                 </div>
                             </div>
-                            <button class="buttons btn btn-yellow" @click="createNewOffer(newOffer)">Create Offer</button>
+                            <p>{{ offerName }}</p>
+                            <p>{{ description }}</p>
+                            <p>{{ projectName }}</p>
+                            <p>{{ startDate }} - {{ finalDate }}</p>
+                            <p>{{ skills }}</p>
+                            <p>{{ price }}</p>
                         </div>
                     </div>
                 </div>
@@ -57,39 +62,44 @@
 <script>
 import Navbar from './layouts/Navbar';
 import { mapActions } from 'vuex';
-
+import { mapGetters } from 'vuex';
+ 
 export default {
-    name: 'CreateOffer',
+    name: 'ChangeOffer',
     components: {
         Navbar
     },
     data() {
         return {
-            newOffer: {
-                name: '',
-                description: '',
-                projectName: '',
-                companyName: '', // take from current user
-                companyLogo: '', // take from current user
-                startDate: '',
-                finalDate: '',
-                skills: '',
-                price: null
-            }
+
         }
+    },
+    computed: {
+        ...mapGetters([
+            'offerName',
+            'description',
+            'projectName',
+            'startDate',
+            'finalDate',
+            'skills',
+            'price'
+        ])
     },
     methods: {
         ...mapActions([
-            'createNewOffer'
+            'changeOfferName',
+            'changeDescription',
+            'changeProjectName',
+            'changeStartDate',
+            'changeFinalDate',
+            'changeSkills',
+            'changePrice'
         ])
     }
 }
 </script>
 
 <style lang="stylus" scoped>
-.form
-    margin-bottom 24px
-
 .control
     display flex
     flex-direction column
@@ -100,6 +110,5 @@ export default {
         opacity 1
         display unset 
         position unset
-
-
 </style>
+
