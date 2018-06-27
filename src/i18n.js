@@ -10,22 +10,36 @@ const messages = {
                 createAccount: 'Create one.'
             },
             registration: {
-                fullName: 'Full name',
-                email: 'E-mail',
-                password: 'Password',
-                repeatPassword: 'Repeat Password',
+                form: {
+                    name: {
+                       label: 'full name',
+                       placeholder: 'enter full name'
+                    },
+                    email: {
+                        label: 'e-mail',
+                        placeholder: 'enter e-mail'
+                    },
+                    password: {
+                        label: 'password',
+                        placeholder: 'enter password'
+                    },
+                    repeatPassword: {
+                        label: 'Repeat Password',
+                        placeholder: 'enter repeat password'
+                    }
+                },
+                toast: {
+                    error: {
+                        name: 'Enter correct name',
+                        email: 'Enter correct email',
+                        password: 'The password must be between 8 and 100 characters long, have uppercase letters, lowercase letters, numbers',
+                        repeatPassword: 'The entered password do not match'
+                    }
+                },
                 create: 'Create',
                 haveAccount: 'Already have an account?',
                 login: 'Log in.',
-                completionRegistration: 'To complete the registration, please follow the link on your mail',
-                fillAllFields: 'Fill in all the fields',
-                enterFullName: 'Enter your full name',
-                enterEmail: 'Enter your email',
-                enterPassword: 'Enter your password',
-                enterRepeatPassword: 'Repeat password',
-                enterValidEmail: 'Enter your valid email',
-                enterCorrectLengthPassword: 'Password must be at least 8 characters long',
-                enterMatchPassword: 'Passwords do not match'
+                completionRegistration: 'To complete the registration, please follow the link on your mail'
             },
             notifications: {
                 edit: 'Edit',
@@ -830,52 +844,44 @@ const messages = {
         pages: {
             login: {
                 password: 'пароль',
-                login:
-                    'Войти',
-                textForgotPassword:
-                    'Забыли свой email или пароль?',
-                recoverAccount:
-                    'Восстановите аккаунт',
-                textHaveAccount:
-                    'У Вас ещё нет аккаунта?',
-                createAccount:
-                    'Создайте аккаунт.'
-            }
-            ,
+                login: 'Войти',
+                textForgotPassword: 'Забыли свой email или пароль?',
+                recoverAccount: 'Восстановите аккаунт',
+                textHaveAccount: 'У Вас ещё нет аккаунта?',
+                createAccount: 'Создайте аккаунт.'
+            },
             registration: {
-                fullName: 'Имя',
-                email:
-                    'E-mail',
-                password:
-                    'Пароль',
-                repeatPassword:
-                    'Повторите пароль',
-                create:
-                    'Создать',
-                haveAccount:
-                    'У Вас уже есть аккаунт?',
-                login:
-                    'Войти.',
-                completionRegistration:
-                    'Для завершения регистрации пройдите по ссылке на вашей почте',
-                fillAllFields:
-                    'Заполните все поля',
-                enterFullName:
-                    'Введите Ваше имя',
-                enterEmail:
-                    'Введите email',
-                enterPassword:
-                    'Введите Ваш пароль',
-                enterRepeatPassword:
-                    'Повторите пароль',
-                enterValidEmail:
-                    'Введите корректный пароль',
-                enterCorrectLengthPassword:
-                    'Пароль должен быть длиной минимум 8 символов',
-                enterMatchPassword:
-                    'Пароли не совпадают'
-            }
-            ,
+                form: {
+                    name: {
+                        label: 'имя',
+                        placeholder: 'введите имя'
+                    },
+                    email: {
+                        label: 'e-mail',
+                        placeholder: 'введите e-mail'
+                    },
+                    password: {
+                        label: 'пароль',
+                        placeholder: 'введите пароль'
+                    },
+                    repeatPassword: {
+                        label: 'повторите пароль',
+                        placeholder: 'повторите ввод пароля'
+                    }
+                },
+                toast: {
+                    error: {
+                        name: 'Введите корректное имя',
+                        email: 'Введите корректный email',
+                        password: 'Пароль должен быть длиной от 8 до 100 символов, иметь заглавные буквы, строчные буквы, цифры',
+                        repeatPassword: 'Введённые пароли не совпадают'
+                    }
+                },
+                create: 'Создать',
+                haveAccount: 'У Вас уже есть аккаунт?',
+                login: 'Войти.',
+                completionRegistration: 'Для завершения регистрации перейдите по ссылке на вашей почте',
+            },
             notifications: {
                 edit: 'Редактировать',
                 navbarTitle:

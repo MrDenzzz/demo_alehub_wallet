@@ -155,7 +155,10 @@ const actions = {
                 method: 'POST'
             }).then(resp => {
                 console.log(resp, 'resp');
-                commit('SUCCESS_USER_REGISTER', resp);
+                if (resp.status === 200)
+                    commit('SUCCESS_USER_REGISTER', resp);
+                else if (resp.status === 230)
+                    commit('EXIST_USER_REGISTER', resp);
                 resolve(resp);
             }).catch(err => {
                 commit('ERROR_USER_REGISTER', err);
@@ -469,6 +472,11 @@ const mutations = {
     },
     SUCCESS_USER_REGISTER: (state, data) => {
         state.userRegisterStatus = 'success';
+    },
+    EXIST_USER_REGISTER: () => {
+        state.userRegisterStatus = 'success';
+        //пользователь уже создан
+
     },
     ERROR_USER_REGISTER: (state, err) => {
         state.userRegisterStatus = 'error';

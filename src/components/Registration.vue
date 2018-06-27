@@ -22,60 +22,62 @@
                                 </p>
                             </div>
                             <div class="login-form" v-if="!processingSendRequest && !successSendRequest">
-                                <div class="control" @click="focusInput('fullname')">
-                                    <label for="fullname">{{ $t('pages.registration.fullName') }}</label>
-                                    <input type="text"
-                                           id="fullname"
-                                           class="d-block"
-                                           placeholder="full name"
-                                           required
-                                           @keyup.enter="register"
-                                           v-model="fullName"
-                                           autofocus>
-                                </div>
+                                <form @submit.prevent="registerUser()">
+                                    <div class="control" @click="focusInput('fullname')">
+                                        <label for="fullname">{{ $t('pages.registration.form.name.label') }}</label>
+                                        <input type="text"
+                                               id="fullname"
+                                               class="d-block"
+                                               required
+                                               :placeholder="$t('pages.registration.form.name.placeholder')"
+                                               v-model="fullName"
+                                               autofocus>
+                                        <!--@keyup.enter="register"-->
+                                    </div>
 
-                                <div class="control" @click="focusInput('email')">
-                                    <label for="email">{{ $t('pages.registration.email') }}</label>
-                                    <input type="email"
-                                           id="email"
-                                           class="d-block"
-                                           placeholder="e-mail"
-                                           required
-                                           v-validate="'email'"
-                                           @keyup.enter="register"
-                                           v-model="email">
-                                </div>
+                                    <div class="control" @click="focusInput('email')">
+                                        <label for="email">{{ $t('pages.registration.form.email.label') }}</label>
+                                        <input type="email"
+                                               id="email"
+                                               class="d-block"
+                                               required
+                                               :placeholder="$t('pages.registration.form.email.placeholder')"
+                                               v-validate="'email'"
+                                               v-model="email">
+                                        <!--@keyup.enter="register"-->
+                                    </div>
 
-                                <div class="control" @click="focusInput('password')">
-                                    <label for="password">{{ $t('pages.registration.password') }}</label>
-                                    <input type="password"
-                                           id="password"
-                                           class="d-block"
-                                           placeholder="password"
-                                           required
-                                           @keyup.enter="register"
-                                           v-model="password">
-                                </div>
+                                    <div class="control" @click="focusInput('password')">
+                                        <label for="password">{{ $t('pages.registration.form.password.label') }}</label>
+                                        <input type="password"
+                                               id="password"
+                                               class="d-block"
+                                               required
+                                               :placeholder="$t('pages.registration.form.password.placeholder')"
+                                               v-model="password">
+                                        <!--@keyup.enter="register"-->
+                                    </div>
 
-                                <div class="control" @click="focusInput('repeatpass')">
-                                    <label for="repeatpass">{{ $t('pages.registration.repeatPassword') }}</label>
-                                    <input type="password"
-                                           id="repeatpass"
-                                           class="d-block"
-                                           placeholder="password"
-                                           required
-                                           @keyup.enter="register"
-                                           v-model="passwordConfirm">
-                                </div>
+                                    <div class="control" @click="focusInput('repeatpass')">
+                                        <label for="repeatpass">{{ $t('pages.registration.form.repeatPassword.label') }}</label>
+                                        <input type="password"
+                                               id="repeatpass"
+                                               class="d-block"
+                                               required
+                                               :placeholder="$t('pages.registration.form.repeatPassword.placeholder')"
+                                               v-model="passwordConfirm">
+                                        <!--@keyup.enter="register"-->
+                                    </div>
 
-                                <div class="is-center" v-if="dataProcessing">
-                                    <spinner/>
-                                </div>
+                                    <div class="is-center" v-if="dataProcessing">
+                                        <spinner/>
+                                    </div>
 
-                                <button class="btn btn-yellow btn-block nomargin"
-                                        @click="registerUser()">
-                                    {{ $t('pages.registration.create') }}
-                                </button>
+                                    <button type="submit"
+                                            class="btn btn-yellow btn-block nomargin">
+                                        {{ $t('pages.registration.create') }}
+                                    </button>
+                                </form>
 
                                 <p class="text">
                                     {{ $t('pages.registration.haveAccount') }}
@@ -100,7 +102,7 @@
     import isPasswordBlacklist from 'password-blacklist';
 
     export default {
-        name: 'register',
+        name: 'registration',
         components: {
             Navbar,
             Spinner
@@ -122,37 +124,24 @@
             }
         },
         methods: {
-            /*
-            * */
-            formatVal: function (val) {
-                //put this to external module
-                let formatArr = val.split(''),
-                    flag = false;
-
-                if (formatArr[0] === ' ') {
-                    flag = true;
-                    formatArr = formatArr.filter(item => {
-                        if (flag && item !== ' ') {
-                            flag = false;
+            /**
+             * show error toast
+             *
+             * @param text
+             */
+            errorToasted: function (text) {
+                this.$toasted.show(text, {
+                    duration: 10000,
+                    type: 'error',
+                    action: {
+                        text: 'hide',
+                        class: 'toasted-action-hide',
+                        onClick: (e, toastObject) => {
+                            toastObject.goAway(0);
                         }
-                        return !flag;
-                    });
-                }
-                if (formatArr[formatArr.length - 1] === ' ') {
-                    flag = true;
-                    formatArr.reverse();
-                    formatArr = formatArr.filter(item => {
-                        if (flag && item !== ' ') {
-                            flag = false;
-                        }
-                        return !flag;
-                    });
-                    formatArr.reverse();
-                }
-                return formatArr.join('');
+                    }
+                });
             },
-            /*
-            * */
             validateVal: function (val) {
                 //добавить проверки на специальные символы
                 if (val.length === 0)
@@ -160,80 +149,17 @@
                 return true;
             },
             /**
-             * check for the filling of all fields when registering the user
+             * validation of emails according to specified rules
              *
              * @returns {boolean}
              */
-            checkFillAllFields: function () {
-                if (!this.fullName && !this.email && !this.phoneNumber
-                    && !this.password && !this.passwordConfirm) {
-                    this.focusInput('fullname');
-                    this.$toasted.show(this.$t('pages.registration.fillAllFields'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
+            validateEmail: function () {
+                let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if(!re.test(String(this.email).toLowerCase())) {
+                    this.errorToasted(this.$t('pages.registration.toast.error.email'));
                     return false;
                 }
-            },
-            /**
-             * check for the full name field
-             *
-             * @returns {boolean}
-             */
-            checkFillFullName: function () {
-                if (!this.fullName) {
-                    this.focusInput('fullname');
-                    this.$toasted.show(this.$t('pages.registration.enterFullName'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    return false;
-                }
-            },
-            /**
-             * check for the email field
-             *
-             * @returns {boolean}
-             */
-            checkFillEmail: function () {
-                if (!this.email) {
-                    this.focusInput('email');
-                    this.$toasted.show(this.$t('pages.registration.enterEmail'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    return false;
-                }
-            },
-            /**
-             * check for the password field
-             *
-             * @returns {boolean}
-             */
-            checkFillPassword: function () {
-                if (!this.password) {
-                    this.focusInput('password');
-                    this.$toasted.show(this.$t('pages.registration.enterPassword'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    return false;
-                }
-            },
-            /**
-             * check for the confirm password field
-             *
-             * @returns {boolean}
-             */
-            checkFillConfirmPassword: function () {
-                if (!this.passwordConfirm) {
-                    this.focusInput('repeatpass');
-                    this.$toasted.show(this.$t('pages.registration.enterRepeatPassword'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    return false;
-                }
+                return true;
             },
             /**
              * password validation according to the specified rules
@@ -243,12 +169,10 @@
             validatePassword: function (pass) {
                 let res = this.Schema.validate(pass);
                 if (!res) {
-                    this.$toasted.show('Пароль не соответствует условиям', {
-                        duration: 10000,
-                        type: 'error',
-                    });
+                    this.errorToasted(this.$t('pages.registration.toast.error.password'));
                     return false;
                 }
+                return true;
             },
             /**
              * verification of the password for compliance
@@ -257,50 +181,34 @@
              */
             checkPassToPassConfirm: function () {
                 if (this.password !== this.passwordConfirm) {
-                    this.$toasted.show(this.$t('pages.registration.enterMatchPassword'), {
+                    this.$toasted.show(this.$t('pages.registration.toast.error.repeatPassword'), {
                         duration: 10000,
                         type: 'error',
+                        action: {
+                            text: 'hide',
+                            class: 'toasted-action-hide',
+                            onClick: (e, toastObject) => {
+                                toastObject.goAway(0);
+                            }
+                        }
                     });
                     this.focusInput('password');
                     return false;
                 }
+                return true;
             },
 
             registerUser: function () {
                 this.isExistUser = false;
-                var e = this.errors.items;
 
-                this.checkFillAllFields();
+                if (!this.validateEmail())
+                    return false;
 
-                this.fullName = this.formatVal(this.fullName);
+                if (!this.validatePassword(this.password))
+                    return false;
 
-                if (!this.fullName || !this.email || !this.phoneNumber || !this.password || !this.passwordConfirm) {
-
-                    this.checkFillFullName();
-
-                    this.checkFillEmail();
-
-                    this.checkFillPassword();
-
-                    this.checkFillConfirmPassword();
-                }
-
-                if (e.length !== 0) {
-                    this.isErrorEmail = true;
-                    this.focusInput('email');
-                    if (e[0].rule === 'email') {
-                        this.$toasted.show(this.$t('pages.registration.enterValidEmail'), {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
-                }
-
-                this.validatePassword(this.password);
-
-                this.checkPassToPassConfirm();
-
+                if (!this.checkPassToPassConfirm())
+                    return false;
 
                 this.dataProcessing = true;
 
@@ -366,8 +274,6 @@
         },
         mounted() {
             this.initValidateSchema();
-
-
         }
     }
 </script>
