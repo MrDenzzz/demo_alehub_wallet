@@ -33,13 +33,14 @@ const messages = {
                         name: 'Enter correct name',
                         email: 'Enter correct email',
                         password: 'The password must be between 8 and 100 characters long, have uppercase letters, lowercase letters, numbers',
-                        repeatPassword: 'The entered password do not match'
+                        repeatPassword: 'The entered password do not match',
+                        userAlreadyExist: 'User with such an email address already exists'
                     }
                 },
                 create: 'Create',
                 haveAccount: 'Already have an account?',
                 login: 'Log in.',
-                completionRegistration: 'To complete the registration, please follow the link on your mail'
+                completionRegistration: 'To complete the registration, please follow the link on your mail',
             },
             notifications: {
                 edit: 'Edit',
@@ -874,7 +875,8 @@ const messages = {
                         name: 'Введите корректное имя',
                         email: 'Введите корректный email',
                         password: 'Пароль должен быть длиной от 8 до 100 символов, иметь заглавные буквы, строчные буквы, цифры',
-                        repeatPassword: 'Введённые пароли не совпадают'
+                        repeatPassword: 'Введённые пароли не совпадают',
+                        userAlreadyExist: 'Пользователь с таким email-адресом уже существует'
                     }
                 },
                 create: 'Создать',

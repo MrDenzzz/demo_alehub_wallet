@@ -217,24 +217,14 @@
                     email: this.email,
                     password: this.password
                 }).then(resp => {
-                    console.log(resp);
-
-                    // if (response.body.message === 'User already exist!') {
-                    //     this.dataProcessing = false;
-                    //     this.$toasted.show('User already exist!', {
-                    //         duration: 10000,
-                    //         type: 'error',
-                    //     });
-                    //     return this.isExistUser = true;
-                    // }
-
                     this.successSendRequest = true;
                     this.processingSendRequest = true;
                     this.processingSendRequest = false;
                     this.dataProcessing = false;
                 }).catch(err => {
-                    console.log(err);
                     this.dataProcessing = false;
+                    if (err.response.status === 406)
+                        this.errorToasted(this.$t('pages.registration.toast.error.userAlreadyExist'));
                 });
             },
             focusInput: function (id) {
