@@ -28,6 +28,7 @@
                                            id="fullname"
                                            class="d-block"
                                            placeholder="full name"
+                                           required
                                            @keyup.enter="register"
                                            v-model="fullName"
                                            autofocus>
@@ -39,6 +40,7 @@
                                            id="email"
                                            class="d-block"
                                            placeholder="e-mail"
+                                           required
                                            v-validate="'email'"
                                            @keyup.enter="register"
                                            v-model="email">
@@ -50,6 +52,7 @@
                                            id="password"
                                            class="d-block"
                                            placeholder="password"
+                                           required
                                            @keyup.enter="register"
                                            v-model="password">
                                 </div>
@@ -60,6 +63,7 @@
                                            id="repeatpass"
                                            class="d-block"
                                            placeholder="password"
+                                           required
                                            @keyup.enter="register"
                                            v-model="passwordConfirm">
                                 </div>
@@ -112,7 +116,9 @@
                 successSendRequest: false,
                 processingSendRequest: false,
                 dataProcessing: false,
-                isExistUser: false
+                isExistUser: false,
+
+                Schema: false
             }
         },
         methods: {
@@ -153,30 +159,12 @@
                     return false;
                 return true;
             },
-
+            /**
+             * check for the filling of all fields when registering the user
+             *
+             * @returns {boolean}
+             */
             checkFillAllFields: function () {
-
-            },
-
-            checkFillFullName: function () {
-
-            },
-
-            checkFillEmail: function () {
-
-            },
-
-            checkFillPassword: function () {
-
-            },
-
-            checkFillConfirmPassword: function () {
-
-            },
-
-            registerUser: function () {
-                this.isExistUser = false;
-                var e = this.errors.items;
                 if (!this.fullName && !this.email && !this.phoneNumber
                     && !this.password && !this.passwordConfirm) {
                     this.focusInput('fullname');
@@ -186,48 +174,115 @@
                     });
                     return false;
                 }
+            },
+            /**
+             * check for the full name field
+             *
+             * @returns {boolean}
+             */
+            checkFillFullName: function () {
+                if (!this.fullName) {
+                    this.focusInput('fullname');
+                    this.$toasted.show(this.$t('pages.registration.enterFullName'), {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+            },
+            /**
+             * check for the email field
+             *
+             * @returns {boolean}
+             */
+            checkFillEmail: function () {
+                if (!this.email) {
+                    this.focusInput('email');
+                    this.$toasted.show(this.$t('pages.registration.enterEmail'), {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+            },
+            /**
+             * check for the password field
+             *
+             * @returns {boolean}
+             */
+            checkFillPassword: function () {
+                if (!this.password) {
+                    this.focusInput('password');
+                    this.$toasted.show(this.$t('pages.registration.enterPassword'), {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+            },
+            /**
+             * check for the confirm password field
+             *
+             * @returns {boolean}
+             */
+            checkFillConfirmPassword: function () {
+                if (!this.passwordConfirm) {
+                    this.focusInput('repeatpass');
+                    this.$toasted.show(this.$t('pages.registration.enterRepeatPassword'), {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+            },
+            /**
+             * password validation according to the specified rules
+             *
+             * @returns {boolean}
+             */
+            validatePassword: function (pass) {
+                let res = this.Schema.validate(pass);
+                if (!res) {
+                    this.$toasted.show('Пароль не соответствует условиям', {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    return false;
+                }
+            },
+            /**
+             * verification of the password for compliance
+             *
+             * @returns {boolean}
+             */
+            checkPassToPassConfirm: function () {
+                if (this.password !== this.passwordConfirm) {
+                    this.$toasted.show(this.$t('pages.registration.enterMatchPassword'), {
+                        duration: 10000,
+                        type: 'error',
+                    });
+                    this.focusInput('password');
+                    return false;
+                }
+            },
+
+            registerUser: function () {
+                this.isExistUser = false;
+                var e = this.errors.items;
+
+                this.checkFillAllFields();
 
                 this.fullName = this.formatVal(this.fullName);
 
-                //to another func in methods
-                if (!this.fullName || !this.email || !this.phoneNumber
-                    || !this.password || !this.passwordConfirm) {
+                if (!this.fullName || !this.email || !this.phoneNumber || !this.password || !this.passwordConfirm) {
 
-                    if (!this.fullName) {
-                        this.focusInput('fullname');
-                        this.$toasted.show(this.$t('pages.registration.enterFullName'), {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
+                    this.checkFillFullName();
 
-                    if (!this.email) {
-                        this.focusInput('email');
-                        this.$toasted.show(this.$t('pages.registration.enterEmail'), {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
+                    this.checkFillEmail();
 
-                    if (!this.password) {
-                        this.focusInput('password');
-                        this.$toasted.show(this.$t('pages.registration.enterPassword'), {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
+                    this.checkFillPassword();
 
-                    if (!this.passwordConfirm) {
-                        this.focusInput('repeatpass');
-                        this.$toasted.show(this.$t('pages.registration.enterRepeatPassword'), {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return false;
-                    }
+                    this.checkFillConfirmPassword();
                 }
 
                 if (e.length !== 0) {
@@ -242,53 +297,35 @@
                     }
                 }
 
-                if (this.password.length < 8) {
-                    this.focusInput('password');
-                    this.$toasted.show(this.$t('pages.registration.enterCorrectLengthPassword'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    return false
-                }
+                this.validatePassword(this.password);
 
-                if (this.password !== this.passwordConfirm) {
-                    this.$toasted.show(this.$t('pages.registration.enterMatchPassword'), {
-                        duration: 10000,
-                        type: 'error',
-                    });
-                    this.focusInput('password');
-                    return false;
-                }
+                this.checkPassToPassConfirm();
+
 
                 this.dataProcessing = true;
 
-                //rewrite to axios
-                this.$http.post(`${this.$host}/users/new`, {
+                this.$store.dispatch('userRegisterRequest', {
                     name: this.fullName,
                     email: this.email,
                     password: this.password
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-                    if (response.body.message === 'User already exist!') {
-                        this.dataProcessing = false;
-                        this.$toasted.show('User already exist!', {
-                            duration: 10000,
-                            type: 'error',
-                        });
-                        return this.isExistUser = true;
-                    }
+                }).then(resp => {
+                    console.log(resp);
+
+                    // if (response.body.message === 'User already exist!') {
+                    //     this.dataProcessing = false;
+                    //     this.$toasted.show('User already exist!', {
+                    //         duration: 10000,
+                    //         type: 'error',
+                    //     });
+                    //     return this.isExistUser = true;
+                    // }
+
                     this.successSendRequest = true;
                     this.processingSendRequest = true;
                     this.processingSendRequest = false;
                     this.dataProcessing = false;
-                    // console.log(response);
-                    // return this.$router.push('/registration/confirmationuser');
-                }, response => {
-                    console.log('error', response);
+                }).catch(err => {
+                    console.log(err);
                     this.dataProcessing = false;
                 });
             },
@@ -306,9 +343,9 @@
              * initiate validate password schema
              */
             initValidateSchema: function () {
-                const Schema = new PasswordValidator();
+                this.Schema = new PasswordValidator();
 
-                Schema
+                this.Schema
                     .is().min(8)
                     .is().max(100)
                     .has().uppercase()
@@ -325,7 +362,7 @@
                 isPasswordBlacklist(pass).then(blacklisted => {
                     return blacklisted;
                 })
-            }
+            },
         },
         mounted() {
             this.initValidateSchema();

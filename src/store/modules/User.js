@@ -141,6 +141,28 @@ const actions = {
             });
         });
     },
+    userRegisterRequest: ({commit, dispatch}, user) => {
+        return new Promise((resolve, reject) => {
+            commit('REQUEST_USER_REGISTER');
+            let host = 'https://ale-demo-4550.nodechef.com/users/new';
+            axios({
+                url: host,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: user,
+                method: 'POST'
+            }).then(resp => {
+                console.log(resp, 'resp');
+                commit('SUCCESS_USER_REGISTER', resp);
+                resolve(resp);
+            }).catch(err => {
+                commit('ERROR_USER_REGISTER', err);
+                reject(err);
+            });
+        });
+    },
     confirmationRegistration: ({commit}, token) => {
         return new Promise((resolve, reject) => {
             commit('REQUEST_CONFIRMATION_REGISTRATION');
@@ -441,6 +463,15 @@ const mutations = {
     },
     ERROR_USER: (state) => {
         state.userStatus = 'error';
+    },
+    REQUEST_USER_REGISTER: (state) => {
+        state.userRegisterStatus = 'loading';
+    },
+    SUCCESS_USER_REGISTER: (state, data) => {
+        state.userRegisterStatus = 'success';
+    },
+    ERROR_USER_REGISTER: (state, err) => {
+        state.userRegisterStatus = 'error';
     },
     REQUEST_CONFIRMATION_REGISTRATION: (state) => {
         state.confirmationRegistrationStatus = 'loading';
