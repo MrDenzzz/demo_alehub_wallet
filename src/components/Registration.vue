@@ -92,6 +92,9 @@
     import Navbar from './layouts/Navbar';
     import Spinner from './layouts/Spinner';
 
+    import PasswordValidator from 'password-validator';
+    import isPasswordBlacklist from 'password-blacklist';
+
     export default {
         name: 'register',
         components: {
@@ -150,6 +153,27 @@
                     return false;
                 return true;
             },
+
+            checkFillAllFields: function () {
+
+            },
+
+            checkFillFullName: function () {
+
+            },
+
+            checkFillEmail: function () {
+
+            },
+
+            checkFillPassword: function () {
+
+            },
+
+            checkFillConfirmPassword: function () {
+
+            },
+
             registerUser: function () {
                 this.isExistUser = false;
                 var e = this.errors.items;
@@ -277,7 +301,36 @@
 
                 if (type === 'password')
                     this.isErrorPassword = false;
+            },
+            /**
+             * initiate validate password schema
+             */
+            initValidateSchema: function () {
+                const Schema = new PasswordValidator();
+
+                Schema
+                    .is().min(8)
+                    .is().max(100)
+                    .has().uppercase()
+                    .has().lowercase()
+                    .has().digits()
+                    .has().not().spaces();
+            },
+            /**
+             * checking the password in the black list of passwords
+             *
+             * @param pass user entered password
+             */
+            checkPassInBlackList: function (pass) {
+                isPasswordBlacklist(pass).then(blacklisted => {
+                    return blacklisted;
+                })
             }
+        },
+        mounted() {
+            this.initValidateSchema();
+
+
         }
     }
 </script>
