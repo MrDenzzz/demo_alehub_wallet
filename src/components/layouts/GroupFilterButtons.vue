@@ -2,12 +2,19 @@
     <div class="group-filter-buttons" id="group-filter-buttons">
         <button type="button"
                 class="circle circle-gray circle-filter"
-                v-for="item in filters"
-                :id="contractorTypeType(item.id)"
-                :class="calcClass(contractorTypeType(item.id), item.opened, item.folded)"
-                @click="changeStateButtonFilter(item.id)">
+                v-for="filter in filters"
+                :id="contractorTypeType(filter.id)"
+                :class="calcClass(filter)"
+                @click="changeStateButton(filter)">
+
+            <!--<button type="button"-->
+            <!--class="circle circle-gray circle-filter"-->
+            <!--v-for="item in filters"-->
+            <!--:id="contractorTypeType(item.id)"-->
+            <!--:class="calcClass(contractorTypeType(item.id), item.opened, item.folded)"-->
+            <!--@click="changeStateButtonFilter(item.id)">-->
             <span class="title">
-                {{ item.title }}
+                {{ filter.title }}
             </span>
         </button>
     </div>
@@ -36,11 +43,11 @@
              * @param opt changed option
              */
             filterElementOptions: function (opt) {
-                this.changeStateButtonFilter(opt.id);
-                this.foldAnotherFilter();
-                this.currentFilter(opt.id).opened = opt.opened;
-                this.currentFilter(opt.id).folded = opt.folded;
-                this.dispatchChangeFilter();
+                // this.changeStateButtonFilter(opt.id);
+                // this.foldAnotherFilter();
+                // this.currentFilter(opt.id).opened = opt.opened;
+                // this.currentFilter(opt.id).folded = opt.folded;
+                // this.dispatchChangeFilter();
             }
         },
         computed: {
@@ -69,31 +76,6 @@
              */
             contractorTypeType: function (contractorTypeId) {
                 return this.contractorType(contractorTypeId).type;
-            },
-            /**
-             * calc active class for filter buttons
-             *
-             * @param id
-             * @param opened
-             * @param folded
-             * @returns {*}
-             */
-            calcClass: function (id, opened, folded) {
-                if (!this.filters.find(item => item.id === id) &&
-                    typeof opened !== 'boolean' && typeof folded !== 'boolean') {
-                    console.error('Wrong arguments value');
-                    return false;
-                }
-
-                if (!opened && !folded)
-                    return id;
-                else if (opened && !folded)
-                    return id + '__active';
-                else if (!opened && folded)
-                    return id + '__active-fold';
-
-                console.error('Missing IF statement in calcClass');
-                return false;
             },
             /**
              *
@@ -195,28 +177,60 @@
             },
             /**
              *
+             *
              * @param id
              */
             changeStateButtonFilter: function (id) {
                 let current = this.currentFilter(id);
 
-                if (!current.opened && !current.folded) {
-                    current.opened = true;
-                    this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
-                    this.dispatchChangeFilter();
-                    this.dispatchMakeFilterOfContractorType(id);
-                } else if (current.opened && !current.folded) {
-                    current.opened = false;
-                    current.folded = true;
-                    this.changeFoldQueue(id);
-                    this.dispatchChangeFilter();
-                } else if (!current.opened && current.folded) {
-                    current.folded = false;
-                    this.changeFoldQueue(id);
-                    this.dispatchChangeFilter();
-                    this.dispatchResetFilterOfContractorType(id);
-                }
+
+                // if (!current.opened && !current.folded) {
+                //     current.opened = true;
+                //     this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
+                //     this.dispatchChangeFilter();
+                //     this.dispatchMakeFilterOfContractorType(id);
+                // } else if (current.opened && !current.folded) {
+                //     current.opened = false;
+                //     current.folded = true;
+                //     this.changeFoldQueue(id);
+                //     this.dispatchChangeFilter();
+                // } else if (!current.opened && current.folded) {
+                //     current.folded = false;
+                //     this.changeFoldQueue(id);
+                //     this.dispatchChangeFilter();
+                //     this.dispatchResetFilterOfContractorType(id);
+                // }
             },
+            /**
+             * calculate class to current button
+             *
+             * @returns {*}
+             */
+            calcClass: function (filter) {
+                let current = this.types.find(type => {
+                    return type.id === filter.typeId;
+                });
+
+                return (!filter.opened) ? current.type : current.type + '__active';
+            },
+            /**
+             * changes the state of the button
+             *
+             * @param filter
+             */
+            changeStateButton: function (filter) {
+                //find opened filters
+                let openedFilter = this.filtersCondition.find(filter => {
+                    return filter.opened;
+                });
+
+                //check opened filter is current filter
+                if (openedFilter && openedFilter.id !== filter.id)
+                    openedFilter.opened = !openedFilter.opened;
+
+                filter.opened = !filter.opened;
+            },
+
         },
         created() {
             this.filters = this.filtersCondition;
