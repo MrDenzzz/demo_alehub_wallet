@@ -1,6 +1,6 @@
 <template>
     <div class="contract-list">
-        <Navbar title="Contract List"
+        <navbar title="Contract List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
 
-                            <Datepicker id="dateOffersFrom"
+                            <datepicker id="dateOffersFrom"
                                         class="dateOffersFrom"
                                         v-if="openedFromDatepicker"
                                         v-model="offersDateFrom"
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <Datepicker id="dateOffersTo"
+                            <datepicker id="dateOffersTo"
                                         class="dateOffersTo"
                                         :style="{ 'top': getSelectedAreaHeight }"
                                         v-if="openedToDatepicker"
@@ -59,15 +59,15 @@
                                  alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
 
-                                <Group-Filter-Buttons :filterElementOptions="changedFilterElementOptions"/>
+                                <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
-                                <Offers-Filter v-for="item in filters"
+                                <offers-filter v-for="item in filters"
                                                v-if="item.opened"
                                                :key="item.id"
                                                :id="item.id"
                                                :offset-top="filterOffsetTop(item.id)"/>
 
-                                <Offers-Filter-Folded v-for="item in filters"
+                                <offers-filter-folded v-for="item in filters"
                                                       v-if="item.folded"
                                                       :key="item.id"
                                                       :id="item.id"
@@ -78,16 +78,17 @@
                     </div>
 
                     <div class="circle circle-bottom circle-green">
-                        <img src="../../static/img/icons-for-circle/infinity.svg" alt="" width="12px" height="6px">
+                        <img src="../../static/img/icons-for-circle/infinity.svg"
+                             alt="infinity" width="12px" height="6px">
                         <div class="triangle">
-                            <Group-Status-Buttons/>
+                            <group-status-buttons/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="search-result">
-                <Offers-List/>
-                <Offers-Contractor-Dialog v-if="openedContractorDialog"
+                <offers-list/>
+                <offers-contractor-dialog v-if="openedContractorDialog"
                                           :coordinates="contractorDialogCoordinates"/>
             </div>
         </div>
@@ -299,45 +300,44 @@
 
             //получать сюда список фильтров и кнопок
 
-            // window.addEventListener('click', (e) => {
-            //     let target = e.target,
-            //         parentTarget = target.parentElement;
-            //
-            //     let isFilterButton = arr.find(item => {
-            //             return item === target.id;
-            //         }),
-            //         isFilterButtonParent = arr.find(item => {
-            //             return item === parentTarget.id;
-            //         });
-            //
-            //     //if target is button filters or span in button filters
-            //     if (isFilterButton || isFilterButtonParent) {
-            //         console.log('is target');
-            //     } else {
-            //         let openedFilter = this.filtersCondition.find(filter => {
-            //             return filter.opened;
-            //         });
-            //
-            //         if (openedFilter)
-            //             openedFilter.opened = false;
-            //     }
-            //
-            //     //if target is contractor or contractor panel
-            //     if (this.availabilityParentClass('dialog', target) ||
-            //         this.availabilityParentClass('contractors-content', target)) {
-            //         console.log('target isPanelContractor');
-            //     } else {
-            //         if (this.openedContractorDialog) {
-            //             this.$store.dispatch('hideOfferContractorDialog'
-            //             ).then(resp => {
-            //                 console.log('Success hide offer contractor dialog');
-            //             }).catch(err => {
-            //                 console.log('Error hide offer contractor dialog');
-            //             });
-            //         }
-            //     }
-            // });
+            window.addEventListener('click', (e) => {
+                let target = e.target,
+                    parentTarget = target.parentElement;
 
+                let isFilterButton = arr.find(item => {
+                        return item === target.id;
+                    }),
+                    isFilterButtonParent = arr.find(item => {
+                        return item === parentTarget.id;
+                    });
+
+                //if target is button filters or span in button filters
+                if (isFilterButton || isFilterButtonParent) {
+                    console.log('is target');
+                } else {
+                    let openedFilter = this.filtersCondition.find(filter => {
+                        return filter.opened;
+                    });
+
+                    if (openedFilter)
+                        openedFilter.opened = false;
+                }
+
+                //if target is contractor or contractor panel
+                if (this.availabilityParentClass('dialog', target) ||
+                    this.availabilityParentClass('contractors-content', target)) {
+                    console.log('target isPanelContractor');
+                } else {
+                    if (this.openedContractorDialog) {
+                        this.$store.dispatch('hideOfferContractorDialog'
+                        ).then(resp => {
+                            console.log('Success hide offer contractor dialog');
+                        }).catch(err => {
+                            console.log('Error hide offer contractor dialog');
+                        });
+                    }
+                }
+            });
         }
     }
 </script>
@@ -392,8 +392,7 @@
 
                         @media (max-width 768px)
                             top 0
-                            left
-                        -18px
+                            left -18px
 
                         .triangle-icon
                             border 6px solid transparent
@@ -412,8 +411,7 @@
 
                         @media (max-width 768px)
                             bottom 0
-                            right
-                        -18px
+                            right -18px
 
                         .triangle
                             border 6px solid transparent
@@ -450,8 +448,7 @@
                             flex-direction row
                             width 192px
                             top 8px
-                            left
-                        -96px
+                            left -96px
 
                         @media (max-width 620px)
                             flex-direction column
@@ -476,20 +473,18 @@
                             top -18px
 
                             @media (max-width 768px)
-                                left
-                            -16px
-                            bottom 0
-                            top -50px
+                                left -16px
+                                bottom 0
+                                top -50px
 
                         .marker-calendar-bottom
                             left -50px
                             bottom -18px
 
                             @media (max-width 768px)
-                                top
-                            -50px
-                            right -16px
-                            left unset
+                                top -50px
+                                right -16px
+                                left unset
 
                         .marker-calendar-bottom, .marker-calendar-top
                             .block
@@ -509,9 +504,8 @@
                             position absolute
 
                             @media (max-width 768px)
-                                top
-                            -6px
-                            left 190px
+                                top -6px
+                                left 190px
 
                             .triangle
                                 border 6px solid transparent
@@ -546,9 +540,8 @@
                             @media (max-width 768px)
                                 width 60%
                                 height 36px
-                                top
-                            -1px
-                            left 58px
+                                top -1px
+                                left 58px
 
             .search-result
                 padding-left 100px

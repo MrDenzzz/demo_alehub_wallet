@@ -591,7 +591,8 @@ const messages = {
                 ]
             },
             buttons: {
-                clear: 'Clear'
+                clear: 'Clear',
+                search: 'Search'
             }
         },
         countries: [

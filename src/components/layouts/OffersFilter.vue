@@ -3,11 +3,12 @@
         <div class="dialog"
              :style="{ 'top': offsetTop }">
 
-            <!--<button type="button" class="fold"-->
-                    <!--@click="toFold">-->
-                <!--<img src="../../../static/img/arrow-down-dark.svg"-->
-                     <!--alt="to fold">-->
-            <!--</button>-->
+            <button type="button" class="close"
+                    @click="toClose">
+                <!--make cross-->
+                <img src="../../../static/img/arrow-down-dark.svg"
+                     alt="close">
+            </button>
 
             <form>
                 <input-name :title="$t('offersFilter.name.title')"/>
@@ -31,9 +32,15 @@
                                      :options="$t('offersFilter.verified.options')"/>
 
                 <button type="button"
-                        class="buttons btn btn-yellow"
+                        class="buttons btn btn-default m-b-10"
                         @click="clear">
                     {{ $t('offersFilter.buttons.clear') }}
+                </button>
+
+                <button type="button"
+                        class="buttons btn btn-yellow"
+                        @click="filterOffers">
+                    {{ $t('offersFilter.buttons.search') }}
                 </button>
             </form>
         </div>
@@ -95,6 +102,13 @@
             clear: function () {
 
             },
+            /**
+             *
+             *
+             */
+            filterOffers: function () {
+
+            },
             dispatchMakeFilter: function () {
 
                 //write validator data by type and val
@@ -115,6 +129,9 @@
                 }).catch(err => {
 
                 });
+            },
+            toClose: function () {
+
             }
         },
         mounted() {
@@ -151,6 +168,9 @@
 </script>
 
 <style lang="stylus" scoped>
+    .m-b-10
+        margin-bottom 10px
+
     .fade-bottom-enter-active
         transition all .2s ease-out
 
@@ -171,7 +191,7 @@
         left 54px
         padding 16px
 
-        .fold
+        .close
             cursor pointer
             position absolute
             right 10px
