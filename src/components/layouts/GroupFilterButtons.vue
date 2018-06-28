@@ -6,13 +6,6 @@
                 :id="contractorTypeType(filter.id)"
                 :class="calcClass(filter)"
                 @click="changeStateButton(filter)">
-
-            <!--<button type="button"-->
-            <!--class="circle circle-gray circle-filter"-->
-            <!--v-for="item in filters"-->
-            <!--:id="contractorTypeType(item.id)"-->
-            <!--:class="calcClass(contractorTypeType(item.id), item.opened, item.folded)"-->
-            <!--@click="changeStateButtonFilter(item.id)">-->
             <span class="title">
                 {{ filter.title }}
             </span>
@@ -85,18 +78,6 @@
              */
             currentFilter: function (id) {
                 return this.filters.find(item => item.id === id);
-            },
-            /**
-             * fold other filter when unfold current filter
-             */
-            foldAnotherFilter: function () {
-                this.filters.forEach(item => {
-                    if (item.opened) {
-                        item.opened = false;
-                        item.folded = true;
-                        this.changeFoldQueue(item.id);
-                    }
-                });
             },
             /**
              *
@@ -174,32 +155,6 @@
                 }).catch((resp) => {
                     console.error(resp);
                 });
-            },
-            /**
-             *
-             *
-             * @param id
-             */
-            changeStateButtonFilter: function (id) {
-                let current = this.currentFilter(id);
-
-
-                // if (!current.opened && !current.folded) {
-                //     current.opened = true;
-                //     this.setCorrectStateOtherButtonFilter(id, current.opened, current.folded);
-                //     this.dispatchChangeFilter();
-                //     this.dispatchMakeFilterOfContractorType(id);
-                // } else if (current.opened && !current.folded) {
-                //     current.opened = false;
-                //     current.folded = true;
-                //     this.changeFoldQueue(id);
-                //     this.dispatchChangeFilter();
-                // } else if (!current.opened && current.folded) {
-                //     current.folded = false;
-                //     this.changeFoldQueue(id);
-                //     this.dispatchChangeFilter();
-                //     this.dispatchResetFilterOfContractorType(id);
-                // }
             },
             /**
              * calculate class to current button
@@ -295,71 +250,10 @@
                 &:hover
                     background-color rgba(126, 32, 192, .4)
 
-            &.ts__active, &.ts-ex__active, &.ch__active, &.qa__active,
-            &.ts__active-fold, &.ts-ex__active-fold, &.ch__active-fold, &.qa__active-fold
+            &.ts__active, &.ts-ex__active, &.ch__active, &.qa__active
                 -webkit-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
                 -moz-box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
                 box-shadow 0 0 12px 0 rgba(0, 0, 0, .5)
-
-            &.ts__active-fold
-                background linear-gradient(
-                        to bottom,
-                        #b63c2c,
-                        #b63c2c 50%,
-                        #fff 50%,
-                        #b63c2c 100%,
-                        #fff 100%,
-                        #fff
-                )
-                background-size 100% 3px
-
-            &.ts__active-fold
-                background linear-gradient(
-                        to bottom,
-                        #b63c2c,
-                        #b63c2c 50%,
-                        #fff 50%,
-                        #b63c2c 100%,
-                        #fff 100%,
-                        #fff
-                )
-                background-size 100% 3px
-
-            &.ts-ex__active-fold
-                background linear-gradient(
-                        to bottom,
-                        #0391a6,
-                        #0391a6 50%,
-                        #fff 50%,
-                        #0391a6 100%,
-                        #fff 100%,
-                        #fff
-                )
-                background-size 100% 3px
-
-            &.ch__active-fold
-                background linear-gradient(
-                        to bottom,
-                        #e09a00,
-                        #e09a00 50%,
-                        #fff 50%,
-                        #e09a00 100%,
-                        #fff 100%,
-                        #fff
-                )
-                background-size 100% 3px
-
-            &.qa__active-fold
-                background linear-gradient(
-                        to bottom,
-                        #7e20c0,
-                        #7e20c0 50%,
-                        #fff 50%,
-                        #7e20c0 100%,
-                        #fff 100%,
-                        #fff
-                )
-                background-size 100% 3px
 
             &.ts__active
                 background-color #b63c2c

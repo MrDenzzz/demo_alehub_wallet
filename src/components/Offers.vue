@@ -312,6 +312,39 @@
                 this.changedFilterElementOptions = obj;
 
             });
+
+
+            let arr = ['ts', 'ts-ex', 'ch', 'qa'];
+
+            //получать сюда список фильтров и кнопок
+
+            window.addEventListener('click', (e) => {
+                let target = e.target,
+                    parentTarget = target.parentElement;
+
+                let isFilterButton = arr.find(item => {
+                        return item === target.id;
+                    }),
+                    isFilterButtonParent = arr.find(item => {
+                        return item === parentTarget.id;
+                    });
+
+
+                //if target is button filters or span in button filters
+                if (isFilterButton || isFilterButtonParent) {
+                    console.log('is target');
+                } else {
+                    let openedFilter = this.filtersCondition.find(filter => {
+                        return filter.opened;
+                    });
+
+                    if (openedFilter)
+                        openedFilter.opened = false;
+                }
+
+                console.log(target, 'e.target.id');
+            });
+
         }
     }
 </script>
