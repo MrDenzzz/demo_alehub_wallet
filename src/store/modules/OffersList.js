@@ -645,6 +645,12 @@ const actions = {
             resolve('success select contractor');
         });
     },
+    hideOfferContractorDialog: ({commit}) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_HIDE_OFFER_CONTRACTOR_DIALOG');
+            resolve('success hide offer contractor dialog');
+        });
+    },
     changeFiltersCondition: ({commit}, filters) => {
         return new Promise(resolve => {
             commit('SUCCESS_CHANGE_FILTERS_CONDITION', filters);
@@ -682,13 +688,22 @@ const mutations = {
      *
      *
      * @param state
-     * @param contractor
+     * @param contractorData
      * @constructor
      */
     SUCCESS_SELECT_CONTRACTOR: (state, contractorData) => {
         state.selectedContractor = contractorData.contractor;
         state.openedContractorDialog = contractorData.opened;
-        state.contractorDialogCoordinates = contractorData.contractorDialogCoordinates;
+        state.contractorDialogCoordinates = contractorData.coordinates;
+    },
+    /**
+     *
+     *
+     * @param state
+     * @constructor
+     */
+    SUCCESS_HIDE_OFFER_CONTRACTOR_DIALOG: (state) => {
+        state.openedContractorDialog = false;
     },
     /**
      *

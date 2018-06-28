@@ -244,41 +244,6 @@
                 return this.getCoords(document.getElementById(this.contractorTypeType(id))).top -
                     this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
             },
-
-            // toggleContractorDialog: function (e, contractor) {
-            //     // this.openedContractorDialog = !this.openedContractorDialog;
-            //
-            //     // this.currentContractorId = contractor.id;
-            //
-            //     if (!this.openedContractorDialog) {
-            //         this.clickCoordinates.top = e.pageY;
-            //         this.clickCoordinates.left = e.pageX;
-            //         this.$store.dispatch('selectContractor',
-            //             contractor
-            //         ).then((resp) => {
-            //             this.openedContractorDialog = true;
-            //             //почитать ещё про промисы, then и catch
-            //         }).catch(() => {
-            //             console.log('reject 1')
-            //         });
-            //
-            //         return true;
-            //     } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
-            //         this.clickCoordinates.top = e.pageY;
-            //         this.clickCoordinates.left = e.pageX;
-            //         this.$store.dispatch('selectContractor',
-            //             contractor
-            //         ).then(() => {
-            //
-            //         }).catch(() => {
-            //             console.log('reject 2')
-            //         });
-            //         return true;
-            //     }
-            //     console.log(3);
-            //     this.openedContractorDialog = false;
-            //     return false;
-            // },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
                 return dateFormat.toDateString();
@@ -330,48 +295,48 @@
 
             });
 
-
             let arr = ['ts', 'ts-ex', 'ch', 'qa'];
 
             //получать сюда список фильтров и кнопок
 
-            window.addEventListener('click', (e) => {
-                let target = e.target,
-                    parentTarget = target.parentElement;
-
-                let isFilterButton = arr.find(item => {
-                        return item === target.id;
-                    }),
-                    isFilterButtonParent = arr.find(item => {
-                        return item === parentTarget.id;
-                    });
-
-                // let isPanelContractor = e.target;
-
-                // console.log(e.target, 'target');
-                // console.log(isPanelContractor.parentElement, 'parent');
-
-
-                //if target is button filters or span in button filters
-                if (isFilterButton || isFilterButtonParent) {
-                    console.log('is target');
-                } else {
-                    let openedFilter = this.filtersCondition.find(filter => {
-                        return filter.opened;
-                    });
-
-                    if (openedFilter)
-                        openedFilter.opened = false;
-                }
-
-                //if target is contractor or contractor panel
-                if (this.availabilityParentClass('dialog', target) ||
-                    this.availabilityParentClass('contractors-content', target)) {
-                    console.log('target isPanelContractor');
-                } else {
-                    console.log('target not isPanelContractor');
-                }
-            });
+            // window.addEventListener('click', (e) => {
+            //     let target = e.target,
+            //         parentTarget = target.parentElement;
+            //
+            //     let isFilterButton = arr.find(item => {
+            //             return item === target.id;
+            //         }),
+            //         isFilterButtonParent = arr.find(item => {
+            //             return item === parentTarget.id;
+            //         });
+            //
+            //     //if target is button filters or span in button filters
+            //     if (isFilterButton || isFilterButtonParent) {
+            //         console.log('is target');
+            //     } else {
+            //         let openedFilter = this.filtersCondition.find(filter => {
+            //             return filter.opened;
+            //         });
+            //
+            //         if (openedFilter)
+            //             openedFilter.opened = false;
+            //     }
+            //
+            //     //if target is contractor or contractor panel
+            //     if (this.availabilityParentClass('dialog', target) ||
+            //         this.availabilityParentClass('contractors-content', target)) {
+            //         console.log('target isPanelContractor');
+            //     } else {
+            //         if (this.openedContractorDialog) {
+            //             this.$store.dispatch('hideOfferContractorDialog'
+            //             ).then(resp => {
+            //                 console.log('Success hide offer contractor dialog');
+            //             }).catch(err => {
+            //                 console.log('Error hide offer contractor dialog');
+            //             });
+            //         }
+            //     }
+            // });
 
         }
     }
