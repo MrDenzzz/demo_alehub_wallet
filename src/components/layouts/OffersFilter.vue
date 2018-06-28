@@ -3,14 +3,13 @@
         <div class="dialog"
              :style="{ 'top': offsetTop }">
 
-            <button type="button" class="fold"
-                    @click="toFold">
-                <img src="../../../static/img/arrow-down-dark.svg"
-                     alt="to fold">
-            </button>
+            <!--<button type="button" class="fold"-->
+                    <!--@click="toFold">-->
+                <!--<img src="../../../static/img/arrow-down-dark.svg"-->
+                     <!--alt="to fold">-->
+            <!--</button>-->
 
             <form>
-
                 <input-name :title="$t('offersFilter.name.title')"/>
 
                 <input-double-rating :title="$t('offersFilter.rating.title')"
@@ -36,7 +35,6 @@
                         @click="clear">
                     {{ $t('offersFilter.buttons.clear') }}
                 </button>
-
             </form>
         </div>
     </transition>
@@ -85,12 +83,12 @@
             }
         },
         methods: {
-            /**
-             * fold this offers filter
-             */
-            toFold: function () {
-                this.$parent.$emit('onFold', {id: this.id, opened: false, folded: true});
-            },
+            // /**
+            //  * fold this offers filter
+            //  */
+            // toFold: function () {
+            //     this.$parent.$emit('onFold', {id: this.id, opened: false, folded: true});
+            // },
             /**
              * clear all fields of this offers filter
              */

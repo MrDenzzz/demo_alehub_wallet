@@ -1,6 +1,6 @@
 <template>
     <div class="contract-list">
-        <navbar title="Contract List"
+        <Navbar title="Contract List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
 
-                            <datepicker id="dateOffersFrom"
+                            <Datepicker id="dateOffersFrom"
                                         class="dateOffersFrom"
                                         v-if="openedFromDatepicker"
                                         v-model="offersDateFrom"
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <datepicker id="dateOffersTo"
+                            <Datepicker id="dateOffersTo"
                                         class="dateOffersTo"
                                         :style="{ 'top': getSelectedAreaHeight }"
                                         v-if="openedToDatepicker"
@@ -59,15 +59,15 @@
                                  alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
 
-                                <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
+                                <Group-Filter-Buttons :filterElementOptions="changedFilterElementOptions"/>
 
-                                <offers-filter v-for="item in filters"
+                                <Offers-Filter v-for="item in filters"
                                                v-if="item.opened"
                                                :key="item.id"
                                                :id="item.id"
                                                :offset-top="filterOffsetTop(item.id)"/>
 
-                                <offers-filter-folded v-for="item in filters"
+                                <Offers-Filter-Folded v-for="item in filters"
                                                       v-if="item.folded"
                                                       :key="item.id"
                                                       :id="item.id"
@@ -80,13 +80,15 @@
                     <div class="circle circle-bottom circle-green">
                         <img src="../../static/img/icons-for-circle/infinity.svg" alt="" width="12px" height="6px">
                         <div class="triangle">
-                            <group-status-buttons/>
+                            <Group-Status-Buttons/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="search-result">
-                    <offers-list/>
+                <Offers-List/>
+                <Offers-Contractor-Dialog v-if="openedContractorDialog"
+                                          :coordinates="contractorDialogCoordinates"/>
             </div>
         </div>
     </div>
@@ -98,6 +100,7 @@
     import OffersList from './layouts/OffersList';
     import OffersFilter from './layouts/OffersFilter';
     import OffersFilterFolded from './layouts/OffersFilterFolded';
+    import OffersContractorDialog from './layouts/OffersContractorDialog';
     import GroupFilterButtons from './layouts/GroupFilterButtons';
     import GroupStatusButtons from './layouts/GroupStatusButtons';
 
@@ -113,6 +116,7 @@
             OffersList,
             OffersFilter,
             OffersFilterFolded,
+            OffersContractorDialog,
             GroupFilterButtons,
             GroupStatusButtons,
             Datepicker
@@ -145,7 +149,7 @@
                 offersDateFrom: 0,
                 offersDateTo: 0,
 
-                openedContractorDialog: false,
+                // openedContractorDialog: false,
 
                 clickCoordinates: {
                     top: false,
@@ -190,6 +194,9 @@
                     'types',
                     'offers',
                     'contractors',
+                    'selectedContractor',
+                    'openedContractorDialog',
+                    'contractorDialogCoordinates',
                     'filtersCondition'
                 ]
             ),
@@ -235,43 +242,43 @@
                 }
 
                 return this.getCoords(document.getElementById(this.contractorTypeType(id))).top -
-                       this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
+                    this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
             },
 
-            toggleContractorDialog: function (e, contractor) {
-                // this.openedContractorDialog = !this.openedContractorDialog;
-
-                // this.currentContractorId = contractor.id;
-
-                if (!this.openedContractorDialog) {
-                    this.clickCoordinates.top = e.pageY;
-                    this.clickCoordinates.left = e.pageX;
-                    this.$store.dispatch('selectContractor',
-                        contractor
-                    ).then((resp) => {
-                        this.openedContractorDialog = true;
-                        //почитать ещё про промисы, then и catch
-                    }).catch(() => {
-                        console.log('reject 1')
-                    });
-
-                    return true;
-                } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
-                    this.clickCoordinates.top = e.pageY;
-                    this.clickCoordinates.left = e.pageX;
-                    this.$store.dispatch('selectContractor',
-                        contractor
-                    ).then(() => {
-
-                    }).catch(() => {
-                        console.log('reject 2')
-                    });
-                    return true;
-                }
-                console.log(3);
-                this.openedContractorDialog = false;
-                return false;
-            },
+            // toggleContractorDialog: function (e, contractor) {
+            //     // this.openedContractorDialog = !this.openedContractorDialog;
+            //
+            //     // this.currentContractorId = contractor.id;
+            //
+            //     if (!this.openedContractorDialog) {
+            //         this.clickCoordinates.top = e.pageY;
+            //         this.clickCoordinates.left = e.pageX;
+            //         this.$store.dispatch('selectContractor',
+            //             contractor
+            //         ).then((resp) => {
+            //             this.openedContractorDialog = true;
+            //             //почитать ещё про промисы, then и catch
+            //         }).catch(() => {
+            //             console.log('reject 1')
+            //         });
+            //
+            //         return true;
+            //     } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
+            //         this.clickCoordinates.top = e.pageY;
+            //         this.clickCoordinates.left = e.pageX;
+            //         this.$store.dispatch('selectContractor',
+            //             contractor
+            //         ).then(() => {
+            //
+            //         }).catch(() => {
+            //             console.log('reject 2')
+            //         });
+            //         return true;
+            //     }
+            //     console.log(3);
+            //     this.openedContractorDialog = false;
+            //     return false;
+            // },
             toFormatDate: function (date) {
                 let dateFormat = new Date(date);
                 return dateFormat.toDateString();
@@ -302,6 +309,16 @@
                     default:
                         return 'qa'
                 }
+            },
+            availabilityParentClass: function (parentClass, element) {
+                if (element.parentElement) {
+                    if (!(element.parentElement.classList.contains(parentClass) || element.classList.contains(parentClass))) {
+                        return this.availabilityParentClass(parentClass, element.parentElement);
+                    } else {
+                        return true;
+                    }
+                }
+                return false;
             }
         },
         created() {
@@ -329,6 +346,11 @@
                         return item === parentTarget.id;
                     });
 
+                // let isPanelContractor = e.target;
+
+                // console.log(e.target, 'target');
+                // console.log(isPanelContractor.parentElement, 'parent');
+
 
                 //if target is button filters or span in button filters
                 if (isFilterButton || isFilterButtonParent) {
@@ -342,7 +364,13 @@
                         openedFilter.opened = false;
                 }
 
-                console.log(target, 'e.target.id');
+                //if target is contractor or contractor panel
+                if (this.availabilityParentClass('dialog', target) ||
+                    this.availabilityParentClass('contractors-content', target)) {
+                    console.log('target isPanelContractor');
+                } else {
+                    console.log('target not isPanelContractor');
+                }
             });
 
         }
@@ -399,7 +427,8 @@
 
                         @media (max-width 768px)
                             top 0
-                            left -18px
+                            left
+                        -18px
 
                         .triangle-icon
                             border 6px solid transparent
@@ -418,7 +447,8 @@
 
                         @media (max-width 768px)
                             bottom 0
-                            right -18px
+                            right
+                        -18px
 
                         .triangle
                             border 6px solid transparent
@@ -455,7 +485,8 @@
                             flex-direction row
                             width 192px
                             top 8px
-                            left -96px
+                            left
+                        -96px
 
                         @media (max-width 620px)
                             flex-direction column
@@ -480,18 +511,20 @@
                             top -18px
 
                             @media (max-width 768px)
-                                left -16px
-                                bottom 0
-                                top -50px
+                                left
+                            -16px
+                            bottom 0
+                            top -50px
 
                         .marker-calendar-bottom
                             left -50px
                             bottom -18px
 
                             @media (max-width 768px)
-                                top -50px
-                                right -16px
-                                left unset
+                                top
+                            -50px
+                            right -16px
+                            left unset
 
                         .marker-calendar-bottom, .marker-calendar-top
                             .block
@@ -511,8 +544,9 @@
                             position absolute
 
                             @media (max-width 768px)
-                                top -6px
-                                left 190px
+                                top
+                            -6px
+                            left 190px
 
                             .triangle
                                 border 6px solid transparent
@@ -547,8 +581,9 @@
                             @media (max-width 768px)
                                 width 60%
                                 height 36px
-                                top -1px
-                                left 58px
+                                top
+                            -1px
+                            left 58px
 
             .search-result
                 padding-left 100px
@@ -682,8 +717,6 @@
 
             &:first-child, &:last-child
                 visibility hidden
-
-
 
     // Dark Theme
 

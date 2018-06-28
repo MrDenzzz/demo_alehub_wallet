@@ -90,28 +90,20 @@
                 </div>
             </div>
         </div>
-
-        <offers-contractor-dialog v-if="openedContractorDialog"
-                                  :coordinates="contractorDialogCoordinates"/>
-
     </div>
 </template>
 
 <script>
-    import OffersContractorDialog from './OffersContractorDialog';
-
     import moment from 'moment';
 
     import {mapGetters} from 'vuex';
 
     export default {
-        name: 'OffersOffer',
-        components: {
-            OffersContractorDialog
-        },
+        name: 'OffersList',
+        components: {},
         data() {
             return {
-                openedContractorDialog: false,
+                // openedContractorDialog: false,
 
                 contractorDialogCoordinates: {
                     top: false,
@@ -143,6 +135,7 @@
                     'filteredOffers',
                     'contractors',
                     'offerContractors',
+                    'openedContractorDialog',
                     'filteredOfferContractors',
                     'selectedContractor'
                 ]
@@ -211,19 +204,23 @@
                 this.contractorDialogCoordinates.left = e.pageX;
 
                 if (!this.openedContractorDialog) {
-                    this.$store.dispatch('selectContractor',
-                        contractor
-                    ).then((resp) => {
-                        this.openedContractorDialog = true;
+                    this.$store.dispatch('selectContractor', {
+                        contractor: contractor,
+                        opened: true,
+                        coordinates: this.contractorDialogCoordinates
+                    }).then(resp => {
+                        // this.openedContractorDialog = true;
                     }).catch(() => {
                         console.error('error toggle contractor dialog');
                     });
 
                     return true;
-                } else if (this.openedContractorDialog === true && contractor.id !== this.selectedContractor.id) {
-                    this.$store.dispatch('selectContractor',
-                        contractor
-                    ).then(() => {
+                } else if (this.openedContractorDialog && contractor.id !== this.selectedContractor.id) {
+                    this.$store.dispatch('selectContractor', {
+                        contractor: contractor,
+                        opened: true,
+                        coordinates: this.contractorDialogCoordinates
+                    }).then(() => {
 
                     }).catch(() => {
                         console.error('error toggle SAME contractor dialog');
@@ -231,7 +228,16 @@
 
                     return true;
                 }
-                this.openedContractorDialog = false;
+                // this.openedContractorDialog = false;
+                this.$store.dispatch('selectContractor', {
+                    contractor: contractor,
+                    opened: false,
+                    coordinates: this.contractorDialogCoordinates
+                }).then(() => {
+
+                }).catch(() => {
+                    console.error('');
+                });
                 return false;
             },
             getIcon: function (name) {
@@ -268,11 +274,11 @@
                     let diff = this.offers[i].finalDate - this.offers[i].startDate,
                         diffKeyStart = this.offers[i].finalDate - this.offers[i].keys[j].start;
 
-                    document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) +'px';
+                    document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) + 'px';
 
                     if (this.offers[i].keys[j].end) {
                         let diffKeyEnd = this.offers[i].finalDate - this.offers[i].keys[j].end;
-                        document.getElementById('key-end' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyEnd / diff) +'px';
+                        document.getElementById('key-end' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyEnd / diff) + 'px';
                     }
                 }
             }
@@ -455,8 +461,8 @@
                             @media (max-width 620px)
                                 display none
 
-                            //&:nth-child(4)
-                            //    left -300px
+                        //&:nth-child(4)
+                        //    left -300px
 
                         .contractors-info
                             cursor pointer

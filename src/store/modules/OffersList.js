@@ -630,13 +630,18 @@ const state = {
         avgCostPerProject: 0,
         type: false,
         keys: []
+    },
+    openedContractorDialog: false,
+    contractorDialogCoordinates: {
+        top: 0,
+        left: 0
     }
 };
 
 const actions = {
-    selectContractor: ({commit}, contractor) => {
+    selectContractor: ({commit}, contractorData) => {
         return new Promise(resolve => {
-            commit('SUCCESS_SELECT_CONTRACTOR', contractor);
+            commit('SUCCESS_SELECT_CONTRACTOR', contractorData);
             resolve('success select contractor');
         });
     },
@@ -680,8 +685,10 @@ const mutations = {
      * @param contractor
      * @constructor
      */
-    SUCCESS_SELECT_CONTRACTOR: (state, contractor) => {
-        state.selectedContractor = contractor;
+    SUCCESS_SELECT_CONTRACTOR: (state, contractorData) => {
+        state.selectedContractor = contractorData.contractor;
+        state.openedContractorDialog = contractorData.opened;
+        state.contractorDialogCoordinates = contractorData.contractorDialogCoordinates;
     },
     /**
      *
@@ -895,6 +902,8 @@ const getters = {
     types: state => state.types,
     status: state => state.status,
     selectedContractor: state => state.selectedContractor,
+    openedContractorDialog: state => state.openedContractorDialog,
+    contractorDialogCoordinates: state => state.contractorDialogCoordinates,
     offers: state => state.offers,
     contractors: state => state.contractors,
     /**
