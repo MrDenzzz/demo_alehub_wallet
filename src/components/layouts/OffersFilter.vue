@@ -95,7 +95,7 @@
                     ratingTo: 0,
                     priceFrom: 0,
                     priceTo: 0,
-                    certification: [],
+                    certificatesId: [],
                     verified: []
                 },
                 clear: false
@@ -128,7 +128,7 @@
                     ratingTo: this.filter.ratingTo,
                     priceFrom: this.filter.priceFrom,
                     priceTo: this.filter.priceTo,
-                    certification: this.filter.certification,
+                    certificatesId: this.filter.certificatesId,
                     verified: this.filter.verified
                 }).then(resp => {
                     console.log('success filter offers');
@@ -175,8 +175,8 @@
                 // this.clear = false;
                 // this.dispatchMakeFilter();
             });
-            this.$on('changeCertification', certification => {
-                this.filter.certification = certification;
+            this.$on('changeCertification', certificatesId => {
+                this.filter.certificatesId = certificatesId;
                 // this.clear = false;
                 // this.dispatchMakeFilter();
             });

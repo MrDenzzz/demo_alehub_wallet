@@ -5,15 +5,15 @@
         </label>
         <div class="form-checkbox">
             <label class="control control-checkbox"
-                   v-for="item in options">
+                   v-for="certificate in certificates">
                 <input type="checkbox"
                        name="items"
-                       :value="item"
+                       :value="certificate.id"
                        v-model="items"
                        @change="emitChangeCertification(items)">
                 <div class="control-indicator"></div>
                 <span>
-                    {{ item.title }}
+                    {{ certificate.name }}
                 </span>
             </label>
         </div>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'InputCertificationList',
         props: {
@@ -54,6 +56,13 @@
             return {
                 items: []
             }
+        },
+        computed: {
+            ...mapGetters(
+                [
+                    'certificates'
+                ]
+            )
         },
         methods: {
             emitChangeCertification: function (items) {

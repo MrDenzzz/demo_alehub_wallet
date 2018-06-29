@@ -152,6 +152,17 @@ const state = {
 
     filteredContractorsTypes: [],
 
+    certificates: [
+        {
+            id: 1,
+            name: 'ГОСТ'
+        },
+        {
+            id: 2,
+            name: 'DIN'
+        }
+    ],
+
     contractors: [
         {
             id: 1,
@@ -165,6 +176,8 @@ const state = {
             githubAddress: '/vova-dmitrov',
             countOfProject: 1328,
             avgCostPerProject: 7500,
+            certificatesId: [1],
+            verified: true,
             keys: [
                 '../../static/img/keys/ts-key.svg'
             ]
@@ -181,6 +194,8 @@ const state = {
             githubAddress: '/deus-virus',
             countOfProject: 321,
             avgCostPerProject: 1000,
+            certificatesId: [2],
+            verified: false,
             keys: [
                 '../../static/img/keys/ts-ex-key.svg'
             ]
@@ -197,6 +212,8 @@ const state = {
             githubAddress: '/glumac',
             countOfProject: 3,
             avgCostPerProject: 350,
+            certificatesId: [2],
+            verified: true,
             keys: [
                 '../../static/img/keys/ch-key.svg',
                 '../../static/img/keys/ch-key.svg'
@@ -214,6 +231,8 @@ const state = {
             githubAddress: '/rift',
             countOfProject: 230,
             avgCostPerProject: 1010,
+            certificatesId: [1, 2],
+            verified: false,
             keys: [
                 '../../static/img/keys/qa-key.svg',
                 '../../static/img/keys/qa-key.svg'
@@ -231,6 +250,8 @@ const state = {
             githubAddress: '',
             countOfProject: 203,
             avgCostPerProject: 506,
+            certificatesId: [1, 2],
+            verified: true,
             keys: [
                 '../../static/img/keys/ts-key.svg'
             ]
@@ -247,6 +268,8 @@ const state = {
             githubAddress: '/galvadon',
             countOfProject: 130204,
             avgCostPerProject: 1300,
+            certificatesId: [],
+            verified: false,
             keys: [
                 '../../static/img/keys/ts-ex-key.svg'
             ]
@@ -701,6 +724,51 @@ const actions = {
     },
 };
 
+function checkEntranceArr(arr1, arr2) {
+    //arr1 [1, 2, 3]
+    //arr2 [1, 2]
+
+    if (arr2.length > arr1.length) {
+        console.log(1);
+        return false;
+    }
+
+    if (arr2.length === 0) {
+        console.log(2);
+        return true;
+    }
+
+    if (arr1.length === arr2.length) {
+        console.log(3);
+        for (let i = 0; i < arr1.length; i++) {
+            for (let j = 0; j < arr2.length; j++) {
+                if (arr1[i] === arr2[j]) {
+                    break;
+                }
+                if (j === arr2.length - 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    if (arr2.length < arr1.length) {
+        console.log(4);
+        for (let i = 0; i < arr2.length; i++) {
+            for (let j = 0; j < arr1.length; j++) {
+                if (arr2[i] === arr1[j]) {
+                    break;
+                }
+                if (j === arr1.length - 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
 const mutations = {
     /**
      *
@@ -745,7 +813,7 @@ const mutations = {
 
         let selectedContractors = state.contractors.filter(contractor => contractor.typeId === filter.typeId);
 
-        console.log(selectedContractors, 'selectedContractors');
+        // console.log(selectedContractors, 'selectedContractors');
 
         state.filteredOffers = state.filteredOffers.filter(offer => {
             return offer.contractorsId.find(id => {
@@ -755,10 +823,18 @@ const mutations = {
                         selectedContractor.rating >= filter.ratingFrom &&
                         (filter.ratingTo && selectedContractor.rating <= filter.ratingTo || true) &&
                         selectedContractor.avgCostPerProject >= filter.priceFrom &&
-                        (filter.priceTo && selectedContractor.avgCostPerProject <= filter.priceTo || true);
+                        (filter.priceTo && selectedContractor.avgCostPerProject <= filter.priceTo || true) &&
+                        checkEntranceArr(selectedContractor.certificatesId, filter.certificatesId)
+                    // selectedContractor.certificatesId.filter(certificateId => {
+                    //     return certificateId === filter.certificatesId;
+                    // });
                 });
             });
         });
+
+        // selectedContractors[0].certificatesId.filter(certificateId => {
+        //     return certificateId === filter.certificatesId;
+        // });
 
         //find substring name in contractor name
 
@@ -990,6 +1066,7 @@ const mutations = {
 const getters = {
     types: state => state.types,
     status: state => state.status,
+    certificates: state => state.certificates,
     selectedContractor: state => state.selectedContractor,
     openedContractorDialog: state => state.openedContractorDialog,
     contractorDialogCoordinates: state => state.contractorDialogCoordinates,
