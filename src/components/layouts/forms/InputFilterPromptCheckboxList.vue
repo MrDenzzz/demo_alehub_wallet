@@ -34,8 +34,27 @@
             list: {
                 type: Array,
                 required: true
+            },
+            clear: {
+                type: Boolean,
+                required: true
             }
-        }
+        },
+        watch: {
+            /**
+             * watch of the property 'clear', if the property 'clear' is true, it clears the model of the input fields
+             *
+             * @param val
+             */
+            clear: function (val) {
+                if (val) {
+                    // this.from = '';
+                    // this.to = '';
+                    // this.emitChangeRatingFrom(this.from);
+                    // this.emitChangeRatingTo(this.to);
+                }
+            }
+        },
     }
 </script>
 

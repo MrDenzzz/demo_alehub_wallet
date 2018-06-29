@@ -16,6 +16,23 @@
             title: {
                 type: String,
                 required: true
+            },
+            clear: {
+                type: Boolean,
+                required: true
+            }
+        },
+        watch: {
+            /**
+             * watch of the property 'clear', if the property 'clear' is true, it clears the model of the input field
+             *
+             * @param val
+             */
+            clear: function (val) {
+                if (val) {
+                    this.value = '';
+                    this.emitChangeValue(this.value);
+                }
             }
         },
         data() {

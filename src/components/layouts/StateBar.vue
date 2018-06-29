@@ -58,7 +58,11 @@
                 </span>
             </div>
         </div>
-        <div>
+        <div class="state-control">
+            <button type="button" class="buttons btn-default m-r-20">
+                Clear filter
+            </button>
+
             <router-link tag="button" to="/offers/createoffer"
                          class="buttons btn-yellow">
                 <img src="../../../static/img/add-dark-ic.svg" alt="create">
@@ -157,6 +161,9 @@
 </script>
 
 <style lang="stylus" scoped>
+    .m-r-20
+        margin-right 20px
+
     .buttons
         margin-bottom 0
         display flex
@@ -213,6 +220,10 @@
 
                     @media (max-width 620px)
                         font-size 11px
+
+        .state-control
+            display flex
+            align-items center
 
     .dark
         .state-bar

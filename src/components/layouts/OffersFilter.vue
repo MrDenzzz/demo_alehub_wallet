@@ -10,29 +10,35 @@
             </button>
 
             <form>
-                <input-name :title="$t('offersFilter.name.title')"/>
+                <input-name :title="$t('offersFilter.name.title')"
+                            :clear="clear"/>
 
                 <input-double-rating :title="$t('offersFilter.rating.title')"
                                      :from="$t('offersFilter.rating.from')"
-                                     :to="$t('offersFilter.rating.to')"/>
+                                     :to="$t('offersFilter.rating.to')"
+                                     :clear="clear"/>
 
                 <input-double-price :title="$t('offersFilter.price.title')"
                                     :from="$t('offersFilter.price.from')"
-                                    :to="$t('offersFilter.price.to')"/>
+                                    :to="$t('offersFilter.price.to')"
+                                    :clear="clear"/>
 
                 <input-prompt-checkbox-list :title="$t('offersFilter.country.title')"
                                             :list="$t('countries')"
-                                            :select-all="$t('offersFilter.country.selectAll')"/>
+                                            :select-all="$t('offersFilter.country.selectAll')"
+                                            :clear="clear"/>
 
                 <input-certification-list :title="$t('offersFilter.certification.title')"
-                                          :options="$t('offersFilter.certification.options')"/>
+                                          :options="$t('offersFilter.certification.options')"
+                                          :clear="clear"/>
 
                 <input-verified-list :title="$t('offersFilter.verified.title')"
-                                     :options="$t('offersFilter.verified.options')"/>
+                                     :options="$t('offersFilter.verified.options')"
+                                     :clear="clear"/>
 
                 <button type="button"
                         class="buttons btn btn-default m-b-10"
-                        @click="clear">
+                        @click="clearFilterOffers">
                     {{ $t('offersFilter.buttons.clear') }}
                 </button>
 
@@ -91,7 +97,8 @@
                     priceTo: 0,
                     certification: [],
                     verified: []
-                }
+                },
+                clear: false
             }
         },
         computed: {
@@ -111,8 +118,8 @@
             /**
              * clear all fields of this offers filter
              */
-            clear: function () {
-
+            clearFilterOffers: function () {
+                this.clear = true;
             },
             /**
              *
@@ -170,30 +177,37 @@
         mounted() {
             this.$on('changeName', name => {
                 this.filter.name = name;
+                // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changeRatingFrom', ratingFrom => {
                 this.filter.ratingFrom = ratingFrom;
+                // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changeRatingTo', ratingTo => {
                 this.filter.ratingTo = ratingTo;
+                // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changePriceFrom', priceFrom => {
                 this.filter.priceFrom = priceFrom;
+                // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changePriceTo', priceTo => {
                 this.filter.priceTo = priceTo;
+                // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changeCertification', certification => {
                 this.filter.certification = certification;
+                // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changeVerified', verified => {
                 this.filter.verified = verified;
+                this.clear = false;
                 // this.dispatchMakeFilter();
             });
         }
