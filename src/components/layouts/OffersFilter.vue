@@ -177,11 +177,13 @@
         mounted() {
             this.$on('changeName', name => {
                 this.filter.name = name;
+                // this.filterOffers();
                 // this.clear = false;
                 // this.dispatchMakeFilter();
             });
             this.$on('changeRatingFrom', ratingFrom => {
                 this.filter.ratingFrom = ratingFrom;
+                // this.filterOffers();
                 // this.clear = false;
                 // this.dispatchMakeFilter();
             });

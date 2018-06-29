@@ -744,7 +744,9 @@ const mutations = {
         state.filteredOffers = state.filteredOffers.filter(offer => {
             return offer.contractorsId.find(id => {
                 return selectedContractors.find(selectedContractor => {
-                    return selectedContractor.id === id;
+                    return selectedContractor.id === id &&
+                        selectedContractor.rating >= filter.ratingFrom &&
+                        selectedContractor.rating <= filter.ratingTo;
                 });
             });
         });

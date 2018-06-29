@@ -89,7 +89,12 @@
                 </div>
             </div>
             <div class="search-result">
-                <offers-list/>
+                <offers-list v-if="filteredOffers.length !== 0"/>
+                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                    <p style="font-family: MuseoSansCyrl500;">
+                        No offers found
+                    </p>
+                </div>
                 <offers-contractor-dialog v-if="openedContractorDialog"
                                           :coordinates="contractorDialogCoordinates"/>
             </div>
@@ -200,6 +205,7 @@
                     'selectedContractor',
                     'openedContractorDialog',
                     'contractorDialogCoordinates',
+                    'filteredOffers',
                     'filtersCondition'
                 ]
             ),
@@ -315,7 +321,7 @@
 
                 //if target is button filters or span in button filters
                 if (isFilterButton || isFilterButtonParent || this.availabilityParentClass('filter-dialog', target)) {
-                    console.log('is target');
+                    // console.log('is target');
                 } else {
                     let openedFilter = this.filtersCondition.find(filter => {
                         return filter.opened;
@@ -328,7 +334,7 @@
                 //if target is contractor or contractor panel
                 if (this.availabilityParentClass('dialog', target) ||
                     this.availabilityParentClass('contractors-content', target)) {
-                    console.log('target isPanelContractor');
+                    // console.log('target isPanelContractor');
                 } else {
                     if (this.openedContractorDialog) {
                         this.$store.dispatch('hideOfferContractorDialog'

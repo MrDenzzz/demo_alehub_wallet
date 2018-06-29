@@ -36,7 +36,7 @@
                             <div class="contractors-info"
                                  @click="toggleContractorDialog($event, contractor)">
                                 <p class="title">
-                                    {{ contractor.name }}
+                                    {{ contractor.name + ' ' + contractor.rating }}
                                 </p>
                                 <p class="subtitle">
                                     {{ contractorTypeName(contractor.typeId) }}
