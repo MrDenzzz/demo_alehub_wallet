@@ -59,7 +59,8 @@
             </div>
         </div>
         <div class="state-control">
-            <button type="button" class="buttons btn-default m-r-20">
+            <button type="button" class="buttons btn-default m-r-20"
+                    @click="clearFilter">
                 Clear filter
             </button>
 
@@ -151,6 +152,14 @@
         methods: {
             getIcon: function () {
                 return '';
+            },
+            clearFilter: function () {
+                this.$store.dispatch('clearFilterOffers'
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             }
         },
         mounted() {

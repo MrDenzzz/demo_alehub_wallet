@@ -692,7 +692,13 @@ const actions = {
             commit('SUCCESS_CLOSE_FILTER_DIALOG', id);
             resolve('success close filter dialog');
         });
-    }
+    },
+    clearFilterOffers: ({commit}, id) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_CLEAR_FILTER_OFFERS');
+            resolve('success clear filter offers');
+        });
+    },
 };
 
 const mutations = {
@@ -849,6 +855,15 @@ const mutations = {
         console.log(currentFilter, 'currentFilter');
 
         state.currentFilter = currentFilter;
+    },
+    /**
+     *
+     *
+     * @param state
+     * @constructor
+     */
+    SUCCESS_CLEAR_FILTER_OFFERS: (state) => {
+        state.filteredOffers = state.offers;
     },
     /**
      * change prop name in state filters by id
