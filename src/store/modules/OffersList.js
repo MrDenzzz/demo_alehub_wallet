@@ -663,6 +663,12 @@ const actions = {
             resolve('success make filter of contractor type');
         });
     },
+    makeFilterOffers: ({commit}, filter) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_MAKE_FILTER_OFFERS', filter);
+            resolve('success make filter of contractor type');
+        });
+    },
     cancelResetOfContractorType: ({commit}, typeId) => {
         return new Promise(resolve => {
             commit('SUCCESS_RESET_FILTER_OF_CONTRACTOR_TYPE', typeId);
@@ -679,6 +685,12 @@ const actions = {
         return new Promise(resolve => {
             commit('SUCCESS_MAKE_FILTER_BY_FIELDS', options);
             resolve('success make filter by fields');
+        });
+    },
+    closeFilterDialog: ({commit}, id) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_CLOSE_FILTER_DIALOG', id);
+            resolve('success close filter dialog');
         });
     }
 };
@@ -714,6 +726,28 @@ const mutations = {
      */
     SUCCESS_CHANGE_FILTERS_CONDITION: (state, filters) => {
         state.filtersCondition = filters;
+    },
+    /**
+     *
+     *
+     * @param state
+     * @param filter
+     * @constructor
+     */
+    SUCCESS_MAKE_FILTER_OFFERS: (state, filter) => {
+        console.log(filter, 'filter from OffersList.js');
+
+        let selectedContractors = state.contractors.filter(contractor => contractor.typeId === filter.typeId);
+
+        console.log(selectedContractors, 'selectedContractors');
+
+        state.filteredOffers = state.filteredOffers.filter(offer => {
+            return offer.contractorsId.find(id => {
+                return selectedContractors.find(selectedContractor => {
+                    return selectedContractor.id === id;
+                });
+            });
+        });
     },
     /**
      *
@@ -814,8 +848,6 @@ const mutations = {
 
         state.currentFilter = currentFilter;
     },
-
-
     /**
      * change prop name in state filters by id
      *
@@ -911,6 +943,16 @@ const mutations = {
         //     return filter.id === options.id;
         // }).priceTo = parseFloat(options.priceTo);
     },
+    /**
+     * change state filtersCondition.opened to false
+     *
+     * @param state
+     * @param id
+     * @constructor
+     */
+    SUCCESS_CLOSE_FILTER_DIALOG: (state, id) => {
+        state.filtersCondition.find(filter => filter.id === id).opened = false;
+    }
 };
 
 const getters = {

@@ -61,18 +61,20 @@
 
                                 <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
-                                <offers-filter v-for="item in filters"
-                                               v-if="item.opened"
-                                               :key="item.id"
-                                               :id="item.id"
-                                               :offset-top="filterOffsetTop(item.id)"/>
+                                <!--make single component, not list offers-filter-->
+                                <offers-filter v-for="filter in filters"
+                                               v-if="filter.opened"
+                                               :key="filter.id"
+                                               :id="filter.id"
+                                               :type-id="filter.typeId"
+                                               :offset-top="filterOffsetTop(filter.id)"/>
 
-                                <offers-filter-folded v-for="item in filters"
-                                                      v-if="item.folded"
-                                                      :key="item.id"
-                                                      :id="item.id"
-                                                      :title="item.title"
-                                                      :queue="item.queue"/>
+                                <offers-filter-folded v-for="filter in filters"
+                                                      v-if="filter.folded"
+                                                      :key="filter.id"
+                                                      :id="filter.id"
+                                                      :title="filter.title"
+                                                      :queue="filter.queue"/>
                             </div>
                         </div>
                     </div>
@@ -312,7 +314,7 @@
                     });
 
                 //if target is button filters or span in button filters
-                if (isFilterButton || isFilterButtonParent) {
+                if (isFilterButton || isFilterButtonParent || this.availabilityParentClass('filter-dialog', target)) {
                     console.log('is target');
                 } else {
                     let openedFilter = this.filtersCondition.find(filter => {

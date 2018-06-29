@@ -1,12 +1,11 @@
 <template>
     <transition name="fade-bottom">
-        <div class="dialog"
+        <div class="filter-dialog"
              :style="{ 'top': offsetTop }">
 
             <button type="button" class="close"
-                    @click="toClose">
-                <!--make cross-->
-                <img src="../../../static/img/arrow-down-dark.svg"
+                    @click="closeFilterDialog">
+                <img src="../../../static/img/close-dark-ic.svg"
                      alt="close">
             </button>
 
@@ -55,6 +54,8 @@
     import InputCertificationList from './forms/InputFilterCertificationList';
     import InputVerifiedList from './forms/InputFilterVerifiedList';
 
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'OffersFilter',
         components: {
@@ -67,6 +68,10 @@
         },
         props: {
             id: {
+                type: Number,
+                required: true
+            },
+            typeId: {
                 type: Number,
                 required: true
             },
@@ -89,6 +94,13 @@
                 }
             }
         },
+        computed: {
+            ...mapGetters(
+                [
+                    'filters'
+                ]
+            )
+        },
         methods: {
             // /**
             //  * fold this offers filter
@@ -107,7 +119,21 @@
              *
              */
             filterOffers: function () {
-
+                this.$store.dispatch('makeFilterOffers', {
+                    id: this.id,
+                    typeId: this.typeId,
+                    name: this.filter.name,
+                    ratingFrom: this.filter.ratingFrom,
+                    ratingTo: this.filter.ratingTo,
+                    priceFrom: this.filter.priceFrom,
+                    priceTo: this.filter.priceTo,
+                    certification: this.filter.certification,
+                    verified: this.filter.verified
+                }).then(resp => {
+                    console.log('success filter offers');
+                }).catch(err => {
+                    console.log('error filter offers');
+                });
             },
             dispatchMakeFilter: function () {
 
@@ -130,38 +156,45 @@
 
                 });
             },
-            toClose: function () {
 
+            closeFilterDialog: function () {
+                this.$store.dispatch('closeFilterDialog',
+                    this.id
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             }
         },
         mounted() {
             this.$on('changeName', name => {
                 this.filter.name = name;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
             this.$on('changeRatingFrom', ratingFrom => {
                 this.filter.ratingFrom = ratingFrom;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
             this.$on('changeRatingTo', ratingTo => {
                 this.filter.ratingTo = ratingTo;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
             this.$on('changePriceFrom', priceFrom => {
                 this.filter.priceFrom = priceFrom;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
             this.$on('changePriceTo', priceTo => {
                 this.filter.priceTo = priceTo;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
             this.$on('changeCertification', certification => {
                 this.filter.certification = certification;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
             this.$on('changeVerified', verified => {
                 this.filter.verified = verified;
-                this.dispatchMakeFilter();
+                // this.dispatchMakeFilter();
             });
         }
     }
@@ -181,7 +214,7 @@
         transform translateY(30px)
         opacity 0
 
-    .dialog
+    .filter-dialog
         width 208px
         border-radius 4px
         background-color #fafafa
