@@ -109,12 +109,6 @@
             )
         },
         methods: {
-            // /**
-            //  * fold this offers filter
-            //  */
-            // toFold: function () {
-            //     this.$parent.$emit('onFold', {id: this.id, opened: false, folded: true});
-            // },
             /**
              * clear all fields of this offers filter
              */
@@ -138,32 +132,11 @@
                     verified: this.filter.verified
                 }).then(resp => {
                     console.log('success filter offers');
+                    this.closeFilterDialog();
                 }).catch(err => {
                     console.log('error filter offers');
                 });
             },
-            dispatchMakeFilter: function () {
-
-                //write validator data by type and val
-
-                this.$store.dispatch('makeFilterByFields',
-                    {
-                        id: this.id,
-                        name: this.filter.name,
-                        ratingFrom: this.filter.ratingFrom,
-                        ratingTo: this.filter.ratingTo,
-                        priceFrom: this.filter.priceFrom,
-                        priceTo: this.filter.priceTo,
-                        certification: this.filter.certification,
-                        verified: this.filter.verified
-                    }
-                ).then(resp => {
-
-                }).catch(err => {
-
-                });
-            },
-
             closeFilterDialog: function () {
                 this.$store.dispatch('closeFilterDialog',
                     this.id

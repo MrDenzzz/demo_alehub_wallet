@@ -90,7 +90,7 @@
             </div>
             <div class="search-result">
                 <offers-list v-if="filteredOffers.length !== 0"/>
-                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;" v-else>
                     <p style="font-family: MuseoSansCyrl500;">
                         No offers found
                     </p>

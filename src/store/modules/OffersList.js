@@ -751,11 +751,26 @@ const mutations = {
             return offer.contractorsId.find(id => {
                 return selectedContractors.find(selectedContractor => {
                     return selectedContractor.id === id &&
+                        selectedContractor.name.split(' ').find(item => item.indexOf(filter.name) === 0) &&
                         selectedContractor.rating >= filter.ratingFrom &&
-                        selectedContractor.rating <= filter.ratingTo;
+                        (filter.ratingTo && selectedContractor.rating <= filter.ratingTo || true) &&
+                        selectedContractor.avgCostPerProject >= filter.priceFrom &&
+                        (filter.priceTo && selectedContractor.avgCostPerProject <= filter.priceTo || true);
                 });
             });
         });
+
+        //find substring name in contractor name
+
+        // selectedContractors.forEach(contractor => {
+        //     let nameArr = contractor.name.split(' ');
+        //     contractor.name.split(' ').find(item => item.indexOf(filter.name) === 0);
+        // });
+
+
+        // for (let i = 0; i < ) {
+        //
+        // }
     },
     /**
      *
