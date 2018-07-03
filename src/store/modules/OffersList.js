@@ -725,21 +725,13 @@ const actions = {
 };
 
 function checkEntranceArr(arr1, arr2) {
-    //arr1 [1, 2, 3]
-    //arr2 [1, 2]
-
-    if (arr2.length > arr1.length) {
-        console.log(1);
+    if (arr2.length > arr1.length)
         return false;
-    }
 
-    if (arr2.length === 0) {
-        console.log(2);
+    if (arr2.length === 0)
         return true;
-    }
 
     if (arr1.length === arr2.length) {
-        console.log(3);
         for (let i = 0; i < arr1.length; i++) {
             for (let j = 0; j < arr2.length; j++) {
                 if (arr1[i] === arr2[j]) {
@@ -754,7 +746,6 @@ function checkEntranceArr(arr1, arr2) {
     }
 
     if (arr2.length < arr1.length) {
-        console.log(4);
         for (let i = 0; i < arr2.length; i++) {
             for (let j = 0; j < arr1.length; j++) {
                 if (arr2[i] === arr1[j]) {
@@ -802,18 +793,14 @@ const mutations = {
         state.filtersCondition = filters;
     },
     /**
-     *
+     * mutation that changes the current filter
      *
      * @param state
      * @param filter
      * @constructor
      */
     SUCCESS_MAKE_FILTER_OFFERS: (state, filter) => {
-        console.log(filter, 'filter from OffersList.js');
-
         let selectedContractors = state.contractors.filter(contractor => contractor.typeId === filter.typeId);
-
-        // console.log(selectedContractors, 'selectedContractors');
 
         state.filteredOffers = state.filteredOffers.filter(offer => {
             return offer.contractorsId.find(id => {
@@ -825,30 +812,16 @@ const mutations = {
                         selectedContractor.avgCostPerProject >= filter.priceFrom &&
                         (filter.priceTo && selectedContractor.avgCostPerProject <= filter.priceTo || true) &&
                         checkEntranceArr(selectedContractor.certificatesId, filter.certificatesId)
-                    // selectedContractor.certificatesId.filter(certificateId => {
-                    //     return certificateId === filter.certificatesId;
-                    // });
                 });
             });
         });
 
-        // selectedContractors[0].certificatesId.filter(certificateId => {
-        //     return certificateId === filter.certificatesId;
-        // });
-
-        //find substring name in contractor name
-
-        // selectedContractors.forEach(contractor => {
-        //     let nameArr = contractor.name.split(' ');
-        //     contractor.name.split(' ').find(item => item.indexOf(filter.name) === 0);
-        // });
-
-
-        // for (let i = 0; i < ) {
-        //
-        // }
+        state.currentFilter = state.filters.find(item => {
+            return item.id === filter.id;
+        });
     },
     /**
+     *
      *
      * @param state
      * @param typeId

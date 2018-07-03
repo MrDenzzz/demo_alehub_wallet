@@ -94,10 +94,17 @@
                 verified: ''
             }
         },
+        watch: {
+            currentFilter: function (val) {
+                console.log(val, 'valvalval');
+            }
+        },
         computed: {
             ...mapGetters(
                 [
-                    'currentFilter'
+                    'currentFilter',
+
+                    'filteredOffers'
                 ]
             ),
             /**
@@ -117,7 +124,7 @@
              * @returns {string}
              */
             currentName: function () {
-                if (!this.name)
+                if (!this.currentFilter.name)
                     return 'not set';
 
                 return this.name;
@@ -203,11 +210,10 @@
 
                 let verified = '';
 
-                if (this.currentFilter.verified.length !== 0) {
+                if (this.currentFilter.verified.length !== 0)
                     this.currentFilter.verified.forEach(filter => {
                         verified += filter + ' ';
                     });
-                }
 
                 return verified;
             },

@@ -9,7 +9,7 @@
                      alt="close">
             </button>
 
-            <form>
+            <form @submit.prevent="filterOffers">
                 <input-name :title="$t('offersFilter.name.title')"
                             :clear="clear"/>
 
@@ -43,8 +43,7 @@
                 </button>
 
                 <button type="button"
-                        class="buttons btn btn-yellow"
-                        @click="filterOffers">
+                        class="buttons btn btn-yellow">
                     {{ $t('offersFilter.buttons.search') }}
                 </button>
             </form>
