@@ -6,7 +6,15 @@
                     {{ 'Contractor' }}
                 </span>
                 <span class="bold-text">
-                    {{ contractor }}
+                    {{ currentContractor }}
+                </span>
+            </div>
+            <div class="state">
+                <span class="title">
+                    {{ $t('stateBar.name') }}
+                </span>
+                <span class="bold-text">
+                    {{ currentName }}
                 </span>
             </div>
             <div class="state">
@@ -14,15 +22,7 @@
                     {{ $t('stateBar.timeInterval') }}
                 </span>
                 <span class="bold-text">
-                    {{ dateFrom }} - {{ dateTo }}
-                </span>
-            </div>
-            <div class="state">
-                <span class="title">
-                    {{ $t('stateBar.timeInterval') }}
-                </span>
-                <span class="bold-text">
-                    {{ currentFilter.name }}
+                    {{ currentDate }}
                 </span>
             </div>
             <div class="state">
@@ -30,7 +30,7 @@
                     {{ $t('stateBar.rating') }}
                 </span>
                 <span class="bold-text">
-                    {{ currentFilter.ratingFrom }} - {{ currentFilter.ratingTo }}
+                    {{ currentRating }}
                 </span>
             </div>
             <div class="state">
@@ -38,7 +38,7 @@
                     {{ $t('stateBar.price') }}
                 </span>
                 <span class="bold-text">
-                    {{ currentFilterPriceFrom }} - {{ currentFilter.priceTo }}
+                    {{ currentPrice }}
                 </span>
             </div>
             <div class="state">
@@ -46,7 +46,7 @@
                     {{ $t('stateBar.certification') }}
                 </span>
                 <span class="bold-text">
-                    {{ currentFilterCertification }}
+                    {{ currentCertification }}
                 </span>
             </div>
             <div class="state">
@@ -54,7 +54,7 @@
                     {{ $t('stateBar.verified') }}
                 </span>
                 <span class="bold-text">
-                    {{ currentFilterVerified }}
+                    {{ currentVerified }}
                 </span>
             </div>
         </div>
@@ -100,27 +100,85 @@
                     'currentFilter'
                 ]
             ),
-            isDateFrom: function () {
-                return this.dateFrom;
+            /**
+             * validation and type contractor output
+             *
+             * @returns {string}
+             */
+            currentContractor: function () {
+                if (!this.contractor)
+                    return 'not set';
+
+                return this.contractor;
             },
-            isDateTo: function () {
-                return this.dateTo;
-            },
-            isName: function () {
+            /**
+             * validation and name output
+             *
+             * @returns {string}
+             */
+            currentName: function () {
+                if (!this.name)
+                    return 'not set';
+
                 return this.name;
             },
-            currentFilterPriceFrom: function () {
-                console.log(typeof this.currentFilter.priceFrom, 'typeof this.currentFilter.priceFrom');
+            /**
+             * validation and date output
+             *
+             * @returns {string}
+             */
+            currentDate: function () {
+                if (!this.dateFrom && !this.dateTo)
+                    return 'not set';
 
-                if (typeof this.currentFilter.priceFrom !== 'number')
-                    return 'not a number';
+                if (this.dateFrom && !this.dateTo)
+                    return 'from ' + this.dateFrom;
 
-                if (this.currentFilter.priceFrom)
-                    return this.currentFilter.priceFrom;
+                if (!this.dateFrom && this.dateTo)
+                    return 'to ' + this.dateTo;
 
-                return 'not set';
+                return this.dateFrom + ' - ' + this.dateTo;
             },
-            currentFilterCertification: function () {
+            /**
+             * validation and rating output
+             *
+             * @returns {string}
+             */
+            currentRating: function () {
+                if (!this.ratingFrom && !this.ratingTo)
+                    return 'not set';
+
+                if (this.ratingFrom && !this.ratingTo)
+                    return 'from ' + this.ratingFrom;
+
+                if (!this.ratingFrom && this.ratingTo)
+                    return 'to ' + this.ratingTo;
+
+                return this.ratingFrom + ' - ' + this.ratingTo;
+            },
+            /**
+             * validation and price output
+             *
+             * @returns {string}
+             */
+            currentPrice: function () {
+                if (!this.priceFrom && !this.priceTo)
+                    return 'not set';
+
+                if (this.priceFrom && !this.priceTo)
+                    return 'from ' + this.priceFrom;
+
+                if (!this.priceFrom && this.priceTo)
+                    return 'to ' + this.priceTo;
+
+                return this.priceFrom + ' - ' + this.priceTo;
+            },
+            /**
+             * validation and certification data output
+             *
+             * @returns {string}
+             */
+            currentCertification: function () {
                 if (!(this.currentFilter.certification instanceof Array))
                     return 'not set';
 
@@ -134,7 +192,12 @@
 
                 return certification;
             },
-            currentFilterVerified: function () {
+            /**
+             * validation and verification data output
+             *
+             * @returns {string}
+             */
+            currentVerified: function () {
                 if (!(this.currentFilter.verified instanceof Array))
                     return 'not set';
 
@@ -147,7 +210,7 @@
                 }
 
                 return verified;
-            }
+            },
         },
         methods: {
             getIcon: function () {
