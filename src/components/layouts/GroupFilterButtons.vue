@@ -167,7 +167,7 @@
                     return type.id === filter.id;
                 });
 
-                return (!this.filter.opened) ? current.type : current.type + '__active';
+                return (this.filter.opened && this.filter.typeId === filter.id) ? current.type + '__active' : current.type;
             },
             /**
              * changes the state of the button
