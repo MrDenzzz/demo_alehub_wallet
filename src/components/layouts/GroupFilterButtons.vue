@@ -5,7 +5,7 @@
                 v-for="filter in filters"
                 :id="contractorTypeType(filter.id)"
                 :class="calcClass(filter)"
-                @click="changeStateButton(filter)">
+                @click="changeStateButton(filter.id)">
             <span class="title">
                 {{ filter.title }}
             </span>
@@ -47,7 +47,8 @@
             ...mapGetters(
                 [
                     'types',
-                    'filtersCondition'
+                    'filtersCondition',
+                    'filter'
                 ]
             )
         },
@@ -150,10 +151,10 @@
             dispatchResetFilterOfContractorType: function (typeId) {
                 this.$store.dispatch('cancelResetOfContractorType',
                     typeId
-                ).then((resp) => {
+                ).then(resp => {
                     // console.log(resp);
-                }).catch((resp) => {
-                    console.error(resp);
+                }).catch(err => {
+                    console.error(err);
                 });
             },
             /**
@@ -163,27 +164,23 @@
              */
             calcClass: function (filter) {
                 let current = this.types.find(type => {
-                    return type.id === filter.typeId;
+                    return type.id === filter.id;
                 });
 
-                return (!filter.opened) ? current.type : current.type + '__active';
+                return (!this.filter.opened) ? current.type : current.type + '__active';
             },
             /**
              * changes the state of the button
-             *
-             * @param filter
              */
-            changeStateButton: function (filter) {
-                //find opened filters
-                let openedFilter = this.filtersCondition.find(filter => {
-                    return filter.opened;
+            changeStateButton: function (id) {
+
+                this.$store.dispatch('changeOpeningFilter',
+                    id
+                ).then(resp => {
+                    console.log('success change opening filter');
+                }).catch(err => {
+                    console.log('error change opening filter');
                 });
-
-                //check opened filter is current filter
-                if (openedFilter && openedFilter.id !== filter.id)
-                    openedFilter.opened = !openedFilter.opened;
-
-                filter.opened = !filter.opened;
             },
 
         },

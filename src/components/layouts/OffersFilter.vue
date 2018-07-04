@@ -1,6 +1,7 @@
 <template>
     <transition name="fade-bottom">
         <div class="filter-dialog"
+             id="filter-dialog"
              :style="{ 'top': offsetTop }">
 
             <button type="button" class="close"
@@ -72,16 +73,12 @@
             InputCertificationList
         },
         props: {
-            id: {
-                type: Number,
-                required: true
-            },
             typeId: {
                 type: Number,
                 required: true
             },
             offsetTop: {
-                type: [Boolean, String],
+                type: [Boolean, String, Number],
                 required: true
             }
         },
@@ -103,7 +100,7 @@
         computed: {
             ...mapGetters(
                 [
-                    'filters'
+                    // 'filters'
                 ]
             )
         },
@@ -120,7 +117,6 @@
              */
             filterOffers: function () {
                 this.$store.dispatch('makeFilterOffers', {
-                    id: this.id,
                     typeId: this.typeId,
                     name: this.filter.name,
                     ratingFrom: this.filter.ratingFrom,

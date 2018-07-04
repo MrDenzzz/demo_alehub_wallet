@@ -62,12 +62,10 @@
                                 <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
                                 <!--make single component, not list offers-filter-->
-                                <offers-filter v-for="filter in filters"
-                                               v-if="filter.opened"
-                                               :key="filter.id"
-                                               :id="filter.id"
+                                <offers-filter v-if="filter.opened"
                                                :type-id="filter.typeId"
-                                               :offset-top="filterOffsetTop(filter.id)"/>
+                                               :offset-top="0"/>
+                                <!--:offset-top="filterOffsetTop('filter-dialog')"/>-->
 
                                 <offers-filter-folded v-for="filter in filters"
                                                       v-if="filter.folded"
@@ -147,8 +145,14 @@
         data() {
             return {
 
+                // filter: {
+                //     typeId: null,
+                //     opened: false
+                // },
+
                 changedFilterElementOptions: {},
 
+                typeId: null,
 
                 filters: [],
 
@@ -199,6 +203,7 @@
         computed: {
             ...mapGetters(
                 [
+                    'filter',
                     'types',
                     'offers',
                     'contractors',

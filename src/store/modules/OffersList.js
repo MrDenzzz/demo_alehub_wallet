@@ -28,6 +28,8 @@ const state = {
             priority: 4
         }
     ],
+
+    //for remove
     currentFilter: {},
     filters: [
         {
@@ -84,38 +86,36 @@ const state = {
         },
     ],
 
+    filter: {
+        typeId: null,
+        name: '',
+        ratingFrom: '',
+        ratingTo: '',
+        priceFrom: '',
+        priceTo: '',
+        countries: [],
+        certification: [],
+        verified: [],
+        condition: {},
+        opened: false
+    },
+
     filtersCondition: [
         {
             id: 1,
-            typeId: 1,
-            title: 'TS',
-            opened: false,
-            folded: false,
-            queue: 0
+            title: 'TS'
         },
         {
             id: 2,
-            typeId: 2,
-            title: 'EX',
-            opened: false,
-            folded: false,
-            queue: 0
+            title: 'EX'
         },
         {
             id: 3,
-            typeId: 3,
-            title: 'CH',
-            opened: false,
-            folded: false,
-            queue: 0
+            title: 'CH'
         },
         {
             id: 4,
-            typeId: 4,
-            title: 'QA',
-            opened: false,
-            folded: false,
-            queue: 0
+            title: 'QA'
         }
     ],
 
@@ -722,6 +722,13 @@ const actions = {
             resolve('success clear filter offers');
         });
     },
+
+    changeOpeningFilter: ({commit}, id) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_CHANGE_OPENING_FILTER', id);
+            resolve('success change opening filter');
+        });
+    }
 };
 
 function checkEntranceArr(arr1, arr2) {
@@ -1033,6 +1040,13 @@ const mutations = {
      */
     SUCCESS_CLOSE_FILTER_DIALOG: (state, id) => {
         state.filtersCondition.find(filter => filter.id === id).opened = false;
+    },
+
+    SUCCESS_CHANGE_OPENING_FILTER: (state, id) => {
+        state.filter.typeId = id;
+        state.filter.opened = !state.filter.opened;
+
+        console.log(state.filter, 'state.filter');
     }
 };
 
@@ -1121,7 +1135,9 @@ const getters = {
     filters: state => state.filters,
     filtersCondition: state => state.filtersCondition,
     filteredContractorsTypes: state => state.filteredContractorsTypes,
-    currentFilter: state => state.currentFilter
+    currentFilter: state => state.currentFilter,
+
+    filter: state => state.filter
 };
 
 export default {
