@@ -183,6 +183,8 @@
                 });
             },
 
+
+
         },
         created() {
             this.filters = this.filtersCondition;

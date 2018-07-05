@@ -61,11 +61,9 @@
 
                                 <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
-                                <!--make single component, not list offers-filter-->
                                 <offers-filter v-if="filter.opened"
                                                :type-id="filter.typeId"
-                                               :offset-top="0"/>
-                                <!--:offset-top="filterOffsetTop('filter-dialog')"/>-->
+                                               :offset-top="filterOffsetTop()"/>
 
                                 <offers-filter-folded v-for="filter in filters"
                                                       v-if="filter.folded"
@@ -249,13 +247,19 @@
                     left: elem.getBoundingClientRect().left + pageXOffset
                 };
             },
-            filterOffsetTop: function (id) {
-                if (!id) {
-                    console.error('Wrong argument value');
-                    return '0px';
-                }
+            /**
+             *
+             *
+             * @returns {string}
+             */
+            filterOffsetTop: function () {
+                let selected = this.types.find(type => {
+                    return type.id === this.filter.typeId;
+                });
 
-                return this.getCoords(document.getElementById(this.contractorTypeType(id))).top -
+                console.log(selected.type, 'selected');
+
+                return this.getCoords(document.getElementById(selected.type)).top -
                     this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
             },
             toFormatDate: function (date) {

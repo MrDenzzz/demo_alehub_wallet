@@ -1043,8 +1043,22 @@ const mutations = {
     },
 
     SUCCESS_CHANGE_OPENING_FILTER: (state, id) => {
-        state.filter.typeId = id;
-        state.filter.opened = !state.filter.opened;
+        if (state.filter.typeId === id && state.filter.opened) {
+            state.filter.opened = false;
+        } else {
+            state.filter.opened = true;
+            state.filter.typeId = id;
+            state.filter.name = '';
+            state.filter.ratingFrom = '';
+            state.filter.ratingTo = '';
+            state.filter.priceFrom = '';
+            state.filter.priceTo = '';
+            state.filter.countries = [];
+            state.filter.certification = [];
+            state.filter.verified = [];
+            state.filter.condition = {};
+        }
+
 
         console.log(state.filter, 'state.filter');
     }
