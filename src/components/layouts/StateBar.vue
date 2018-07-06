@@ -252,7 +252,12 @@
             margin-right 10px
 
     .state-bar
-        padding 87px 32px 23px 110px
+        z-index 10
+        position fixed
+        width 100%
+        margin-top 64px
+        height 100px
+        padding 0 60px
         background-color #eceef1
         display flex
         justify-content space-between

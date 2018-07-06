@@ -63,16 +63,18 @@
                                  alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
 
-                                <group-filter-buttons :enabled="enabledGroupFilterButtons"
-                                                      :filterElementOptions="changedFilterElementOptions"/>
 
-                                <offers-filter v-if="filter.opened"
-                                               :type-id="filter.typeId"
-                                               :offset-top="filterOffsetTop()"/>
                             </div>
                         </div>
 
                     </div>
+
+                    <group-filter-buttons :enabled="enabledGroupFilterButtons"
+                                          :filterElementOptions="changedFilterElementOptions"/>
+
+                    <offers-filter v-if="filter.opened"
+                                   :type-id="filter.typeId"
+                                   :offset-top="filterOffsetTop()"/>
 
                     <!--<offers-filter-folded v-for="filter in filters"-->
                     <!--v-if="filter.folded"-->
@@ -377,7 +379,7 @@
             overflow-x hidden
 
         .row-page
-            padding-top 32px
+            padding-top 196px
             padding-right 68px
             padding-left 68px
             display flex
