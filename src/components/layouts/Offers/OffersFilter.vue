@@ -6,7 +6,7 @@
 
             <button type="button" class="close"
                     @click="closeFilterDialog">
-                <img src="../../../static/img/close-dark-ic.svg"
+                <img src="../../../../static/img/close-dark-ic.svg"
                      alt="close">
             </button>
 
@@ -53,12 +53,12 @@
 </template>
 
 <script>
-    import InputName from './forms/InputFilter';
-    import InputDoubleRating from './forms/InputFilterDoubleRating';
-    import InputDoublePrice from './forms/InputFilterDoublePrice';
-    import InputPromptCheckboxList from './forms/InputFilterPromptCheckboxList';
-    import InputCertificationList from './forms/InputFilterCertificationList';
-    import InputVerifiedList from './forms/InputFilterVerifiedList';
+    import InputName from '../forms/InputFilter';
+    import InputDoubleRating from '../forms/InputFilterDoubleRating';
+    import InputDoublePrice from '../forms/InputFilterDoublePrice';
+    import InputPromptCheckboxList from '../forms/InputFilterPromptCheckboxList';
+    import InputCertificationList from '../forms/InputFilterCertificationList';
+    import InputVerifiedList from '../forms/InputFilterVerifiedList';
 
     import {mapGetters} from 'vuex';
 

@@ -9,72 +9,72 @@
 
         <div class="row-page">
             <div class="sidebar">
-                <div class="vertical-progress">
-                    <div class="circle circle-top circle-yellow">
-                        <div class="triangle-icon"></div>
-                    </div>
+                <!--<div class="vertical-progress">-->
+                    <!--<div class="circle circle-top circle-yellow">-->
+                        <!--<div class="triangle-icon"></div>-->
+                    <!--</div>-->
 
-                    <div class="whole-line">
-                        <div class="selected-area">
-                            <div class="marker-calendar marker-calendar-top"
-                                 @click="openedFromDatepicker = !openedFromDatepicker">
-                                <div class="block">
-                                    <img src="../../static/img/calendar-ic_black.svg"
-                                         alt="date from" width="16px" height="16px">
-                                    <div class="triangle"></div>
-                                </div>
-                            </div>
+                    <!--<div class="whole-line">-->
+                        <!--<div class="selected-area">-->
+                            <!--<div class="marker-calendar marker-calendar-top"-->
+                                 <!--@click="openedFromDatepicker = !openedFromDatepicker">-->
+                                <!--<div class="block">-->
+                                    <!--<img src="../../static/img/calendar-ic_black.svg"-->
+                                         <!--alt="date from" width="16px" height="16px">-->
+                                    <!--<div class="triangle"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
-                            <datepicker id="dateOffersFrom"
-                                        class="dateOffersFrom"
-                                        v-if="openedFromDatepicker"
-                                        v-model="offersDateFrom"
-                                        :language="$t('modals.pdf.lang')"
-                                        :inline="true"/>
+                            <!--<datepicker id="dateOffersFrom"-->
+                                        <!--class="dateOffersFrom"-->
+                                        <!--v-if="openedFromDatepicker"-->
+                                        <!--v-model="offersDateFrom"-->
+                                        <!--:language="$t('modals.pdf.lang')"-->
+                                        <!--:inline="true"/>-->
 
-                            <div class="marker-calendar marker-calendar-bottom"
-                                 @click="openedToDatepicker = !openedToDatepicker">
-                                <div class="block">
-                                    <img src="../../static/img/calendar-ic_black.svg"
-                                         alt="date to" width="16px" height="16px">
-                                    <div class="triangle"></div>
-                                </div>
-                            </div>
+                            <!--<div class="marker-calendar marker-calendar-bottom"-->
+                                 <!--@click="openedToDatepicker = !openedToDatepicker">-->
+                                <!--<div class="block">-->
+                                    <!--<img src="../../static/img/calendar-ic_black.svg"-->
+                                         <!--alt="date to" width="16px" height="16px">-->
+                                    <!--<div class="triangle"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
-                            <datepicker id="dateOffersTo"
-                                        class="dateOffersTo"
-                                        :style="{ 'top': getSelectedAreaHeight }"
-                                        v-if="openedToDatepicker"
-                                        v-model="offersDateTo"
-                                        :language="$t('modals.pdf.lang')"
-                                        :inline="true"/>
-                        </div>
-                        <div class="dividers-container">
-                            <div class="divider horizontal"
-                                 v-for="n in 8" :key="n">
-                            </div>
-                        </div>
-
-
-                        <div id="enable-filters"
-                             class="circle circle-big circle-yellow circle-main"
-                             @click="toggleGroupFilterButtons">
-                            <img src="../../static/img/ale-logo.svg"
-                                 alt="ale logo" width="21px" height="25px">
-                            <div class="triangle">
+                            <!--<datepicker id="dateOffersTo"-->
+                                        <!--class="dateOffersTo"-->
+                                        <!--:style="{ 'top': getSelectedAreaHeight }"-->
+                                        <!--v-if="openedToDatepicker"-->
+                                        <!--v-model="offersDateTo"-->
+                                        <!--:language="$t('modals.pdf.lang')"-->
+                                        <!--:inline="true"/>-->
+                        <!--</div>-->
+                        <!--<div class="dividers-container">-->
+                            <!--<div class="divider horizontal"-->
+                                 <!--v-for="n in 8" :key="n">-->
+                            <!--</div>-->
+                        <!--</div>-->
 
 
-                            </div>
-                        </div>
+                        <!--<div id="enable-filters"-->
+                             <!--class="circle circle-big circle-yellow circle-main"-->
+                             <!--@click="toggleGroupFilterButtons">-->
+                            <!--<img src="../../static/img/ale-logo.svg"-->
+                                 <!--alt="ale logo" width="21px" height="25px">-->
+                            <!--<div class="triangle">-->
 
-                    </div>
 
-                    <group-filter-buttons :enabled="enabledGroupFilterButtons"
-                                          :filterElementOptions="changedFilterElementOptions"/>
+                            <!--</div>-->
+                        <!--</div>-->
 
-                    <offers-filter v-if="filter.opened"
-                                   :type-id="filter.typeId"
-                                   :offset-top="filterOffsetTop()"/>
+                    <!--</div>-->
+
+                    <!--<group-filter-buttons :enabled="enabledGroupFilterButtons"-->
+                                          <!--:filterElementOptions="changedFilterElementOptions"/>-->
+
+                    <!--<offers-filter v-if="filter.opened"-->
+                                   <!--:type-id="filter.typeId"-->
+                                   <!--:offset-top="filterOffsetTop()"/>-->
 
                     <!--<offers-filter-folded v-for="filter in filters"-->
                     <!--v-if="filter.folded"-->
@@ -83,14 +83,14 @@
                     <!--:title="filter.title"-->
                     <!--:queue="filter.queue"/>-->
 
-                    <div class="circle circle-bottom circle-green">
-                        <img src="../../static/img/icons-for-circle/infinity.svg"
-                             alt="infinity" width="12px" height="6px">
-                        <div class="triangle">
-                            <group-status-buttons/>
-                        </div>
-                    </div>
-                </div>
+                    <!--<div class="circle circle-bottom circle-green">-->
+                        <!--<img src="../../static/img/icons-for-circle/infinity.svg"-->
+                             <!--alt="infinity" width="12px" height="6px">-->
+                        <!--<div class="triangle">-->
+                            <!--<group-status-buttons/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
             <div class="search-result">
                 <offers-list v-if="filteredOffers.length !== 0"/>
@@ -111,16 +111,19 @@
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
-    import OffersFilter from './layouts/OffersFilter';
-    import OffersFilterFolded from './layouts/OffersFilterFolded';
+    // import OffersFilter from './layouts/Offers/OffersFilter';
+    // import OffersFilterFolded from './layouts/OffersFilterFolded';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
-    import GroupFilterButtons from './layouts/GroupFilterButtons';
-    import GroupStatusButtons from './layouts/GroupStatusButtons';
+    // import GroupFilterButtons from './layouts/GroupFilterButtons';
+    // import GroupStatusButtons from './layouts/GroupStatusButtons';
 
 
-    import OffersControlToggleFilter from './layouts/Offers/OffersControlToggleFilter';
+    // import OffersControlToggleFilter from './layouts/Offers/OffersControlToggleFilter';
+
 
     import Datepicker from 'vuejs-datepicker';
+
+    import OffersControl from './layouts/Offers/OffersControl';
 
     import {mapGetters} from 'vuex';
 
@@ -130,12 +133,13 @@
             Navbar,
             StateBar,
             OffersList,
-            OffersFilter,
-            OffersFilterFolded,
+            OffersControl,
+            // OffersFilter,
+            // OffersFilterFolded,
             OffersContractorDialog,
-            GroupFilterButtons,
-            GroupStatusButtons,
-            Datepicker
+            // GroupFilterButtons,
+            // GroupStatusButtons,
+            // Datepicker
         },
         watch: {
             offersDateFrom: function (val) {
