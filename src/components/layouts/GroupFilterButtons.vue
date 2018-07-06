@@ -1,16 +1,19 @@
 <template>
-    <div class="group-filter-buttons" id="group-filter-buttons">
-        <button type="button"
-                class="circle circle-gray circle-filter"
-                v-for="filter in filters"
-                :id="contractorTypeType(filter.id)"
-                :class="calcClass(filter)"
-                @click="changeStateButton(filter.id)">
+    <transition name="fade">
+        <div id="group-filter-buttons"
+             class="group-filter-buttons" v-if="enabled">
+            <button type="button"
+                    class="circle circle-gray circle-filter"
+                    v-for="filter in filters"
+                    :id="contractorTypeType(filter.id)"
+                    :class="[calcClass(filter), calcClassEnabled()]"
+                    @click="changeStateButton(filter.id)">
             <span class="title">
                 {{ filter.title }}
             </span>
-        </button>
-    </div>
+            </button>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -21,6 +24,10 @@
         props: {
             filterElementOptions: {
                 type: Object,
+                require: true
+            },
+            enabled: {
+                type: Boolean,
                 require: true
             }
         },
@@ -97,6 +104,13 @@
                     });
                     current.queue = 0;
                 }
+            },
+            calcClassEnabled: function () {
+                // console.log('check class enabled');
+                // if (!this.enabled)
+                //     return '';
+                //
+                // return 'disabled-button-filter';
             },
             /**
              *
@@ -182,9 +196,6 @@
                     console.log('error change opening filter');
                 });
             },
-
-
-
         },
         created() {
             this.filters = this.filtersCondition;
@@ -193,6 +204,27 @@
 </script>
 
 <style lang="stylus" scoped>
+    .disabled-button-filter
+        transition all .3s ease-out
+        transform translateY(0)
+
+    .fade-enter-active
+        transition all .3s ease-out
+
+    .fade-leave-active
+        transition all .3s ease-in
+
+    .fade-enter, .fade-leave-to
+        transform translateX(-50px)
+        opacity 0
+
+    /*.fade-enter-active, .fade-leave-active
+        transition: opacity .5s
+
+    .fade-enter, .fade-leave-to
+        transform translateX(-50px)
+        opacity 0*/
+
     .group-filter-buttons
         height 192px
         display flex

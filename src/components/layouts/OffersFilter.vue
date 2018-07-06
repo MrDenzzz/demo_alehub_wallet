@@ -135,7 +135,6 @@
              *
              */
             closeFilterDialog: function () {
-                console.log('OOOOOOOOOOOOOOOOOOOOOOOOOO');
                 this.$store.dispatch('closeFilterDialog',
                     this.id
                 ).then(resp => {
@@ -147,7 +146,6 @@
         },
         mounted() {
             this.$on('changeName', name => {
-                console.log(name, 'name');
                 this.filter.name = name;
                 // this.filterOffers();
                 // this.clear = false;

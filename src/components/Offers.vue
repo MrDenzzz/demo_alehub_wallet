@@ -63,9 +63,15 @@
                                  alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
 
+                                <group-filter-buttons :enabled="enabledGroupFilterButtons"
+                                                      :filterElementOptions="changedFilterElementOptions"/>
 
+                                <offers-filter v-if="filter.opened"
+                                               :type-id="filter.typeId"
+                                               :offset-top="filterOffsetTop()"/>
                             </div>
                         </div>
+
                     </div>
 
                     <!--<offers-filter-folded v-for="filter in filters"-->
@@ -74,12 +80,6 @@
                     <!--:id="filter.id"-->
                     <!--:title="filter.title"-->
                     <!--:queue="filter.queue"/>-->
-
-                    <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
-
-                    <offers-filter v-if="filter.opened"
-                                   :type-id="filter.typeId"
-                                   :offset-top="filterOffsetTop"/>
 
                     <div class="circle circle-bottom circle-green">
                         <img src="../../static/img/icons-for-circle/infinity.svg"
@@ -92,7 +92,8 @@
             </div>
             <div class="search-result">
                 <offers-list v-if="filteredOffers.length !== 0"/>
-                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;" v-else>
+                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"
+                     v-else>
                     <p style="font-family: MuseoSansCyrl500;">
                         No offers found
                     </p>
@@ -151,6 +152,9 @@
         },
         data() {
             return {
+
+                enabledGroupFilterButtons: false,
+
                 changedFilterElementOptions: {},
 
                 typeId: null,
@@ -222,7 +226,7 @@
         },
         methods: {
             toggleGroupFilterButtons: function () {
-
+                this.enabledGroupFilterButtons = !this.enabledGroupFilterButtons;
             },
             /**
              * return data of type contractor
@@ -257,15 +261,9 @@
              * @returns {string}
              */
             filterOffsetTop: function () {
-                console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-
-                console.log(this.filter, 'this.filter');
-
                 let selected = this.types.find(type => {
                     return type.id === this.filter.typeId;
                 });
-
-                // console.log(selected, 'selected');
 
                 return this.getCoords(document.getElementById(selected.type)).top -
                     this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
@@ -370,7 +368,7 @@
 <style lang="stylus" scoped>
     .circle-main
         z-index 2
-
+        cursor pointer
 
     .contract-list
         background-color #f0f4fa
