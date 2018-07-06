@@ -54,26 +54,32 @@
                                  v-for="n in 8" :key="n">
                             </div>
                         </div>
-                        <div class="circle circle-big circle-yellow">
+
+
+                        <div id="enable-filters"
+                             class="circle circle-big circle-yellow circle-main"
+                             @click="toggleGroupFilterButtons">
                             <img src="../../static/img/ale-logo.svg"
                                  alt="ale logo" width="21px" height="25px">
                             <div class="triangle">
 
-                                <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
 
-                                <offers-filter v-if="filter.opened"
-                                               :type-id="filter.typeId"
-                                               :offset-top="filterOffsetTop()"/>
-
-                                <offers-filter-folded v-for="filter in filters"
-                                                      v-if="filter.folded"
-                                                      :key="filter.id"
-                                                      :id="filter.id"
-                                                      :title="filter.title"
-                                                      :queue="filter.queue"/>
                             </div>
                         </div>
                     </div>
+
+                    <!--<offers-filter-folded v-for="filter in filters"-->
+                    <!--v-if="filter.folded"-->
+                    <!--:key="filter.id"-->
+                    <!--:id="filter.id"-->
+                    <!--:title="filter.title"-->
+                    <!--:queue="filter.queue"/>-->
+
+                    <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
+
+                    <offers-filter v-if="filter.opened"
+                                   :type-id="filter.typeId"
+                                   :offset-top="filterOffsetTop"/>
 
                     <div class="circle circle-bottom circle-green">
                         <img src="../../static/img/icons-for-circle/infinity.svg"
@@ -107,6 +113,9 @@
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     import GroupFilterButtons from './layouts/GroupFilterButtons';
     import GroupStatusButtons from './layouts/GroupStatusButtons';
+
+
+    import OffersControlToggleFilter from './layouts/Offers/OffersControlToggleFilter';
 
     import Datepicker from 'vuejs-datepicker';
 
@@ -142,12 +151,6 @@
         },
         data() {
             return {
-
-                // filter: {
-                //     typeId: null,
-                //     opened: false
-                // },
-
                 changedFilterElementOptions: {},
 
                 typeId: null,
@@ -158,8 +161,6 @@
                 openedToDatepicker: false,
                 offersDateFrom: 0,
                 offersDateTo: 0,
-
-                // openedContractorDialog: false,
 
                 clickCoordinates: {
                     top: false,
@@ -220,6 +221,9 @@
             }
         },
         methods: {
+            toggleGroupFilterButtons: function () {
+
+            },
             /**
              * return data of type contractor
              *
@@ -364,6 +368,10 @@
 </script>
 
 <style lang="stylus" scoped>
+    .circle-main
+        z-index 2
+
+
     .contract-list
         background-color #f0f4fa
 
