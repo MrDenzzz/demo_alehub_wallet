@@ -253,11 +253,15 @@
              * @returns {string}
              */
             filterOffsetTop: function () {
+                console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+
+                console.log(this.filter, 'this.filter');
+
                 let selected = this.types.find(type => {
                     return type.id === this.filter.typeId;
                 });
 
-                console.log(selected.type, 'selected');
+                // console.log(selected, 'selected');
 
                 return this.getCoords(document.getElementById(selected.type)).top -
                     this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';

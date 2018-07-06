@@ -10,7 +10,7 @@
                 </label>
                 <input type="text" id="from"
                        v-model="from"
-                       @blur="emitChangePriceFrom(from)">
+                       @input="emitChangePriceFrom(from)">
             </div>
             <div class="single-input">
                 <label for="to">
@@ -18,7 +18,7 @@
                 </label>
                 <input type="text" id="to"
                        v-model="to"
-                       @blur="emitChangePriceTo(to)">
+                       @input="emitChangePriceTo(to)">
             </div>
         </div>
     </div>

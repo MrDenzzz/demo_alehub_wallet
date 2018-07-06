@@ -5,7 +5,7 @@
         </label>
         <input type="text" id="name"
                v-model="value"
-               @blur="emitChangeValue(value)">
+               @input="emitChangeValue(value)">
     </div>
 </template>
 

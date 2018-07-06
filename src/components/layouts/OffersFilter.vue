@@ -43,7 +43,7 @@
                     {{ $t('offersFilter.buttons.clear') }}
                 </button>
 
-                <button type="button"
+                <button type="submit"
                         class="buttons btn btn-yellow">
                     {{ $t('offersFilter.buttons.search') }}
                 </button>
@@ -113,7 +113,6 @@
             },
             /**
              *
-             *
              */
             filterOffers: function () {
                 this.$store.dispatch('makeFilterOffers', {
@@ -132,7 +131,11 @@
                     console.log('error filter offers');
                 });
             },
+            /**
+             *
+             */
             closeFilterDialog: function () {
+                console.log('OOOOOOOOOOOOOOOOOOOOOOOOOO');
                 this.$store.dispatch('closeFilterDialog',
                     this.id
                 ).then(resp => {
@@ -144,6 +147,7 @@
         },
         mounted() {
             this.$on('changeName', name => {
+                console.log(name, 'name');
                 this.filter.name = name;
                 // this.filterOffers();
                 // this.clear = false;

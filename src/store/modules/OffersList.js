@@ -809,7 +809,7 @@ const mutations = {
     SUCCESS_MAKE_FILTER_OFFERS: (state, filter) => {
         let selectedContractors = state.contractors.filter(contractor => contractor.typeId === filter.typeId);
 
-        state.filteredOffers = state.filteredOffers.filter(offer => {
+        state.filteredOffers = state.offers.filter(offer => {
             return offer.contractorsId.find(id => {
                 return selectedContractors.find(selectedContractor => {
                     return selectedContractor.id === id &&
@@ -823,9 +823,14 @@ const mutations = {
             });
         });
 
-        state.currentFilter = state.filters.find(item => {
-            return item.id === filter.id;
-        });
+        state.filter.typeId = filter.typeId;
+        state.filter.name = filter.name;
+        state.filter.ratingFrom = filter.ratingFrom;
+        state.filter.ratingTo = filter.ratingTo;
+        state.filter.priceFrom = filter.priceFrom;
+        state.filter.priceTo = filter.priceTo;
+        state.filter.certificatesId = filter.certificatesId;
+        state.filter.verified = filter.verified;
     },
     /**
      *
@@ -1039,7 +1044,8 @@ const mutations = {
      * @constructor
      */
     SUCCESS_CLOSE_FILTER_DIALOG: (state, id) => {
-        state.filtersCondition.find(filter => filter.id === id).opened = false;
+        // state.filtersCondition.find(filter => filter.id === id).opened = false;
+        state.filter.opened = false;
     },
 
     SUCCESS_CHANGE_OPENING_FILTER: (state, id) => {
