@@ -9,6 +9,9 @@
 
         <div class="row-page">
             <div class="sidebar">
+
+                <offers-control/>
+
                 <!--<div class="vertical-progress">-->
                     <!--<div class="circle circle-top circle-yellow">-->
                         <!--<div class="triangle-icon"></div>-->
@@ -69,25 +72,25 @@
 
                     <!--</div>-->
 
-                    <!--<group-filter-buttons :enabled="enabledGroupFilterButtons"-->
-                                          <!--:filterElementOptions="changedFilterElementOptions"/>-->
+                    <!--&lt;!&ndash;<group-filter-buttons :enabled="enabledGroupFilterButtons"&ndash;&gt;-->
+                                          <!--&lt;!&ndash;:filterElementOptions="changedFilterElementOptions"/>&ndash;&gt;-->
 
-                    <!--<offers-filter v-if="filter.opened"-->
-                                   <!--:type-id="filter.typeId"-->
-                                   <!--:offset-top="filterOffsetTop()"/>-->
+                    <!--&lt;!&ndash;<offers-filter v-if="filter.opened"&ndash;&gt;-->
+                                   <!--&lt;!&ndash;:type-id="filter.typeId"&ndash;&gt;-->
+                                   <!--&lt;!&ndash;:offset-top="filterOffsetTop()"/>&ndash;&gt;-->
 
-                    <!--<offers-filter-folded v-for="filter in filters"-->
-                    <!--v-if="filter.folded"-->
-                    <!--:key="filter.id"-->
-                    <!--:id="filter.id"-->
-                    <!--:title="filter.title"-->
-                    <!--:queue="filter.queue"/>-->
+                    <!--&lt;!&ndash;<offers-filter-folded v-for="filter in filters"&ndash;&gt;-->
+                    <!--&lt;!&ndash;v-if="filter.folded"&ndash;&gt;-->
+                    <!--&lt;!&ndash;:key="filter.id"&ndash;&gt;-->
+                    <!--&lt;!&ndash;:id="filter.id"&ndash;&gt;-->
+                    <!--&lt;!&ndash;:title="filter.title"&ndash;&gt;-->
+                    <!--&lt;!&ndash;:queue="filter.queue"/>&ndash;&gt;-->
 
                     <!--<div class="circle circle-bottom circle-green">-->
                         <!--<img src="../../static/img/icons-for-circle/infinity.svg"-->
                              <!--alt="infinity" width="12px" height="6px">-->
                         <!--<div class="triangle">-->
-                            <!--<group-status-buttons/>-->
+                            <!--&lt;!&ndash;<group-status-buttons/>&ndash;&gt;-->
                         <!--</div>-->
                     <!--</div>-->
                 <!--</div>-->
@@ -588,7 +591,7 @@
                 @media (max-width 620px)
                     padding-top 260px
 
-    .circle
+    /*.circle
         width 36px
         min-width 36px
         height 36px
@@ -653,7 +656,6 @@
             text-transform uppercase
             line-height 1
             letter-spacing 1px
-            color #fcfcfc
             text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
 
         .subtitle
@@ -661,7 +663,7 @@
             color #fcfcfc
             font-size 9px
             text-transform uppercase
-            text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
+            text-shadow 0 0 2px rgba(0, 0, 0, 0.24)*/
 
     .marker-calendar
         cursor pointer

@@ -1,13 +1,31 @@
 <template>
-    
+    <div class="offers-control-line">
+        <offers-control-new-offer/>
+        <offers-control-toggle-filter/>
+        <offers-control-toggle-state/>
+    </div>
 </template>
 
 <script>
+    import OffersControlNewOffer from './OffersControlNewOffer';
+    import OffersControlToggleFilter from './OffersControlToggleFilter';
+    import OffersControlToggleState from './OffersControlToggleState';
+
     export default {
-        name: "OffersControlLine"
+        name: 'OffersControlLine',
+        components: {
+            OffersControlNewOffer,
+            OffersControlToggleFilter,
+            OffersControlToggleState
+        }
     }
 </script>
 
-<style scoped>
-
+<style lang="stylus" scoped>
+    /*#c5cdd7*/
+    .offers-control-line
+        position relative
+        width 35px
+        height 550px
+        background-color #e7eaee
 </style>

@@ -1,24 +1,21 @@
 <template>
-    <div class="offers-control-toggle-filter">
-        <button id="enable-filters"
-                class="circle circle-big circle-yellow circle-main">
-            <img src="../../../../static/img/ale-logo.svg"
-                 alt="ale logo" width="21px" height="25px">
-        </button>
+    <div class="offers-control-new-offer">
+        <div class="circle circle-yellow">
+            <span>go</span>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'OffersControlToggleFilter'
+        name: 'OffersControlNewOffer'
     }
 </script>
 
 <style lang="stylus" scoped>
-    .offers-control-toggle-filter
+    .offers-control-new-offer
         position absolute
-        top calc(50% - 24px)
-        left -6.5px
+        top -18px
 
     .circle
         width 36px
@@ -35,12 +32,7 @@
         -o-transition all .3s ease
         transition all .3s ease
 
-        &.circle-big
-            width 48px
-            height 48px
-            min-width 48px
-            min-height 48px
-
         &.circle-yellow
             background-color #ffd24f
+
 </style>
