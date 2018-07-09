@@ -5,9 +5,7 @@
                 <img src="../../../../static/img/calendar-ic_black.svg"
                      alt="date from">
             </div>
-            <div class="marker-arrow">
-
-            </div>
+            <div class="marker-arrow"></div>
         </div>
         <datepicker id="dateOffersFrom"
                     class="dateOffersFrom"
