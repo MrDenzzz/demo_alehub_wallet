@@ -6,6 +6,7 @@
         </div>
         <offers-control-line/>
         <div class="offers-control__group-buttons">
+            <offers-group-manage-buttons/>
             <offers-group-filter-buttons/>
             <offers-group-status-buttons/>
         </div>
@@ -14,6 +15,7 @@
 
 <script>
     import OffersFilter from './OffersFilter';
+    import OffersGroupManageButtons from './OffersGroupManageButtons';
     import OffersGroupFilterButtons from './OffersGroupFilterButtons';
     import OffersGroupStatusButtons from './OffersGroupStatusButtons';
     import OffersControlLine from './OffersControlLine';
@@ -25,6 +27,7 @@
         name: 'OffersControl',
         components: {
             OffersFilter,
+            OffersGroupManageButtons,
             OffersGroupFilterButtons,
             OffersGroupStatusButtons,
             OffersControlLine,
@@ -40,6 +43,7 @@
         display flex
 
         .offers-control__group-buttons
+            position relative
             width 120px
             display flex
             justify-content center

@@ -1,8 +1,8 @@
 <template>
     <div class="offers-control-line">
-        <offers-control-new-offer/>
+        <offers-control-toggle-manage/>
         <offers-control-toggle-filter/>
-        <offers-control-toggle-state/>
+        <offers-control-toggle-status/>
         <div class="divider-container">
             <div class="divider"
                  v-for="n in 12" :key="n"></div>
@@ -11,17 +11,17 @@
 </template>
 
 <script>
-    import OffersControlNewOffer from './OffersControlNewOffer';
+    import OffersControlToggleManage from './OffersControlToggleManage';
     import OffersControlToggleFilter from './OffersControlToggleFilter';
-    import OffersControlToggleState from './OffersControlToggleState';
+    import OffersControlToggleStatus from './OffersControlToggleStatus';
     import OffersGroupFilterButtons from './OffersGroupFilterButtons';
 
     export default {
         name: 'OffersControlLine',
         components: {
-            OffersControlNewOffer,
+            OffersControlToggleManage,
             OffersControlToggleFilter,
-            OffersControlToggleState,
+            OffersControlToggleStatus,
             OffersGroupFilterButtons
         }
     }

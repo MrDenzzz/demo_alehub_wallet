@@ -16,9 +16,9 @@
                         :id="contractorTypeType(filters[0].id)"
                         :class="[calcClass(filters[0]), calcClassEnabled()]"
                         @click="changeStateButton(filters[0].id)">
-            <span class="title">
-            {{ filters[0].title }}
-            </span>
+                    <span class="title">
+                    {{ filters[0].title }}
+                    </span>
                 </button>
             </transition>
 
@@ -29,9 +29,9 @@
                         :id="contractorTypeType(filters[1].id)"
                         :class="[calcClass(filters[1]), calcClassEnabled()]"
                         @click="changeStateButton(filters[1].id)">
-            <span class="title">
-            {{ filters[1].title }}
-            </span>
+                    <span class="title">
+                    {{ filters[1].title }}
+                    </span>
                 </button>
             </transition>
 
@@ -42,9 +42,9 @@
                         :id="contractorTypeType(filters[2].id)"
                         :class="[calcClass(filters[2]), calcClassEnabled()]"
                         @click="changeStateButton(filters[2].id)">
-            <span class="title">
-            {{ filters[2].title }}
-            </span>
+                    <span class="title">
+                    {{ filters[2].title }}
+                    </span>
                 </button>
             </transition>
 
@@ -55,9 +55,9 @@
                         :id="contractorTypeType(filters[3].id)"
                         :class="[calcClass(filters[3]), calcClassEnabled()]"
                         @click="changeStateButton(filters[3].id)">
-            <span class="title">
-            {{ filters[3].title }}
-            </span>
+                    <span class="title">
+                    {{ filters[3].title }}
+                    </span>
                 </button>
             </transition>
         </div>
@@ -258,7 +258,7 @@
         transform translate(-50px, 30px)
         opacity 0
 
-    .fade-ch-activeslack
+    .fade-ch-active
         transition all .3s ease-out
 
     .fade-ch-leave-active

@@ -660,8 +660,24 @@ const state = {
         left: 0
     },
 
+    manage: {
+        create: {
+            id: 1,
+            title: 'c',
+        },
+        favorites: {
+            id: 2,
+            title: 'f'
+        },
+        search: {
+            id: 3,
+            title: 't'
+        }
+    },
+
     openedGroupFilterButtons: false,
     openedGroupStatusButtons: false,
+    openedGroupManageButtons: false
 };
 
 const actions = {
@@ -742,6 +758,12 @@ const actions = {
     toggleGroupStatusButtons: ({commit}) => {
         return new Promise(resolve => {
             commit('SUCCESS_TOGGLE_GROUP_STATUS_BUTTONS');
+            resolve('success toggle group status buttons');
+        });
+    },
+    toggleGroupManageButtons: ({commit}) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_TOGGLE_GROUP_MANAGE_BUTTONS');
             resolve('success toggle group status buttons');
         });
     }
@@ -1090,6 +1112,9 @@ const mutations = {
     },
     SUCCESS_TOGGLE_GROUP_STATUS_BUTTONS: (state) => {
         state.openedGroupStatusButtons = !state.openedGroupStatusButtons;
+    },
+    SUCCESS_TOGGLE_GROUP_MANAGE_BUTTONS: (state) => {
+        state.openedGroupManageButtons = !state.openedGroupManageButtons;
     }
 };
 
@@ -1181,9 +1206,11 @@ const getters = {
     currentFilter: state => state.currentFilter,
 
     filter: state => state.filter,
+    manage: state => state.manage,
 
     openedGroupFilterButtons: state => state.openedGroupFilterButtons,
-    openedGroupStatusButtons: state => state.openedGroupStatusButtons
+    openedGroupStatusButtons: state => state.openedGroupStatusButtons,
+    openedGroupManageButtons: state => state.openedGroupManageButtons,
 };
 
 export default {

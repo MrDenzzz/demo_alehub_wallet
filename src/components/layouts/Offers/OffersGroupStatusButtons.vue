@@ -154,7 +154,7 @@
 
     .group-status-buttons
         position absolute
-        bottom 120px
+        bottom -96px
         display flex
         flex-direction row
         align-items center

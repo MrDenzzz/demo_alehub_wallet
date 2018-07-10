@@ -1,14 +1,25 @@
 <template>
     <div class="offers-control-new-offer">
-        <div class="circle circle-yellow">
+        <button class="circle circle-yellow"
+                @click="toggleGroupManageButtons">
             <span>go</span>
-        </div>
+        </button>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'OffersControlNewOffer'
+        name: 'OffersControlNewOffer',
+        methods: {
+            toggleGroupManageButtons: function () {
+                this.$store.dispatch('toggleGroupManageButtons',
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
+            }
+        }
     }
 </script>
 
@@ -33,6 +44,7 @@
         transition all .3s ease
 
         &.circle-yellow
+            cursor pointer
             background-color #ffd24f
 
 </style>
