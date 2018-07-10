@@ -1,21 +1,6 @@
 <template>
-    <!--<transition name="fade">-->
     <div id="group-filter-buttons"
          class="group-filter-buttons">
-        <!--&lt;!&ndash;<transition-group name="fade" tag="div">&ndash;&gt;-->
-        <!--<button type="button"-->
-        <!--class="circle circle-gray circle-filter"-->
-        <!--v-for="(filter, i) in filters"-->
-        <!--:key="i"-->
-        <!--:id="contractorTypeType(filter.id)"-->
-        <!--:class="[calcClass(filter), calcClassEnabled()]"-->
-        <!--@click="changeStateButton(filter.id)">-->
-        <!--<span class="title">-->
-        <!--{{ filter.title }}-->
-        <!--</span>-->
-        <!--</button>-->
-        <!--</transition-group>-->
-
         <transition name="fade-ts">
             <button type="button"
                     class="circle circle-gray circle-filter"
@@ -67,9 +52,7 @@
             </span>
             </button>
         </transition>
-
     </div>
-    <!--</transition>-->
 </template>
 
 <script>
@@ -78,10 +61,6 @@
     export default {
         name: 'GroupFilterButtons',
         props: {
-            // filterElementOptions: {
-            //     type: Object,
-            //     require: true
-            // }
         },
         data() {
             return {
@@ -89,18 +68,6 @@
             }
         },
         watch: {
-            /**
-             * when the property filterElementOption changes, the filter state changes accordingly
-             *
-             * @param opt changed option
-             */
-            // filterElementOptions: function (opt) {
-            //     // this.changeStateButtonFilter(opt.id);
-            //     // this.foldAnotherFilter();
-            //     // this.currentFilter(opt.id).opened = opt.opened;
-            //     // this.currentFilter(opt.id).folded = opt.folded;
-            //     // this.dispatchChangeFilter();
-            // }
         },
         computed: {
             ...mapGetters(
@@ -282,7 +249,7 @@
         transform translate(-50px, 30px)
         opacity 0
 
-    .fade-ch-active
+    .fade-ch-activeslack
         transition all .3s ease-out
 
     .fade-ch-leave-active

@@ -1,15 +1,44 @@
 <template>
     <div class="group-status-buttons">
-        <div class="filters-block">
+        <transition name="fade-ts">
             <button type="button"
                     class="circle"
-                    v-for="item in status"
-                    :id="item.id"
-                    :class="calcStatusClass(item)"
-                    @click="changeButtonStatus(item.id)">
-                <img :src="item.src" :alt="item.title">
+                    :id="status[0].id"
+                    :class="calcStatusClass(status[0])"
+                    @click="changeButtonStatus(status[0].id)">
+                <img :src="status[0].src" :alt="status[0].title">
             </button>
-        </div>
+        </transition>
+
+        <transition name="fade-ts-ex">
+            <button type="button"
+                    class="circle"
+                    :id="status[1].id"
+                    :class="calcStatusClass(status[1])"
+                    @click="changeButtonStatus(status[1].id)">
+                <img :src="status[1].src" :alt="status[1].title">
+            </button>
+        </transition>
+
+        <transition name="fade-ch">
+            <button type="button"
+                    class="circle"
+                    :id="status[2].id"
+                    :class="calcStatusClass(status[2])"
+                    @click="changeButtonStatus(status[2].id)">
+                <img :src="status[2].src" :alt="status[2].title">
+            </button>
+        </transition>
+
+        <transition name="fade-qa">
+            <button type="button"
+                    class="circle"
+                    :id="status[3].id"
+                    :class="calcStatusClass(status[3])"
+                    @click="changeButtonStatus(status[3].id)">
+                <img :src="status[3].src" :alt="status[3].title">
+            </button>
+        </transition>
     </div>
 </template>
 
