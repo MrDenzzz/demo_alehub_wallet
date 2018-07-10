@@ -1,57 +1,66 @@
 <template>
     <div id="group-filter-buttons"
          class="group-filter-buttons">
-        <transition name="fade-ts">
-            <button type="button"
-                    class="circle circle-gray circle-filter"
-                    v-if="openedGroupFilterButtons"
-                    :id="contractorTypeType(filters[0].id)"
-                    :class="[calcClass(filters[0]), calcClassEnabled()]"
-                    @click="changeStateButton(filters[0].id)">
+        <div class="col col__center">
+            <transition name="fade-triangle">
+                <div class="triangle"
+                     v-if="openedGroupFilterButtons">
+                </div>
+            </transition>
+        </div>
+        <div class="col col__space-between">
+            <transition name="fade-ts">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[0].id)"
+                        :class="[calcClass(filters[0]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[0].id)">
             <span class="title">
             {{ filters[0].title }}
             </span>
-            </button>
-        </transition>
+                </button>
+            </transition>
 
-        <transition name="fade-ts-ex">
-            <button type="button"
-                    class="circle circle-gray circle-filter"
-                    v-if="openedGroupFilterButtons"
-                    :id="contractorTypeType(filters[1].id)"
-                    :class="[calcClass(filters[1]), calcClassEnabled()]"
-                    @click="changeStateButton(filters[1].id)">
+            <transition name="fade-ts-ex">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[1].id)"
+                        :class="[calcClass(filters[1]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[1].id)">
             <span class="title">
             {{ filters[1].title }}
             </span>
-            </button>
-        </transition>
+                </button>
+            </transition>
 
-        <transition name="fade-ch">
-            <button type="button"
-                    class="circle circle-gray circle-filter"
-                    v-if="openedGroupFilterButtons"
-                    :id="contractorTypeType(filters[2].id)"
-                    :class="[calcClass(filters[2]), calcClassEnabled()]"
-                    @click="changeStateButton(filters[2].id)">
+            <transition name="fade-ch">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[2].id)"
+                        :class="[calcClass(filters[2]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[2].id)">
             <span class="title">
             {{ filters[2].title }}
             </span>
-            </button>
-        </transition>
+                </button>
+            </transition>
 
-        <transition name="fade-qa">
-            <button type="button"
-                    class="circle circle-gray circle-filter"
-                    v-if="openedGroupFilterButtons"
-                    :id="contractorTypeType(filters[3].id)"
-                    :class="[calcClass(filters[3]), calcClassEnabled()]"
-                    @click="changeStateButton(filters[3].id)">
+            <transition name="fade-qa">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[3].id)"
+                        :class="[calcClass(filters[3]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[3].id)">
             <span class="title">
             {{ filters[3].title }}
             </span>
-            </button>
-        </transition>
+                </button>
+            </transition>
+        </div>
     </div>
 </template>
 
@@ -269,29 +278,20 @@
         transform translate(-50px, -50px)
         opacity 0
 
-    .fade-enter-active
+    .fade-triangle-active
         transition all .3s ease-out
 
-    .fade-leave-active
+    .fade-triangle-leave-active
         transition all .3s ease-in
 
-    .fade-enter, .fade-leave-to
-        transform translateX(-50px)
+    .fade-triangle-enter, .fade-triangle-leave-to
+        transform translate(-50px, 0)
         opacity 0
-
-    /*.fade-enter-active, .fade-leave-active
-        transition: opacity .5s
-
-    .fade-enter, .fade-leave-to
-        transform translateX(-50px)
-        opacity 0*/
 
     .group-filter-buttons
         height 192px
         display flex
-        flex-direction column
         align-items center
-        justify-content space-between
 
         .circle-filter
             cursor pointer
@@ -304,6 +304,28 @@
 
             .title
                 color #fcfcfc
+
+        .col
+            height 100%
+
+            &.col__center
+                display flex
+                flex-direction column
+                justify-content center
+
+            &.col__space-between
+                display flex
+                flex-direction column
+                justify-content space-between
+
+        .triangle
+            content ""
+            bottom 0
+            width 0
+            height 0
+            border-left 6px solid #a6aaae
+            border-top 6px solid transparent
+            border-bottom 6px solid transparent
 
         .circle
             width 36px
