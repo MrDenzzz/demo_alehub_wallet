@@ -658,7 +658,9 @@ const state = {
     contractorDialogCoordinates: {
         top: 0,
         left: 0
-    }
+    },
+
+    openedGroupFilterButtons: false,
 };
 
 const actions = {
@@ -727,6 +729,13 @@ const actions = {
         return new Promise(resolve => {
             commit('SUCCESS_CHANGE_OPENING_FILTER', id);
             resolve('success change opening filter');
+        });
+    },
+
+    toggleGroupFilterButtons: ({commit}) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_TOGGLE_GROUP_FILTER_BUTTONS');
+            resolve('success toggle group filter buttons');
         });
     }
 };
@@ -1067,6 +1076,10 @@ const mutations = {
 
 
         console.log(state.filter, 'state.filter');
+    },
+
+    SUCCESS_TOGGLE_GROUP_FILTER_BUTTONS: (state) => {
+        state.openedGroupFilterButtons = !state.openedGroupFilterButtons;
     }
 };
 
@@ -1157,7 +1170,9 @@ const getters = {
     filteredContractorsTypes: state => state.filteredContractorsTypes,
     currentFilter: state => state.currentFilter,
 
-    filter: state => state.filter
+    filter: state => state.filter,
+
+    openedGroupFilterButtons: state => state.openedGroupFilterButtons,
 };
 
 export default {

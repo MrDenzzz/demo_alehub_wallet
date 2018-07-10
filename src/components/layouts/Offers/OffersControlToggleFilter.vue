@@ -1,7 +1,8 @@
 <template>
     <div class="offers-control-toggle-filter">
         <button id="enable-filters"
-                class="circle circle-big circle-yellow circle-main">
+                class="circle circle-big circle-yellow circle-main"
+                @click="toggleGroupFilterButtons">
             <img src="../../../../static/img/ale-logo.svg"
                  alt="ale logo" width="21px" height="25px">
         </button>
@@ -10,7 +11,17 @@
 
 <script>
     export default {
-        name: 'OffersControlToggleFilter'
+        name: 'OffersControlToggleFilter',
+        methods: {
+            toggleGroupFilterButtons: function () {
+                this.$store.dispatch('toggleGroupFilterButtons'
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
+            }
+        }
     }
 </script>
 
@@ -43,4 +54,7 @@
 
         &.circle-yellow
             background-color #ffd24f
+
+        &.circle-main
+            cursor pointer
 </style>

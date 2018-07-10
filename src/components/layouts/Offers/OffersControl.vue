@@ -1,10 +1,13 @@
 <template>
     <div class="offers-control">
-        <div class="container__datepicker">
+        <div class="offers-control__datepicker">
             <offers-datepicker-from/>
             <offers-datepicker-to/>
         </div>
         <offers-control-line/>
+        <div class="offers-control__group-buttons">
+            <offers-group-filter-buttons/>
+        </div>
     </div>
 </template>
 
@@ -32,7 +35,14 @@
 </script>
 
 <style lang="stylus" scoped>
-.offers-control
-    display flex
+    .offers-control
+        display flex
+
+        .offers-control__group-buttons
+            width 120px
+            display flex
+            justify-content center
+            align-items center
+
 
 </style>

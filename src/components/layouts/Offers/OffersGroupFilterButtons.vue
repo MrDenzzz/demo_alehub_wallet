@@ -1,19 +1,75 @@
 <template>
-    <transition name="fade">
-        <div id="group-filter-buttons"
-             class="group-filter-buttons" v-if="enabled">
+    <!--<transition name="fade">-->
+    <div id="group-filter-buttons"
+         class="group-filter-buttons">
+        <!--&lt;!&ndash;<transition-group name="fade" tag="div">&ndash;&gt;-->
+        <!--<button type="button"-->
+        <!--class="circle circle-gray circle-filter"-->
+        <!--v-for="(filter, i) in filters"-->
+        <!--:key="i"-->
+        <!--:id="contractorTypeType(filter.id)"-->
+        <!--:class="[calcClass(filter), calcClassEnabled()]"-->
+        <!--@click="changeStateButton(filter.id)">-->
+        <!--<span class="title">-->
+        <!--{{ filter.title }}-->
+        <!--</span>-->
+        <!--</button>-->
+        <!--</transition-group>-->
+
+        <transition name="fade-ts">
             <button type="button"
                     class="circle circle-gray circle-filter"
-                    v-for="filter in filters"
-                    :id="contractorTypeType(filter.id)"
-                    :class="[calcClass(filter), calcClassEnabled()]"
-                    @click="changeStateButton(filter.id)">
+                    v-if="openedGroupFilterButtons"
+                    :id="contractorTypeType(filters[0].id)"
+                    :class="[calcClass(filters[0]), calcClassEnabled()]"
+                    @click="changeStateButton(filters[0].id)">
             <span class="title">
-                {{ filter.title }}
+            {{ filters[0].title }}
             </span>
             </button>
-        </div>
-    </transition>
+        </transition>
+
+        <transition name="fade-ts-ex">
+            <button type="button"
+                    class="circle circle-gray circle-filter"
+                    v-if="openedGroupFilterButtons"
+                    :id="contractorTypeType(filters[1].id)"
+                    :class="[calcClass(filters[1]), calcClassEnabled()]"
+                    @click="changeStateButton(filters[1].id)">
+            <span class="title">
+            {{ filters[1].title }}
+            </span>
+            </button>
+        </transition>
+
+        <transition name="fade-ch">
+            <button type="button"
+                    class="circle circle-gray circle-filter"
+                    v-if="openedGroupFilterButtons"
+                    :id="contractorTypeType(filters[2].id)"
+                    :class="[calcClass(filters[2]), calcClassEnabled()]"
+                    @click="changeStateButton(filters[2].id)">
+            <span class="title">
+            {{ filters[2].title }}
+            </span>
+            </button>
+        </transition>
+
+        <transition name="fade-qa">
+            <button type="button"
+                    class="circle circle-gray circle-filter"
+                    v-if="openedGroupFilterButtons"
+                    :id="contractorTypeType(filters[3].id)"
+                    :class="[calcClass(filters[3]), calcClassEnabled()]"
+                    @click="changeStateButton(filters[3].id)">
+            <span class="title">
+            {{ filters[3].title }}
+            </span>
+            </button>
+        </transition>
+
+    </div>
+    <!--</transition>-->
 </template>
 
 <script>
@@ -22,14 +78,10 @@
     export default {
         name: 'GroupFilterButtons',
         props: {
-            filterElementOptions: {
-                type: Object,
-                require: true
-            },
-            enabled: {
-                type: Boolean,
-                require: true
-            }
+            // filterElementOptions: {
+            //     type: Object,
+            //     require: true
+            // }
         },
         data() {
             return {
@@ -42,20 +94,22 @@
              *
              * @param opt changed option
              */
-            filterElementOptions: function (opt) {
-                // this.changeStateButtonFilter(opt.id);
-                // this.foldAnotherFilter();
-                // this.currentFilter(opt.id).opened = opt.opened;
-                // this.currentFilter(opt.id).folded = opt.folded;
-                // this.dispatchChangeFilter();
-            }
+            // filterElementOptions: function (opt) {
+            //     // this.changeStateButtonFilter(opt.id);
+            //     // this.foldAnotherFilter();
+            //     // this.currentFilter(opt.id).opened = opt.opened;
+            //     // this.currentFilter(opt.id).folded = opt.folded;
+            //     // this.dispatchChangeFilter();
+            // }
         },
         computed: {
             ...mapGetters(
                 [
                     'types',
                     'filtersCondition',
-                    'filter'
+                    'filter',
+
+                    'openedGroupFilterButtons'
                 ]
             )
         },
@@ -204,9 +258,49 @@
 </script>
 
 <style lang="stylus" scoped>
-    .disabled-button-filter
+    /*.disabled-button-filter*/
+    //transition all .3s ease-out
+    //transform translateY(0)
+
+    .fade-ts-active
         transition all .3s ease-out
-        transform translateY(0)
+
+    .fade-ts-leave-active
+        transition all .3s ease-in
+
+    .fade-ts-enter, .fade-ts-leave-to
+        transform translate(-50px, 50px)
+        opacity 0
+
+    .fade-ts-ex-active
+        transition all .3s ease-out
+
+    .fade-ts-ex-leave-active
+        transition all .3s ease-in
+
+    .fade-ts-ex-enter, .fade-ts-ex-leave-to
+        transform translate(-50px, 30px)
+        opacity 0
+
+    .fade-ch-active
+        transition all .3s ease-out
+
+    .fade-ch-leave-active
+        transition all .3s ease-in
+
+    .fade-ch-enter, .fade-ch-leave-to
+        transform translate(-50px, -30px)
+        opacity 0
+
+    .fade-qa-active
+        transition all .3s ease-out
+
+    .fade-qa-leave-active
+        transition all .3s ease-in
+
+    .fade-qa-enter, .fade-qa-leave-to
+        transform translate(-50px, -50px)
+        opacity 0
 
     .fade-enter-active
         transition all .3s ease-out

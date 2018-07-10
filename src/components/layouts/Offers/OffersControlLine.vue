@@ -14,13 +14,15 @@
     import OffersControlNewOffer from './OffersControlNewOffer';
     import OffersControlToggleFilter from './OffersControlToggleFilter';
     import OffersControlToggleState from './OffersControlToggleState';
+    import OffersGroupFilterButtons from './OffersGroupFilterButtons';
 
     export default {
         name: 'OffersControlLine',
         components: {
             OffersControlNewOffer,
             OffersControlToggleFilter,
-            OffersControlToggleState
+            OffersControlToggleState,
+            OffersGroupFilterButtons
         }
     }
 </script>
@@ -36,7 +38,7 @@
         .divider-container
             display flex
             flex-direction column
-            justify-content space-between
+            justify-content space-around
             align-items center
             height 100%
 

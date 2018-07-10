@@ -580,7 +580,7 @@
                                 left 58px
 
             .search-result
-                padding-left 100px
+                padding-left 20px
                 width 100%
                 max-width 1332px
 
