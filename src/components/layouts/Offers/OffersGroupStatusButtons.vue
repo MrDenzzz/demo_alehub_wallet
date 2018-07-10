@@ -1,48 +1,57 @@
 <template>
     <div class="group-status-buttons">
-        <transition name="fade-progress">
-            <button type="button"
-                    class="circle"
-                    v-if="openedGroupStatusButtons"
-                    :id="status[0].id"
-                    :class="calcStatusClass(status[0])"
-                    @click="changeButtonStatus(status[0].id)">
-                <img :src="status[0].src" :alt="status[0].title">
-            </button>
-        </transition>
+        <div class="col col__center">
+            <transition name="fade-triangle">
+                <div class="triangle"
+                     v-if="openedGroupStatusButtons">
+                </div>
+            </transition>
+        </div>
+        <div class="col col__space-between">
+            <transition name="fade-progress">
+                <button type="button"
+                        class="circle"
+                        v-if="openedGroupStatusButtons"
+                        :id="status[0].id"
+                        :class="calcStatusClass(status[0])"
+                        @click="changeButtonStatus(status[0].id)">
+                    <img :src="status[0].src" :alt="status[0].title">
+                </button>
+            </transition>
 
-        <transition name="fade-ready">
-            <button type="button"
-                    class="circle"
-                    v-if="openedGroupStatusButtons"
-                    :id="status[1].id"
-                    :class="calcStatusClass(status[1])"
-                    @click="changeButtonStatus(status[1].id)">
-                <img :src="status[1].src" :alt="status[1].title">
-            </button>
-        </transition>
+            <transition name="fade-ready">
+                <button type="button"
+                        class="circle"
+                        v-if="openedGroupStatusButtons"
+                        :id="status[1].id"
+                        :class="calcStatusClass(status[1])"
+                        @click="changeButtonStatus(status[1].id)">
+                    <img :src="status[1].src" :alt="status[1].title">
+                </button>
+            </transition>
 
-        <transition name="fade-wait">
-            <button type="button"
-                    class="circle"
-                    v-if="openedGroupStatusButtons"
-                    :id="status[2].id"
-                    :class="calcStatusClass(status[2])"
-                    @click="changeButtonStatus(status[2].id)">
-                <img :src="status[2].src" :alt="status[2].title">
-            </button>
-        </transition>
+            <transition name="fade-wait">
+                <button type="button"
+                        class="circle"
+                        v-if="openedGroupStatusButtons"
+                        :id="status[2].id"
+                        :class="calcStatusClass(status[2])"
+                        @click="changeButtonStatus(status[2].id)">
+                    <img :src="status[2].src" :alt="status[2].title">
+                </button>
+            </transition>
 
-        <transition name="fade-cancel">
-            <button type="button"
-                    class="circle"
-                    v-if="openedGroupStatusButtons"
-                    :id="status[3].id"
-                    :class="calcStatusClass(status[3])"
-                    @click="changeButtonStatus(status[3].id)">
-                <img :src="status[3].src" :alt="status[3].title">
-            </button>
-        </transition>
+            <transition name="fade-cancel">
+                <button type="button"
+                        class="circle"
+                        v-if="openedGroupStatusButtons"
+                        :id="status[3].id"
+                        :class="calcStatusClass(status[3])"
+                        @click="changeButtonStatus(status[3].id)">
+                    <img :src="status[3].src" :alt="status[3].title">
+                </button>
+            </transition>
+        </div>
     </div>
 </template>
 
@@ -53,9 +62,7 @@
         name: 'GroupStatusButton',
         props: {},
         data() {
-            return {
-
-            }
+            return {}
         },
         computed: {
             ...mapGetters(
@@ -82,13 +89,13 @@
              * @param id status button
              */
             changeButtonStatus: function (id) {
-               this.$store.dispatch('makeFilterOfStatusOffer',
-                   id
-               ).then((resp) => {
-                   console.log(resp);
-               }).catch(() => {
+                this.$store.dispatch('makeFilterOfStatusOffer',
+                    id
+                ).then((resp) => {
+                    console.log(resp);
+                }).catch(() => {
 
-               });
+                });
             }
         }
     }
@@ -135,26 +142,36 @@
         transform translate(-50px, -50px)
         opacity 0
 
+    .fade-triangle-active
+        transition all .3s ease-out
+
+    .fade-triangle-leave-active
+        transition all .3s ease-in
+
+    .fade-triangle-enter, .fade-triangle-leave-to
+        transform translate(-50px, 0)
+        opacity 0
+
     .group-status-buttons
         position absolute
         bottom 120px
         display flex
-        flex-direction column
-        justify-content space-between
+        flex-direction row
         align-items center
         height 192px
 
-        &:before
-            content ""
-            position absolute
-            left -7px
-            top calc(50% - 6px)
-            bottom 0
-            width 0
-            height 0
-            border-left 6px solid #a6aaae
-            border-top 6px solid transparent
-            border-bottom 6px solid transparent
+        .col
+            height 100%
+
+            &.col__center
+                display flex
+                flex-direction column
+                justify-content center
+
+            &.col__space-between
+                display flex
+                flex-direction column
+                justify-content space-between
 
         @media (max-width 768px)
             flex-direction row
@@ -165,6 +182,15 @@
         @media (max-width 620px)
             flex-direction column
             align-items center
+
+        .triangle
+            content ""
+            bottom 0
+            width 0
+            height 0
+            border-left 6px solid #a6aaae
+            border-top 6px solid transparent
+            border-bottom 6px solid transparent
 
         .circle
             cursor pointer
