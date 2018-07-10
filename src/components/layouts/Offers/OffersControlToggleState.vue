@@ -1,14 +1,26 @@
 <template>
     <div class="offers-control-toggle-state">
-        <div class="circle circle-green">
+        <button type="button"
+                class="circle circle-green"
+                @click="toggleGroupFilterButtons">
             to
-        </div>
+        </button>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'OffersControlToggleState'
+        name: 'OffersControlToggleState',
+        methods: {
+            toggleGroupFilterButtons: function () {
+                this.$store.dispatch('toggleGroupStatusButtons'
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
+            }
+        }
     }
 </script>
 
@@ -33,5 +45,6 @@
         transition all .3s ease
 
         &.circle-green
+            cursor pointer
             background-color #1bac2c
 </style>

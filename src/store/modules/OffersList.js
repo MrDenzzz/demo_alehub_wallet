@@ -661,6 +661,7 @@ const state = {
     },
 
     openedGroupFilterButtons: false,
+    openedGroupStatusButtons: false,
 };
 
 const actions = {
@@ -736,6 +737,12 @@ const actions = {
         return new Promise(resolve => {
             commit('SUCCESS_TOGGLE_GROUP_FILTER_BUTTONS');
             resolve('success toggle group filter buttons');
+        });
+    },
+    toggleGroupStatusButtons: ({commit}) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_TOGGLE_GROUP_STATUS_BUTTONS');
+            resolve('success toggle group status buttons');
         });
     }
 };
@@ -1080,6 +1087,9 @@ const mutations = {
 
     SUCCESS_TOGGLE_GROUP_FILTER_BUTTONS: (state) => {
         state.openedGroupFilterButtons = !state.openedGroupFilterButtons;
+    },
+    SUCCESS_TOGGLE_GROUP_STATUS_BUTTONS: (state) => {
+        state.openedGroupStatusButtons = !state.openedGroupStatusButtons;
     }
 };
 
@@ -1173,6 +1183,7 @@ const getters = {
     filter: state => state.filter,
 
     openedGroupFilterButtons: state => state.openedGroupFilterButtons,
+    openedGroupStatusButtons: state => state.openedGroupStatusButtons
 };
 
 export default {

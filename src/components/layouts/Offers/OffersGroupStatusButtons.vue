@@ -1,8 +1,9 @@
 <template>
     <div class="group-status-buttons">
-        <transition name="fade-ts">
+        <transition name="fade-progress">
             <button type="button"
                     class="circle"
+                    v-if="openedGroupStatusButtons"
                     :id="status[0].id"
                     :class="calcStatusClass(status[0])"
                     @click="changeButtonStatus(status[0].id)">
@@ -10,9 +11,10 @@
             </button>
         </transition>
 
-        <transition name="fade-ts-ex">
+        <transition name="fade-ready">
             <button type="button"
                     class="circle"
+                    v-if="openedGroupStatusButtons"
                     :id="status[1].id"
                     :class="calcStatusClass(status[1])"
                     @click="changeButtonStatus(status[1].id)">
@@ -20,9 +22,10 @@
             </button>
         </transition>
 
-        <transition name="fade-ch">
+        <transition name="fade-wait">
             <button type="button"
                     class="circle"
+                    v-if="openedGroupStatusButtons"
                     :id="status[2].id"
                     :class="calcStatusClass(status[2])"
                     @click="changeButtonStatus(status[2].id)">
@@ -30,9 +33,10 @@
             </button>
         </transition>
 
-        <transition name="fade-qa">
+        <transition name="fade-cancel">
             <button type="button"
                     class="circle"
+                    v-if="openedGroupStatusButtons"
                     :id="status[3].id"
                     :class="calcStatusClass(status[3])"
                     @click="changeButtonStatus(status[3].id)">
@@ -56,7 +60,8 @@
         computed: {
             ...mapGetters(
                 [
-                    'status'
+                    'status',
+                    'openedGroupStatusButtons'
                 ]
             ),
         },
@@ -90,8 +95,49 @@
 </script>
 
 <style lang="stylus" scoped>
-    .filters-block
-        position relative
+    .fade-progress-active
+        transition all .3s ease-out
+
+    .fade-progress-leave-active
+        transition all .3s ease-in
+
+    .fade-progress-enter, .fade-progress-leave-to
+        transform translate(-50px, 50px)
+        opacity 0
+
+    .fade-ready-active
+        transition all .3s ease-out
+
+    .fade-ready-leave-active
+        transition all .3s ease-in
+
+    .fade-ready-enter, .fade-ready-leave-to
+        transform translate(-50px, 30px)
+        opacity 0
+
+    .fade-wait-activeslack
+        transition all .3s ease-out
+
+    .fade-wait-leave-active
+        transition all .3s ease-in
+
+    .fade-wait-enter, .fade-wait-leave-to
+        transform translate(-50px, -30px)
+        opacity 0
+
+    .fade-cancel-active
+        transition all .3s ease-out
+
+    .fade-cancel-leave-active
+        transition all .3s ease-in
+
+    .fade-cancel-enter, .fade-cancel-leave-to
+        transform translate(-50px, -50px)
+        opacity 0
+
+    .group-status-buttons
+        position absolute
+        bottom 120px
         display flex
         flex-direction column
         justify-content space-between

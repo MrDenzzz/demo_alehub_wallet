@@ -7,6 +7,7 @@
         <offers-control-line/>
         <div class="offers-control__group-buttons">
             <offers-group-filter-buttons/>
+            <offers-group-status-buttons/>
         </div>
     </div>
 </template>
@@ -43,6 +44,4 @@
             display flex
             justify-content center
             align-items center
-
-
 </style>
