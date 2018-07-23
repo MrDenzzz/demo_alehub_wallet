@@ -14,7 +14,7 @@ import Notifications from '@/components/Notifications';
 import Settings from '@/components/Settings';
 import WalletSettings from '@/components/WalletSettings';
 import NotFound from '@/components/NotFound';
-// import Offers from '@/components/Offers';
+// import offers from '@/components/offers';
 import Resume from '@/components/Resume';
 import NewOffer from '@/components/NewOffer';
 import CreateOffer from '@/components/CreateOffer';
@@ -169,8 +169,8 @@ const router = new Router(
             },
             // {
             //     path: '/offers',
-            //     name: 'Offers',
-            //     component: Offers,
+            //     name: 'offers',
+            //     component: offers,
             //     beforeEnter: ifAuthenticated
             // },
             // {

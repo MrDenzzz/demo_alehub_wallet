@@ -126,7 +126,7 @@ const messages = {
                 addNew: 'Add a new wallet'
             },
             jobOffers: {
-                navbarTitle: 'Job Offers',
+                navbarTitle: 'Job offers',
                 amountOffers: 'offers',
                 notFoundOffersByFilter: 'No offers match your filters',
                 filters: {

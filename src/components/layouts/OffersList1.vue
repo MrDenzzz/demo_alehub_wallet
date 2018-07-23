@@ -31,28 +31,28 @@
                 'getPartOfferSavedList'
             ]),
             // currentPage: function () {
-            //     return this.$store.state.Offers.currentPage;
+            //     return this.$store.state.offers.currentPage;
             // },
             // countOfferPerPage: function () {
-            //     return this.$store.state.Offers.countOfferPerPage;
+            //     return this.$store.state.offers.countOfferPerPage;
             // },
             // getCurrentSortBy: function () {
-            //     return this.$store.state.Offers.currentSortBy;
+            //     return this.$store.state.offers.currentSortBy;
             // },
             // getUserId: function () {
             //     return localStorage.getItem('id');
             // },
             // getOffersList: function () {
-            //     return this.$store.state.Offers.offersList;
+            //     return this.$store.state.offers.offersList;
             // },
             // getCurrentPage: function () {
-            //     return this.$store.state.Offers.currentPage;
+            //     return this.$store.state.offers.currentPage;
             // },
             // getCurrentSavedPage: function () {
-            //     return this.$store.state.Offers.currentSavedPage  ;
+            //     return this.$store.state.offers.currentSavedPage  ;
             // },
             // getCurrentOfferPerPage: function () {
-            //     return this.$store.state.Offers.countOfferPerPage;
+            //     return this.$store.state.offers.countOfferPerPage;
             // },
             // getOffersResultList: function () {
             //     return this.getOffersList.filter(item => {

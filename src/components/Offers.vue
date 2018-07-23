@@ -114,19 +114,19 @@
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
-    // import OffersFilter from './layouts/Offers/OffersFilter';
+    // import OffersFilter from './layouts/offers/OffersFilter';
     // import OffersFilterFolded from './layouts/OffersFilterFolded';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     // import GroupFilterButtons from './layouts/GroupFilterButtons';
     // import GroupStatusButtons from './layouts/GroupStatusButtons';
 
 
-    // import OffersControlToggleFilter from './layouts/Offers/OffersControlToggleFilter';
+    // import OffersControlToggleFilter from './layouts/offers/OffersControlToggleFilter';
 
 
     import Datepicker from 'vuejs-datepicker';
 
-    import OffersControl from './layouts/Offers/OffersControl';
+    import OffersControl from './layouts/offers/OffersControl';
 
     import {mapGetters} from 'vuex';
 
