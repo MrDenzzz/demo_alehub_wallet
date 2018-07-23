@@ -677,7 +677,8 @@ const state = {
 
     openedGroupFilterButtons: false,
     openedGroupStatusButtons: false,
-    openedGroupManageButtons: false
+    openedGroupManageButtons: false,
+    openedOfferOptions: false
 };
 
 const actions = {
@@ -1211,6 +1212,7 @@ const getters = {
     openedGroupFilterButtons: state => state.openedGroupFilterButtons,
     openedGroupStatusButtons: state => state.openedGroupStatusButtons,
     openedGroupManageButtons: state => state.openedGroupManageButtons,
+    openedOfferOptions: state => state.openedOfferOptions
 };
 
 export default {

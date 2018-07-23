@@ -32,7 +32,12 @@
         },
         methods: {
             toggleMenu: function () {
-                this.opened = !this.opened;
+                this.$store.dispatch('toggleOfferOptions'
+                ).then(resp => {
+                    this.opened = !this.opened;
+                }).catch(err => {
+                    console.log('err');
+                });
             },
             getIcon: function (name) {
                 return require(`../../../assets/img/${name}.svg`);

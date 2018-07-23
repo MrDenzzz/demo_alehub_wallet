@@ -143,6 +143,7 @@
                     'contractors',
                     'selectedContractor',
                     'openedContractorDialog',
+                    'openedOfferOptions',
                     'contractorDialogCoordinates',
                     'filteredOffers',
                     'filtersCondition'
@@ -289,6 +290,14 @@
                         }).catch(err => {
                             console.log('Error hide offer contractor dialog');
                         });
+                    }
+                }
+
+                if (this.availabilityParentClass('offer-option', target)) {
+
+                } else {
+                    if (this.openedOfferOptions) {
+                        console.log('im here');
                     }
                 }
             });
