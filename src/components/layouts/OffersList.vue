@@ -50,6 +50,7 @@
                     <img :src="getStatusIcon(offer.statusId, 'circles')"
                          :alt="offer.statusId">
                 </div>
+                <offer-options/>
             </div>
             <div class="progress-row">
                 <div class="progress-bar"
@@ -94,13 +95,17 @@
 </template>
 
 <script>
+    import OfferOptions from '../layouts/offers/OfferOptions';
+
     import moment from 'moment';
 
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'OffersList',
-        components: {},
+        components: {
+            OfferOptions
+        },
         data() {
             return {
                 // openedContractorDialog: false,
@@ -288,6 +293,17 @@
 </script>
 
 <style lang="stylus" scoped>
+    .offers.context
+        display flex
+        justify-content center
+
+        .offers-context-options
+            width 30px
+            height 30px
+
+        .offer-context-menu
+            position absolute
+
     .offers-list
         display flex
         flex-direction column

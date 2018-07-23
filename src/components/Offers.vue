@@ -12,99 +12,21 @@
 
                 <offers-control/>
 
-                <!--<div class="vertical-progress">-->
-                    <!--<div class="circle circle-top circle-yellow">-->
-                        <!--<div class="triangle-icon"></div>-->
-                    <!--</div>-->
-
-                    <!--<div class="whole-line">-->
-                        <!--<div class="selected-area">-->
-                            <!--<div class="marker-calendar marker-calendar-top"-->
-                                 <!--@click="openedFromDatepicker = !openedFromDatepicker">-->
-                                <!--<div class="block">-->
-                                    <!--<img src="../../static/img/calendar-ic_black.svg"-->
-                                         <!--alt="date from" width="16px" height="16px">-->
-                                    <!--<div class="triangle"></div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-
-                            <!--<datepicker id="dateOffersFrom"-->
-                                        <!--class="dateOffersFrom"-->
-                                        <!--v-if="openedFromDatepicker"-->
-                                        <!--v-model="offersDateFrom"-->
-                                        <!--:language="$t('modals.pdf.lang')"-->
-                                        <!--:inline="true"/>-->
-
-                            <!--<div class="marker-calendar marker-calendar-bottom"-->
-                                 <!--@click="openedToDatepicker = !openedToDatepicker">-->
-                                <!--<div class="block">-->
-                                    <!--<img src="../../static/img/calendar-ic_black.svg"-->
-                                         <!--alt="date to" width="16px" height="16px">-->
-                                    <!--<div class="triangle"></div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-
-                            <!--<datepicker id="dateOffersTo"-->
-                                        <!--class="dateOffersTo"-->
-                                        <!--:style="{ 'top': getSelectedAreaHeight }"-->
-                                        <!--v-if="openedToDatepicker"-->
-                                        <!--v-model="offersDateTo"-->
-                                        <!--:language="$t('modals.pdf.lang')"-->
-                                        <!--:inline="true"/>-->
-                        <!--</div>-->
-                        <!--<div class="dividers-container">-->
-                            <!--<div class="divider horizontal"-->
-                                 <!--v-for="n in 8" :key="n">-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-
-                        <!--<div id="enable-filters"-->
-                             <!--class="circle circle-big circle-yellow circle-main"-->
-                             <!--@click="toggleGroupFilterButtons">-->
-                            <!--<img src="../../static/img/ale-logo.svg"-->
-                                 <!--alt="ale logo" width="21px" height="25px">-->
-                            <!--<div class="triangle">-->
-
-
-                            <!--</div>-->
-                        <!--</div>-->
-
-                    <!--</div>-->
-
-                    <!--&lt;!&ndash;<group-filter-buttons :enabled="enabledGroupFilterButtons"&ndash;&gt;-->
-                                          <!--&lt;!&ndash;:filterElementOptions="changedFilterElementOptions"/>&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<offers-filter v-if="filter.opened"&ndash;&gt;-->
-                                   <!--&lt;!&ndash;:type-id="filter.typeId"&ndash;&gt;-->
-                                   <!--&lt;!&ndash;:offset-top="filterOffsetTop()"/>&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<offers-filter-folded v-for="filter in filters"&ndash;&gt;-->
-                    <!--&lt;!&ndash;v-if="filter.folded"&ndash;&gt;-->
-                    <!--&lt;!&ndash;:key="filter.id"&ndash;&gt;-->
-                    <!--&lt;!&ndash;:id="filter.id"&ndash;&gt;-->
-                    <!--&lt;!&ndash;:title="filter.title"&ndash;&gt;-->
-                    <!--&lt;!&ndash;:queue="filter.queue"/>&ndash;&gt;-->
-
-                    <!--<div class="circle circle-bottom circle-green">-->
-                        <!--<img src="../../static/img/icons-for-circle/infinity.svg"-->
-                             <!--alt="infinity" width="12px" height="6px">-->
-                        <!--<div class="triangle">-->
-                            <!--&lt;!&ndash;<group-status-buttons/>&ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
             <div class="search-result">
+
                 <offers-list v-if="filteredOffers.length !== 0"/>
+
                 <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"
                      v-else>
                     <p style="font-family: MuseoSansCyrl500;">
                         No offers found
                     </p>
                 </div>
-                <offers-contractor-dialog v-if="openedContractorDialog"
-                                          :coordinates="contractorDialogCoordinates"/>
+                <transition name="fade-bottom">
+                    <offers-contractor-dialog v-if="openedContractorDialog"
+                                              :coordinates="contractorDialogCoordinates"/>
+                </transition>
             </div>
         </div>
     </div>
@@ -375,6 +297,16 @@
 </script>
 
 <style lang="stylus" scoped>
+    .fade-bottom-enter-active
+        transition all .2s ease-out
+
+    .fade-bottom-leave-active
+        transition all .2s ease-in
+
+    .fade-bottom-enter, .fade-bottom-leave-to
+        transform translateY(30px)
+        opacity 0
+
     .circle-main
         z-index 2
         cursor pointer
