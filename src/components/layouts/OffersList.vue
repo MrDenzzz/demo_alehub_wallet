@@ -50,7 +50,9 @@
                     <img :src="getStatusIcon(offer.statusId, 'circles')"
                          :alt="offer.statusId">
                 </div>
-                <offer-options/>
+                <offer-options :hidden-offer-options="hiddenOfferOptions"
+                               :offer-id="offer.id"
+                               :opened-options="offer.openedOptions"/>
             </div>
             <div class="progress-row">
                 <div class="progress-bar"
@@ -72,7 +74,6 @@
                          :key="offer.id.toString() + key.id.toString()">
                         <img :src="key.src" alt="key">
                     </div>
-
                     <div class="key-block"
                          :id="'key-end' + offer.id + key.id"
                          v-for="key in offer.keys"
@@ -105,6 +106,12 @@
         name: 'OffersList',
         components: {
             OfferOptions
+        },
+        props: {
+            hiddenOfferOptions: {
+                type: Boolean,
+                required: true
+            }
         },
         data() {
             return {

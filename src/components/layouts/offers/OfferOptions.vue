@@ -7,7 +7,7 @@
         </div>
         <transition name="fade-bottom">
             <div class="offer-option-menu"
-                 v-if="opened">
+                 v-if="openedOptions">
                 <div class="offer-option-item">
                     <span>Save</span>
                 </div>
@@ -23,21 +23,49 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'OffersOptions',
+        props: {
+            hiddenOfferOptions: {
+                type: Boolean,
+                required: true
+            },
+            offerId: {
+                type: Number,
+                required: true
+            },
+            openedOptions: {
+                type: Boolean,
+                required: true
+            }
+        },
         data() {
             return {
                 opened: false
             }
         },
+        computed: {
+            ...mapGetters(
+                [
+                    'openedOfferOptions'
+                ]
+            ),
+        },
         methods: {
             toggleMenu: function () {
-                this.$store.dispatch('toggleOfferOptions'
-                ).then(resp => {
-                    this.opened = !this.opened;
-                }).catch(err => {
-                    console.log('err');
-                });
+
+                this.$store.dispatch('toggleOfferOptions', this.offerId).then().catch();
+
+                // this.opened = !this.opened;
+                // this.$parent.$emit('unhideOfferOptions', false);
+                // this.$store.dispatch('toggleOfferOptions'
+                // ).then(resp => {
+                //     this.opened = this.openedOfferOptions;
+                // }).catch(err => {
+                //     console.log('err');
+                // });
             },
             getIcon: function (name) {
                 return require(`../../../assets/img/${name}.svg`);

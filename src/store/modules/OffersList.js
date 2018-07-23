@@ -312,7 +312,8 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            steps: 10
+            steps: 10,
+            openedOptions: false
         },
         {
             id: 2,
@@ -344,7 +345,8 @@ const state = {
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            steps: 8
+            steps: 8,
+            openedOptions: false
         },
         {
             id: 3,
@@ -357,7 +359,8 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            steps: 1
+            steps: 1,
+            openedOptions: false
         },
         {
             id: 4,
@@ -370,7 +373,8 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            steps: 1
+            steps: 1,
+            openedOptions: false
         },
         {
             id: 5,
@@ -408,7 +412,8 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            steps: 10
+            steps: 10,
+            openedOptions: false
         },
         {
             id: 6,
@@ -440,7 +445,8 @@ const state = {
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            steps: 8
+            steps: 8,
+            openedOptions: false
         },
         {
             id: 7,
@@ -455,6 +461,7 @@ const state = {
             finalDate: 1525703409000,
             projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
+            openedOptions: false
         }
     ],
     offers: [
@@ -494,7 +501,8 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            steps: 10
+            steps: 10,
+            openedOptions: false
         },
         {
             id: 2,
@@ -526,7 +534,8 @@ const state = {
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            steps: 8
+            steps: 8,
+            openedOptions: false
         },
         {
             id: 3,
@@ -539,7 +548,8 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            steps: 1
+            steps: 1,
+            openedOptions: false
         },
         {
             id: 4,
@@ -552,7 +562,8 @@ const state = {
             keys: [],
             startDate: 1525185009000,
             finalDate: 1525703409000,
-            steps: 1
+            steps: 1,
+            openedOptions: false
         },
         {
             id: 5,
@@ -590,7 +601,8 @@ const state = {
             ],
             startDate: 1517495409000,
             finalDate: 1543588209000,
-            steps: 10
+            steps: 10,
+            openedOptions: false
         },
         {
             id: 6,
@@ -622,13 +634,14 @@ const state = {
             ],
             startDate: 1523370609000,
             finalDate: 1543588209000,
-            steps: 8
+            steps: 8,
+            openedOptions: false
         },
         {
             id: 7,
             contractorsId: [4],
             statusId: 4,
-            title: 'Virtual reality pluggin',
+            title: 'Virtual reality plugin',
             company: 'Nike',
             logoSrc: '../../static/img/logo/react.png',
             to: '/offer',
@@ -637,6 +650,7 @@ const state = {
             finalDate: 1525703409000,
             projectLogo: '../../static/img/ale-logo.svg',
             steps: 1,
+            openedOptions: false
         }
     ],
 
@@ -678,7 +692,8 @@ const state = {
     openedGroupFilterButtons: false,
     openedGroupStatusButtons: false,
     openedGroupManageButtons: false,
-    openedOfferOptions: false
+    openedOfferOptions: false,
+    hiddenAreaOfferOptions: false
 };
 
 const actions = {
@@ -766,6 +781,24 @@ const actions = {
         return new Promise(resolve => {
             commit('SUCCESS_TOGGLE_GROUP_MANAGE_BUTTONS');
             resolve('success toggle group status buttons');
+        });
+    },
+    toggleOfferOptions: ({commit}, id) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_TOGGLE_OFFER_OPTIONS', id);
+            resolve('success toggle offer options');
+        })
+    },
+    hideAreaOfferOptions: ({commit}) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_HIDE_AREA_OFFER_OPTIONS');
+            resolve('success hide area offer options');
+        });
+    },
+    hideOfferOptions: ({commit}) => {
+        return new Promise(resolve => {
+            commit('SUCCESS_HIDE_OFFER_OPTIONS');
+            resolve('success hide offer options');
         });
     }
 };
@@ -1086,7 +1119,24 @@ const mutations = {
         // state.filtersCondition.find(filter => filter.id === id).opened = false;
         state.filter.opened = false;
     },
+    SUCCESS_TOGGLE_OFFER_OPTIONS: (state, id) => {
+        if (state.filteredOffers.find(offer => offer.openedOptions) &&
+            id !== state.filteredOffers.find(offer => offer.openedOptions).id)
+            state.filteredOffers.find(offer => offer.openedOptions).openedOptions = false;
 
+        state.filteredOffers.find(offer => offer.id === id).openedOptions =
+            !state.filteredOffers.find(offer => offer.id === id).openedOptions;
+
+        // state.openedOfferOptions = !state.openedOfferOptions;
+        // state.hiddenAreaOfferOptions = false;
+    },
+    SUCCESS_HIDE_AREA_OFFER_OPTIONS: (state) => {
+        state.hiddenAreaOfferOptions = true;
+    },
+    SUCCESS_HIDE_OFFER_OPTIONS: (state) => {
+        if (state.filteredOffers.find(offer => offer.openedOptions))
+            state.filteredOffers.find(offer => offer.openedOptions).openedOptions = false;
+    },
     SUCCESS_CHANGE_OPENING_FILTER: (state, id) => {
         if (state.filter.typeId === id && state.filter.opened) {
             state.filter.opened = false;
@@ -1212,7 +1262,8 @@ const getters = {
     openedGroupFilterButtons: state => state.openedGroupFilterButtons,
     openedGroupStatusButtons: state => state.openedGroupStatusButtons,
     openedGroupManageButtons: state => state.openedGroupManageButtons,
-    openedOfferOptions: state => state.openedOfferOptions
+    openedOfferOptions: state => state.openedOfferOptions,
+    hiddenAreaOfferOptions: state => state.hiddenAreaOfferOptions
 };
 
 export default {

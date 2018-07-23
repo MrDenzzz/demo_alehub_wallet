@@ -15,7 +15,9 @@
             </div>
             <div class="search-result">
 
-                <offers-list v-if="filteredOffers.length !== 0"/>
+                <offers-list v-if="filteredOffers.length !== 0"
+                             :hidden-offer-options="hiddenOfferOptions"
+                />
 
                 <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"
                      v-else>
@@ -83,6 +85,7 @@
         },
         data() {
             return {
+                hiddenOfferOptions: false,
 
                 enabledGroupFilterButtons: false,
 
@@ -154,6 +157,11 @@
             },
             getSelectedAreaHeight: function () {
                 return getComputedStyle(document.querySelector('.selected-area')).height;
+            },
+            checkOpenedOfferOptions: function () {
+                if (this.filteredOffers.find(offer => offer.openedOptions))
+                    return this.filteredOffers.find(offer => offer.openedOptions).openedOptions;
+                return false;
             }
         },
         methods: {
@@ -296,12 +304,15 @@
                 if (this.availabilityParentClass('offer-option', target)) {
 
                 } else {
-                    if (this.openedOfferOptions) {
+                    if (this.checkOpenedOfferOptions) {
+                        this.$store.dispatch('hideOfferOptions').then().catch();
                         console.log('im here');
                     }
                 }
             });
-        }
+
+        },
+
     }
 </script>
 
@@ -369,7 +380,8 @@
 
                         @media (max-width 768px)
                             top 0
-                            left -18px
+                            left
+                        -18px
 
                         .triangle-icon
                             border 6px solid transparent
@@ -388,7 +400,8 @@
 
                         @media (max-width 768px)
                             bottom 0
-                            right -18px
+                            right
+                        -18px
 
                         .triangle
                             border 6px solid transparent
@@ -425,7 +438,8 @@
                             flex-direction row
                             width 192px
                             top 8px
-                            left -96px
+                            left
+                        -96px
 
                         @media (max-width 620px)
                             flex-direction column
@@ -450,18 +464,20 @@
                             top -18px
 
                             @media (max-width 768px)
-                                left -16px
-                                bottom 0
-                                top -50px
+                                left
+                            -16px
+                            bottom 0
+                            top -50px
 
                         .marker-calendar-bottom
                             left -50px
                             bottom -18px
 
                             @media (max-width 768px)
-                                top -50px
-                                right -16px
-                                left unset
+                                top
+                            -50px
+                            right -16px
+                            left unset
 
                         .marker-calendar-bottom, .marker-calendar-top
                             .block
@@ -481,8 +497,9 @@
                             position absolute
 
                             @media (max-width 768px)
-                                top -6px
-                                left 190px
+                                top
+                            -6px
+                            left 190px
 
                             .triangle
                                 border 6px solid transparent
@@ -517,8 +534,9 @@
                             @media (max-width 768px)
                                 width 60%
                                 height 36px
-                                top -1px
-                                left 58px
+                                top
+                            -1px
+                            left 58px
 
             .search-result
                 padding-left 20px
