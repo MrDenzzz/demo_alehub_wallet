@@ -12,38 +12,47 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form">
+                                <input-control
+                                    :labelValue="'Offer Name'"
+                                    :inputId="'offerName'"
+                                    :placeholder="'Enter the name of the offer'"
+                                    :fullWidth="true"
+                                />
+                                <textarea-control
+                                    :label-value="$t('pages.newOffer.fields.description.label')"
+                                    :textarea-id="'description'"
+                                    :placeholder="'Type your description here'"
+                                    :fullWidth="true"
+                                />
                                 <div class="control">
-                                    <label>Offer Name</label>
-                                    <input type="text" v-model="newOffer.name">
-                                </div>
-                                <div class="control">
-                                    <label>Offer Description</label>
-                                    <textarea name="" id="" cols="30" rows="10" v-model="newOffer.description"></textarea>
-                                </div>
-                                <div class="control">
-                                    <div style="display: flex;">
-                                        <div style="display: flex; flex-direction: column;">
-                                            <label>Start Date</label>
-                                            <input type="date" v-model="newOffer.startDate">
-                                        </div>
-                                        <div style="display: flex; flex-direction: column;">
-                                            <label>Final Date</label>
-                                            <input type="date" v-model="newOffer.finalDate">
-                                        </div>
+                                    <div class="wrap-input datepick">
+                                        <label for="offerName">Start Date</label>
+                                        <datepicker
+                                            id="datepicker"
+                                            v-model="newOffer.startDate"
+                                            language="en"
+                                            :placeholder="'Choose start time'"
+                                        />
                                     </div>
                                 </div>
-                                <div style="display: flex; flex-direction: column;" class="control">
-                                    <label>Project Name</label>
-                                    <input type="text" v-model="newOffer.projectName">
+                                <div class="control">
+                                    <div class="wrap-input datepick">
+                                        <label for="offerName">Final Date</label>
+                                        <datepicker
+                                            id="datepicker"
+                                            v-model="newOffer.finalDate"
+                                            language="en"
+                                            :placeholder="'Choose final time'"
+                                        />
+                                    </div>
                                 </div>
-                                <div style="display: flex; flex-direction: column;" class="control">
-                                    <label>Requirements and Skills</label>
-                                    <input type="text" v-model="newOffer.skills">
-                                </div>
-                                <div style="display: flex; flex-direction: column;" class="control">
-                                    <label>Offer Price</label>
-                                    <input type="text" v-model="newOffer.price">
-                                </div>
+                                <input-control
+                                    :labelValue="'Offer Price'"
+                                    :inputId="'offerPrice'"
+                                    :placeholder="'Enter the price of the offer'"
+                                    :fullWidth="true"
+                                    :inputType="'number'"
+                                />
                             </div>
                             <button class="buttons btn btn-yellow" @click="createNewOffer(newOffer)">Create Offer</button>
                         </div>
@@ -56,12 +65,18 @@
 
 <script>
 import Navbar from './layouts/Navbar';
+import TextareaControl from './layouts/forms/TextareaControl';
+import InputControl from './layouts/forms/InputControl';
+import Datepicker from 'vuejs-datepicker';
 import { mapActions } from 'vuex';
 
 export default {
     name: 'CreateOffer',
     components: {
-        Navbar
+        Navbar,
+        TextareaControl,
+        InputControl,
+        Datepicker
     },
     data() {
         return {
@@ -91,15 +106,24 @@ export default {
     margin-bottom 24px
 
 .control
-    display flex
-    flex-direction column
-    align-items flex-start
 
-    input
-        z-index unset 
-        opacity 1
-        display unset 
-        position unset
+    .wrap-input
+        width 100%
+
+        input 
+            opacity 1
+
+    &:last-child
+        border none !important 
+
 
 
 </style>
+
+<style lang="stylus">
+.control
+    .datepick
+        input
+            opacity 1 !important
+</style>
+
