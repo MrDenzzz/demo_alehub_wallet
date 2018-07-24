@@ -1,6 +1,11 @@
 <template>
     <div class="offers-datepicker-to">
-        <div class="marker-calendar">
+        <!--@mouseup="dragEnd()"-->
+        <div class="marker-calendar"
+             @mousedown="dragStart($event)"
+             @dragstart="stopDrag()"
+             @mousemove="(xDrag && yDrag) ? dragMove($event) : 'false'"
+             :style="calcY">
             <div class="marker-block">
                 <img src="../../../../static/img/calendar-ic_black.svg"
                      alt="date from">
@@ -28,15 +33,52 @@
             return {
                 inline: true,
                 opened: false,
-                dateTo: null
+                dateTo: null,
+                xDrag: 0,
+                yDrag: 0
             }
+        },
+        computed: {
+            calcY: function () {
+
+            }
+        },
+        methods: {
+            dragStart: function (e) {
+                this.xDrag = e.pageX;
+                this.yDrag = e.pageY;
+            },
+            dragEnd: function () {
+                this.xDrag = 0;
+                this.yDrag = 0;
+            },
+            stopDrag: function () {
+                return false;
+            },
+            dragMove: function (e) {
+                let xMove = e.pageX,
+                    yMove = e.pageY;
+
+                let xDiff = this.xDrag - xMove,
+                    yDiff = this.yDrag - yMove;
+
+                if (Math.abs(yDiff) > Math.abs(xDiff)) {
+                    console.log(yDiff, 'yDiff');
+                }
+            }
+        },
+        mounted() {
+            window.addEventListener('mouseup', function (event) {
+                this.xDrag = 0;
+                this.yDrag = 0;
+            })
         }
     }
 </script>
 
 <style lang="stylus" scoped>
     .marker-calendar
-        position relative
+        position absolute
         display flex
         width 50px
         height 32px
