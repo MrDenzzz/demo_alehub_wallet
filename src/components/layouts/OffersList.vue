@@ -92,10 +92,15 @@
                 <!--</div>-->
             <!--</div>-->
         <!--</div>-->
+
+
+        <offer-panel/>
+
     </div>
 </template>
 
 <script>
+    import OfferPanel from '../layouts/offers/OfferPanel';
     import OfferOptions from '../layouts/offers/OfferOptions';
 
     import moment from 'moment';
@@ -105,13 +110,14 @@
     export default {
         name: 'OffersList',
         components: {
+            OfferPanel,
             OfferOptions
         },
         props: {
-            hiddenOfferOptions: {
-                type: Boolean,
-                required: true
-            }
+            // hiddenOfferOptions: {
+            //     type: Boolean,
+            //     required: true
+            // }
         },
         data() {
             return {
@@ -154,146 +160,146 @@
             ),
         },
         methods: {
-            /**
-             *
-             *
-             * @param statusId
-             */
-            getOfferCircleClass: function (statusId) {
-                return 'circle-' + this.status.find(item => item.id === statusId).class;
-            },
-            /**
-             *
-             *
-             * @param statusId
-             */
-            getOfferStatusClass: function (statusId) {
-                return this.status.find(item => item.id === statusId).class;
-            },
-            /**
-             *
-             * @param {Number} offerId
-             */
-            progressBarId: function (offerId) {
-                return 'progress-bar-' + offerId;
-            },
-            /**
-             * return data of type contractor
-             *
-             * @param {number} contractorTypeId
-             * @returns {*}
-             */
-            contractorType: function (contractorTypeId) {
-                return this.types.find(type => type.id === contractorTypeId);
-            },
-            /**
-             * return name of type contractor
-             *
-             * @param {number} contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeName: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).name;
-            },
-            /**
-             * return type of contractor
-             *
-             * @param {number} contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeType: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).type;
-            },
-            /**
-             *
-             *
-             * @param {Object} e
-             * @param {Object} contractor
-             * @returns {boolean}
-             */
-            toggleContractorDialog: function (e, contractor) {
-                this.contractorDialogCoordinates.top = e.pageY;
-                this.contractorDialogCoordinates.left = e.pageX;
-
-                if (!this.openedContractorDialog) {
-                    this.$store.dispatch('selectContractor', {
-                        contractor: contractor,
-                        opened: true,
-                        coordinates: this.contractorDialogCoordinates
-                    }).then(resp => {
-                        // this.openedContractorDialog = true;
-                    }).catch(() => {
-                        console.error('error toggle contractor dialog');
-                    });
-
-                    return true;
-                } else if (this.openedContractorDialog && contractor.id !== this.selectedContractor.id) {
-                    this.$store.dispatch('selectContractor', {
-                        contractor: contractor,
-                        opened: true,
-                        coordinates: this.contractorDialogCoordinates
-                    }).then(() => {
-
-                    }).catch(() => {
-                        console.error('error toggle SAME contractor dialog');
-                    });
-
-                    return true;
-                }
-                // this.openedContractorDialog = false;
-                this.$store.dispatch('selectContractor', {
-                    contractor: contractor,
-                    opened: false,
-                    coordinates: this.contractorDialogCoordinates
-                }).then(() => {
-
-                }).catch(() => {
-                    console.error('');
-                });
-                return false;
-            },
-            getIcon: function (name) {
-                return this.selectedTheme === 'dark' ? require(`../../../static/img/${name}_dark.svg`) : require(`../../../static/img/${name}.svg`);
-            },
-            checkContractorType: function (type) {
-                return type;
-            },
-            toFormatDate: function (date) {
-                return moment(date).format('DD MMMM, YYYY');
-            },
-            getStatusIcon: function (id, iconType) {
-                let status = this.status.find(item => item.id === id).class;
-
-                switch (status) {
-                    case 'continues':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
-                    case 'check':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
-                    case 'stop':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
-                    case 'cancel':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
-                }
-            }
+            // /**
+            //  *
+            //  *
+            //  * @param statusId
+            //  */
+            // getOfferCircleClass: function (statusId) {
+            //     return 'circle-' + this.status.find(item => item.id === statusId).class;
+            // },
+            // /**
+            //  *
+            //  *
+            //  * @param statusId
+            //  */
+            // getOfferStatusClass: function (statusId) {
+            //     return this.status.find(item => item.id === statusId).class;
+            // },
+            // /**
+            //  *
+            //  * @param {Number} offerId
+            //  */
+            // progressBarId: function (offerId) {
+            //     return 'progress-bar-' + offerId;
+            // },
+            // /**
+            //  * return data of type contractor
+            //  *
+            //  * @param {number} contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorType: function (contractorTypeId) {
+            //     return this.types.find(type => type.id === contractorTypeId);
+            // },
+            // /**
+            //  * return name of type contractor
+            //  *
+            //  * @param {number} contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorTypeName: function (contractorTypeId) {
+            //     return this.contractorType(contractorTypeId).name;
+            // },
+            // /**
+            //  * return type of contractor
+            //  *
+            //  * @param {number} contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorTypeType: function (contractorTypeId) {
+            //     return this.contractorType(contractorTypeId).type;
+            // },
+            // /**
+            //  *
+            //  *
+            //  * @param {Object} e
+            //  * @param {Object} contractor
+            //  * @returns {boolean}
+            //  */
+            // toggleContractorDialog: function (e, contractor) {
+            //     this.contractorDialogCoordinates.top = e.pageY;
+            //     this.contractorDialogCoordinates.left = e.pageX;
+            //
+            //     if (!this.openedContractorDialog) {
+            //         this.$store.dispatch('selectContractor', {
+            //             contractor: contractor,
+            //             opened: true,
+            //             coordinates: this.contractorDialogCoordinates
+            //         }).then(resp => {
+            //             // this.openedContractorDialog = true;
+            //         }).catch(() => {
+            //             console.error('error toggle contractor dialog');
+            //         });
+            //
+            //         return true;
+            //     } else if (this.openedContractorDialog && contractor.id !== this.selectedContractor.id) {
+            //         this.$store.dispatch('selectContractor', {
+            //             contractor: contractor,
+            //             opened: true,
+            //             coordinates: this.contractorDialogCoordinates
+            //         }).then(() => {
+            //
+            //         }).catch(() => {
+            //             console.error('error toggle SAME contractor dialog');
+            //         });
+            //
+            //         return true;
+            //     }
+            //     // this.openedContractorDialog = false;
+            //     this.$store.dispatch('selectContractor', {
+            //         contractor: contractor,
+            //         opened: false,
+            //         coordinates: this.contractorDialogCoordinates
+            //     }).then(() => {
+            //
+            //     }).catch(() => {
+            //         console.error('');
+            //     });
+            //     return false;
+            // },
+            // getIcon: function (name) {
+            //     return this.selectedTheme === 'dark' ? require(`../../../static/img/${name}_dark.svg`) : require(`../../../static/img/${name}.svg`);
+            // },
+            // checkContractorType: function (type) {
+            //     return type;
+            // },
+            // toFormatDate: function (date) {
+            //     return moment(date).format('DD MMMM, YYYY');
+            // },
+            // getStatusIcon: function (id, iconType) {
+            //     let status = this.status.find(item => item.id === id).class;
+            //
+            //     switch (status) {
+            //         case 'continues':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
+            //         case 'check':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
+            //         case 'stop':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
+            //         case 'cancel':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
+            //     }
+            // }
         },
         mounted() {
-            for (let i = 0; i < this.offers.length; i++) {
-
-                let currentProgressBar = document.getElementById(this.progressBarId(this.offers[i].id));
-
-                for (let j = 0; j < this.offers[i].keys.length; j++) {
-
-                    let diff = this.offers[i].finalDate - this.offers[i].startDate,
-                        diffKeyStart = this.offers[i].finalDate - this.offers[i].keys[j].start;
-
-                    document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) + 'px';
-
-                    if (this.offers[i].keys[j].end) {
-                        let diffKeyEnd = this.offers[i].finalDate - this.offers[i].keys[j].end;
-                        document.getElementById('key-end' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyEnd / diff) + 'px';
-                    }
-                }
-            }
+            // for (let i = 0; i < this.offers.length; i++) {
+            //
+            //     let currentProgressBar = document.getElementById(this.progressBarId(this.offers[i].id));
+            //
+            //     for (let j = 0; j < this.offers[i].keys.length; j++) {
+            //
+            //         let diff = this.offers[i].finalDate - this.offers[i].startDate,
+            //             diffKeyStart = this.offers[i].finalDate - this.offers[i].keys[j].start;
+            //
+            //         document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) + 'px';
+            //
+            //         if (this.offers[i].keys[j].end) {
+            //             let diffKeyEnd = this.offers[i].finalDate - this.offers[i].keys[j].end;
+            //             document.getElementById('key-end' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyEnd / diff) + 'px';
+            //         }
+            //     }
+            // }
 
         }
     }

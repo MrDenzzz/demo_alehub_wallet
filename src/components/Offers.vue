@@ -11,7 +11,7 @@
                     <offers-filter-new/>
                 </div>
                 <div class="col-9">
-                    offers
+                    <offers-list/>
                 </div>
             </div>
         </div>
