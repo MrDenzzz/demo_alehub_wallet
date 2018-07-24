@@ -1,97 +1,97 @@
 <template>
     <div class="offers-list">
-        <div class="offers-offer"
-             v-for="(offer, i) in filteredOffers"
-             :key="offer.id"
-             :class="getOfferStatusClass(offer.statusId)"
-             :style="{width: 10 * offer.steps + '%'}">
-            <div class="row-top">
-                <div class="offer-info">
-                    <img class="offer-logo"
-                         :src="offer.logoSrc"
-                         :alt="offer.company">
-                    <router-link class="info-text"
-                                 tag="div"
-                                 :to="offer.to">
-                        <p class="title">
-                            {{ offer.title }}
-                        </p>
-                        <p class="subtitle">
-                            {{ offer.company }}
-                        </p>
-                    </router-link>
-                </div>
-                <div class="contractors-list">
-                    <div class="contractors-item"
-                         v-for="contractor in filteredOfferContractors[i]"
-                         :key="contractor.id">
-                        <div class="contractors-content">
-                            <div class="circle"
-                                 :class="contractorTypeType(contractor.typeId)"
-                                 @click="toggleContractorDialog($event, contractor)">
-                                <span class="initials">
-                                {{ contractor.initials }}
-                                </span>
-                            </div>
-                            <div class="contractors-info"
-                                 @click="toggleContractorDialog($event, contractor)">
-                                <p class="title">
-                                    {{ contractor.name + ' ' + contractor.rating }}
-                                </p>
-                                <p class="subtitle">
-                                    {{ contractorTypeName(contractor.typeId) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="circle circle-big"
-                     :class="getOfferCircleClass(offer.statusId)">
-                    <img :src="getStatusIcon(offer.statusId, 'circles')"
-                         :alt="offer.statusId">
-                </div>
-                <offer-options :hidden-offer-options="hiddenOfferOptions"
-                               :offer-id="offer.id"
-                               :opened-options="offer.openedOptions"/>
-            </div>
-            <div class="progress-row">
-                <div class="progress-bar"
-                     :id="progressBarId(offer.id)"
-                     :class="offer.status">
-                    <img :src="getStatusIcon(offer.statusId, 'arrows')"
-                         :alt="offer.status"
-                         class="arrow">
-                    <div class="step"
-                         v-for="n in offer.steps"
-                         :key="n"
-                         :class="{ 'one-step': offer.steps <= 1 }">
-                        Month
-                    </div>
-                    <div class="key-block"
-                         :id="'key' + offer.id + key.id"
-                         v-for="key in offer.keys"
-                         @click="test($event)"
-                         :key="offer.id.toString() + key.id.toString()">
-                        <img :src="key.src" alt="key">
-                    </div>
-                    <div class="key-block"
-                         :id="'key-end' + offer.id + key.id"
-                         v-for="key in offer.keys"
-                         v-if="key.end"
-                         :key="offer.id.toString() + key.id.toString() + '1'">
-                        <img :src="key.src" alt="key">
-                    </div>
-                </div>
-            </div>
-            <div class="row-bottom">
-                <div class="date">
-                    {{ toFormatDate(offer.startDate) }}
-                </div>
-                <div class="date">
-                    {{ toFormatDate(offer.finalDate) }}
-                </div>
-            </div>
-        </div>
+        <!--<div class="offers-offer"-->
+             <!--v-for="(offer, i) in filteredOffers"-->
+             <!--:key="offer.id"-->
+             <!--:class="getOfferStatusClass(offer.statusId)"-->
+             <!--:style="{width: 10 * offer.steps + '%'}">-->
+            <!--<div class="row-top">-->
+                <!--<div class="offer-info">-->
+                    <!--<img class="offer-logo"-->
+                         <!--:src="offer.logoSrc"-->
+                         <!--:alt="offer.company">-->
+                    <!--<router-link class="info-text"-->
+                                 <!--tag="div"-->
+                                 <!--:to="offer.to">-->
+                        <!--<p class="title">-->
+                            <!--{{ offer.title }}-->
+                        <!--</p>-->
+                        <!--<p class="subtitle">-->
+                            <!--{{ offer.company }}-->
+                        <!--</p>-->
+                    <!--</router-link>-->
+                <!--</div>-->
+                <!--<div class="contractors-list">-->
+                    <!--<div class="contractors-item"-->
+                         <!--v-for="contractor in filteredOfferContractors[i]"-->
+                         <!--:key="contractor.id">-->
+                        <!--<div class="contractors-content">-->
+                            <!--<div class="circle"-->
+                                 <!--:class="contractorTypeType(contractor.typeId)"-->
+                                 <!--@click="toggleContractorDialog($event, contractor)">-->
+                                <!--<span class="initials">-->
+                                <!--{{ contractor.initials }}-->
+                                <!--</span>-->
+                            <!--</div>-->
+                            <!--<div class="contractors-info"-->
+                                 <!--@click="toggleContractorDialog($event, contractor)">-->
+                                <!--<p class="title">-->
+                                    <!--{{ contractor.name + ' ' + contractor.rating }}-->
+                                <!--</p>-->
+                                <!--<p class="subtitle">-->
+                                    <!--{{ contractorTypeName(contractor.typeId) }}-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="circle circle-big"-->
+                     <!--:class="getOfferCircleClass(offer.statusId)">-->
+                    <!--<img :src="getStatusIcon(offer.statusId, 'circles')"-->
+                         <!--:alt="offer.statusId">-->
+                <!--</div>-->
+                <!--<offer-options :hidden-offer-options="hiddenOfferOptions"-->
+                               <!--:offer-id="offer.id"-->
+                               <!--:opened-options="offer.openedOptions"/>-->
+            <!--</div>-->
+            <!--<div class="progress-row">-->
+                <!--<div class="progress-bar"-->
+                     <!--:id="progressBarId(offer.id)"-->
+                     <!--:class="offer.status">-->
+                    <!--<img :src="getStatusIcon(offer.statusId, 'arrows')"-->
+                         <!--:alt="offer.status"-->
+                         <!--class="arrow">-->
+                    <!--<div class="step"-->
+                         <!--v-for="n in offer.steps"-->
+                         <!--:key="n"-->
+                         <!--:class="{ 'one-step': offer.steps <= 1 }">-->
+                        <!--Month-->
+                    <!--</div>-->
+                    <!--<div class="key-block"-->
+                         <!--:id="'key' + offer.id + key.id"-->
+                         <!--v-for="key in offer.keys"-->
+                         <!--@click="test($event)"-->
+                         <!--:key="offer.id.toString() + key.id.toString()">-->
+                        <!--<img :src="key.src" alt="key">-->
+                    <!--</div>-->
+                    <!--<div class="key-block"-->
+                         <!--:id="'key-end' + offer.id + key.id"-->
+                         <!--v-for="key in offer.keys"-->
+                         <!--v-if="key.end"-->
+                         <!--:key="offer.id.toString() + key.id.toString() + '1'">-->
+                        <!--<img :src="key.src" alt="key">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row-bottom">-->
+                <!--<div class="date">-->
+                    <!--{{ toFormatDate(offer.startDate) }}-->
+                <!--</div>-->
+                <!--<div class="date">-->
+                    <!--{{ toFormatDate(offer.finalDate) }}-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 

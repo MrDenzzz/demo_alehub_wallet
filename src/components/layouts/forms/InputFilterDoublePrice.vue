@@ -4,7 +4,7 @@
             {{ $t('offersFilter.price.title') }}
         </label>
         <div class="double-input-block">
-            <div class="single-input">
+            <div class="double-input">
                 <label for="from">
                     {{ $t('offersFilter.price.from') }}
                 </label>
@@ -12,7 +12,7 @@
                        v-model="from"
                        @input="emitChangePriceFrom(from)">
             </div>
-            <div class="single-input">
+            <div class="double-input">
                 <label for="to">
                     {{ $t('offersFilter.price.to') }}
                 </label>
@@ -81,9 +81,8 @@
 
         .double-input-block
             display flex
-            flex-direction column
 
-            .single-input
+            .double-input
                 position relative
                 display flex
                 align-items center
@@ -91,9 +90,6 @@
                 background-color #f7f7f7
                 border-radius 2px
                 padding-left 8px
-
-                &:first-child
-                    margin-bottom 10px
 
                 label
                     margin-bottom 0
@@ -112,4 +108,7 @@
                     width 100%
                     padding 6px 8px
                     color #34343e
+
+                &:first-child
+                    margin-right 12px
 </style>

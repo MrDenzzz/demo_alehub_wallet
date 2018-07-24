@@ -1,34 +1,18 @@
 <template>
-    <div class="contract-list">
+    <div class="offers">
         <navbar title="Contract List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
 
-        <state-bar/>
-
-        <div class="row-page">
-            <div class="sidebar">
-
-                <offers-control/>
-
-            </div>
-            <div class="search-result">
-
-                <offers-list v-if="filteredOffers.length !== 0"
-                             :hidden-offer-options="hiddenOfferOptions"
-                />
-
-                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"
-                     v-else>
-                    <p style="font-family: MuseoSansCyrl500;">
-                        No offers found
-                    </p>
+        <div class="offers-content">
+            <div class="row">
+                <div class="col-3">
+                    <offers-filter-new/>
                 </div>
-                <transition name="fade-bottom">
-                    <offers-contractor-dialog v-if="openedContractorDialog"
-                                              :coordinates="contractorDialogCoordinates"/>
-                </transition>
+                <div class="col-9">
+                    offers
+                </div>
             </div>
         </div>
     </div>
@@ -44,6 +28,7 @@
     // import GroupFilterButtons from './layouts/GroupFilterButtons';
     // import GroupStatusButtons from './layouts/GroupStatusButtons';
 
+    import OffersFilterNew from './layouts/offers/OffersFilterNew';
 
     // import OffersControlToggleFilter from './layouts/offers/OffersControlToggleFilter';
 
@@ -61,12 +46,14 @@
             StateBar,
             OffersList,
             OffersControl,
+            OffersFilterNew,
             // OffersFilter,
             // OffersFilterFolded,
             OffersContractorDialog,
             // GroupFilterButtons,
             // GroupStatusButtons,
-            // Datepicker
+            // Datepicker,
+
         },
         watch: {
             offersDateFrom: function (val) {
@@ -330,6 +317,9 @@
     .circle-main
         z-index 2
         cursor pointer
+
+    .offers-content
+        padding 88px 24px 0 24px
 
     .contract-list
         background-color #f0f4fa
