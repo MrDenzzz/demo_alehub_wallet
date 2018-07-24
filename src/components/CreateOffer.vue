@@ -60,45 +60,16 @@
                             <div class="form addition" :class="{'add-opened': isOpened}">
                                 <div class="outer">
                                     <input-control
-                                        :labelValue="'Offer Name'"
-                                        :inputId="'offerName'"
-                                        :placeholder="'Enter the name of the offer'"
+                                        :labelValue="'Project Name'"
+                                        :inputId="'projectName'"
+                                        :placeholder="'Enter the name of the project'"
                                         :fullWidth="true"
                                     />
-                                    <textarea-control
-                                        :label-value="$t('pages.newOffer.fields.description.label')"
-                                        :textarea-id="'description'"
-                                        :placeholder="'Type your description here'"
-                                        :fullWidth="true"
-                                    />
-                                    <div class="control">
-                                        <div class="wrap-input datepick">
-                                            <label for="offerName">Start Date</label>
-                                            <datepicker
-                                                id="datepicker"
-                                                v-model="newOffer.startDate"
-                                                language="en"
-                                                :placeholder="'Choose start time'"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="control">
-                                        <div class="wrap-input datepick">
-                                            <label for="offerName">Final Date</label>
-                                            <datepicker
-                                                id="datepicker"
-                                                v-model="newOffer.finalDate"
-                                                language="en"
-                                                :placeholder="'Choose final time'"
-                                            />
-                                        </div>
-                                    </div>
                                     <input-control
-                                        :labelValue="'Offer Price'"
-                                        :inputId="'offerPrice'"
-                                        :placeholder="'Enter the price of the offer'"
+                                        :labelValue="'Requirements and Skills'"
+                                        :inputId="'reqs'"
+                                        :placeholder="'Enter the Requirements and Skills'"
                                         :fullWidth="true"
-                                        :inputType="'number'"
                                     />
                                 </div>
                             </div>
@@ -154,6 +125,17 @@ export default {
                 document.querySelector('.addition').style.height = '0px';
             }
         }
+    },
+    mounted () {
+        this.$on('imitVModel', function(value, id) {
+            if (id === 'offerName') this.newOffer.name = value;
+            if (id === 'offerPrice') this.newOffer.price = value;
+            if (id === 'projectName') this.newOffer.projectName = value;
+            if (id === 'reqs') this.newOffer.skills = value;
+        })
+        this.$on('receiveDescriptionOffer', function(value) {
+            this.newOffer.description = value;
+        })
     }
 }
 </script>
