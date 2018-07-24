@@ -54,6 +54,54 @@
                                     :inputType="'number'"
                                 />
                             </div>
+                            <div class="additional" @click="toggleAdd">
+                                Additional
+                            </div>
+                            <div class="form addition" :class="{'add-opened': isOpened}">
+                                <div class="outer">
+                                    <input-control
+                                        :labelValue="'Offer Name'"
+                                        :inputId="'offerName'"
+                                        :placeholder="'Enter the name of the offer'"
+                                        :fullWidth="true"
+                                    />
+                                    <textarea-control
+                                        :label-value="$t('pages.newOffer.fields.description.label')"
+                                        :textarea-id="'description'"
+                                        :placeholder="'Type your description here'"
+                                        :fullWidth="true"
+                                    />
+                                    <div class="control">
+                                        <div class="wrap-input datepick">
+                                            <label for="offerName">Start Date</label>
+                                            <datepicker
+                                                id="datepicker"
+                                                v-model="newOffer.startDate"
+                                                language="en"
+                                                :placeholder="'Choose start time'"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="wrap-input datepick">
+                                            <label for="offerName">Final Date</label>
+                                            <datepicker
+                                                id="datepicker"
+                                                v-model="newOffer.finalDate"
+                                                language="en"
+                                                :placeholder="'Choose final time'"
+                                            />
+                                        </div>
+                                    </div>
+                                    <input-control
+                                        :labelValue="'Offer Price'"
+                                        :inputId="'offerPrice'"
+                                        :placeholder="'Enter the price of the offer'"
+                                        :fullWidth="true"
+                                        :inputType="'number'"
+                                    />
+                                </div>
+                            </div>
                             <button class="buttons btn btn-yellow" @click="createNewOffer(newOffer)">Create Offer</button>
                         </div>
                     </div>
@@ -90,13 +138,22 @@ export default {
                 finalDate: '',
                 skills: '',
                 price: null
-            }
+            },
+            isOpened: false
         }
     },
     methods: {
         ...mapActions([
             'createNewOffer'
-        ])
+        ]),
+        toggleAdd: function () {
+            this.isOpened = !this.isOpened;
+            if (this.isOpened) {
+                document.querySelector('.addition').style.height = document.querySelector('.addition .outer').scrollHeight+'px';
+            } else {
+                document.querySelector('.addition').style.height = '0px';
+            }
+        }
     }
 }
 </script>
@@ -106,7 +163,6 @@ export default {
     margin-bottom 24px
 
 .control
-
     .wrap-input
         width 100%
 
@@ -116,8 +172,25 @@ export default {
     &:last-child
         border none !important 
 
+.additional
+    text-align center
+    text-transform uppercase
+    font-size 14px
+    font-family MuseoSansCyrl500
+    padding 15px
+    background-color #f0f0f0
+    margin-top -20px
+    margin-bottom 4px
+    cursor pointer
 
+.addition
+    height 0px
+    overflow-y hidden
+    padding 0 16px
+    transition all 0.3s linear
 
+    &.add-opened
+        padding 16px
 </style>
 
 <style lang="stylus">
