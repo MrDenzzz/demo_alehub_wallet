@@ -6,14 +6,14 @@
         @opened="modalOpen"
         @closed="modalClosed">
 
-        <Head 
+        <Head
             :newWalletStep="newWalletStep"
             :dropDownOption="dropDownOption"
             :isCloseModal="isCloseModal"
             :isOpenOptions="isOpenOptions"
         />
 
-        <Step1 
+        <Step1
             :walletType="walletType"
             :checkNewWalletFields="checkNewWalletFields"
             :mnemonics="mnemonics"
@@ -21,142 +21,23 @@
             v-if="newWalletStep === 1"
         />
 
-        <div v-if="newWalletStep === 2 && recoveryStep === 1">
-            <div class="modal-warning">
-                <p class="agreed">
-                    {{ $t('modals.newWallet.recovery.phrase.text') }}
-                </p>
-
-                <label class="control control-checkbox">
-                    <span>{{ $t('modals.newWallet.recovery.phrase.checkbox') }}</span>
-                    <input type="checkbox"
-                           class="type_project_arr"
-                           v-model="isAgreedRecovery"/>
-                    <div class="control-indicator"></div>
-                </label>
-            </div>
-
-            <div class="wrap-spinner"
-                 v-if="dataProcessing">
-                <spinner/>
-            </div>
-
-            <div class="modal-btn text-center">
-                <button id="continue-to-recovery"
-                        class="btn btn-yellow btn-large btn-bottom btn-timer"
-                        :disabled="countTimer || !isAgreedRecovery || dataProcessing"
-                        :class="{ 'disabled': countTimer !== 0 || !isAgreedRecovery || dataProcessing}"
-                        @click="getRandomSeed()">
-                    {{ $t('modals.newWallet.recovery.phrase.btn') }}
-                    <span v-if="countTimer !== 0">
-                        ({{ countTimer }})
-                    </span>
-                </button>
-            </div>
-        </div>
-
-        <div v-if="newWalletStep === 2 && recoveryStep === 2">
-            <div class="modal-warning">
-                <p class="agreed">
-                    {{ $t('modals.newWallet.recovery.mnemonic.text') }}
-                </p>
-            </div>
-
-            <div class="phrase">
-                <span class="mnemonic-phrase"
-                      v-for="mnemonic in recoveryMnemonicPhrase">
-                    {{ mnemonic }}
-                </span>
-            </div>
-
-            <div class="modal-btn text-center">
-                <button id="copy-mnemonic"
-                        type="button"
-                        class="buttons button-copy btn-default"
-                        v-clipboard:copy="copyMnemonic()"
-                        @click="successCopyMnemonic">
-                    <img class="icon-copy"
-                         :src="getIcon('tmp_copy_icon')">
-                    {{ $t('modals.newWallet.recovery.mnemonic.btnCopy') }}
-                </button>
-                <button class="btn btn-yellow btn-large btn-bottom"
-                        @click="changeRecoveryStep('next')">
-                    {{ $t('modals.newWallet.recovery.mnemonic.btn') }}
-                </button>
-            </div>
-        </div>
-
-        <div class="body"
-             v-if="newWalletStep === 2 && recoveryStep === 3">
-            <div class="modal-warning agreed-border">
-                <p class="agreed">
-                    {{ $t('modals.newWallet.recovery.finish.each') }}
-                </p>
-            </div>
-
-            <div class="modal-control modal-control-noMargin">
-                <div class="modal-input input-phrase">
-                    <label class="title">
-                        {{ $t('modals.newWallet.recovery.finish.fields.phrase.title') }}
-                    </label>
-                    <div class="badge-control"
-                         v-if="mnemonicsRecovery.length !== 0">
-                        <span class="badge"
-                              v-for="mnemonic in mnemonicsRecovery">
-                            {{ mnemonic }}
-                        </span>
-                    </div>
-                    <input id="input-to-mnemonic-recovery"
-                           type="text"
-                           class="input"
-                           :placeholder="$t('modals.newWallet.recovery.finish.fields.phrase.placeholder')"
-                           v-on:keyup.188="addMnemonicRecovery"
-                           v-model="mnemonicFieldRecovery"
-                           @keyup.enter="addMnemonicRecovery"
-                           @keyup.delete="removeMnemonicRecovery"
-                           @keyup.space="addMnemonicRecovery"
-                           @blur="addMnemonicRecovery"/>
-                </div>
-            </div>
-
-            <div class="modal-warning">
-                <label class="control control-checkbox">
-                    <span>{{ $t('modals.newWallet.recovery.finish.fields.deviceOnly') }}</span>
-                    <input type="checkbox"
-                           class="type_project_arr"
-                           v-model="restorationAgreements.deviceOnly"/>
-                    <div class="control-indicator"></div>
-                </label>
-
-                <label class="control control-checkbox">
-                    <span>{{ $t('modals.newWallet.recovery.finish.fields.secure') }}</span>
-                    <input type="checkbox"
-                           class="type_project_arr"
-                           v-model="restorationAgreements.phraseSecure"/>
-                    <div class="control-indicator"></div>
-                </label>
-            </div>
-
-            <div class="wrap-spinner"
-                 v-if="dataProcessing">
-                <spinner/>
-            </div>
-
-            <div class="modal-btn text-center">
-                <button class="btn btn-default btn-large"
-                        :class="{ 'disabled': mnemonicsRecovery.length === 0 || dataProcessing}"
-                        @click="clearRecoveryPhrase"
-                        :disabled="mnemonicsRecovery.length === 0 || dataProcessing">
-                    {{ $t('modals.newWallet.recovery.finish.btn.clear') }}
-                </button>
-                <button id="create-new-wallet"
-                        class="btn btn-yellow btn-large"
-                        :class="{ 'disabled': isConfirmRecovery || dataProcessing}"
-                        :disabled="isConfirmRecovery || dataProcessing"
-                        @click="newCreateWallet">
-                    {{ $t('modals.newWallet.recovery.finish.btn.confirm') }}
-                </button>
-            </div>
+        <div v-if="newWalletStep === 2">
+            <RecoveryStep1
+                :dataProcessing="dataProcessing"
+                :countTimer="countTimer"
+                v-if="recoveryStep === 1"
+            />
+            <RecoveryStep2
+                :recoveryMnemonicPhrase="recoveryMnemonicPhrase"
+                v-if="recoveryStep === 2"
+            />
+            <RecoveryStep3
+                :dataProcessing="dataProcessing"
+                :mnemonicsRecovery="mnemonicsRecovery"
+                :restorationAgreements="restorationAgreements"
+                :isConfirmRecovery="isConfirmRecovery"
+                v-if="recoveryStep === 3"
+            />
         </div>
     </modal>
 </template>
@@ -165,6 +46,9 @@
     import Spinner from '../layouts/Spinner';
     import Head from './new-wallet/Head';
     import Step1 from './new-wallet/Step1';
+    import RecoveryStep1 from './new-wallet/RecoveryStep1'
+    import RecoveryStep2 from './new-wallet/RecoveryStep2'
+    import RecoveryStep3 from './new-wallet/RecoveryStep3'
 
     import {mapGetters} from 'vuex';
     import mnGen from 'mngen';
@@ -175,7 +59,10 @@
         components: {
             Spinner,
             Head,
-            Step1
+            Step1,
+            RecoveryStep1,
+            RecoveryStep2,
+            RecoveryStep3
         },
         data() {
             return {
@@ -268,9 +155,6 @@
             recoveryBlur: function () {
                 this.mnemonicFieldRecovery = '';
             },
-            clearRecoveryPhrase: function () {
-                this.mnemonicsRecovery = [];
-            },
             changeRecoveryStep: function (step) {
                 if (step === 'next') {
                     return this.recoveryStep = this.recoveryStep + 1;
@@ -279,24 +163,6 @@
                     this.newWalletStep = 1;
                 }
                 else this.recoveryStep = this.recoveryStep - 1;
-            },
-            removeMnemonicRecovery: function () {
-                if (this.mnemonicFieldRecovery !== '' || this.mnemonicsRecovery.length === '')
-                    return false;
-                this.mnemonicFieldRecovery = this.mnemonicsRecovery[this.mnemonicsRecovery.length - 1];
-                this.mnemonicsRecovery.pop();
-            },
-            addMnemonicRecovery: function () {
-                let newMnemonic = this.mnemonicFieldRecovery.replace(/,/g, ' ');
-                if (newMnemonic === '')
-                    return false;
-
-                newMnemonic = newMnemonic.split(' ');
-                for (let i = 0; i < newMnemonic.length; i++) {
-                    if (newMnemonic[i] !== '')
-                        this.mnemonicsRecovery.push(newMnemonic[i]);
-                }
-                this.mnemonicFieldRecovery = '';
             },
             countDown: function () {
                 if (this.countTimer !== 0) {
@@ -564,23 +430,6 @@
             //         this.closeModal();
             //     });
             // },
-
-            copyMnemonic: function () {
-                return this.recoveryMnemonicPhrase.join(' ');
-            },
-            successCopyMnemonic: function () {
-                this.$toasted.show(this.$t('modals.newWallet.recovery.mnemonic.toastedSuccessMnemonic'), {
-                    duration: 5000,
-                    type: 'success',
-                });
-            },
-            getIcon: function (name) {
-                if (this.selectedTheme === "dark")
-                    return require(`../../assets/img/${name}_dark.svg`);
-                else if (this.selectedTheme === "white")
-                    return require(`../../assets/img/${name}_dark.svg`);
-                else return require(`../../assets/img/${name}.svg`);
-            }
         },
         created() {
             setTimeout(() => {
@@ -604,8 +453,8 @@
             this.$on("changeType", function (index) {
                 this.changeType(index);
             });
-            this.$on("changeRecoveryStep", function () {
-                this.changeRecoveryStep();
+            this.$on("changeRecoveryStep", function (data) {
+                this.changeRecoveryStep(data);
             });
             this.$on("changeWalletName", (name) => {
                 this.walletName = name;
@@ -613,17 +462,41 @@
             this.$on("changeMnemonicField", (data) => {
                 this.mnemonicField = data;
             });
+            this.$on("changeMnemonicFieldRecovery", (data) => {
+                this.mnemonicFieldRecovery = data;
+            })
+            this.$on("changeAgreedRecovery", (data) => {
+                this.isAgreedRecovery = data;
+            });
             this.$on("changeStepCreate", function (data) {
                 this.changeStepCreate(data);
             });
             this.$on("pushMnemonic", function (mnemonic) {
-                this.mnemonics.push(mnemonic)
+                this.mnemonics.push(mnemonic);
+            });
+            this.$on("pushMnemonicRecovery", function (mnemonic) {
+                this.mnemonicsRecovery.push(mnemonic);
             });
             this.$on("popMnemonic", function () {
                 this.mnemonics.pop();
             });
+            this.$on("popMnemonicRecovery", function () {
+                this.mnemonicsRecovery.pop();
+            });
             this.$on("redeemCreateWallet", function () {
                 this.redeemCreateWallet();
+            });
+            this.$on("getRandomSeed", function() {
+                this.getRandomSeed();
+            });
+            this.$on("changeRestorationAgreements", function(data) {
+                this.restorationAgreements[data] = !this.restorationAgreements[data];
+            });
+            this.$on("clearRecoveryPhrase", function() {
+                this.mnemonicsRecovery = [];
+            });
+            this.$on("newCreateWallet", function() {
+                this.newCreateWallet();
             });
         },
     }
