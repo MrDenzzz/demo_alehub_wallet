@@ -1,5 +1,10 @@
 const messages = {
     eng: {
+        components: {
+            offersFilter: {
+                title: 'Filters'
+            }
+        },
         pages: {
             login: {
                 password: 'Password',
@@ -843,6 +848,11 @@ const messages = {
         ]
     },
     rus: {
+        components: {
+            offersFilter: {
+                title: 'Фильтры'
+            }
+        },
         pages: {
             login: {
                 password: 'пароль',
@@ -1279,76 +1289,58 @@ const messages = {
                         placeholder:
                             'имя кошелька'
                     }
-                }
-                ,
+                },
                 buttons: {
                     cancel: 'Отмена',
                     delete:
                         'Удалить'
                 }
-            }
-            ,
+            },
             changeTwoAuth: {
                 title: {
                     enable: 'Включить двухфакторную аутентификацию',
-                    disable:
-                        'Выключить двухфакторную аутентификацию'
-                }
-                ,
+                    disable: 'Выключить двухфакторную аутентификацию'
+                },
                 warning: 'Сохраните этот секретный код в безопасном месте',
                 buttons:
                     {
                         enable: 'Включить',
-                        disable:
-                            'Выключить',
-                        copy:
-                            'Скопировать секретный ключ'
+                        disable: 'Выключить',
+                        copy: 'Скопировать секретный ключ'
                     }
                 ,
                 fields: {
                     secret: {
                         label: 'Секретный ключ',
-                        placeholder:
-                            'Введите секретный ключ'
-                    }
-                    ,
+                        placeholder: 'Введите секретный ключ'
+                    },
                     _2fa: {
                         label: '2fa ключ',
-                        placeholder:
-                            'Введите 2fa ключ'
+                        placeholder: 'Введите 2fa ключ'
                     }
                 }
-            }
-            ,
+            },
             changePassword: {
                 title: 'Изменить пароль',
                 fields:
                     {
                         _2fa: {
                             label: '2fa ключ',
-                            placeholder:
-                                'Введите 2fa ключ'
-                        }
-                        ,
+                            placeholder: 'Введите 2fa ключ'
+                        },
                         oldPass: {
                             label: 'Старый пароль',
-                            placeholder:
-                                'Старый пароль'
-                        }
-                        ,
+                            placeholder: 'Старый пароль'
+                        },
                         newPass: {
                             label: 'Новый пароль',
-                            placeholder:
-                                'Новый пароль'
-                        }
-                        ,
+                            placeholder: 'Новый пароль'
+                        },
                         confirmPass: {
                             label: 'Повторите пароль',
-                            placeholder:
-                                'Подтвердите новый пароль'
+                            placeholder: 'Подтвердите новый пароль'
                         }
-                    }
-                ,
+                    },
                 buttons: {
                     change: 'Изменить'
                 }
@@ -1360,74 +1352,48 @@ const messages = {
                     {
                         _2fa: {
                             label: '2fa ключ',
-                            placeholder:
-                                'Введите 2fa ключ'
-                        }
-                        ,
+                            placeholder: 'Введите 2fa ключ'
+                        },
                         newEmail: {
                             label: 'Email',
-                            placeholder:
-                                'Введите новый email'
-                        }
-                        ,
-                    }
-                ,
+                            placeholder: 'Введите новый email'
+                        },
+                    },
                 buttons: {
                     change: 'Изменить'
                 }
-            }
-            ,
+            },
             share: {
                 title: 'Поделиться',
-                label:
-                    'Добавить комментарий',
-                placeholder:
-                    'Напишите свой комментарий здесь'
-            }
-            ,
+                label: 'Добавить комментарий',
+                placeholder: 'Напишите свой комментарий здесь'
+            },
             pdf: {
                 title: 'Экспорт в PDF',
-                firstDesc:
-                    'Выбирите как Вы хотите вывести транзакции',
-                firstRadio:
-                    {
+                firstDesc: 'Выбирите как Вы хотите вывести транзакции',
+                firstRadio: {
                         first: 'Текущие транзакции кошелька',
-                        second:
-                            'Все транзакции',
-                        third:
-                            'Персональная настройка',
-                    }
-                ,
+                        second: 'Все транзакции',
+                        third: 'Персональная настройка',
+                    },
                 secondDesc: 'Выбирите транзакции каких кошельков Вы хотите вывести',
-                selectAll:
-                    'Выбрать все',
-                tags:
-                    'Теги',
-                thirdDesc:
-                    'Введите теги чтобы выбрать определенные транзакции (необязательно)',
-                TransactionsType:
-                    'Вид транзакции',
-                secondRadio:
-                    {
+                selectAll: 'Выбрать все',
+                tags: 'Теги',
+                thirdDesc: 'Введите теги чтобы выбрать определенные транзакции (необязательно)',
+                TransactionsType: 'Вид транзакции',
+                secondRadio: {
                         first: 'Полученные',
-                        second:
-                            'Отправленные',
-                        third:
-                            'Все',
-                    }
-                ,
+                        second: 'Отправленные',
+                        third: 'Все',
+                    },
                 range: 'Размер суммы транзакции',
-                from:
-                    'от',
-                to:
-                    'до',
+                from: 'от',
+                to: 'до',
                 button:
                     {
                         reset: 'Сбросить фильтры',
-                        export1:
-                            "Экспортировать",
-                        export2:
-                            "транзакции"
+                        export1: "Экспортировать",
+                        export2: "транзакции"
                     }
                 ,
                 lang: 'ru'

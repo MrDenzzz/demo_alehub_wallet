@@ -1,7 +1,7 @@
 <template>
     <div class="offers-filter">
         <h3 class="offers-filter-title">
-            Filters
+            {{ $t('components.offersFilter.title') }}
         </h3>
         <div class="offers-filter-container">
             <form @submit.prevent="filter">

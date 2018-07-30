@@ -7,10 +7,10 @@
 
         <div class="offers-content">
             <div class="row">
-                <div class="col-3">
+                <div class="col-3 offers-filter-col">
                     <offers-filter-new/>
                 </div>
-                <div class="col-9">
+                <div class="offers-list-col">
                     <offers-list/>
                 </div>
             </div>
@@ -22,18 +22,8 @@
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
-    // import OffersFilter from './layouts/offers/OffersFilter';
-    // import OffersFilterFolded from './layouts/OffersFilterFolded';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
-    // import GroupFilterButtons from './layouts/GroupFilterButtons';
-    // import GroupStatusButtons from './layouts/GroupStatusButtons';
-
     import OffersFilterNew from './layouts/offers/OffersFilterNew';
-
-    // import OffersControlToggleFilter from './layouts/offers/OffersControlToggleFilter';
-
-
-    import Datepicker from 'vuejs-datepicker';
 
     import OffersControl from './layouts/offers/OffersControl';
 
@@ -317,6 +307,16 @@
     .circle-main
         z-index 2
         cursor pointer
+
+    .row
+        display flex
+
+    .offers-filter-col
+        width 350px
+        margin-right 1%
+
+    .offers-list-col
+        width calc(100% - 350px - 1%)
 
     .offers-content
         padding 88px 24px 0 24px
