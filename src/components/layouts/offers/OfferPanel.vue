@@ -12,12 +12,12 @@
             <div class="offer-panel-employer">
                 <div class="offer-panel-employer-name">
                 <span>
-                    {{ offer.employer }}
+                    {{ offerEmployerName }}
                 </span>
                 </div>
                 <div class="offer-panel-employer-rating">
                 <span>
-                    {{ offer.rating }}
+                    {{ offerEmployerRating }}
                 </span>
                 </div>
             </div>
@@ -44,10 +44,10 @@
             </div>
             <div class="offer-panel-contractors">
                 <div class="contractor"
-                     v-for="contractor in offer.contractors">
+                     v-for="contractor in offerContractors">
                     <span class="contractor-position"
-                        :class="calcContractorPositionClass(contractor.position)">
-                        {{ contractor.position }}
+                        :class="calcContractorPositionClass(offerContractorPosition(contractor))">
+                        {{ offerContractorPosition(contractor) }}
                     </span>
                     <span class="contractor-name">
                         {{ contractor.name }}
@@ -176,6 +176,37 @@
                     'conditions'
                 ]
             ),
+            /**
+             * get offer employer data
+             *
+             * @returns {Object}
+             */
+            offerEmployer: function () {
+                return this.employers.find(emp => {
+                    return emp.id === this.offer1.employerId;
+                });
+            },
+            /**
+             * get offer employer name
+             *
+             * @returns {String}
+             */
+            offerEmployerName: function () {
+                return this.offerEmployer.name;
+            },
+            /**
+             * get offer employer rating
+             *
+             * @returns {Number}
+             */
+            offerEmployerRating: function () {
+                return this.offerEmployer.rating;
+            },
+            /**
+             * get requirements offer data
+             *
+             * @returns {Array}
+             */
             offerRequirements: function () {
                 let reqs = [];
                 this.offer1.requirements.forEach(offReq => {
@@ -187,9 +218,35 @@
                         reqs.push(tmpReq);
                 });
                 return reqs;
+            },
+            /**
+             * get offer contractors data
+             *
+             * @returns {Array}
+             */
+            offerContractors: function () {
+                let contractors = [];
+                this.offer1.contractors.forEach(offConts => {
+                    let tmpConts = this.contractors.find(conts => {
+                        return offConts.contractorId === conts.id;
+                    });
+
+                    contractors.push(tmpConts);
+                });
+                return contractors;
             }
         },
         methods: {
+            /**
+             * get offer contractor position title
+             *
+             * @returns {String}
+             */
+            offerContractorPosition: function (contractor) {
+                return this.positions.find(position => {
+                    return position.id === contractor.positionId;
+                }).title;
+            },
             /**
              * calculates the width and indentation of the block based on the contractor's data
              *
@@ -401,6 +458,7 @@
                         font-weight bold
                         padding 2px 4px
                         border-radius 2px
+                        text-transform uppercase
 
                         &.contractor-position-ch
                             background-color #ffd24f
