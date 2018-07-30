@@ -1,5 +1,5 @@
 const messages = {
-    eng: {
+    en: {
         components: {
             offersFilter: {
                 title: 'Filters'
@@ -847,7 +847,7 @@ const messages = {
             {name: 'Zimbabwe', code: 'ZW'}
         ]
     },
-    rus: {
+    ru: {
         components: {
             offersFilter: {
                 title: 'Фильтры'

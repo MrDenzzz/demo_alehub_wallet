@@ -4,18 +4,19 @@
             {{ title }}
         </label>
         <div class="form-checkbox">
-            <label class="control control-checkbox"
-                   v-for="certificate in certificates">
-                <input type="checkbox"
-                       name="items"
-                       :value="certificate.id"
-                       v-model="items"
-                       @change="emitChangeCertification(items)">
-                <div class="control-indicator"></div>
-                <span>
-                    {{ certificate.name }}
-                </span>
-            </label>
+            certificates
+            <!--<label class="control control-checkbox"-->
+                   <!--v-for="certificate in certificates">-->
+                <!--<input type="checkbox"-->
+                       <!--name="items"-->
+                       <!--:value="certificate.id"-->
+                       <!--v-model="items"-->
+                       <!--@change="emitChangeCertification(items)">-->
+                <!--<div class="control-indicator"></div>-->
+                <!--<span>-->
+                    <!--{{ certificate.name }}-->
+                <!--</span>-->
+            <!--</label>-->
         </div>
     </div>
 </template>
@@ -60,7 +61,7 @@
         computed: {
             ...mapGetters(
                 [
-                    'certificates'
+                    // 'certificates'
                 ]
             )
         },

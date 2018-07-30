@@ -131,12 +131,12 @@ Object.defineProperty(Array.prototype, 'equals', {enumerable: false});
 
 let systemLang = '';
 if (localStorage.getItem('systemLang') === null) {
-    localStorage.setItem('systemLang', 'eng');
-    systemLang = 'eng';
+    localStorage.setItem('systemLang', 'en');
+    systemLang = 'en';
 } else {
     systemLang = localStorage.getItem('systemLang');
 }
-if (systemLang !== ('rus' || 'eng')) systemLang = 'eng';
+if (systemLang !== ('ru' || 'en')) systemLang = 'en';
 
 const i18n = new VueI18n({
     locale: systemLang,

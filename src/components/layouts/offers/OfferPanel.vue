@@ -3,10 +3,10 @@
         <div class="offer-panel-wrap">
             <div class="offer-panel-header">
                 <h3 class="offer-panel-header-title">
-                    {{ offer.name }}
+                    {{ offer1.name }}
                 </h3>
                 <span class="offer-panel-header-price">
-                {{ offer.price }}
+                {{ formatPrice(offer1.price) }}
             </span>
             </div>
             <div class="offer-panel-employer">
@@ -74,9 +74,15 @@
 
     export default {
         name: 'OfferPanel',
-        props: {},
+        props: {
+            offer1: {
+                type: Object,
+                required: true
+            }
+        },
         data() {
             return {
+                currency: 'ALE',
                 offer: {
                     id: 1,
                     name: 'NodeJS telegram bot',
@@ -226,6 +232,15 @@
             formatDate: function (date) {
                 return moment(date).format('Do MMM YYYY');
             },
+            formatPrice: function (price) {
+                return price.toLocaleString(this.$i18n.locale) + ' ' + this.currency;
+            },
+            /**
+             *
+             *
+             * @param position
+             * @returns {string}
+             */
             calcTooltipClass: function (position) {
                 switch (position.toLowerCase()) {
                     case 'ch':
@@ -245,10 +260,13 @@
 </script>
 
 <style lang="stylus" scoped>
+    $margin-bottom = 16px
+
     .offer-panel
         width 100%
         padding 16px 0 0 0
         background-color #f0f0f0
+        margin-bottom $margin-bottom
 
         .offer-panel-wrap
             padding 0 16px

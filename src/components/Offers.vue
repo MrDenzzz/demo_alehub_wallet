@@ -117,16 +117,16 @@
         computed: {
             ...mapGetters(
                 [
-                    'filter',
-                    'types',
-                    'offers',
-                    'contractors',
-                    'selectedContractor',
-                    'openedContractorDialog',
-                    'openedOfferOptions',
-                    'contractorDialogCoordinates',
-                    'filteredOffers',
-                    'filtersCondition'
+                    // 'filter',
+                    // 'types',
+                    // 'offers',
+                    // 'contractors',
+                    // 'selectedContractor',
+                    // 'openedContractorDialog',
+                    // 'openedOfferOptions',
+                    // 'contractorDialogCoordinates',
+                    // 'filteredOffers',
+                    // 'filtersCondition'
                 ]
             ),
             selectedTheme: function () {
@@ -135,158 +135,157 @@
             getSelectedAreaHeight: function () {
                 return getComputedStyle(document.querySelector('.selected-area')).height;
             },
-            checkOpenedOfferOptions: function () {
-                if (this.filteredOffers.find(offer => offer.openedOptions))
-                    return this.filteredOffers.find(offer => offer.openedOptions).openedOptions;
-                return false;
-            }
+            // checkOpenedOfferOptions: function () {
+            //     if (this.filteredOffers.find(offer => offer.openedOptions))
+            //         return this.filteredOffers.find(offer => offer.openedOptions).openedOptions;
+            //     return false;
+            // }
         },
         methods: {
-            toggleGroupFilterButtons: function () {
-                this.enabledGroupFilterButtons = !this.enabledGroupFilterButtons;
-            },
-            /**
-             * return data of type contractor
-             *
-             * @param contractorTypeId
-             * @returns {*}
-             */
-            contractorType: function (contractorTypeId) {
-                return this.types.find(type => type.id === contractorTypeId);
-            },
-            /**
-             * return type of contractor
-             *
-             * @param contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeType: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).type;
-            },
-            getCoords: function (elem) {
-                if (!elem)
-                    return false;
-
-                return {
-                    top: elem.getBoundingClientRect().top + pageYOffset,
-                    left: elem.getBoundingClientRect().left + pageXOffset
-                };
-            },
-            /**
-             *
-             *
-             * @returns {string}
-             */
-            filterOffsetTop: function () {
-                let selected = this.types.find(type => {
-                    return type.id === this.filter.typeId;
-                });
-
-                return this.getCoords(document.getElementById(selected.type)).top -
-                    this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
-            },
-            toFormatDate: function (date) {
-                let dateFormat = new Date(date);
-                return dateFormat.toDateString();
-            },
-            getStatusIcon: function (status, iconType) {
-                switch (status) {
-                    case 'completed':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
-                    case 'ongoing':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
-                    case 'timelag':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
-                    default:
-                        return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
-                }
-            },
-            getIcon: function (name) {
-                return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
-            },
-            checkContractorType: function (type) {
-                switch (type) {
-                    case 'TS':
-                        return 'ts';
-                    case 'TS execution':
-                        return 'ts-exec';
-                    case 'Check':
-                        return 'ch';
-                    default:
-                        return 'qa'
-                }
-            },
-            availabilityParentClass: function (parentClass, element) {
-                if (element.parentElement) {
-                    if (!(element.parentElement.classList.contains(parentClass) || element.classList.contains(parentClass))) {
-                        return this.availabilityParentClass(parentClass, element.parentElement);
-                    } else {
-                        return true;
-                    }
-                }
-                return false;
-            }
+            // toggleGroupFilterButtons: function () {
+            //     this.enabledGroupFilterButtons = !this.enabledGroupFilterButtons;
+            // },
+            // /**
+            //  * return data of type contractor
+            //  *
+            //  * @param contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorType: function (contractorTypeId) {
+            //     return this.types.find(type => type.id === contractorTypeId);
+            // },
+            // /**
+            //  * return type of contractor
+            //  *
+            //  * @param contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorTypeType: function (contractorTypeId) {
+            //     return this.contractorType(contractorTypeId).type;
+            // },
+            // getCoords: function (elem) {
+            //     if (!elem)
+            //         return false;
+            //
+            //     return {
+            //         top: elem.getBoundingClientRect().top + pageYOffset,
+            //         left: elem.getBoundingClientRect().left + pageXOffset
+            //     };
+            // },
+            // /**
+            //  *
+            //  *
+            //  * @returns {string}
+            //  */
+            // filterOffsetTop: function () {
+            //     let selected = this.types.find(type => {
+            //         return type.id === this.filter.typeId;
+            //     });
+            //
+            //     return this.getCoords(document.getElementById(selected.type)).top -
+            //         this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
+            // },
+            // toFormatDate: function (date) {
+            //     let dateFormat = new Date(date);
+            //     return dateFormat.toDateString();
+            // },
+            // getStatusIcon: function (status, iconType) {
+            //     switch (status) {
+            //         case 'completed':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
+            //         case 'ongoing':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
+            //         case 'timelag':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
+            //         default:
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
+            //     }
+            // },
+            // getIcon: function (name) {
+            //     return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
+            // },
+            // checkContractorType: function (type) {
+            //     switch (type) {
+            //         case 'TS':
+            //             return 'ts';
+            //         case 'TS execution':
+            //             return 'ts-exec';
+            //         case 'Check':
+            //             return 'ch';
+            //         default:
+            //             return 'qa'
+            //     }
+            // },
+            // availabilityParentClass: function (parentClass, element) {
+            //     if (element.parentElement) {
+            //         if (!(element.parentElement.classList.contains(parentClass) || element.classList.contains(parentClass))) {
+            //             return this.availabilityParentClass(parentClass, element.parentElement);
+            //         } else {
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // }
         },
         created() {
-            this.filters = this.filtersCondition;
+            // this.filters = this.filtersCondition;
         },
         mounted() {
-            this.$on('onFold', (obj) => {
-                this.changedFilterElementOptions = obj;
+            // this.$on('onFold', (obj) => {
+            //     this.changedFilterElementOptions = obj;
+            // });
 
-            });
-
-            let arr = ['ts', 'ts-ex', 'ch', 'qa'];
+            // let arr = ['ts', 'ts-ex', 'ch', 'qa'];
 
             //получать сюда список фильтров и кнопок
 
-            window.addEventListener('click', (e) => {
-                let target = e.target,
-                    parentTarget = target.parentElement;
-
-                let isFilterButton = arr.find(item => {
-                        return item === target.id;
-                    }),
-                    isFilterButtonParent = arr.find(item => {
-                        return item === parentTarget.id;
-                    });
-
-                //if target is button filters or span in button filters
-                if (isFilterButton || isFilterButtonParent || this.availabilityParentClass('filter-dialog', target)) {
-                    // console.log('is target');
-                } else {
-                    let openedFilter = this.filtersCondition.find(filter => {
-                        return filter.opened;
-                    });
-
-                    if (openedFilter)
-                        openedFilter.opened = false;
-                }
-
-                //if target is contractor or contractor panel
-                if (this.availabilityParentClass('dialog', target) ||
-                    this.availabilityParentClass('contractors-content', target)) {
-                    // console.log('target isPanelContractor');
-                } else {
-                    if (this.openedContractorDialog) {
-                        this.$store.dispatch('hideOfferContractorDialog'
-                        ).then(resp => {
-                            console.log('Success hide offer contractor dialog');
-                        }).catch(err => {
-                            console.log('Error hide offer contractor dialog');
-                        });
-                    }
-                }
-
-                if (this.availabilityParentClass('offer-option', target)) {
-
-                } else {
-                    if (this.checkOpenedOfferOptions) {
-                        this.$store.dispatch('hideOfferOptions').then().catch();
-                        console.log('im here');
-                    }
-                }
-            });
+            // window.addEventListener('click', (e) => {
+            //     let target = e.target,
+            //         parentTarget = target.parentElement;
+            //
+            //     let isFilterButton = arr.find(item => {
+            //             return item === target.id;
+            //         }),
+            //         isFilterButtonParent = arr.find(item => {
+            //             return item === parentTarget.id;
+            //         });
+            //
+            //     //if target is button filters or span in button filters
+            //     if (isFilterButton || isFilterButtonParent || this.availabilityParentClass('filter-dialog', target)) {
+            //         // console.log('is target');
+            //     } else {
+            //         let openedFilter = this.filtersCondition.find(filter => {
+            //             return filter.opened;
+            //         });
+            //
+            //         if (openedFilter)
+            //             openedFilter.opened = false;
+            //     }
+            //
+            //     //if target is contractor or contractor panel
+            //     if (this.availabilityParentClass('dialog', target) ||
+            //         this.availabilityParentClass('contractors-content', target)) {
+            //         // console.log('target isPanelContractor');
+            //     } else {
+            //         if (this.openedContractorDialog) {
+            //             this.$store.dispatch('hideOfferContractorDialog'
+            //             ).then(resp => {
+            //                 console.log('Success hide offer contractor dialog');
+            //             }).catch(err => {
+            //                 console.log('Error hide offer contractor dialog');
+            //             });
+            //         }
+            //     }
+            //
+            //     if (this.availabilityParentClass('offer-option', target)) {
+            //
+            //     } else {
+            //         if (this.checkOpenedOfferOptions) {
+            //             this.$store.dispatch('hideOfferOptions').then().catch();
+            //             console.log('im here');
+            //         }
+            //     }
+            // });
 
         },
 
@@ -311,12 +310,14 @@
     .row
         display flex
 
+    $margin-right = 16px
+
     .offers-filter-col
         width 350px
-        margin-right 1%
+        margin-right $margin-right
 
     .offers-list-col
-        width calc(100% - 350px - 1%)
+        width calc(100% - 350px - $margin-right)
 
     .offers-content
         padding 88px 24px 0 24px

@@ -1,7 +1,8 @@
 <template>
     <div class="offers-list">
         <offer-panel v-for="offer in offers"
-                     :offer="offer"/>
+                     :key="offer.id"
+                     :offer1="offer"/>
     </div>
 </template>
 
@@ -24,7 +25,6 @@
                     top: false,
                     left: false
                 },
-
                 statusIcons: {
                     arrows: {
                         canceled: '../../static/img/arrows/arrow-canceled.svg',
