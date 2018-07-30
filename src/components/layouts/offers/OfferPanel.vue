@@ -23,7 +23,7 @@
             </div>
             <div class="offer-panel-description">
                 <p>
-                    {{ offer.description }}
+                    {{ offer1.description }}
                 </p>
             </div>
             <div class="offer-panel-requirements">
@@ -32,14 +32,14 @@
                         Requirements:
                     </div>
                     <div class="requirement"
-                         v-for="requirement in offer.requirements">
+                         v-for="requirement in offerRequirements">
                         <span>
-                            {{ requirement.name }}
+                            {{ requirement.title }}
                         </span>
                     </div>
                 </div>
                 <div class="end-date">
-                    ends in {{ offer.end }} days
+                    ends in {{ offer1.end }} days
                 </div>
             </div>
             <div class="offer-panel-contractors">
@@ -70,6 +70,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     import moment from 'moment';
 
     export default {
@@ -164,7 +166,29 @@
                 }
             }
         },
-        computed: {},
+        computed: {
+            ...mapGetters(
+                [
+                    'employers',
+                    'positions',
+                    'contractors',
+                    'requirements',
+                    'conditions'
+                ]
+            ),
+            offerRequirements: function () {
+                let reqs = [];
+                this.offer1.requirements.forEach(offReq => {
+                    let tmpReq = this.requirements.find(req => {
+                        return offReq.requirementId === req.id;
+                    });
+
+                    if (tmpReq)
+                        reqs.push(tmpReq);
+                });
+                return reqs;
+            }
+        },
         methods: {
             /**
              * calculates the width and indentation of the block based on the contractor's data
