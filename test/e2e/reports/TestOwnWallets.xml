@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="1"
             failures="0"
-            tests="5">
+            tests="2">
 
-  <testsuite name="test"
-    errors="1" failures="0" hostname="" id="" package="test" skipped="4"
-    tests="5" time="0.03000" timestamp="Wed, 25 Jul 2018 13:04:27 GMT">
+  <testsuite name="TestOwnWallets"
+    errors="1" failures="0" hostname="" id="" package="TestOwnWallets" skipped="1"
+    tests="2" time="0.01300" timestamp="Mon, 30 Jul 2018 13:35:14 GMT">
   
-    <testcase name="default autharisation test" classname="test" time="0.03000" assertions="0">
+    <testcase name="wallets" classname="TestOwnWallets" time="0.01300" assertions="0">
     </testcase>
   
 
   
     <system-err>
-        Error while running [Test / default autharisation test]:
+        Error while running [Test Own Wallets / wallets]:
 
-  ReferenceError: data is not defined
-    at Object.default autharisation test (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/test.js:15:16)
+  TypeError: Cannot read property &#39;CONTROL&#39; of undefined
+    at Object.wallets (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestOwnWallets.js:25:28)
     at Module.call (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/runner/module.js:62:34)
     at /home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/runner/testcase.js:70:29
     at _fulfilled (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:834:54)
@@ -32,22 +32,7 @@
   
     
     <testcase
-      name="wallets" classname="test">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="here we check wallet logic" classname="test">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="here we check sending coins from one my wallet to another my wallet" classname="test">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="here we sent from my wallet to wallet on another account" classname="test">
+      name="here we check wallet logic" classname="TestOwnWallets">
       <skipped />
     </testcase>
     

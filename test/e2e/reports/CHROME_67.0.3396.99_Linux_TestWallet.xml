@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="3"
+            tests="5">
+
+  <testsuite name="TestWallet"
+    errors="0" failures="3" hostname="" id="" package="TestWallet" skipped="1"
+    tests="5" time="24.76" timestamp="Mon, 30 Jul 2018 09:55:49 GMT">
+  
+    <testcase name="default autharisation test" classname="TestWallet" time="13.27" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="wallets" classname="TestWallet" time="3.099" assertions="7">
+
+    
+
+      <failure message="Testing if element &lt;.toasted&gt; contains text: &#34;Autharizathion access!&#34;.">    at Object.wallets (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestWallet.js:57:17)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="here we check wallet logic" classname="TestWallet" time="2.163" assertions="10">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.error&gt; contains text: &#34;send greater than 0&#34;.">    at Object.here we check wallet logic (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestWallet.js:95:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+
+      <failure message="Testing if element &lt;.error&gt; contains text: &#34;You cannot send coins to yourself&#34;.">    at Object.here we check wallet logic (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestWallet.js:101:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="here we check sending coins from one my wallet to another my wallet" classname="TestWallet" time="6.228" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Timed out while waiting for element &lt;button#send-coins&gt; to be present for 5000 milliseconds.">    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestWallet.js:123:14)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+  
+    
+    <testcase
+      name="here we sent from my wallet to wallet on another account" classname="TestWallet">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>
