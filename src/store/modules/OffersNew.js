@@ -1,7 +1,194 @@
 import axios from 'axios';
 
 const state = {
-
+    positions: [
+        {
+            id: 1,
+            title: 'ch'
+        },
+        {
+            id: 2,
+            title: 'ts'
+        },
+        {
+            id: 3,
+            title: 'ex'
+        },
+        {
+            id: 4,
+            title: 'qa'
+        }
+    ],
+    contractors: [
+        {
+            id: 1,
+            positionId: 1,
+            name: 'Vasiliy Ivanov'
+        },
+        {
+            id: 2,
+            positionId: 2,
+            name: 'Ivan Kotov'
+        },
+        {
+            id: 3,
+            positionId: 3,
+            name: 'Andrey Sagal'
+        },
+        {
+            id: 4,
+            positionId: 4,
+            name: 'Nikita Govorunov'
+        },
+        {
+            id: 5,
+            positionId: 1,
+            name: 'Denis Sergeev'
+        },
+        {
+            id: 6,
+            positionId: 2,
+            name: 'Vsevolod Kuznetsov'
+        },
+        {
+            id: 7,
+            positionId: 3,
+            name: 'Danila Bagrov'
+        },
+        {
+            id: 8,
+            positionId: 4,
+            name: 'Egor Gloktev'
+        }
+    ],
+    requirements: [
+        {
+            id: 1,
+            title: 'Java Script'
+        },
+        {
+            id: 2,
+            title: 'Java'
+        },
+        {
+            id: 3,
+            title: 'C++'
+        },
+        {
+            id: 4,
+            title: 'NodeJS'
+        },
+        {
+            id: 5,
+            title: 'VueJS'
+        },
+        {
+            id: 6,
+            title: 'React'
+        },
+        {
+            id: 7,
+            title: 'Network'
+        },
+        {
+            id: 8,
+            title: 'Blockchain'
+        }
+    ],
+    status: [
+        {
+            id: 1,
+            title: 'progress'
+        },
+        {
+            id: 2,
+            title: 'ready'
+        },
+        {
+            id: 3,
+            title: 'pause'
+        },
+        {
+            id: 4,
+            title: 'stop'
+        }
+    ],
+    offers: {
+        id: 1,
+        statusId: 1,
+        name: 'NodeJS telegram bot',
+        description: 'It is required to develop a telegram for a crypto-currency start-up. It must be done ' +
+        'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
+        'pleasant memories.',
+        employer: 'Effective Energy LTD',
+        rating: 9.2,
+        price: 3200,
+        requirements: [
+            {
+                id: 1,
+                requirementId: 1,
+            },
+            {
+                id: 2,
+                requirementId: 2,
+            },
+            {
+                id: 3,
+                requirementId: 3,
+            },
+            {
+                id: 4,
+                requirementId: 4,
+            },
+            {
+                id: 5,
+                requirementId: 5,
+            }
+        ],
+        end: 18,
+        contractors: [
+            {
+                id: 1,
+                contractorId: 1,
+                date: [
+                    {
+                        from: 1524571843000,
+                        to: 1524744643000
+                    }
+                ]
+            },
+            {
+                id: 2,
+                contractorId: 2,
+                date: [
+                    {
+                        from: 1524644643000,
+                        to: 1525119843000
+                    }
+                ]
+            },
+            {
+                id: 3,
+                contractorId: 3,
+                date: [
+                    {
+                        from: 1525003843000,
+                        to: 1525954243000
+                    }
+                ]
+            },
+            {
+                id: 4,
+                contractorId: 4,
+                date: [
+                    {
+                        from: 1525522243000,
+                        to: 1526213443000
+                    }
+                ]
+            }
+        ]
+    }
 };
 
 const actions = {
@@ -13,7 +200,7 @@ const mutations ={
 };
 
 const getters = {
-
+    offers: state => state.offers
 };
 
 export default {
