@@ -1,102 +1,18 @@
 <template>
-    <div class="contract-list">
+    <div class="offers">
         <navbar title="Contract List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
 
-        <state-bar/>
-
-        <div class="row-page">
-            <div class="sidebar">
-                <div class="vertical-progress">
-                    <div class="circle circle-top circle-yellow">
-                        <div class="triangle-icon"></div>
-                    </div>
-
-                    <div class="whole-line">
-                        <div class="selected-area">
-                            <div class="marker-calendar marker-calendar-top"
-                                 @click="openedFromDatepicker = !openedFromDatepicker">
-                                <div class="block">
-                                    <img src="../../static/img/calendar-ic_black.svg"
-                                         alt="date from" width="16px" height="16px">
-                                    <div class="triangle"></div>
-                                </div>
-                            </div>
-
-                            <datepicker id="dateOffersFrom"
-                                        class="dateOffersFrom"
-                                        v-if="openedFromDatepicker"
-                                        v-model="offersDateFrom"
-                                        :language="$t('modals.pdf.lang')"
-                                        :inline="true"/>
-
-                            <div class="marker-calendar marker-calendar-bottom"
-                                 @click="openedToDatepicker = !openedToDatepicker">
-                                <div class="block">
-                                    <img src="../../static/img/calendar-ic_black.svg"
-                                         alt="date to" width="16px" height="16px">
-                                    <div class="triangle"></div>
-                                </div>
-                            </div>
-
-                            <datepicker id="dateOffersTo"
-                                        class="dateOffersTo"
-                                        :style="{ 'top': getSelectedAreaHeight }"
-                                        v-if="openedToDatepicker"
-                                        v-model="offersDateTo"
-                                        :language="$t('modals.pdf.lang')"
-                                        :inline="true"/>
-                        </div>
-                        <div class="dividers-container">
-                            <div class="divider horizontal"
-                                 v-for="n in 8" :key="n">
-                            </div>
-                        </div>
-                        <div class="circle circle-big circle-yellow">
-                            <img src="../../static/img/ale-logo.svg"
-                                 alt="ale logo" width="21px" height="25px">
-                            <div class="triangle">
-
-                                <group-filter-buttons :filterElementOptions="changedFilterElementOptions"/>
-
-                                <!--make single component, not list offers-filter-->
-                                <offers-filter v-for="filter in filters"
-                                               v-if="filter.opened"
-                                               :key="filter.id"
-                                               :id="filter.id"
-                                               :type-id="filter.typeId"
-                                               :offset-top="filterOffsetTop(filter.id)"/>
-
-                                <offers-filter-folded v-for="filter in filters"
-                                                      v-if="filter.folded"
-                                                      :key="filter.id"
-                                                      :id="filter.id"
-                                                      :title="filter.title"
-                                                      :queue="filter.queue"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="circle circle-bottom circle-green">
-                        <img src="../../static/img/icons-for-circle/infinity.svg"
-                             alt="infinity" width="12px" height="6px">
-                        <div class="triangle">
-                            <group-status-buttons/>
-                        </div>
-                    </div>
+        <div class="offers-content">
+            <div class="row">
+                <div class="col-3 offers-filter-col">
+                    <offers-filter-new/>
                 </div>
-            </div>
-            <div class="search-result">
-                <offers-list v-if="filteredOffers.length !== 0"/>
-                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;" v-else>
-                    <p style="font-family: MuseoSansCyrl500;">
-                        No offers found
-                    </p>
+                <div class="offers-list-col">
+                    <offers-list/>
                 </div>
-                <offers-contractor-dialog v-if="openedContractorDialog"
-                                          :coordinates="contractorDialogCoordinates"/>
             </div>
         </div>
     </div>
@@ -106,13 +22,10 @@
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
-    import OffersFilter from './layouts/OffersFilter';
-    import OffersFilterFolded from './layouts/OffersFilterFolded';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
-    import GroupFilterButtons from './layouts/GroupFilterButtons';
-    import GroupStatusButtons from './layouts/GroupStatusButtons';
+    import OffersFilterNew from './layouts/offers/OffersFilterNew';
 
-    import Datepicker from 'vuejs-datepicker';
+    import OffersControl from './layouts/offers/OffersControl';
 
     import {mapGetters} from 'vuex';
 
@@ -122,12 +35,15 @@
             Navbar,
             StateBar,
             OffersList,
-            OffersFilter,
-            OffersFilterFolded,
+            OffersControl,
+            OffersFilterNew,
+            // OffersFilter,
+            // OffersFilterFolded,
             OffersContractorDialog,
-            GroupFilterButtons,
-            GroupStatusButtons,
-            Datepicker
+            // GroupFilterButtons,
+            // GroupStatusButtons,
+            // Datepicker,
+
         },
         watch: {
             offersDateFrom: function (val) {
@@ -146,9 +62,13 @@
         },
         data() {
             return {
+                hiddenOfferOptions: false,
+
+                enabledGroupFilterButtons: false,
 
                 changedFilterElementOptions: {},
 
+                typeId: null,
 
                 filters: [],
 
@@ -156,8 +76,6 @@
                 openedToDatepicker: false,
                 offersDateFrom: 0,
                 offersDateTo: 0,
-
-                // openedContractorDialog: false,
 
                 clickCoordinates: {
                     top: false,
@@ -199,14 +117,16 @@
         computed: {
             ...mapGetters(
                 [
-                    'types',
-                    'offers',
-                    'contractors',
-                    'selectedContractor',
-                    'openedContractorDialog',
-                    'contractorDialogCoordinates',
-                    'filteredOffers',
-                    'filtersCondition'
+                    // 'filter',
+                    // 'types',
+                    // 'offers',
+                    // 'contractors',
+                    // 'selectedContractor',
+                    // 'openedContractorDialog',
+                    // 'openedOfferOptions',
+                    // 'contractorDialogCoordinates',
+                    // 'filteredOffers',
+                    // 'filtersCondition'
                 ]
             ),
             selectedTheme: function () {
@@ -214,143 +134,194 @@
             },
             getSelectedAreaHeight: function () {
                 return getComputedStyle(document.querySelector('.selected-area')).height;
-            }
+            },
+            // checkOpenedOfferOptions: function () {
+            //     if (this.filteredOffers.find(offer => offer.openedOptions))
+            //         return this.filteredOffers.find(offer => offer.openedOptions).openedOptions;
+            //     return false;
+            // }
         },
         methods: {
-            /**
-             * return data of type contractor
-             *
-             * @param contractorTypeId
-             * @returns {*}
-             */
-            contractorType: function (contractorTypeId) {
-                return this.types.find(type => type.id === contractorTypeId);
-            },
-            /**
-             * return type of contractor
-             *
-             * @param contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeType: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).type;
-            },
-            getCoords: function (elem) {
-                if (!elem)
-                    return false;
-
-                return {
-                    top: elem.getBoundingClientRect().top + pageYOffset,
-                    left: elem.getBoundingClientRect().left + pageXOffset
-                };
-            },
-            filterOffsetTop: function (id) {
-                if (!id) {
-                    console.error('Wrong argument value');
-                    return '0px';
-                }
-
-                return this.getCoords(document.getElementById(this.contractorTypeType(id))).top -
-                    this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
-            },
-            toFormatDate: function (date) {
-                let dateFormat = new Date(date);
-                return dateFormat.toDateString();
-            },
-            getStatusIcon: function (status, iconType) {
-                switch (status) {
-                    case 'completed':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
-                    case 'ongoing':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
-                    case 'timelag':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
-                    default:
-                        return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
-                }
-            },
-            getIcon: function (name) {
-                return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
-            },
-            checkContractorType: function (type) {
-                switch (type) {
-                    case 'TS':
-                        return 'ts';
-                    case 'TS execution':
-                        return 'ts-exec';
-                    case 'Check':
-                        return 'ch';
-                    default:
-                        return 'qa'
-                }
-            },
-            availabilityParentClass: function (parentClass, element) {
-                if (element.parentElement) {
-                    if (!(element.parentElement.classList.contains(parentClass) || element.classList.contains(parentClass))) {
-                        return this.availabilityParentClass(parentClass, element.parentElement);
-                    } else {
-                        return true;
-                    }
-                }
-                return false;
-            }
+            // toggleGroupFilterButtons: function () {
+            //     this.enabledGroupFilterButtons = !this.enabledGroupFilterButtons;
+            // },
+            // /**
+            //  * return data of type contractor
+            //  *
+            //  * @param contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorType: function (contractorTypeId) {
+            //     return this.types.find(type => type.id === contractorTypeId);
+            // },
+            // /**
+            //  * return type of contractor
+            //  *
+            //  * @param contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorTypeType: function (contractorTypeId) {
+            //     return this.contractorType(contractorTypeId).type;
+            // },
+            // getCoords: function (elem) {
+            //     if (!elem)
+            //         return false;
+            //
+            //     return {
+            //         top: elem.getBoundingClientRect().top + pageYOffset,
+            //         left: elem.getBoundingClientRect().left + pageXOffset
+            //     };
+            // },
+            // /**
+            //  *
+            //  *
+            //  * @returns {string}
+            //  */
+            // filterOffsetTop: function () {
+            //     let selected = this.types.find(type => {
+            //         return type.id === this.filter.typeId;
+            //     });
+            //
+            //     return this.getCoords(document.getElementById(selected.type)).top -
+            //         this.getCoords(document.getElementById('group-filter-buttons')).top + 'px';
+            // },
+            // toFormatDate: function (date) {
+            //     let dateFormat = new Date(date);
+            //     return dateFormat.toDateString();
+            // },
+            // getStatusIcon: function (status, iconType) {
+            //     switch (status) {
+            //         case 'completed':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
+            //         case 'ongoing':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
+            //         case 'timelag':
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
+            //         default:
+            //             return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
+            //     }
+            // },
+            // getIcon: function (name) {
+            //     return this.selectedTheme === 'dark' ? require(`../../static/img/${name}_dark.svg`) : require(`../../static/img/${name}.svg`);
+            // },
+            // checkContractorType: function (type) {
+            //     switch (type) {
+            //         case 'TS':
+            //             return 'ts';
+            //         case 'TS execution':
+            //             return 'ts-exec';
+            //         case 'Check':
+            //             return 'ch';
+            //         default:
+            //             return 'qa'
+            //     }
+            // },
+            // availabilityParentClass: function (parentClass, element) {
+            //     if (element.parentElement) {
+            //         if (!(element.parentElement.classList.contains(parentClass) || element.classList.contains(parentClass))) {
+            //             return this.availabilityParentClass(parentClass, element.parentElement);
+            //         } else {
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // }
         },
         created() {
-            this.filters = this.filtersCondition;
+            // this.filters = this.filtersCondition;
         },
         mounted() {
-            this.$on('onFold', (obj) => {
-                this.changedFilterElementOptions = obj;
+            // this.$on('onFold', (obj) => {
+            //     this.changedFilterElementOptions = obj;
+            // });
 
-            });
-
-            let arr = ['ts', 'ts-ex', 'ch', 'qa'];
+            // let arr = ['ts', 'ts-ex', 'ch', 'qa'];
 
             //получать сюда список фильтров и кнопок
 
-            window.addEventListener('click', (e) => {
-                let target = e.target,
-                    parentTarget = target.parentElement;
+            // window.addEventListener('click', (e) => {
+            //     let target = e.target,
+            //         parentTarget = target.parentElement;
+            //
+            //     let isFilterButton = arr.find(item => {
+            //             return item === target.id;
+            //         }),
+            //         isFilterButtonParent = arr.find(item => {
+            //             return item === parentTarget.id;
+            //         });
+            //
+            //     //if target is button filters or span in button filters
+            //     if (isFilterButton || isFilterButtonParent || this.availabilityParentClass('filter-dialog', target)) {
+            //         // console.log('is target');
+            //     } else {
+            //         let openedFilter = this.filtersCondition.find(filter => {
+            //             return filter.opened;
+            //         });
+            //
+            //         if (openedFilter)
+            //             openedFilter.opened = false;
+            //     }
+            //
+            //     //if target is contractor or contractor panel
+            //     if (this.availabilityParentClass('dialog', target) ||
+            //         this.availabilityParentClass('contractors-content', target)) {
+            //         // console.log('target isPanelContractor');
+            //     } else {
+            //         if (this.openedContractorDialog) {
+            //             this.$store.dispatch('hideOfferContractorDialog'
+            //             ).then(resp => {
+            //                 console.log('Success hide offer contractor dialog');
+            //             }).catch(err => {
+            //                 console.log('Error hide offer contractor dialog');
+            //             });
+            //         }
+            //     }
+            //
+            //     if (this.availabilityParentClass('offer-option', target)) {
+            //
+            //     } else {
+            //         if (this.checkOpenedOfferOptions) {
+            //             this.$store.dispatch('hideOfferOptions').then().catch();
+            //             console.log('im here');
+            //         }
+            //     }
+            // });
 
-                let isFilterButton = arr.find(item => {
-                        return item === target.id;
-                    }),
-                    isFilterButtonParent = arr.find(item => {
-                        return item === parentTarget.id;
-                    });
+        },
 
-                //if target is button filters or span in button filters
-                if (isFilterButton || isFilterButtonParent || this.availabilityParentClass('filter-dialog', target)) {
-                    // console.log('is target');
-                } else {
-                    let openedFilter = this.filtersCondition.find(filter => {
-                        return filter.opened;
-                    });
-
-                    if (openedFilter)
-                        openedFilter.opened = false;
-                }
-
-                //if target is contractor or contractor panel
-                if (this.availabilityParentClass('dialog', target) ||
-                    this.availabilityParentClass('contractors-content', target)) {
-                    // console.log('target isPanelContractor');
-                } else {
-                    if (this.openedContractorDialog) {
-                        this.$store.dispatch('hideOfferContractorDialog'
-                        ).then(resp => {
-                            console.log('Success hide offer contractor dialog');
-                        }).catch(err => {
-                            console.log('Error hide offer contractor dialog');
-                        });
-                    }
-                }
-            });
-        }
     }
 </script>
 
 <style lang="stylus" scoped>
+    .fade-bottom-enter-active
+        transition all .2s ease-out
+
+    .fade-bottom-leave-active
+        transition all .2s ease-in
+
+    .fade-bottom-enter, .fade-bottom-leave-to
+        transform translateY(30px)
+        opacity 0
+
+    .circle-main
+        z-index 2
+        cursor pointer
+
+    .row
+        display flex
+
+    $margin-right = 16px
+
+    .offers-filter-col
+        width 350px
+        margin-right $margin-right
+
+    .offers-list-col
+        width calc(100% - 350px - $margin-right)
+
+    .offers-content
+        padding 88px 24px 0 24px
+
     .contract-list
         background-color #f0f4fa
 
@@ -358,7 +329,7 @@
             overflow-x hidden
 
         .row-page
-            padding-top 32px
+            padding-top 196px
             padding-right 68px
             padding-left 68px
             display flex
@@ -400,7 +371,8 @@
 
                         @media (max-width 768px)
                             top 0
-                            left -18px
+                            left
+                        -18px
 
                         .triangle-icon
                             border 6px solid transparent
@@ -419,7 +391,8 @@
 
                         @media (max-width 768px)
                             bottom 0
-                            right -18px
+                            right
+                        -18px
 
                         .triangle
                             border 6px solid transparent
@@ -456,7 +429,8 @@
                             flex-direction row
                             width 192px
                             top 8px
-                            left -96px
+                            left
+                        -96px
 
                         @media (max-width 620px)
                             flex-direction column
@@ -481,18 +455,20 @@
                             top -18px
 
                             @media (max-width 768px)
-                                left -16px
-                                bottom 0
-                                top -50px
+                                left
+                            -16px
+                            bottom 0
+                            top -50px
 
                         .marker-calendar-bottom
                             left -50px
                             bottom -18px
 
                             @media (max-width 768px)
-                                top -50px
-                                right -16px
-                                left unset
+                                top
+                            -50px
+                            right -16px
+                            left unset
 
                         .marker-calendar-bottom, .marker-calendar-top
                             .block
@@ -512,8 +488,9 @@
                             position absolute
 
                             @media (max-width 768px)
-                                top -6px
-                                left 190px
+                                top
+                            -6px
+                            left 190px
 
                             .triangle
                                 border 6px solid transparent
@@ -548,11 +525,12 @@
                             @media (max-width 768px)
                                 width 60%
                                 height 36px
-                                top -1px
-                                left 58px
+                                top
+                            -1px
+                            left 58px
 
             .search-result
-                padding-left 100px
+                padding-left 20px
                 width 100%
                 max-width 1332px
 
@@ -563,7 +541,7 @@
                 @media (max-width 620px)
                     padding-top 260px
 
-    .circle
+    /*.circle
         width 36px
         min-width 36px
         height 36px
@@ -628,7 +606,6 @@
             text-transform uppercase
             line-height 1
             letter-spacing 1px
-            color #fcfcfc
             text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
 
         .subtitle
@@ -636,7 +613,7 @@
             color #fcfcfc
             font-size 9px
             text-transform uppercase
-            text-shadow 0 0 2px rgba(0, 0, 0, 0.24)
+            text-shadow 0 0 2px rgba(0, 0, 0, 0.24)*/
 
     .marker-calendar
         cursor pointer

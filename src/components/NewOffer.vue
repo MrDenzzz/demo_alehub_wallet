@@ -30,8 +30,7 @@
                                 <price-control
                                         :label-title="$t('pages.newOffer.fields.price.label')"
                                         :input-id="'price'"
-                                        :placeholder="$t('pages.newOffer.fields.price.placeholder')"
-                                />
+                                        :placeholder="$t('pages.newOffer.fields.price.placeholder')"/>
 
 
                                 <textarea-control

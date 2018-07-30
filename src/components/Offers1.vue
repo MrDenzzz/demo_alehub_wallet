@@ -320,7 +320,7 @@ export default {
   mounted() {
     let currentPage = this.$router;
     // window.addEventListener("scroll", function(e) {
-    //   if (currentPage.currentRoute.name !== "Offers") return false;
+    //   if (currentPage.currentRoute.name !== "offers") return false;
     //   let filters = document.getElementById("filters_block");
     //   if (window.scrollY >= 40) {
     //     // пофиксить

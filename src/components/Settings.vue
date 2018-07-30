@@ -44,22 +44,33 @@
 
                                 <div class="control">
                                     <div class="wrap-input">
-                                        <label for="upload-avatar" style="display: flex; flex-direction: column; cursor: pointer;">
+                                        <label for="upload-avatar"
+                                               style="display: flex; flex-direction: column; cursor: pointer;">
                                             <p>Add photo</p>
                                             <div class="circle">
-                                                <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar" alt="" width="67" height="67">
+                                                <img alt=""
+                                                     width="67"
+                                                     height="67"
+                                                     :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
                                             </div>
                                         </label>
-                                        <input type="file" id="upload-avatar" name="upload-avatar" ref="uploadAvatar" @change="setUserAvatar" @click="onClickInputFile">
+                                        <input type="file"
+                                               id="upload-avatar"
+                                               name="upload-avatar"
+                                               ref="uploadAvatar"
+                                               @change="setUserAvatar"
+                                               @click="onClickInputFile">
                                     </div>
                                 </div>
 
                                 <div class="control border-none"
                                      @click.stop="changeLanguage">
                                     <div class="wrap-input">
-                                        <label>{{ $t('pages.settings.language') }}</label>
+                                        <label>
+                                            {{ $t('pages.settings.language') }}
+                                        </label>
                                         <select-control :current="selectedLang"
-                                                        :all-options="['English', 'Русский']"
+                                                        :all-options="languages"
                                                         :id="'language'"/>
                                     </div>
                                 </div>
@@ -67,39 +78,33 @@
 
                             <panel-heading :title="$t('pages.settings.theme')"
                                            :isTop="false"/>
-                            <!-- <div class="group-settings">
-                                <div class="form select-main" @click="selectTheme('main')">
-                                    <img src="../../static/img/logo_main.svg" alt="">
-                                </div>
-                                <div class="form select-dark" @click="selectTheme('dark')">
-                                    <img src="../../static/img/logo_dark.svg" alt="">
-                                </div>
-                                <div class="form select-white" @click="selectTheme('white')">
-                                    <img src="../../static/img/logo_white.svg" alt="">
-                                </div>  -->
-                                <div class="form">
-                                    <div class="theme-list">
-                                        <div class="theme-item active" v-for="theme in themes" :key="theme" @click="selectTheme(theme)" :class="'theme-' + theme">
-                                            <div class="theme-header">
-                                                <span class="theme-logo">ALEHUB</span>
+
+                            <div class="form">
+                                <div class="theme-list">
+                                    <div class="theme-item active"
+                                         v-for="theme in themes"
+                                         :key="theme"
+                                         @click="selectTheme(theme)"
+                                         :class="'theme-' + theme">
+                                        <div class="theme-header">
+                                            <span class="theme-logo">ALEHUB</span>
+                                        </div>
+                                        <div style="display: flex; height: 100%;">
+                                            <div class="theme-menu">
+                                                <div class="menu-item"></div>
                                             </div>
-                                            <div style="display: flex; height: 100%;">
-                                                <div class="theme-menu">
-                                                    <div class="menu-item"></div>
+                                            <div class="theme-main">
+                                                <div class="theme-btn">
+                                                    <div class="button button-first"></div>
+                                                    <div class="button button-second"></div>
                                                 </div>
-                                                <div class="theme-main">
-                                                    <div class="theme-btn">
-                                                        <div class="button button-first"></div>
-                                                        <div class="button button-second"></div>
-                                                    </div>
-                                                    <div class="theme-block"></div>
-                                                    <div class="theme-line recieved"></div>
-                                                </div>
+                                                <div class="theme-block"></div>
+                                                <div class="theme-line recieved"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <!-- </div> -->
+                            </div>
 
                             <panel-heading :title="$t('pages.settings.security')"/>
                             <div class="form">
@@ -172,6 +177,11 @@
         },
         data() {
             return {
+                languages: [
+                    'English',
+                    'Русский'
+                ],
+
                 isShow: false,
                 notifText: '',
                 switchValueAuth: true,
@@ -179,29 +189,31 @@
                 newName: '',
                 dataProcessing: false,
                 themes: [
-                       'main',
-                       'dark',
-                       'white'
+                    'main',
+                    'dark',
+                    'white'
                 ],
             }
         },
         watch: {},
         computed: {
-            ...mapGetters([
-                'authStatus',
-                'userStatus',
-                'userName',
-                'userEmail',
-                'userAvatar',
-                'userTwoAuth',
-                'userLastUpdatedPassword',
-                'twoAuthStatus'
-            ]),
+            ...mapGetters(
+                [
+                    'authStatus',
+                    'userStatus',
+                    'userName',
+                    'userEmail',
+                    'userAvatar',
+                    'userTwoAuth',
+                    'userLastUpdatedPassword',
+                    'twoAuthStatus'
+                ]
+            ),
             selectedLang: function () {
                 switch (localStorage.getItem('systemLang')) {
-                    case 'eng':
+                    case 'en':
                         return 'English';
-                    case 'rus':
+                    case 'ru':
                         return 'Русский';
                     default:
                         return 'English';
@@ -214,12 +226,12 @@
                     return 'The last password change was today';
                 else if (diff === 1)
                     return 'Last password change was yesterday';
-                else if (diff < 4 && localStorage.getItem('systemLang') === 'rus')
-                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.second');
-                else if (localStorage.getItem('systemLang') === 'rus')
-                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.third');
+                else if (diff < 4 && localStorage.getItem('systemLang') === 'ru')
+                    return this.$t('pages.settings.passwordLabel.first') + ' ' + diff + ' ' + this.$t('pages.settings.passwordLabel.second');
+                else if (localStorage.getItem('systemLang') === 'ru')
+                    return this.$t('pages.settings.passwordLabel.first') + ' ' + diff + ' ' + this.$t('pages.settings.passwordLabel.third');
                 else if (diff < 4)
-                    return this.$t('pages.settings.passwordLabel.first')+' '+ diff+' '+this.$t('pages.settings.passwordLabel.second');
+                    return this.$t('pages.settings.passwordLabel.first') + ' ' + diff + ' ' + this.$t('pages.settings.passwordLabel.second');
             }
         },
         methods: {
@@ -233,7 +245,7 @@
                 if (this.userTwoAuth)
                     this.openModal(name);
                 else
-                    this.$toasted.show(this.$t("modals.error.changePassword.first") +' '+type+' '+this.$t("modals.error.changePassword.second"), {
+                    this.$toasted.show(this.$t("modals.error.changePassword.first") + ' ' + type + ' ' + this.$t("modals.error.changePassword.second"), {
                         duration: 10000,
                         type: 'error',
                         action: {
@@ -266,9 +278,9 @@
             newSelect: function (value, id) {
                 if (id === 'language') {
                     if (value === 'English')
-                        localStorage.setItem('systemLang', 'eng');
+                        localStorage.setItem('systemLang', 'en');
                     if (value === 'Русский')
-                        localStorage.setItem('systemLang', 'rus');
+                        localStorage.setItem('systemLang', 'ru');
                     this.selectedLanguage = value;
                     this.$i18n.locale = localStorage.getItem('systemLang');
                     this.$parent.$emit('changeSystemLanguage');
@@ -295,15 +307,15 @@
                 this.setTheme(name);
                 switch (name) {
                     case 'main':
-                        body.classList.remove("dark", "white");
+                        body.classList.remove('dark', 'white');
                         break;
                     case 'dark':
-                        body.classList.remove("white");
-                        body.classList.add("dark");
+                        body.classList.remove('white');
+                        body.classList.add('dark');
                         break;
                     case 'white':
-                        body.classList.remove("dark");
-                        body.classList.add("white");
+                        body.classList.remove('dark');
+                        body.classList.add('white');
                         break;
                 }
             },
@@ -357,7 +369,7 @@
             .wrap-input
                 .full-line
                     width 100%
-                
+
                 button
                     margin-left 0
                     width 67px
@@ -374,14 +386,14 @@
 
                 p
                     margin-top 0
-                
+
                 #upload-avatar
                     opacity 0
                     position absolute
 
                 .error
                     color #b10303
-                    text-transform none 
+                    text-transform none
                     font-weight 500
 
     .form .deletelink
@@ -396,37 +408,37 @@
         padding-top 0px
 
     .theme-list
-        margin-left 16px 
-        margin-right 16px 
-        margin-top 22px 
-        margin-bottom 22px 
+        margin-left 16px
+        margin-right 16px
+        margin-top 22px
+        margin-bottom 22px
         display flex
 
-        @media(max-width 790px)
+        @media (max-width 790px)
             flex-wrap wrap
 
         .theme-item
             background-color #f7f7f7
-            width 200px 
-            height 120px 
-            margin-right 40px 
-            border 1px solid #d1d1d1 
-            display flex 
+            width 200px
+            height 120px
+            margin-right 40px
+            border 1px solid #d1d1d1
+            display flex
             flex-direction column
             opacity 1
             cursor pointer
 
-            @media(max-width 790px)
+            @media (max-width 790px)
                 margin-bottom 24px
-        
+
             &:last-child
                 margin-right 0
 
             &:nth-child(2)
-                @media(max-width 600px)
+                @media (max-width 600px)
                     margin-right 0
 
-                @media(max-width 550px)
+                @media (max-width 550px)
                     margin-right 40px
 
             &.theme-main
@@ -492,29 +504,29 @@
 
                     &.recieved
                         background-color #fff
-                        
+
             .theme-header
                 height 20px
-                width 100% 
-                background-color #0d1717 
-                display flex 
-                justify-content center 
+                width 100%
+                background-color #0d1717
+                display flex
+                justify-content center
                 align-items center
 
             .theme-logo
                 font-family Fairview
-                color #fcfcfc 
+                color #fcfcfc
                 font-size 14px
 
             .theme-menu
-                height 100% 
+                height 100%
                 width 50px
                 position relative
 
                 .menu-item
                     position absolute
                     background-color #f7f7f7
-                    height 15px 
+                    height 15px
                     width 48px
                     top 15px
 

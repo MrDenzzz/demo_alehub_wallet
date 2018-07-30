@@ -10,7 +10,7 @@
                 </label>
                 <input type="text" id="from"
                        v-model="from"
-                       @blur="emitChangeRatingFrom(from)">
+                       @input="emitChangeRatingFrom(from)">
             </div>
             <div class="double-input">
                 <label for="to">
@@ -18,7 +18,7 @@
                 </label>
                 <input type="text" id="to"
                        v-model="to"
-                       @blur="emitChangeRatingTo(to)">
+                       @input="emitChangeRatingTo(to)">
             </div>
         </div>
     </div>

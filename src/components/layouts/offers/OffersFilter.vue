@@ -1,15 +1,16 @@
 <template>
     <transition name="fade-bottom">
         <div class="filter-dialog"
+             id="filter-dialog"
              :style="{ 'top': offsetTop }">
 
             <button type="button" class="close"
                     @click="closeFilterDialog">
-                <img src="../../../static/img/close-dark-ic.svg"
+                <img src="../../../../static/img/close-dark-ic.svg"
                      alt="close">
             </button>
 
-            <form>
+            <form @submit.prevent="filterOffers">
                 <input-name :title="$t('offersFilter.name.title')"
                             :clear="clear"/>
 
@@ -42,9 +43,8 @@
                     {{ $t('offersFilter.buttons.clear') }}
                 </button>
 
-                <button type="button"
-                        class="buttons btn btn-yellow"
-                        @click="filterOffers">
+                <button type="submit"
+                        class="buttons btn btn-yellow">
                     {{ $t('offersFilter.buttons.search') }}
                 </button>
             </form>
@@ -53,12 +53,12 @@
 </template>
 
 <script>
-    import InputName from './forms/InputFilter';
-    import InputDoubleRating from './forms/InputFilterDoubleRating';
-    import InputDoublePrice from './forms/InputFilterDoublePrice';
-    import InputPromptCheckboxList from './forms/InputFilterPromptCheckboxList';
-    import InputCertificationList from './forms/InputFilterCertificationList';
-    import InputVerifiedList from './forms/InputFilterVerifiedList';
+    import InputName from '../forms/InputFilter';
+    import InputDoubleRating from '../forms/InputFilterDoubleRating';
+    import InputDoublePrice from '../forms/InputFilterDoublePrice';
+    import InputPromptCheckboxList from '../forms/InputFilterPromptCheckboxList';
+    import InputCertificationList from '../forms/InputFilterCertificationList';
+    import InputVerifiedList from '../forms/InputFilterVerifiedList';
 
     import {mapGetters} from 'vuex';
 
@@ -73,16 +73,12 @@
             InputCertificationList
         },
         props: {
-            id: {
-                type: Number,
-                required: true
-            },
             typeId: {
                 type: Number,
                 required: true
             },
             offsetTop: {
-                type: [Boolean, String],
+                type: [Boolean, String, Number],
                 required: true
             }
         },
@@ -104,7 +100,7 @@
         computed: {
             ...mapGetters(
                 [
-                    'filters'
+                    // 'filters'
                 ]
             )
         },
@@ -117,11 +113,9 @@
             },
             /**
              *
-             *
              */
             filterOffers: function () {
                 this.$store.dispatch('makeFilterOffers', {
-                    id: this.id,
                     typeId: this.typeId,
                     name: this.filter.name,
                     ratingFrom: this.filter.ratingFrom,
@@ -137,6 +131,9 @@
                     console.log('error filter offers');
                 });
             },
+            /**
+             *
+             */
             closeFilterDialog: function () {
                 this.$store.dispatch('closeFilterDialog',
                     this.id

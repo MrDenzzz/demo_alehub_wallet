@@ -1,19 +1,67 @@
 <template>
-    <transition name="fade">
-        <div id="group-filter-buttons"
-             class="group-filter-buttons" v-if="enabled">
-            <button type="button"
-                    class="circle circle-gray circle-filter"
-                    v-for="filter in filters"
-                    :id="contractorTypeType(filter.id)"
-                    :class="[calcClass(filter), calcClassEnabled()]"
-                    @click="changeStateButton(filter.id)">
-            <span class="title">
-                {{ filter.title }}
-            </span>
-            </button>
+    <div id="group-filter-buttons"
+         class="group-filter-buttons">
+        <div class="col col__center">
+            <transition name="fade-triangle">
+                <div class="triangle"
+                     v-if="openedGroupFilterButtons">
+                </div>
+            </transition>
         </div>
-    </transition>
+        <div class="col col__space-between">
+            <transition name="fade-ts">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[0].id)"
+                        :class="[calcClass(filters[0]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[0].id)">
+                    <span class="title">
+                    {{ filters[0].title }}
+                    </span>
+                </button>
+            </transition>
+
+            <transition name="fade-ts-ex">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[1].id)"
+                        :class="[calcClass(filters[1]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[1].id)">
+                    <span class="title">
+                    {{ filters[1].title }}
+                    </span>
+                </button>
+            </transition>
+
+            <transition name="fade-ch">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[2].id)"
+                        :class="[calcClass(filters[2]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[2].id)">
+                    <span class="title">
+                    {{ filters[2].title }}
+                    </span>
+                </button>
+            </transition>
+
+            <transition name="fade-qa">
+                <button type="button"
+                        class="circle circle-gray circle-filter"
+                        v-if="openedGroupFilterButtons"
+                        :id="contractorTypeType(filters[3].id)"
+                        :class="[calcClass(filters[3]), calcClassEnabled()]"
+                        @click="changeStateButton(filters[3].id)">
+                    <span class="title">
+                    {{ filters[3].title }}
+                    </span>
+                </button>
+            </transition>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -22,14 +70,6 @@
     export default {
         name: 'GroupFilterButtons',
         props: {
-            filterElementOptions: {
-                type: Object,
-                require: true
-            },
-            enabled: {
-                type: Boolean,
-                require: true
-            }
         },
         data() {
             return {
@@ -37,25 +77,15 @@
             }
         },
         watch: {
-            /**
-             * when the property filterElementOption changes, the filter state changes accordingly
-             *
-             * @param opt changed option
-             */
-            filterElementOptions: function (opt) {
-                // this.changeStateButtonFilter(opt.id);
-                // this.foldAnotherFilter();
-                // this.currentFilter(opt.id).opened = opt.opened;
-                // this.currentFilter(opt.id).folded = opt.folded;
-                // this.dispatchChangeFilter();
-            }
         },
         computed: {
             ...mapGetters(
                 [
                     'types',
                     'filtersCondition',
-                    'filter'
+                    'filter',
+
+                    'openedGroupFilterButtons'
                 ]
             )
         },
@@ -204,33 +234,64 @@
 </script>
 
 <style lang="stylus" scoped>
-    .disabled-button-filter
-        transition all .3s ease-out
-        transform translateY(0)
+    /*.disabled-button-filter*/
+    //transition all .3s ease-out
+    //transform translateY(0)
 
-    .fade-enter-active
+    .fade-ts-active
         transition all .3s ease-out
 
-    .fade-leave-active
+    .fade-ts-leave-active
         transition all .3s ease-in
 
-    .fade-enter, .fade-leave-to
-        transform translateX(-50px)
+    .fade-ts-enter, .fade-ts-leave-to
+        transform translate(-50px, 50px)
         opacity 0
 
-    /*.fade-enter-active, .fade-leave-active
-        transition: opacity .5s
+    .fade-ts-ex-active
+        transition all .3s ease-out
 
-    .fade-enter, .fade-leave-to
-        transform translateX(-50px)
-        opacity 0*/
+    .fade-ts-ex-leave-active
+        transition all .3s ease-in
+
+    .fade-ts-ex-enter, .fade-ts-ex-leave-to
+        transform translate(-50px, 30px)
+        opacity 0
+
+    .fade-ch-active
+        transition all .3s ease-out
+
+    .fade-ch-leave-active
+        transition all .3s ease-in
+
+    .fade-ch-enter, .fade-ch-leave-to
+        transform translate(-50px, -30px)
+        opacity 0
+
+    .fade-qa-active
+        transition all .3s ease-out
+
+    .fade-qa-leave-active
+        transition all .3s ease-in
+
+    .fade-qa-enter, .fade-qa-leave-to
+        transform translate(-50px, -50px)
+        opacity 0
+
+    .fade-triangle-active
+        transition all .3s ease-out
+
+    .fade-triangle-leave-active
+        transition all .3s ease-in
+
+    .fade-triangle-enter, .fade-triangle-leave-to
+        transform translate(-50px, 0)
+        opacity 0
 
     .group-filter-buttons
         height 192px
         display flex
-        flex-direction column
         align-items center
-        justify-content space-between
 
         .circle-filter
             cursor pointer
@@ -243,6 +304,28 @@
 
             .title
                 color #fcfcfc
+
+        .col
+            height 100%
+
+            &.col__center
+                display flex
+                flex-direction column
+                justify-content center
+
+            &.col__space-between
+                display flex
+                flex-direction column
+                justify-content space-between
+
+        .triangle
+            content ""
+            bottom 0
+            width 0
+            height 0
+            border-left 6px solid #a6aaae
+            border-top 6px solid transparent
+            border-bottom 6px solid transparent
 
         .circle
             width 36px

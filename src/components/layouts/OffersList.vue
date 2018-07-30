@@ -1,115 +1,30 @@
 <template>
     <div class="offers-list">
-        <div class="offers-offer"
-             v-for="(offer, i) in filteredOffers"
-             :key="offer.id"
-             :class="getOfferStatusClass(offer.statusId)"
-             :style="{width: 10 * offer.steps + '%'}">
-            <div class="row-top">
-                <div class="offer-info">
-                    <img class="offer-logo"
-                         :src="offer.logoSrc"
-                         :alt="offer.company">
-                    <router-link class="info-text"
-                                 tag="div"
-                                 :to="offer.to">
-                        <p class="title">
-                            {{ offer.title }}
-                        </p>
-                        <p class="subtitle">
-                            {{ offer.company }}
-                        </p>
-                    </router-link>
-                </div>
-                <div class="contractors-list">
-                    <div class="contractors-item"
-                         v-for="contractor in filteredOfferContractors[i]"
-                         :key="contractor.id">
-                        <div class="contractors-content">
-                            <div class="circle"
-                                 :class="contractorTypeType(contractor.typeId)"
-                                 @click="toggleContractorDialog($event, contractor)">
-                                <span class="initials">
-                                {{ contractor.initials }}
-                                </span>
-                            </div>
-                            <div class="contractors-info"
-                                 @click="toggleContractorDialog($event, contractor)">
-                                <p class="title">
-                                    {{ contractor.name + ' ' + contractor.rating }}
-                                </p>
-                                <p class="subtitle">
-                                    {{ contractorTypeName(contractor.typeId) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="circle circle-big"
-                     :class="getOfferCircleClass(offer.statusId)">
-                    <img :src="getStatusIcon(offer.statusId, 'circles')"
-                         :alt="offer.statusId">
-                </div>
-            </div>
-            <div class="progress-row">
-                <div class="progress-bar"
-                     :id="progressBarId(offer.id)"
-                     :class="offer.status">
-                    <img :src="getStatusIcon(offer.statusId, 'arrows')"
-                         :alt="offer.status"
-                         class="arrow">
-                    <div class="step"
-                         v-for="n in offer.steps"
-                         :key="n"
-                         :class="{ 'one-step': offer.steps <= 1 }">
-                        Month
-                    </div>
-                    <div class="key-block"
-                         :id="'key' + offer.id + key.id"
-                         v-for="key in offer.keys"
-                         @click="test($event)"
-                         :key="offer.id.toString() + key.id.toString()">
-                        <img :src="key.src" alt="key">
-                    </div>
-
-                    <div class="key-block"
-                         :id="'key-end' + offer.id + key.id"
-                         v-for="key in offer.keys"
-                         v-if="key.end"
-                         :key="offer.id.toString() + key.id.toString() + '1'">
-                        <img :src="key.src" alt="key">
-                    </div>
-                </div>
-            </div>
-            <div class="row-bottom">
-                <div class="date">
-                    {{ toFormatDate(offer.startDate) }}
-                </div>
-                <div class="date">
-                    {{ toFormatDate(offer.finalDate) }}
-                </div>
-            </div>
-        </div>
+        <offer-panel v-for="offer in offers"
+                     :key="offer.id"
+                     :offer1="offer"/>
     </div>
 </template>
 
 <script>
-    import moment from 'moment';
+    import OfferPanel from '../layouts/offers/OfferPanel';
+    import OfferOptions from '../layouts/offers/OfferOptions';
 
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'OffersList',
-        components: {},
+        components: {
+            OfferPanel,
+            OfferOptions
+        },
+        props: {},
         data() {
             return {
-                // openedContractorDialog: false,
-
                 contractorDialogCoordinates: {
                     top: false,
                     left: false
                 },
-
                 statusIcons: {
                     arrows: {
                         canceled: '../../static/img/arrows/arrow-canceled.svg',
@@ -129,165 +44,29 @@
         computed: {
             ...mapGetters(
                 [
-                    'types',
-                    'offers',
-                    'status',
-                    'filteredOffers',
-                    'contractors',
-                    'offerContractors',
-                    'openedContractorDialog',
-                    'filteredOfferContractors',
-                    'selectedContractor'
+                    'offers'
                 ]
             ),
         },
-        methods: {
-            /**
-             *
-             *
-             * @param statusId
-             */
-            getOfferCircleClass: function (statusId) {
-                return 'circle-' + this.status.find(item => item.id === statusId).class;
-            },
-            /**
-             *
-             *
-             * @param statusId
-             */
-            getOfferStatusClass: function (statusId) {
-                return this.status.find(item => item.id === statusId).class;
-            },
-            /**
-             *
-             * @param {Number} offerId
-             */
-            progressBarId: function (offerId) {
-                return 'progress-bar-' + offerId;
-            },
-            /**
-             * return data of type contractor
-             *
-             * @param {number} contractorTypeId
-             * @returns {*}
-             */
-            contractorType: function (contractorTypeId) {
-                return this.types.find(type => type.id === contractorTypeId);
-            },
-            /**
-             * return name of type contractor
-             *
-             * @param {number} contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeName: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).name;
-            },
-            /**
-             * return type of contractor
-             *
-             * @param {number} contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeType: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).type;
-            },
-            /**
-             *
-             *
-             * @param {Object} e
-             * @param {Object} contractor
-             * @returns {boolean}
-             */
-            toggleContractorDialog: function (e, contractor) {
-                this.contractorDialogCoordinates.top = e.pageY;
-                this.contractorDialogCoordinates.left = e.pageX;
-
-                if (!this.openedContractorDialog) {
-                    this.$store.dispatch('selectContractor', {
-                        contractor: contractor,
-                        opened: true,
-                        coordinates: this.contractorDialogCoordinates
-                    }).then(resp => {
-                        // this.openedContractorDialog = true;
-                    }).catch(() => {
-                        console.error('error toggle contractor dialog');
-                    });
-
-                    return true;
-                } else if (this.openedContractorDialog && contractor.id !== this.selectedContractor.id) {
-                    this.$store.dispatch('selectContractor', {
-                        contractor: contractor,
-                        opened: true,
-                        coordinates: this.contractorDialogCoordinates
-                    }).then(() => {
-
-                    }).catch(() => {
-                        console.error('error toggle SAME contractor dialog');
-                    });
-
-                    return true;
-                }
-                // this.openedContractorDialog = false;
-                this.$store.dispatch('selectContractor', {
-                    contractor: contractor,
-                    opened: false,
-                    coordinates: this.contractorDialogCoordinates
-                }).then(() => {
-
-                }).catch(() => {
-                    console.error('');
-                });
-                return false;
-            },
-            getIcon: function (name) {
-                return this.selectedTheme === 'dark' ? require(`../../../static/img/${name}_dark.svg`) : require(`../../../static/img/${name}.svg`);
-            },
-            checkContractorType: function (type) {
-                return type;
-            },
-            toFormatDate: function (date) {
-                return moment(date).format('DD MMMM, YYYY');
-            },
-            getStatusIcon: function (id, iconType) {
-                let status = this.status.find(item => item.id === id).class;
-
-                switch (status) {
-                    case 'continues':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.ongoing : this.statusIcons.circles.ongoing;
-                    case 'check':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.completed : this.statusIcons.circles.completed;
-                    case 'stop':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.timelag : this.statusIcons.circles.timelag;
-                    case 'cancel':
-                        return iconType === 'arrows' ? this.statusIcons.arrows.canceled : this.statusIcons.circles.canceled;
-                }
-            }
-        },
+        methods: {},
         mounted() {
-            for (let i = 0; i < this.offers.length; i++) {
-
-                let currentProgressBar = document.getElementById(this.progressBarId(this.offers[i].id));
-
-                for (let j = 0; j < this.offers[i].keys.length; j++) {
-
-                    let diff = this.offers[i].finalDate - this.offers[i].startDate,
-                        diffKeyStart = this.offers[i].finalDate - this.offers[i].keys[j].start;
-
-                    document.getElementById('key' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyStart / diff) + 'px';
-
-                    if (this.offers[i].keys[j].end) {
-                        let diffKeyEnd = this.offers[i].finalDate - this.offers[i].keys[j].end;
-                        document.getElementById('key-end' + this.offers[i].id + this.offers[i].keys[j].id).style['right'] = currentProgressBar.offsetWidth * (diffKeyEnd / diff) + 'px';
-                    }
-                }
-            }
 
         }
     }
 </script>
 
 <style lang="stylus" scoped>
+    .offers.context
+        display flex
+        justify-content center
+
+        .offers-context-options
+            width 30px
+            height 30px
+
+        .offer-context-menu
+            position absolute
+
     .offers-list
         display flex
         flex-direction column

@@ -7,7 +7,8 @@
             </span>
         </div>
         <div class="save">
-            <img src="../../../static/img/star-off.svg" alt="save contractor">
+            <img src="../../../static/img/star-off.svg"
+                 alt="save contractor">
         </div>
         <div class="header">
             <div class="logo__wrap">
