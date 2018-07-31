@@ -11,6 +11,7 @@
                     <offers-filter-new/>
                 </div>
                 <div class="offers-list-col">
+                    <offers-list-sort/>
                     <offers-list/>
                 </div>
             </div>
@@ -22,6 +23,7 @@
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
+    import OffersListSort from './layouts/offers/OffersListSort';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     import OffersFilterNew from './layouts/offers/OffersFilterNew';
 
@@ -35,6 +37,7 @@
             Navbar,
             StateBar,
             OffersList,
+            OffersListSort,
             OffersControl,
             OffersFilterNew,
             // OffersFilter,
