@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="3"
+            failures="1"
+            tests="1">
+
+  <testsuite name="TestW2W"
+    errors="3" failures="1" hostname="" id="" package="TestW2W" skipped="0"
+    tests="1" time="29.57" timestamp="Mon, 30 Jul 2018 15:35:32 GMT">
+  
+    <testcase name="here we check sending coins from one my wallet to another my wallet" classname="TestW2W" time="29.57" assertions="20">
+
+    
+
+      <failure message="Testing if element &lt;.success&gt; contains text: &#34;Autharizathion access!&#34;. Element could not be located.">    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestW2W.js:28:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.success&gt; contains text: &#34;You have successfully send coins to the wallet&#34;.">    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestW2W.js:53:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.success&gt; contains text: &#34;You have successfully copied the address of the wallet&#34;.">    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestW2W.js:64:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.success&gt; contains text: &#34;You have successfully send coins to the wallet&#34;.">    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestW2W.js:78:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+      <failure message="Testing if element &lt;div[type=&#34;Bbi2BcuM3ybHA2ptz5EgRyxSslKspqYqMw6RpUYtpXRAY7G&#34;]&gt;.wrap-in-wallet&gt;.wallet&gt; contains text: &#34;0&#34;. Element could not be located.">    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestW2W.js:79:21)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+    </testcase>
+  
+
+  
+    <system-err>
+      ERROR: Unable to locate element: &#34;.success&#34; using: css selector
+    at F.command (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/api/assertions/containsText.js:46:21)
+    at F.module.exports.BaseAssertion._scheduleAssertion (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/assertion.js:87:17)
+    at F.module.exports.BaseAssertion._executeCommand (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/assertion.js:82:17)
+    at AssertionInstance.commandFn [as _commandFn] (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/assertion.js:180:21)
+    at AsyncTree.runCommand (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:154:30)
+    at AsyncTree.runChildNode (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:114:8)
+    at AsyncTree.walkDown (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:80:10)
+    at AsyncTree.walkUp (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:97:8)
+    at AsyncTree.walkDown (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:90:12)
+    at AsyncTree.traverse (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:73:8)
+ERROR: Unable to locate element: &#34;button#btnCopyAddress&#34; using: css selector
+    at Object.here we check sending coins from one my wallet to another my wallet (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestW2W.js:62:14)
+    at Module.call (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+ERROR: Unable to locate element: &#34;div[type=&#34;Bbi2BcuM3ybHA2ptz5EgRyxSslKspqYqMw6RpUYtpXRAY7G&#34;]&gt;.wrap-in-wallet&gt;.wallet&#34; using: css selector
+    at F.command (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/api/assertions/containsText.js:46:21)
+    at F.module.exports.BaseAssertion._scheduleAssertion (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/assertion.js:87:17)
+    at F.module.exports.BaseAssertion._executeCommand (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/assertion.js:82:17)
+    at AssertionInstance.commandFn [as _commandFn] (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/assertion.js:180:21)
+    at AsyncTree.runCommand (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:154:30)
+    at AsyncTree.runChildNode (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:114:8)
+    at AsyncTree.walkDown (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:80:10)
+    at AsyncTree.walkUp (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:97:8)
+    at AsyncTree.walkDown (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:90:12)
+    at AsyncTree.walkUp (/home/evg/WebstormProjects/ale-wallet/node_modules/nightwatch/lib/core/queue.js:97:8)
+    </system-err>
+  
+
+  
+  </testsuite>
+</testsuites>
