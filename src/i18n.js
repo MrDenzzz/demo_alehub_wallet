@@ -3,6 +3,10 @@ const messages = {
         components: {
             offersFilter: {
                 title: 'Filters'
+            },
+            offersSelectSortWay: {
+                decrease: 'decrease',
+                increase: 'increase'
             }
         },
         pages: {
@@ -17,8 +21,8 @@ const messages = {
             registration: {
                 form: {
                     name: {
-                       label: 'full name',
-                       placeholder: 'enter full name'
+                        label: 'full name',
+                        placeholder: 'enter full name'
                     },
                     email: {
                         label: 'e-mail',
@@ -851,6 +855,10 @@ const messages = {
         components: {
             offersFilter: {
                 title: 'Фильтры'
+            },
+            offersSelectSortWay: {
+                decrease: 'По убыванию',
+                increase: 'По возрастанию'
             }
         },
         pages: {
@@ -917,8 +925,7 @@ const messages = {
                     'с адреса',
                 selectAll:
                     'Выбрать все'
-            }
-            ,
+            },
             settings: {
                 navbarTitle: 'Настройки',
                 panelHeadingGeneral:
@@ -947,8 +954,7 @@ const messages = {
                     'Двухфакторная аутентификация',
                 _2faText:
                     'Вы можете добавить второй уровень защиты с помощью двухэтапной аутентификации. Для переключения потребуется одноразовый код, отправленный на ваш телефон, или стороннее приложение для аутентификации.'
-            }
-            ,
+            },
             summary: {
                 navbarTitle: 'Обзор',
                 notFound:
@@ -1372,20 +1378,20 @@ const messages = {
                 title: 'Экспорт в PDF',
                 firstDesc: 'Выбирите как Вы хотите вывести транзакции',
                 firstRadio: {
-                        first: 'Текущие транзакции кошелька',
-                        second: 'Все транзакции',
-                        third: 'Персональная настройка',
-                    },
+                    first: 'Текущие транзакции кошелька',
+                    second: 'Все транзакции',
+                    third: 'Персональная настройка',
+                },
                 secondDesc: 'Выбирите транзакции каких кошельков Вы хотите вывести',
                 selectAll: 'Выбрать все',
                 tags: 'Теги',
                 thirdDesc: 'Введите теги чтобы выбрать определенные транзакции (необязательно)',
                 TransactionsType: 'Вид транзакции',
                 secondRadio: {
-                        first: 'Полученные',
-                        second: 'Отправленные',
-                        third: 'Все',
-                    },
+                    first: 'Полученные',
+                    second: 'Отправленные',
+                    third: 'Все',
+                },
                 range: 'Размер суммы транзакции',
                 from: 'от',
                 to: 'до',
