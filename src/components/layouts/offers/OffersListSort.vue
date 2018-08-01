@@ -1,7 +1,9 @@
 <template>
     <div class="offers-list-sort">
-        <offers-select-sort-way/>
-        <offers-select-sort-options/>
+        <div class="aaa">
+            <offers-select-sort-way/>
+            <offers-select-sort-options/>
+        </div>
     </div>
 </template>
 
@@ -16,19 +18,19 @@
             OffersSelectSortOptions
         },
         data() {
-            return {
-
-            }
+            return {}
         },
-        computed: {
-
-        },
-        methods: {
-
-        }
+        computed: {},
+        methods: {}
     }
 </script>
 
 <style lang="stylus" scoped>
+    .offers-list-sort
+        display flex
+        justify-content flex-end
 
+        .aaa
+            display flex
+            position absolute
 </style>

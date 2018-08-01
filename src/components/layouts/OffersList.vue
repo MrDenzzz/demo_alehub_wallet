@@ -68,6 +68,7 @@
             position absolute
 
     .offers-list
+        margin-top 46px
         display flex
         flex-direction column
         align-items flex-start

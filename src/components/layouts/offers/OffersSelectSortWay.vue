@@ -30,5 +30,6 @@
 </script>
 
 <style lang="stylus" scoped>
-
+    .offers-select-sort-way
+        margin-right 20px
 </style>

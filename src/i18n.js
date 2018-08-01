@@ -7,6 +7,11 @@ const messages = {
             offersSelectSortWay: {
                 decrease: 'decrease',
                 increase: 'increase'
+            },
+            offersSelectSortOptions: {
+                price: 'by price',
+                date: 'by date',
+                rating: 'by rating'
             }
         },
         pages: {
@@ -859,6 +864,11 @@ const messages = {
             offersSelectSortWay: {
                 decrease: 'По убыванию',
                 increase: 'По возрастанию'
+            },
+            offersSelectSortOptions: {
+                price: 'По цене',
+                date: 'По дате',
+                rating: 'По рейтингу'
             }
         },
         pages: {
