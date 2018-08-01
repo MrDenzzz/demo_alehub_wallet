@@ -8,6 +8,7 @@
         <div class="offers-content">
             <div class="row">
                 <div class="col-3 offers-filter-col">
+                    <offers-panel-suggest-new-offer/>
                     <offers-filter-new/>
                 </div>
                 <div class="offers-list-col">
@@ -24,6 +25,7 @@
     import StateBar from './layouts/StateBar';
     import OffersList from './layouts/OffersList';
     import OffersListSort from './layouts/offers/OffersListSort';
+    import OffersPanelSuggestNewOffer from './layouts/offers/OffersPanelSuggestNewOffer';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
     import OffersFilterNew from './layouts/offers/OffersFilterNew';
 
@@ -40,6 +42,7 @@
             OffersListSort,
             OffersControl,
             OffersFilterNew,
+            OffersPanelSuggestNewOffer,
             // OffersFilter,
             // OffersFilterFolded,
             OffersContractorDialog,
