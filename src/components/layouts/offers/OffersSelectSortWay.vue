@@ -1,6 +1,8 @@
 <template>
     <div class="offers-select-sort-way">
-        <select-widget :options="options"/>
+        <select-widget :identifier="identifier"
+                       :opened="opened"
+                       :options="options"/>
     </div>
 </template>
 
@@ -11,6 +13,16 @@
         name: 'OffersSelectSortWay',
         components: {
             SelectWidget
+        },
+        props: {
+            identifier: {
+                type: String,
+                required: true
+            },
+            opened: {
+                type: Boolean,
+                required: true
+            }
         },
         data() {
             return {
@@ -31,5 +43,5 @@
 
 <style lang="stylus" scoped>
     .offers-select-sort-way
-        margin-right 20px
+        margin-right 10px
 </style>

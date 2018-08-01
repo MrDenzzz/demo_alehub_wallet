@@ -1,17 +1,20 @@
 <template>
-    <div :class="{'select-offer': typeSelect === 'offer', 'select-curency': typeSelect === 'curency'}" class="select">
-        <span class="value" :class="{'value-offer': typeSelect === 'offer', 'value-offer-sort': sortBy}"
-              @click="changeOption">{{ currentOption }}</span>
-        <div class="list list-select" :class="{'list-offer': typeSelect === 'offer', 'list-offer-sort': sortBy, 'list-count-offers': countOffers}"
+    <div class="select"
+         :class="{'select-offer': typeSelect === 'offer', 'select-curency': typeSelect === 'curency'}">
+        <span class="value"
+              :class="{'value-offer': typeSelect === 'offer', 'value-offer-sort': sortBy}"
+              @click="changeOption">
+            {{ currentOption }}
+        </span>
+        <div class="list list-select"
+             :class="{'list-offer': typeSelect === 'offer', 'list-offer-sort': sortBy, 'list-count-offers': countOffers}"
              v-show="isOpenOptions">
             <ul>
-                <li
-                    v-for="(option, index) in allOptions"
+                <li v-for="(option, index) in allOptions"
                     :key="index"
                     :class="{ 'selected': option === currentOption, 'li-offer': typeSelect === 'offer',
                     'selected-offer':  typeSelect === 'offer' && option === currentOption}"
-                    @click="newSelect(option)"
-                >
+                    @click="newSelect(option)">
                     {{ option }}
                 </li>
             </ul>
@@ -66,10 +69,10 @@
         created() {
             let self = this;
             setTimeout(() => {
-                window.onclick = function(e) {
+                window.onclick = function (e) {
                     self.hideSelectList(e);
                 };
-                window.onkeyup = function(e) {
+                window.onkeyup = function (e) {
                     if (e.keyCode !== 27) return false;
                     self.hideSelectList(e);
                 }
@@ -240,11 +243,13 @@
             }
         }
     }
+
     @media (max-width: 768px) {
         .select-offer {
             padding: 9px 18px;
         }
     }
+
     @media (max-width: 425px) {
         .list-offer-sort {
             width: 170px !important;

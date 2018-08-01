@@ -1,6 +1,8 @@
 <template>
     <div class="offers-select-sort-options">
-        <select-widget :options="options"/>
+        <select-widget :identifier="identifier"
+                       :opened="opened"
+                       :options="options"/>
     </div>
 </template>
 
@@ -12,20 +14,30 @@
         components: {
             SelectWidget
         },
+        props: {
+            identifier: {
+                type: String,
+                required: true
+            },
+            opened: {
+                type: Boolean,
+                required: true
+            }
+        },
         data() {
             return {
                 options: [
                     {
                         title: this.$t('components.offersSelectSortOptions.price'),
-                        value: false
+                        value: 'price'
                     },
                     {
                         title: this.$t('components.offersSelectSortOptions.date'),
-                        value: true
+                        value: 'date'
                     },
                     {
                         title: this.$t('components.offersSelectSortOptions.rating'),
-                        value: false
+                        value: 'rating'
                     },
                 ]
             }

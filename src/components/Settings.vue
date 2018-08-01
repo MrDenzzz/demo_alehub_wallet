@@ -107,6 +107,7 @@
                             </div>
 
                             <panel-heading :title="$t('pages.settings.security')"/>
+
                             <div class="form">
                                 <div class="control">
                                     <div class="wrap-input">
