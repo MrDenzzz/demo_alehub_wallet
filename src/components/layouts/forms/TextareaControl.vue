@@ -1,6 +1,6 @@
 <template>
     <div class="control" @click="makeFocus">
-        <div class="wrap-input">
+        <div class="wrap-input" :class="{fullWidth: fullWidth}">
             <label :for="textareaId">{{ labelValue }}</label>
             <textarea :id="textareaId"
                       :placeholder="placeholder"
@@ -24,7 +24,8 @@
             labelValue: String,
             textareaId: String,
             placeholder: String,
-            inputValue: String
+            inputValue: String,
+            fullWidth: Boolean,
         },
         data() {
             return {
@@ -96,6 +97,12 @@
                 opacity 1
                 line-height 1.29
                 font-size 14px
+
+            &.fullWidth
+                width 100%
+
+                textarea
+                    margin-top 18px
 
         @media (max-width: 425px)
             & .wrap-input
