@@ -1,145 +1,52 @@
 <template>
     <div>
         <header class="navbar">
-            <div class="navbar-nav"
-                 v-if="isNavigate">
-                <div v-if="isBack"
-                     class="back-icon"
-                     @click="backLink">
-                    <img src="../../assets/img/back-ic.svg"
-                         width="24.5"
-                         height="17">
-                </div>
+            <div class="navbar-nav" v-if="isNavigate">
+                <back-button v-if="isBack" @click.native="backLink" />
 
                 <router-link :to="{ path: '/' }" v-else>
-                    <div class="logo">
-                        ALEHUB
-                    </div>
+                    <div class="logo">ALEHUB</div>
                 </router-link>
 
-                <div class="actions">
-                    <router-link class="item"
-                                 active-class="active"
-                                 v-for="(link, indexLink) in navbarLinks"
-                                 :key="indexLink"
-                                 :to="{ path: link.path }"
-                                 exact>
-                        <img :src="getIcon(link.iconName)"
-                             :width="link.iconWidth"
-                             :height="link.iconHeight">
-                        <span v-if="notifBadge && link.isBadge === true"
-                              class="badge">
-                        </span>
-                    </router-link>
-                </div>
+                <actions 
+                    :navbarLinks="navbarLinks"
+                    :notifBadge="notifBadge"
+                    :selectedTheme="selectedTheme"
+                />
             </div>
 
             <span class="title">{{ title }}</span>
 
-            <div class="balance"
-                 :class="{ 'gridBalance': !rightMenu }">
-                <span class="count"
-                      v-if="isBalance">
-                    <vue-numeric :value="currentWalletBalance"
-                                 :separator="correctLangSep"
-                                 :decimal-separator="correctLangDecSep"
-                                 :precision="correctValuePrecision"
-                                 :read-only="true"/>
-                </span>
-                <div v-if="isBalance"
-                     class="count">
-                    {{ 'ALE' }}
-                </div>
-
-                <div class="options" v-if="rightMenu">
-                    <img width="3"
-                         height="16"
-                         :src="getIcon('options')">
-
-                    <div class="dropdown-options"
-                         :class="{'horizontal-dropdown-options': rightMenu.horizontal, 'textList': !rightMenu.horizontal }">
-                        <div class="item"
-                             v-for="(item, index) in rightMenu.list"
-                             :key="index">
-                            <router-link v-if="item.type === 'link' && !item.isHide && !item.mail"
-                                         :to="{ path: item.link }"
-                                         active-class="active">
-                                <span>{{ item.name }}</span>
-                            </router-link>
-                            <a v-if="item.mail"
-                               :href="'mailto:'+item.mail">
-                                <span>{{ item.name }}</span>
-                            </a>
-                            <a v-if="item.type === 'event'"
-                               @click="startEvent(item.function)">
-                                <span>{{ item.name }}</span>
-                            </a>
-                            <span v-if="item.type === 'modal' && !item.isHide"
-                                  @click="openModal(item.target)">
-                                {{ item.name }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hamburger"
-                     :class="{'is-active': collapsed}"
-                     id="hamburger" @click="toggleMenu()">
-                    <span class="line"></span>
-                    <span class="line"></span>
-                    <span class="line"></span>
-                </div>
-            </div>
+            <balance 
+                :rightMenu="rightMenu"
+                :isBalance="isBalance"
+                :collapsed="collapsed"
+            />
         </header>
-        <div class="mobile-menu"
-             :class="{ 'is-collapsed': collapsed }">
-            <div class="menus">
-                <router-link class="item"
-                             active-class="active"
-                             v-for="(link, indexLink) in navbarLinks"
-                             :key="indexLink"
-                             :to="{ path: link.path }"
-                             exact>
-                    <img :src="getIcon(link.iconName)"
-                         :width="link.iconWidth"
-                         :height="link.iconHeight">
-                    <span class="linkName">{{$t('navbar.'+link.name)}}</span>
-                </router-link>
-            </div>
-            <hr v-if="rightMenu">
-            <div class="scMobileMenu"
-                 v-if="rightMenu">
-                <div class="item"
-                     v-for="(item, index) in rightMenu.list"
-                     :key="index">
-                    <router-link v-if="item.type === 'link' && !item.isHide && !item.mail"
-                                 :to="{ path: item.link }"
-                                 active-class="active">
-                        <span>{{ item.name }}</span>
-                    </router-link>
-                    <a v-if="item.mail"
-                       :href="'mailto:'+item.mail">
-                        <span>{{ item.name }}</span>
-                    </a>
-                    <a v-if="item.type === 'event'"
-                       @click="startEvent(item.function)">
-                        <span>{{ item.name }}</span>
-                    </a>
-                    <span v-if="item.type === 'modal' && !item.isHide"
-                          @click="openModal(item.target)">
-                        {{ item.name }}
-                    </span>
-                </div>
-            </div>
-        </div>
+
+        <mobile-menu 
+            :collapsed="collapsed"
+            :navbarLinks="navbarLinks"
+            :rightMenu="rightMenu"
+        />
     </div>
 </template>
 
 <script>
     import {mapGetters} from "vuex";
+    import BackButton from "./Navbar/BackButton"
+    import Actions from "./Navbar/Actions"
+    import Balance from "./Navbar/Balance"
+    import MobileMenu from "./Navbar/MobileMenu"
 
     export default {
         name: 'Navbar',
-        component: {},
+        components: {
+            BackButton,
+            Actions,
+            Balance,
+            MobileMenu
+        },
         props: {
             title: {
                 type: String,
@@ -168,22 +75,6 @@
             },
             notifBadge: function () {
                 return this.$store.state.Notifications.isNewNotification
-            },
-            correctLangSep: function () {
-                if (localStorage.getItem('systemLang') === 'eng')
-                    return ',';
-                return 'space';
-            },
-            correctLangDecSep: function () {
-                if (localStorage.getItem('systemLang') === 'eng')
-                    return '.';
-                return ',';
-            },
-            correctValuePrecision: function () {
-                if (Number(this.currentWalletBalance) % 1 !== 0)
-                    return this.currentWalletBalance.toString().split('.')[1].toString().length;
-                else
-                    return 0;
             }
         },
         methods: {
@@ -210,9 +101,6 @@
                     document.removeEventListener('click', closeMenu, true)
                 }
             },
-            parseBalance: function (count) {
-                return numeral(count).format('0,0');
-            },
             backLink: function () {
                 this.$router.go(-1);
             },
@@ -222,16 +110,17 @@
             startEvent: function (type) {
                 this.$parent.$emit(type)
             },
-            getIcon: function (name) {
-                switch (this.selectedTheme) {
-                    case 'dark':
-                        return require(`../../assets/img/${name}.svg`);
-                    case 'white':
-                        return require(`../../assets/img/${name}_white.svg`);
-                    default:
-                        return require(`../../assets/img/${name}.svg`);
-                }
-            }
+        },
+        mounted() {
+            this.$on("startEvent", item => {
+                this.startEvent(item);
+            });
+            this.$on("openModal", target => {
+                this.openModal(target);
+            });
+            this.$on("toggleMenu", () => {
+                this.toggleMenu();
+            });
         }
     }
 </script>
