@@ -3,15 +3,22 @@
         <span class="title">
             {{ $t('components.offersPanelSuggestNewOffer.title') }}
         </span>
-        <button class="buttons btn-yellow">
+        <router-link tag="button"
+                     class="buttons btn-yellow"
+                     :to="toCreate">
             {{ $t('components.offersPanelSuggestNewOffer.button') }}
-        </button>
+        </router-link>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'OffersPanelSuggestNewOffer'
+        name: 'OffersPanelSuggestNewOffer',
+        data() {
+            return {
+                toCreate: ''
+            }
+        },
     }
 </script>
 
@@ -46,7 +53,6 @@
             line-height $line-height
             width 100%
             margin-bottom 0
-
 
 
 </style>
