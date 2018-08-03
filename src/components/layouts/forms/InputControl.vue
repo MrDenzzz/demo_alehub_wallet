@@ -1,6 +1,6 @@
 <template>
     <div class="control" @click="makeFocus">
-        <div class="wrap-input">
+        <div class="wrap-input" :class="{fullWidth: fullWidth}">
             <label :for="inputId">{{ labelValue }}</label>
             <input
                     class="input-control"
@@ -37,7 +37,8 @@
                 type: String,
                 default: 'text'
             },
-            placeholder: String
+            placeholder: String,
+            fullWidth: Boolean
         },
         data() {
             return {
@@ -101,6 +102,9 @@
                 position relative
                 z-index 1
                 display block
+
+            &.fullWidth
+                width 100%
 
             input:focus
                 color #34343e
