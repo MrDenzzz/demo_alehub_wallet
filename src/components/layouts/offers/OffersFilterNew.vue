@@ -84,20 +84,30 @@
 </script>
 
 <style lang="stylus" scoped>
-    .offers-filter
+    $title-m-t = 24px
+    $title-p-l = 16px
+    $title-f-s = 14px
+    $title-letter-s = 0.5px
+    $title-line-h = 1.29
+    $title-color = #818686
 
+    $container-p = 16px
+    $container-background = #f0f0f0
+
+    .offers-filter
         .offers-filter-title
             font-family MuseoSansCyrl300
             text-transform uppercase
-            color #818686
-            letter-spacing 0.5px
-            line-height 1.29
-            font-size 14px
-            padding-left 16px
+            color $title-color
+            letter-spacing $title-letter-s
+            line-height $title-line-h
+            font-size $title-f-s
+            margin-top $title-m-t
+            padding-left $title-p-l
 
         .offers-filter-container
-            padding 16px
-            background-color #f0f0f0
+            padding $container-p
+            background-color $container-background
 
             .offers-filter-container-footer
                 display flex
