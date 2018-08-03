@@ -16,7 +16,7 @@
         name: 'OffersPanelSuggestNewOffer',
         data() {
             return {
-                toCreate: ''
+                toCreate: '/offers/createoffer'
             }
         },
     }
