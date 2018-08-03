@@ -12,6 +12,10 @@ const messages = {
                 price: 'by price',
                 date: 'by date',
                 rating: 'by rating'
+            },
+            offersPanelSuggestNewOffer: {
+                title: 'You are an employer?',
+                button: 'Create your own task'
             }
         },
         pages: {
@@ -869,6 +873,10 @@ const messages = {
                 price: 'По цене',
                 date: 'По дате',
                 rating: 'По рейтингу'
+            },
+            offersPanelSuggestNewOffer: {
+                title: 'Вы заказчик?',
+                button: 'Создайте задачу'
             }
         },
         pages: {
