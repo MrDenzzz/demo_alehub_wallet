@@ -1,5 +1,14 @@
 <template>
     <div class="offer-panel-timeline">
+        <div class="grid">
+            <div class="grid-line"
+                 v-for="i in contractors.length + 1">
+                <div class="grid-segment" v-for="i in 10">
+                    <span class="dot"></span>
+                    <span class="line"></span>
+                </div>
+            </div>
+        </div>
         <div class="line"
              v-for="contractor in contractors"
              :class="calcLineClass(contractor.position)"
@@ -74,6 +83,17 @@
             }
         },
         methods: {
+            calcNumDot: function (i) {
+                if (i === this.contractors.length)
+                    return 20;
+                return 10;
+            },
+            calcDotPosition: function (n) {
+                let lineHeight = 12,
+                    gridWidth = 900;
+
+                return 'left:' + gridWidth;
+            },
             /**
              * calculates the width and indentation of the block based on the contractor's data
              *
@@ -140,7 +160,8 @@
 </script>
 
 <style lang="stylus" scoped>
-    $timeline-p = 8px 16px
+    $timeline-p-t-b = 8px
+    $timeline-p-l-r = 16px
     $timeline-h = 70px
     $timeline-b = #e8e8e8
 
@@ -163,11 +184,46 @@
 
     .offer-panel-timeline
         width 100%
-        padding $timeline-p
+        padding-top $timeline-p-t-b
+        padding-bottom $timeline-p-t-b
+        padding-left $timeline-p-l-r
+        padding-right $timeline-p-l-r
         height $timeline-h
         background-color $timeline-b
         display flex
         flex-direction column
+        position relative
+
+        .grid
+            position absolute
+            width "calc(100% - %s * 2)" % $timeline-p-l-r
+            height "calc(100% - %s * 2)" % $timeline-p-t-b
+
+            .grid-line
+                position relative
+                height 11.5px
+                display flex
+                justify-content space-between
+                align-items flex-start
+
+                .grid-segment
+                    height 3px
+                    display flex
+                    align-items center
+                    width calc(100% / 9)
+
+                    .line
+                        z-index 1
+                        height 1px
+                        width calc(100% - 2px)
+                        background-color black
+
+                    .dot
+                        z-index 1
+                        height 3px
+                        width 3px
+                        background-color black
+                        border-radius 50%
 
         .line
             height $line-h
