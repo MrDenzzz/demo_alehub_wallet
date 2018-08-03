@@ -140,31 +140,51 @@
 </script>
 
 <style lang="stylus" scoped>
+    $timeline-p = 8px 16px
+    $timeline-h = 70px
+    $timeline-b = #e8e8e8
+
+    $line-h = 12px
+
+    $line-ch-b = #ffd24f
+    $line-ts-b = #d26e6e
+    $line-ex-b = #6e9ad2
+    $line-qa-b = #abd26e
+
+    $tooltip-top = 12px
+    $tooltip-color = #ffffff
+    $tooltip-f-s = 11px
+    $tooltip-border-r = 0 0 6px 6px
+
+    $tooltip-ch = #b7aa83
+    $tooltip-ts = #9a5f5f
+    $tooltip-ex = #5f7592
+    $tooltip-qa = #89a065
+
     .offer-panel-timeline
         width 100%
-        padding 8px 16px
-        height 70px
-        background-color #e8e8e8
+        padding $timeline-p
+        height $timeline-h
+        background-color $timeline-b
         display flex
         flex-direction column
 
         .line
-            height 12px
+            height $line-h
             display block
             position relative
 
             &.line-ch
-                background #ffd24f
-                transition background 5s ease
+                background $line-ch-b
 
             &.line-ts
-                background #d26e6e
+                background $line-ts-b
 
             &.line-ex
-                background #6e9ad2
+                background $line-ex-b
 
             &.line-qa
-                background #abd26e
+                background $line-qa-b
 
             &:hover
                 .tooltip
@@ -175,13 +195,12 @@
 
             .tooltip
                 opacity 0
-                top 12px
-                background-color black
-                color #fff
-                font-size 11px
+                top $tooltip-top
+                color $tooltip-color
+                font-size $tooltip-f-s
+                border-radius $tooltip-border-r
                 font-family MuseoSansCyrl300
                 text-align center
-                border-radius 0 0 6px 6px
                 padding 0 10px
                 position absolute
                 z-index 1
@@ -189,14 +208,14 @@
                 transition all .3s linear
 
                 &.tooltip-ch
-                    background-color #b7aa83
+                    background-color $tooltip-ch
 
                 &.tooltip-ts
-                    background-color #9a5f5f
+                    background-color $tooltip-ts
 
                 &.tooltip-ex
-                    background-color #5f7592
+                    background-color $tooltip-ex
 
                 &.tooltip-qa
-                    background-color #89a065
+                    background-color $tooltip-qa
 </style>
