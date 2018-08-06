@@ -3,10 +3,10 @@
         <div class="offer-panel-wrap">
             <div class="offer-panel-header">
                 <h3 class="offer-panel-header-title">
-                    {{ offer1.name }}
+                    {{ offer.name }}
                 </h3>
                 <span class="offer-panel-header-price">
-                {{ formatPrice(offer1.price) }}
+                {{ formatPrice(offer.price) }}
             </span>
             </div>
             <div class="offer-panel-employer">
@@ -23,7 +23,7 @@
             </div>
             <div class="offer-panel-description">
                 <p>
-                    {{ offer1.description }}
+                    {{ offer.description }}
                 </p>
             </div>
             <div class="offer-panel-requirements">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="end-date">
-                    ends in {{ offer1.end }} days
+                    ends in {{ offer.end }} days
                 </div>
             </div>
             <div class="offer-panel-contractors">
@@ -55,7 +55,8 @@
                 </div>
             </div>
         </div>
-        <offer-panel-timeline :contractors="offer.contractors"/>
+
+        <offer-panel-timeline :offer-contractors="offer.contractors"/>
     </div>
 </template>
 
@@ -70,7 +71,7 @@
             OfferPanelTimeline
         },
         props: {
-            offer1: {
+            offer: {
                 type: Object,
                 required: true
             }
@@ -78,85 +79,6 @@
         data() {
             return {
                 currency: 'ALE',
-                offer: {
-                    id: 1,
-                    name: 'NodeJS telegram bot',
-                    description: 'It is required to develop a telegram for a crypto-currency start-up. It must be done ' +
-                    'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
-                    'pleasant memories.',
-                    employer: 'Effective Energy LTD',
-                    rating: 9.2,
-                    price: '3,200 ALE',
-                    requirements: [
-                        {
-                            id: 1,
-                            name: 'JavaScript',
-                        },
-                        {
-                            id: 2,
-                            name: 'NodeJS',
-                        },
-                        {
-                            id: 3,
-                            name: 'Telegram',
-                        },
-                        {
-                            id: 4,
-                            name: 'Bot',
-                        },
-                        {
-                            id: 5,
-                            name: 'High skills',
-                        }
-                    ],
-                    end: 18,
-                    contractors: [
-                        {
-                            id: 1,
-                            name: 'First',
-                            position: 'CH',
-                            date: [
-                                {
-                                    from: 1524571843000,
-                                    to: 1524744643000
-                                }
-                            ]
-                        },
-                        {
-                            id: 2,
-                            name: 'Second',
-                            position: 'TS',
-                            date: [
-                                {
-                                    from: 1524644643000,
-                                    to: 1525119843000
-                                }
-                            ]
-                        },
-                        {
-                            id: 3,
-                            name: 'Third',
-                            position: 'EX',
-                            date: [
-                                {
-                                    from: 1525003843000,
-                                    to: 1525954243000
-                                }
-                            ]
-                        },
-                        {
-                            id: 4,
-                            name: 'Fourth',
-                            position: 'QA',
-                            date: [
-                                {
-                                    from: 1525522243000,
-                                    to: 1526213443000
-                                }
-                            ]
-                        }
-                    ]
-                }
             }
         },
         computed: {
@@ -176,7 +98,7 @@
              */
             offerEmployer: function () {
                 return this.employers.find(emp => {
-                    return emp.id === this.offer1.employerId;
+                    return emp.id === this.offer.employerId;
                 });
             },
             /**
@@ -202,7 +124,7 @@
              */
             offerRequirements: function () {
                 let reqs = [];
-                this.offer1.requirements.forEach(offReq => {
+                this.offer.requirements.forEach(offReq => {
                     let tmpReq = this.requirements.find(req => {
                         return offReq.requirementId === req.id;
                     });
@@ -219,7 +141,7 @@
              */
             offerContractors: function () {
                 let contractors = [];
-                this.offer1.contractors.forEach(offConts => {
+                this.offer.contractors.forEach(offConts => {
                     let tmpConts = this.contractors.find(conts => {
                         return offConts.contractorId === conts.id;
                     });

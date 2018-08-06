@@ -1,45 +1,59 @@
 <template>
     <div class="offer-panel-timeline">
-        <div class="grid">
-            <div class="grid-line"
-                 v-for="i in contractors.length + 1">
-                <div class="grid-segment" v-for="i in 10">
-                    <span class="dot"></span>
-                    <span class="line"></span>
-                </div>
+        <!--<div class="grid">-->
+            <!--<div class="grid-line"-->
+                 <!--v-for="i in contractors.length + 1">-->
+                <!--<div class="grid-segment" v-for="i in 10">-->
+                    <!--<span class="dot"></span>-->
+                    <!--<span class="line"></span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--:min-time="" :max-time=""-->
+
+        <div class="line" v-for="contractor in offerContractors">
+            <div class="segment"
+                 v-for="date in contractor.date"
+                 :class="calcLineClass(contractorContractors(contractor).position)"
+                 :style="calcLineWidth(contractor.id, date)">
+                <span class="tooltip"
+                      :class="calcTooltipClass(contractorContractors(contractor).position)">
+                  {{ formatDate(date.from) }} - {{ formatDate(date.to) }}
+                </span>
             </div>
         </div>
-        <div class="line"
-             v-for="contractor in contractors"
-             :class="calcLineClass(contractor.position)"
-             :style="calcLineWidth(contractor)">
-            <span class="tooltip"
-                  :class="calcTooltipClass(contractor.position)">
-              {{ formatDate(contractor.date[0].from) }} - {{ formatDate(contractor.date[0].to) }}
-            </span>
-        </div>
+
+        <!--<offer-panel-timeline-grid :contractors="contractors"/>-->
     </div>
 </template>
 
 <script>
+    import OfferPanelTimelineGrid from './OfferPanelTimelineGrid';
+
+    import {mapGetters} from 'vuex';
+
     import moment from 'moment';
 
     export default {
         name: 'OfferPanelTimeline',
+        components: {
+            OfferPanelTimelineGrid
+        },
         props: {
-            contractors: {
+            offerContractors: {
                 type: Array,
                 required: true
             },
         },
         data() {
             return {
+                lines: [],
                 classes: {
-                    line: {
-                        ch: 'line-ch',
-                        ts: 'line-ts',
-                        ex: 'line-ex',
-                        qa: 'line-qa'
+                    segment: {
+                        ch: 'segment-ch',
+                        ts: 'segment-ts',
+                        ex: 'segment-ex',
+                        qa: 'segment-qa'
                     },
                     tooltip: {
                         ch: 'tooltip-ch',
@@ -51,6 +65,12 @@
             }
         },
         computed: {
+            ...mapGetters(
+                [
+                    'contractors',
+                    'positions'
+                ]
+            ),
             /**
              * calculating the minimum time on the timeline
              *
@@ -59,9 +79,11 @@
             minTime: function () {
                 let min = 9007199254740991;
 
-                this.contractors.forEach(offerContractor => {
-                    if (offerContractor.date[0].from < min)
-                        min = offerContractor.date[0].from;
+                this.offerContractors.forEach(offerContractor => {
+                    offerContractor.date.forEach(date => {
+                        if (date.from < min)
+                            min = date.from;
+                    });
                 });
 
                 return min;
@@ -74,15 +96,30 @@
             maxTime: function () {
                 let max = 0;
 
-                this.contractors.forEach(offerContractor => {
-                    if (offerContractor.date[0].to > max)
-                        max = offerContractor.date[0].to;
+                this.offerContractors.forEach(offerContractor => {
+                    offerContractor.date.forEach(date => {
+                        if (date.to > max)
+                            max = date.to;
+                    });
                 });
 
                 return max;
             }
         },
         methods: {
+            contractorContractors: function (contractor) {
+                let tmpC = this.contractors.find(c => c.id === contractor.contractorId);
+                return {
+                    id: contractor.id,
+                    name: tmpC.name,
+                    position: this.contractorPosition(tmpC),
+                    date: contractor.date
+                }
+            },
+            contractorPosition: function (contractor) {
+                return this.positions.find(p => p.id === contractor.positionId).title;
+            },
+
             calcNumDot: function (i) {
                 if (i === this.contractors.length)
                     return 20;
@@ -95,16 +132,25 @@
                 return 'left:' + gridWidth;
             },
             /**
-             * calculates the width and indentation of the block based on the contractor's data
+             * calculates the width and indentation of the block based on the contractor's date
              *
-             * @param contractor
+             * @param id
+             * @param date
              * @returns {string}
              */
-            calcLineWidth: function (contractor) {
-                let width = (contractor.date[0].to - contractor.date[0].from) * 100 / (this.maxTime - this.minTime),
-                    start = (contractor.date[0].from - this.minTime) * 100 / (this.maxTime - this.minTime);
+            calcLineWidth: function (id, date) {
+                let width = (date.to - date.from) * 100 / (this.maxTime - this.minTime),
+                    start = (date.from - this.minTime) * 100 / (this.maxTime - this.minTime);
 
-                return 'width:' + width + '%' + ';' + 'margin-left: ' + start + '%';
+                let offset = 0,
+                    same = this.lines.find(line => line.id === id);
+
+                if (same)
+                    offset = same.width;
+
+                this.lines[this.lines.length] = {id: id, width: width};
+
+                return 'width:' + width + '%' + ';' + 'margin-left: ' + (start - offset)  + '%';
             },
             /**
              * calculates the class of timeline line's based on the contractor's position
@@ -115,13 +161,13 @@
             calcLineClass: function (position) {
                 switch (position.toLowerCase()) {
                     case 'ch':
-                        return this.classes.line.ch;
+                        return this.classes.segment.ch;
                     case 'ts':
-                        return this.classes.line.ts;
+                        return this.classes.segment.ts;
                     case 'ex':
-                        return this.classes.line.ex;
+                        return this.classes.segment.ex;
                     case 'qa':
-                        return this.classes.line.qa;
+                        return this.classes.segment.qa;
                     default:
                         return '';
                 }
@@ -155,6 +201,21 @@
             formatDate: function (date) {
                 return moment(date).format('Do MMM YYYY');
             },
+        },
+        created() {
+        //     this.offerContractors.forEach(oC => {
+        //          this.lines[oC.id.toString()] = ''
+        //     });
+        //     console.log(this.lines, 'this.lines');
+        },
+        mounted() {
+            console.log(this.offerContractors, 'offerContractors');
+            // console.log(this.contractors, 'check');
+            // this.contractors.forEach(c => {
+            //     c.date.forEach(d => {
+            //         console.log(d, 'date');
+            //     })
+            // })
         }
     }
 </script>
@@ -162,7 +223,7 @@
 <style lang="stylus" scoped>
     $timeline-p-t-b = 8px
     $timeline-p-l-r = 16px
-    $timeline-h = 70px
+    $timeline-h = 82px
     $timeline-b = #e8e8e8
 
     $line-h = 12px
@@ -194,84 +255,59 @@
         flex-direction column
         position relative
 
-        .grid
-            position absolute
-            width "calc(100% - %s * 2)" % $timeline-p-l-r
-            height "calc(100% - %s * 2)" % $timeline-p-t-b
-
-            .grid-line
-                position relative
-                height 11.5px
-                display flex
-                justify-content space-between
-                align-items flex-start
-
-                .grid-segment
-                    height 3px
-                    display flex
-                    align-items center
-                    width calc(100% / 9)
-
-                    .line
-                        z-index 1
-                        height 1px
-                        width calc(100% - 2px)
-                        background-color black
-
-                    .dot
-                        z-index 1
-                        height 3px
-                        width 3px
-                        background-color black
-                        border-radius 50%
-
         .line
-            height $line-h
-            display block
             position relative
+            height $line-h
+            width 100%
+            display flex
 
-            &.line-ch
-                background $line-ch-b
+            .segment
+                height 100%
+                display block
+                position relative
 
-            &.line-ts
-                background $line-ts-b
+                &.segment-ch
+                    background $line-ch-b
 
-            &.line-ex
-                background $line-ex-b
+                &.segment-ts
+                    background $line-ts-b
 
-            &.line-qa
-                background $line-qa-b
+                &.segment-ex
+                    background $line-ex-b
 
-            &:hover
+                &.segment-qa
+                    background $line-qa-b
+
+                &:hover
+                    .tooltip
+                        height auto
+                        opacity 1
+                        padding-top 5px
+                        padding-bottom 5px
+
                 .tooltip
-                    height auto
-                    opacity 1
-                    padding-top 5px
-                    padding-bottom 5px
+                    opacity 0
+                    top $tooltip-top
+                    color $tooltip-color
+                    font-size $tooltip-f-s
+                    border-radius $tooltip-border-r
+                    font-family MuseoSansCyrl300
+                    text-align center
+                    padding 0 10px
+                    position absolute
+                    z-index 1
+                    height 0
+                    transition all .3s linear
 
-            .tooltip
-                opacity 0
-                top $tooltip-top
-                color $tooltip-color
-                font-size $tooltip-f-s
-                border-radius $tooltip-border-r
-                font-family MuseoSansCyrl300
-                text-align center
-                padding 0 10px
-                position absolute
-                z-index 1
-                height 0
-                transition all .3s linear
+                    &.tooltip-ch
+                        background-color $tooltip-ch
 
-                &.tooltip-ch
-                    background-color $tooltip-ch
+                    &.tooltip-ts
+                        background-color $tooltip-ts
 
-                &.tooltip-ts
-                    background-color $tooltip-ts
+                    &.tooltip-ex
+                        background-color $tooltip-ex
 
-                &.tooltip-ex
-                    background-color $tooltip-ex
-
-                &.tooltip-qa
-                    background-color $tooltip-qa
+                    &.tooltip-qa
+                        background-color $tooltip-qa
 </style>

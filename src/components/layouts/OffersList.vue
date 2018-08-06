@@ -2,7 +2,7 @@
     <div class="offers-list">
         <offer-panel v-for="offer in offers"
                      :key="offer.id"
-                     :offer1="offer"/>
+                     :offer="offer"/>
     </div>
 </template>
 
