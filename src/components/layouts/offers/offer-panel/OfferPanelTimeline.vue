@@ -1,16 +1,5 @@
 <template>
     <div class="offer-panel-timeline">
-        <!--<div class="grid">-->
-            <!--<div class="grid-line"-->
-                 <!--v-for="i in contractors.length + 1">-->
-                <!--<div class="grid-segment" v-for="i in 10">-->
-                    <!--<span class="dot"></span>-->
-                    <!--<span class="line"></span>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--:min-time="" :max-time=""-->
-
         <div class="line" v-for="contractor in offerContractors">
             <div class="segment"
                  v-for="date in contractor.date"
@@ -23,7 +12,9 @@
             </div>
         </div>
 
-        <!--<offer-panel-timeline-grid :contractors="contractors"/>-->
+        <offer-panel-timeline-grid :offer-contractors="offerContractors"
+                                   :min-time="minTime"
+                                   :max-time="maxTime"/>
     </div>
 </template>
 
@@ -107,6 +98,12 @@
             }
         },
         methods: {
+            /**
+             * return contractor object
+             *
+             * @param contractor
+             * @return {Object}
+             */
             contractorContractors: function (contractor) {
                 let tmpC = this.contractors.find(c => c.id === contractor.contractorId);
                 return {
@@ -116,20 +113,14 @@
                     date: contractor.date
                 }
             },
+            /**
+             * return contractor position
+             *
+             * @param contractor
+             * @return {String}
+             */
             contractorPosition: function (contractor) {
                 return this.positions.find(p => p.id === contractor.positionId).title;
-            },
-
-            calcNumDot: function (i) {
-                if (i === this.contractors.length)
-                    return 20;
-                return 10;
-            },
-            calcDotPosition: function (n) {
-                let lineHeight = 12,
-                    gridWidth = 900;
-
-                return 'left:' + gridWidth;
             },
             /**
              * calculates the width and indentation of the block based on the contractor's date
@@ -142,15 +133,7 @@
                 let width = (date.to - date.from) * 100 / (this.maxTime - this.minTime),
                     start = (date.from - this.minTime) * 100 / (this.maxTime - this.minTime);
 
-                let offset = 0,
-                    same = this.lines.find(line => line.id === id);
-
-                if (same)
-                    offset = same.width;
-
-                this.lines[this.lines.length] = {id: id, width: width};
-
-                return 'width:' + width + '%' + ';' + 'margin-left: ' + (start - offset)  + '%';
+                return 'width:' + width + '%' + ';' + 'left: ' + start  + '%';
             },
             /**
              * calculates the class of timeline line's based on the contractor's position
@@ -203,19 +186,10 @@
             },
         },
         created() {
-        //     this.offerContractors.forEach(oC => {
-        //          this.lines[oC.id.toString()] = ''
-        //     });
-        //     console.log(this.lines, 'this.lines');
+
         },
         mounted() {
-            console.log(this.offerContractors, 'offerContractors');
-            // console.log(this.contractors, 'check');
-            // this.contractors.forEach(c => {
-            //     c.date.forEach(d => {
-            //         console.log(d, 'date');
-            //     })
-            // })
+
         }
     }
 </script>
@@ -264,7 +238,7 @@
             .segment
                 height 100%
                 display block
-                position relative
+                position absolute
 
                 &.segment-ch
                     background $line-ch-b
