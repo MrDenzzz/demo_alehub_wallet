@@ -110,8 +110,6 @@
                 });
                 return contractors;
             }
-        },
-        methods: {
         }
     }
 </script>

@@ -4,11 +4,11 @@
             <div class="title">
                 {{ $t('components.offerPanelBodyRequirements.title') }}:
             </div>
-            <div class="requirements-list"
+            <div class="requirement"
                  v-for="requirement in requirements">
-                <div class="requirement">
+                <span>
                     {{ requirement.title }}
-                </div>
+                </span>
             </div>
         </div>
         <div class="end-date">
@@ -50,14 +50,17 @@
                 color #34343e
                 margin-right 14px
 
-            .requirements-list
+            .requirement
                 font-family MuseoSansCyrl500
                 background-color #dedfdf
                 border-radius 2px
-                padding 2px 6px
+                padding-left 6px
+                padding-right 6px
                 margin-right 14px
+                display flex
+                align-items center
 
-                .requirement
+                span
                     font-size 12px
                     color #0d1717
                     opacity .8
