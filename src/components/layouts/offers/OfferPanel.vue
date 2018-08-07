@@ -11,11 +11,6 @@
                               :offer-end="offer.end"
                               :offer-contractors="offerContractors"/>
 
-            <div class="offer-panel-description">
-                <p>
-                    {{ offer.description }}
-                </p>
-            </div>
             <div class="offer-panel-requirements">
                 <div class="requirements">
                     <div class="title">
@@ -192,13 +187,6 @@
 
         .offer-panel-wrap
             padding 0 16px
-
-            .offer-panel-description
-                font-family MuseoSansCyrl300
-                font-size 16px
-
-                p
-                    margin 8px 0 12px 0
 
             .offer-panel-requirements
                 display flex

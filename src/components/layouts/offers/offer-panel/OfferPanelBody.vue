@@ -2,11 +2,14 @@
     <div class="offer-panel-body">
         <offer-panel-body-employer :employer-name="offerEmployerName"
                                    :employer-rating="offerEmployerRating"/>
+
+        <offer-panel-body-description :description="offerDescription"/>
     </div>
 </template>
 
 <script>
     import OfferPanelBodyEmployer from './OfferPanelBodyEmployer';
+    import OfferPanelBodyDescription from './OfferPanelBodyDescription';
 
     export default {
         name: 'OfferPanelBody',
@@ -43,7 +46,8 @@
             }
         },
         components: {
-            OfferPanelBodyEmployer
+            OfferPanelBodyEmployer,
+            OfferPanelBodyDescription
         }
     }
 </script>
