@@ -4,19 +4,13 @@
             <offer-panel-header :offer-name="offer.name"
                                 :offer-price="offer.price"/>
 
+            <offer-panel-body :offer-employer-name="offerEmployerName"
+                              :offer-employer-rating="offerEmployerRating"
+                              :offer-description="offer.description"
+                              :offer-requirements="offerRequirements"
+                              :offer-end="offer.end"
+                              :offer-contractors="offerContractors"/>
 
-            <div class="offer-panel-employer">
-                <div class="offer-panel-employer-name">
-                <span>
-                    {{ offerEmployerName }}
-                </span>
-                </div>
-                <div class="offer-panel-employer-rating">
-                <span>
-                    {{ offerEmployerRating }}
-                </span>
-                </div>
-            </div>
             <div class="offer-panel-description">
                 <p>
                     {{ offer.description }}
@@ -182,13 +176,7 @@
                     default:
                         return '';
                 }
-            },
-            formatPrice: function (price) {
-                return formatPriceModule(price, this.currency, this.$i18n.locale);
             }
-        },
-        mounted() {
-
         }
     }
 </script>
@@ -204,35 +192,6 @@
 
         .offer-panel-wrap
             padding 0 16px
-
-
-
-            .offer-panel-employer
-                display flex
-                align-items center
-
-                .offer-panel-employer-name, .offer-panel-employer-rating
-                    font-family MuseoSansCyrl500
-                    color #34343e
-                    height 30px
-
-                .offer-panel-employer-name
-                    font-size 18px
-                    line-height 1.33
-                    opacity .8
-                    display flex
-                    align-items center
-
-                .offer-panel-employer-rating
-                    background-color #ffd24f
-                    border-radius 2px
-                    height 16px
-                    margin-left 14px
-                    padding 4px 6px 2px 6px
-                    font-size 11px
-                    font-weight bold
-                    display flex
-                    align-items center
 
             .offer-panel-description
                 font-family MuseoSansCyrl300
