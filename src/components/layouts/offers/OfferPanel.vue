@@ -1,14 +1,10 @@
 <template>
     <div class="offer-panel">
         <div class="offer-panel-wrap">
-            <div class="offer-panel-header">
-                <h3 class="offer-panel-header-title">
-                    {{ offer.name }}
-                </h3>
-                <span class="offer-panel-header-price">
-                    {{ formatPrice(offer.price) }}
-                </span>
-            </div>
+            <offer-panel-header :offer-name="offer.name"
+                                :offer-price="offer.price"/>
+
+
             <div class="offer-panel-employer">
                 <div class="offer-panel-employer-name">
                 <span>
@@ -46,7 +42,7 @@
                 <div class="contractor"
                      v-for="contractor in offerContractors">
                     <span class="contractor-position"
-                        :class="calcContractorPositionClass(offerContractorPosition(contractor))">
+                          :class="calcContractorPositionClass(offerContractorPosition(contractor))">
                         {{ offerContractorPosition(contractor) }}
                     </span>
                     <span class="contractor-name">
@@ -61,6 +57,8 @@
 </template>
 
 <script>
+    import OfferPanelHeader from './offer-panel/OfferPanelHeader';
+    import OfferPanelBody from './offer-panel/OfferPanelBody';
     import OfferPanelTimeline from './offer-panel/OfferPanelTimeline';
 
     import formatPriceModule from '../../../modules/FormatPrice';
@@ -70,6 +68,8 @@
     export default {
         name: 'OfferPanel',
         components: {
+            OfferPanelHeader,
+            OfferPanelBody,
             OfferPanelTimeline
         },
         props: {
@@ -205,27 +205,7 @@
         .offer-panel-wrap
             padding 0 16px
 
-            .offer-panel-header
-                display flex
-                justify-content space-between
-                align-items center
 
-                .offer-panel-header-title
-                    font-family MuseoSansCyrl500
-                    font-size 18px
-                    line-height 1.33
-                    color #34343e
-                    height 30px
-                    margin 0
-
-                .offer-panel-header-price
-                    height 24px
-                    font-family MuseoSansCyrl500
-                    font-size 18px
-                    font-weight bold
-                    line-height 1.33
-                    text-align right
-                    color #34343e
 
             .offer-panel-employer
                 display flex
