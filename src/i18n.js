@@ -16,6 +16,15 @@ const messages = {
             offersPanelSuggestNewOffer: {
                 title: 'You are an employer?',
                 button: 'Create your own task'
+            },
+            offerPanelBodyRequirements: {
+                title: 'Requirements',
+                date: {
+                    end: 'ends in',
+                    day: 'day',
+                    days1: 'days',
+                    days2: 'days'
+                }
             }
         },
         pages: {
@@ -877,6 +886,15 @@ const messages = {
             offersPanelSuggestNewOffer: {
                 title: 'Вы заказчик?',
                 button: 'Создайте задачу'
+            },
+            offerPanelBodyRequirements: {
+                title: 'Требования',
+                date: {
+                    end: 'заканчивается через',
+                    day: 'день',
+                    days1: 'дня',
+                    days2: 'дней'
+                }
             }
         },
         pages: {

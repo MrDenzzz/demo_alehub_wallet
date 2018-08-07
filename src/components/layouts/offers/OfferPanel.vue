@@ -11,22 +11,6 @@
                               :offer-end="offer.end"
                               :offer-contractors="offerContractors"/>
 
-            <div class="offer-panel-requirements">
-                <div class="requirements">
-                    <div class="title">
-                        Requirements:
-                    </div>
-                    <div class="requirement"
-                         v-for="requirement in offerRequirements">
-                        <span>
-                            {{ requirement.title }}
-                        </span>
-                    </div>
-                </div>
-                <div class="end-date">
-                    ends in {{ offer.end }} days
-                </div>
-            </div>
             <div class="offer-panel-contractors">
                 <div class="contractor"
                      v-for="contractor in offerContractors">
@@ -49,8 +33,6 @@
     import OfferPanelHeader from './offer-panel/OfferPanelHeader';
     import OfferPanelBody from './offer-panel/OfferPanelBody';
     import OfferPanelTimeline from './offer-panel/OfferPanelTimeline';
-
-    import formatPriceModule from '../../../modules/FormatPrice';
 
     import {mapGetters} from 'vuex';
 
@@ -187,41 +169,6 @@
 
         .offer-panel-wrap
             padding 0 16px
-
-            .offer-panel-requirements
-                display flex
-                align-items center
-                justify-content space-between
-                margin-bottom 10px
-
-                .requirements
-                    display flex
-
-                    .title
-                        font-family MuseoSansCyrl500
-                        line-height 1.5
-                        font-size 16px
-                        color #34343e
-                        margin-right 14px
-
-                    .requirement
-                        font-family MuseoSansCyrl500
-                        background-color #dedfdf
-                        border-radius 2px
-                        padding 2px 6px
-                        margin-right 14px
-
-                        span
-                            font-size 12px
-                            color #0d1717
-                            opacity .8
-
-                .end-date
-                    font-family MuseoSansCyrl300
-                    color #34343e
-                    font-size 16px
-                    text-align right
-                    opacity .6
 
             .offer-panel-contractors
                 display flex

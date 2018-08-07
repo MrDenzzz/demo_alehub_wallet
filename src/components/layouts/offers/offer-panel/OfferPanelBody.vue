@@ -4,12 +4,16 @@
                                    :employer-rating="offerEmployerRating"/>
 
         <offer-panel-body-description :description="offerDescription"/>
+
+        <offer-panel-body-requirements :requirements="offerRequirements"
+                                       :end="offerEnd"/>
     </div>
 </template>
 
 <script>
     import OfferPanelBodyEmployer from './OfferPanelBodyEmployer';
     import OfferPanelBodyDescription from './OfferPanelBodyDescription';
+    import OfferPanelBodyRequirements from './OfferPanelBodyRequirements';
 
     export default {
         name: 'OfferPanelBody',
@@ -47,7 +51,8 @@
         },
         components: {
             OfferPanelBodyEmployer,
-            OfferPanelBodyDescription
+            OfferPanelBodyDescription,
+            OfferPanelBodyRequirements
         }
     }
 </script>
