@@ -184,12 +184,6 @@
             formatDate: function (date) {
                 return moment(date).format('Do MMM YYYY');
             },
-        },
-        created() {
-
-        },
-        mounted() {
-
         }
     }
 </script>
@@ -223,7 +217,6 @@
         padding-bottom $timeline-p-t-b
         padding-left $timeline-p-l-r
         padding-right $timeline-p-l-r
-        height $timeline-h
         background-color $timeline-b
         display flex
         flex-direction column

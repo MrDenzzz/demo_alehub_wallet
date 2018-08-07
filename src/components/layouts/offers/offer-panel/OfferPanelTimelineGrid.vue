@@ -144,13 +144,14 @@
     .offer-panel-timeline-grid
         position relative
         width 100%
-        height 12px
+        height 8px
         display flex
         align-items flex-end
 
         .dots
             .dot
                 position absolute
+                bottom 0
                 height 3px
                 width 3px
                 border-radius 50%
