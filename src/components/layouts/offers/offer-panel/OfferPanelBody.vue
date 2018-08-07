@@ -7,6 +7,8 @@
 
         <offer-panel-body-requirements :requirements="offerRequirements"
                                        :end="offerEnd"/>
+
+        <offer-panel-body-contractors :offer-contractors="offerContractors"/>
     </div>
 </template>
 
@@ -14,6 +16,7 @@
     import OfferPanelBodyEmployer from './OfferPanelBodyEmployer';
     import OfferPanelBodyDescription from './OfferPanelBodyDescription';
     import OfferPanelBodyRequirements from './OfferPanelBodyRequirements';
+    import OfferPanelBodyContractors from './OfferPanelBodyContractors';
 
     export default {
         name: 'OfferPanelBody',
@@ -52,7 +55,8 @@
         components: {
             OfferPanelBodyEmployer,
             OfferPanelBodyDescription,
-            OfferPanelBodyRequirements
+            OfferPanelBodyRequirements,
+            OfferPanelBodyContractors
         }
     }
 </script>
