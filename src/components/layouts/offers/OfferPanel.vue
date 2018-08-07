@@ -6,8 +6,8 @@
                     {{ offer.name }}
                 </h3>
                 <span class="offer-panel-header-price">
-                {{ formatPrice(offer.price) }}
-            </span>
+                    {{ formatPrice(offer.price) }}
+                </span>
             </div>
             <div class="offer-panel-employer">
                 <div class="offer-panel-employer-name">
@@ -62,6 +62,8 @@
 
 <script>
     import OfferPanelTimeline from './offer-panel/OfferPanelTimeline';
+
+    import formatPriceModule from '../../../modules/FormatPrice';
 
     import {mapGetters} from 'vuex';
 
@@ -182,8 +184,11 @@
                 }
             },
             formatPrice: function (price) {
-                return price.toLocaleString(this.$i18n.locale) + ' ' + this.currency;
+                return formatPriceModule(price, this.currency, this.$i18n.locale);
             }
+        },
+        mounted() {
+
         }
     }
 </script>
