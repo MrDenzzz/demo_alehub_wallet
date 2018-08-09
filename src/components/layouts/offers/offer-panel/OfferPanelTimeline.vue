@@ -23,7 +23,7 @@
 
     import {mapGetters} from 'vuex';
 
-    import moment from 'moment';
+    import formatDateModule from '../../../../modules/FormatDate';
 
     export default {
         name: 'OfferPanelTimeline',
@@ -182,7 +182,7 @@
              * @returns {string}
              */
             formatDate: function (date) {
-                return moment(date).format('Do MMM YYYY');
+                return formatDateModule(date, 'Do MMM YYYY');
             },
         }
     }
