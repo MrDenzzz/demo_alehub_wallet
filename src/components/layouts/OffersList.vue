@@ -1,14 +1,17 @@
 <template>
     <div class="offers-list">
-        <offer-panel v-for="offer in offers"
+        <offer-panel v-for="offer in filteredOffers"
                      :key="offer.id"
                      :offer="offer"/>
+
+        <offers-pagination :number-offers="3"/>
     </div>
 </template>
 
 <script>
     import OfferPanel from '../layouts/offers/OfferPanel';
     import OfferOptions from '../layouts/offers/OfferOptions';
+    import OffersPagination from '../layouts/offers/OffersPagination';
 
     import {mapGetters} from 'vuex';
 
@@ -16,7 +19,8 @@
         name: 'OffersList',
         components: {
             OfferPanel,
-            OfferOptions
+            OfferOptions,
+            OffersPagination
         },
         props: {},
         data() {
@@ -44,7 +48,7 @@
         computed: {
             ...mapGetters(
                 [
-                    'offers'
+                    'filteredOffers'
                 ]
             ),
         },
@@ -71,7 +75,7 @@
         margin-top 46px
         display flex
         flex-direction column
-        align-items flex-start
+        align-items center
         width 100%
 
         .offers-offer

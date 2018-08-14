@@ -3,15 +3,16 @@
         <label for="name">
             {{ title }}
         </label>
-        <input type="text" id="name"
-               v-model="value"
-               @input="emitChangeValue(value)">
+        <input type="text"
+               id="name"
+               v-model="name"
+               @input="emitChangeName(name)">
     </div>
 </template>
 
 <script>
     export default {
-        name: 'InputFilter',
+        name: 'InputNameFilter',
         props: {
             title: {
                 type: String,
@@ -31,18 +32,24 @@
             clear: function (val) {
                 if (val) {
                     this.value = '';
-                    this.emitChangeValue(this.value);
+                    this.emitChangeName(this.name);
                 }
             }
         },
         data() {
             return {
-                value: ''
+                name: '',
+                reset: false
             }
         },
         methods: {
-            emitChangeValue: function (value) {
-                this.$parent.$emit('changeName', value);
+            emitChangeName: function (name) {
+                this.$parent.$emit('changeName',
+                    {
+                        name: name,
+                        reset: this.clear
+                    }
+                );
             }
         }
     }

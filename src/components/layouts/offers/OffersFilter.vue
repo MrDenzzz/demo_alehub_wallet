@@ -53,7 +53,7 @@
 </template>
 
 <script>
-    import InputName from '../forms/InputFilter';
+    import InputName from '../forms/InputNameFilter';
     import InputDoubleRating from '../forms/InputFilterDoubleRating';
     import InputDoublePrice from '../forms/InputFilterDoublePrice';
     import InputPromptCheckboxList from '../forms/InputFilterPromptCheckboxList';

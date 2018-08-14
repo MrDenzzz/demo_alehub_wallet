@@ -40,7 +40,7 @@
         },
         methods: {
             ...mapMutations({
-                saveOffer: 'saveOffer'
+                saveOffer: 'SAVE_OFFER'
             })
         }
     }
