@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import InputName from '../forms/InputFilter';
+    import InputName from '../forms/InputNameFilter';
     import InputDoubleRating from '../forms/InputFilterDoubleRating';
     import InputDoublePrice from '../forms/InputFilterDoublePrice';
     import InputPromptCheckboxList from '../forms/InputFilterPromptCheckboxList';
@@ -68,18 +68,64 @@
         },
         data() {
             return {
-                clearing: false
+                clearing: false,
+                filterData: {
+                    name: '',
+                    ratingFrom: '',
+                    ratingTo: '',
+                    priceFrom: '',
+                    priceTo: ''
+                }
             }
         },
         computed: {},
         methods: {
             filter: function () {
+                this.$store.dispatch('filterOffersRequest',
+                    this.filterData
+                ).then(resp => {
 
+                }).catch(err => {
+
+                });
+            },
+            reset: function () {
+                this.$store.dispatch('resetOffersRequest'
+                ).then(resp => {
+
+                }).catch(err => {
+
+                });
             },
             clear: function () {
-
+                this.clearing = true;
             }
         },
+        mounted() {
+            this.$on('changeName', value => {
+                this.filterData.name = value.name;
+                if (value.reset) {
+                    this.clearing = false;
+                    this.reset();
+                }
+            });
+
+            this.$on('changeRatingFrom', ratingFrom => {
+                this.filterData.ratingFrom = ratingFrom;
+            });
+
+            this.$on('changeRatingTo', ratingTo => {
+                this.filterData.ratingTo = ratingTo;
+            });
+
+            this.$on('changePriceFrom', priceFrom => {
+                this.filterData.priceFrom = priceFrom;
+            });
+
+            this.$on('changePriceTo', priceTo => {
+                this.filterData.priceTo = priceTo;
+            });
+        }
     }
 </script>
 

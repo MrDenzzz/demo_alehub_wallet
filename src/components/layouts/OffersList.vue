@@ -1,6 +1,6 @@
 <template>
     <div class="offers-list">
-        <offer-panel v-for="offer in offers"
+        <offer-panel v-for="offer in filteredOffers"
                      :key="offer.id"
                      :offer="offer"/>
 
@@ -48,7 +48,7 @@
         computed: {
             ...mapGetters(
                 [
-                    'offers'
+                    'filteredOffers'
                 ]
             ),
         },

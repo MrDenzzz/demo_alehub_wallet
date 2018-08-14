@@ -137,8 +137,8 @@ const state = {
             employerId: 1,
             name: 'NodeJS telegram bot',
             description: 'It is required to develop a telegram for a crypto-currency start-up. It must be done ' +
-                'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
-                'pleasant memories.',
+            'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
+            'pleasant memories.',
             price: 3200,
             requirements: [
                 {
@@ -224,9 +224,9 @@ const state = {
             employerId: 2,
             name: 'Web shop',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
-                'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ' +
-                'aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum ' +
-                'dolore eu fugiat nulla pariatur.',
+            'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ' +
+            'aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum ' +
+            'dolore eu fugiat nulla pariatur.',
             employer: 'Effective Energy LTD',
             price: 4500,
             requirements: [
@@ -283,8 +283,197 @@ const state = {
             employerId: 3,
             name: 'Compressing algorithm',
             description: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain ' +
-                'was born and I will give you a complete account of the system, and expound the actual teachings of ' +
-                'the great explorer of the truth, the master-builder of human happiness.',
+            'was born and I will give you a complete account of the system, and expound the actual teachings of ' +
+            'the great explorer of the truth, the master-builder of human happiness.',
+            price: 11600,
+            requirements: [
+                {
+                    id: 1,
+                    requirementId: 1,
+                },
+                {
+                    id: 2,
+                    requirementId: 3,
+                },
+                {
+                    id: 3,
+                    requirementId: 5,
+                },
+                {
+                    id: 4,
+                    requirementId: 8,
+                }
+            ],
+            end: 18,
+            contractors: [
+                {
+                    id: 1,
+                    contractorId: 1,
+                    date: [
+                        {
+                            from: 1524571843000,
+                            to: 1524744643000
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    filteredOffers: [
+        {
+            id: 1,
+            conditionId: 1,
+            employerId: 1,
+            name: 'NodeJS telegram bot',
+            description: 'It is required to develop a telegram for a crypto-currency start-up. It must be done ' +
+            'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
+            'pleasant memories.',
+            price: 3200,
+            requirements: [
+                {
+                    id: 1,
+                    requirementId: 1,
+                },
+                {
+                    id: 2,
+                    requirementId: 2,
+                },
+                {
+                    id: 3,
+                    requirementId: 3,
+                },
+                {
+                    id: 4,
+                    requirementId: 4,
+                },
+                {
+                    id: 5,
+                    requirementId: 5,
+                }
+            ],
+            end: 18,
+            contractors: [
+                {
+                    id: 1,
+                    contractorId: 1,
+                    date: [
+                        {
+                            from: 1524571843000,
+                            to: 1524744643000
+                        },
+                        {
+                            from: 1525003843000,
+                            to: 1525654243000
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    contractorId: 2,
+                    date: [
+                        {
+                            from: 1524644643000,
+                            to: 1525119843000
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    contractorId: 3,
+                    date: [
+                        {
+                            from: 1525003843000,
+                            to: 1525954243000
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    contractorId: 4,
+                    date: [
+                        {
+                            from: 1524671843000,
+                            to: 1524844643000
+                        },
+                        {
+                            from: 1524971843000,
+                            to: 1525044643000
+                        },
+                        {
+                            from: 1525522243000,
+                            to: 1526213443000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 2,
+            conditionId: 2,
+            employerId: 2,
+            name: 'Web shop',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
+            'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ' +
+            'aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum ' +
+            'dolore eu fugiat nulla pariatur.',
+            employer: 'Effective Energy LTD',
+            price: 4500,
+            requirements: [
+                {
+                    id: 1,
+                    requirementId: 5,
+                },
+                {
+                    id: 2,
+                    requirementId: 6,
+                },
+                {
+                    id: 3,
+                    requirementId: 7,
+                }
+            ],
+            end: 18,
+            contractors: [
+                {
+                    id: 1,
+                    contractorId: 1,
+                    date: [
+                        {
+                            from: 1524571843000,
+                            to: 1524744643000
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    contractorId: 2,
+                    date: [
+                        {
+                            from: 1524644643000,
+                            to: 1525119843000
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    contractorId: 3,
+                    date: [
+                        {
+                            from: 1525003843000,
+                            to: 1525954243000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 3,
+            conditionId: 3,
+            employerId: 3,
+            name: 'Compressing algorithm',
+            description: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain ' +
+            'was born and I will give you a complete account of the system, and expound the actual teachings of ' +
+            'the great explorer of the truth, the master-builder of human happiness.',
             price: 11600,
             requirements: [
                 {
@@ -321,12 +510,35 @@ const state = {
     ],
 };
 
-const actions = {};
+const actions = {
+    filterOffersRequest: ({commit}, filterData) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_FILTER_OFFER', filterData);
+            resolve('success filter offer');
+        });
+    },
+    resetOffersRequest: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_RESET_OFFER');
+            resolve('success reset offer');
+        });
+    }
+};
 
-const mutations = {};
+const mutations = {
+    SUCCESS_FILTER_OFFER: (state, filterData) => {
+        state.filteredOffers = state.filteredOffers.filter(offer => {
+            return offer.name === filterData.name;
+        });
+    },
+    SUCCESS_RESET_OFFER: (state) => {
+        state.filteredOffers = state.offers;
+    }
+};
 
 const getters = {
     offers: state => state.offers,
+    filteredOffers: state => state.filteredOffers,
     employers: state => state.employers,
     positions: state => state.positions,
     contractors: state => {
@@ -345,8 +557,7 @@ const getters = {
         return state.contractors;
     },
     requirements: state => state.requirements,
-    conditions: state => state.conditions
-
+    conditions: state => state.conditions,
 };
 
 export default {
