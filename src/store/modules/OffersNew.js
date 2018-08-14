@@ -525,10 +525,45 @@ const actions = {
     }
 };
 
+function checkFilterRatingFrom(offerRating, filterRatingFrom) {
+    if (!filterRatingFrom)
+        return true;
+
+    return offerRating > filterRatingFrom;
+}
+
+function checkFilterRatingTo(offerRating, filterRatingTo) {
+    if (!filterRatingTo)
+        return true;
+
+    return offerRating < filterRatingTo;
+}
+
+function checkFilterPriceFrom(offerPrice, filterPriceFrom) {
+    if (!filterPriceFrom)
+        return true;
+
+    return offerPrice > filterPriceFrom;
+}
+
+function checkFilterPriceTo(offerPrice, filterPriceTo) {
+    if (!filterPriceTo)
+        return true;
+
+    return offerPrice < filterPriceTo;
+}
+
 const mutations = {
     SUCCESS_FILTER_OFFER: (state, filterData) => {
-        state.filteredOffers = state.filteredOffers.filter(offer => {
-            return offer.name === filterData.name;
+        state.filteredOffers = state.offers.filter(offer => {
+            return offer.name.toLowerCase().includes(filterData.name.toLowerCase()) &&
+                checkFilterRatingFrom(Number(state.employers.find(e => e.id === offer.employerId).rating), Number(filterData.ratingFrom)) &&
+                checkFilterRatingTo(Number(state.employers.find(e => e.id === offer.employerId).rating), Number(filterData.ratingTo)) &&
+                checkFilterPriceFrom(Number(offer.price), Number(filterData.priceFrom)) &&
+                checkFilterPriceTo(Number(offer.price), Number(filterData.priceTo));
+            // (filterData.ratingTo) ? Number(offer.price) < Number(filterData.ratingTo) : true &&
+            // (filterData.priceFrom) ? Number(offer.price) > Number(filterData.priceFrom) : true &&
+            // (filterData.priceTo) ? Number(offer.price) < Number(filterData.priceTo) : true;
         });
     },
     SUCCESS_RESET_OFFER: (state) => {

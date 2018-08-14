@@ -18,18 +18,20 @@
                                     :to="$t('offersFilter.price.to')"
                                     :clear="clearing"/>
 
-                <input-prompt-checkbox-list :title="$t('offersFilter.country.title')"
-                                            :list="$t('countries')"
-                                            :select-all="$t('offersFilter.country.selectAll')"
-                                            :clear="clearing"/>
+                <!--добавить даты-->
 
-                <input-certification-list :title="$t('offersFilter.certification.title')"
-                                          :options="$t('offersFilter.certification.options')"
-                                          :clear="clearing"/>
+                <!--<input-prompt-checkbox-list :title="$t('offersFilter.country.title')"-->
+                                            <!--:list="$t('countries')"-->
+                                            <!--:select-all="$t('offersFilter.country.selectAll')"-->
+                                            <!--:clear="clearing"/>-->
 
-                <input-verified-list :title="$t('offersFilter.verified.title')"
-                                     :options="$t('offersFilter.verified.options')"
-                                     :clear="clearing"/>
+                <!--<input-certification-list :title="$t('offersFilter.certification.title')"-->
+                                          <!--:options="$t('offersFilter.certification.options')"-->
+                                          <!--:clear="clearing"/>-->
+
+                <!--<input-verified-list :title="$t('offersFilter.verified.title')"-->
+                                     <!--:options="$t('offersFilter.verified.options')"-->
+                                     <!--:clear="clearing"/>-->
 
                 <div class="offers-filter-container-footer">
                     <button type="button"

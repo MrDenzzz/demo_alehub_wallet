@@ -234,6 +234,12 @@
             // }
         },
         created() {
+            this.$store.dispatch('resetOffersRequest'
+            ).then(resp => {
+
+            }).catch(err => {
+
+            });
             // this.filters = this.filtersCondition;
         },
         mounted() {
