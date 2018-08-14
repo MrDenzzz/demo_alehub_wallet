@@ -9,7 +9,9 @@
                               :offer-description="offer.description"
                               :offer-requirements="offerRequirements"
                               :offer-end="offer.end"
-                              :offer-contractors="offerContractors"/>
+                              :offer-contractors="offerContractors"
+                              :offer-saved="offer.saved"
+                              :offer-id="offer.id"/>
         </div>
 
         <offer-panel-timeline :offer-contractors="offer.contractors"/>

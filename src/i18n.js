@@ -190,7 +190,8 @@ const messages = {
                 },
                 rightMenu: {
                     savedOffers: 'Saved offers',
-                    createOffer: 'Create offer'
+                    createOffer: 'Create offer',
+                    allOffers: 'All offers'
                 }
             },
             singleOffer: {
@@ -1093,7 +1094,8 @@ const messages = {
                 },
                 rightMenu: {
                     savedOffers: 'Сохраненное',
-                    createOffer: 'Создать новое'
+                    createOffer: 'Создать новое',
+                    allOffers: 'Все оферы'
                 }
             },
             singleOffer: {

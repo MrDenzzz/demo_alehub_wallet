@@ -1,7 +1,9 @@
 <template>
     <div class="offer-panel-body">
         <offer-panel-body-employer :employer-name="offerEmployerName"
-                                   :employer-rating="offerEmployerRating"/>
+                                   :employer-rating="offerEmployerRating"
+                                   :saved="offerSaved"
+                                   :offer-id="offerId"/>
 
         <offer-panel-body-description :description="offerDescription"/>
 
@@ -50,6 +52,16 @@
                 type: Array,
                 default: [],
                 required: true
+            },
+            offerSaved: {
+                type: Boolean,
+                default: false,
+                required: false
+            },
+            offerId: {
+                type: Number,
+                default: 0,
+                required: false
             }
         },
         components: {

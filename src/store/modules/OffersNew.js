@@ -140,6 +140,7 @@ const state = {
                 'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
                 'pleasant memories.',
             price: 3200,
+            saved: false,
             requirements: [
                 {
                     id: 1,
@@ -229,6 +230,7 @@ const state = {
                 'dolore eu fugiat nulla pariatur.',
             employer: 'Effective Energy LTD',
             price: 4500,
+            saved: true,
             requirements: [
                 {
                     id: 1,
@@ -286,6 +288,7 @@ const state = {
                 'was born and I will give you a complete account of the system, and expound the actual teachings of ' +
                 'the great explorer of the truth, the master-builder of human happiness.',
             price: 11600,
+            saved: false,
             requirements: [
                 {
                     id: 1,
@@ -323,10 +326,20 @@ const state = {
 
 const actions = {};
 
-const mutations = {};
+const mutations = {
+    saveOffer(state, offerId) {
+        let index = state.offers.findIndex(item => {
+            return item.id === offerId;
+        });
+        state.offers[index].saved = !state.offers[index].saved;
+    }
+};
 
 const getters = {
     offers: state => state.offers,
+    savedOffers: state => state.offers.filter(item => {
+        return item.saved === true;
+    }),
     employers: state => state.employers,
     positions: state => state.positions,
     contractors: state => {

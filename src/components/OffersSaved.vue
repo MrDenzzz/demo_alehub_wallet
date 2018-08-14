@@ -1,6 +1,6 @@
 <template>
     <div class="offers">
-        <navbar title="Contract List"
+        <navbar title="Saved Contract List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
@@ -23,7 +23,7 @@
 <script>
     import Navbar from './layouts/Navbar';
     import StateBar from './layouts/StateBar';
-    import OffersList from './layouts/OffersList';
+    import OffersList from './layouts/OffersListSaved';
     import OffersListSort from './layouts/offers/OffersListSort';
     import OffersPanelSuggestNewOffer from './layouts/offers/OffersPanelSuggestNewOffer';
     import OffersContractorDialog from './layouts/OffersContractorDialog';
@@ -34,7 +34,7 @@
     import {mapGetters} from 'vuex';
 
     export default {
-        name: 'Offers',
+        name: 'OffersSaved',
         components: {
             Navbar,
             StateBar,
@@ -118,8 +118,8 @@
                         },
                         {
                             type: 'link',
-                            name: this.$t('pages.jobOffers.rightMenu.savedOffers'),
-                            link: '/offers/saved'
+                            name: this.$t('pages.jobOffers.rightMenu.allOffers'),
+                            link: '/offers'
                         }
                     ]
                 },

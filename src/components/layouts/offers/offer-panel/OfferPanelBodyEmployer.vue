@@ -1,15 +1,23 @@
 <template>
     <div class="offer-panel-body-employer">
-        <h3 class="name">
-            {{ employerName }}
-        </h3>
-        <div class="rating">
-            {{ employerRating }}
+        <div class="main-body">
+            <h3 class="name">
+                {{ employerName }}
+            </h3>
+            <div class="rating">
+                {{ employerRating }}
+            </div>
         </div>
+        
+        <div class="save"
+            :class="{saved: saved}"
+            @click="saveOffer(offerId)"></div>
     </div>
 </template>
 
 <script>
+    import {mapMutations} from 'vuex';
+
     export default {
         name: 'OfferPanelBodyEmployer',
         props: {
@@ -20,13 +28,29 @@
             employerRating: {
                 type: [String, Number],
                 required: true
+            },
+            saved: {
+                type: Boolean,
+                required: false
+            },
+            offerId: {
+                type: Number,
+                required: false
             }
+        },
+        methods: {
+            ...mapMutations({
+                saveOffer: 'saveOffer'
+            })
         }
     }
 </script>
 
 <style lang="stylus" scoped>
     .offer-panel-body-employer
+        justify-content space-between
+
+    .offer-panel-body-employer, .main-body
         display flex
         align-items center
 
@@ -54,4 +78,19 @@
             font-weight bold
             display flex
             align-items center
+
+        .save
+            background url(../../../../../static/img/star-off.svg)
+            background-size contain
+            background-repeat no-repeat
+            background-position center
+            width 16px
+            height 16px
+            cursor pointer
+
+            &.saved
+                background url(../../../../../static/img/star-on.svg)
+                background-size contain
+                background-repeat no-repeat
+                background-position center
 </style>
