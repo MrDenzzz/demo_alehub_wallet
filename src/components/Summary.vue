@@ -134,6 +134,11 @@
                             type: "link",
                             name: this.$t('pages.summary.rightMenu.walletSettings'),
                             link: "/wallet/settings"
+                        },
+                        {
+                            type: "link",
+                            name: this.$t('pages.summary.rightMenu.myOffers'),
+                            link: "/offers/my"
                         }
                     ]
                 },

@@ -27,6 +27,7 @@ import ConfirmationChangeEmail from '@/components/ConfirmationChangeEmail';
 import Offer from '@/components/Offer'
 import Offers from '@/components/Offers'
 import OffersSaved from '@/components/OffersSaved'
+import MyOffers from '@/components/MyOffers'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -196,6 +197,12 @@ const router = new Router(
                 path: '/offers/saved',
                 name: 'offersSaved',
                 component: OffersSaved,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/offers/my',
+                name: 'MyOffers',
+                component: MyOffers,
                 beforeEnter: ifAuthenticated
             },
             {

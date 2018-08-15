@@ -114,7 +114,8 @@ const messages = {
                     walletOffers: 'Wallet offers',
                     send: 'Send',
                     transactions: 'Transactions',
-                    walletSettings: 'Wallet settings'
+                    walletSettings: 'Wallet settings',
+                    myOffers: 'My offers'
                 },
                 searchPanel: {
                     search: 'Search Transactions...',
@@ -1015,7 +1016,8 @@ const messages = {
                     transactions:
                         'Транзакции',
                     walletSettings:
-                        'Настройки кошелька'
+                        'Настройки кошелька',
+                    myOffers: 'Мои предложения'
                 },
                 searchPanel: {
                     search: 'Поиск транзакций...',
