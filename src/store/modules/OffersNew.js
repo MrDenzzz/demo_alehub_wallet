@@ -176,6 +176,72 @@ const state = {
                 }
             ],
             end: 18,
+            positions: [
+                {
+                    id: 1,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 1,
+                        date: [
+                            {
+                                from: 1524571843000,
+                                to: 1524744643000
+                            },
+                            {
+                                from: 1525003843000,
+                                to: 1525654243000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    positionId: 2,
+                    contractor: {
+                        contractorId: 2,
+                        date: [
+                            {
+                                from: 1524644643000,
+                                to: 1525119843000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    positionId: 3,
+                    contractor: {
+                        contractorId: 3,
+                        date: [
+                            {
+                                from: 1525003843000,
+                                to: 1525954243000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 4,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 4,
+                        date: [
+                            {
+                                from: 1524671843000,
+                                to: 1524844643000
+                            },
+                            {
+                                from: 1524971843000,
+                                to: 1525044643000
+                            },
+                            {
+                                from: 1525522243000,
+                                to: 1526213443000
+                            }
+                        ]
+                    }
+                }
+            ],
             contractors: [
                 {
                     id: 1,
@@ -258,6 +324,47 @@ const state = {
                 }
             ],
             end: 18,
+            positions: [
+                {
+                    id: 1,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 1,
+                        date: [
+                            {
+                                from: 1524571843000,
+                                to: 1524744643000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    positionId: 2,
+                    contractor: {
+                        contractorId: 2,
+                        date: [
+                            {
+                                from: 1524644643000,
+                                to: 1525119843000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    positionId: 3,
+                    contractor: {
+                        contractorId: 3,
+                        date: [
+                            {
+                                from: 1525003843000,
+                                to: 1525954243000
+                            }
+                        ]
+                    }
+                }
+            ],
             contractors: [
                 {
                     id: 1,
@@ -320,6 +427,21 @@ const state = {
                 }
             ],
             end: 18,
+            positions: [
+                {
+                    id: 1,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 1,
+                        date: [
+                            {
+                                from: 1524571843000,
+                                to: 1524744643000
+                            }
+                        ]
+                    }
+                }
+            ],
             contractors: [
                 {
                     id: 1,

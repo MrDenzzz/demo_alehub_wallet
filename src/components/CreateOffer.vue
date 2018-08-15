@@ -196,7 +196,6 @@
             });
 
             this.$on('returnSelectedPositions', selectedPositions => {
-                console.log(selectedPositions, 'selectedPositions');
                 this.newOffer.positions = selectedPositions;
             });
         }
