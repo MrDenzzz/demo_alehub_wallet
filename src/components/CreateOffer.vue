@@ -73,7 +73,10 @@
                                     />
                                 </div>
                             </div>
-                            <button class="buttons btn btn-yellow" @click="createNewOffer(newOffer)">Create Offer</button>
+                            <button class="buttons btn btn-yellow" 
+                                :class="{disabled: !checkFields}" 
+                                :disabled="!checkFields" 
+                                @click="createNewOffer(newOffer)">Create Offer</button>
                         </div>
                     </div>
                 </div>
@@ -87,7 +90,7 @@ import Navbar from './layouts/Navbar';
 import TextareaControl from './layouts/forms/TextareaControl';
 import InputControl from './layouts/forms/InputControl';
 import Datepicker from 'vuejs-datepicker';
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
     name: 'CreateOffer',
@@ -113,10 +116,17 @@ export default {
             isOpened: false
         }
     },
+    computed: {
+        checkFields () {
+            if (this.newOffer.name && this.newOffer.description && this.newOffer.startDate && this.newOffer.finalDate && this.newOffer.price)
+                return true
+            return false
+        }
+    },
     methods: {
-        ...mapActions([
-            'createNewOffer'
-        ]),
+        ...mapMutations({
+            NewOffer:'NEW_OFFER'
+        }),
         toggleAdd: function () {
             this.isOpened = !this.isOpened;
             if (this.isOpened) {
@@ -124,6 +134,10 @@ export default {
             } else {
                 document.querySelector('.addition').style.height = '0px';
             }
+        },
+        createNewOffer(data) {
+            this.NewOffer(data);
+            this.$router.push('/offers');
         }
     },
     mounted () {
@@ -173,6 +187,12 @@ export default {
 
     &.add-opened
         padding 16px
+
+.buttons
+    &:disabled 
+        opacity 0.4
+        border-radius 2px
+        background-color rgba(13,23,23,0.08) !important
 </style>
 
 <style lang="stylus">

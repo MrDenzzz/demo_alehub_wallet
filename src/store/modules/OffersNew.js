@@ -525,7 +525,7 @@ const actions = {
             commit('SUCCESS_RESET_OFFER');
             resolve('success reset offer');
         });
-    }
+    },
 };
 
 function checkFilterRatingFrom(offerRating, filterRatingFrom) {
@@ -572,11 +572,28 @@ const mutations = {
     SUCCESS_RESET_OFFER: (state) => {
         state.filteredOffers = state.offers;
     },
-    SAVE_OFFER(state, offerId) {
+    SAVE_OFFER: (state, offerId) => {
+        console.log(offerId);
         let index = state.offers.findIndex(item => {
             return item.id === offerId;
         });
         state.offers[index].saved = !state.offers[index].saved;
+    },
+    NEW_OFFER: (state, data) => {
+        let id = state.offers[state.offers.length - 1].id + 1;
+        let end = Math.ceil((Date.parse(data.finalDate) - Date.parse(new Date)) / 24 / 60 / 60 / 1000)
+        state.offers.push({
+            id: id,
+            conditionId: 1,
+            employerId: 1,
+            name: data.name,
+            saved: false,
+            description: data.description,
+            price: Number(data.price),
+            requirements: [],
+            end: end,
+            contractors: []
+        })
     }
 };
 
