@@ -127,11 +127,11 @@ const state = {
     conditions: [
         {
             id: 1,
-            title: 'progress'
+            title: 'ready'
         },
         {
             id: 2,
-            title: 'ready'
+            title: 'progress'
         },
         {
             id: 3,
@@ -758,6 +758,14 @@ const getters = {
     offers: state => state.offers,
     savedOffers: state => state.offers.filter(item => {
         return item.saved === true;
+    }),
+    MyOffers: state => state.offers.filter(item => {
+        return item.employerId === 2;
+    }),
+    PortfolioOffers: state => state.offers.filter(item => {
+        return item.contractors.findIndex(contractor => {
+            return contractor.id === 2;
+        }) !== -1;
     }),
     filteredOffers: state => state.filteredOffers,
     employers: state => state.employers,
