@@ -1,17 +1,23 @@
 <template>
-    <div class="control" @click="makeFocus">
+    <div class="control"
+         @click="makeFocus">
         <div class="wrap-input">
-            <label>{{ labelValue }}</label>
-            <div class="row" style="margin-top: 18px;">
+            <label>{{ titleControl }}</label>
+            <div class="row m-t-18">
                 <div class="col-12 row-flex-start">
-                    <div class="adding-opt" v-for="item in addingOptions">
-                        <span class="adding-item">{{ item }}</span>
-                        <img class="close-adding" src="../../../assets/img/remove-tag-ic.svg" alt="" :value="item"
+                    <div class="adding-opt"
+                         v-for="item in addingOptions">
+                        <span class="adding-item">
+                            {{ item }}
+                        </span>
+                        <img class="close-adding"
+                             src="../../../assets/img/remove-tag-ic.svg"
+                             alt="close"
+                             :value="item"
                              @click="removeFromReqs($event, item)">
 
                     </div>
-                    <input
-                            type="text"
+                    <input type="text"
                             class="autocomplete-input"
                             :id="autocompleteId"
                             :placeholder="placeholder"
@@ -20,13 +26,16 @@
                             @keydown.38="moveUpSelect"
                             @keydown.40="moveDownSelect"
                             @focus="removePlaceholder"
-                            @blur="addPlaceholder"
-                    >
+                            @blur="addPlaceholder">
                 </div>
 
-                <div class="col-12" id="1">
-                    <ul id="autocomplete-select" class="auto-select" style="position: absolute;">
-                        <li class="options" ref="index" :value="item.label" v-for="(item, index) in tempOptions"
+                <div class="col-12">
+                    <ul id="autocomplete-select"
+                        class="auto-select">
+                        <li class="options"
+                            ref="index"
+                            :value="item.label"
+                            v-for="(item, index) in tempOptions"
                             @click="addToReqs(item.label)">
                             {{ item.label }}
                         </li>
@@ -38,10 +47,12 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: 'autocomplete-requirements-control',
         props: {
-            labelValue: {
+            titleControl: {
                 type: String,
                 required: true
             },
@@ -61,74 +72,80 @@
                     selectOption: 'select-opt'
                 },
                 offsetSelect: 22,
-                options: [
-                    {
-                        id: 0,
-                        label: 'Moscow',
-                        value: 'Moscow'
-                    },
-                    {
-                        id: 1,
-                        label: 'Saint-Petersburg',
-                        value: 'Saint-Petersburg'
-                    },
-                    {
-                        id: 2,
-                        label: 'Novosibirsk',
-                        value: 'Novosibirsk'
-                    },
-                    {
-                        id: 3,
-                        label: 'Tolyati',
-                        value: 'Tolyati'
-                    },
-                    {
-                        id: 4,
-                        label: 'Murmansk',
-                        value: 'Murmansk'
-                    },
-                    {
-                        id: 5,
-                        label: 'Murom',
-                        value: 'Murom'
-                    },
-                    {
-                        id: 6,
-                        label: 'Montana',
-                        value: 'Montana'
-                    },
-                    {
-                        id: 7,
-                        label: 'Samara',
-                        value: 'Samara'
-                    },
-                    {
-                        id: 8,
-                        label: 'Novokuznetsk',
-                        value: 'Novokuznetsk'
-                    },
-                    {
-                        id: 9,
-                        label: 'Tolyala',
-                        value: 'Tolyala'
-                    },
-                    {
-                        id: 10,
-                        label: 'Kaliningrad',
-                        value: 'Kaliningrad'
-                    },
-                    {
-                        id: 11,
-                        label: 'Murium',
-                        value: 'Murium'
-                    }
-
-                ],
+                // options: [
+                //     {
+                //         id: 0,
+                //         label: 'Moscow',
+                //         value: 'Moscow'
+                //     },
+                //     {
+                //         id: 1,
+                //         label: 'Saint-Petersburg',
+                //         value: 'Saint-Petersburg'
+                //     },
+                //     {
+                //         id: 2,
+                //         label: 'Novosibirsk',
+                //         value: 'Novosibirsk'
+                //     },
+                //     {
+                //         id: 3,
+                //         label: 'Tolyati',
+                //         value: 'Tolyati'
+                //     },
+                //     {
+                //         id: 4,
+                //         label: 'Murmansk',
+                //         value: 'Murmansk'
+                //     },
+                //     {
+                //         id: 5,
+                //         label: 'Murom',
+                //         value: 'Murom'
+                //     },
+                //     {
+                //         id: 6,
+                //         label: 'Montana',
+                //         value: 'Montana'
+                //     },
+                //     {
+                //         id: 7,
+                //         label: 'Samara',
+                //         value: 'Samara'
+                //     },
+                //     {
+                //         id: 8,
+                //         label: 'Novokuznetsk',
+                //         value: 'Novokuznetsk'
+                //     },
+                //     {
+                //         id: 9,
+                //         label: 'Tolyala',
+                //         value: 'Tolyala'
+                //     },
+                //     {
+                //         id: 10,
+                //         label: 'Kaliningrad',
+                //         value: 'Kaliningrad'
+                //     },
+                //     {
+                //         id: 11,
+                //         label: 'Murium',
+                //         value: 'Murium'
+                //     }
+                //
+                // ],
+                options: [],
                 tempOptions: [],
                 addingOptions: []
             }
         },
         computed: {
+            ...mapGetters(
+                [
+                    'requirementsList'
+                ]
+            ),
             currentSelectOption: function () {
                 return document.getElementsByClassName(this.classes.selectOption)[0];
             },
@@ -146,6 +163,9 @@
             addPlaceholder: function () {
                 document.getElementById(this.autocompleteId).placeholder = this.placeholder;
             },
+            /**
+             *
+             */
             searchJuxtapose: function () {
                 let a = document.getElementById(this.autocompleteId).value.toLowerCase();
                 let resultOptions = [];
@@ -263,9 +283,19 @@
             },
             makeFocus: function () {
                 document.getElementById(this.autocompleteId).focus();
+            },
+            /**
+             * init local data options by external data
+             *
+             * @param requirementsList
+             */
+            initLocalRequirementsList: function (requirementsList) {
+                this.options = requirementsList;
             }
         },
         created() {
+            this.initLocalRequirementsList(this.requirementsList);
+
             if (this.inputValue.length !== 0) {
                 this.tmp = this.inputValue.slice();
                 for (let i = 0; i < this.inputValue.length; i++) {
@@ -277,6 +307,9 @@
 </script>
 
 <style lang="stylus" scoped>
+
+    .m-t-18
+        margin-top 18px
 
     input
         font-family MuseoSansCyrl500
@@ -302,11 +335,10 @@
         line-height 1.29
         font-size 14px
 
-    input.autocomplete-input
+    .autocomplete-input
         margin-top 0 !important
 
     .adding-item
-        white-space pre
         margin-right 6px
 
     .qwe
@@ -340,6 +372,7 @@
         d-block
 
     .auto-select
+        position absolute
         width 280px
         list-style none
         box-shadow 0 5px 20px 0 rgba(0, 0, 0, 0.12)

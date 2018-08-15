@@ -15,6 +15,7 @@ import OffersListModule from './modules/OffersList';
 import ThemesModule from './modules/Themes';
 import OfferModule from './modules/Offer';
 import OffersNew from './modules/OffersNew';
+import OfferRequirements from './modules/OfferRequirements';
 
 
 export const store = new Vuex.Store({
@@ -30,7 +31,8 @@ export const store = new Vuex.Store({
         OffersList: OffersListModule,
         Themes: ThemesModule,
         Offer: OfferModule,
-        OffersNew: OffersNew
+        OffersNew: OffersNew,
+        OfferRequirements: OfferRequirements
     },
     strict: false
 });
