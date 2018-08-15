@@ -176,8 +176,8 @@ const state = {
                 }
             ],
             date: {
-                from: 0,
-                to: 1,
+                from: 1524571843000,
+                to: 1526213443000,
             },
             end: 18,
             positions: [
@@ -328,8 +328,8 @@ const state = {
                 }
             ],
             date: {
-                from: 0,
-                to: 1,
+                from: 1524571843000,
+                to: 1525954243000,
             },
             end: 18,
             positions: [
@@ -435,8 +435,8 @@ const state = {
                 }
             ],
             date: {
-                from: 0,
-                to: 1,
+                from: 1524571843000,
+                to: 1524744643000,
             },
             end: 18,
             positions: [
