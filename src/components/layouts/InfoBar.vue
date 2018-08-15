@@ -1,11 +1,11 @@
 <template>
-    <div class="info-bar">
+    <div class="info-bar" v-if="selectedOffer">
         <div class="info-wrap">
             <div class="project">
                 <div class="circle"></div>
                 <div class="project-info">
-                    <div class="title">{{ project.name }}</div>
-                    <div class="subtitle">{{ project.company }}</div>
+                    <div class="title">{{ selectedOffer.name }}</div>
+                    <div class="subtitle">{{ selectedOffer.company }}</div>
                 </div>
             </div>
             <div class="info">
@@ -13,7 +13,7 @@
                     Global limit
                 </div>
                 <div class="subtitle">
-                    ${{ project.limit }}
+                    {{ selectedOffer.price }}
                 </div>
             </div>
             <div class="info">
@@ -21,7 +21,7 @@
                     Contract period
                 </div>
                 <div class="subtitle">
-                    {{ project.startDate }} - {{ project.finalDate }}
+                    {{ parseDate(selectedOffer.from) }} - {{ parseDate(selectedOffer.to) }}
                 </div>
             </div>
             <div class="info">
@@ -29,7 +29,7 @@
                     Status
                 </div>
                 <div class="subtitle">
-                    {{ project.status }}
+                    {{ parseStatus(selectedOffer.conditionId) }}
                 </div>
             </div>
         </div>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import Moment from 'moment';
+
 export default {
     name: 'InfoBar',
     data() {
@@ -61,15 +63,36 @@ export default {
             }
         }
     },
+    props: {
+        offers: {
+            type: Array
+        },
+        conditions: {
+            type: Array
+        }
+    },
     computed: {
         selectedTheme() {
             return this.$store.state.Themes.theme;
+        },
+        selectedOffer() {
+            return this.offers.find(item => {
+                return item.id === Number(this.$route.params.id);
+            });
         }
     },
     methods: {
         getIcon: function (name) {
             return this.selectedTheme === 'dark' ? require(`../../../static/img/${name}_dark.svg`) : require(`../../../static/img/${name}.svg`);
         },
+        parseDate: function (date) {
+            return Moment(date).format('D MMM, YYYY');
+        },
+        parseStatus: function (id) {
+            return this.conditions.find(item => {
+                return item.id === id;
+            }).title;
+        }
     }
 }
 </script>
@@ -133,6 +156,7 @@ export default {
                 line-height 1.29
                 color #34343e
                 white-space nowrap
+                text-transform capitalize
 
                 @media(max-width 960px)
                     font-size 16px

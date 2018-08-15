@@ -5,7 +5,8 @@
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
 
-        <info-bar/>
+        <info-bar :offers="offers"
+                  :conditions="conditions"/>
 
         <contractors-list/>
 
@@ -19,6 +20,7 @@
     import InfoBar from './layouts/InfoBar';
     import ContractorsList from './layouts/ContractorsList';
     import Timeline from './layouts/Timeline';
+    import {mapGetters} from "vuex";
 
     export default {
         name: 'NewOffers',
@@ -48,6 +50,12 @@
             }
         },
         computed: {
+            ...mapGetters(
+                [
+                    'offers',
+                    'conditions'
+                ]
+            ),
             selectedTheme() {
                 return this.$store.state.Themes.theme;
             }
