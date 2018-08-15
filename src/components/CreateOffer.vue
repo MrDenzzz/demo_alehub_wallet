@@ -44,13 +44,11 @@
                             </div>
                             <!--@click="toggleAdd"-->
                             <div class="additional"
-                            >
+                                 >
                                 Additional
                             </div>
                             <!--:class="{'add-opened': isOpened}"-->
-                            <div class="form addition add-opened"
-                                 style="height: auto;"
-                            >
+                            <div class="form addition add-opened" style="height: auto;">
                                 <div class="outer">
 
                                     <input-control :labelValue="'Project Name'"
@@ -58,17 +56,17 @@
                                                    :placeholder="'Enter the name of the project'"
                                                    :fullWidth="true"/>
 
-                                    <autocomplete-requirements-control
-                                            :title-control="'Autocomplete requirements and skills'"
-                                            :placeholder="'Enter the requirements and skills'"
-                                            :autocomplete-id="'autocomplete-reqs-1'"
-                                            :input-value="['js', 'c++']"/>
+                                    <offer-create-reqs-input-autocomplete
+                                            :title-control="'Autocomplete requirements and requirements'"
+                                            :placeholder="'Enter the requirements and requirements'"
+                                            :input-id="'autocomplete-reqs-1'"
+                                            :requirementsList="requirementsList"/>
 
 
-                                    <input-control :labelValue="'Requirements and Skills'"
-                                                   :inputId="'reqs'"
-                                                   :placeholder="'Enter the Requirements and Skills'"
-                                                   :fullWidth="true"/>
+                                    <!--<input-control :labelValue="'Requirements and requirements'"-->
+                                    <!--:inputId="'reqs'"-->
+                                    <!--:placeholder="'Enter the Requirements and requirements'"-->
+                                    <!--:fullWidth="true"/>-->
                                 </div>
                             </div>
                             <button class="buttons btn btn-yellow"
@@ -90,9 +88,9 @@
     import TextareaControl from './layouts/forms/TextareaControl';
     import InputControl from './layouts/forms/InputControl';
     import Datepicker from 'vuejs-datepicker';
-    import AutocompleteRequirementsControl from './layouts/forms/AutocompleteRequirementsControl';
+    import OfferCreateReqsInputAutocomplete from './layouts/offers/offer-create/OfferCreateReqsInputAutocomplete';
 
-    import {mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'CreateOffer',
@@ -101,33 +99,52 @@
             TextareaControl,
             InputControl,
             Datepicker,
-            AutocompleteRequirementsControl
+            OfferCreateReqsInputAutocomplete
         },
         data() {
             return {
                 newOffer: {
-                    name: '',
-                    description: '',
-                    projectName: '',
+                    name: '13123',
+                    description: 'descriptionasdasd  asd asd ',
+                    projectName: 'asd as asd asd sad',
                     companyName: '', // take from current user
                     companyLogo: '', // take from current user
-                    startDate: '',
-                    finalDate: '',
-                    skills: '',
-                    price: null
+                    startDate: 1524571843000,
+                    finalDate: 1524744643000,
+                    requirements: [
+                        {
+                            id: 1,
+                            label: 'JavaScript',
+                            title: 'JavaScript'
+                        },
+                        {
+                            id: 2,
+                            label: 'Java',
+                            title: 'Java'
+                        },
+                        {
+                            id: 3,
+                            label: 'C++',
+                            title: 'C++'
+                        }
+                    ],
+                    price: 666
                 },
-                isOpened: false
+                isOpened: true
             }
         },
         computed: {
-            checkFields() {
-                return this.newOffer.name && this.newOffer.description && this.newOffer.startDate && this.newOffer.finalDate && this.newOffer.price;
+            ...mapGetters(
+                [
+                    'requirementsList'
+                ]
+            ),
+            checkFields: function () {
+                return true;
+                // return this.newOffer.name && this.newOffer.description && this.newOffer.startDate && this.newOffer.finalDate && this.newOffer.price;
             }
         },
         methods: {
-            ...mapMutations({
-                NewOffer: 'NEW_OFFER'
-            }),
             toggleAdd: function () {
                 this.isOpened = !this.isOpened;
                 if (this.isOpened) {
@@ -136,21 +153,38 @@
                     document.querySelector('.addition').style.height = '0px';
                 }
             },
-            createNewOffer: function (data) {
-                this.NewOffer(data);
-                this.$router.push('/offers');
+            createNewOffer: function (dataNewOffer) {
+                this.$store.dispatch('addNewOffer',
+                    dataNewOffer
+                ).then(resp => {
+                    console.log(resp);
+                    this.$router.push('/offers');
+                }).catch(err => {
+
+                });
             }
         },
         mounted() {
             this.$on('imitVModel', function (value, id) {
-                if (id === 'offerName') this.newOffer.name = value;
-                if (id === 'offerPrice') this.newOffer.price = value;
-                if (id === 'projectName') this.newOffer.projectName = value;
-                if (id === 'reqs') this.newOffer.skills = value;
+                if (id === 'offerName')
+                    this.newOffer.name = value;
+
+                if (id === 'offerPrice')
+                    this.newOffer.price = value;
+
+                if (id === 'projectName')
+                    this.newOffer.projectName = value;
+
+                if (id === 'reqs')
+                    this.newOffer.requirements = value;
             });
-            this.$on('rece' +
-                'iveDescriptionOffer', function (value) {
+
+            this.$on('receiveDescriptionOffer', function (value) {
                 this.newOffer.description = value;
+            });
+
+            this.$on('returnCreateOfferRequirements', offerRequirementsList => {
+                this.newOffer.requirements = offerRequirementsList;
             });
         }
     }

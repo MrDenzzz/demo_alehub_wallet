@@ -151,7 +151,7 @@
     import PanelHeading from './layouts/PanelHeading';
     import InputControl from './layouts/forms/InputControl';
     import TextareaControl from './layouts/forms/TextareaControl';
-    import AutocompleteRequirementsControl from './layouts/forms/AutocompleteRequirementsControl';
+    import AutocompleteRequirementsControl from './layouts/forms/input/InputAutocomplete';
     import DatepickerControl from './layouts/forms/DatepickerControl';
     import ActionPanel from './layouts/ActionPanel';
     import PriceControl from './layouts/forms/PriceControl';

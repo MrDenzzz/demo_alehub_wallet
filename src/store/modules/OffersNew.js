@@ -81,34 +81,42 @@ const state = {
     requirements: [
         {
             id: 1,
-            title: 'Java Script'
+            label: 'JavaScript',
+            title: 'JavaScript'
         },
         {
             id: 2,
+            label: 'Java',
             title: 'Java'
         },
         {
             id: 3,
+            label: 'C++',
             title: 'C++'
         },
         {
             id: 4,
+            label: 'NodeJS',
             title: 'NodeJS'
         },
         {
             id: 5,
+            label: 'VueJS',
             title: 'VueJS'
         },
         {
             id: 6,
+            label: 'React',
             title: 'React'
         },
         {
             id: 7,
+            label: 'Network',
             title: 'Network'
         },
         {
             id: 8,
+            label: 'Blockchain',
             title: 'Blockchain'
         }
     ],
@@ -526,6 +534,12 @@ const actions = {
             resolve('success reset offer');
         });
     },
+    addNewOffer: ({commit}, offerData) => {
+        return new Promise((resolve, reject) => {
+            commit('SUCCESS_ADD_NEW_OFFER', offerData);
+            resolve('success add new offer');
+        });
+    }
 };
 
 function checkFilterRatingFrom(offerRating, filterRatingFrom) {
@@ -556,6 +570,20 @@ function checkFilterPriceTo(offerPrice, filterPriceTo) {
     return offerPrice < filterPriceTo;
 }
 
+function autoIncrement() {
+
+}
+
+function formatToOffersRequirements(requirements) {
+    let i = 0;
+    return requirements.map(req => {
+        return {
+            id: ++i,
+            requirementId: req.id
+        };
+    });
+}
+
 const mutations = {
     SUCCESS_FILTER_OFFER: (state, filterData) => {
         state.filteredOffers = state.offers.filter(offer => {
@@ -579,21 +607,24 @@ const mutations = {
         });
         state.offers[index].saved = !state.offers[index].saved;
     },
-    NEW_OFFER: (state, data) => {
-        let id = state.offers[state.offers.length - 1].id + 1;
-        let end = Math.ceil((Date.parse(data.finalDate) - Date.parse(new Date)) / 24 / 60 / 60 / 1000)
-        state.offers.push({
-            id: id,
-            conditionId: 1,
-            employerId: 1,
-            name: data.name,
-            saved: false,
-            description: data.description,
-            price: Number(data.price),
-            requirements: [],
-            end: end,
-            contractors: []
-        })
+    SUCCESS_ADD_NEW_OFFER: (state, data) => {
+        let id = state.offers[state.offers.length - 1].id + 1,
+            end = Math.ceil((Date.parse(data.finalDate) - Date.parse(new Date)) / 24 / 60 / 60 / 1000);
+
+        state.offers.push(
+            {
+                id: id,
+                conditionId: 1,
+                employerId: 1,
+                name: data.name,
+                saved: false,
+                description: data.description,
+                price: Number(data.price),
+                requirements: formatToOffersRequirements(data.requirements),
+                end: end,
+                contractors: []
+            }
+        )
     }
 };
 
@@ -621,6 +652,7 @@ const getters = {
         return state.contractors;
     },
     requirements: state => state.requirements,
+    requirementsList: state => state.requirements,
     conditions: state => state.conditions,
 };
 

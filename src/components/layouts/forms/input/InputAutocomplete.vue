@@ -8,10 +8,10 @@
                     <div class="adding-opt"
                          v-for="item in addingOptions">
                         <span class="adding-item">
-                            {{ item }}
+                            {{ item.label }}
                         </span>
                         <img class="close-adding"
-                             src="../../../assets/img/remove-tag-ic.svg"
+                             src="../../../../assets/img/remove-tag-ic.svg"
                              alt="close"
                              :value="item"
                              @click="removeFromReqs($event, item)">
@@ -19,7 +19,7 @@
                     </div>
                     <input type="text"
                             class="autocomplete-input"
-                            :id="autocompleteId"
+                            :id="inputId"
                             :placeholder="placeholder"
                             @input="searchJuxtapose"
                             @keydown.enter="addOptIntoResult"
@@ -34,9 +34,9 @@
                         class="auto-select">
                         <li class="options"
                             ref="index"
-                            :value="item.label"
+                            :value="item"
                             v-for="(item, index) in tempOptions"
-                            @click="addToReqs(item.label)">
+                            @click="addToReqs(item)">
                             {{ item.label }}
                         </li>
                     </ul>
@@ -47,10 +47,8 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
-
     export default {
-        name: 'autocomplete-requirements-control',
+        name: 'input-autocomplete-control',
         props: {
             titleControl: {
                 type: String,
@@ -60,11 +58,21 @@
                 type: String,
                 required: true
             },
-            autocompleteId: {
+            inputId: {
                 type: String,
                 required: true
             },
-            inputValue: [String, Array]
+            requirementsList: {
+                type: [Array],
+                required: true
+            },
+            inputValue: {
+                type: [String, Array],
+                default: function () {
+                    return [];
+                },
+                required: false
+            }
         },
         data() {
             return {
@@ -72,80 +80,12 @@
                     selectOption: 'select-opt'
                 },
                 offsetSelect: 22,
-                // options: [
-                //     {
-                //         id: 0,
-                //         label: 'Moscow',
-                //         value: 'Moscow'
-                //     },
-                //     {
-                //         id: 1,
-                //         label: 'Saint-Petersburg',
-                //         value: 'Saint-Petersburg'
-                //     },
-                //     {
-                //         id: 2,
-                //         label: 'Novosibirsk',
-                //         value: 'Novosibirsk'
-                //     },
-                //     {
-                //         id: 3,
-                //         label: 'Tolyati',
-                //         value: 'Tolyati'
-                //     },
-                //     {
-                //         id: 4,
-                //         label: 'Murmansk',
-                //         value: 'Murmansk'
-                //     },
-                //     {
-                //         id: 5,
-                //         label: 'Murom',
-                //         value: 'Murom'
-                //     },
-                //     {
-                //         id: 6,
-                //         label: 'Montana',
-                //         value: 'Montana'
-                //     },
-                //     {
-                //         id: 7,
-                //         label: 'Samara',
-                //         value: 'Samara'
-                //     },
-                //     {
-                //         id: 8,
-                //         label: 'Novokuznetsk',
-                //         value: 'Novokuznetsk'
-                //     },
-                //     {
-                //         id: 9,
-                //         label: 'Tolyala',
-                //         value: 'Tolyala'
-                //     },
-                //     {
-                //         id: 10,
-                //         label: 'Kaliningrad',
-                //         value: 'Kaliningrad'
-                //     },
-                //     {
-                //         id: 11,
-                //         label: 'Murium',
-                //         value: 'Murium'
-                //     }
-                //
-                // ],
                 options: [],
                 tempOptions: [],
                 addingOptions: []
             }
         },
         computed: {
-            ...mapGetters(
-                [
-                    'requirementsList'
-                ]
-            ),
             currentSelectOption: function () {
                 return document.getElementsByClassName(this.classes.selectOption)[0];
             },
@@ -158,16 +98,17 @@
         },
         methods: {
             removePlaceholder: function () {
-                document.getElementById(this.autocompleteId).placeholder = "";
+                document.getElementById(this.inputId).placeholder = "";
             },
             addPlaceholder: function () {
-                document.getElementById(this.autocompleteId).placeholder = this.placeholder;
+                document.getElementById(this.inputId).placeholder = this.placeholder;
             },
             /**
              *
+             *
              */
             searchJuxtapose: function () {
-                let a = document.getElementById(this.autocompleteId).value.toLowerCase();
+                let a = document.getElementById(this.inputId).value.toLowerCase();
                 let resultOptions = [];
                 var _this = this;
 
@@ -187,24 +128,25 @@
                     for (let i = 0; i < _this.tempOptions.length; i++) {
                         // document.getElementsByClassName('options')[i].innerHTML = ' ' + document.getElementsByClassName('options')[i].
                         // innerHTML.replace(new RegExp('[^a-zа-яё]' + a + '[^a-zа-яё]', 'gim'), '<span style="color: red;" class="qwe">' + ' ' + a + ' ' + '</span>');
-                        document.getElementsByClassName('options')[i].innerHTML = ' ' + '<span style="color: #a87104;">' + a + '</span>' + _this.tempOptions[i].label.replace(
-                            _this.tempOptions[i].label.substring(0, a.length), '');
+                        document.getElementsByClassName('options')[i].innerHTML = ' ' + '<span style="color: #a87104;">' +
+                            a + '</span>' + _this.tempOptions[i].label.replace(_this.tempOptions[i].label.substring(0, a.length), '');
                     }
 
                     let listOpt = document.getElementsByClassName('options');
-                    if (listOpt.length !== 0) {
+
+                    if (listOpt.length !== 0)
                         listOpt[0].classList.add('select-opt');
-                    }
 
                 }, 40);
 
             },
             addToReqs: function (val) {
-                let autoInput = document.getElementById(this.autocompleteId);
+                let autoInput = document.getElementById(this.inputId);
                 var _this = this;
+
                 if (!this.addingOptions.includes(val)) {
                     this.addingOptions.push(val);
-                    this.$parent.$emit('receiveRequirementsOffer', this.addingOptions);
+                    this.$parent.$emit('returnDataList', this.addingOptions);
                     this.tempOptions = [];
                     autoInput.value = '';
                     autoInput.focus();
@@ -214,7 +156,7 @@
                 }
             },
             removeFromReqs: function (e, val) {
-                let autoInput = document.getElementById(this.autocompleteId);
+                let autoInput = document.getElementById(this.inputId);
                 var _this = this;
 
                 let reqWidth = e.srcElement.parentElement.offsetWidth;
@@ -223,7 +165,8 @@
                 this.addingOptions.splice(this.addingOptions.findIndex(function (el) {
                     return el === val;
                 }), 1);
-                this.$parent.$emit('receiveRequirementsOffer', this.addingOptions);
+
+                this.$parent.$emit('returnDataList', this.addingOptions);
 
                 this.tempOptions = [];
                 autoInput.value = '';
@@ -234,14 +177,14 @@
             },
             addOptIntoResult: function () {
                 let searchItem = document.getElementsByClassName('select-opt')[0];
-                let autoInput = document.getElementById(this.autocompleteId);
+                let autoInput = document.getElementById(this.inputId);
                 var _this = this;
                 if (searchItem) {
-                    this.addingOptions.push(this.tempOptions.find(function (el) {
+                    this.addingOptions.push(this.tempOptions.find(el => {
                         return el.label.toLowerCase() === searchItem.innerText.toLowerCase();
-                    }).label);
+                    }));
 
-                    this.$parent.$emit('receiveRequirementsOffer', this.addingOptions);
+                    this.$parent.$emit('returnDataList', this.addingOptions);
 
                     this.tempOptions = [];
                     autoInput.value = '';
@@ -282,7 +225,7 @@
                 document.getElementById('autocomplete-select').style.left = this.offsetSelect + 'px';
             },
             makeFocus: function () {
-                document.getElementById(this.autocompleteId).focus();
+                document.getElementById(this.inputId).focus();
             },
             /**
              * init local data options by external data
