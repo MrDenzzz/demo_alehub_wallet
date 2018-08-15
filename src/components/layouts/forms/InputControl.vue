@@ -1,18 +1,18 @@
 <template>
-    <div class="control" @click="makeFocus">
-        <div class="wrap-input" :class="{fullWidth: fullWidth}">
+    <div class="control"
+         @click="makeFocus">
+        <div class="wrap-input"
+             :class="{fullWidth: fullWidth}">
             <label :for="inputId">{{ labelValue }}</label>
-            <input
-                    class="input-control"
-                    v-model="value"
-                    :type="inputType"
-                    :id="inputId"
-                    :placeholder="placeholder"
-                    @keyup.enter="endOfInput"
-                    @blur="addPlaceholder"
-                    @focus="removePlaceholder"
-                    @input="sendData"
-            >
+            <input class="input-control"
+                   v-model="value"
+                   :type="inputType"
+                   :id="inputId"
+                   :placeholder="placeholder"
+                   @keyup.enter="endOfInput"
+                   @blur="addPlaceholder"
+                   @focus="removePlaceholder"
+                   @input="sendData">
         </div>
     </div>
 </template>
@@ -110,11 +110,12 @@
                 color #34343e
                 opacity 1
 
-            input::-webkit-input-placeholder
+            input:
+            :-webkit-input-placeholder
                 opacity 1
                 line-height 1.29
                 font-size 14px
-                
+
     @media (max-width: 425px)
         .control
             .wrap-input

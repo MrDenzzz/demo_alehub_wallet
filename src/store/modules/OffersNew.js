@@ -21,19 +21,23 @@ const state = {
     positions: [
         {
             id: 1,
-            title: 'ch'
+            title: 'ch',
+            label: 'check'
         },
         {
             id: 2,
-            title: 'ts'
+            title: 'ts',
+            label: 'technical support'
         },
         {
             id: 3,
-            title: 'ex'
+            title: 'ex',
+            label: 'executor'
         },
         {
             id: 4,
-            title: 'qa'
+            title: 'qa',
+            label: 'quality assurance'
         }
     ],
     contractors: [
@@ -636,6 +640,7 @@ const getters = {
     filteredOffers: state => state.filteredOffers,
     employers: state => state.employers,
     positions: state => state.positions,
+    positionsOfferContractors: state => state.positions,
     contractors: state => {
         // let contractors = [];
         // state.contractors.forEach(contractor => {

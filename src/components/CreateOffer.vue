@@ -67,6 +67,10 @@
                                     <!--:inputId="'reqs'"-->
                                     <!--:placeholder="'Enter the Requirements and requirements'"-->
                                     <!--:fullWidth="true"/>-->
+
+
+                                    <offer-create-input-positions :positions="positionsOfferContractors"/>
+
                                 </div>
                             </div>
                             <button class="buttons btn btn-yellow"
@@ -89,6 +93,7 @@
     import InputControl from './layouts/forms/InputControl';
     import Datepicker from 'vuejs-datepicker';
     import OfferCreateReqsInputAutocomplete from './layouts/offers/offer-create/OfferCreateReqsInputAutocomplete';
+    import OfferCreateInputPositions from './layouts/offers/offer-create/OfferCreateInputPositions';
 
     import {mapGetters} from 'vuex';
 
@@ -99,7 +104,8 @@
             TextareaControl,
             InputControl,
             Datepicker,
-            OfferCreateReqsInputAutocomplete
+            OfferCreateReqsInputAutocomplete,
+            OfferCreateInputPositions
         },
         data() {
             return {
@@ -109,8 +115,8 @@
                     projectName: 'asd as asd asd sad',
                     companyName: '', // take from current user
                     companyLogo: '', // take from current user
-                    startDate: 1524571843000,
-                    finalDate: 1524744643000,
+                    startDate: 1527014933000,
+                    finalDate: 1537014933000,
                     requirements: [
                         {
                             id: 1,
@@ -128,7 +134,8 @@
                             title: 'C++'
                         }
                     ],
-                    price: 666
+                    price: 666,
+                    positions: []
                 },
                 isOpened: true
             }
@@ -136,7 +143,8 @@
         computed: {
             ...mapGetters(
                 [
-                    'requirementsList'
+                    'requirementsList',
+                    'positionsOfferContractors'
                 ]
             ),
             checkFields: function () {
@@ -185,6 +193,11 @@
 
             this.$on('returnCreateOfferRequirements', offerRequirementsList => {
                 this.newOffer.requirements = offerRequirementsList;
+            });
+
+            this.$on('returnSelectedPositions', selectedPositions => {
+                console.log(selectedPositions, 'selectedPositions');
+                this.newOffer.positions = selectedPositions;
             });
         }
     }
