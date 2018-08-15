@@ -22,7 +22,7 @@
                                     <div class="wrap-input datepick">
                                         <label for="datepicker-from">Start Date</label>
                                         <datepicker id="datepicker-from"
-                                                    v-model="newOffer.startDate"
+                                                    v-model="newOffer.date.from"
                                                     language="en"
                                                     :placeholder="'Choose start time'"/>
                                     </div>
@@ -31,7 +31,7 @@
                                     <div class="wrap-input datepick">
                                         <label for="datepicker-to">Final Date</label>
                                         <datepicker id="datepicker-to"
-                                                    v-model="newOffer.finalDate"
+                                                    v-model="newOffer.date.to"
                                                     language="en"
                                                     :placeholder="'Choose final time'"/>
                                     </div>
@@ -115,8 +115,10 @@
                     projectName: 'asd as asd asd sad',
                     companyName: '', // take from current user
                     companyLogo: '', // take from current user
-                    startDate: 1527014933000,
-                    finalDate: 1537014933000,
+                    date: {
+                        from: 1527014933000,
+                        to: 1537014933000,
+                    },
                     requirements: [
                         {
                             id: 1,

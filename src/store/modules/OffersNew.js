@@ -175,6 +175,10 @@ const state = {
                     requirementId: 5,
                 }
             ],
+            date: {
+                from: 0,
+                to: 1,
+            },
             end: 18,
             positions: [
                 {
@@ -323,6 +327,10 @@ const state = {
                     requirementId: 7,
                 }
             ],
+            date: {
+                from: 0,
+                to: 1,
+            },
             end: 18,
             positions: [
                 {
@@ -426,6 +434,10 @@ const state = {
                     requirementId: 8,
                 }
             ],
+            date: {
+                from: 0,
+                to: 1,
+            },
             end: 18,
             positions: [
                 {
@@ -466,6 +478,7 @@ const state = {
             'quickly, beautifully and inexpensively. With us you will receive many invaluable experiences and ' +
             'pleasant memories.',
             price: 3200,
+            saved: false,
             requirements: [
                 {
                     id: 1,
@@ -488,7 +501,77 @@ const state = {
                     requirementId: 5,
                 }
             ],
+            date: {
+                from: 0,
+                to: 1,
+            },
             end: 18,
+            positions: [
+                {
+                    id: 1,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 1,
+                        date: [
+                            {
+                                from: 1524571843000,
+                                to: 1524744643000
+                            },
+                            {
+                                from: 1525003843000,
+                                to: 1525654243000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    positionId: 2,
+                    contractor: {
+                        contractorId: 2,
+                        date: [
+                            {
+                                from: 1524644643000,
+                                to: 1525119843000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    positionId: 3,
+                    contractor: {
+                        contractorId: 3,
+                        date: [
+                            {
+                                from: 1525003843000,
+                                to: 1525954243000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 4,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 4,
+                        date: [
+                            {
+                                from: 1524671843000,
+                                to: 1524844643000
+                            },
+                            {
+                                from: 1524971843000,
+                                to: 1525044643000
+                            },
+                            {
+                                from: 1525522243000,
+                                to: 1526213443000
+                            }
+                        ]
+                    }
+                }
+            ],
             contractors: [
                 {
                     id: 1,
@@ -555,6 +638,7 @@ const state = {
             'dolore eu fugiat nulla pariatur.',
             employer: 'Effective Energy LTD',
             price: 4500,
+            saved: true,
             requirements: [
                 {
                     id: 1,
@@ -569,7 +653,52 @@ const state = {
                     requirementId: 7,
                 }
             ],
+            date: {
+                from: 0,
+                to: 1,
+            },
             end: 18,
+            positions: [
+                {
+                    id: 1,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 1,
+                        date: [
+                            {
+                                from: 1524571843000,
+                                to: 1524744643000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    positionId: 2,
+                    contractor: {
+                        contractorId: 2,
+                        date: [
+                            {
+                                from: 1524644643000,
+                                to: 1525119843000
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    positionId: 3,
+                    contractor: {
+                        contractorId: 3,
+                        date: [
+                            {
+                                from: 1525003843000,
+                                to: 1525954243000
+                            }
+                        ]
+                    }
+                }
+            ],
             contractors: [
                 {
                     id: 1,
@@ -612,6 +741,7 @@ const state = {
             'was born and I will give you a complete account of the system, and expound the actual teachings of ' +
             'the great explorer of the truth, the master-builder of human happiness.',
             price: 11600,
+            saved: false,
             requirements: [
                 {
                     id: 1,
@@ -630,7 +760,26 @@ const state = {
                     requirementId: 8,
                 }
             ],
+            date: {
+                from: 0,
+                to: 1,
+            },
             end: 18,
+            positions: [
+                {
+                    id: 1,
+                    positionId: 1,
+                    contractor: {
+                        contractorId: 1,
+                        date: [
+                            {
+                                from: 1524571843000,
+                                to: 1524744643000
+                            }
+                        ]
+                    }
+                }
+            ],
             contractors: [
                 {
                     id: 1,
@@ -710,6 +859,17 @@ function formatToOffersRequirements(requirements) {
     });
 }
 
+function formatToOffersPositions(positions) {
+    let i = 0;
+    return positions.map(pos => {
+        return {
+            id: ++i,
+            positionId: pos.id,
+            contractor: {}
+        };
+    });
+}
+
 const mutations = {
     SUCCESS_FILTER_OFFER: (state, filterData) => {
         state.filteredOffers = state.offers.filter(offer => {
@@ -735,7 +895,7 @@ const mutations = {
     },
     SUCCESS_ADD_NEW_OFFER: (state, data) => {
         let id = state.offers[state.offers.length - 1].id + 1,
-            end = Math.ceil((Date.parse(data.finalDate) - Date.parse(new Date)) / 24 / 60 / 60 / 1000);
+            end = Math.ceil((Date.parse(data.date.to) - Date.parse(new Date)) / 24 / 60 / 60 / 1000);
 
         state.offers.push(
             {
@@ -747,7 +907,12 @@ const mutations = {
                 description: data.description,
                 price: Number(data.price),
                 requirements: formatToOffersRequirements(data.requirements),
+                date: {
+                    from: data.date.from,
+                    to: data.date.to,
+                },
                 end: end,
+                positions: formatToOffersPositions(data.positions),
                 contractors: []
             }
         )
