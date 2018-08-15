@@ -4,7 +4,7 @@
                      :key="offer.id"
                      :offer="offer"/>
 
-        <offers-pagination :number-offers="3"/>
+        <!--<offers-pagination :number-offers="3"/>-->
     </div>
 </template>
 

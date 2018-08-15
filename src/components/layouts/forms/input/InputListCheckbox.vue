@@ -46,7 +46,7 @@
              * @returns {string}
              */
             calcActiveClass: function (itemId) {
-                if (this.model.find(m => m.id === itemId))
+                if (this.model.find(m => m === itemId))
                     return 'active-label';
                 return 'inactive-label';
             }
