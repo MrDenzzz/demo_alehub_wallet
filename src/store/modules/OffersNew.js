@@ -196,7 +196,23 @@ const state = {
                                 to: 1525654243000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -209,7 +225,16 @@ const state = {
                                 to: 1525119843000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 3,
@@ -222,7 +247,23 @@ const state = {
                                 to: 1525954243000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 4,
@@ -243,7 +284,23 @@ const state = {
                                 to: 1526213443000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 }
             ],
             contractors: [
@@ -344,7 +401,16 @@ const state = {
                                 to: 1524744643000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -357,7 +423,23 @@ const state = {
                                 to: 1525119843000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 3,
@@ -370,7 +452,16 @@ const state = {
                                 to: 1525954243000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 }
             ],
             contractors: [
@@ -451,7 +542,23 @@ const state = {
                                 to: 1524744643000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 }
             ],
             contractors: [
@@ -522,7 +629,23 @@ const state = {
                                 to: 1525654243000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -535,7 +658,16 @@ const state = {
                                 to: 1525119843000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 3,
@@ -548,7 +680,23 @@ const state = {
                                 to: 1525954243000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 4,
@@ -569,7 +717,23 @@ const state = {
                                 to: 1526213443000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 }
             ],
             contractors: [
@@ -670,7 +834,16 @@ const state = {
                                 to: 1524744643000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -683,7 +856,23 @@ const state = {
                                 to: 1525119843000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 },
                 {
                     id: 3,
@@ -696,7 +885,16 @@ const state = {
                                 to: 1525954243000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 }
             ],
             contractors: [
@@ -777,7 +975,23 @@ const state = {
                                 to: 1524744643000
                             }
                         ]
-                    }
+                    },
+                    documents: [
+                        {
+                            id: 1,
+                            href: '../../static/offer-documents/doc1.txt',
+                            date: {
+                                upload: 1
+                            }
+                        },
+                        {
+                            id: 2,
+                            href: '../../static/offer-documents/doc2.txt',
+                            date: {
+                                upload: 1
+                            }
+                        }
+                    ]
                 }
             ],
             contractors: [
@@ -793,7 +1007,7 @@ const state = {
                 }
             ]
         }
-    ],
+    ]
 };
 
 const actions = {
@@ -865,7 +1079,8 @@ function formatToOffersPositions(positions) {
         return {
             id: ++i,
             positionId: pos,
-            contractor: {}
+            contractor: {},
+            documents: []
         };
     });
 }
