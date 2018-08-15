@@ -864,7 +864,7 @@ function formatToOffersPositions(positions) {
     return positions.map(pos => {
         return {
             id: ++i,
-            positionId: pos.id,
+            positionId: pos,
             contractor: {}
         };
     });
@@ -915,7 +915,7 @@ const mutations = {
                 positions: formatToOffersPositions(data.positions),
                 contractors: []
             }
-        )
+        );
     }
 };
 
