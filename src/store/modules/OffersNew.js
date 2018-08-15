@@ -115,11 +115,11 @@ const state = {
     conditions: [
         {
             id: 1,
-            title: 'progress'
+            title: 'ready'
         },
         {
             id: 2,
-            title: 'ready'
+            title: 'progress'
         },
         {
             id: 3,

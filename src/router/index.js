@@ -164,7 +164,7 @@ const router = new Router(
                 beforeEnter: ifAuthenticated
             },
             {
-                path: '/offer',
+                path: '/offer/:id',
                 name: 'Offer',
                 component: Offer,
                 beforeEnter: ifAuthenticated
