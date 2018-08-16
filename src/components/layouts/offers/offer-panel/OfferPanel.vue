@@ -2,7 +2,8 @@
     <div class="offer-panel">
         <div class="offer-panel-wrap">
             <offer-panel-header :offer-name="offer.name"
-                                :offer-price="offer.price"/>
+                                :offer-price="offer.price"
+                                :offer-id="offer.id"/>
 
             <offer-panel-body :offer-employer-name="offerEmployerName"
                               :offer-employer-rating="offerEmployerRating"

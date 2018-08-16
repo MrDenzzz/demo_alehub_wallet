@@ -1,6 +1,6 @@
 <template>
     <div class="offer-panel-header">
-        <h3 class="offer-panel-header-title">
+        <h3 class="offer-panel-header-title" @click="goToOffer(offerId)">
             {{ offerName }}
         </h3>
         <h3 class="offer-panel-header-price">
@@ -24,6 +24,11 @@
                 type: Number,
                 default: 1,
                 required: true
+            },
+            offerId: {
+                type: Number,
+                default: 0,
+                required: true
             }
         },
         data() {
@@ -40,6 +45,9 @@
              */
             formatPrice: function(price) {
                 return formatPriceModule(price, this.currency, this.$i18n.locale);
+            },
+            goToOffer: function (id) {
+                this.$router.push(`/offer/${id}`)
             }
         },
     }
@@ -59,6 +67,9 @@
             line-height 1.33
             color #34343e
             margin 0
+
+        .offer-panel-header-title
+            cursor pointer
 
         .offer-panel-header-price
             font-weight bold
