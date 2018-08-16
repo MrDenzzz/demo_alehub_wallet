@@ -1028,6 +1028,9 @@ const actions = {
             commit('SUCCESS_ADD_NEW_OFFER', offerData);
             resolve('success add new offer');
         });
+    },
+    applyOffer: ({commit}, offerId) => {
+        commit('SUCCESS_APPLY_OFFER', offerId)
     }
 };
 
@@ -1102,7 +1105,6 @@ const mutations = {
         state.filteredOffers = state.offers;
     },
     SAVE_OFFER: (state, offerId) => {
-        console.log(offerId);
         let index = state.offers.findIndex(item => {
             return item.id === offerId;
         });
@@ -1131,6 +1133,35 @@ const mutations = {
                 contractors: []
             }
         );
+    },
+    SUCCESS_APPLY_OFFER: (state, offerId) => {
+        let offerIndex = state.offers.findIndex(item => {
+            return item.id === Number(offerId);
+        });
+        state.offers[offerIndex].positions.push({
+            id: state.offers[offerIndex].positions.length === 0 ? 1 : state.offers[offerIndex].positions[state.offers[offerIndex].positions.length - 1].id + 1,
+            positionId: state.offers[offerIndex].positions.length === 0 ? 1 : state.offers[offerIndex].positions[state.offers[offerIndex].positions.length - 1].positionId + 1,
+            contractor: {
+                contractorId: 4,
+                date: [
+                    {
+                        from: state.offers[offerIndex].date.from,
+                        to: state.offers[offerIndex].date.to
+                    }
+                ]
+            },
+            documents: []
+        });
+        state.offers[offerIndex].contractors.push({
+            id: state.offers[offerIndex].contractors.length === 0 ? 1 : state.offers[offerIndex].contractors[state.offers[offerIndex].contractors.length - 1].id + 1,
+            contractorId: 4,
+            date: [
+                {
+                    from: state.offers[offerIndex].date.from,
+                    to: state.offers[offerIndex].date.to
+                }
+            ]
+        })
     }
 };
 
@@ -1140,11 +1171,11 @@ const getters = {
         return item.saved === true;
     }),
     MyOffers: state => state.offers.filter(item => {
-        return item.employerId === 2;
+        return item.employerId === 4;
     }),
     PortfolioOffers: state => state.offers.filter(item => {
         return item.contractors.findIndex(contractor => {
-            return contractor.id === 2;
+            return contractor.id === 4;
         }) !== -1;
     }),
     filteredOffers: state => state.filteredOffers,

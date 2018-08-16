@@ -21,7 +21,7 @@
                     Contract period
                 </div>
                 <div class="subtitle">
-                    {{ parseDate(selectedOffer.from) }} - {{ parseDate(selectedOffer.to) }}
+                    {{ parseDate(selectedOffer.date.from) }} - {{ parseDate(selectedOffer.date.to) }}
                 </div>
             </div>
             <div class="info">
@@ -33,6 +33,11 @@
                 </div>
             </div>
         </div>
+        <button class="buttons btn-yellow" 
+                v-if="!checkApplyed"
+                @click="apply">
+            Apply
+        </button>
         <div class="options" @click="showMenu = !showMenu">
             <img :src="getIcon('menu')" alt="">
         </div>
@@ -47,6 +52,7 @@
 
 <script>
 import Moment from 'moment';
+import {mapActions} from 'vuex';
 
 export default {
     name: 'InfoBar',
@@ -79,9 +85,20 @@ export default {
             return this.offers.find(item => {
                 return item.id === Number(this.$route.params.id);
             });
+        },
+        checkApplyed() {
+            if (this.selectedOffer.contractors.findIndex(item => {
+                return item.contractorId === 4;
+            }) !== -1)
+                return true;
+
+            return false;
         }
     },
     methods: {
+        ...mapActions([
+            'applyOffer'
+        ]),
         getIcon: function (name) {
             return this.selectedTheme === 'dark' ? require(`../../../static/img/${name}_dark.svg`) : require(`../../../static/img/${name}.svg`);
         },
@@ -92,6 +109,9 @@ export default {
             return this.conditions.find(item => {
                 return item.id === id;
             }).title;
+        },
+        apply: function () {
+            this.applyOffer(this.$route.params.id);
         }
     }
 }
@@ -99,6 +119,9 @@ export default {
 
 
 <style lang="stylus" scoped>
+    .buttons
+        margin-bottom 0
+        height 38px
     .info-bar
         padding 83px 32px 19px
         background-color #ececec
