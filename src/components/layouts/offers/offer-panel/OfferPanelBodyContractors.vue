@@ -9,7 +9,8 @@
             <div class="contractor-name"
                  @click="toggleContractorPanel(contractor.id)">
                 {{ contractor.name }}
-                <!--<offer-panel-contractor-dialog v-if="checkContractorPanelOpened(contractor.id)"/>-->
+                <offer-panel-contractor-dialog v-if="checkContractorPanelOpened(contractor.id)"
+                                               :contractor="contractor"/>
             </div>
         </div>
     </div>
@@ -93,10 +94,8 @@
             }
         },
         created() {
-            console.log(this.offerContractors, 'this.offerContractors');
-
             this.offerContractors.forEach(oC => {
-                this.panels.push({ id: oC.id, opened: false });
+                this.panels.push({id: oC.id, opened: false});
             });
         }
     }
@@ -135,5 +134,9 @@
                     background-color #abd26e
 
             .contractor-name
+                cursor pointer
                 margin-left 8px
+
+                &:hover
+                    font-weight 700
 </style>
