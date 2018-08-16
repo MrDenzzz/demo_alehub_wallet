@@ -62,13 +62,6 @@
                                             :input-id="'autocomplete-reqs-1'"
                                             :requirementsList="requirementsList"/>
 
-
-                                    <!--<input-control :labelValue="'Requirements and requirements'"-->
-                                    <!--:inputId="'reqs'"-->
-                                    <!--:placeholder="'Enter the Requirements and requirements'"-->
-                                    <!--:fullWidth="true"/>-->
-
-
                                     <offer-create-input-positions :positions="positionsOfferContractors"/>
 
                                 </div>

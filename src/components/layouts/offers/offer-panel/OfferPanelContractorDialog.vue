@@ -1,13 +1,13 @@
 <template>
-    <div class="dialog"
-         :style="{ 'top': offsetY, 'left': offsetX }">
+    <!--:style="{ 'top': offsetY, 'left': offsetX }"-->
+    <div class="dialog">
         <div class="rating">
             <span>
                 {{ rating }}
             </span>
         </div>
         <div class="save">
-            <img src="../../../static/img/star-off.svg"
+            <img src="../../../../../static/img/star-off.svg"
                  alt="save contractor">
         </div>
         <div class="header">
@@ -91,19 +91,23 @@
 </template>
 
 <script>
-    import FormattingPrice from './FormattingPrice';
+    import FormattingPrice from '../../FormattingPrice';
 
     import moment from 'moment';
 
     import {mapGetters} from 'vuex';
 
     export default {
-        name: 'OffersContractorDialog',
+        name: 'OfferPanelContractorDialog',
         components: {
             FormattingPrice
         },
         props: {
-            coordinates: {
+            // coordinates: {
+            //     type: Object,
+            //     required: true
+            // }
+            contractor: {
                 type: Object,
                 required: true
             }
@@ -123,9 +127,6 @@
             },
             offsetX: function () {
                 return this.coordinates.left + 'px';
-            },
-            contractor: function () {
-                return this.selectedContractor;
             },
             position: function () {
                 return (this.contractor.position) ? this.contractor.position : 'position not established';
@@ -198,20 +199,6 @@
              */
             contractorTypeType: function (contractorTypeId) {
                 return this.contractorType(contractorTypeId).type;
-            },
-            checkContractorType: function (type) {
-                switch (type) {
-                    case 'TS':
-                        return 'ts';
-                    case 'TS execution':
-                        return 'ts-exec';
-                    case 'Check':
-                        return 'ch';
-                    case 'QA':
-                        return 'qa';
-                    default:
-                        return 'undefined';
-                }
             }
         }
 

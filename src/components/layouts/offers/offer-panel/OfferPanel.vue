@@ -19,9 +19,9 @@
 </template>
 
 <script>
-    import OfferPanelHeader from './offer-panel/OfferPanelHeader';
-    import OfferPanelBody from './offer-panel/OfferPanelBody';
-    import OfferPanelTimeline from './offer-panel/OfferPanelTimeline';
+    import OfferPanelHeader from './OfferPanelHeader';
+    import OfferPanelBody from './OfferPanelBody';
+    import OfferPanelTimeline from './OfferPanelTimeline';
 
     import {mapGetters} from 'vuex';
 
@@ -30,7 +30,8 @@
         components: {
             OfferPanelHeader,
             OfferPanelBody,
-            OfferPanelTimeline
+            OfferPanelTimeline,
+
         },
         props: {
             offer: {
@@ -103,15 +104,18 @@
              */
             offerContractors: function () {
                 let contractors = [];
-                this.offer.contractors.forEach(offConts => {
-                    let tmpConts = this.contractors.find(conts => {
-                        return offConts.contractorId === conts.id;
+                this.offer.contractors.forEach(oC => {
+                    let tC = this.contractors.find(c => {
+                        return oC.contractorId === c.id;
                     });
 
-                    contractors.push(tmpConts);
+                    contractors.push(tC);
                 });
                 return contractors;
             }
+        },
+        mounted() {
+
         }
     }
 </script>

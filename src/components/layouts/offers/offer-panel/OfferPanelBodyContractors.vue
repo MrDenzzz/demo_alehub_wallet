@@ -6,23 +6,35 @@
                  :class="calcContractorPositionClass(offerContractorPosition(contractor))">
                 {{ offerContractorPosition(contractor) }}
             </div>
-            <div class="contractor-name">
+            <div class="contractor-name"
+                 @click="toggleContractorPanel(contractor.id)">
                 {{ contractor.name }}
+                <!--<offer-panel-contractor-dialog v-if="checkContractorPanelOpened(contractor.id)"/>-->
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import OfferPanelContractorDialog from './OfferPanelContractorDialog';
+
     import {mapGetters} from 'vuex';
 
     export default {
         name: 'OfferPanelBodyContractors',
+        components: {
+            OfferPanelContractorDialog
+        },
         props: {
             offerContractors: {
                 type: Array,
                 default: [],
                 required: true
+            }
+        },
+        data() {
+            return {
+                panels: []
             }
         },
         computed: {
@@ -61,8 +73,32 @@
                     default:
                         return '';
                 }
+            },
+            /**
+             * check contractor panel opened by contractor id
+             *
+             * @param id
+             * @returns {*}
+             */
+            checkContractorPanelOpened: function (id) {
+                return this.panels.find(p => p.id === id).opened;
+            },
+            /**
+             * toggle contractor panel by contractor id
+             *
+             * @param id
+             */
+            toggleContractorPanel: function (id) {
+                this.panels.find(p => p.id === id).opened = !this.panels.find(p => p.id === id).opened;
             }
         },
+        created() {
+            console.log(this.offerContractors, 'this.offerContractors');
+
+            this.offerContractors.forEach(oC => {
+                this.panels.push({ id: oC.id, opened: false });
+            });
+        }
     }
 </script>
 

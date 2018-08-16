@@ -44,43 +44,67 @@ const state = {
         {
             id: 1,
             positionId: 1,
-            name: 'Vasiliy Ivanov'
+            name: 'Vasiliy Ivanov',
+            rating: 5.5,
+            sinceDate: 1524671843000,
+            webAddress: 'v-ivanov.com',
+            githubAddress: '@vasiliy.ivanov',
+            countOfProject: 12,
+            avgCostPerProject: 1000
         },
         {
             id: 2,
             positionId: 2,
-            name: 'Ivan Kotov'
+            name: 'Ivan Kotov',
+            rating: 6.9,
+            sinceDate: 1514671843000,
+            webAddress: 'i-kotov.com',
+            githubAddress: '@ivan.kotov',
+            countOfProject: 23,
+            avgCostPerProject: 2000
         },
         {
             id: 3,
             positionId: 3,
-            name: 'Andrey Sagal'
+            name: 'Andrey Sagal',
+            rating: 8.2,
+            sinceDate: 1504671843000,
+            webAddress: 'a-sagal.com',
+            githubAddress: '@andrey.sagal',
+            countOfProject: 34,
+            avgCostPerProject: 3000
         },
         {
             id: 4,
             positionId: 4,
-            name: 'Nikita Govorunov'
+            name: 'Nikita Govorunov',
+            rating: 9.8,
+            sinceDate: 1494671843000,
+            webAddress: 'n-govorunov.com',
+            githubAddress: '@nikita.govorunov',
+            countOfProject: 45,
+            avgCostPerProject: 4000
         },
-        {
-            id: 5,
-            positionId: 1,
-            name: 'Denis Sergeev'
-        },
-        {
-            id: 6,
-            positionId: 2,
-            name: 'Vsevolod Kuznetsov'
-        },
-        {
-            id: 7,
-            positionId: 3,
-            name: 'Danila Bagrov'
-        },
-        {
-            id: 8,
-            positionId: 4,
-            name: 'Egor Gloktev'
-        }
+        // {
+        //     id: 5,
+        //     positionId: 1,
+        //     name: 'Denis Sergeev'
+        // },
+        // {
+        //     id: 6,
+        //     positionId: 2,
+        //     name: 'Vsevolod Kuznetsov'
+        // },
+        // {
+        //     id: 7,
+        //     positionId: 3,
+        //     name: 'Danila Bagrov'
+        // },
+        // {
+        //     id: 8,
+        //     positionId: 4,
+        //     name: 'Egor Gloktev'
+        // }
     ],
     requirements: [
         {
