@@ -2,8 +2,7 @@
     <div class="offers-list">
         <offer-panel v-for="offer in filteredOffers"
                      :key="offer.id"
-                     :offer="offer"
-                     @click="goToOffer(offer.id)"/>
+                     :offer="offer"/>
 
         <!--<offers-pagination :number-offers="3"/>-->
     </div>
@@ -52,11 +51,6 @@
                     'filteredOffers'
                 ]
             ),
-        },
-        methods: {
-            goToOffer: function (id) {
-                console.log(id);
-            }
         },
         mounted() {
 
