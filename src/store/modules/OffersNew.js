@@ -1162,10 +1162,25 @@ const mutations = {
         let offerIndex = state.offers.findIndex(item => {
             return item.id === Number(offerId);
         });
-        state.offers[offerIndex].positions.push({
-            id: state.offers[offerIndex].positions.length === 0 ? 1 : state.offers[offerIndex].positions[state.offers[offerIndex].positions.length - 1].id + 1,
-            positionId: state.offers[offerIndex].positions.length === 0 ? 1 : state.offers[offerIndex].positions[state.offers[offerIndex].positions.length - 1].positionId + 1,
-            contractor: {
+        state.offers[offerIndex].positions.push(
+            {
+                id: state.offers[offerIndex].positions.length === 0 ? 1 : state.offers[offerIndex].positions[state.offers[offerIndex].positions.length - 1].id + 1,
+                positionId: state.offers[offerIndex].positions.length === 0 ? 1 : state.offers[offerIndex].positions[state.offers[offerIndex].positions.length - 1].positionId + 1,
+                contractor: {
+                    contractorId: 4,
+                    date: [
+                        {
+                            from: state.offers[offerIndex].date.from,
+                            to: state.offers[offerIndex].date.to
+                        }
+                    ]
+                },
+                documents: []
+            }
+        );
+        state.offers[offerIndex].contractors.push(
+            {
+                id: state.offers[offerIndex].contractors.length === 0 ? 1 : state.offers[offerIndex].contractors[state.offers[offerIndex].contractors.length - 1].id + 1,
                 contractorId: 4,
                 date: [
                     {
@@ -1173,19 +1188,8 @@ const mutations = {
                         to: state.offers[offerIndex].date.to
                     }
                 ]
-            },
-            documents: []
-        });
-        state.offers[offerIndex].contractors.push({
-            id: state.offers[offerIndex].contractors.length === 0 ? 1 : state.offers[offerIndex].contractors[state.offers[offerIndex].contractors.length - 1].id + 1,
-            contractorId: 4,
-            date: [
-                {
-                    from: state.offers[offerIndex].date.from,
-                    to: state.offers[offerIndex].date.to
-                }
-            ]
-        })
+            }
+        )
     }
 };
 

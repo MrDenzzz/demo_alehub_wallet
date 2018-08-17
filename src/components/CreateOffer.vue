@@ -51,10 +51,13 @@
                             <div class="form addition add-opened" style="height: auto;">
                                 <div class="outer">
 
-                                    <input-control :labelValue="'Project Name'"
-                                                   :inputId="'projectName'"
-                                                   :placeholder="'Enter the name of the project'"
-                                                   :fullWidth="true"/>
+                                    <!--<input-control :labelValue="'Project Name'"-->
+                                                   <!--:inputId="'projectName'"-->
+                                                   <!--:placeholder="'Enter the name of the project'"-->
+                                                   <!--:fullWidth="true"/>-->
+
+                                    <offer-create-input-file-dropzone/>
+
 
                                     <offer-create-reqs-input-autocomplete
                                             :title-control="'Autocomplete requirements and requirements'"
@@ -87,6 +90,7 @@
     import Datepicker from 'vuejs-datepicker';
     import OfferCreateReqsInputAutocomplete from './layouts/offers/offer-create/OfferCreateReqsInputAutocomplete';
     import OfferCreateInputPositions from './layouts/offers/offer-create/OfferCreateInputPositions';
+    import OfferCreateInputFileDropzone from './layouts/offers/offer-create/OfferCreateInputFileDropzone';
 
     import {mapGetters} from 'vuex';
 
@@ -98,7 +102,9 @@
             InputControl,
             Datepicker,
             OfferCreateReqsInputAutocomplete,
-            OfferCreateInputPositions
+            OfferCreateInputPositions,
+            OfferCreateInputFileDropzone,
+
         },
         data() {
             return {
