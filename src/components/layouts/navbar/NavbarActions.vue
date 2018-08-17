@@ -9,8 +9,8 @@
             <img :src="getIcon(link.iconName)"
                  :width="link.iconWidth"
                  :height="link.iconHeight">
-            <span v-if="notifBadge && link.isBadge === true"
-                  class="badge">
+            <span class="badge"
+                  v-if="notifBadge && link.isBadge === true">
             </span>
         </router-link>
     </div>
@@ -22,15 +22,15 @@ export default {
     props: {
         navbarLinks: {
             type: Array,
-            required: true,
+            required: true
         },
         notifBadge: {
             type: Boolean,
-            required: false,
+            required: false
         },
         selectedTheme: {
             type: String,
-            required: true,
+            required: true
         }
     },
     methods: {

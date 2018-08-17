@@ -1,51 +1,53 @@
 <template>
     <div>
         <header class="navbar">
-            <div class="navbar-nav" v-if="isNavigate">
-                <back-button v-if="isBack" @click.native="backLink" />
+            <div class="navbar-nav"
+                 v-if="isNavigate">
+                <navbar-back v-if="isBack"
+                             @click.native="backLink"/>
 
-                <router-link :to="{ path: '/' }" v-else>
-                    <div class="logo">ALEHUB</div>
+                <router-link :to="{ path: '/' }"
+                             v-else>
+                    <div class="logo">
+                        ALEHUB
+                    </div>
                 </router-link>
 
-                <actions 
-                    :navbarLinks="navbarLinks"
-                    :notifBadge="notifBadge"
-                    :selectedTheme="selectedTheme"
-                />
+                <navbar-actions :navbarLinks="navbarLinks"
+                                :notifBadge="notifBadge"
+                                :selectedTheme="selectedTheme"/>
             </div>
 
-            <span class="title">{{ title }}</span>
+            <span class="title">
+                {{ title }}
+            </span>
 
-            <balance 
-                :rightMenu="rightMenu"
-                :isBalance="isBalance"
-                :collapsed="collapsed"
-            />
+            <navbar-balance :rightMenu="rightMenu"
+                            :is-balance="isBalance"
+                            :collapsed="collapsed"/>
         </header>
 
-        <mobile-menu 
-            :collapsed="collapsed"
-            :navbarLinks="navbarLinks"
-            :rightMenu="rightMenu"
-        />
+        <navbar-mobile-menu :collapsed="collapsed"
+                            :navbar-links="navbarLinks"
+                            :right-menu="rightMenu"/>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
-    import BackButton from "./Navbar/BackButton"
-    import Actions from "./Navbar/Actions"
-    import Balance from "./Navbar/Balance"
-    import MobileMenu from "./Navbar/MobileMenu"
+    import NavbarBack from './navbar/NavbarBack'
+    import NavbarActions from './navbar/NavbarActions'
+    import NavbarBalance from './navbar/NavbarBalance'
+    import NavbarMobileMenu from './navbar/NavbarMobileMenu'
+
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'Navbar',
         components: {
-            BackButton,
-            Actions,
-            Balance,
-            MobileMenu
+            NavbarBack,
+            NavbarActions,
+            NavbarBalance,
+            NavbarMobileMenu
         },
         props: {
             title: {
@@ -64,9 +66,11 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'currentWalletBalance'
-            ]),
+            ...mapGetters(
+                [
+                    'currentWalletBalance'
+                ]
+            ),
             selectedTheme: function () {
                 return this.$store.state.Themes.theme;
             },

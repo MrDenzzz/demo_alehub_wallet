@@ -1,6 +1,6 @@
 <template>
     <div class="offers">
-        <navbar title="Contract List"
+        <navbar title="Offer's List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
