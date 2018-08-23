@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import OfferPanel from '../layouts/offers/OfferPanel';
+    import OfferPanel from './offers/offer-panel/OfferPanel';
     import OfferOptions from '../layouts/offers/OfferOptions';
     import OffersPagination from '../layouts/offers/OffersPagination';
 

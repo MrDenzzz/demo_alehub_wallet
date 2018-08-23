@@ -362,6 +362,9 @@
 </script>
 
 <style lang="stylus" scoped>
+    label
+        white-space unset !important
+
     .form
         margin-bottom 10px
         .control

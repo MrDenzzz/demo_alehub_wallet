@@ -1,6 +1,6 @@
 <template>
     <div class="offers">
-        <navbar title="Contract List"
+        <navbar title="Offer's List"
                 :isNavigate="true"
                 :isBalance="true"
                 :rightMenu="rightMenu"/>
@@ -26,7 +26,7 @@
     import OffersList from './layouts/OffersList';
     import OffersListSort from './layouts/offers/OffersListSort';
     import OffersPanelSuggestNewOffer from './layouts/offers/OffersPanelSuggestNewOffer';
-    import OffersContractorDialog from './layouts/OffersContractorDialog';
+    // import OffersContractorDialog from './layouts/offers/OfferPanelContractorDialog';
     import OffersFilterNew from './layouts/offers/OffersFilterNew';
 
     import OffersControl from './layouts/offers/OffersControl';
@@ -45,7 +45,7 @@
             OffersPanelSuggestNewOffer,
             // OffersFilter,
             // OffersFilterFolded,
-            OffersContractorDialog,
+            // OffersContractorDialog,
             // GroupFilterButtons,
             // GroupStatusButtons,
             // Datepicker,

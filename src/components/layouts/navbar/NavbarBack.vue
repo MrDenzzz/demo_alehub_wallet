@@ -7,7 +7,8 @@
 </template>
 
 <script>
+
 export default {
-    name: 'NavbarBackButton',
+    name: 'NavbarBack',
 }
 </script>

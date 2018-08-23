@@ -26,7 +26,7 @@
     import OffersList from './layouts/MyOffersList';
     import OffersListSort from './layouts/offers/OffersListSort';
     import OffersPanelSuggestNewOffer from './layouts/offers/OffersPanelSuggestNewOffer';
-    import OffersContractorDialog from './layouts/OffersContractorDialog';
+    import OffersContractorDialog from './layouts/offers/offer-panel/OfferPanelContractorDialog';
     import OffersFilterNew from './layouts/offers/OffersFilterNew';
 
     import OffersControl from './layouts/offers/OffersControl';

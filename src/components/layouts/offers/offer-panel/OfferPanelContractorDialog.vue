@@ -1,28 +1,28 @@
 <template>
-    <div class="dialog"
-         :style="{ 'top': offsetY, 'left': offsetX }">
+    <!--:style="{ 'top': offsetY, 'left': offsetX }"-->
+    <div class="dialog">
         <div class="rating">
             <span>
                 {{ rating }}
             </span>
         </div>
         <div class="save">
-            <img src="../../../static/img/star-off.svg"
+            <img src="../../../../../static/img/star-off.svg"
                  alt="save contractor">
         </div>
         <div class="header">
             <div class="logo__wrap">
-                <img class="logo"
-                     v-if="contractor.src"
-                     :src="contractor.src"
-                     :alt="contractor.name">
-                <div class="placeholder"
-                     :class="contractorTypeType(contractor.typeId)"
-                     v-else>
-                    <span class="initials">
-                        {{ contractor.initials }}
-                    </span>
-                </div>
+                <!--<img class="logo"-->
+                     <!--v-if="contractor.src"-->
+                     <!--:src="contractor.src"-->
+                     <!--:alt="contractor.name">-->
+                <!--<div class="placeholder"-->
+                     <!--:class="contractorTypeType(contractor.typeId)"-->
+                     <!--v-else>-->
+                    <!--<span class="initials">-->
+                        <!--{{ 'AS' }}-->
+                    <!--</span>-->
+                <!--</div>-->
             </div>
 
             <div class="info">
@@ -30,7 +30,7 @@
                     {{ contractor.name }}
                 </h4>
                 <h5 class="position">
-                    {{ contractorTypeName(contractor.typeId) }}
+                    {{ contractorPosition(contractor.positionId).title }}
                 </h5>
                 <p class="date">
                     {{ sinceDate }}
@@ -42,8 +42,10 @@
                 <span class="left">
                     Web
                 </span>
-                <a class="right" target="_blank"
-                   v-if="isWebAddress" :href="webAddress">
+                <a class="right"
+                   target="_blank"
+                   v-if="isWebAddress"
+                   :href="webAddress">
                     {{ webAddressShort }}
                 </a>
                 <span v-else>
@@ -54,8 +56,10 @@
                 <span class="left">
                     GitHub
                 </span>
-                <a class="right" target="_blank"
-                   v-if="isGithubAddress" :href="githubAddress">
+                <a class="right"
+                   target="_blank"
+                   v-if="isGithubAddress"
+                   :href="githubAddress">
                     {{ githubAddress }}
                 </a>
                 <span v-else>
@@ -91,19 +95,19 @@
 </template>
 
 <script>
-    import FormattingPrice from './FormattingPrice';
-
-    import moment from 'moment';
+    import FormattingPrice from '../../FormattingPrice';
 
     import {mapGetters} from 'vuex';
 
+    import moment from 'moment';
+
     export default {
-        name: 'OffersContractorDialog',
+        name: 'OfferPanelContractorDialog',
         components: {
             FormattingPrice
         },
         props: {
-            coordinates: {
+            contractor: {
                 type: Object,
                 required: true
             }
@@ -114,19 +118,9 @@
         computed: {
             ...mapGetters(
                 [
-                    'types',
-                    'selectedContractor'
+                    'positions'
                 ]
             ),
-            offsetY: function () {
-                return this.coordinates.top + 'px';
-            },
-            offsetX: function () {
-                return this.coordinates.left + 'px';
-            },
-            contractor: function () {
-                return this.selectedContractor;
-            },
             position: function () {
                 return (this.contractor.position) ? this.contractor.position : 'position not established';
             },
@@ -172,46 +166,23 @@
             }
         },
         methods: {
+            // /**
+            //  * return data of type contractor
+            //  *
+            //  * @param contractorTypeId
+            //  * @returns {*}
+            //  */
+            // contractorType: function (contractorTypeId) {
+            //     return this.types.find(type => type.id === contractorTypeId);
+            // },
             /**
-             * return data of type contractor
+             * return contractor position data
              *
-             * @param contractorTypeId
+             * @param positionId
              * @returns {*}
              */
-            contractorType: function (contractorTypeId) {
-                return this.types.find(type => type.id === contractorTypeId);
-            },
-            /**
-             * return name of type contractor
-             *
-             * @param contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeName: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).name;
-            },
-            /**
-             * return type of contractor
-             *
-             * @param contractorTypeId
-             * @returns {*}
-             */
-            contractorTypeType: function (contractorTypeId) {
-                return this.contractorType(contractorTypeId).type;
-            },
-            checkContractorType: function (type) {
-                switch (type) {
-                    case 'TS':
-                        return 'ts';
-                    case 'TS execution':
-                        return 'ts-exec';
-                    case 'Check':
-                        return 'ch';
-                    case 'QA':
-                        return 'qa';
-                    default:
-                        return 'undefined';
-                }
+            contractorPosition: function (positionId) {
+                return this.positions.find(p => p.id === positionId);
             }
         }
 
@@ -220,6 +191,7 @@
 
 <style lang="stylus" scoped>
     .dialog
+        z-index 1
         font-family MuseoSansCyrl500
         font-size 12px
         color #34343e
