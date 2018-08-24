@@ -1,10 +1,10 @@
 <template>
     <div class="multiple-file-uploader">
         <!--ref="myVueDropzone"-->
-        <dropzone id="customdropzone"
-                  class="dropzone"
-                  :options="dropzoneOptions"
-                  :include-styling="includeStyling"/>
+        <!--<dropzone id="customdropzone"-->
+                  <!--class="dropzone"-->
+                  <!--:options="dropzoneOptions"-->
+                  <!--:include-styling="includeStyling"/>-->
     </div>
 </template>
 
@@ -14,7 +14,7 @@
     export default {
         name: 'InputFileDropzone',
         components: {
-            Dropzone
+            // Dropzone
         },
         data() {
             return {
