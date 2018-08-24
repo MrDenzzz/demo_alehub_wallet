@@ -42,13 +42,11 @@
                                                :fullWidth="true"
                                                :inputType="'number'"/>
                             </div>
-                            <!--@click="toggleAdd"-->
                             <div class="additional"
-                                 >
+                                @click="toggleAdd" >
                                 Additional
                             </div>
-                            <!--:class="{'add-opened': isOpened}"-->
-                            <div class="form addition add-opened" style="height: auto;">
+                            <div class="form addition" :class="{'add-opened': isOpened}">
                                 <div class="outer">
 
                                     <!--<input-control :labelValue="'Project Name'"-->
@@ -138,7 +136,7 @@
                     price: 666,
                     positions: []
                 },
-                isOpened: true
+                isOpened: false
             }
         },
         computed: {
@@ -235,13 +233,15 @@
         transition all 0.3s linear
 
         &.add-opened
-            padding 16px
+            padding 0 16px
 
     .buttons
         &:disabled
             opacity 0.4
             border-radius 2px
             background-color rgba(13, 23, 23, 0.08) !important
+
+    
 </style>
 
 <style lang="stylus">
@@ -249,5 +249,11 @@
         .datepick
             input
                 opacity 1 !important
+
+    .outer
+        div
+            &:last-child
+                div
+                    border-bottom none !important
 </style>
 
