@@ -90,7 +90,7 @@
     import Datepicker from 'vuejs-datepicker';
     import OfferCreateReqsInputAutocomplete from './layouts/offers/offer-create/OfferCreateReqsInputAutocomplete';
     import OfferCreateInputPositions from './layouts/offers/offer-create/OfferCreateInputPositions';
-    import OfferCreateInputFileDropzone from './layouts/offers/offer-create/OfferCreateInputFileDropzone';
+    import OfferCreateInputFileDropzone from './layouts/offers/offer-create/OfferCreateInputFileUpload';
 
     import {mapGetters} from 'vuex';
 

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import Dropzone from 'vue2-dropzone';
+    // import Dropzone from 'vue2-dropzone';
 
     export default {
         name: 'InputFileDropzone',
