@@ -59,6 +59,9 @@
             <span class="line"></span>
             <span class="line"></span>
         </div>
+        <div class="profile-icon" @click="goToProfile">
+            <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
+        </div>
     </div>
 </template>
 
@@ -84,7 +87,8 @@
         computed: {
             ...mapGetters(
                 [
-                    'currentWalletBalance'
+                    'currentWalletBalance',
+                    'userAvatar'
                 ]
             ),
             correctLangSep: function () {
@@ -123,7 +127,29 @@
             },
             toggleMenu: function () {
                 this.$parent.$emit('toggleMenu');
+            },
+            goToProfile: function () {
+                this.$router.push('/profile')
             }
         }
     }
 </script>
+
+<style lang="stylus" scoped>
+.profile-icon
+    width 64px
+    height 100%
+    display flex
+    justify-content center
+    align-items center
+    margin-right 18px
+    &:hover
+        background: #474b4b;
+        cursor: pointer;
+
+    img
+        width 36px
+        height 36px
+        object-fit cover
+        border-radius 50%
+</style>
