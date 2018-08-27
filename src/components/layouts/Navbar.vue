@@ -24,7 +24,8 @@
 
             <navbar-balance :rightMenu="rightMenu"
                             :is-balance="isBalance"
-                            :collapsed="collapsed"/>
+                            :collapsed="collapsed"
+                            :isProfile="isProfile"/>
         </header>
 
         <navbar-mobile-menu :collapsed="collapsed"
@@ -57,7 +58,8 @@
             isNavigate: [String, Boolean],
             isBalance: [String, Boolean],
             rightMenu: Object,
-            isBack: [String, Boolean]
+            isBack: [String, Boolean],
+            isProfile: Boolean
         },
         data() {
             return {

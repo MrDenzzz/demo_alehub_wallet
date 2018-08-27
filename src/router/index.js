@@ -28,6 +28,7 @@ import Offer from '@/components/Offer'
 import Offers from '@/components/Offers'
 import OffersSaved from '@/components/OffersSaved'
 import MyOffers from '@/components/MyOffers'
+import Profile from '@/components/Profile'
 
 Vue.use(Router);
 Vue.use(VModal);
@@ -155,6 +156,12 @@ const router = new Router(
                 path: '/settings',
                 name: 'Settings',
                 component: Settings,
+                beforeEnter: ifAuthenticated
+            },
+            {
+                path: '/profile',
+                name: 'Profile',
+                component: Profile,
                 beforeEnter: ifAuthenticated
             },
             {
