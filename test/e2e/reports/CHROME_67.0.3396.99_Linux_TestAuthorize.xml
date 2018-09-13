@@ -5,9 +5,9 @@
 
   <testsuite name="TestAuthorize"
     errors="0" failures="1" hostname="" id="" package="TestAuthorize" skipped="0"
-    tests="1" time="14.63" timestamp="Mon, 30 Jul 2018 13:19:30 GMT">
+    tests="1" time="13.74" timestamp="Thu, 13 Sep 2018 04:19:14 GMT">
   
-    <testcase name="default autharisation test" classname="TestAuthorize" time="14.63" assertions="7">
+    <testcase name="default autharisation test" classname="TestAuthorize" time="13.74" assertions="7">
 
     
 
@@ -15,11 +15,12 @@
 
     
 
-    
+      <failure message="Testing if element &lt;.error-block&gt; contains text: &#34;password must be 8 symbols length&#34;.">    at Object.defaultAutharisationTest [as default autharisation test] (/home/evg/Desktop/demo_alehub_wallet/test/e2e/specs/tests/TestAuthorize.js:43:19)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
 
     
 
-      <failure message="Timed out while waiting for element &lt;.success&gt; to be present for 5000 milliseconds.">    at Object.default autharisation test (/home/evg/WebstormProjects/ale-wallet/test/e2e/specs/tests/TestAuthorize.js:60:12)
+      <failure message="Timed out while waiting for element &lt;.success&gt; to be present for 5000 milliseconds.">    at Object.defaultAutharisationTest [as default autharisation test] (/home/evg/Desktop/demo_alehub_wallet/test/e2e/specs/tests/TestAuthorize.js:53:12)
     at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
 
     

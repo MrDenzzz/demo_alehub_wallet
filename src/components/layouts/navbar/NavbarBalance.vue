@@ -11,7 +11,7 @@
 
         <div v-if="isBalance"
              class="count">
-            {{ 'ALE' }}
+            
         </div>
 
         <div class="options"
@@ -59,7 +59,7 @@
             <span class="line"></span>
             <span class="line"></span>
         </div>
-        <div class="profile-icon" @click="goToProfile">
+        <div v-if="userAvatar" class="profile-icon" @click="goToProfile">
             <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
         </div>
     </div>

@@ -1,6 +1,7 @@
 module.exports = {
     // localhost: 'http://localhost:' + (process.env.PORT || config.dev.port),
     localhost: 'http://localhost:8080',
+    offerLink: 'http://localhost:8080/#/offers/',
     user: {
         one: {
             mail: 'zhitkov100@gmail.com',
