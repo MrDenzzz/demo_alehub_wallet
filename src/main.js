@@ -151,13 +151,13 @@ if (token !== 'undefined' && token) {
 
         // console.log(resp, 'this user');
 
-        console.log('Successfully reload');
+        // console.log('Successfully reload');
 
         if (store.state.User.haveWallets) {
 
             store.dispatch('walletsRequest').then(() => {
 
-                console.log('Successfully reload wallets');
+                // console.log('Successfully reload wallets');
 
                 if (store.state.Wallets.currentWallet !== null) {
 
@@ -172,13 +172,13 @@ if (token !== 'undefined' && token) {
                             }).then(() => {
                                 console.log('Success request all transactions');
                             }).catch(() => {
-                                console.log('Error request all transactions');
+                                // console.log('Error request all transactions');
                             });
 
                             store.dispatch('transactionsRequest',
                                 store.state.Wallets.currentWallet.address
                             ).then(() => {
-                                console.log('Successfully reload transactions');
+                                // console.log('Successfully reload transactions');
                             }).catch(() => {
                                 console.log('Error requesting transactions. main.js');
                             });

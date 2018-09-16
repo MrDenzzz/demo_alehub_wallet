@@ -116,11 +116,11 @@
                             name: this.$t('pages.summary.rightMenu.walletSettings'),
                             link: '/wallet/settings'
                         },
-                        {
-                            type: 'link',
-                            name: this.$t('pages.jobOffers.rightMenu.allOffers'),
-                            link: '/offers'
-                        }
+                        // {
+                        //     type: 'link',
+                        //     name: this.$t('pages.jobOffers.rightMenu.allOffers'),
+                        //     link: '/offers'
+                        // }
                     ]
                 },
             }

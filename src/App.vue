@@ -88,9 +88,9 @@
 
                     this.downloadMissingTransactions();
 
-                    console.log('Load app');
+                    // console.log('Load app');
 
-                    console.log(this.$store.state.Wallets.wallets, 'this.$store.state.Wallets.wallets');
+                    // console.log(this.$store.state.Wallets.wallets, 'this.$store.state.Wallets.wallets');
 
                     return false;
                 }
@@ -167,7 +167,7 @@
                     }).then(() => {
                         // console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
                     }).catch(() => {
-                        console.log('Error request all transactions');
+                        // console.log('Error request all transactions');
                     });
                 }).catch(() => {
                     console.log('Error addition missing wallets to loaded wallets');

@@ -76,7 +76,7 @@ const actions = {
                 dispatch('copyAllTransactions', resp.data);
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error transactions wallet address');
+                // console.log(err, 'error transactions wallet address');
                 commit('ERROR_ALL_TRANSACTIONS', err);
                 reject(err)
             });
@@ -142,7 +142,7 @@ const actions = {
                 commit('SUCCESS_ADDITION_TRANSACTION', resp.data);
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error transactions wallet address');
+                // console.log(err, 'error transactions wallet address');
                 commit('ERROR_ADDITION_TRANSACTION', err);
                 reject(err)
             });
@@ -176,7 +176,7 @@ const actions = {
                 dispatch('copyAllTransactions', resp.data);
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error transactions wallet address');
+                // console.log(err, 'error transactions wallet address');
                 commit('ERROR_ADD_MISSING_TRANSACTIONS', err);
                 reject(err)
             });
@@ -203,7 +203,7 @@ const actions = {
                 }
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error transactions wallet address');
+                // console.log(err, 'error transactions wallet address');
                 commit('ERROR_TRANSACTIONS', err);
                 reject(err)
             });

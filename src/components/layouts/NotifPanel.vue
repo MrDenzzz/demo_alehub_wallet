@@ -13,13 +13,17 @@
                     </label>
                     {{$t('pages.notifications.selectAll')}}
                 </button>
-                <button class="buttons btn-default"
+                <button v-else="isShown" class="buttons btn-default"
                         @click="showCheckbox">
-                    {{ $t('pages.notifications.edit') }}
+                        <p>{{ $t('pages.notifications.edit') }}</p>
+                </button>
+                <button v-if="isShown" class="buttons btn-default"
+                        @click="showCheckbox">
+                        <p>{{ $t('modals.deleteWallet.buttons.cancel') }}</p>
                 </button>
             </div>
             <!--была кнопка удаления с v-if="isShown" я сделал слой с двумя кнопками-->
-            <div v-if="isShown">
+            <div>
                 <button class="buttons btn-default btn-delete"
                         :disabled="checkedNotif.length === 0"
                         @click="removeCheckedNotif(checkedNotif)">
@@ -29,14 +33,14 @@
                          :src="getIcon('bin')">
                 </button>
                 <!--z-->
-                <button class="buttons btn-default btn-delete"
+                <!-- <button class="buttons btn-default btn-delete"
                         :disabled="checkedNotif.length === 0"
                         v-clipboard:copy="copyNotification()">
                     <img class="icon-copy"
                          width="22"
                          height="22"
                          :src="getIcon('tmp_copy_icon')"/>
-                </button>
+                </button> -->
                 <!--z-->
             </div>
         </div>

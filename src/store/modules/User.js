@@ -124,7 +124,7 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                console.log(resp.data, 'user data');
+                // console.log(resp.data, 'user data');
                 commit('SUCCESS_AUTH');
                 commit('SUCCESS_USER', resp.data);
                 dispatch('setChangeTwoAuthStatus', resp.data.isTwoAuth);

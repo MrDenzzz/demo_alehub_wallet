@@ -50,7 +50,7 @@ const actions = {
                 commit('SUCCESS_WALLETS', resp.data);
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'err from wallets request');
+                //console.log(err, 'err from wallets request');
                 commit('ERROR_WALLETS', err);
                 reject(err)
             });
@@ -78,7 +78,7 @@ const actions = {
                 commit('SUCCESS_LAZY_WALLETS', resp.data);
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error wallets lazy request');
+                //console.log(err, 'error wallets lazy request');
                 commit('ERROR_LAZY_WALLETS', err);
                 reject(err)
             });
@@ -100,7 +100,7 @@ const actions = {
                 commit('SUCCESS_PING_WALLETS', resp.data);
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error wallets lazy request');
+                //console.log(err, 'error wallets lazy request');
                 commit('ERROR_PING_WALLETS', err);
                 reject(err)
             });
@@ -148,7 +148,7 @@ const actions = {
                 data: mnemonic,
                 method: 'POST'
             }).then(resp => {
-                console.log(resp, 'RESP REDEEM');
+                //console.log(resp, 'RESP REDEEM');
                 commit('SUCCESS_REDEEM_WALLET', resp.data.walletInfo);
                 resolve(resp);
             }).catch(err => {
@@ -219,11 +219,11 @@ const actions = {
                 },
                 method: 'DELETE'
             }).then(resp => {
-                console.log(resp, 'success removing wallet');
+                //console.log(resp, 'success removing wallet');
                 commit('SUCCESS_REMOVE_WALLET');
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error removing wallet');
+                //console.log(err, 'error removing wallet');
                 commit('ERROR_REMOVE_WALLET', err);
                 reject(err)
             });
@@ -255,11 +255,11 @@ const actions = {
                 },
                 method: 'GET'
             }).then(resp => {
-                console.log(resp, 'success get random seed');
+                //console.log(resp, 'success get random seed');
                 commit('SUCCESS_GET_RANDOM_SEED');
                 resolve(resp);
             }).catch(err => {
-                console.log(err, 'error removing wallet');
+                //console.log(err, 'error removing wallet');
                 commit('ERROR_GET_RANDOM_SEED', err);
                 reject(err)
             });

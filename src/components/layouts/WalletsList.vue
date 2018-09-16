@@ -142,7 +142,7 @@
                         this.$store.dispatch('resetTransactionsUpdated'
                         ).then(() => {
                         }).catch(() => {
-                            console.log('Error reset transactionsUpdated. WalletList.vue');
+                            // console.log('Error reset transactionsUpdated. WalletList.vue');
                         });
 
                         this.$store.dispatch('additionTransactionRequest', {
@@ -150,7 +150,7 @@
                         }).then(() => {
                             // console.log(this.allTransactions, 'this.allTransactions from WalletsList.vue');
                         }).catch(() => {
-                            console.log('Error request all transactions');
+                            // console.log('Error request all transactions');
                         });
 
                         this.$store.dispatch('transactionsRequestLazy',
@@ -158,16 +158,16 @@
                         ).then(() => {
                             this.$store.dispatch('setFilterDate'
                             ).then(() => {
-                                console.log('Success set filter date');
+                                // console.log('Success set filter date');
                             }).catch(() => {
-                                console.log('Error set filter date. WalletList.vue');
+                                // console.log('Error set filter date. WalletList.vue');
                             });
                         }).catch((err) => {
-                            console.log(err, 'Get transactions for current wallet impossible');
+                            // console.log(err, 'Get transactions for current wallet impossible');
                         });
 
                     }).catch(() => {
-                        console.log('Сan not change the current wallet. WalletList.vue');
+                        // console.log('Сan not change the current wallet. WalletList.vue');
                     });
                 }
             },

@@ -56,18 +56,18 @@
                 this.$store.dispatch('getNotifications', this.currentWallet.address
                 ).then(() => {
                     this.dataProcessing = false;
-                    console.log('Success getting notifications');
+                    //console.log('Success getting notifications');
                 }).catch(() => {
-                    console.log('Error getting notifications');
+                    //console.log('Error getting notifications');
                 });
             },
             changeToggleNotificationBadge: function (val) {
                 this.$store.dispatch('toggleNotificationBadge',
                     val
                 ).then(() => {
-                    console.log('Success toggle notifications badge');
+                    //console.log('Success toggle notifications badge');
                 }).catch(() => {
-                    console.log('Error toggle notifications badge');
+                    //console.log('Error toggle notifications badge');
                 });
             },
             removeCheckedNotif(checkedNotif) {
@@ -75,9 +75,9 @@
                 this.$store.dispatch('deleteNotifications', checkedNotif
                 ).then(() => {
                     this.isLoader = false;
-                    console.log('Success deleting notifications');
+                    //console.log('Success deleting notifications');
                 }).catch(() => {
-                    console.log('Error deleting notifications');
+                    //console.log('Error deleting notifications');
                 });
             },
         },

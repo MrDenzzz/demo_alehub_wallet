@@ -63,9 +63,9 @@
             </div>
         </section>
 
-        <chat :data="messagesList"/>
+        <!-- <chat :data="messagesList"/> -->
 
-        <new-wallet/>
+        <!-- <new-wallet v-if="0"/> -->
         <select-language/>
     </div>
 </template>
@@ -135,11 +135,11 @@
                             name: this.$t('pages.summary.rightMenu.walletSettings'),
                             link: "/wallet/settings"
                         },
-                        {
-                            type: "link",
-                            name: this.$t('pages.summary.rightMenu.myOffers'),
-                            link: "/offers/my"
-                        }
+                        // {
+                        //     type: "link",
+                        //     name: this.$t('pages.summary.rightMenu.myOffers'),
+                        //     link: "/offers/my"
+                        // }
                     ]
                 },
                 changeWalletResult: false,
