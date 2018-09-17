@@ -59,7 +59,7 @@
             <span class="line"></span>
             <span class="line"></span>
         </div>
-        <div v-if="userAvatar" class="profile-icon" @click="goToProfile">
+        <div v-if="userAvatar && (this.$routs.path == '/login')" class="profile-icon" @click="goToProfile">
             <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
         </div>
     </div>
