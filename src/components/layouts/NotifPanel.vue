@@ -252,6 +252,8 @@
         .control-indicator
             top 2px
             left -20px
+    p
+        margin 0
 
 </style>
 

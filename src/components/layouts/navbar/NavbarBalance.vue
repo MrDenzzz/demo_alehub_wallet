@@ -1,6 +1,11 @@
 <template>
     <div class="balance"
          :class="{ 'gridBalance': !rightMenu }">
+        
+        <div v-if="(userAvatar || isBalance) && !isLoginPage" class="profile-icon" @click="goToProfile">
+            <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
+        </div>
+
         <span class="count" v-if="isBalance">
             <vue-numeric :value="currentWalletBalance"
                          :separator="correctLangSep"
@@ -59,9 +64,7 @@
             <span class="line"></span>
             <span class="line"></span>
         </div>
-        <div v-if="userAvatar && isBalance" class="profile-icon" @click="goToProfile">
-            <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
-        </div>
+
     </div>
 </template>
 
@@ -106,7 +109,10 @@
                     return this.currentWalletBalance.toString().split('.')[1].toString().length;
                 else
                     return 0;
-            }
+            },
+            isLoginPage: function () {
+                return this.$route.path === '/login';
+            },
         },
         methods: {
             getIcon: function (name) {

@@ -26,12 +26,17 @@
                                 {{ $t('modals.send.amount') }}
                             </label>
                             <p class="count">
-                                <input type="text"
-                                       v-model="amountAle"
-                                       id="amount"
-                                       placeholder="0"
-                                       @keypress="checkTypingChar"
-                                       :maxlength="maxlength">
+                                <input 
+                                    oncopy="return false;" 
+                                    onpaste="return false;" 
+                                    oncut="return false;"
+                                    autocomplete="off"
+                                    type="text"
+                                    v-model="amountAle"
+                                    id="amount"
+                                    placeholder="0"
+                                    @keypress="checkTypingChar"
+                                    :maxlength="maxlength">
                                 {{ 'ALC' }}
                             </p>
                         </div>
@@ -185,7 +190,7 @@
                 if (Number(this.amountAle) % 1 !== 0)
                     return this.amountAle.toString().split('.')[1].toString().length;
                 return 0;
-            }
+            },
         },
         methods: {
             checkTypingChar: function (e) {
@@ -318,7 +323,7 @@
                             this.$store.dispatch('transactionsRequestLazy',
                                 this.currentWallet.address
                             ).then(() => {
-                                this.$toasted.show('this.$t("modals.send.footerModal")', {
+                                this.$toasted.show("Sending was successful", {
                                     duration: 5000,
                                     type: 'success',
                                 });
@@ -377,7 +382,11 @@
                 this.amountAle = this.currentWallet.balance;
                 this.focusInput('address');
             }
-        }
+        },
+        // mounted(){
+        //     const element = document.querySelector('input#amount')
+        //     element.addEventListener('paste', e =>  e.preventDefault())
+        // }
     };
 </script>
 

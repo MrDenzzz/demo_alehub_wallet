@@ -49,7 +49,7 @@
                                     <div class="error-block" v-if="isErrorLogin">
                                         <p>Login or password is incorrect</p>
                                     </div>
-                                    <div class="is-center" v-if="dataProcessing">
+                                    <div class="is-center" v-if="dataProcessing && (password.length >=8)">
                                         <spinner/>
                                     </div>
                                 </form>

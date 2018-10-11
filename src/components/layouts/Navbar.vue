@@ -79,7 +79,10 @@
             },
             notifBadge: function () {
                 return this.$store.state.Notifications.isNewNotification
-            }
+            },
+            isLoginPage: function () {
+                return !(this.$route.path === '/');
+            },
         },
         methods: {
             toggleMenu: function () {
