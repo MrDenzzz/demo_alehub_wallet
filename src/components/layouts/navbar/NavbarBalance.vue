@@ -59,7 +59,7 @@
             <span class="line"></span>
             <span class="line"></span>
         </div>
-        <div class="profile-icon" @click="goToProfile">
+        <div class="profile-icon" @click="goToProfile" v-if="isProfile == false">
             <img :src="'https://ale-demo-4550.nodechef.com/'+ userAvatar">
         </div>
     </div>
@@ -82,6 +82,10 @@
             collapsed: {
                 type: Boolean,
                 required: true,
+            },
+            isProfile: {
+                type: Boolean,
+                required: false
             }
         },
         computed: {
