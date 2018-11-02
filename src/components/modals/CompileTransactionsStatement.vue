@@ -614,8 +614,7 @@
                     }
                 }
             },
-            /*
-            * */
+
             changeTypeStatement: function () {
                 if (this.selectionTypeStatement === 'current') {
                     this.countTransactions.current = this.transactionsCount;
